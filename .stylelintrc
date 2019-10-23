@@ -4,7 +4,6 @@
     "stylelint-csstree-validator",
     "stylelint-group-selectors",
     "stylelint-high-performance-animation",
-    "stylelint-images",
     "stylelint-order",
     "stylelint-scss",
     "stylelint-z-index-value-constraint"
@@ -265,12 +264,6 @@
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
     "value-list-max-empty-lines": 0,
-    "a11y/line-height-is-vertical-rhythmed": true,
-    "a11y/media-prefers-reduced-motion": true,
-    "a11y/no-obsolete-attribute": true,
-    "a11y/no-outline-none": true,
-    "a11y/no-text-align-justify": true,
-    "a11y/selector-pseudo-class-focus": true,
     "csstree/validator": {
         "ignore": ["font-display"]
     },

@@ -1,11 +1,11 @@
 ////
-/// sizzle.scss - A Sassy CSS Front-End Development Library
+/// stipple.scss - A Sassy CSS Front-End Development Library
 /// @author Stephen M Irving -- www.stephenirving.net
-/// Version 0.4.6 08/30/2019
+/// Version 0.0.3 10/23/2019
 ///
-/// Sizzle is a Sassy CSS library of functions & mixins that aid your front-end
-/// development process by serving up the sizzle without requiring all the
-/// hassle. This is the version with browser vendor prefixes included.
+/// Stipple is a Sassy CSS library of simple-to-use functions & mixins that aid
+/// your front-end UI/UX development experience by serving up workflow enhancing
+/// utilities along with production ready element styles and animations.
 ////
 
 ////////////////////////////////////////
@@ -22,7 +22,7 @@
 // #FUNCTIONS //////////////////////////
 ////////////////////////////////////////
 
-// General Utility Functions
+// General Utilitiy Functions
 @import 'functions/asset';
 @import 'functions/char';
 @import 'functions/missing-dependencies';
@@ -30,7 +30,6 @@
 @import 'functions/str-replace';
 
 // Is-Type Functions
-@import 'functions/is-string';
 @import 'functions/is-number';
 @import 'functions/is-integer';
 @import 'functions/is-float';
@@ -62,8 +61,8 @@
 // Conversion Functions
 @import 'functions/strip-unit';
 @import 'functions/conv-angle';
-@import 'functions/conv-to-em';
 @import 'functions/conv-to-px';
+@import 'functions/conv-to-em';
 @import 'functions/conv-to-rem';
 
 // List Functions
@@ -91,6 +90,7 @@
 @import 'functions/top-shadow';
 @import 'functions/make-long-shadow';
 
+
 ////////////////////////////////////////
 // #MIXINS /////////////////////////////
 ////////////////////////////////////////
@@ -98,33 +98,19 @@
 // Utilities
 @import 'mixins/utilities/absolute-center';
 @import 'mixins/utilities/align-horizontally';
-@import 'mixins/utilities/align-items';
 @import 'mixins/utilities/align-vertically';
 @import 'mixins/utilities/bem';
 @import 'mixins/utilities/bg-image';
 @import 'mixins/utilities/bg-image-svg';
 @import 'mixins/utilities/border-radius';
 @import 'mixins/utilities/button-base';
-@import 'mixins/utilities/calc';
 @import 'mixins/utilities/card-depth';
 @import 'mixins/utilities/clearfix';
-@import 'mixins/utilities/columns';
-@import 'mixins/utilities/column-count';
-@import 'mixins/utilities/column-fill';
-@import 'mixins/utilities/column-gap';
-@import 'mixins/utilities/column-rule';
-@import 'mixins/utilities/column-span';
-@import 'mixins/utilities/column-width';
 @import 'mixins/utilities/cover';
 @import 'mixins/utilities/disable-outline';
 @import 'mixins/utilities/family';
 @import 'mixins/utilities/fixed-length';
 @import 'mixins/utilities/flex-center';
-@import 'mixins/utilities/flex-container';
-@import 'mixins/utilities/flex-direction';
-@import 'mixins/utilities/flex';
-@import 'mixins/utilities/flex-order';
-@import 'mixins/utilities/flex-wrap';
 @import 'mixins/utilities/font';
 @import 'mixins/utilities/font-size';
 @import 'mixins/utilities/ghost-button';
@@ -133,12 +119,10 @@
 @import 'mixins/utilities/hide-text';
 @import 'mixins/utilities/hide-visually';
 @import 'mixins/utilities/inner-side-shadow';
-@import 'mixins/utilities/justify-content';
 @import 'mixins/utilities/long-shadow';
 @import 'mixins/utilities/max-width';
 @import 'mixins/utilities/min-to-max-width';
 @import 'mixins/utilities/min-width';
-@import 'mixins/utilities/no-select';
 @import 'mixins/utilities/on-event';
 @import 'mixins/utilities/only-chrome';
 @import 'mixins/utilities/only-edge';
@@ -150,8 +134,6 @@
 @import 'mixins/utilities/opacity';
 @import 'mixins/utilities/placeholder';
 @import 'mixins/utilities/position';
-@import 'mixins/utilities/prefix';
-@import 'mixins/utilities/prefixes';
 @import 'mixins/utilities/pseudo';
 @import 'mixins/utilities/reset';
 @import 'mixins/utilities/reset-list';
@@ -164,9 +146,6 @@
 @import 'mixins/utilities/text-emboss';
 @import 'mixins/utilities/text-outline';
 @import 'mixins/utilities/text-shadow';
-@import 'mixins/utilities/transform';
-@import 'mixins/utilities/transition';
-@import 'mixins/utilities/translate';
 @import 'mixins/utilities/truncate';
 
 // Shapes

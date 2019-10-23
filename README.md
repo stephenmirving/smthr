@@ -17,6 +17,7 @@ having to mess with clip-path coordinates or animation keyframe creation.
 
 * 140+ mixins
 * 51+ functions
+* A modern, opinionated normalize file written in Sass called betterize
 * A small collection @extend placeholders and !default variables
 * The choice between .scss and classic .sass syntax
 

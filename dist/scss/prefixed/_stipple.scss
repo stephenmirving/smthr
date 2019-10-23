@@ -1,12 +1,11 @@
 ////
-/// sizzle.scss - A Sassy CSS Front-End Development Library
+/// stipple.scss - A Sassy CSS Front-End Development Library
 /// @author Stephen M Irving -- www.stephenirving.net
-/// Version 0.4.6 08/30/2019
+/// Version 0.0.3 10/23/2019
 ///
-/// Sizzle is a Sassy CSS library of functions & mixins that aid your front-end
-/// development process by serving up the sizzle without requiring all the
-/// hassle. This is the unprefixed version that does not have any browser vendor
-/// prefixes for any properties that have unprefixed versions available.
+/// Stipple is a Sassy CSS library of simple-to-use functions & mixins that aid
+/// your front-end UI/UX development experience by serving up workflow enhancing
+/// utilities along with production ready element styles and animations.
 ////
 
 ////////////////////////////////////////
@@ -22,20 +21,19 @@
 $base-font-size: 16 !default;
 
 /// Example font stack map with web-safe fonts. Use with the font-stack function.
-/// @access public
 /// @type Map
 /// @todo Fill out the stack with the fonts you choose for your theme.
 $font-stack: (
   'primary': (
     'Source Sans Pro',
-    system-ui,
-    -apple-system,
     Roboto,
-    Ubuntu,
-    Arial,
     Cantarell,
     'Noto Sans',
+    Arial,
     'Segoe UI',
+    Ubuntu,
+    -apple-system,
+    BlinkMacSystemFont,
     sans-serif,
     'Apple Color Emoji',
     'Segoe UI Emoji',
@@ -84,13 +82,11 @@ $font-stack: (
 );
 
 /// Base path for assets (fonts, images, etc.), do not use a trailing slash.
-/// @access public
 /// @type String
 $asset-base-path: '../assets' !default;
 
 /// Suffix appended to the end of an image name to indicate that it is for HiDPI
 /// Retina displays.
-/// @access public
 /// @type String
 $image-2x-suffix: '@2x' !default;
 
@@ -137,18 +133,18 @@ $white: #fff !default;
 /// @type List
 $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 
-
 /// Extended in the `animation-front-face` and the `animation-back-face`
 /// mixins as the base styles for the subelements of a 3-D transformed element.
 %animation-faces {
-  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
   height: 100%;
   position: absolute;
   width: 100%;
 }
 
 
-/// Applies the float clearing 'clearfix' hack, but as an @extend placeholder
+/// Applies the float clearing 'clearfix' hack, but as an @extend placeholder.
 %clearfix {
   &:before,
   &:after {
@@ -168,7 +164,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   border: 0;
   clip: rect(1px 1px 1px 1px); // IE 6-7
   clip: rect(1px, 1px, 1px, 1px);
-  clip-path: inset(100%);
+  -webkit-clip-path: inset(100%);
+          clip-path: inset(100%);
   height: 1px;
   margin: -1px;
   overflow: hidden;
@@ -211,40 +208,11 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
-/// Checks if a value is a relative length.
+/// Checks if a value is an angle.
 /// @access public
 ///
 /// @param {*} $value - A value to be checked.
-/// @return {Boolean} True if $value is a relative length, false if it is not.
-@function is-relative-length($value) {
-  @return (
-    type-of($value) == 'number' and
-    index(
-      'em' 'ex' 'ch' 'rem' '%' 'vw' 'vh' 'vmin' 'vmax',
-      unit($value)
-    ) != null
-  );
-}
-
-
-/// Checks if a value is a length.
-/// @access public
-///
-/// @param {*} $value - A value to be checked.
-/// @return {Boolean} True if $value is a length, false if it is not.
-///
-/// @require {function} is-relative-length
-/// @require {function} is-absolute-length
-@function is-length($value) {
-  @return is-relative-length($value) or is-absolute-length($value);
-}
-
-
-/// Checks if a value is an angle
-/// @access public
-///
-/// @param {*} $value - A value to be checked
-/// @return {Boolean} True if $value is an angle, false if it is not
+/// @return {Boolean} True if $value is an angle, false if it is not.
 @function is-angle($value) {
   @return (
     type-of($value) == 'number' and
@@ -297,6 +265,19 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
+/// Checks if a value is a length.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is a length, false if it is not.
+///
+/// @require {function} is-relative-length
+/// @require {function} is-absolute-length
+@function is-length($value) {
+  @return is-relative-length($value) or is-absolute-length($value);
+}
+
+
 /// Checks if a value is a string.
 /// @access public
 ///
@@ -343,11 +324,27 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
+/// Checks if a value is a relative length.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is a relative length, false if it is not.
+@function is-relative-length($value) {
+  @return (
+    type-of($value) == 'number' and
+    index(
+      'em' 'ex' 'ch' 'rem' '%' 'vw' 'vh' 'vmin' 'vmax',
+      unit($value)
+    ) != null
+  );
+}
+
+
 /// Checks if a value is a resolution.
 /// @access public
 ///
-/// @param {*} $value - A value to be checked
-/// @return {Boolean} True if $value is a resolution, false if it is not
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is a resolution, false if it is not.
 @function is-resolution($value) {
   @return (
     type-of($value) == 'number' and
@@ -387,10 +384,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     $char: str-slice($string, $i, $i);
 
     @if (
-      not index(
-        '-' 'a' 'b' 'c' 'd' 'e' 'f' 'g' 'h' 'i' 'j' 'k' 'l' 'm' 'n'
-        'o' 'p' 'q' 'r' 's' 't' 'u' 'v' 'w' 'x' 'y' 'z', $char
-      )
+      not index('-' 'a' 'b' 'c' 'd' 'e' 'f' 'g' 'h' 'i' 'j' 'k' 'l' 'm' 'n'
+                'o' 'p' 'q' 'r' 's' 't' 'u' 'v' 'w' 'x' 'y' 'z', $char)
     ) {
       @return false;
     }
@@ -409,6 +404,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @return not not index($list, $value);
 }
 
+
 /// Casts `$value` into a list.
 /// @access public
 ///
@@ -420,6 +416,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 @function to-list($value, $separator: list-separator($value)) {
   @return join((), $value, $separator);
 }
+
 
 /// Casts `$value` into a list.
 /// @access public
@@ -513,22 +510,24 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
-/// Removes `$value` from `$list`.
+/// Removes value `$value` from `$list`.
 ///
-/// @param {List} $list - The list to update.
+/// @param {List} $list - The list to update
 /// @param {*} $value - The value to remove from `$list`.
 /// @return {List} The updated list.
 ///
 /// @require {function} update-list
+/// @alias trim-list
 @function remove-list($list, $value) {
   $_: missing-dependencies('update-list');
 
   @return update-list($list, $value, null);
 }
 
+
 /// Removes `$value` from `$list`.
 ///
-/// @param {List} $list - The list to update.
+/// @param {List} $list - The list to update
 /// @param {*} $value - The value to remove from `$list`.
 /// @return {List} The updated list.
 ///
@@ -562,11 +561,11 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
-/// Asset file location builder
+/// An asset file location builder.
 /// @access private
 ///
-/// @param {String} $type - Asset type, matching folder name
-/// @param {String} $file - Asset file name, including extension
+/// @param {String} $type - Asset type, matching folder name.
+/// @param {String} $file - Asset file name, including extension.
 ///
 /// @return {String} A file location leading to the asset.
 /// @require {variable} $asset-base-path
@@ -579,7 +578,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @return unquote($asset-path + '/' + $type + '/' + $file);
 }
 
-/// Image asset helper
+/// A simple image asset path helper
 /// @access public
 ///
 /// @param {String} $file - Asset file name, including extension
@@ -590,7 +589,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @return asset('images', $file);
 }
 
-/// Font asset helper
+/// A simple font asset path helper
 /// @access public
 ///
 /// @param {String} $file - Asset file name, including extension
@@ -658,54 +657,14 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// Clamp `$number` between `$min` and `$max`
 /// @access public
 ///
-/// @param {Number} $number - Number to clamp
-/// @param {Number} $min - Minimum value
-/// @param {Number} $max - Maximum value
+/// @param {Number} $number - The number to clamp.
+/// @param {Number} $min - The minimum value.
+/// @param {Number} $max - The maximum value.
 /// @return {Number} If number is within the limits, returns the number, if it
-/// is below the limit, returns the min, if it is above the max, returns the max
+/// is below the limit, it will return the min, if it is above the max, it will
+/// return the max.
 @function clamp($number, $min, $max) {
   @return min(max($number, $min), $max);
-}
-
-
-/// Converts a pixel value into em units.
-/// @access public
-///
-/// @param {Length-Percentage} $pixels - A value to convert to em units.
-/// @param {Number} $base-context [null] - The contextual base font-size.
-/// @return {Length} The values in em.
-///
-/// @require {function} strip-unit
-/// @throw Invalid data type or units for $pixels
-@function conv-to-em($pixels, $base-context: null) {
-  @if (
-    type-of($pixels) != 'number' or
-    (type-of($pixels) == 'number' and
-    not unitless($pixels) and unit($pixels) != 'px')
-  ) {
-    @error 'Invalid value of (#{inspect($pixels)}) passed to conv-to-em(). ' +
-        'Value of $pixels must be number in px units.';
-  }
-
-  // If no base is defined, defer to the $base-font-size variable. If that does
-  // not exist, default to 16
-  @if not $base-context {
-    $base-context: if(
-      global-variable-exists(base-font-size),
-      $base-font-size,
-      16
-    );
-  }
-
-  @if unitless($pixels) {
-    $pixels: $pixels * 1px;
-  }
-
-  @if unitless($base-context) {
-    $base-context: $base-context * 1px;
-  }
-
-  @return $pixels / $base-context * 1em;
 }
 
 
@@ -849,6 +808,47 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
+/// Converts a pixel value into em units.
+/// @access public
+///
+/// @param {Length-Percentage} $pixels - A value to convert to em units.
+/// @param {Number} $base-context [null] - The contextual base font-size.
+/// @return {Length} The values in em.
+///
+/// @require {function} strip-unit
+/// @throw Invalid data type or units for $pixels
+@function conv-to-em($pixels, $base-context: null) {
+  @if (
+    type-of($pixels) != 'number' or
+    (type-of($pixels) == 'number' and
+    not unitless($pixels) and unit($pixels) != 'px')
+  ) {
+    @error 'Invalid value of (#{inspect($pixels)}) passed to conv-to-em(). ' +
+        'Value of $pixels must be number in px units.';
+  }
+
+  // If no base is defined, defer to the $base-font-size variable. If that does
+  // not exist, default to 16
+  @if not $base-context {
+    $base-context: if(
+      global-variable-exists(base-font-size),
+      $base-font-size,
+      16
+    );
+  }
+
+  @if unitless($pixels) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if unitless($base-context) {
+    $base-context: $base-context * 1px;
+  }
+
+  @return $pixels / $base-context * 1em;
+}
+
+
 /// Converts a rem value into pixel units.
 /// @access public
 ///
@@ -881,7 +881,6 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     @return $px-vals;
   }
 }
-
 
 /// Converts values into REM units.
 /// @access public
@@ -917,7 +916,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   }
 
   @for $i from 1 through $count {
-    $rem-vals: append($rem-vals, px-to-rem(nth($values, $i), $base));
+    $rem-values: append($rem-values, px-to-rem(nth($values, $i), $base));
   }
 
   @return $rem-values;
@@ -936,8 +935,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @require {function} strip-unit
 @function px-to-rem($value, $base: null) {
   @if type-of($value) != 'number' {
-    @error inspect($value) + ', which is not a number, was passed to ' +
-        'conv-to-rem().';
+    @error inspect($value) + ', which is not a number, was passed ' +
+        'to conv-to-rem().';
   }
 
   // Transform em into rem if someone hands over 'em's
@@ -1080,11 +1079,11 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
-/// Returns the result of a natural logarithm.
+/// Returns the result of a natural logarithm
 ///
-/// @param {Number} $value - The input for the equation.
+/// @param {Number} $value - The input for the equation
 ///
-/// @return {Number} The result of the equation.
+/// @return {Number} The result of the equation
 @function ln($value) {
   $ten-exp: 1;
   $ln-ten: 2.30258509;
@@ -1100,26 +1099,26 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
-/// Computes the natural logarithm using the Maclaurin series.
+/// Computes the natural logarithm using the Maclaurin series
 ///
 /// @param {Number} $x
 /// @param {Number} $n
 ///
-/// @return {Number} The result of the operation.
+/// @return {Number} The result of the operation
 /// @require {function} pow
 @function ln-maclaurin($x, $n) {
   @return (pow(-1, $n + 1) / $n) * (pow($x - 1, $n));
 }
 
 
-/// Generates the values to create a long shadow. Used by `long-shadow` mixin.
+/// Generates the values to create a long shadow. Used by `long-shadow` mixin
 /// @access public
 ///
-/// @param {Color} $color - The color of the long shadow.
-/// @param {Number} $longness - The integer length of the shadow.
-/// @return {Mixed} The value string for the long shadow effect.
+/// @param {Color} $color - The color of the long shadow
+/// @param {Number} $longness - The integer length of the shadow
+/// @return {Mixed} The value string for the long shadow effect
 @function make-long-shadow($color, $longness) {
-  $val: 0 0 $color;
+  $val: 0px 0px $color;
   @for $i from 1 through $longness {
     $val: #{$val}, #{$i}px #{$i}px #{$color};
   }
@@ -1434,7 +1433,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 
 
 /// Absolutely centers the element inside of its first parent using a method
-/// combining positioning and translation. The parent element must be non-static.
+/// combining positioning and translation.
 ///
 /// @group Utilities
 /// @alias abs-center
@@ -1442,7 +1441,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   left: 50%;
   position: relative;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%); // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+      -ms-transform: translateX(-50%) translateY(-50%); // IE 9
+          transform: translate(-50%, -50%);
 }
 
 /// Absolutely centers the element inside of its first parent using a method
@@ -1454,13 +1455,17 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   left: 50%;
   position: relative;
   top: 50%;
-  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%); // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+      -ms-transform: translateX(-50%) translateY(-50%); // IE 9
+          transform: translate(-50%, -50%);
 }
-
 
 /// Horizontally aligns an alement using absolute positioning and transform. You
 /// can modify the $pos argument to change the left property's value to alter
-/// the horizontal alignment. Parent element must be non-static.
+/// the horizontal alignment. Parent element must be non-static. The '-webkit'
+/// prefix is included to ensure the effect is applied in Chrome 4-35,
+/// Safari 3.1-8, iOS 3.2-8.4, and Opera 15-22. The '-ms' prefix is included to
+/// ensure the effect is applied in Internet Explorer 9.
 ///
 /// @param {Position} $pos [50%] - The top property value. 50% will put the
 /// element in the vertical center.
@@ -1471,20 +1476,19 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if $pos == 'middle' or $pos == 'center' or $pos == 'c' or $pos == 'm' {
     $pos: 50%;
   }
-
   @if unitless($pos) {
     $pos: $pos * 1%;
   }
-
   @if $pos < 0% or $pos > 100% {
     @error 'The left position value of `#{inspect($pos)}` is out of range for' +
         'the `align-horizontally` mixin. You must choose a value between 0% ' +
         'and 100%, inclusive.';
   }
-
   left: $pos;
   position: absolute;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%); // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+      -ms-transform: translateX(-50%); // IE 9
+          transform: translateX(-50%);
 }
 
 /// Horizontally centers the element inside of its first parent using a method
@@ -1495,7 +1499,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 @mixin center-horizontally {
   left: 50%;
   position: relative;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%); // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+      -ms-transform: translateX(-50%); // IE 9
+          transform: translateX(-50%);
 }
 
 /// Horizontally centers the element inside of its first parent using a method
@@ -1506,13 +1512,41 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 @mixin horizontal-center {
   left: 50%;
   position: relative;
-  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%); // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+      -ms-transform: translateX(-50%); // IE 9
+          transform: translateX(-50%);
+}
+
+
+/// A vendor prefix based utilitiy mixin that applies the align-items property
+/// with the necessary vendor prefixes to ensure wide browser support.
+///
+/// @param {Keyword} $value [center] - The align-items property's value.
+///
+/// @group Utilities
+@mixin align-items($value: center) {
+  $legacy-value: $value;
+
+  @if ($value == 'flex-start' or $value == 'start') {
+    $value: flex-start;
+    $legacy-value: start;
+  } @else if ($value == 'flex-end' or $value == 'end') {
+    $value: flex-end;
+    $legacy-value: end;
+  }
+  -webkit-box-align: #{$legacy-value}; // Chrome 4-20, iOS 3.2 -6.1, Safari 3.1-6
+     -ms-flex-align: #{$legacy-value}; // IE 10
+  -webkit-align-items: #{$value}; // Chrome 21-28, iOS 7-8.4, Safari 6.1-8, Opera 15-16
+          align-items: #{$value}; // Chrome 29+, Safari 9+, iOS8.5+, Opera 12.1 & 17+, Firefox 20+
 }
 
 
 /// Vertically aligns an alement using absolute positioning and transform. You
 /// can modify the $pos argument to change the top property's value to alter
-/// the vertical alignment. Parent element must be non-static.
+/// the vertical alignment. Parent element must be non-static. The '-webkit'
+/// prefix is included to ensure the effect is applied in Chrome 4-35,
+/// Safari 3.1-8, iOS 3.2-8.4, and Opera 15-22. The '-ms' prefix is included to
+/// ensure the effect is applied in Internet Explorer 9.
 ///
 /// @param {Position} $pos [50%] - The top property value. 50% will put the
 /// element in the vertical center.
@@ -1534,7 +1568,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 
   position: relative;
   top: $pos;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%); // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+      -ms-transform: translateY(-50%); // IE 9
+          transform: translateY(-50%);
 }
 
 /// Vertically centers the element inside of its first parent using a method
@@ -1545,7 +1581,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 @mixin center-vertically {
   position: relative;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%); // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+      -ms-transform: translateY(-50%); // IE 9
+          transform: translateY(-50%);
 }
 
 /// Vertically centers the element inside of its first parent using a method
@@ -1556,9 +1594,10 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 @mixin vertical-center {
   position: relative;
   top: 50%;
-  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%); // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+      -ms-transform: translateY(-50%); // IE 9
+          transform: translateY(-50%);
 }
-
 
 /// Applied to the child element of the element with the a 3-d transform effect
 /// to represent the back-face of the card that the animation flips to or past.
@@ -1576,12 +1615,6 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   // Default rotation for the flip-axis value of horizontal
   $trans-val: rotateX(180deg);
 
-  @if (
-    to-lower-case($flip-axis) == 'vertical' or
-    to-lower-case($flip-axis) == 'vert' or
-    to-lower-case($flip-axis) == 'v'
-  ) {
-    $trans-val: rotateY(180deg);
   } @else if (
     to-lower-case($flip-axis) == 'diagonal' or
     to-lower-case($flip-axis) == 'diagonal1' or
@@ -1590,12 +1623,16 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     to-lower-case($flip-axis) == 'd' or
     to-lower-case($flip-axis) == 'd1'
   ) {
+    $trans-val: rotateY(180deg);
+  } @else if (to-lower-case($flip-axis) == 'diagonal'
+      or to-lower-case($flip-axis) == 'diagonal1'
+      or to-lower-case($flip-axis) == 'diag'
+      or to-lower-case($flip-axis) == 'diag1'
+      or to-lower-case($flip-axis) == 'd' or to-lower-case($flip-axis) == 'd1') {
     $trans-val: rotate3d(1, 1, 0, 180deg);
-  } @else if (
-    to-lower-case($flip-axis) == 'diagonal2' or
-    to-lower-case($flip-axis) == 'diag2' or
-    to-lower-case($flip-axis) == 'd2'
-  ) {
+  } @else if (to-lower-case($flip-axis) == 'diagonal2'
+      or to-lower-case($flip-axis) == 'diag2'
+      or to-lower-case($flip-axis) == 'd2') {
     $trans-val: rotate3d(-1, 1, 0, -180deg);
   } @else if (
     to-lower-case($flip-axis) != 'horizontal' and
@@ -1606,15 +1643,13 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     @error 'Invalid flip-axis value of `#{inspect($flip-axis)}` for the ' +
         '`animation-back-face` mixin';
   }
-
   @extend %animation-faces;
-
-  transform: $trans-val;
+  -webkit-transform: $trans-val;
+          transform: $trans-val;
   @if ($z-val and type-of($z-val) == 'number' and unitless($z-val)) {
     z-index: $z-val;
   }
 }
-
 
 /// Applied to the child element of the element with the `animation` mixin
 /// to represent the front-face of the card that the animation flips to the
@@ -1632,7 +1667,6 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     z-index: $z-val;
   }
 }
-
 
 /// Applied to the parent element of an element that includes a 3-D animation.
 ///
@@ -1666,17 +1700,23 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if $height {
     height: $height;
   }
-
   @if (type-of($perspective) == 'number' and $perspective > 0
       and index('px' 'em' 'rem', unit($perspective)))
       or $perspective == 'initial'
       or $perspective == 'inherit' {
-    perspective: $perspective;
+    -webkit-perspective: $perspective;
+            perspective: $perspective;
   }
-
+  @if str-slice($p-origin + '', 1, 4) == 'calc' {
+    -webkit-perspective-origin: -webkit-#{$p-origin};
+  } @else {
+    -webkit-perspective-origin: $p-origin;
+  }
   perspective-origin: $p-origin;
-  user-select: none;
-
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   @if $width {
     width: $width;
   }
@@ -1684,7 +1724,6 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     z-index: $z-val;
   }
 }
-
 
 /// Uses clip path to change an element to the shape of an arrow.
 ///
@@ -1710,58 +1749,43 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     color: $fg-color;
   }
   @if (
-    to-lower-case($direction) == 'right' or to-lower-case($direction) == 'r'
+    to-lower-case($direction) == 'right' or
+    to-lower-case($direction) == 'r'
   ) {
-    clip-path:
-      polygon(
-        0 20%,
-        60% 20%,
-        60% 0,
-        100% 50%,
-        60% 100%,
-        60% 80%,
-        0 80%
-      );
-  } @else if
-    (to-lower-case($direction) == 'left' or to-lower-case($direction) == 'l') {
-    clip-path:
-      polygon(
-        40% 0,
-        40% 20%,
-        100% 20%,
-        100% 80%,
-        40% 80%,
-        40% 100%,
-        0 50%
-      );
+    -webkit-clip-path: polygon( 0 20%, 60% 20%, 60% 0, 100% 50%,
+                                60% 100%, 60% 80%, 0 80% );
+            clip-path: polygon( 0 20%, 60% 20%, 60% 0, 100% 50%,
+                                60% 100%, 60% 80%, 0 80% );
   } @else if (
-    to-lower-case($direction) == 'up' or to-lower-case($direction) == 'u' or
-    to-lower-case($direction) == 'top' or to-lower-case($direction) == 't'
+    to-lower-case($direction) == 'left' or
+    to-lower-case($direction) == 'l'
   ) {
-    clip-path:
-      polygon(
-        100% 50%,
-        75% 50%,
-        75% 100%,
-        25% 100%,
-        25% 50%,
-        0 50%,
-        50% 0
-      );
+    -webkit-clip-path: polygon( 40% 0, 40% 20%, 100% 20%, 100% 80%,
+                                40% 80%, 40% 100%, 0 50% );
+            clip-path: polygon( 40% 0, 40% 20%, 100% 20%, 100% 80%,
+                                40% 80%, 40% 100%, 0 50% );
   } @else if (
-    to-lower-case($direction) == 'down' or to-lower-case($direction) == 'd' or
-    to-lower-case($direction) == 'bottom' or to-lower-case($direction) == 'b'
+    to-lower-case($direction) == 'up' or
+    to-lower-case($direction) == 'u' or
+    to-lower-case($direction) == 'top' or
+    to-lower-case($direction) == 't'
   ) {
-    clip-path:
-      polygon(
-        75% 0,
-        75% 50%,
-        100% 50%,
-        50% 100%,
-        0 50%,
-        25% 50%,
-        25% 0
-      );
+    -webkit-clip-path: polygon(
+      100% 50%, 75% 50%, 75% 100%, 25% 100%, 25% 50%, 0 50%, 50% 0
+    );
+            clip-path: polygon(
+      100% 50%, 75% 50%, 75% 100%, 25% 100%, 25% 50%, 0 50%, 50% 0
+    );
+  } @else if (
+    to-lower-case($direction) == 'down' or
+    to-lower-case($direction) == 'd' or
+    to-lower-case($direction) == 'bottom' or
+    to-lower-case($direction) =='b'
+  ) {
+    -webkit-clip-path: polygon( 75% 0, 75% 50%, 100% 50%, 50% 100%,
+                                0 50%, 25% 50%, 25% 0 );
+            clip-path: polygon( 75% 0, 75% 50%, 100% 50%, 50% 100%,
+                                0 50%, 25% 50%, 25% 0 );
   } @else {
     @error 'Invalid direction of `#{inspect($direction)}` for the `arrow` mixin';
   }
@@ -1861,7 +1885,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   border-top: ($size * .75) solid transparent;
   height: 0;
   position: relative;
-  transform: rotate($angle);
+  -webkit-transform: rotate($angle);
+       -ms-tranform: rotate($angle);
+          transform: rotate($angle);
   width: 0;
 
   &:after {
@@ -1873,7 +1899,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     left: $size * -.75;
     position: absolute;
     top: -$size;
-    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
     width: $size;
   }
 }
@@ -1918,8 +1946,10 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  clip-path: polygon( 20% 0, 80% 0, 100% 20%, 100% 80%,
-                      80% 100%, 20% 100%, 0 80%, 0 20%);
+  -webkit-clip-path: polygon( 20% 0, 80% 0, 100% 20%, 100% 80%,
+                              80% 100%, 20% 100%, 0 80%, 0 20%);
+          clip-path: polygon( 20% 0, 80% 0, 100% 20%, 100% 80%,
+                              80% 100%, 20% 100%, 0 80%, 0 20%);
   height: $height;
   width: $size;
 }
@@ -1978,14 +2008,14 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     @error 'Invalid type for the dimensions used in the `bg-image` mixin.';
   } @else {
     $bg-width: if(
-      (type-of($bg-width) == 'number' and unitless($bg-width)),
+      type-of($bg-width) == 'number' and unitless($bg-width),
       $bg-width * 1px,
       $bg-width
     );
     $bg-height: if(
       (type-of($bg-height) == 'number' and unitless($bg-height)),
-      $bg-height * 1px,
-      $bg-height
+        $bg-height * 1px,
+        $bg-height
     );
   }
 
@@ -2034,7 +2064,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   background-image: url(#{$img-name});
 
   // Scaled up version of the image for HiDPI displays
-  @media only screen and (min-device-pixel-ratio: $ratio),
+  @media only screen and (-webkit-min-device-pixel-ratio: $ratio),
+         only screen and (min-device-pixel-ratio: $ratio),
          only screen and (min-resolution: $ratio * 96dpi),
          only screen and (min-resolution: $ratio * 1dppx) {
     background-image: url(#{$hidpi-img});
@@ -2104,14 +2135,14 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     @error 'Invalid type for the dimensions used in the `bg-image-svg` mixin.';
   } @else {
     $bg-width: if(
-      (type-of($bg-width) == 'number' and unitless($bg-width)),
+      type-of($bg-width) == 'number' and unitless($bg-width),
       $bg-width * 1px,
       $bg-width
     );
     $bg-height: if(
       (type-of($bg-height) == 'number' and unitless($bg-height)),
-      $bg-height * 1px,
-      $bg-height
+        $bg-height * 1px,
+        $bg-height
     );
   }
 
@@ -2142,7 +2173,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   background: url(#{$svg-img-name}), linear-gradient(transparent, transparent);
 
   // Scaled up version of the image for HiDPI displays
-  @media only screen and (min-device-pixel-ratio: $ratio),
+  @media only screen and (-webkit-min-device-pixel-ratio: $ratio),
+         only screen and (min-device-pixel-ratio: $ratio),
          only screen and (min-resolution: $ratio * 96dpi),
          only screen and (min-resolution: $ratio * 1dppx) {
     background: url(#{$ret-png-img}); // 2x PNG fallback image
@@ -2164,7 +2196,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 ///
 /// @param {Length-Percentage} $radius [8px] - The border-radius value.
 ///
-/// @group Utlities
+/// @group Utilities
 @mixin border-radius($radius: 8px) {
   @if ($radius == 'circle') {
     $radius: 50%;
@@ -2185,8 +2217,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite.
 /// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. The default of null applies the default timing function of ease.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
@@ -2440,85 +2472,174 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     // and ensure that the timing function remains at that default
     $timing-func: null;
   }
-  animation: bounce#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: bounce#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: bounce#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
   @if ($fwd-bck) {
-    transform: translate3d(0, 0, 0);
-    transform-style: preserve-3d;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
   }
 
   @at-root {
 
-    @keyframes bounce#{$anim-num} {
-      @if ($in-or-out) {
+    @if ($in-or-out) {
+      @-webkit-keyframes bounce#{$anim-num} {
         0% {
-          animation-timing-function: ease-in;
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
           opacity: 0;
-          transform: #{$dir-val1};
+          -webkit-transform: #{$dir-val1};
+                  transform: #{$dir-val1};
         }
 
         38% {
-          animation-timing-function: ease-out;
+          -webkit-animation-timing-function: ease-out;
+                  animation-timing-function: ease-out;
           opacity: 1;
-          transform: #{$dir-val2};
+          -webkit-transform: #{$dir-val2};
+                  transform: #{$dir-val2};
         }
 
         55% {
-          animation-timing-function: ease-in;
-          transform: #{$dir-val3};
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val3};
+                  transform: #{$dir-val3};
         }
 
         @if (not $fwd-bck) {
           72%,
           90%,
           100% {
-            animation-timing-function: ease-out;
-            transform: #{$dir-val2};
+            -webkit-animation-timing-function: ease-out;
+                    animation-timing-function: ease-out;
+            -webkit-transform: #{$dir-val2};
+                    transform: #{$dir-val2};
           }
         } @else {
           72%,
           89%,
           100% {
-            animation-timing-function: ease-out;
-            transform: #{$dir-val2};
+            -webkit-animation-timing-function: ease-out;
+                    animation-timing-function: ease-out;
+            -webkit-transform: #{$dir-val2};
+                    transform: #{$dir-val2};
           }
         }
 
         81% {
-          animation-timing-function: ease-in;
-          transform: #{$dir-val4};
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val4};
+                  transform: #{$dir-val4};
         }
 
         95% {
-          animation-timing-function: ease-in;
-          transform: #{$dir-val5};
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val5};
+                  transform: #{$dir-val5};
         }
-      } @else {
+      }
+
+      @keyframes bounce#{$anim-num} {
+        0% {
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          opacity: 0;
+          -webkit-transform: #{$dir-val1};
+                  transform: #{$dir-val1};
+        }
+
+        38% {
+          -webkit-animation-timing-function: ease-out;
+                  animation-timing-function: ease-out;
+          opacity: 1;
+          -webkit-transform: #{$dir-val2};
+                  transform: #{$dir-val2};
+        }
+
+        55% {
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val3};
+                  transform: #{$dir-val3};
+        }
+
+        @if (not $fwd-bck) {
+          72%,
+          90%,
+          100% {
+            -webkit-animation-timing-function: ease-out;
+                    animation-timing-function: ease-out;
+            -webkit-transform: #{$dir-val2};
+                    transform: #{$dir-val2};
+          }
+        } @else {
+          72%,
+          89%,
+          100% {
+            -webkit-animation-timing-function: ease-out;
+                    animation-timing-function: ease-out;
+            -webkit-transform: #{$dir-val2};
+                    transform: #{$dir-val2};
+          }
+        }
+
+        81% {
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val4};
+                  transform: #{$dir-val4};
+        }
+
+        95% {
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val5};
+                  transform: #{$dir-val5};
+        }
+      }
+    } @else {
+      @-webkit-keyframes bounce#{$anim-num} {
         0%,
         15%,
         38% {
-          animation-timing-function: ease-out;
-          transform: #{$dir-val1};
+          -webkit-animation-timing-function: ease-out;
+                  animation-timing-function: ease-out;
+          -webkit-transform: #{$dir-val1};
+                  transform: #{$dir-val1};
         }
 
         5% {
-          animation-timing-function: ease-in;
-          transform: #{$dir-val2};
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val2};
+                  transform: #{$dir-val2};
         }
 
         25% {
-          animation-timing-function: ease-in;
-          transform: #{$dir-val3};
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val3};
+                  transform: #{$dir-val3};
         }
 
         52% {
-          animation-timing-function: ease-in;
-          transform: #{$dir-val4};
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val4};
+                  transform: #{$dir-val4};
         }
 
         70% {
-          animation-timing-function: ease-out;
-          transform: if(($direction != 'backward'), #{$dir-val1}, #{$xtra-val});
+          -webkit-animation-timing-function: ease-out;
+                  animation-timing-function: ease-out;
+          -webkit-transform: if(($direction != 'backward'), #{$dir-val1}, #{$xtra-val});
+                  transform: if(($direction != 'backward'), #{$dir-val1}, #{$xtra-val});
         }
 
         85% {
@@ -2527,10 +2648,65 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 
         100% {
           @if ($fwd-bck) {
-            animation-timing-function: ease-in;
+            -webkit-animation-timing-function: ease-in;
+                    animation-timing-function: ease-in;
           }
           opacity: 0;
-          transform: #{$dir-val5};
+          -webkit-transform: #{$dir-val5};
+                  transform: #{$dir-val5};
+        }
+      }
+
+      @keyframes bounce#{$anim-num} {
+        0%,
+        15%,
+        38% {
+          -webkit-animation-timing-function: ease-out;
+                  animation-timing-function: ease-out;
+          -webkit-transform: #{$dir-val1};
+                  transform: #{$dir-val1};
+        }
+
+        5% {
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val2};
+                  transform: #{$dir-val2};
+        }
+
+        25% {
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val3};
+                  transform: #{$dir-val3};
+        }
+
+        52% {
+          -webkit-animation-timing-function: ease-in;
+                  animation-timing-function: ease-in;
+          -webkit-transform: #{$dir-val4};
+                  transform: #{$dir-val4};
+        }
+
+        70% {
+          -webkit-animation-timing-function: ease-out;
+                  animation-timing-function: ease-out;
+          -webkit-transform: if(($direction != 'backward'), #{$dir-val1}, #{$xtra-val});
+                  transform: if(($direction != 'backward'), #{$dir-val1}, #{$xtra-val});
+        }
+
+        85% {
+          opacity: 1;
+        }
+
+        100% {
+          @if ($fwd-bck) {
+            -webkit-animation-timing-function: ease-in;
+                    animation-timing-function: ease-in;
+          }
+          opacity: 0;
+          -webkit-transform: #{$dir-val5};
+                  transform: #{$dir-val5};
         }
       }
     }
@@ -2546,9 +2722,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. The default of null applies the default timing function of ease.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
@@ -2705,17 +2881,21 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: bounce#{$anim-num} #{$timing} #{$timing-func} #{$delay}
-              #{$infinite} both;
+  -webkit-animation: bounce#{$anim-num} #{$timing} #{$timing-func} #{$delay}
+                      #{$infinite} both;
+          animation: bounce#{$anim-num} #{$timing} #{$timing-func} #{$delay}
+                      #{$infinite} both;
   height: $height;
   width: $size;
 
   @at-root {
-    @keyframes bounce#{$anim-num} {
+    @-webkit-keyframes bounce#{$anim-num} {
       0% {
-        animation-timing-function: ease-in;
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
         opacity: 1;
-        transform: #{$dir-val1};
+        -webkit-transform: #{$dir-val1};
+                transform: #{$dir-val1};
       }
 
       24% {
@@ -2726,34 +2906,106 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
       55%,
       75%,
       87% {
-        animation-timing-function: ease-out;
-        transform: #{$dir-val6};
+        -webkit-animation-timing-function: ease-out;
+                animation-timing-function: ease-out;
+        -webkit-transform: #{$dir-val6};
+                transform: #{$dir-val6};
       }
 
       40% {
-        animation-timing-function: ease-in;
-        transform: #{$dir-val2};
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+        -webkit-transform: #{$dir-val2};
+                transform: #{$dir-val2};
       }
 
       65% {
-        animation-timing-function: ease-in;
-        transform: #{$dir-val3};
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+        -webkit-transform: #{$dir-val3};
+                transform: #{$dir-val3};
       }
 
       82% {
-        animation-timing-function: ease-in;
-        transform: #{$dir-val4};
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+        -webkit-transform: #{$dir-val4};
+                transform: #{$dir-val4};
       }
 
       93% {
-        animation-timing-function: ease-in;
-        transform: #{$dir-val5};
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+        -webkit-transform: #{$dir-val5};
+                transform: #{$dir-val5};
       }
 
       100% {
-        animation-timing-function: ease-out;
+        -webkit-animation-timing-function: ease-out;
+                animation-timing-function: ease-out;
+        -webkit-transform: #{$dir-val6};
+                transform: #{$dir-val6};
         opacity: 1;
-        transform: #{$dir-val6};
+      }
+    }
+
+    @keyframes bounce#{$anim-num} {
+      0% {
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+        opacity: 1;
+        -webkit-transform: #{$dir-val1};
+                transform: #{$dir-val1};
+      }
+
+      24% {
+        opacity: 1;
+      }
+
+      25%,
+      55%,
+      75%,
+      87% {
+        -webkit-animation-timing-function: ease-out;
+                animation-timing-function: ease-out;
+        -webkit-transform: #{$dir-val6};
+                transform: #{$dir-val6};
+      }
+
+      40% {
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+        -webkit-transform: #{$dir-val2};
+                transform: #{$dir-val2};
+      }
+
+      65% {
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+        -webkit-transform: #{$dir-val3};
+                transform: #{$dir-val3};
+      }
+
+      82% {
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+        -webkit-transform: #{$dir-val4};
+                transform: #{$dir-val4};
+      }
+
+      93% {
+        -webkit-animation-timing-function: ease-in;
+                animation-timing-function: ease-in;
+        -webkit-transform: #{$dir-val5};
+                transform: #{$dir-val5};
+      }
+
+      100% {
+        -webkit-animation-timing-function: ease-out;
+                animation-timing-function: ease-out;
+        opacity: 1;
+        -webkit-transform: #{$dir-val6};
+                transform: #{$dir-val6};
       }
     }
   }
@@ -2777,9 +3029,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// library. If no global variable is found, it will apply the following
 /// default: `background-color .2s ease-out, color .2s ease-out`.
 ///
-/// @group Utilities
 /// @require {mixin} disable-outline
-/// @alias btn-base
 @mixin button-base(
   $btn-background,
   $btn-color,
@@ -2832,7 +3082,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   padding: $btn-padding;
   text-align: center;
   @if $btn-transition {
-    transition: $btn-transition;
+    -webkit-transition: $btn-transition;
+            transition: $btn-transition;
   }
   vertical-align: middle;
 }
@@ -2884,6 +3135,26 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
+/// Helper mixin that inserts the -webkit- vendor prefix into a calc statement
+/// above the non-prefixed statement.
+///
+/// @param {Property} $property - A CSS property.
+/// @param {Mixed} $value - A CSS value with `calc()` function in it.
+///
+/// @group Utilities
+@mixin calc($property, $values) {
+  $vendor-calc-statements: ();
+  @each $value in $values {
+    $vendor-calc-statements:
+      append($vendor-calc-statements,
+      unquote(str-insert($value, '-webkit-',
+      str-index($value, 'calc('))));
+  }
+  #{$property}: $vendor-calc-statements;
+  #{$property}: $values;
+}
+
+
 /// Gives an element a depth effect based on Google's Material Design principles.
 /// @link http://www.google.com/design/spec/layout/layout-principles.html#layout-principles-dimensionality
 ///
@@ -2916,7 +3187,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Length-Percentage} $height [$size] The height of the chevron.
 ///
 /// @group Shapes
-/// @throw Invalid $direciton value
+/// @throw Invalid $direction value
 @mixin chevron(
   $direction: right,
   $bg: #fb8c00,
@@ -2929,32 +3200,42 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  @if (to-lower-case($direction) == 'right'
-      or to-lower-case($direction) == 'r') {
-    clip-path: polygon( 75% 0, 100% 50%, 75% 100%, 0 100%,
-                        25% 50%, 0 0);
+  @if (
+    to-lower-case($direction) == 'right' or
+    to-lower-case($direction) == 'r'
+  ) {
+    -webkit-clip-path: polygon( 75% 0, 100% 50%, 75% 100%, 0 100%,
+                                25% 50%, 0 0 );
+            clip-path: polygon( 75% 0, 100% 50%, 75% 100%, 0 100%,
+                                25% 50%, 0 0);
   } @else if (
     to-lower-case($direction) == 'left' or
     to-lower-case($direction) == 'l'
   ) {
-    clip-path: polygon( 100% 0, 75% 50%, 100% 100%, 25% 100%,
-                        0 50%, 25% 0 );
+    -webkit-clip-path: polygon( 100% 0, 75% 50%, 100% 100%, 25% 100%,
+                                0 50%, 25% 0 );
+            clip-path: polygon( 100% 0, 75% 50%, 100% 100%, 25% 100%,
+                                0 50%, 25% 0 );
   } @else if (
     to-lower-case($direction) == 'up' or
     to-lower-case($direction) == 'u' or
     to-lower-case($direction) == 'top' or
     to-lower-case($direction) == 't'
   ) {
-    clip-path: polygon( 100% 100%, 50% 75%, 0 100%, 0 25%,
-                        50% 0, 100% 25% );
+    -webkit-clip-path: polygon( 100% 100%, 50% 75%, 0 100%, 0 25%,
+                                50% 0, 100% 25% );
+            clip-path: polygon( 100% 100%, 50% 75%, 0 100%, 0 25%,
+                                50% 0, 100% 25% );
   } @else if (
     to-lower-case($direction) == 'down' or
     to-lower-case($direction) == 'd' or
     to-lower-case($direction) == 'bottom' or
     to-lower-case($direction) =='b'
   ) {
-    clip-path: polygon( 100% 75%, 50% 100%, 0 75%, 0 0,
-                        50% 25%, 100% 0 );
+    -webkit-clip-path: polygon( 100% 75%, 50% 100%, 0 75%, 0 0,
+                                50% 25%, 100% 0 );
+            clip-path: polygon( 100% 75%, 50% 100%, 0 75%, 0 0,
+                                50% 25%, 100% 0 );
   } @else {
     @error 'Invalid direction value of `#{inspect($direction)}` for the `chevron` mixin';
   }
@@ -3141,10 +3422,25 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     @error 'Invalid $bg-or-fg value or `#{inspect($bg-or-fg)}` for the ' +
         '`color-shifter` mixin.';
   }
-  animation: color-change#{$anim-num} #{$timing}
-              #{$timing-func}#{$delay}#{$inf-alt} both;
+  -webkit-animation: color-change#{$anim-num} #{$timing}
+                      #{$timing-func}#{$delay}#{$inf-alt} both;
+          animation: color-change#{$anim-num} #{$timing}
+                      #{$timing-func}#{$delay}#{$inf-alt} both;
 
   @at-root {
+
+    @-webkit-keyframes color-change#{$anim-num} {
+      $index: 1;
+      @each $interval in $interval-values {
+        $rounded-val: round($interval * 1000) / 1000;
+
+        #{$rounded-val + '%'} {
+          #{$bg-or-fg}: nth($colors, $index);
+        }
+        $index: $index + 1
+      }
+    }
+
     @keyframes color-change#{$anim-num} {
       $index: 1;
       @each $interval in $interval-values {
@@ -3157,6 +3453,97 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
       }
     }
   }
+}
+
+
+/// CSS Grid column-count property with vendor prefixes.
+///
+/// @param {Integer|Keyword} $value - The columnn-count value. Can be an integer
+/// or `auto`, as well as the global values of `inherit`, `initial`, and `unset`.
+///
+/// @group Utilities
+@mixin column-count ($value) {
+  -webkit-column-fill: $value;
+     -moz-column-fill: $value;
+          column-fill: $value;
+}
+
+
+/// CSS Grid column-fill property with vendor prefixes.
+///
+/// @param {Keyword} $value - The column-fill value. Can be either `auto`,
+/// `balance`, `balance-all` , or the global values of `inherit`, `initial`,
+/// or `unset`.
+///
+/// @group Utilities
+@mixin column-fill ($value) {
+  -webkit-column-fill: $value;
+     -moz-column-fill: $value;
+          column-fill: $value;
+}
+
+
+/// CSS Grid column-gap property with vendor prefixes.
+///
+/// @param {Length-Percentage|Keyword} $value - The columnn-gap value. Can be
+/// a length-percentage value, or can be set to `normal`, `inherit`, `initial`,
+/// or `unset`.
+///
+/// @group Utilities
+@mixin column-gap ($value) {
+  -webkit-column-gap: $value;
+     -moz-column-gap: $value;
+          column-gap: $value;
+}
+
+
+/// CSS Grid column-rule property with vendor prefixes.
+///
+/// @param {Mixed} $values - The columnn-rule value
+///
+/// @group Utilities
+@mixin column-rule ($values) {
+  -webkit-column-rule: $values;
+     -moz-column-rule: $values;
+          column-rule: $values;
+}
+
+
+/// Vendor prefixed shorthand property for column-width and column-count.
+///
+/// @param {Mixed} $values - The shorthand column property values.
+///
+/// @group Utilities
+/// @example 100px 3 would mean 100px width and 3 columns
+@mixin columns ($values) {
+  -webkit-columns: values;
+     -moz-columns: values;
+          columns: values;
+}
+
+
+/// CSS Grid column-span property with vendor prefixes.
+///
+/// @param {Keyword} $value - The columnn-span value. Can be `none`, `all`,
+/// `initial`, or `inherit`.
+///
+/// @group Utilities
+@mixin column-span ($value) {
+  -webkit-column-span: $value;
+     -moz-column-span: $value;
+          column-span: $value;
+}
+
+
+/// CSS Grid column-width property with vendor prefixes..
+///
+/// @param {Length-Percentage|Keyword} $value [30%] - The columnn-width value.
+///
+/// @group Utilities
+@mixin column-width ($value: 30%) {
+  -webkit-column-width: $value;
+     -moz-column-width: $value;
+          column-width: $value;
 }
 
 
@@ -3201,9 +3588,12 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  clip-path: polygon( 10% 25%, 35% 25%, 35% 0, 65% 0,
-                      65% 25%, 90% 25%, 90% 50%, 65% 50%,
-                      65% 100%, 35% 100%, 35% 50%, 10% 50% );
+  -webkit-clip-path: polygon( 10% 25%, 35% 25%, 35% 0, 65% 0,
+                              65% 25%, 90% 25%, 90% 50%, 65% 50%,
+                              65% 100%, 35% 100%, 35% 50%, 10% 50% );
+          clip-path: polygon( 10% 25%, 35% 25%, 35% 0, 65% 0,
+                              65% 25%, 90% 25%, 90% 50%, 65% 50%,
+                              65% 100%, 35% 100%, 35% 50%, 10% 50% );
   height: $size;
   width: $size;
 }
@@ -3225,7 +3615,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  -webkit-clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+          clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
   height: $height;
   width: $size;
 }
@@ -3253,9 +3644,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
 /// function for this animation of `cubic-bezier(.39, .575, .565, 1)`.
@@ -3514,26 +3905,51 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: fade#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: fade#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: fade#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
   @if ($fwd-bck) {
-    transform: translate3d(0, 0, 0);
-    transform-style: preserve-3d;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
   }
 
   @at-root {
-    @keyframes fade#{$anim-num} {
+
+    @-webkit-keyframes fade#{$anim-num} {
       0% {
         opacity: $opacity-val1;
         @if $direction {
-          transform: $trans-val1;
+          -webkit-transform: $trans-val1;
+                  transform: $trans-val1;
         }
       }
 
       100% {
         opacity: $opacity-val2;
         @if $direction {
-          transform: $trans-val2;
+          -webkit-transform: $trans-val2;
+                  transform: $trans-val2;
+        }
+      }
+    }
+
+    @keyframes fade#{$anim-num} {
+      0% {
+        opacity: $opacity-val1;
+        @if $direction {
+          -webkit-transform: $trans-val1;
+                  transform: $trans-val1;
+        }
+      }
+
+      100% {
+        opacity: $opacity-val2;
+        @if $direction {
+          -webkit-transform: $trans-val2;
+                  transform: $trans-val2;
         }
       }
     }
@@ -4033,13 +4449,27 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @group Animations
 @mixin fast-frames($animation-name, $property, $from, $to) {
   @at-root {
-    @keyframes #{$animation-name} {
+    @-webkit-keyframes #{$animation-name} {
       0% {
-        #{$property}: $from;
+        -webkit-#{$property}: $from;
+                #{$property}: $from;
       }
 
       100% {
-        #{$property}: $to;
+        -webkit-#{$property}: $to;
+                #{$property}: $to;
+      }
+    }
+
+    @keyframes #{$animation-name} {
+      0% {
+        -webkit-#{$property}: $from;
+                #{$property}: $from;
+      }
+
+      100% {
+        -webkit-#{$property}: $to;
+                #{$property}: $to;
       }
     }
   }
@@ -4056,6 +4486,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Boolean} $important-flag [false] - True if the !important
 /// designation should be applied to all values.
 ///
+/// @group Utilities
 /// @throw Incorrect keyword for $dimension
 @mixin fixed-length($length, $dimension: wh, $important-flag: false) {
   $imp: null;
@@ -4080,13 +4511,14 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     min-width: $length $imp;
     width: $length $imp;
   } @else {
-    @error 'Invalid $dimension of `#{inspect($dimension)}` for the `fixed-length` mixin.'l;
+    @error 'Invalid $dimension of `#{inspect($dimension)}` for the `fixed-length` mixin.';
   }
 }
 
 
-/// Uses flexbox to vertically and/or horizontally center an element, as well as
-/// set its flex-direction property.
+/// Uses flexbox to vertically and/or horizontally center an element, as well
+/// as set its flex-direction property, while also providing the optimal vendor
+/// prefixes necessary to ensure wide browser support.
 ///
 /// @param {Boolean|String} $horizontal [true] - Pass true to center the
 /// contents horizontally.
@@ -4100,7 +4532,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 @mixin flex-center($horizontal: true, $vertical: true, $flex-dir: 'row') {
   $swap: $horizontal;
   $f-dir: row;
-  $orientation: horizontal;
+  $b-dir: normal;
+  $b-orient: horizontal;
 
   @if ($horizontal == true or $horizontal == 't' or $horizontal == 'yes'
       or $horizontal == 'y') {
@@ -4128,33 +4561,154 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     @if ($flex-dir == 'row-reverse' or $flex-dir == 'r-r' or $flex-dir == 'rr'
         or $flex-dir == 'row-rev' or $flex-direction == 'rowrev') {
       $f-dir: row-reverse;
+      $b-dir: reverse;
     } @else if ($flex-dir == 'column' or $flex-dir == 'col' or $flex-dir == 'c'
         or str-slice($flex-dir + '', 1, 4) == 'vert' or $flex-dir == 'v') {
       $f-dir: column;
-      $orientation: vertical;
+      $b-orient: vertical;
     } @else if ($flex-dir == 'column-reverse' or $flex-dir == 'col-reverse'
         or $flex-dir == 'col-rev' or $flex-dir == 'colrev' or $flex-dir == 'c-r'
         or $flex-dir == 'c-rev' or $flex-dir == 'cr') {
       $f-dir: column-reverse;
-      $orientation: vertical;
+      $b-dir: reverse;
+      $b-orient: vertical;
     } @else if ($flex-dir != 'row' and $flex-dir != 'r' and $flex-dir != 'normal'
         and str-slice($flex-dir + '', 1, 5) != 'horiz' and $flex-dir != 'h') {
       @error 'Invalid `$flex-dir` value passed to the `flex-center` mixin.';
     }
 
-    @if ($orientation == 'vertical') {
+    @if ($b-orient == 'vertical') {
       $horizontal: $vertical;
       $vertical: $swap;
     }
-    flex-direction: $f-dir;
+    -webkit-box-orient: $b-orient;
+    -webkit-box-direction: $b-dir;
+    -webkit-flex-direction: $f-dir;
+        -ms-flex-direction: $f-dir;
+            flex-direction: $f-dir;
   }
   @if $vertical {
-    align-items: center;
+    -webkit-box-align: center;
+       -ms-flex-align: center;
+    -webkit-align-items: center;
+            align-items: center;
   }
-  display: flex;
+  display: -webkit-box; // Chrome 4-20, iOS 3.2 -6.1, Safari 3.1-6
+  display: -ms-flexbox; // IE 10
+  display: -webkit-flex; // Chrome 21-28, iOS 7-8.4, Safari 6.1-8, Opera 15-16
+  display: flex; // Chrome 29+, Safari 9+, iOS8.5+, Opera 12.1 & 17+, Firefox 20+
   @if $horizontal {
-    justify-content: center;
+    -webkit-box-pack: center;
+       -ms-flex-pack: center;
+    -webkit-justify-content: center;
+            justify-content: center;
   }
+}
+
+
+/// A vendor prefix based utilitiy mixin that applies the flex display type
+/// with the necessary vendor prefixes to ensure wide browser support.
+///
+/// @group Utilities
+@mixin flex-container {
+  display: -webkit-box; // Chrome 4-20, iOS 3.2 -6.1, Safari 3.1-6
+  display: -ms-flexbox; // IE 10
+  display: -webkit-flex; // Chrome 21-28, iOS 7-8.4, Safari 6.1-8, Opera 15-16
+  display: flex; // Chrome 29+, Safari 9+, iOS8.5+, Opera 12.1 & 17+, Firefox 20+
+}
+
+
+/// A vendor prefix based utilitiy mixin that applies the flex-direction
+/// property with the necessary vendor prefixes to ensure wide browser support.
+///
+/// @param {Keyword|String} $flex-dir [row] - The flex-direction value.
+///
+/// @group Utilities
+@mixin flex-direction($flex-dir: row) {
+  $f-dir: row;
+  $b-dir: normal;
+  $b-orient: horizontal;
+
+  @if $flex-dir {
+    @if ($flex-dir == 'row-reverse' or $flex-dir == 'r-r' or $flex-dir == 'rr'
+        or $flex-dir == 'row-rev' or $flex-direction == 'rowrev') {
+      $f-dir: row-reverse;
+      $b-dir: reverse;
+    } @else if ($flex-dir == 'column' or $flex-dir == 'col' or $flex-dir == 'c'
+        or str-slice($flex-dir, 1, 4) == 'vert' or $flex-dir == 'v') {
+      $f-dir: column;
+      $b-orient: vertical;
+    } @else if ($flex-dir == 'column-reverse' or $flex-dir == 'col-reverse'
+        or $flex-dir == 'col-rev' or $flex-dir == 'colrev' or $flex-dir == 'c-r'
+        or $flex-dir == 'c-rev' or $flex-dir == 'cr') {
+      $f-dir: column-reverse;
+      $b-dir: reverse;
+      $b-orient: vertical;
+    } @else if ($flex-dir != 'row' and $flex-dir != 'r' and $flex-dir != 'normal'
+        and str-slice($flex-dir, 1, 5) != 'horiz' and $flex-dir != 'h') {
+      @error 'Invalid `$flex-dir` value passed to the `flex-direction` mixin.';
+    }
+  } @else {
+    @error 'You must enter a value for the `flex-direction` mixin.';
+  }
+  -webkit-box-orient: $b-orient;
+  -webkit-box-direction: $b-dir;
+  -webkit-flex-direction: $f-dir;
+      -ms-flex-direction: $f-dir;
+          flex-direction: $f-dir;
+}
+
+
+/// A vendor prefix based utilitiy mixin that applies the flex property
+/// with the necessary vendor prefixes to ensure wide browser support. The mixin
+/// will optionally take a width value as the second argument.
+///
+/// @param {Keyword|Number|Length-Percentage|List} $flex-val [1] - The flex
+/// property's value.
+/// @param {Length-Percentage} $width [null] - You must use a set width on a
+/// flexed element to keep it from collapsing in old browsers.
+///
+/// @group Utilities
+@mixin flex($flex-val: 1, $width: null) {
+  $legacy-val: if(
+    $flex-val == 'auto', 1, if($flex-val == 'none', 0, nth($flex-val, 1))
+  );
+  -webkit-box-flex: $legacy-val; // Chrome 4-20, iOS 3.2 -6.1, Safari 3.1-6
+  -ms-flex: $flex-val; // IE 10
+  -webkit-flex: $flex-val; // Chrome 21-28, iOS 7-8.4, Safari 6.1-8, Opera 15-16
+          flex: $flex-val;
+  @if ($width) {
+    width: $width;
+  }
+}
+
+
+/// A vendor prefix based utilitiy mixin that applies the order property
+/// with the necessary vendor prefixes to ensure wide browser support. The order
+/// property changes the source order of a flex child. Children with lower
+/// numbers appear first in the layout.
+///
+/// @param {Number} $order [1] - The order value to apply.
+///
+/// @group Utilities
+@mixin flex-order($order: 1) {
+  -webkit-box-ordinal-group: order;
+  -ms-flex-order: $order;
+   -webkit-order: $order;
+           order: $order;
+}
+
+
+/// A vendor prefix based utilitiy mixin that applies the flex-wrap property
+/// with the necessary vendor prefixes to ensure wide browser support.
+///
+/// @param {Keyword} $value [wrap] - The flex-wrap value.
+///
+/// @group Utilities
+@mixin flex-wrap($value: wrap) {
+  -webkit-flex-wrap: $value;
+      -ms-flex-wrap: $value;
+          flex-wrap: $value;
 }
 
 
@@ -4171,9 +4725,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
 /// function for this animation of `cubic-bezier(.455, .03, .515, .955)`;
@@ -4469,21 +5023,38 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: flip#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
-  transform: translate3d(0, 0, 0);
-  transform-style: preserve-3d;
-  @include only-moz {
-    backface-visibility: hidden;
-  }
+  -webkit-animation: flip#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: flip#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+  -moz-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
 
   @at-root {
-    @keyframes flip#{$anim-num} {
+
+    @-webkit-keyframes flip#{$anim-num} {
       0% {
+        -webkit-transform: $trans-val1;
                 transform: $trans-val1;
       }
 
       100% {
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+      }
+    }
+
+    @keyframes flip#{$anim-num} {
+      0% {
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+      }
+
+      100% {
+        -webkit-transform: $trans-val2;
                 transform: $trans-val2;
       }
     }
@@ -4504,9 +5075,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
 /// animation.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
@@ -4693,26 +5264,49 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
-  transform: translate3d(0, 0, 0);
-  transform-style: preserve-3d;
-  @include only-moz {
-    backface-visibility: hidden;
-  }
+  -webkit-animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+  -moz-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
 
   @at-root {
-    @keyframes flip-and-scale#{$anim-num} {
+
+    @-webkit-keyframes flip-and-scale#{$anim-num} {
       0% {
-        transform: #{$scale-val1} #{$flip-val1};
+        -webkit-transform: #{$scale-val1} #{$flip-val1};
+                transform: #{$scale-val1} #{$flip-val1};
       }
 
       50% {
-        transform: #{$scale-val2} #{$flip-val2};
+        -webkit-transform: #{$scale-val2} #{$flip-val2};
+                transform: #{$scale-val2} #{$flip-val2};
       }
 
       100% {
-        transform: #{$scale-val3} #{$flip-val3};
+        -webkit-transform: #{$scale-val3} #{$flip-val3};
+                transform: #{$scale-val3} #{$flip-val3};
+      }
+    }
+
+    @keyframes flip-and-scale#{$anim-num} {
+      0% {
+        -webkit-transform: #{$scale-val1} #{$flip-val1};
+                transform: #{$scale-val1} #{$flip-val1};
+      }
+
+      50% {
+        -webkit-transform: #{$scale-val2} #{$flip-val2};
+                transform: #{$scale-val2} #{$flip-val2};
+      }
+
+      100% {
+        -webkit-transform: #{$scale-val3} #{$flip-val3};
+                transform: #{$scale-val3} #{$flip-val3};
       }
     }
   }
@@ -4733,9 +5327,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
 /// animation.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
@@ -4767,8 +5361,10 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   $trans-val3: translateY(-100%) rotateX(-180deg) scale(1);
   $trans-orig-val3: 50% 100%;
 
-  @if (to-lower-case($direction) == 'right'
-      or to-lower-case($direction) == 'r') {
+  @if (
+    to-lower-case($direction) == 'right' or
+    to-lower-case($direction) == 'r'
+  ) {
     $trans-val1: translateX(0) rotateY(0) scale(1);
     $trans-orig-val1: 100% 50%;
     $trans-val2: translateX(50%) rotateY(-90deg) scale(2);
@@ -4892,29 +5488,61 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
-  transform: translate3d(0, 0, 0);
-  transform-style: preserve-3d;
-  @include only-moz {
-    backface-visibility: hidden;
-  }
+  -webkit-animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+  -moz-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
 
   @at-root {
-    @keyframes flip-and-scale#{$anim-num} {
+
+    @-webkit-keyframes flip-and-scale#{$anim-num} {
       0% {
-        transform: $trans-val1;
-        transform-origin: $trans-orig-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+        -webkit-transform-origin: $trans-orig-val1;
+                transform-origin: $trans-orig-val1;
       }
 
       50% {
-        transform: $trans-val2;
-        transform-origin: $trans-orig-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+        -webkit-transform-origin: $trans-orig-val2;
+                transform-origin: $trans-orig-val2;
       }
 
       100% {
-        transform: $trans-val3;
-        transform-origin: $trans-orig-val3;
+        -webkit-transform: $trans-val3;
+                transform: $trans-val3;
+        -webkit-transform-origin: $trans-orig-val3;
+                transform-origin: $trans-orig-val3;
+      }
+    }
+
+    @keyframes flip-and-scale#{$anim-num} {
+      0% {
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+        -webkit-transform-origin: $trans-orig-val1;
+                transform-origin: $trans-orig-val1;
+      }
+
+      50% {
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+        -webkit-transform-origin: $trans-orig-val2;
+                transform-origin: $trans-orig-val2;
+      }
+
+      100% {
+        -webkit-transform: $trans-val3;
+                transform: $trans-val3;
+        -webkit-transform-origin: $trans-orig-val3;
+                transform-origin: $trans-orig-val3;
       }
     }
   }
@@ -5060,8 +5688,10 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if $fg-color {
     color: $fg-color;
   }
-  clip-path: polygon( 0 0, 0 100%, 20% 100%, 20% 20%, 80% 20%, 80% 80%,
-                      20% 80%, 20% 100%, 100% 100%, 100% 0 );
+  -webkit-clip-path: polygon( 0 0, 0 100%, 20% 100%, 20% 20%, 80% 20%, 80% 80%,
+                              20% 80%, 20% 100%, 100% 100%, 100% 0 );
+          clip-path: polygon( 0 0, 0 100%, 20% 100%, 20% 20%, 80% 20%, 80% 80%,
+                              20% 80%, 20% 100%, 100% 100%, 100% 0 );
   height: $height;
   width: $size;
 }
@@ -5132,7 +5762,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   padding: $padding;
   text-decoration: none;
   text-transform: uppercase;
-  transition: color $transition-speed, background $transition-speed;
+  -webkit-transition: color $transition-speed, background $transition-speed;
+          transition: color $transition-speed, background $transition-speed;
 
   &:hover {
     background: $border-color;
@@ -5165,6 +5796,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   $start-percent: 0%,
   $end-percent: 100%
 ) {
+  $vertical: false;
+
   @if type-of($start-percent) != 'number' or type-of($end-percent) != 'number' {
     @error 'Invalid data type entered for the values in the `gradient()` mixin.'
     + ' If you pass values for the `$start-percent` or `$end-percent` '
@@ -5197,24 +5830,44 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($orientation == 'vertical' or $orientation == 'vert' or $orientation == 'v'
       or $orientation == 'down' or $orientation == 'd' or $orientation == 'bottom'
       or $orientation == 'to bottom' or $orientation == 'top' or $orientation == 'top to bottom') {
+    $vertical: true;
+    background: -moz-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, $start-color),color-stop($end-percent, $end-color));
+    background: -webkit-linear-gradient(top, $start-color $start-percent, $end-color $end-percent);
     background: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent);
+    filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start-color}',endColorstr='#{$end-color}',GradientType=0)");
   } @else if ($orientation == 'horizontal' or $orientation == 'horiz'
       or $orientation == 'h' or $orientation == 'right' or not $orientation
       or $orientation == 'to right' or $orientation == 'left' or $orientation == 'left to right') {
+    background: -moz-linear-gradient(left, $start-color $start-percent, $end-color $end-percent);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%, $start-color), color-stop($end-percent, $end-color));
+    background: -webkit-linear-gradient(left, $start-color $start-percent, $end-color $end-percent);
     background: linear-gradient(to right, $start-color $start-percent, $end-color $end-percent);
   } @else if ($orientation == 'radial' or $orientation == 'rad' or $orientation == 'r'
       or $orientation == 'circular' or $orientation == 'circle') {
+    background: -moz-radial-gradient(center, ellipse cover, $start-color $start-percent, $end-color $end-percent);
+    background: -webkit-gradient(radial, center center, 0px, center center, $end-percent, color-stop(0%, $start-color), color-stop($end-percent, $end-color));
+    background: -webkit-radial-gradient(center, ellipse cover, $start-color $start-percent, $end-color $end-percent);
     background: radial-gradient(ellipse at center, $start-color $start-percent, $end-color $end-percent);
   } @else if ($orientation == 'diagonal' or $orientation == 'diag' or $orientation == 'd'
       or $orientation == 'd1' or $orientation == 'diagonal1' or $orientation == 'diag1') {
-    background: linear-gradient(45deg, $start-color $start-percent, $end-color $end-percent);
+    background: -moz-linear-gradient(45deg, $start-color $start-percent, $end-color $end-percent);
+    background: -webkit-linear-gradient(45deg, $start-color $start-percent, $end-color $end-percent);
+    background: linear-gradient(45deg, $start-color $start-percent, $end-color  $end-percent);
   } @else if ($orientation == 'diagonal2' or $orientation == 'diag2' or $orientation == 'd2') {
+    background: -moz-linear-gradient(-45deg, $start-color $start-percent, $end-color $end-percent);
+    background: -webkit-linear-gradient(-45deg, $start-color $start-percent, $end-color $end-percent);
     background: linear-gradient(135deg, $start-color $start-percent, $end-color $end-percent);
-  } @else if (type-of($orientation) != 'number'
+  } @else if (is-number($orientation)
       and index('deg' 'rad' 'grad' 'turn', unit($orientation))) {
+    background: -moz-linear-gradient($orientation, $start-color $start-percent, $end-color $end-percent);
+    background: -webkit-linear-gradient($orientation, $start-color $start-percent, $end-color $end-percent);
     background: linear-gradient($orientation, $start-color $start-percent, $end-color $end-percent);
   } @else {
     @error 'Invalid $orientation value of `#{inspect($orientation)}` for the `gradient` mixin.';
+  }
+  @if (not $vertical) {
+    filter: unquote("progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$start-color}',endColorstr='#{$end-color}',GradientType=1)");
   }
 }
 
@@ -5302,7 +5955,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// in height.
 ///
 /// @group Shapes
-@mixin heart($bg-color: #F00, $size: 15rem) {
+@mixin heart($bg: #F00, $size: 15rem) {
   height: $size * .9;
   position: relative;
   width: $size;
@@ -5316,15 +5969,23 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     left: $size / 2;
     position: absolute;
     top: 0;
-    transform: rotate(-45deg);
-    transform-origin: 0 100%;
+    -webkit-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+    -webkit-transform-origin: 0 100%;
+        -ms-transform-origin: 0 100%;
+            transform-origin: 0 100%;
     width: $size / 2;
   }
 
   &:after {
     left: 0;
-    transform: rotate(45deg);
-    transform-origin: 100% 100%;
+    -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+    -webkit-transform-origin: 100% 100%;
+        -ms-transform-origin: 100% 100%;
+            transform-origin: 100% 100%;
   }
 }
 
@@ -5344,8 +6005,10 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  clip-path: polygon( 50% 0, 100% 25%, 100% 75%,
-                      50% 100%, 0 75%, 0 25% );
+  -webkit-clip-path: polygon( 50% 0, 100% 25%, 100% 75%,
+                              50% 100%, 0 75%, 0 25% );
+          clip-path: polygon( 50% 0, 100% 25%, 100% 75%,
+                              50% 100%, 0 75%, 0 25% );
   height: $size;
   width: $size;
 }
@@ -5405,7 +6068,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     &:active,
     &:focus {
       clip: auto;
-      clip-path: none;
+      -webkit-clip-path: none;
+              clip-path: none;
       height: auto;
       margin: 0;
       overflow: visible;
@@ -5416,12 +6080,14 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   }
 }
 
+
 /// Reverses the effect of the `hide-visually()` mixin.
 ///
 /// @group Utilities
 @mixin show-visually {
   clip: auto;
-  clip-path: none;
+  -webkit-clip-path: none;
+          clip-path: none;
   height: auto;
   overflow: visible;
   position: static !important;
@@ -5458,14 +6124,18 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   &:before {
     border-radius: #{$rad-val} #{$rad-val} 0;
     left: 0;
-    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+        -ms-transform: rotate(-45deg);
+            transform: rotate(-45deg);
   }
 
   &:after {
     border-radius: #{$rad-val} #{$rad-val} #{$rad-val} 0;
     left: auto;
     right: 0;
-    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
   }
 }
 
@@ -5503,6 +6173,38 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
+/// A vendor prefix based utilitiy mixin that applies the justify-content
+/// property with the necessary vendor prefixes to ensure wide browser support.
+///
+/// @param {Keyword} $value [center] - The justify-content property's value.
+///
+/// @group Utilities
+@mixin justify-content($value: center) {
+  $legacy-value: $value;
+
+  @if ($value == 'space-between' or $value == 'justify') {
+    $value: space-between;
+    $legacy-value: justify;
+  } @else if ($value == 'space-around' or $value == 'distribute') {
+    $value: space-around;
+    $legacy-value: distribute;
+  } @else if ($value == 'flex-start' or $value == 'start') {
+    $value: flex-start;
+    $legacy-value: start;
+  } @else if ($value == 'flex-end' or $value == 'end') {
+    $value: flex-end;
+    $legacy-value: end;
+  }
+
+  @if ($value != 'space-around') {
+    -webkit-box-pack: #{$legacy-value}; // Chrome 4-20, iOS 3.2 -6.1, Safari 3.1-6
+  }
+  -ms-flex-pack: #{$legacy-value}; // IE 10
+  -webkit-justify-content: #{$value}; // Chrome 21-28, iOS 7-8.4, Safari 6.1-8, Opera 15-16
+          justify-content: #{$value}; // Chrome 29+, Safari 9+, iOS8.5+, Opera 12.1 & 17+, Firefox 20+
+}
+
+
 /// Creates a long text shadow effect.
 ///
 /// @param {Color} $color - The color of the long shadow.
@@ -5528,6 +6230,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   }
 }
 
+
 /// Nest a combined max-width and min-width media query within a selector or on
 /// its own.
 /// @content Styles for screen widths equal to or larger than $min-threshold and
@@ -5545,6 +6248,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   }
 }
 
+
 /// Nest a simple min-width media query within a selector or on its own.
 /// @content Styles for screen widths equal to or larger than $threshold.
 ///
@@ -5558,7 +6262,19 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   }
 }
 
-/// Uses clip path to change an element to the shape of an octagon.
+
+/// Prevents the user from highlighting anything it is applied to.
+///
+/// @group Utilities
+@mixin no-select() {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+
+/// Uses clip path to change an element to the shape of an octagon
 ///
 /// @param {Color|Mixed} $bg [#8b0000] - Can be any value that is valid for the
 /// background shorthand property.
@@ -5574,11 +6290,14 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  clip-path: polygon( 30% 0, 70% 0, 100% 30%, 100% 70%,
-                      70% 100%, 30% 100%, 0 70%, 0 30% );
+  -webkit-clip-path: polygon( 30% 0, 70% 0, 100% 30%, 100% 70%,
+                              70% 100%, 30% 100%, 0 70%, 0 30% );
+          clip-path: polygon( 30% 0, 70% 0, 100% 30%, 100% 70%,
+                              70% 100%, 30% 100%, 0 70%, 0 30% );
   height: $size;
   width: $size;
 }
+
 
 /// Event wrapper
 /// @author Harry Roberts
@@ -5662,14 +6381,15 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number} $ratio [1.3] - A minimum pixel ratio resolution value used
 /// to calculate the media query.
 ///
-/// @content Styles that target HiDPI/Retina displays only.
+/// @content Styles that target HiDPI/Retina displays only
 ///
 /// @group Utilities
 /// @alias hidpi-only
-/// @alias retina-only
 /// @alias only-retina
+/// @alias retina-only
 @mixin only-hidpi($ratio: 1.3) {
-  @media only screen and (min-device-pixel-ratio: $ratio),
+  @media only screen and (-webkit-min-device-pixel-ratio: $ratio),
+         only screen and (min-device-pixel-ratio: $ratio),
          only screen and (min-resolution: ($ratio * 96dpi)),
          only screen and (min-resolution: ($ratio * 1dppx)) {
     @content;
@@ -5906,6 +6626,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   }
 }
 
+
 /// Uses @supports queries and a clever hack to apply the given styles to
 /// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
 /// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
@@ -6024,9 +6745,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. The default of null will set it to the default timing function
 /// of ease.
@@ -6188,14 +6909,26 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
         '`text-flicker` mixin';
   }
-  animation: pan-wipe#{$anim-num} #{$timing} #{$timing-func} #{$delay}
-              #{$iterations} #{$anim-dir} both;
+  -webkit-animation: pan-wipe#{$anim-num} #{$timing} #{$timing-func} #{$delay}
+                      #{$iterations} #{$anim-dir} both;
+          animation: pan-wipe#{$anim-num} #{$timing} #{$timing-func} #{$delay}
+                      #{$iterations} #{$anim-dir} both;
   background: $bg;
   height: $height;
   overflow: hidden;
   width: $size;
 
   @at-root {
+    @-webkit-keyframes pan-wipe#{$anim-num} {
+      0% {
+        background-position: $pos-val1;
+      }
+
+      100% {
+        background-position: $pos-val2;
+      }
+    }
+
     @keyframes pan-wipe#{$anim-num} {
       0% {
         background-position: $pos-val1;
@@ -6255,19 +6988,23 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if $direction {
     @if (to-lower-case($direction) == 'right'
         or to-lower-case($direction) == 'r') {
-      clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
+      -webkit-clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
+              clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
     } @else if (
       to-lower-case($direction) == 'left'or to-lower-case($direction) == 'l'
     ) {
-      clip-path: polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0 50%);
+      -webkit-clip-path: polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0 50%);
+              clip-path: polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0 50%);
     } @else if (to-lower-case($direction) == 'up'
         or to-lower-case($direction) == 'u' or to-lower-case($direction) == 't'
         or to-lower-case($direction) == 'top') {
-      clip-path: polygon(100% 25%, 100% 100%, 0 100%, 0 25%, 50% 0);
+      -webkit-clip-path: polygon(100% 25%, 100% 100%, 0 100%, 0 25%, 50% 0);
+              clip-path: polygon(100% 25%, 100% 100%, 0 100%, 0 25%, 50% 0);
     } @else if (to-lower-case($direction) == 'down'
         or to-lower-case($direction) == 'd' or to-lower-case($direction) =='b'
         or to-lower-case($direction) == 'bottom') {
-      clip-path: polygon(100% 0, 100% 75%, 50% 100%, 0 75%, 0 0);
+      -webkit-clip-path: polygon(100% 0, 100% 75%, 50% 100%, 0 75%, 0 0);
+              clip-path: polygon(100% 0, 100% 75%, 50% 100%, 0 75%, 0 0);
     } @else {
       @error 'Invalid direction of `#{inspect($direction)}` for the `point` mixin.';
     }
@@ -6303,30 +7040,40 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 ) {
   background: $bg;
   background-clip: padding-box;
-  @if (to-lower-case($direction) == 'right'
-      or to-lower-case($direction) == 'r') {
-    border-radius: 4px 0 0 4px;
-    clip-path: polygon( 95% 0, 95% 35%, 100% 50%, 95% 65%,
-                        95% 100%, 0 100%, 0 0 );
+  @if (
+    to-lower-case($direction) == 'right' or
+    to-lower-case($direction) == 'r'
+  ) {
+  border-radius: 4px 0 0 4px;
+  -webkit-clip-path: polygon( 95% 0, 95% 35%, 100% 50%, 95% 65%,
+                              95% 100%, 0 100%, 0 0 );
+          clip-path: polygon( 95% 0, 95% 35%, 100% 50%, 95% 65%,
+                              95% 100%, 0 100%, 0 0 );
   } @else if (
     to-lower-case($direction) == 'left' or
     to-lower-case($direction) == 'l'
   ) {
     border-radius: 0 4px 4px 0;
-    clip-path: polygon( 5% 0, 5% 35%, 0 50%, 5% 65%,
-                        5% 100%, 100% 100%, 100% 0 );
+    -webkit-clip-path: polygon( 5% 0, 5% 35%, 0 50%, 5% 65%,
+                                5% 100%, 100% 100%, 100% 0 );
+            clip-path: polygon( 5% 0, 5% 35%, 0 50%, 5% 65%,
+                                5% 100%, 100% 100%, 100% 0 );
   } @else if (to-lower-case($direction) == 'up'
       or to-lower-case($direction) == 'u' or to-lower-case($direction) == 'top'
       or to-lower-case($direction) == 't') {
-    border-radius: 0 0 4px 4px;
-    clip-path: polygon( 55% 15%, 50% 0, 45% 15%, 0 15%,
-                        0 100%, 100% 100%, 100% 15% );
+  border-radius: 0 0 4px 4px;
+  -webkit-clip-path: polygon( 55% 15%, 50% 0, 45% 15%, 0 15%,
+                              0 100%, 100% 100%, 100% 15% );
+          clip-path: polygon( 55% 15%, 50% 0, 45% 15%, 0 15%,
+                              0 100%, 100% 100%, 100% 15% );
   } @else if (to-lower-case($direction) == 'down'
       or to-lower-case($direction) == 'd' or to-lower-case($direction) == 'b'
       or to-lower-case($direction) == 'bottom') {
-    border-radius: 4px 4px 0 0;
-    clip-path: polygon( 55% 85%, 50% 100%, 45% 85%, 0 85%,
-                        0 0, 100% 0, 100% 85% );
+  border-radius: 4px 4px 0 0;
+  -webkit-clip-path: polygon( 55% 85%, 50% 100%, 45% 85%, 0 85%,
+                              0 0, 100% 0, 100% 85% );
+          clip-path: polygon( 55% 85%, 50% 100%, 45% 85%, 0 85%,
+                              0 0, 100% 0, 100% 85% );
   } @else {
     @error 'Invalid $direction value of `#{inspect($direction)}` passed to the ' +
         '`pointing-label` mixin.';
@@ -6370,6 +7117,57 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 }
 
 
+/// Takes a given property and a corresponding value and pairs it with a space
+/// separated list of any vendor prefixes desired (`moz webkit` for `-moz- and
+/// -webkit-`). If no list of prefixes is given then the webkit, moz, ms, and o
+/// prefixes are all applied.
+///
+/// @param {String} $property - The CSS property being prefixed.
+/// @param {*} $value - The chosen value for the property.
+/// @param {List|String} $prefixes [(webkit moz ms o)]- List of prefixes to
+/// print.
+///
+/// @group Utilities
+/// @throw Invalid value for $prefixes
+@mixin prefix($property, $value, $prefixes: (webkit moz ms o)) {
+  $known-prefixes: webkit, khtml, moz, ms, o;
+
+  @if ($prefix) {
+    @each $prefix in $prefixes {
+      @if not index($known-prefixes, $prefix) {
+        @warn 'Unknown prefix `#{inspect($prefix)}` for `prefix` mixin.';
+      }
+      #{'-' + $prefix + '-' + $property}: $value;
+    }
+  }
+  #{$property}: $value;
+}
+
+
+/// Mixin to prefix several properties at once as a map.
+/// @author Hugo Giraudel
+///
+/// @param {Map} $declarations - Property: Value pair declarations to prefix.
+/// @param {List|String} $prefixes [(webkit moz ms o)] - List of prefixes to
+/// print.
+///
+/// @group Utilities
+/// @throw Invalid value for $prefixes
+@mixin prefixes($declarations, $prefixes: (webkit moz ms o)) {
+  $known-prefixes: webkit, khtml, moz, ms, o;
+
+  @each $property, $value in $declarations {
+    @each $prefix in $prefixes {
+      @if not index($known-prefixes, $prefix) {
+        @warn 'Unknown prefix `#{inspect($prefix)}` for `prefixes` mixin.';
+      }
+      #{'-' + $prefix + '-' + $property}: $value;
+    }
+    #{$property}: $value;
+  }
+}
+
+
 /// Uses clip path to change an element to the shape of a price tag.
 ///
 /// @param {Color|Mixed} $bg [#fb8c00] - Can be any value that is valid for the
@@ -6386,7 +7184,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  clip-path: polygon(30px 0, 100% 0, 100% 100%, 30px 100%, 0 50%);
+  -webkit-clip-path: polygon(30px 0, 100% 0, 100% 100%, 30px 100%, 0 50%);
+          clip-path: polygon(30px 0, 100% 0, 100% 100%, 30px 100%, 0 50%);
   padding: $padding;
 }
 
@@ -6403,9 +7202,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
 /// function for this animation of `cubic-bezier(.39, .575, .565, 1)`.
@@ -6450,118 +7249,87 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   }
 
   @if $direction {
+    @if type-of($direction) == 'string' {
+      $direction: to-lower-case($direction);
+    }
     @if (
-      to-lower-case($direction) == 'top' or
-      to-lower-case($direction) == 't' or
-      to-lower-case($direction) == 'up' or
-      to-lower-case($direction) == 'u'
+      $direction == 'top' or $direction == 't' or
+      $direction == 'up' or $direction == 'u'
     ) {
       $blur-val1: blur(2px);
       $blur-val2: blur(0);
       $t-origin-val: 50% 0%;
     } @else if (
-      to-lower-case($direction) == 'bottom' or
-      to-lower-case($direction) == 'btm' or
-      to-lower-case($direction) == 'b'
+      $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
     ) {
+      $trans-val1: translateY(50px);
+      $trans-val2: translateY(0);
     } @else if (
-      to-lower-case($direction) == 'forwards' or
-      to-lower-case($direction) == 'forward' or
-      to-lower-case($direction) == 'fwd' or
-      to-lower-case($direction) == 'fw' or
-      to-lower-case($direction) == 'f'
+      $direction == 'forwards' or $direction == 'forward' or
+      $direction == 'fwd' or $direction == 'fw' or $direction == 'f'
     ) {
-        or to-lower-case($direction) == 'fw'
-        or to-lower-case($direction) == 'f') {
       $direction: 'forward';
       $trans-val1: translateZ(-80px);
       $trans-val2: translateZ(0);
     } @else if (
-      to-lower-case($direction) == 'backwards' or
-      to-lower-case($direction) == 'backward' or
-      to-lower-case($direction) == 'bckwrd' or
-      to-lower-case($direction) == 'back' or
-      to-lower-case($direction) == 'bck' or
-      to-lower-case($direction) == 'bw' or
-      to-lower-case($direction) == 'b'
+      $direction == 'backwards' or $direction == 'backward' or
+      $direction == 'bckwrd' or $direction == 'back' or
+      $direction == 'bck' or $direction == 'bw' or $direction == 'b'
     ) {
       $direction: 'backward';
       $trans-val1: translateZ(80px);
       $trans-val2: translateZ(0);
     } @else if (
-      to-lower-case($direction) == 'top' or
-      to-lower-case($direction) == 't' or
-      to-lower-case($direction) == 'up' or
-      to-lower-case($direction) == 'u'
+      $direction == 'top' or $direction == 't' or
+      $direction == 'up' or $direction == 'u'
     ) {
       $trans-val1: translateY(-50px);
       $trans-val2: translateY(0);
-    } @else if (
-      to-lower-case($direction) == 'left'or to-lower-case($direction) == 'l'
-    ) {
+    } @else if $direction == 'left' or $direction == 'l' {
       $trans-val1: translateX(-50px);
       $trans-val2: translateX(0);
-    } @else if (
-      to-lower-case($direction) == 'right' or to-lower-case($direction) == 'r'
-    ) {
+    } @else if $direction == 'right' or $direction == 'r' {
       $trans-val1: translateX(50px);
       $trans-val2: translateX(0);
     } @else if (
-      to-lower-case($direction) == 'top-left' or
-      to-lower-case($direction) == 'topleft' or
-      to-lower-case($direction) == 't-l' or
-      to-lower-case($direction) == 'tl' or
-      to-lower-case($direction) == 'left-top' or
-      to-lower-case($direction) == 'lefttop' or
-      to-lower-case($direction) == 'l-t' or
-      to-lower-case($direction) == 'lt'
+      $direction == 'top-left' or $direction == 'topleft' or
+      $direction == 't-l' or $direction == 'tl' or
+      $direction == 'left-top' or $direction == 'lefttop' or
+      $direction == 'l-t' or $direction == 'lt'
     ) {
       $trans-val1: translateX(-50px) translateY(-50px);
       $trans-val2: translateX(0) translateY(0);
     } @else if (
-      to-lower-case($direction) == 'top-right' or
-      to-lower-case($direction) == 'topright' or
-      to-lower-case($direction) == 't-r' or
-      to-lower-case($direction) == 'tr' or
-      to-lower-case($direction) == 'right-top' or
-      to-lower-case($direction) == 'righttop' or
-      to-lower-case($direction) == 'r-t' or
-      to-lower-case($direction) == 'rt'
+      $direction == 'top-right' or $direction == 'topright' or
+      $direction == 't-r' or $direction == 'tr' or
+      $direction == 'right-top' or $direction == 'righttop' or
+      $direction == 'r-t' or $direction == 'rt'
     ) {
       $trans-val1: translateX(50px) translateY(-50px);
       $trans-val2: translateX(0) translateY(0);
     } @else if (
-      to-lower-case($direction) == 'bottom-right' or
-      to-lower-case($direction) == 'bottomright' or
-      to-lower-case($direction) == 'b-r' or
-      to-lower-case($direction) == 'br' or
-      to-lower-case($direction) == 'right-bottom' or
-      to-lower-case($direction) == 'rightbottom' or
-      to-lower-case($direction) == 'r-b' or
-      to-lower-case($direction) == 'rb'
+      $direction == 'bottom-right' or $direction == 'bottomright' or
+      $direction == 'b-r' or $direction == 'br' or
+      $direction == 'right-bottom' or $direction == 'rightbottom' or
+      $direction == 'r-b' or $direction == 'rb'
     ) {
       $trans-val1: translateX(50px) translateY(50px);
       $trans-val2: translateX(0) translateY(0);
     } @else if (
-      to-lower-case($direction) == 'bottom-left' or
-      to-lower-case($direction) == 'bottomleft' or
-      to-lower-case($direction) == 'b-l' or
-      to-lower-case($direction) == 'bl' or
-      to-lower-case($direction) == 'left-bottom' or
-      to-lower-case($direction) == 'leftbottom' or
-      to-lower-case($direction) == 'l-b' or
-      to-lower-case($direction) == 'lb'
+      $direction == 'bottom-left' or $direction == 'bottomleft' or
+      $direction == 'b-l' or $direction == 'bl' or
+      $direction == 'left-bottom' or $direction == 'leftbottom' or
+      $direction == 'l-b' or $direction == 'lb'
     ) {
       $trans-val1: translateX(-50px) translateY(50px);
       $trans-val2: translateX(0) translateY(0);
-    } @else if (
-      to-lower-case($direction) == 'center' or
-      to-lower-case($direction) == 'cent' or
-      to-lower-case($direction) == 'c'
+    } @else if
+      $direction == 'center' or $direction == 'cent' or $direction == 'c'
     ) {
       $direction: 'center';
     } @else {
-      @error 'Invalid direction of `#{inspect($direction)}` chosen for the `puff` mixin.';
+      @error 'Invalid direction of `#{inspect($direction)}` chosen for the ' +
+          '`puff` mixin.';
     }
   } @else {
     $direction: 'center';
@@ -6677,27 +7445,62 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: puff#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: puff#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: puff#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes puff#{$anim-num} {
+
+    @-webkit-keyframes puff#{$anim-num} {
       0% {
-        filter: blur(2px);
-        transform: scale(2);
-        @if $direction != 'center' {
-          transform-origin: $t-origin-val;
-        }
+        -webkit-filter: blur(2px);
+                filter: blur(2px);
         opacity: 0;
+        -webkit-transform: scale(2);
+                transform: scale(2);
+        @if $direction != 'center' {
+          -webkit-transform-origin: $t-origin-val;
+                  transform-origin: $t-origin-val;
+        }
       }
 
       100% {
-        filter: blur(0);
-        transform: scale(1);
-        @if $direction != 'center' {
-          transform-origin: $t-origin-val;
-        }
+        -webkit-filter: blur(0);
+                filter: blur(0);
         opacity: 1;
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        @if $direction != 'center' {
+          -webkit-transform-origin: $t-origin-val;
+                  transform-origin: $t-origin-val;
+        }
+      }
+    }
+
+    @keyframes puff#{$anim-num} {
+      0% {
+        -webkit-filter: blur(2px);
+                filter: blur(2px);
+        opacity: 0;
+        -webkit-transform: scale(2);
+                transform: scale(2);
+        @if $direction != 'center' {
+          -webkit-transform-origin: $t-origin-val;
+                  transform-origin: $t-origin-val;
+        }
+      }
+
+      100% {
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+        -webkit-transform: scale(1);
+                transform: scale(1);
+        @if $direction != 'center' {
+          -webkit-transform-origin: $t-origin-val;
+                  transform-origin: $t-origin-val;
+        }
       }
     }
   }
@@ -6904,9 +7707,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for
 /// the animation. A null value passed here will default to the recommended
 /// timing function for this animation of `ease-out` on a roll-in animation, and
@@ -7100,26 +7903,54 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-    animation: roll#{$anim-num} #{$timing} #{$timing-func}
-                #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: roll#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: roll#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
 
-    @keyframes roll#{$anim-num} {
+    @-webkit-keyframes roll#{$anim-num} {
       0% {
         @if ($blurred) {
-          filter: $blur-val1;
+          -webkit-filter: $blur-val1;
+                  filter: $blur-val1;
         }
         opacity: $opacity-val1;
-        transform: $trans-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
       }
 
       100% {
         @if ($blurred) {
-          filter: $blur-val2;
+          -webkit-filter: $blur-val2;
+                  filter: $blur-val2;
         }
         opacity: $opacity-val2;
-        transform: $trans-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+      }
+    }
+
+    @keyframes roll#{$anim-num} {
+      0% {
+        @if ($blurred) {
+          -webkit-filter: $blur-val1;
+                  filter: $blur-val1;
+        }
+        opacity: $opacity-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+      }
+
+      100% {
+        @if ($blurred) {
+          -webkit-filter: $blur-val2;
+                  filter: $blur-val2;
+        }
+        opacity: $opacity-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
       }
     }
   }
@@ -7147,9 +7978,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. Default value of null will apply the recommended function for
 /// this animation of `cubic-bezier(.25, .46, .45, .94)`, unless the $axis value
@@ -7357,12 +8188,12 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   }
   @if $delay {
     @if (type-of($delay) != 'number') {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `rotate-scale` ' +
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `rotate` ' +
           'mixin. The delay property must be a number.';
-    } @else if (unitless($delay)) {
+    } @else if unitless($delay) {
       $delay: $delay * 1s;
     } @else if not index('s' 'ms', unit($delay)) {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `rotate-scale` ' +
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `rotate` ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if (unit($delay) == 'ms' and $delay % 10 == 0ms) {
       $delay: ($delay / 1000ms) * 1s;
@@ -7424,38 +8255,77 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not ($anim-num) {
     $anim-num: null;
   }
-  animation: rotate#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: rotate#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: rotate#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
   @if ($is-on-axis) {
-    transform: translate3d(0, 0, 0);
-    transform-style: preserve-3d;
-    @include only-moz {
-      backface-visibility: hidden;
-    }
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
   }
 
   @at-root {
-    @keyframes rotate#{$anim-num} {
+    @-webkit-keyframes rotate#{$anim-num} {
       0% {
-        transform: $trans-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
         @if ($point != 'center') {
-          transform-origin: $trans-origin-val;
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
         }
       }
 
       @if ($is-diagonal) {
         50% {
-          transform: $trans-valD;
+          -webkit-transform: $trans-valD;
+                  transform: $trans-valD;
           @if ($point != 'center') {
-            transform-origin: $trans-origin-val;
+            -webkit-transform-origin: $trans-origin-val;
+                    transform-origin: $trans-origin-val;
           }
         }
       }
 
       100% {
-        transform: $trans-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
         @if ($point != 'center') {
-          transform-origin: $trans-origin-val;
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
+        }
+      }
+    }
+
+    @keyframes rotate#{$anim-num} {
+      0% {
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+        @if ($point != 'center') {
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
+        }
+      }
+
+      @if ($is-diagonal) {
+        50% {
+          -webkit-transform: $trans-valD;
+                  transform: $trans-valD;
+          @if ($point != 'center') {
+            -webkit-transform-origin: $trans-origin-val;
+                    transform-origin: $trans-origin-val;
+          }
+        }
+      }
+
+      100% {
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+        @if ($point != 'center') {
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
         }
       }
     }
@@ -7482,9 +8352,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
 /// animation.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
@@ -7651,28 +8521,50 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: rotate-scale#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: rotate-scale#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: rotate-scale#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
   @if ($is-on-axis) {
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
-    transform-style: preserve-3d;
-    @include only-moz {
-      backface-visibility: hidden;
-    }
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
   }
 
   @at-root {
-  @keyframes rotate-scale#{$anim-num} {
+    @-webkit-keyframes rotate-scale#{$anim-num} {
       0% {
-        transform: $trans-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
       }
 
       50% {
-        transform: $trans-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
       }
 
       100% {
-        transform: $trans-val3;
+        -webkit-transform: $trans-val3;
+                transform: $trans-val3;
+      }
+    }
+
+    @keyframes rotate-scale#{$anim-num} {
+      0% {
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+      }
+
+      50% {
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+      }
+
+      100% {
+        -webkit-transform: $trans-val3;
+                transform: $trans-val3;
       }
     }
   }
@@ -7694,9 +8586,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. Default value of null will apply the recommended function for
 /// this animation of `cubic-bezier(.25, .46, .45, .94)`.
@@ -7921,22 +8813,48 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: scale-down#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: scale-down#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: scale-down#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes scale-down#{$anim-num} {
+    @-webkit-keyframes scale-down#{$anim-num} {
       0% {
-        transform: $trans-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
         @if ($direction != 'center') {
-          transform-origin: $trans-origin-val1;
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
         }
       }
 
       100% {
-        transform: $trans-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
         @if ($direction != 'center') {
-          transform-origin: $trans-origin-val2;
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
+        }
+      }
+    }
+
+    @keyframes scale-down#{$anim-num} {
+      0% {
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+        @if ($direction != 'center') {
+          -webkit-transform-origin: $trans-origin-val1;
+                  transform-origin: $trans-origin-val1;
+        }
+      }
+
+      100% {
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+        @if ($direction != 'center') {
+          -webkit-transform-origin: $trans-origin-val2;
+                  transform-origin: $trans-origin-val2;
         }
       }
     }
@@ -7959,9 +8877,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. Default value of null will apply the recommended function for
 /// this animation of `cubic-bezier(.39, .575, .565, 1.)`.
@@ -8187,21 +9105,47 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: scale-up#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: scale-up#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: scale-up#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
   @at-root {
-    @keyframes scale-up#{$anim-num} {
+    @-webkit-keyframes scale-up#{$anim-num} {
       0% {
-        transform: $trans-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
         @if ($direction != 'center') {
-        transform-origin: $t  rans-origin-val1;
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
         }
       }
 
       100% {
-        transform: $trans-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
         @if ($direction != 'center') {
-          transform-origin: $trans-origin-val2;
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
+        }
+      }
+    }
+
+    @keyframes scale-up#{$anim-num} {
+      0% {
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+        @if ($direction != 'center') {
+          -webkit-transform-origin: $trans-origin-val1;
+                  transform-origin: $trans-origin-val1;
+        }
+      }
+
+      100% {
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+        @if ($direction != 'center') {
+          -webkit-transform-origin: $trans-origin-val2;
+                  transform-origin: $trans-origin-val2;
         }
       }
     }
@@ -8371,7 +9315,6 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   width: $width;
 }
 
-
 /// Generates an animation that slides an element in or out from or towards a
 /// given direction.
 ///
@@ -8383,9 +9326,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
 /// function for this animation of `cubic-bezier(.25, .46, .45, .94)` on a slide
@@ -8434,15 +9377,15 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
       to-lower-case($direction) == 'btm' or
       to-lower-case($direction) == 'b'
     ) {
+      $trans-val1: translateY(1000px);
     } @else if (
       to-lower-case($direction) == 'left'or to-lower-case($direction) == 'l'
-    ) {left'
-        or to-lower-case($direction) == 'l') {
+    ) {
       $trans-val1: translateX(-1000px);
+      $trans-val2: translateX(0);
     } @else if (
       to-lower-case($direction) == 'right' or to-lower-case($direction) == 'r'
-    ) {right'
-        or to-lower-case($direction) == 'r') {
+    ) {
       $trans-val1: translateX(1000px);
       $trans-val2: translateX(0);
     } @else if (
@@ -8607,20 +9550,38 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation:
-    slide#{$anim-num} #{$timing} #{$timing-func}
-    #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: slide#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: slide#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes slide#{$anim-num} {
+
+    @-webkit-keyframes slide#{$anim-num} {
       0% {
         opacity: $opacity-val1;
-        transform: $trans-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
       }
 
       100% {
         opacity: $opacity-val2;
-        transform: $trans-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+      }
+    }
+
+    @keyframes slide#{$anim-num} {
+      0% {
+        opacity: $opacity-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+      }
+
+      100% {
+        opacity: $opacity-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
       }
     }
   }
@@ -8638,9 +9599,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for
 /// the animation. A default of null will apply a timing-function of ease-out
 /// on a slit-in animation and ease-in on a slit-out animation.
@@ -8816,22 +9777,26 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: slit#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
-  transform: translate3d(0, 0, 0);
-  transform-style: preserve-3d;
-  @include only-moz {
-    backface-visibility: hidden;
-  }
+  -webkit-animation: slit#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: slit#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+  -moz-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
 
   @at-root {
-    @keyframes slit#{$anim-num} {
+
+    @-webkit-keyframes slit#{$anim-num} {
       0% {
         @if ($in-or-out and $is-diagonal) {
           animation-timing-function: ease-in;
         }
         opacity: $opacity-val1;
-        transform: $trans-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
       }
 
       54% {
@@ -8839,7 +9804,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
           animation-timing-function: ease-in-out;
         }
         opacity: $opacity-val2;
-        transform: $trans-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
       }
 
       100% {
@@ -8849,7 +9815,39 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
         @if not $in-or-out {
           opacity: 0;
         }
-        transform: $trans-val3;
+        -webkit-transform: $trans-val3;
+                transform: $trans-val3;
+      }
+    }
+
+    @keyframes slit#{$anim-num} {
+      0% {
+        @if ($in-or-out and $is-diagonal) {
+          animation-timing-function: ease-in;
+        }
+        opacity: $opacity-val1;
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+      }
+
+      54% {
+        @if ($in-or-out and $is-diagonal) {
+          animation-timing-function: ease-in-out;
+        }
+        opacity: $opacity-val2;
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+      }
+
+      100% {
+        @if ($in-or-out and $is-diagonal) {
+          animation-timing-function: ease-out;
+        }
+        @if not $in-or-out {
+          opacity: 0;
+        }
+        -webkit-transform: $trans-val3;
+                transform: $trans-val3;
       }
     }
   }
@@ -8865,7 +9863,8 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @group Utilities
 /// @alias smooth-hidpi-fonts
 @mixin smooth-retina-fonts($ratio: 2) {
-  @media only screen and (min-device-pixel-ratio: $ratio),
+  @media only screen and (-webkit-min-device-pixel-ratio: $ratio),
+         only screen and (min-device-pixel-ratio: $ratio),
          only screen and (min-resolution: $ratio * 96dpi),
          only screen and (min-resolution: $ratio * 1dppx) {
     -moz-osx-font-smoothing: grayscale;
@@ -8898,9 +9897,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null $timing-func will create an animation with the CSS default
 /// timiing-function of ease.
@@ -9065,34 +10064,75 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: snap#{$anim-num} #{$timing} #{$timing-func} #{$delay}
-              #{$iterations} #{$anim-dir} both;
+  -webkit-animation: snap#{$anim-num} #{$timing} #{$timing-func} #{$delay}
+                      #{$iterations} #{$anim-dir} both;
+          animation: snap#{$anim-num} #{$timing} #{$timing-func} #{$delay}
+                      #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes snap#{$anim-num} {
+    @-webkit-keyframes snap#{$anim-num} {
       0%,
       100% {
-        transform: #{$dir-val1};
+        -webkit-transform: #{$dir-val1};
+                transform: #{$dir-val1};
       }
 
       30% {
-        transform: #{$dir-val2};
+        -webkit-transform: #{$dir-val2};
+                transform: #{$dir-val2};
       }
 
       40% {
-        transform: #{$dir-val3};
+        -webkit-transform: #{$dir-val3};
+                transform: #{$dir-val3};
       }
 
       50% {
-        transform: #{$dir-val4};
+        -webkit-transform: #{$dir-val4};
+                transform: #{$dir-val4};
       }
 
       65% {
-        transform: #{$dir-val5};
+        -webkit-transform: #{$dir-val5};
+                transform: #{$dir-val5};
       }
 
       75% {
-        transform: #{$dir-val6};
+        -webkit-transform: #{$dir-val6};
+                transform: #{$dir-val6};
+      }
+    }
+
+    @keyframes snap#{$anim-num} {
+      0%,
+      100% {
+        -webkit-transform: #{$dir-val1};
+                transform: #{$dir-val1};
+      }
+
+      30% {
+        -webkit-transform: #{$dir-val2};
+                transform: #{$dir-val2};
+      }
+
+      40% {
+        -webkit-transform: #{$dir-val3};
+                transform: #{$dir-val3};
+      }
+
+      50% {
+        -webkit-transform: #{$dir-val4};
+                transform: #{$dir-val4};
+      }
+
+      65% {
+        -webkit-transform: #{$dir-val5};
+                transform: #{$dir-val5};
+      }
+
+      75% {
+        -webkit-transform: #{$dir-val6};
+                transform: #{$dir-val6};
       }
     }
   }
@@ -9108,7 +10148,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Color} $fg-color [null] The color of any text in the shape
 /// @param {Length-Percentage} $height [$size] The height of the shape.
 ///
-/// @group Utilities
+/// @group Shapes
 @mixin speech-bubble(
   $bg: #fb8c00,
   $size: 15rem,
@@ -9120,8 +10160,10 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  clip-path: polygon( 0 0, 100% 0, 100% 75%, 75% 75%,
-                      75% 100%, 50% 75%, 0 75% );
+  -webkit-clip-path: polygon( 0 0, 100% 0, 100% 75%, 75% 75%,
+                              75% 100%, 50% 75%, 0 75% );
+          clip-path: polygon( 0 0, 100% 0, 100% 75%, 75% 75%,
+                              75% 100%, 50% 75%, 0 75% );
   height: $height;
   width: $size;
 }
@@ -9140,9 +10182,12 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  clip-path: polygon( 50% 0, 61% 35%, 98% 35%, 68% 57%,
-                      79% 91%, 50% 70%, 21% 91%, 32% 57%,
-                      2% 35%, 39% 35% );
+  -webkit-clip-path: polygon( 50% 0, 61% 35%, 98% 35%, 68% 57%,
+                              79% 91%, 50% 70%, 21% 91%, 32% 57%,
+                              2% 35%, 39% 35% );
+          clip-path: polygon( 50% 0, 61% 35%, 98% 35%, 68% 57%,
+                              79% 91%, 50% 70%, 21% 91%, 32% 57%,
+                              2% 35%, 39% 35% );
   height: $size;
   width: $size;
 }
@@ -9156,6 +10201,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 ///
 /// @group Utilities
 @mixin sticky($z-index: 999, $top: -.5px) {
+  position: -webkit-sticky;
   position: sticky;
   @if $top {
     top: $top;
@@ -9319,24 +10365,29 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
     @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
         '`text-blur-out` mixin';
   }
-  animation: txt-blur-out#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: txt-blur-out#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: txt-blur-out#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes txt-blur-out#{$anim-num} {
+
+    @-webkit-keyframes txt-blur-out#{$anim-num} {
+
       0% {
-        filter: blur(.01px);
         @if (to-lower-case($style) == 'backward'
             or to-lower-case($style) == 'bck' or to-lower-case($style) == 'back'
             or to-lower-case($style) == 'b' or to-lower-case($style) == 'f'
             or to-lower-case($style) == 'fwd'
             or to-lower-case($style) == 'forward') {
-          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+                  transform: translateZ(0);
         }
+        -webkit-filter: blur(.01px);
+        filter: blur(.01px);
       }
 
       100% {
-        filter: blur(12px) opacity(0);
         @if (to-lower-case($style) == 'contract'
             or to-lower-case($style) == 'cont' or to-lower-case($style) == 'c') {
           letter-spacing: -.5em;
@@ -9344,15 +10395,65 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
             or to-lower-case($style) == 'bck' or to-lower-case($style) == 'back'
             or to-lower-case($style) == 'b') {
           letter-spacing: -.5em;
-          transform: translateZ(-500px);
+          -webkit-transform: translateZ(-500px);
+                  transform: translateZ(-500px);
         } @else if (to-lower-case($style) == 'expand'
             or to-lower-case($style) == 'exp' or to-lower-case($style) == 'e') {
           letter-spacing: 1em;
         } @else if (to-lower-case($style) == 'forward'
             or to-lower-case($style) == 'fwd' or to-lower-case($style) == 'f') {
           letter-spacing: 1em;
-          transform: translateZ(300px);
+          -webkit-transform: translateZ(300px);
+                  transform: translateZ(300px);
         }
+        -webkit-filter: blur(12px) opacity(0);
+        filter: blur(12px) opacity(0);
+      }
+    }
+
+    @keyframes txt-blur-out#{$anim-num} {
+      0% {
+        @if (to-lower-case($style) == 'backward'
+            or to-lower-case($style) == 'bck' or to-lower-case($style) == 'back'
+            or to-lower-case($style) == 'b' or to-lower-case($style) == 'f'
+            or to-lower-case($style) == 'fwd'
+            or to-lower-case($style) == 'forward') {
+          -webkit-transform: translateZ(0);
+                  transform: translateZ(0);
+        }
+        -webkit-filter: blur(.01px);
+                filter: blur(.01px);
+      }
+
+      100% {
+        @if (to-lower-case($style) == 'contract'
+            or to-lower-case($style) == 'cont' or to-lower-case($style) == 'c') {
+          letter-spacing: -.5em;
+        } @else if (to-lower-case($style) == 'backward'
+            or to-lower-case($style) == 'bck' or to-lower-case($style) == 'back'
+            or to-lower-case($style) == 'b') {
+          letter-spacing: -.5em;
+          -webkit-transform: translateZ(-500px);
+                  transform: translateZ(-500px);
+        } @else if (to-lower-case($style) == 'expand'
+            or to-lower-case($style) == 'exp' or to-lower-case($style) == 'e') {
+          letter-spacing: 1em;
+        } @else if (to-lower-case($style) == 'forward'
+            or to-lower-case($style) == 'fwd' or to-lower-case($style) == 'f') {
+          letter-spacing: 1em;
+          -webkit-transform: translateZ(300px);
+                  transform: translateZ(300px);
+        } @else if ($style and to-lower-case($style) != 'none'
+            and to-lower-case($style) != 'no' and to-lower-case($style) != 'n'
+            and to-lower-case($style) != 'default'
+            and to-lower-case($style) != 'def'
+            and to-lower-case($style) != 'out'
+            and to-lower-case($style) != 'o') {
+          @error 'Invalid style value of `#{inspect($style)}` for the `text-blur-out` ' +
+              'mixin.';
+        }
+        -webkit-filter: blur(12px) opacity(0);
+                filter: blur(12px) opacity(0);
       }
     }
   }
@@ -9462,10 +10563,21 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   } @else {
     $delay: null;
   }
-  animation: txt-shadow-drop#{$anim-num} #{$timing} #{$delay} both;
-  text-transform: none;
+  -webkit-animation: txt-shadow-drop#{$anim-num} #{$timing} #{$delay} both;
+          animation: txt-shadow-drop#{$anim-num} #{$timing} #{$delay} both;
+   text-transform: none;
 
   @at-root {
+    @-webkit-keyframes txt-shadow-drop#{$anim-num} {
+      0% {
+        text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+      }
+
+      100% {
+        text-shadow: #{$dir-vals} rgba(0, 0, 0, .3);
+      }
+    }
+
     @keyframes txt-shadow-drop#{$anim-num} {
       0% {
         text-shadow: 0 0 0 rgba(0, 0, 0, 0);
@@ -9501,9 +10613,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
 /// animation.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
@@ -9631,12 +10743,14 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-flicker#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: txt-flicker#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: txt-flicker#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes txt-flicker#{$anim-num} {
-      @if ($in-or-out) {
+    @if ($in-or-out) {
+      @-webkit-keyframes txt-flicker#{$anim-num} {
         0% {
           opacity: 0;
         }
@@ -9712,7 +10826,165 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
                        0 0 110px rgba(255, 255, 255, .25),
                        0 0 100px rgba(255, 255, 255, .1);
         }
-      } @else {
+      }
+
+      @keyframes txt-flicker#{$anim-num} {
+        0% {
+          opacity: 0;
+        }
+
+        10%,
+        10.2%,
+        20%,
+        20.6%,
+        30%,
+        30.6%,
+        45%,
+        55.1%,
+        57%,
+        60.1%,
+        65%,
+        75.1%,
+        77%,
+        85.1%,
+        86% {
+          opacity: 0;
+          text-shadow: none;
+        }
+
+        10.1% {
+          opacity: 1;
+          text-shadow: none;
+        }
+
+        20.1% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .25);
+        }
+
+        30.1%,
+        30.5%,
+        45.1%,
+        50%,
+        55% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .45),
+                       0 0 60px rgba(255, 255, 255, .25);
+        }
+
+        57.1%,
+        60% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .55),
+                       0 0 60px rgba(255, 255, 255, .35);
+        }
+
+        65.1%,
+        75% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .55),
+                       0 0 60px rgba(255, 255, 255, .35),
+                       0 0 100px rgba(255, 255, 255, .1);
+        }
+
+        77.1%,
+        85% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .55),
+                       0 0 60px rgba(255, 255, 255, .4),
+                       0 0 110px rgba(255, 255, 255, .2),
+                       0 0 100px rgba(255, 255, 255, .1);
+        }
+
+        86.1%,
+        100% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .6),
+                       0 0 60px rgba(255, 255, 255, .45),
+                       0 0 110px rgba(255, 255, 255, .25),
+                       0 0 100px rgba(255, 255, 255, .1);
+        }
+      }
+    } @else {
+      @-webkit-keyframes txt-flicker {
+        0%,
+        13.9% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .6),
+                       0 0 60px rgba(255, 255, 255, .45),
+                       0 0 110px rgba(255, 255, 255, .25),
+                       0 0 100px rgba(255, 255, 255, .1);
+        }
+
+        14%,
+        14.9%,
+        23%,
+        24.9%,
+        35%,
+        39.9%,
+        43%,
+        44.9%,
+        55%,
+        69.4%,
+        70%,
+        79.4%,
+        80%,
+        89.8%,
+        90% {
+          opacity: 0;
+          text-shadow: none;
+        }
+
+        15%,
+        22.9% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .55),
+                       0 0 60px rgba(255, 255, 255, .4),
+                       0 0 110px rgba(255, 255, 255, .2),
+                       0 0 100px rgba(255, 255, 255, .1);
+        }
+
+        25%,
+        34.9% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .55),
+                       0 0 60px rgba(255, 255, 255, .35),
+                       0 0 100px rgba(255, 255, 255, .1);
+        }
+
+        40%,
+        42.9% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .55),
+                       0 0 60px rgba(255, 255, 255, .35);
+        }
+
+        45%,
+        50%,
+        54.9%,
+        69.5%,
+        69.9% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .45),
+                       0 0 60px rgba(255, 255, 255, .25);
+        }
+
+        79.9% {
+          opacity: 1;
+          text-shadow: 0 0 30px rgba(255, 255, 255, .25);
+        }
+
+        89.9% {
+          opacity: 1;
+          text-shadow: none;
+        }
+
+        100% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes txt-flicker {
         0%,
         13.9% {
           opacity: 1;
@@ -9927,31 +11199,85 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-focus-in#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: txt-focus-in#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: txt-focus-in#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
   @if ($style == 'forward' or $style == 'fwd' or $style == 'f'
       or $style == 'backward' or $style == 'bck' or $style == 'back'
       or $style == 'b') {
-    transform: translate3d(0, 0, 0);
-    transform-style: preserve-3d;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
   }
 
   @at-root {
-    @keyframes txt-focus-in#{$anim-num} {
+
+    @-webkit-keyframes txt-focus-in#{$anim-num} {
       0% {
-        filter: blur(12px);
+        -webkit-filter: blur(12px);
+                filter: blur(12px);
         opacity: 0;
-        @if ($style == 'expand' or $style == 'exp' or $style == 'e') {
+        @if ($style == 'expand' or $style == 'exp'
+            or $style == 'e') {
           letter-spacing: -.5em;
-        } @else if ($style == 'forward' or $style == 'fwd' or $style == 'f') {
+        } @else if ($style == 'forward'
+            or $style == 'fwd' or $style == 'f') {
           letter-spacing: -.5em;
-          transform: translateZ(-800px);
-        } @else if ($style == 'contract' or $style == 'cont' or $style == 'c') {
+          -webkit-transform: translateZ(-800px);
+                  transform: translateZ(-800px);
+        } @else if ($style == 'contract'
+            or $style == 'cont' or $style == 'c') {
           letter-spacing: 1em;
-        } @else if ($style == 'backward' or $style == 'bck' or $style == 'back'
+        } @else if ($style == 'backward'
+            or $style == 'bck' or $style == 'back'
             or $style == 'b') {
           letter-spacing: 1em;
-          transform: translateZ(300px);
+          -webkit-transform: translateZ(300px);
+                  transform: translateZ(300px);
+        }
+      }
+
+      100% {
+        -webkit-filter: blur(0);
+                filter: blur(0);
+        opacity: 1;
+        @if ($style == 'forward' or $style == 'fwd'
+            or $style == 'f') {
+          -webkit-transform: translateZ(0);
+                  transform: translateZ(0);
+        } @else if ($style == 'backward'
+            or $style == 'bck' or $style == 'back'
+            or $style == 'b') {
+          -webkit-transform: translateZ(12px);
+                  transform: translateZ(12px);
+        }
+      }
+    }
+
+    @keyframes txt-focus-in#{$anim-num} {
+      0% {
+        -webkit-filter: blur(12px);
+                filter: blur(12px);
+        opacity: 0;
+        @if ($style == 'expand' or $style == 'exp'
+            or $style == 'e') {
+          letter-spacing: -.5em;
+        } @else if ($style == 'forward'
+            or $style == 'fwd' or $style == 'f') {
+          letter-spacing: -.5em;
+          -webkit-transform: translateZ(-800px);
+                  transform: translateZ(-800px);
+        } @else if ($style == 'contract'
+            or $style == 'cont' or $style == 'c') {
+          letter-spacing: 1em;
+        } @else if ($style == 'backward'
+            or $style == 'bck' or $style == 'back'
+            or $style == 'b') {
+          letter-spacing: 1em;
+          -webkit-transform: translateZ(300px);
+                  transform: translateZ(300px);
         } @else if ($style and $style != 'none'
             and $style != 'no' and $style != 'n'
             and $style != 'default'
@@ -9962,15 +11288,18 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
       }
 
       100% {
-        filter: blur(0);
+        -webkit-filter: blur(0);
+                filter: blur(0);
         opacity: 1;
         @if ($style == 'forward' or $style == 'fwd'
             or $style == 'f') {
-          transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+                  transform: translateZ(0);
         } @else if ($style == 'backward'
             or $style == 'bck' or $style == 'back'
             or $style == 'b') {
-          transform: translateZ(12px);
+          -webkit-transform: translateZ(12px);
+                  transform: translateZ(12px);
         }
       }
     }
@@ -9985,9 +11314,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null timing function will cause the CSS default timing-function
 /// of `ease`.
@@ -10114,10 +11443,25 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-glitch#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: txt-glitch#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: txt-glitch#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
+    @-webkit-keyframes txt-glitch#{$anim-num} {
+
+      @for $i from 0 through 100 {
+        $percent: 0% + $i;
+
+        #{$percent} {
+          $color: nth($colors, random(length($colors)));
+          text-shadow: random(70px) - 35px 0px 0px $color;
+          left: random(12px) - 6px;
+        }
+      }
+    }
+
     @keyframes txt-glitch {
 
       @for $i from 0 through 100 {
@@ -10163,9 +11507,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. Default value of null will be the default CSS timing-function
 /// propertiy's value of ease.
@@ -10363,20 +11707,39 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-shadow-pop#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: txt-shadow-pop#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: txt-shadow-pop#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes txt-shadow-pop#{$anim-num} {
+    @-webkit-keyframes txt-shadow-pop#{$anim-num} {
       0% {
         text-shadow: 0 0 #555, 0 0 #555, 0 0 #555, 0 0 #555,
                      0 0 #555, 0 0 #555, 0 0 #555, 0 0 #555;
-        transform: #{$trans-val1};
+        -webkit-transform: #{$trans-val1};
+                transform: #{$trans-val1};
       }
 
       100% {
         text-shadow: #{$shadow-val};
-        transform: #{$trans-val2};
+        -webkit-transform: #{$trans-val2};
+                transform: #{$trans-val2};
+      }
+    }
+
+    @keyframes txt-shadow-pop#{$anim-num} {
+      0% {
+        text-shadow: 0 0 #555, 0 0 #555, 0 0 #555, 0 0 #555,
+                     0 0 #555, 0 0 #555, 0 0 #555, 0 0 #555;
+        -webkit-transform: #{$trans-val1};
+                transform: #{$trans-val1};
+      }
+
+      100% {
+        text-shadow: #{$shadow-val};
+        -webkit-transform: #{$trans-val2};
+                transform: #{$trans-val2};
       }
     }
   }
@@ -10495,23 +11858,50 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-pop-up#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$infinite} both;
+  -webkit-animation: txt-pop-up#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$infinite} both;
+          animation: txt-pop-up#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$infinite} both;
   height: $height;
   text-transform: none;
   width: $size;
 
   @at-root {
-    @keyframes txt-pop-up#{$anim-num} {
+
+    @-webkit-keyframes txt-pop-up#{$anim-num} {
       0% {
-        transform: translateY(0);
-        transform-origin: 50% 50%;
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
         text-shadow: none;
       }
 
       100% {
-        transform: #{$dir-val};
-        transform-origin: 50% 50%;
+        -webkit-transform: #{$dir-val};
+                transform: #{$dir-val};
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        text-shadow:  0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+                      0 5px 0 #ccc, 0 6px 0 #ccc, 0 7px 0 #ccc, 0 8px 0 #ccc,
+                      0 9px 0 #ccc, 0 50px 30px rgba(0, 0, 0, .3);
+      }
+    }
+
+    @keyframes txt-pop-up#{$anim-num} {
+      0% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+        text-shadow: none;
+      }
+
+      100% {
+        -webkit-transform: #{$dir-val};
+                transform: #{$dir-val};
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
         text-shadow:  0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
                       0 5px 0 #ccc, 0 6px 0 #ccc, 0 7px 0 #ccc, 0 8px 0 #ccc,
                       0 9px 0 #ccc, 0 50px 30px rgba(0, 0, 0, .3);
@@ -10533,7 +11923,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   $x: if((unitless($x)), $x*1px, $x);
   $y: if((unitless($y)), $y*1px, $y);
   $blur: if((unitless($blur)), $blur*1px, $blur);
-  @if (not $blur or $blur == 0px or $blur == 0 or $blur == 'none'
+  @if (not $blur or $blur == 0px or or $blur == 0 or $blur == 'none'
         or $blur == 'no' or $blur == 'n' $blur == 'n/a') {
     text-shadow: $x $y $color;
   } @else {
@@ -10724,36 +12114,47 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-track-in#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: txt-track-in#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: txt-track-in#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
   @if $direction {
-    transform: translate3d(0, 0, 0);
-    transform-style: preserve-3d;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
   }
 
   @at-root {
-    @keyframes txt-track-in#{$anim-num} {
+
+    @-webkit-keyframes txt-track-in#{$anim-num} {
       0% {
         @if $expand-contract {
           letter-spacing: -.5em;
           @if $direction {
             @if not $origin {
-              transform: translateZ(-700px);
+              -webkit-transform: translateZ(-700px);
+                      transform: translateZ(-700px);
             } @else if $origin == 'top' {
-              transform: translateZ(-700px) translateY(-500px);
+              -webkit-transform: translateZ(-700px) translateY(-500px);
+                      transform: translateZ(-700px) translateY(-500px);
             } @else {
-              transform: translateZ(-700px) translateY(500px);
+              -webkit-transform: translateZ(-700px) translateY(500px);
+                      transform: translateZ(-700px) translateY(500px);
             }
           }
         } @else {
           letter-spacing: 1em;
           @if $direction {
             @if not $origin {
-              transform: translateZ(400px);
+              -webkit-transform: translateZ(400px);
+                      transform: translateZ(400px);
             } @else if $origin == 'top' {
-              transform: translateZ(400px) translateY(-300px);
+              -webkit-transform: translateZ(400px) translateY(-300px);
+                      transform: translateZ(400px) translateY(-300px);
             } @else {
-              transform: translateZ(400px) translateY(300px);
+              -webkit-transform: translateZ(400px) translateY(300px);
+                      transform: translateZ(400px) translateY(300px);
             }
           }
         }
@@ -10768,18 +12169,87 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
         @if $expand-contract {
           @if $direction {
             @if not $origin {
-              transform: translateZ(0);
+              -webkit-transform: translateZ(0);
+                      transform: translateZ(0);
             } @else {
-              transform: translateZ(0) translateY(0);
+              -webkit-transform: translateZ(0) translateY(0);
+                      transform: translateZ(0) translateY(0);
             }
           }
         } @else {
           letter-spacing: normal;
           @if $direction {
             @if not $origin {
-              transform: translateZ(0);
+              -webkit-transform: translateZ(0);
+                      transform: translateZ(0);
             } @else {
-              transform: translateZ(0) translateY(0);
+              -webkit-transform: translateZ(0) translateY(0);
+                      transform: translateZ(0) translateY(0);
+            }
+          }
+        }
+        opacity: 1;
+      }
+    }
+
+    @keyframes txt-track-in#{$anim-num} {
+      0% {
+        @if $expand-contract {
+          letter-spacing: -.5em;
+          @if $direction {
+            @if not $origin {
+              -webkit-transform: translateZ(-700px);
+                      transform: translateZ(-700px);
+            } @else if $origin == 'top' {
+              -webkit-transform: translateZ(-700px) translateY(-500px);
+                      transform: translateZ(-700px) translateY(-500px);
+            } @else {
+              -webkit-transform: translateZ(-700px) translateY(500px);
+                      transform: translateZ(-700px) translateY(500px);
+            }
+          }
+        } @else {
+          letter-spacing: 1em;
+          @if $direction {
+            @if not $origin {
+              -webkit-transform: translateZ(400px);
+                      transform: translateZ(400px);
+            } @else if $origin == 'top' {
+              -webkit-transform: translateZ(400px) translateY(-300px);
+                      transform: translateZ(400px) translateY(-300px);
+            } @else {
+              -webkit-transform: translateZ(400px) translateY(300px);
+                      transform: translateZ(400px) translateY(300px);
+            }
+          }
+        }
+        opacity: 0;
+      }
+
+      40% {
+        opacity: .6;
+      }
+
+      100% {
+        @if $expand-contract {
+          @if $direction {
+            @if not $origin {
+              -webkit-transform: translateZ(0);
+                      transform: translateZ(0);
+            } @else {
+              -webkit-transform: translateZ(0) translateY(0);
+                      transform: translateZ(0) translateY(0);
+            }
+          }
+        } @else {
+          letter-spacing: normal;
+          @if $direction {
+            @if not $origin {
+              -webkit-transform: translateZ(0);
+                      transform: translateZ(0);
+            } @else {
+              -webkit-transform: translateZ(0) translateY(0);
+                      transform: translateZ(0) translateY(0);
             }
           }
         }
@@ -10978,32 +12448,40 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation:
-    txt-track-out#{$anim-num} #{$timing} #{$timing-func}
-    #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: txt-track-out#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: txt-track-out#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
   @if $direction {
-    transform: translate3d(0, 0, 0);
-    transform-style: preserve-3d;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
   }
 
   @at-root {
-    @keyframes txt-track-out#{$anim-num} {
+
+    @-webkit-keyframes txt-track-out#{$anim-num} {
       0% {
         opacity: 1;
         @if (not $expand-contract) {
           @if $direction {
             @if not $origin {
-              transform: translateZ(0);
+              -webkit-transform: translateZ(0);
+                      transform: translateZ(0);
             } @else {
-              transform: translateZ(0) translateY(0);
+              -webkit-transform: translateZ(0) translateY(0);
+                      transform: translateZ(0) translateY(0);
             }
           }
         } @else {
           @if $direction {
             @if not $origin {
-              transform: translateZ(0);
+              -webkit-transform: translateZ(0);
+                      transform: translateZ(0);
             } @else {
-              transform: translateZ(0) translateY(0);
+              -webkit-transform: translateZ(0) translateY(0);
+                      transform: translateZ(0) translateY(0);
             }
           }
         }
@@ -11028,22 +12506,101 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
           letter-spacing: -.5em;
           @if $direction {
             @if not $origin {
-              transform: translateZ(-500px);
+              -webkit-transform: translateZ(-500px);
+                      transform: translateZ(-500px);
             } @else if $origin == 'top' {
-              transform: translateZ(-500px) translateY(-300px);
+              -webkit-transform: translateZ(-500px) translateY(-300px);
+                      transform: translateZ(-500px) translateY(-300px);
             } @else {
-              transform: translateZ(-500px) translateY(300px);
+              -webkit-transform: translateZ(-500px) translateY(300px);
+                      transform: translateZ(-500px) translateY(300px);
             }
           }
         } @else {
           letter-spacing: 1em;
           @if $direction {
             @if not $origin {
-              transform: translateZ(300px);
+              -webkit-transform: translateZ(300px);
+                      transform: translateZ(300px);
             } @else if $origin == 'top' {
-              transform: translateZ(300px) translateY(-200px);
+              -webkit-transform: translateZ(300px) translateY(-200px);
+                      transform: translateZ(300px) translateY(-200px);
             } @else {
-              transform: translateZ(300px) translateY(200px);
+              -webkit-transform: translateZ(300px) translateY(200px);
+                      transform: translateZ(300px) translateY(200px);
+            }
+          }
+        }
+      }
+    }
+
+    @keyframes txt-track-out#{$anim-num} {
+      0% {
+        opacity: 1;
+        @if (not $expand-contract) {
+          @if $direction {
+            @if not $origin {
+              -webkit-transform: translateZ(0);
+                      transform: translateZ(0);
+            } @else {
+              -webkit-transform: translateZ(0) translateY(0);
+                      transform: translateZ(0) translateY(0);
+            }
+          }
+        } @else {
+          @if $direction {
+            @if not $origin {
+              -webkit-transform: translateZ(0);
+                      transform: translateZ(0);
+            } @else {
+              -webkit-transform: translateZ(0) translateY(0);
+                      transform: translateZ(0) translateY(0);
+            }
+          }
+        }
+      }
+      @if (not $expand-contract and not $direction and not $origin) {
+        50% {
+          opacity: 1;
+        }
+      } @else {
+        60% {
+          @if (not $expand-contract) {
+            opacity: 1;
+          } @else {
+            opacity: .8;
+          }
+        }
+      }
+
+      100% {
+        opacity: 0;
+        @if (not $expand-contract) {
+          letter-spacing: -.5em;
+          @if $direction {
+            @if not $origin {
+              -webkit-transform: translateZ(-500px);
+                      transform: translateZ(-500px);
+            } @else if $origin == 'top' {
+              -webkit-transform: translateZ(-500px) translateY(-300px);
+                      transform: translateZ(-500px) translateY(-300px);
+            } @else {
+              -webkit-transform: translateZ(-500px) translateY(300px);
+                      transform: translateZ(-500px) translateY(300px);
+            }
+          }
+        } @else {
+          letter-spacing: 1em;
+          @if $direction {
+            @if not $origin {
+              -webkit-transform: translateZ(300px);
+                      transform: translateZ(300px);
+            } @else if $origin == 'top' {
+              -webkit-transform: translateZ(300px) translateY(-200px);
+                      transform: translateZ(300px) translateY(-200px);
+            } @else {
+              -webkit-transform: translateZ(300px) translateY(200px);
+                      transform: translateZ(300px) translateY(200px);
             }
           }
         }
@@ -11052,6 +12609,54 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   }
 }
 
+
+/// A vendor prefix based utility mixin that applies the optimal browser-vendor
+/// prefixes for the transform property. The '-webkit' prefix is included to
+/// apply the transformation to Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, and
+/// Opera 15-22. The '-ms' prefix that can be applied by passing a true value to
+/// the $ie-9-support-2d parameter will give support for 2-D transformation to
+/// Internet Explorer 9.
+///
+/// @param {Transform-Function} $trans-val - The tranform value.
+/// @param {Boolean|String} $ie9-support-2d [false] - Mark true for 2-D
+/// transformations in order to support IE 9. If you do not wish to support IE 9
+/// or your animation is 3-D, then you can pass nothing, null, false, or 'f'.
+@mixin transform($trans-val, $ie9-support-2d: false) {
+  -webkit-transform: $trans-val; // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+  @if ($ie9-support-2d and $ie9-support-2d != 'f') {
+      -ms-transform: $trans-val;
+  }
+  transform: $trans-val;
+}
+
+
+/// A vendor prefixing utility mixin for the transition property.
+///
+/// @param {Mixed} $value - The value for the transition property.
+/// @group Utilities
+@mixin transition($value) {
+  -webkit-transition: $value;
+          transition: $value;
+}
+
+
+/// Provides fast vendor prefixed translations.
+///
+/// @param {Position} $posX - The X value in a 2 dimensional translation.
+/// @param {Position} $posY The Y value in a 2 dimensional translation.
+/// @param {Boolean|String} $support-ie9 [false] - Mark true to support IE 9.
+/// If you do not wish to support IE 9,then you can pass nothing, or a value
+/// of null, false, or `f`.
+///
+/// @group Utilities
+@mixin translate($posX, $posY, $support-ie9: false) {
+  // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+  -webkit-transform: translate($posX, $posY);
+  @if ($support-ie9 and $support-ie9 != 'f') {
+    -ms-transform: translateX($posX) translateY($posY);
+  }
+  transform: translate($posX, $posY);
+}
 
 /// Creates a CSS triangle, which can be used for dropdown arrows, dropdown
 /// pips, and more. Use this mixin inside a `&::before` or `&::after` selector,
@@ -11130,9 +12735,9 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
 /// seconds (s)
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// @param {Keyword|String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of null assumes the CSS property's default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. The default of null will set it to the default timing function
 /// of ease.
@@ -11298,36 +12903,78 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation:
-    wobble#{$anim-num} #{$timing} #{$timing-func}
-    #{$delay} #{$iterations} #{$anim-dir} both;
+  -webkit-animation: wobble#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: wobble#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes wobble#{$anim-num} {
+    @-webkit-keyframes wobble#{$anim-num} {
       0%,
       100% {
-        transform: #{$dir-val1};
-        transform-origin: 50% 50%;
+        -webkit-transform: #{$dir-val1};
+                transform: #{$dir-val1};
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
       }
 
       15% {
-        transform: #{$dir-val2};
+        -webkit-transform: #{$dir-val2};
+                transform: #{$dir-val2};
       }
 
       30% {
-        transform: #{$dir-val3};
+        -webkit-transform: #{$dir-val3};
+                transform: #{$dir-val3};
       }
 
       45% {
-        transform: #{$dir-val4};
+        -webkit-transform: #{$dir-val4};
+                transform: #{$dir-val4};
       }
 
       60% {
-        transform: #{$dir-val5};
+        -webkit-transform: #{$dir-val5};
+                transform: #{$dir-val5};
       }
 
       75% {
-        transform: #{$dir-val6};
+        -webkit-transform: #{$dir-val6};
+                transform: #{$dir-val6};
+      }
+    }
+    @keyframes wobble#{$anim-num} {
+      0%,
+      100% {
+        -webkit-transform: #{$dir-val1};
+                transform: #{$dir-val1};
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+      }
+
+      15% {
+        -webkit-transform: #{$dir-val2};
+                transform: #{$dir-val2};
+      }
+
+      30% {
+        -webkit-transform: #{$dir-val3};
+                transform: #{$dir-val3};
+      }
+
+      45% {
+        -webkit-transform: #{$dir-val4};
+                transform: #{$dir-val4};
+      }
+
+      60% {
+        -webkit-transform: #{$dir-val5};
+                transform: #{$dir-val5};
+      }
+
+      75% {
+        -webkit-transform: #{$dir-val6};
+                transform: #{$dir-val6};
       }
     }
   }
@@ -11347,9 +12994,12 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if ($fg-color) {
     color: $fg-color;
   }
-  clip-path: polygon( 20% 0, 0 20%, 30% 50%, 0 80%, 20% 100%,
-                      50% 70%, 80% 100%, 100% 80%, 70% 50%,
-                      100% 20%, 80% 0, 50% 30%);
+  -webkit-clip-path: polygon( 20% 0, 0 20%, 30% 50%, 0 80%, 20% 100%,
+                              50% 70%, 80% 100%, 100% 80%, 70% 50%,
+                              100% 20%, 80% 0, 50% 30%);
+          clip-path: polygon( 20% 0, 0 20%, 30% 50%, 0 80%, 20% 100%,
+                              50% 70%, 80% 100%, 100% 80%, 70% 50%,
+                              100% 20%, 80% 0, 50% 30%);
   height: $size;
   width: $size;
 }
@@ -11487,19 +13137,36 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: zoom-in#{$anim-num} #{$timing} ease-out #{$delay} both;
+  -webkit-animation: zoom-in#{$anim-num} #{$timing} ease-out #{$delay} both;
+          animation: zoom-in#{$anim-num} #{$timing} ease-out #{$delay} both;
 
   @at-root {
-    @keyframes zoom-in#{$anim-num} {
+    @-webkit-keyframes zoom-in#{$anim-num} {
       0% {
-        transform: #{$dir-val1};
-        transform-origin: #{$dir-val2};
+        -webkit-transform: #{$dir-val1};
+                transform: #{$dir-val1};
+        -webkit-transform-origin: #{$dir-val2};
+                transform-origin: #{$dir-val2};
       }
 
       100% {
-        transform: #{$dir-val3};
-        transform-origin: #{$dir-val4};
+        -webkit-transform: #{$dir-val3};
+                transform: #{$dir-val3};
+        -webkit-transform-origin: #{$dir-val4};
+                transform-origin: #{$dir-val4};
       }
     }
-  }
-}
+
+    @keyframes zoom-in#{$anim-num} {
+      0% {
+        -webkit-transform: #{$dir-val1};
+                transform: #{$dir-val1};
+        -webkit-transform-origin: #{$dir-val2};
+                transform-origin: #{$dir-val2};
+      }
+
+      100% {
+        -webkit-transform: #{$dir-val3};
+                transform: #{$dir-val3};
+        -webkit-transform-origin: #{$dir-val4};
+                transform

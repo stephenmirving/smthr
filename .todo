@@ -1,6 +1,7 @@
 TODO:
 
   General Changes:
+    ☐ Go through betterize and remove anything that is for a dead browser
     ✔ Fix all the @error and @warn messages where a variable is interpolated, replace #{$var} with #{inspect($var)} @done(19-08-13 00:51)
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Make all alias mixins only reference the original instead of repeating code
@@ -101,5 +102,5 @@ Archive:
     ✔ body tag for font so it doesn't cause errors due to 'primary' not existing in font-stack @done(19-07-22 09:48)
     ✔ body font size? Possibly change @done(19-07-22 09:48)
     ✔ Change default line-height to either 1.3 or 1.4 @done(19-07-22 09:48)
-    ✔ Remove import declarations from _sizzle.scss files @done(19-07-22 09:48)
+    ✔ Remove import declarations from _stipple.scss files @done(19-07-22 09:48)
     ✔ Add file to the dist package versions @done(19-07-22 09:49)

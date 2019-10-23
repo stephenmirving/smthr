@@ -1,10 +1,10 @@
-@import 'vendor/sizzle/sizzle';
+@import '../../src/scss/prefixed/stipple/stipple';
 
 @import 'helpers/variables';
 @import 'helpers/custom-properties';
 @import 'helpers/placeholders';
 
-@import 'vendor/sizzle/betterize';
+@import '../../src/scss/prefixed/stipple/betterize';
 @import 'base/typography';
 @import 'helpers/utilities';
 
