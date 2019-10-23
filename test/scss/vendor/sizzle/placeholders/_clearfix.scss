@@ -1,0 +1,12 @@
+/// Applies the float clearing 'clearfix' hack, but as an @extend placeholder
+%clearfix {
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+}

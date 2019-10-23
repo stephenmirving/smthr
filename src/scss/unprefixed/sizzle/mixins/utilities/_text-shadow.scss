@@ -1,0 +1,19 @@
+/// Apply a text shadow effect.
+///
+/// @param {Length} $x [2px] - The x-axis offset of the shadow.
+/// @param {Length} $y [2px] - The x-axis offset of the shadow.
+/// @param {Length} $blur [5px] - The blur range of the shadow.
+/// @param {Color} $color [rgba(0, 0, 0, .4)] - The color of the shadow.
+///
+/// @group Utilities
+@mixin text-shadow($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0, 0, 0, .4)) {
+  $x: if((unitless($x)), $x*1px, $x);
+  $y: if((unitless($y)), $y*1px, $y);
+  $blur: if((unitless($blur)), $blur*1px, $blur);
+  @if (not $blur or $blur == 0px or $blur == 0 $blur == 'none'
+        or $blur == 'no' or $blur == 'n' $blur == 'n/a') {
+    text-shadow: $x $y $color;
+  } @else {
+    text-shadow: $x $y $blur $color;
+  }
+}

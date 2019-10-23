@@ -1,0 +1,7 @@
+/// Checks if a value is an integer.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is an integer, false if it is not.
+@function is-integer($value)
+  @return type-of($value) == 'number' and round($value) == $value

@@ -1,0 +1,122 @@
+/// Generates the base visual styles for a button element.
+///
+/// @param {Color} $btn-background - The background of the button.
+/// @param {Color} $btn-color - The button text color.
+/// @param {Color} $btn-border - The border property for the buttton.
+/// @param {Color} $btn-radius - The border radius property.
+/// @param {Color} $btn-margin - The button's margin property.
+/// @param {Color} $btn-padding - The button's padding property.
+/// @param {Color} $btn-font-family - The button's font-family property.
+/// @param {Color} $btn-font-size [1rem] - The button's font-size property.
+/// @param {Color} $btn-font-weight [400] - The button's font-weight property.
+/// @param {Color} $btn-transition [null] - The button's transition property.
+/// By default, a null value here will have the mixin search for a global
+/// $button-transition variable as is found in the variables file in this
+/// library. If no global variable is found, it will apply the following
+/// default: `background-color .2s ease-out, color .2s ease-out`.
+///
+/// @group Utilities
+/// @require {mixin} disable-outline
+/// @alias btn-base
+@mixin button-base(
+  $btn-background,
+  $btn-color,
+  $btn-border,
+  $btn-radius,
+  $btn-margin,
+  $btn-padding,
+  $btn-font-family,
+  $btn-font-size: 1rem,
+  $btn-font-weight: 400,
+  $btn-transition: null
+) {
+  @if $btn-transition == null {
+    $btn-transition: if(
+      global-variable-exists(button-transition),
+      $button-transition,
+      (background-color .2s ease-out, color .2s ease-out)
+    );
+  } @else if (
+    $btn-transition == false or $btn-transition == 'none' or
+    $btn-transition == 'no' or $btn-transition == 'n/a'
+  ) {
+    $btn-transition: null;
+  }
+  @include disable-outline;
+  background: $btn-background;
+  border-radius: $btn-radius;
+  border: $btn-border;
+  color: $btn-color;
+  cursor: pointer;
+  display: inline-block;
+  @if $btn-font-family and $btn-font-size {
+    @if $btn-font-weight {
+      font: $btn-font-weight $btn-font-size $btn-font-family;
+    } @else {
+      font: $btn-font-size $btn-font-family;
+    }
+  } @else {
+    @if $btn-font-family {
+      font-family: $btn-font-family;
+    }
+    @if $btn-font-size {
+      font-size: $btn-font-size;
+    }
+    @if $btn-font-weight {
+      font-weight: $btn-font-weight;
+    }
+  }
+  margin: $btn-margin;
+  padding: $btn-padding;
+  text-align: center;
+  @if $btn-transition {
+    transition: $btn-transition;
+  }
+  vertical-align: middle;
+}
+
+/// Generates the base visual styles for a button element.
+///
+/// @param {Color} $btn-background - The background of the button.
+/// @param {Color} $btn-color - The button text color.
+/// @param {Color} $btn-border - The border property for the buttton.
+/// @param {Color} $btn-radius - The border radius property.
+/// @param {Color} $btn-margin - The button's margin property.
+/// @param {Color} $btn-padding - The button's padding property.
+/// @param {Color} $btn-font-family - The button's font-family property.
+/// @param {Color} $btn-font-size [1rem] - The button's font-size property.
+/// @param {Color} $btn-font-weight [400] - The button's font-weight property.
+/// @param {Color} $btn-transition [null] - The button's transition property.
+/// By default, a null value here will have the mixin search for a global
+/// $button-transition variable as is found in the variables file in this
+/// library. If no global variable is found, it will apply the following
+/// default: `background-color .2s ease-out, color .2s ease-out`.
+///
+/// @group Utilities
+/// @require {mixin} disable-outline
+/// @alias button-base
+@mixin btn-base(
+  $btn-background,
+  $btn-color,
+  $btn-border,
+  $btn-radius,
+  $btn-margin,
+  $btn-padding,
+  $btn-font-family,
+  $btn-font-size: 1rem,
+  $btn-font-weight: 400,
+  $btn-transition: null
+) {
+  @include button-base(
+    $btn-background,
+    $btn-color,
+    $btn-border,
+    $btn-radius,
+    $btn-margin,
+    $btn-padding,
+    $btn-font-family,
+    $btn-font-size,
+    $btn-font-weight,
+    $btn-transition
+  );
+}

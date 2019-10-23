@@ -1,0 +1,39 @@
+/// Converts a pixel value into em units.
+/// @access public
+///
+/// @param {Length-Percentage} $pixels - A value to convert to em units.
+/// @param {Number} $base-context [null] - The contextual base font-size.
+/// @return {Length} The values in em.
+///
+/// @require {function} strip-unit
+/// @throw Invalid data type or units for $pixels
+@function conv-to-em($pixels, $base-context: null) {
+  @if (
+    type-of($pixels) != 'number' or
+    (type-of($pixels) == 'number' and
+    not unitless($pixels) and unit($pixels) != 'px')
+  ) {
+    @error 'Invalid value of (#{inspect($pixels)}) passed to conv-to-em(). ' +
+        'Value of $pixels must be number in px units.';
+  }
+
+  // If no base is defined, defer to the $base-font-size variable. If that does
+  // not exist, default to 16
+  @if not $base-context {
+    $base-context: if(
+      global-variable-exists(base-font-size),
+      $base-font-size,
+      16
+    );
+  }
+
+  @if unitless($pixels) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if unitless($base-context) {
+    $base-context: $base-context * 1px;
+  }
+
+  @return $pixels / $base-context * 1em;
+}

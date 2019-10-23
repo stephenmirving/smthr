@@ -1,0 +1,39 @@
+// helpers/_utilities.scss
+
+// Apply the float clearing clearfix
+.clearfix {
+  @extend %clearfix;
+}
+
+// Hide visually and from screen readers
+.hidden {
+  @include hide;
+}
+
+// Hide visually, and from screen readers, but maintain layout
+.invisible {
+  @include hide(true);
+}
+
+// Hide only visually, but have it available for screen readers:
+.visually-hidden {
+  @extend %visually-hide;
+}
+
+// Extends the .visually-hidden class to allow the element to be focusable when
+// navigated to via the keyboard
+.visually-hidden--focusable {
+  @include hide-visually(true);
+}
+
+// Reverses the effect of the `visually-hidden` class.
+.show-visually {
+  @include show-visually;
+}
+
+.browserupgrade {
+  margin: .2em 0;
+  background: $silver;
+  color: #000;
+  padding: .2em 0;
+}

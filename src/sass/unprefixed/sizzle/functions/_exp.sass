@@ -1,0 +1,8 @@
+/// Complete an exponentiation. Used for the `pow` function that takes a number
+/// to a given power.
+/// @access private
+///
+/// @param {Number} $value
+/// @return {Number} The result of the operation
+@function exp($value)
+  @return summation('exp-maclaurin', $value, 0, 100)

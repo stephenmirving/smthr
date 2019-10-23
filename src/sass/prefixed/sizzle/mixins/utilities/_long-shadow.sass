@@ -1,0 +1,9 @@
+/// Creates a long text shadow effect.
+///
+/// @param {Color} $color - The color of the long shadow.
+/// @param {Number} $longness - The integer length of the shadow.
+///
+/// @group Utilities
+/// @require {function} make-long-shadow
+=long-shadow($color: #191919, $longness: 180)
+  text-shadow: make-long-shadow($color, $longness)

@@ -1,0 +1,51 @@
+/// Applied to the child element of the element with the a 3-d transform effect
+/// to represent the back-face of the card that the animation flips to or past.
+///
+/// @param {String} $flip-axis [horizontal] - Set this value equal to the axis
+/// the element will flip over in order to ensure that the content of the
+/// back-face of the element is oriented correctly.
+/// @param {Number} $z-val [10] - The z-index value.
+///
+/// @group Animations
+/// @group Utilities
+/// @throw Invalid $z-val z-index value
+/// @require {placeholder} animation-faces
+@mixin animation-back-face($flip-axis: horizontal, $z-val: 10) {
+  // Default rotation for the flip-axis value of horizontal
+  $trans-val: rotateX(180deg);
+
+  } @else if (
+    to-lower-case($flip-axis) == 'diagonal' or
+    to-lower-case($flip-axis) == 'diagonal1' or
+    to-lower-case($flip-axis) == 'diag' or
+    to-lower-case($flip-axis) == 'diag1' or
+    to-lower-case($flip-axis) == 'd' or
+    to-lower-case($flip-axis) == 'd1'
+  ) {
+    $trans-val: rotateY(180deg);
+  } @else if (to-lower-case($flip-axis) == 'diagonal'
+      or to-lower-case($flip-axis) == 'diagonal1'
+      or to-lower-case($flip-axis) == 'diag'
+      or to-lower-case($flip-axis) == 'diag1'
+      or to-lower-case($flip-axis) == 'd' or to-lower-case($flip-axis) == 'd1') {
+    $trans-val: rotate3d(1, 1, 0, 180deg);
+  } @else if (to-lower-case($flip-axis) == 'diagonal2'
+      or to-lower-case($flip-axis) == 'diag2'
+      or to-lower-case($flip-axis) == 'd2') {
+    $trans-val: rotate3d(-1, 1, 0, -180deg);
+  } @else if (
+    to-lower-case($flip-axis) != 'horizontal' and
+    to-lower-case($flip-axis) != 'horiz' and
+    to-lower-case($flip-axis) != 'horz' and
+    to-lower-case($flip-axis) != 'h'
+  ) {
+    @error 'Invalid flip-axis value of `#{inspect($flip-axis)}` for the ' +
+        '`animation-back-face` mixin';
+  }
+  @extend %animation-faces;
+  -webkit-transform: $trans-val;
+          transform: $trans-val;
+  @if ($z-val and type-of($z-val) == 'number' and unitless($z-val)) {
+    z-index: $z-val;
+  }
+}

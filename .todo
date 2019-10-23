@@ -1,0 +1,105 @@
+TODO:
+
+  General Changes:
+    ✔ Fix all the @error and @warn messages where a variable is interpolated, replace #{$var} with #{inspect($var)} @done(19-08-13 00:51)
+    ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
+    ☐ Make all alias mixins only reference the original instead of repeating code
+    ✔ Add !important to display: none for the [hidden] attribute in _betterize.scss @done(19-08-13 00:52)
+    ✔ Change documentation for bg-image and bg-image-svg, remove part where it says a quoted string is required @done(19-08-13 01:56)
+    ✔ Make sure all the animations are fixed for chrome by adding the moz-only on the backface-visibility property on the animation @done(19-08-13 01:56)
+
+  Animations Mixins:
+    ☐ Find ones I haven't done yet and complete one
+
+  Shapes Mixins:
+    ☐ Go to shapes page with psuedo elements and add those
+
+  Utility Mixins:
+    ☐ Fix _family fork - first-child/last-child mixin, adding of-type functionality to first/last
+    ☐ Fix the `size` mixin, it errors out if you pass it function generated sizes like with calc
+    ✔ Go back to the align-vertically, abs-center, and align-horizontally mixins and test whether to switch back to absolute positioning @done(19-08-13 01:07)
+    ☐ Add !important flag to mixins that may need to have it, text-outline for example
+    ☐ Create more flex-box prefix mixins
+      ✔ Finished flex-flow mixin @done(19-08-13 01:54)
+      ☐ Finish testing and copying over flex-flow mixin
+    ☐ Copy over page-break mixin from the print-reports workspace
+      ☐ Finish it if necessary
+      ☐ Propogate it across all
+    ☐ Finish the font-face mixin then propogate it
+    ☐ Allow opacity mixin to take percentages
+    ☐ Add rem-fallback mixin - exisisting version currently saved to OneDrive
+    ☐ Finish propogating responsive-ratio mixin to the dist folder
+    ☐ Finish propogating pseudo mixin to the dist folder
+
+  Functions:
+      ☐ Add more entity codes to the entity function
+      ☐ Copy the entity() function to all versions
+    ☐ Convert mixins from _family.scss into functions for non-nested selector use
+    ☐ Fix the ratio-to-percentage mixin
+    ✔ Finish the pi() function and propogate across all versions @done(19-08-30 01:28)
+    ✔ Finish the angle conversion function and propogate across all versions @done(19-08-30 01:27)
+    ✔ Propogate is-string() across all versions @started(19-09-15 19:42) @done(19-09-15 19:45) @lasted(3m25s)
+    ☐ Special character detecting function, finish and propogate
+    ☐ Check if a string contains a reserved word
+
+  Test Site:
+    ☐ Mobile first
+    ☐ Front page layout
+    ☐ Animation page
+    ☐ Shapes page
+    ☐ Utilities page
+    ☐ Functions page
+    ☐ Placeholders page
+    ☐ Documentation
+
+================================================================================
+
+Archive:
+  ✔ Modify black() and white() to allow for percentages as well as decimals @done(19-08-01 00:24) @project(TODO.Utility Mixins)
+  ✔ Rename all normalize versions 'betterize' @started(19-07-28 00:29) @done(19-07-28 00:30) @lasted(1m12s) @project(TODO.General Changes)
+  ✔ Reorder all elements into groups in the import files @done(19-07-26 00:17) @project(TODO.General Changes)
+  ✔ Fix problems with import order due to any function or mixins that requires another to come before it @done(19-07-24 09:27) @project(TODO.General Changes)
+  ✔ Copy the new version of flex-center over into all versions @started(19-07-22 14:43) @done(19-07-22 14:56) @lasted(13m48s) @project(TODO.General Changes)
+  ✔ Fix all the flexbox mixins with the new vendor prefixes from the new flex-center @started(19-07-22 15:09) @done(19-07-22 16:02) @lasted(53m21s) @project(TODO.General Changes)
+  ✔ justify-content @done(19-07-22 15:09) @project(TODO.General Changes)
+  ✔ align-items @done(19-07-22 15:09) @project(TODO.General Changes)
+  ✔ flex-container @done(19-07-22 15:11) @project(TODO.General Changes)
+  ✔ flex-it @done(19-07-22 15:44) @project(TODO.General Changes)
+  ✔ flex-order @done(19-07-22 15:48) @project(TODO.General Changes)
+  ✔ flex-wrap @done(19-07-22 15:48) @project(TODO.General Changes)
+  ✔ flex-direction @started(19-07-22 15:48) @done(19-07-22 16:02) @lasted(14m20s) @project(TODO.General Changes)
+  ✔ Finish changing the clearfix mixin in the dist folder @done(19-07-24 09:28) @project(TODO.General Changes)
+  ✔ Sort mixins into folders of their individual group types @started(19-07-22 09:47) @done(19-07-22 14:56) @lasted(5h9m51s) @project(TODO.General Changes)
+  ✔ Change name of flex-wrapper mixing, possibly to flex-display or flex-container, to avoid confusing with flex-wrap @done(19-07-22 14:57) @project(TODO.General Changes)
+  ✔ Finish copying the new $font-stack variable stacks from the src/scss versions into all versions @done(19-07-22 14:57) @project(TODO.General Changes)
+  ✔ Change the documentation where all the paremeters wronly described as keywords are changed to strings @done(19-07-24 10:51) @project(TODO.General Changes)
+  ✔ Add the mixins from the page including the one for psuedo elements @done(19-07-23 15:08) @project(TODO.Utility Mixins)
+  ✔ Create mixin for the regular necessary properties in ::before and ::after @done(19-07-23 15:07) @project(TODO.Utility Mixins)
+  ✔ Fix linear gradient mixin -- possibly needs a reordering @done(19-07-22 11:10) @project(TODO.Utility Mixins)
+  ✔ Swap parameter order of $spacing and $stretch in the font() mixin @done(19-07-22 11:10) @project(TODO.Utility Mixins)
+  ✔ Add CSS character codes in as a function, like code(ampersand) @started(19-07-15 01:32) @done(19-07-15 3:00) @lasted(1h28m12s) @project(TODO.Functions)
+  ✔ Add a remove-where function @started(19-07-15 01:36) @done(19-07-15 03:28) @lasted(1h52m09s)
+  ✔ Finish adding 6-pointed star additions @done(19-07-07 19:53) @project(TODO)
+  ✔ Add arrow-curved-tail mixin fully @started(19-07-07 18 :16) @done(19-07-07 19:28) @lasted(1h12m3s) @project(TODO)
+  ✔ Add heart mixin fully @started(19-07-07 17:13) @done(19-07-07 17:42) @lasted(29m) @project(TODO)
+  ✔ Finish ribbon mixin and add it everywhere else (currently just in prefixed scss) @done(19-07-07 20:31) @project(TODO)
+  ✔ Add a custom normalize page @done(19-06-23 13:24) @project(TODO)
+  ✔ Fix the scrollbar mixin for better IE and FF support @started(19-07-11 01:09) @done(19-07-11 02:20) @lasted(1h11m1s) @project(TODO)
+  ✔ Fix the png-svg retina mixins @started(19-07-10 23:17) @done(19-07-11 00:23) @lasted(1h6m46s) @project(TODO)
+  ✔ Copy the png-svg retina mixins over to all the versions @started(19-07-11 00:23) @done(19-07-11 01:07) @lasted(44m55s) @project(TODO)
+  ✔ Fix the font-stack to remove unnecessary quotes @done(19-07-11 01:08) @project(TODO)
+  ✔ Ensure that rotate() is correct after changing transform-origin values before the keyframes to the $trans-origin-val var ???? @done(19-07-15 00:30)
+  ✔ Figure out problem reported on linter for sass versions of rotate(), text-tracking-out() and bounce() @done(19-07-15 00:31)
+  ✔ Fix bg-image and bg-image-svg, causing errors related to unitless($number) for $bg-height @critical @done(19-07-15 00:30)
+    ✔ Copy fix over from primary-styles workspace @done(19-07-15 00:30)
+    ✔ Propogate across all versions @done(19-07-15 00:30)
+  ✔ Fix button base @started(19-07-22 09:47) @done(19-07-22 10:45) @lasted(58m27s)
+    ✔ Create alias mixin @started(19-07-22 09:47) @done(19-07-22 10:45) @lasted(58m31s)
+    ✔ Fix Documentation @done(19-07-22 10:45)
+    ✔ Propogate @done(19-07-22 10:45)
+  ✔ Change _normalize.scss: @done(19-07-22 09:49)
+    ✔ body tag for font so it doesn't cause errors due to 'primary' not existing in font-stack @done(19-07-22 09:48)
+    ✔ body font size? Possibly change @done(19-07-22 09:48)
+    ✔ Change default line-height to either 1.3 or 1.4 @done(19-07-22 09:48)
+    ✔ Remove import declarations from _sizzle.scss files @done(19-07-22 09:48)
+    ✔ Add file to the dist package versions @done(19-07-22 09:49)

@@ -1,0 +1,330 @@
+/// Generates an animation that fades an element in or out. If a forward or
+/// backward direction is chosen to augment the fade, it is recommended that
+/// the `animation-stage` mixin be used on the parent element.
+///
+/// @param {String|Boolean} $in-or-out [in] - Determines if the element will
+/// fade `in` (or true, `i`) our `out` (or false, `o`).
+/// @param {String} $direction [null] - Will optionally either fade in from
+/// this direction or fade out towards this direction.
+/// @param {Time} $timing [null] - The duration of the animation (s or ms).
+/// @param {Time} $delay [null] - The optional delay time for the animation.
+/// @param {Number|String} $iterations [null] - The number of iterations
+/// to complete. If the value passed is not a number, it will be set to infinite.
+/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// null assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. A null value passed here will default to the recommended timing
+/// function for this animation of `cubic-bezier(.39, .575, .565, 1)`.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @throw Invalid $in-or-out value
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+/// @throw Invalid $iterations value
+/// @throw Invalid $anim-dir value
+@mixin fade(
+  $in-or-out: in,
+  $direction: null,
+  $timing: null,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  // Default values for a fade in with no direction
+  $opacity-val1: 0;
+  $opacity-val2: 1;
+  $trans-val1: null;
+  $trans-val2: null;
+  $temp-val: null;
+  $fwd-bck: false;
+
+  // Input scrubbing
+  @if ($in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i') {
+    $in-or-out: true;
+  } @else if ($in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o') {
+    $in-or-out: false;
+  } @else {
+    @error 'Invalid $in-or-out value of `#{inspect($in-or-out)}` for the `fade` mixin.';
+  }
+
+  @if $direction {
+    @if (
+      to-lower-case($direction) == 'bottom' or
+      to-lower-case($direction) == 'btm' or
+      to-lower-case($direction) == 'b'
+    ) {
+      $trans-val1: translateY(50px);
+      $trans-val2: translateY(0);
+    } @else if (
+      to-lower-case($direction) == 'forwards' or
+      to-lower-case($direction) == 'forward' or
+      to-lower-case($direction) == 'fwd' or
+      to-lower-case($direction) == 'fw' or
+      to-lower-case($direction) == 'f'
+    ) {
+      to-lower-case($direction) == 'f'
+    ) {
+      $fwd-bck: true;
+      $trans-val1: translateZ(-80px);
+      $trans-val2: translateZ(0);
+    } @else if (
+      to-lower-case($direction) == 'backwards' or
+      to-lower-case($direction) == 'backward' or
+      to-lower-case($direction) == 'bckwrd' or
+      to-lower-case($direction) == 'back' or
+      to-lower-case($direction) == 'bck' or
+      to-lower-case($direction) == 'bw' or
+      to-lower-case($direction) == 'b'
+    ) {
+      $fwd-bck: true;
+      $trans-val1: translateZ(80px);
+      $trans-val2: translateZ(0);
+    } @else if (
+      to-lower-case($direction) == 'top' or
+      to-lower-case($direction) == 't' or
+      to-lower-case($direction) == 'up' or
+      to-lower-case($direction) == 'u'
+    ) {
+      $trans-val1: translateY(-50px);
+      $trans-val2: translateY(0);
+    } @else if (
+      to-lower-case($direction) == 'left'or to-lower-case($direction) == 'l'
+    ) {
+      $trans-val1: translateX(-50px);
+      $trans-val2: translateX(0);
+    } @else if (
+      to-lower-case($direction) == 'right' or to-lower-case($direction) == 'r'
+    ) {
+      $trans-val1: translateX(50px);
+      $trans-val2: translateX(0);
+    } @else if (
+      to-lower-case($direction) == 'top-left' or
+      to-lower-case($direction) == 'topleft' or
+      to-lower-case($direction) == 't-l' or
+      to-lower-case($direction) == 'tl' or
+      to-lower-case($direction) == 'left-top' or
+      to-lower-case($direction) == 'lefttop' or
+      to-lower-case($direction) == 'l-t' or
+      to-lower-case($direction) == 'lt'
+    ) {
+      to-lower-case($direction) == 'l-t' or
+      to-lower-case($direction) == 'lt'
+    ) {
+      $trans-val1: translateX(-50px) translateY(-50px);
+      $trans-val2: translateX(0) translateY(0);
+    } @else if (
+      to-lower-case($direction) == 'top-right' or
+      to-lower-case($direction) == 'topright' or
+      to-lower-case($direction) == 't-r' or
+      to-lower-case($direction) == 'tr' or
+      to-lower-case($direction) == 'right-top' or
+      to-lower-case($direction) == 'righttop' or
+      to-lower-case($direction) == 'r-t' or
+      to-lower-case($direction) == 'rt'
+    ) {
+      to-lower-case($direction) == 'rt'
+    ) {
+      $trans-val1: translateX(50px) translateY(-50px);
+      $trans-val2: translateX(0) translateY(0);
+    } @else if (
+      to-lower-case($direction) == 'bottom-right' or
+      to-lower-case($direction) == 'bottomright' or
+      to-lower-case($direction) == 'b-r' or
+      to-lower-case($direction) == 'br' or
+      to-lower-case($direction) == 'right-bottom' or
+      to-lower-case($direction) == 'rightbottom' or
+      to-lower-case($direction) == 'r-b' or
+      to-lower-case($direction) == 'rb'
+    ) {
+      $trans-val1: translateX(50px) translateY(50px);
+      $trans-val2: translateX(0) translateY(0);
+    } @else if (
+      to-lower-case($direction) == 'bottom-left' or
+      to-lower-case($direction) == 'bottomleft' or
+      to-lower-case($direction) == 'b-l' or
+      to-lower-case($direction) == 'bl' or
+      to-lower-case($direction) == 'left-bottom' or
+      to-lower-case($direction) == 'leftbottom' or
+      to-lower-case($direction) == 'l-b' or
+      to-lower-case($direction) == 'lb'
+    ) {
+      $trans-val1: translateX(-50px) translateY(50px);
+      $trans-val2: translateX(0) translateY(0);
+    } @else {
+      @error 'Invalid direction of `#{inspect($direction)}` chosen for the ' +
+          '`fade` mixin.';
+    }
+  } @else {
+    $direction: null;
+  }
+
+  @if not $in-or-out {
+    // Swap values for fade-out state
+    $temp-val: $opacity-val1;
+    $opacity-val1: $opacity-val2;
+    $opacity-val2: $temp-val;
+
+    $temp-val: $trans-val1;
+    $trans-val1: $trans-val2;
+    $trans-val2: $temp-val;
+  }
+
+  @if not $timing {
+    @if ($in-or-out) {
+      $timing: if((not $direction), 1.2s, .6s);
+    } @else {
+      $timing: if((not $direction), 1s, .7s);
+    }
+  }
+  @if type-of($timing) != 'number' {
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `fade` ' +
+        'mixin. The timing property must be a number.';
+  } @else if unitless($timing) {
+    // If no there is no unit for $timing, assume seconds
+    $timing: $timing * 1s;
+  } @else if (not index('s' 'ms', unit($timing)) ){
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `fade` mixin.' +
+        'The timing property must be in either s or ms units.';
+  } @else if (unit($timing) == 'ms' and $timing % 100 == 0ms) {
+    // If time in ms would be shorter as seconds, convert it
+    $timing: ($timing / 1000ms) * 1s;
+  }
+
+  @if (
+    $delay == 0 or $delay == 0s or $delay == 0ms or
+    $delay == 'none' or $delay == 'no' or $delay == 'n' or
+    $delay == 'n/a' or $delay == nil or not $delay
+  ) {
+    $delay: null;
+  }
+  @if $delay {
+    @if (type-of($delay) != 'number') {
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `fade` mixin.' +
+          'The delay property must be a number.';
+    } @else if (unitless($delay)) {
+      // If no there is no unit for $delay, assume seconds
+      $delay: $delay * 1s;
+    } @else if not index('s' 'ms', unit($delay)) {
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `fade` mixin.' +
+          'The delay property must be in either s or ms units.';
+    } @else if (unit($delay) == 'ms' and $delay % 100 == 0ms) {
+      // If time in ms would be shorter as seconds, convert it
+      $delay: ($delay / 1000ms) * 1s;
+    }
+  } @else {
+    $delay: null;
+  }
+
+  @if ($iterations) {
+    @if (
+      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    ) {
+      $iterations: infinite;
+    } @else if (
+      (unitless($iterations) and type-of($iterations) == 'number') or
+      $iterations == initial or $iterations == inherit
+    ) {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
+          '`fade` mixin.';
+    }
+  }
+
+  @if (
+    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
+    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
+    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
+  ) {
+    $anim-dir: null;
+  } @else if ($anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r') {
+    $anim-drection: reverse;
+  } @else if ($anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a') {
+    $anim-dir: alternate;
+  } @else if (
+    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
+    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
+    $anim-dir == 'ar'
+  ) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
+        '`fade` mixin';
+  }
+
+  @if (not $timing-func or $timing-func == true or $timing-func == 'none'
+      or $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def'
+      or $timing-func == 'default' or $timing-func == 'd') {
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    @if ($in-or-out) {
+      $timing-func: cubic-bezier(.39, .575, .565, 1);
+    } @else {
+      $timing-func: if(
+        (not $direction),
+          ease-out,
+          cubic-bezier(.25, .46, .45, .94)
+      );
+    }
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  }
+  -webkit-animation: fade#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: fade#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+  @if ($fwd-bck) {
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+  }
+
+  @at-root {
+
+    @-webkit-keyframes fade#{$anim-num} {
+      0% {
+        opacity: $opacity-val1;
+        @if $direction {
+          -webkit-transform: $trans-val1;
+                  transform: $trans-val1;
+        }
+      }
+
+      100% {
+        opacity: $opacity-val2;
+        @if $direction {
+          -webkit-transform: $trans-val2;
+                  transform: $trans-val2;
+        }
+      }
+    }
+
+    @keyframes fade#{$anim-num} {
+      0% {
+        opacity: $opacity-val1;
+        @if $direction {
+          -webkit-transform: $trans-val1;
+                  transform: $trans-val1;
+        }
+      }
+
+      100% {
+        opacity: $opacity-val2;
+        @if $direction {
+          -webkit-transform: $trans-val2;
+                  transform: $trans-val2;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+/// CSS Grid column-gap property with vendor prefixes.
+///
+/// @param {Length-Percentage|Keyword} $value - The columnn-gap value. Can be
+/// a length-percentage value, or can be set to `normal`, `inherit`, `initial`,
+/// or `unset`.
+///
+/// @group Utilities
+=column-gap($value)
+  -webkit-column-gap: $value
+  -moz-column-gap: $value
+  column-gap: $value

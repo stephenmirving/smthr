@@ -1,0 +1,20 @@
+/// Given the key, safely returns a value from a map.
+/// @access public
+///
+/// @param {Map} $map - Map to retrieve a value from.
+/// @param {String} $key - Name of the map key.
+/// @return {List} Found value.
+@function get-val($map, $key) {
+  @if (
+    type-of($map) == 'map' or
+    (type-of($map) == 'list' and length($map) == 0)
+  ) {
+    @if map-has-key($map, $key) {
+      @return map-get($map, $key);
+    } @else {
+      @error 'Key: [#{inspect($key)}] is not available in [#{inspect($map)}]';
+    }
+  } @else {
+    @error '[#{inspect($map)}] is not a valid map';
+  }
+}

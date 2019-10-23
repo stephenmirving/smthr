@@ -1,0 +1,17 @@
+/// Applies the float clearing 'clearfix' hack
+/// @param {Keyword} $clear-val - The clear property's value. Can either be
+/// left, right, or both.
+///
+/// @group Utilities
+/// @throw Invalid $clear-val value
+=clearfix($clear-val: both)
+  &:before,
+  &:after
+    content: ''
+    display: table
+
+  &:after
+    clear: $clear-val
+
+  @if $clear-val != 'both' and $clear-val != 'left' and $clear-val != 'right'
+    @error '`#{inspect($clear-val)}` is not a valid value for the clear property in the `clearfix` mixin. Value must be either `left`, `right`, or `both`.'

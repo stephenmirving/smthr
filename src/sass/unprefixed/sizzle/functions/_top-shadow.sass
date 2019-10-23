@@ -1,0 +1,11 @@
+/// Computes the top-shadow for a card effect. Used by the card-depth mixin.
+/// @access private
+///
+/// @param {Number} $depth - The depth level.
+/// @return {List} Computed values for the top-shadow.
+@function top-shadow($depth)
+  $primary-offset: nth(1.5 3 10 14 19, $depth) * 1px
+  $blur: nth(1.5 3 10 14 19, $depth) * 4px
+  $color: rgba(black, nth(.12 .16 .19 .25 .3, $depth))
+
+  @return 0 $primary-offset $blur $color

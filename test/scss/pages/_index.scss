@@ -1,0 +1,11 @@
+// pages/_index.scss
+
+.banner {
+  @include gradient(get-val($color-palette, primary), get-val($color-palette, warning), d2, 20%)
+  border-color: $black;
+  border-style: solid;
+  border-width: 0 0 2px;
+  box-sizing: border-box;
+  height: 60vh;
+  width: 100vw;
+}

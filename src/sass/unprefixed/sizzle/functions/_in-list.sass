@@ -1,0 +1,8 @@
+/// Returns whether `$list` contains `$value`.
+/// @access public
+///
+/// @param {List} $list - The list to check.
+/// @param {*} $value - The value to look in `$list` for.
+/// @return {Boolean} True if `$list` contains `$value`.
+@function in-list($list, $value)
+  @return not not index($list, $value)

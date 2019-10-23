@@ -1,0 +1,9 @@
+/// Lighten a color by mixing it with white at a given percentage.
+/// @access public
+///
+/// @param {Color} $color - The color being lightened..
+/// @param {Number} $percentage - percentage of `$color` in returned color.
+///
+/// @return {Color} - The lightened color.
+@function tint($color, $percentage)
+  @return mix(#fff, $color, $percentage)

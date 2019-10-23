@@ -1,0 +1,249 @@
+/// Generates an animation that flips an element over while scaling it. The
+/// element this mixin is applied to must have a front-face and a back-face
+/// child element. It is recommended that you use this mixin in conjunction with
+/// the `animation-front-face` and 'animation-back-face' mixins for card `face`
+/// child elements and the 'animation-stage` mixin for the parent element.
+///
+/// @param {String} $direction [right] - The direction the scale effect causes
+/// the element to seem to be moving towards
+/// @param {String} $axis [horizontal] - The axis the element will flip over
+/// @param {Time} $timing [.5s] - The duration of the animation (s or ms)
+/// @param {Time} $delay [null] - The optional delay time for the animation.
+/// @param {Number|String} $iterations [null] - The number of iterations
+/// to complete. If the value passed is not a number, it will be set to infinite
+/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// null assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [linear] - The timing function for the
+/// animation.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @throw Invalid $direction value
+/// @throw Invalid $axis value
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+/// @throw Invalid $iterations value
+/// @throw Invalid $anim-dir value
+@mixin flip-scale(
+  $direction: up,
+  $axis: horizontal,
+  $timing: .5s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: linear,
+  $anim-num: null
+) {
+  // Default tranform values for $direction of `up` and $axis of `horizontal`
+  $scale-val1: scale(1);
+  $flip-val1: rotateX(0);
+  $scale-val2: scale(2.5);
+  $flip-val2: rotateX(-90deg);
+  $scale-val3: scale(1);
+  $flip-val3: rotateX(-180deg);
+  @if (to-lower-case($direction) == 'up' or to-lower-case($direction) == 'u'
+      or to-lower-case($direction) == 'top' or to-lower-case($direction) == 't'
+      or to-lower-case($direction) == 'forward'
+      or to-lower-case($direction) == 'fwd'
+      or to-lower-case($direction) == 'f') {
+    @if (to-lower-case($axis) == 'vertical' or to-lower-case($axis) == 'vert'
+        or to-lower-case($axis) == 'v') {
+      $flip-val1: rotateY(0);
+      $flip-val2: rotateY(90deg);
+      $flip-val3: rotateY(180deg);
+    } @else if (to-lower-case($axis) == 'diagonal'
+        or to-lower-case($axis) == 'diagonal1'
+        or to-lower-case($axis) == 'diag' or to-lower-case($axis) == 'diag1'
+        or to-lower-case($axis) == 'd' or to-lower-case($axis) == 'd1') {
+      $flip-val1: rotate3d(1, 1, 0, 0);
+      $flip-val2: rotate3d(1, 1, 0, 90deg);
+      $flip-val3: rotate3d(1, 1, 0, 180deg);
+    } @else if (to-lower-case($axis) == 'diagonal2'
+        or to-lower-case($axis) == 'diag2' or to-lower-case($axis) == 'd2') {
+      $flip-val1: rotate3d(-1, 1, 0, 0);
+      $flip-val2: rotate3d(-1, 1, 0, 90deg);
+      $flip-val3: rotate3d(-1, 1, 0, 180deg);
+    } @else if (to-lower-case($axis) != 'horizontal'
+        and to-lower-case($axis) != 'horiz'
+        and to-lower-case($axis) != 'horz' and to-lower-case($axis) != 'h') {
+      @error 'Invalid axis value of (#{inspect($axis)}) for the `flip-scale` mixin';
+    }
+  } @else if (to-lower-case($direction) == 'down'
+      or to-lower-case($direction) == 'd'
+      or to-lower-case($direction) == 'bottom'
+      or to-lower-case($direction) == 'back'
+      or to-lower-case($direction) == 'bck'
+      or to-lower-case($direction) == 'b') {
+    $scale-val1: scale(1);
+    $scale-val2: scale(.4);
+    $scale-val3: scale(1);
+    @if (to-lower-case($axis) == 'horizontal'
+        or to-lower-case($axis) == 'horiz'
+        or to-lower-case($axis) == 'horz'
+        or to-lower-case($axis) == 'h') {
+      $flip-val1: rotateX(0);
+      $flip-val2: rotateX(90deg);
+      $flip-val3: rotateX(180deg);
+    } @else if (to-lower-case($axis) == 'vertical'
+        or to-lower-case($axis) == 'vert'
+        or to-lower-case($axis) == 'v') {
+      $flip-val1: rotateY(0);
+      $flip-val2: rotateY(-90deg);
+      $flip-val3: rotateY(-180deg);
+    } @else if (to-lower-case($axis) == 'diagonal'
+        or to-lower-case($axis) == 'diagonal1'
+        or to-lower-case($axis) == 'diag' or to-lower-case($axis) == 'diag1'
+        or to-lower-case($axis) == 'd' or to-lower-case($axis) == 'd1') {
+      $flip-val1: rotate3d(1, 1, 0, 0);
+      $flip-val2: rotate3d(1, 1, 0, -90deg);
+      $flip-val3: rotate3d(1, 1, 0, -180deg);
+    } @else if (to-lower-case($axis) == 'diagonal2'
+        or to-lower-case($axis) == 'diag2' or to-lower-case($axis) == 'd2') {
+      $flip-val1: rotate3d(-1, 1, 0, 0);
+      $flip-val2: rotate3d(-1, 1, 0, -90deg);
+      $flip-val3: rotate3d(-1, 1, 0, -180deg);
+    } @else {
+      @error 'Invalid axis value of (#{inspect($axis)}) for the `flip-scale` mixin';
+    }
+  } @else {
+    @error 'Invalid direction value of `#{inspect($direction)}` for the `flip-scale` ' +
+        'mixin';
+  }
+
+  @if type-of($timing) != 'number' {
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `flip-scale` ' +
+        'mixin. The timing property must be a number.';
+  } @else if unitless($timing) {
+    // If no there is no unit for $timing, assume seconds
+    $timing: $timing * 1s;
+  } @else if not index('s' 'ms', unit($timing)) {
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `flip-scale` ' +
+        'mixin. The timing property must be in either s or ms units.';
+  } @else if ($timing % 10 == 0ms) {
+    // If time in ms would be shorter as seconds, convert it
+    $timing: ($timing / 1000ms) * 1s;
+    // Get rid of possible leading zero in front of decimal place
+    @if (str-slice($timing + '', 1, 2) == '0.') {
+      $timing: unquote(str-slice($timing + '', 2));
+    }
+  }
+
+  @if (
+    $delay == 0 or $delay == 0s or $delay == 0ms or
+    $delay == 'none' or $delay == 'no' or $delay == 'n' or
+    $delay == 'n/a' or $delay == nil or not $delay
+  ) {
+    $delay: null;
+  }
+  @if $delay {
+    @if (type-of($delay) != 'number') {
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `flip-scale` ' +
+          'mixin. The delay property must be a number.';
+    } @else if (unitless($delay)) {
+      $delay: $delay * 1s;
+    } @else if not index('s' 'ms', unit($delay)) {
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `flip-scale` ' +
+          'mixin. The delay property must be in either s or ms units.';
+    } @else if ($delay % 10 == 0ms) {
+      $delay: ($delay / 1000ms) * 1s;
+      @if (str-slice($delay + '', 1, 2) == '0.') {
+        $delay: #{str-slice($delay + '', 2)};
+      }
+    }
+  } @else {
+    $delay: null;
+  }
+
+  @if ($iterations) {
+    @if (
+      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    ) {
+      $iterations: infinite;
+    } @else if (
+      (unitless($iterations) and type-of($iterations) == 'number') or
+      $iterations == initial or $iterations == inherit
+    ) {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
+          '`flip-scale` mixin.';
+    }
+  } @else {
+    $iterations: null;
+  }
+
+  @if (
+    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
+    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
+    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
+  ) {
+    $anim-dir: null;
+  } @else if ($anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r') {
+    $anim-drection: reverse;
+  } @else if ($anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a') {
+    $anim-dir: alternate;
+  } @else if (
+    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
+    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
+    $anim-dir == 'ar'
+  ) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
+        '`flip-scale` mixin';
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  }
+  -webkit-animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+  -moz-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0);
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+
+  @at-root {
+
+    @-webkit-keyframes flip-and-scale#{$anim-num} {
+      0% {
+        -webkit-transform: #{$scale-val1} #{$flip-val1};
+                transform: #{$scale-val1} #{$flip-val1};
+      }
+
+      50% {
+        -webkit-transform: #{$scale-val2} #{$flip-val2};
+                transform: #{$scale-val2} #{$flip-val2};
+      }
+
+      100% {
+        -webkit-transform: #{$scale-val3} #{$flip-val3};
+                transform: #{$scale-val3} #{$flip-val3};
+      }
+    }
+
+    @keyframes flip-and-scale#{$anim-num} {
+      0% {
+        -webkit-transform: #{$scale-val1} #{$flip-val1};
+                transform: #{$scale-val1} #{$flip-val1};
+      }
+
+      50% {
+        -webkit-transform: #{$scale-val2} #{$flip-val2};
+                transform: #{$scale-val2} #{$flip-val2};
+      }
+
+      100% {
+        -webkit-transform: #{$scale-val3} #{$flip-val3};
+                transform: #{$scale-val3} #{$flip-val3};
+      }
+    }
+  }
+}

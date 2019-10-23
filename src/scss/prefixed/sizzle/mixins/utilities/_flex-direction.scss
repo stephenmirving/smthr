@@ -1,0 +1,39 @@
+/// A vendor prefix based utilitiy mixin that applies the flex-direction
+/// property with the necessary vendor prefixes to ensure wide browser support.
+///
+/// @param {Keyword|String} $flex-dir [row] - The flex-direction value.
+///
+/// @group Utilities
+@mixin flex-direction($flex-dir: row) {
+  $f-dir: row;
+  $b-dir: normal;
+  $b-orient: horizontal;
+
+  @if $flex-dir {
+    @if ($flex-dir == 'row-reverse' or $flex-dir == 'r-r' or $flex-dir == 'rr'
+        or $flex-dir == 'row-rev' or $flex-direction == 'rowrev') {
+      $f-dir: row-reverse;
+      $b-dir: reverse;
+    } @else if ($flex-dir == 'column' or $flex-dir == 'col' or $flex-dir == 'c'
+        or str-slice($flex-dir, 1, 4) == 'vert' or $flex-dir == 'v') {
+      $f-dir: column;
+      $b-orient: vertical;
+    } @else if ($flex-dir == 'column-reverse' or $flex-dir == 'col-reverse'
+        or $flex-dir == 'col-rev' or $flex-dir == 'colrev' or $flex-dir == 'c-r'
+        or $flex-dir == 'c-rev' or $flex-dir == 'cr') {
+      $f-dir: column-reverse;
+      $b-dir: reverse;
+      $b-orient: vertical;
+    } @else if ($flex-dir != 'row' and $flex-dir != 'r' and $flex-dir != 'normal'
+        and str-slice($flex-dir, 1, 5) != 'horiz' and $flex-dir != 'h') {
+      @error 'Invalid `$flex-dir` value passed to the `flex-direction` mixin.';
+    }
+  } @else {
+    @error 'You must enter a value for the `flex-direction` mixin.';
+  }
+  -webkit-box-orient: $b-orient;
+  -webkit-box-direction: $b-dir;
+  -webkit-flex-direction: $f-dir;
+      -ms-flex-direction: $f-dir;
+          flex-direction: $f-dir;
+}

@@ -1,0 +1,7 @@
+/// Checks if a value is a floating point (decimal) number.
+/// @access public
+//
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is a float, false if it is not.
+@function is-float($value)
+  @return type-of($value) == 'number' and round($value) != $value

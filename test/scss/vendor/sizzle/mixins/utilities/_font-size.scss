@@ -1,0 +1,14 @@
+/// Converts a font-size in pixels into rems and leaves a back-up font-size
+/// in the original pixel size.
+///
+/// @param {Length|Number} $size - A font-size value in pixels. If the value has
+/// no unit, pixels will be applied to value.
+///
+/// @group Utilities
+@mixin font-size($size) {
+  @if unitless($size) {
+    $size: $size * 1px;
+  }
+  font-size: $size;
+  font-size: conv-to-rem($size);
+}

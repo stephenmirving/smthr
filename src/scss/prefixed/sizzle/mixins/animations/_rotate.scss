@@ -1,0 +1,377 @@
+/// Animates an element by rotating it along a point and/or an axis. For the the
+/// best effect on a diagonal rotation, use the `animation-stage` mixin on the
+/// parent element, and a front and back child element within the rotated
+/// element, with the animation-front-face and animation-back-face mixins
+/// applied, respectively.
+///
+/// @param {String} $point [center] - The point the element will appear to be
+/// rotating around. Can be `center`, `top`, `top-right,` `right,
+/// `bottom-right`, `bottom`, `bottom-left`, `left, or `top-left`. Several
+/// aliases aliases also exist for these values.
+/// @param {Time} $timing [.4s] - The duration of the animation (s or ms).
+/// @param {Time} $delay [null] - The optional delay time for the animation.
+/// @param {String} $axis [null] - The animation can optionally rotate along an
+/// axis line. This value can be null (or false, `no`, `n`), `horizontal` (or
+/// `horiz`, `horz`, `hor`, `h`) or `vertical` (or `vert`, `ver`, `v`). Along
+/// the horizontal axis, only `top`, `bottom`, or `center` $point values are
+/// valid. Along the vertical axis, only `left`, `right`, or `center` $point
+/// values are valid.
+/// @param {Number|String} $iterations [null] - The number of iterations
+/// for the animation to complete. If the value passed is not a number, it will
+/// be set to infinite.
+/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// null assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. Default value of null will apply the recommended function for
+/// this animation of `cubic-bezier(.25, .46, .45, .94)`, unless the $axis value
+/// is null, in which case the timing-function defaults to `linear`.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @throw Invalid $point value
+/// @throw Invalid $axis value
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+/// @throw Invalid $anim-dir value
+@mixin rotate(
+  $point: 'center',
+  $timing: .4s,
+  $delay: null,
+  $axis: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  // Default value for the 'center' direction
+  $trans-val1: rotate(0);
+  $trans-val2: rotate(360deg);
+  $trans-origin-val: null;
+  $trans-valD: null;
+  $is-on-axis: false;
+  $is-diagonal: false;
+
+  @if (to-lower-case($point) == 'top' or to-lower-case($point) == 't') {
+    $trans-origin-val: 0%;
+    $point: 'top';
+  } @else if (to-lower-case($point) == 'top-right'
+      or to-lower-case($point) == 'topright'
+      or to-lower-case($point) == 'right-top'
+      or to-lower-case($point) == 'righttop'
+      or to-lower-case($point) == 't-r'
+      or to-lower-case($point) == 'tr'
+      or to-lower-case($point) == 'r-t'
+      or to-lower-case($point) == 'rt') {
+    $trans-origin-val: 0% 50%;
+    $point: 'right-top';
+  } @else if (to-lower-case($point) == 'right'
+      or to-lower-case($point) == 'r') {
+    $trans-origin-val: 100%;
+    $point: 'right';
+  } @else if (to-lower-case($point) == 'bottom-right'
+      or to-lower-case($point) == 'bottomright'
+      or to-lower-case($point) == 'right-bottom'
+      or to-lower-case($point) == 'rightbottom'
+      or to-lower-case($point) == 'b-r'
+      or to-lower-case($point) == 'br'
+      or to-lower-case($point) == 'r-b'
+      or to-lower-case($point) == 'r-b') {
+    $trans-origin-val: 100% 50%;
+    $point: 'bottom-right';
+  } @else if (to-lower-case($point) == 'bottom'
+      or to-lower-case($point) == 'btm'
+      or to-lower-case($point) == 'b') {
+    $trans-origin-val: 100%;
+    $point: 'bottom';
+  } @else if (to-lower-case($point) == 'bottom-left'
+      or to-lower-case($point) == 'bottomleft'
+      or to-lower-case($point) == 'left-bottom'
+      or to-lower-case($point) == 'leftbottom'
+      or to-lower-case($point) == 'b-l'
+      or to-lower-case($point) == 'bl'
+      or to-lower-case($point) == 'l-b'
+      or to-lower-case($point) == 'lb') {
+    $trans-origin-val: 100% 0%;
+    $point: 'bottom-left';
+  } @else if (to-lower-case($point) == 'left'
+      or to-lower-case($point) == 'l') {
+    $trans-origin-val: 0%;
+    $point: 'left';
+  } @else if (to-lower-case($point) == 'top-left'
+      or to-lower-case($point) == 'topleft'
+      or to-lower-case($point) == 'left-top'
+      or to-lower-case($point) == 'lefttop'
+      or to-lower-case($point) == 't-l'
+      or to-lower-case($point) == 'tl'
+      or to-lower-case($point) == 'l-t'
+      or to-lower-case($point) == 'lt') {
+    $trans-origin-val: 0% 0%;
+    $point: 'top-left';
+  } @else if (to-lower-case($point) == 'center'
+      or to-lower-case($point) != 'centre'
+      or to-lower-case($point) != 'cent'
+      or to-lower-case($point) != 'cen'
+      or to-lower-case($point) != 'c') {
+    $point: 'center';
+  } @else {
+    @error 'Invalid direction value of (#{inspect($point)}) for the ' +
+        '`rotate` mixin.';
+  }
+
+  @if ($axis and $axis != 'none' and $axis != 'no' and $axis != 'n') {
+    $is-on-axis: true;
+    @if ($axis == 'vertical' or $axis == 'vert'
+        or $axis == 'ver' or $axis == 'v') {
+      $trans-val1: rotateY(0);
+      $trans-val2: rotateY(360deg);
+      @if ($point != 'left' and $point != 'right'
+          and $point != 'center') {
+        @error 'You have chosen an axis value of `vertical` that cannot be ' +
+            'used with the direction value of (#{inspect($point)}) for the ' +
+            '`rotate` mixin. A vertical axis must have direction value of ' +
+            'either `left`, `right`, or `center`.';
+      } @else if ($point == 'left') {
+        $trans-origin-val: 0%;
+      } @else if ($point == 'right') {
+        $trans-origin-val: 100%;
+      }
+    } @else if ($axis == 'horizontal' or $axis == 'horz' or $axis == 'hor'
+        or $axis == 'h') {
+      $trans-val1: rotateX(0);
+      $trans-val2: rotateX(-360deg);
+      @if ($point != 'top' and $point != 'bottom'
+          and $point != 'center') {
+        @error 'You have chosen an axis value of `horizontal` that cannot be ' +
+            'used with the direction value of (#{inspect($point)}) for the ' +
+            '`rotate` mixin. A horizontal axis must have direction value of ' +
+            'either `top`, `bottom`, or `center`.';
+      } @else if ($point == 'top') {
+        $trans-origin-val: 0%;
+      } @else if ($point == 'bottom') {
+        $trans-origin-val: 100%;
+      }
+    } @else if ($axis == 'diagonal' or $axis == 'diagonal1' or $axis == 'diag'
+        or $axis == 'diag1' or $axis == 'd' or $axis == 'd1'
+        or  $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2') {
+      $is-diagonal: true;
+      @if ($point != 'center' and $point != 'top-right'
+          and $point != 'top-left' and $point != 'bottom-right'
+          and $point != 'bottom-left') {
+        @error 'You have chosen an axis value of `diagonal` that cannot be ' +
+            'used with the direction value of (#{inspect($point)}) for the ' +
+            '`rotate` mixin. A diagonal axis must have direction value of ' +
+            'either `top-left`, `top-right`, `bottom-right`, `bottom-left`, ' +
+            'or `center`.';
+      } @else if ($point == 'center') {
+        @if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
+          $trans-val1: rotate3d(-1, 1, 0, 0);
+          $trans-valD: rotate3d(-1, 1, 0, 180deg);
+          $trans-val2: rotate3d(-1, 1, 0, 360deg);
+        } @else {
+          $trans-val1: rotate3d(1, 1, 0, 0);
+          $trans-valD: rotate3d(1, 1, 0, -180deg);
+          $trans-val2: rotate3d(1, 1, 0, -360deg);
+        }
+      } @else if ($point == 'top-right') {
+        $trans-val1: rotate3d(1, 1, 0, 0);
+        $trans-valD: rotate3d(1, 1, 0, -180deg);
+        $trans-val2: rotate3d(1, 1, 0, -360deg);
+        $trans-origin-val: 100% 0%;
+      } @else if ($point == 'bottom-right') {
+        $trans-val1: rotate3d(-1, 1, 0, 0);
+        $trans-valD: rotate3d(-1, 1, 0, -180deg);
+        $trans-val2: rotate3d(-1, 1, 0, -360deg);
+        $trans-origin-val: 100% 50%;
+      } @else if ($point == 'bottom-left') {
+        $trans-val1: rotate3d(1, 1, 0, 0);
+        $trans-valD: rotate3d(1, 1, 0, 180deg);
+        $trans-val2: rotate3d(1, 1, 0, 360deg);
+        $trans-origin-val: 0% 50%;
+      } @else if ($point == 'top-left') {
+        $trans-val1: rotate3d(-1, 1, 0, 0);
+        $trans-valD: rotate3d(-1, 1, 0, 180deg);
+        $trans-val2: rotate3d(-1, 1, 0, 360deg);
+        $trans-origin-val: 0% 0%;
+      }
+    } @else {
+      @error 'Invalid $axis value of `#{inspect($axis)}` for the `rotate` mixin.';
+    }
+  }
+
+  @if type-of($timing) != 'number' {
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `rotate` ' +
+        'mixin. The timing property must be a number.';
+  } @else if unitless($timing) {
+    // If no there is no unit for $timing, assume seconds
+    $timing: $timing * 1s;
+  } @else if not index('s' 'ms', unit($timing)) {
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `rotate` ' +
+        'mixin. The timing property must be in either s or ms units.';
+  } @else if (unit($timing) == 'ms' and $timing % 10 == 0ms) {
+    // If time in ms would be shorter as seconds, convert it
+    $timing: ($timing / 1000ms) * 1s;
+    // Get rid of possible leading zero in front of decimal place
+    @if (str-slice($timing + '', 1, 2) == '0.') {
+      $timing: unquote(str-slice($timing + '', 2));
+    }
+  }
+
+  @if (
+    $delay == 0 or $delay == 0s or $delay == 0ms or
+    $delay == 'none' or $delay == 'no' or $delay == 'n' or
+    $delay == 'n/a' or $delay == nil or not $delay
+  ) {delay == 'n/a' or $delay == nil or not $delay
+  ) {delay == 'n/a' or $delay == nil or not $delay
+  ) {delay == 'n/a' or $delay == nil or not $delay
+  ) {
+    $delay: null;
+  }
+  @if $delay {
+    @if (type-of($delay) != 'number') {
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `rotate` ' +
+          'mixin. The delay property must be a number.';
+    } @else if unitless($delay) {
+      $delay: $delay * 1s;
+    } @else if not index('s' 'ms', unit($delay)) {
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `rotate` ' +
+          'mixin. The delay property must be in either s or ms units.';
+    } @else if (unit($delay) == 'ms' and $delay % 10 == 0ms) {
+      $delay: ($delay / 1000ms) * 1s;
+      @if (str-slice($delay + '', 1, 2) == '0.') {
+        $delay: #{str-slice($delay + '', 2)};
+      }
+    }
+  } @else {
+    $delay: null;
+  }
+
+  @if ($iterations) {
+    @if (
+      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    ) {
+      $iterations: infinite;
+    } @else if (
+      (unitless($iterations) and type-of($iterations) == 'number') or
+      $iterations == initial or $iterations == inherit
+    ) {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
+          '`rotate` mixin.';
+    }
+  } @else {
+    $iterations: null;
+  }
+
+  @if (
+    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
+    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
+    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
+  ) {
+    $anim-dir: null;
+  } @else if ($anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r') {
+    $anim-drection: reverse;
+  } @else if ($anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a') {
+    $anim-dir: alternate;
+  } @else if (
+    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
+    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
+    $anim-dir == 'ar'
+  ) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
+        '`rotate` mixin';
+  }
+
+  @if (not $timing-func or $timing-func == true or $timing-func == 'none'
+      or $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def'
+      or $timing-func == 'default' or $timing-func == 'd') {
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    $timing-func: if($is-diagonal, linear, cubic-bezier(.25, .46, .45, .94));
+  }
+
+  @if not ($anim-num) {
+    $anim-num: null;
+  }
+  -webkit-animation: rotate#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+          animation: rotate#{$anim-num} #{$timing} #{$timing-func}
+                      #{$delay} #{$iterations} #{$anim-dir} both;
+  @if ($is-on-axis) {
+    -moz-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+    -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+  }
+
+  @at-root {
+    @-webkit-keyframes rotate#{$anim-num} {
+      0% {
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+        @if ($point != 'center') {
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
+        }
+      }
+
+      @if ($is-diagonal) {
+        50% {
+          -webkit-transform: $trans-valD;
+                  transform: $trans-valD;
+          @if ($point != 'center') {
+            -webkit-transform-origin: $trans-origin-val;
+                    transform-origin: $trans-origin-val;
+          }
+        }
+      }
+
+      100% {
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+        @if ($point != 'center') {
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
+        }
+      }
+    }
+
+    @keyframes rotate#{$anim-num} {
+      0% {
+        -webkit-transform: $trans-val1;
+                transform: $trans-val1;
+        @if ($point != 'center') {
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
+        }
+      }
+
+      @if ($is-diagonal) {
+        50% {
+          -webkit-transform: $trans-valD;
+                  transform: $trans-valD;
+          @if ($point != 'center') {
+            -webkit-transform-origin: $trans-origin-val;
+                    transform-origin: $trans-origin-val;
+          }
+        }
+      }
+
+      100% {
+        -webkit-transform: $trans-val2;
+                transform: $trans-val2;
+        @if ($point != 'center') {
+          -webkit-transform-origin: $trans-origin-val;
+                  transform-origin: $trans-origin-val;
+        }
+      }
+    }
+  }
+}

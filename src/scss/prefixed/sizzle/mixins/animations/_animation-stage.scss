@@ -1,0 +1,56 @@
+/// Applied to the parent element of an element that includes a 3-D animation.
+///
+/// @param {Length|Keyword} $perspective [500px] - The perspective value that
+/// will effect the child element's 3-d animation.
+/// @param {Keyword|Length Percentage|List} $p-origin [55% 50%] - The
+/// perspecitve-origin value that will effect the child element's 3-d animation
+/// The syntax for this property can be just an x-position which can be the
+/// keyword, `left` (equal to a 0 value), `center` (equal to 50%), or `right`
+/// (equal to 100%), or can be a length-percentage. It can be also be in an
+/// x-position y-position 2-value format. The y-position value can be the
+/// keyword, `top` (equal to 0), `center` (equal to 50%), or `bottom` (equal to
+/// 100%), or can it can be a length-percentage. (Ex: `left bottom` or
+/// `100% 50%` or `left 30%). This property also accepts the global values of
+/// inherit, initial, and unset as valid.
+/// @param {Length-Percentage} $width [null] - The width of the element.
+/// @param {Number} $z-val [null] - Sets the z-value property if passed
+/// @param {Length-Percentage} $height [$width] - The height of the element.
+///
+/// @group Animations
+/// @group Utilities
+/// @throw Invalid $perspective value
+/// @throw Invalid $z-val value
+@mixin animation-stage(
+  $perspective: 500px,
+  $p-origin: 55% 50%,
+  $width: null,
+  $z-val: null,
+  $height: null
+) {
+  @if $height {
+    height: $height;
+  }
+  @if (type-of($perspective) == 'number' and $perspective > 0
+      and index('px' 'em' 'rem', unit($perspective)))
+      or $perspective == 'initial'
+      or $perspective == 'inherit' {
+    -webkit-perspective: $perspective;
+            perspective: $perspective;
+  }
+  @if str-slice($p-origin + '', 1, 4) == 'calc' {
+    -webkit-perspective-origin: -webkit-#{$p-origin};
+  } @else {
+    -webkit-perspective-origin: $p-origin;
+  }
+  perspective-origin: $p-origin;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  @if $width {
+    width: $width;
+  }
+  @if $z-val and type-of($z-val) == 'number' and unitless($z-val) {
+    z-index: $z-val;
+  }
+}

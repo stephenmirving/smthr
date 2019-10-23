@@ -1,0 +1,67 @@
+/// Creates a little pointing label from an element using clip-path.
+///
+/// @param {String} $direction [right] - Indicates the direction the label
+/// will be pointing towards.
+/// @param {Color|Mixed} $bg [#999} Any value that is valid for the background
+/// shorthand property.
+/// @param {Length-Percentage} $width [5rem] - A length value setting the width.
+/// @param {Color} $fg-color [null] - Optional color value that, if passed,
+/// sets the color property for the text in the label.
+/// @param {Length-Percentage} $height [$width / 4] Length value that sets
+/// the height of the label.
+///
+/// @group Shapes
+/// @throw Invalid $direction value
+@mixin pointing-label(
+  $direction: right,
+  $bg: #999,
+  $width: 5rem,
+  $fg-color: null,
+  $height: $width / 4
+) {
+  background: $bg;
+  background-clip: padding-box;
+  @if (
+    to-lower-case($direction) == 'right' or
+    to-lower-case($direction) == 'r'
+  ) {
+  border-radius: 4px 0 0 4px;
+  -webkit-clip-path: polygon( 95% 0, 95% 35%, 100% 50%, 95% 65%,
+                              95% 100%, 0 100%, 0 0 );
+          clip-path: polygon( 95% 0, 95% 35%, 100% 50%, 95% 65%,
+                              95% 100%, 0 100%, 0 0 );
+  } @else if (
+    to-lower-case($direction) == 'left' or
+    to-lower-case($direction) == 'l'
+  ) {
+    border-radius: 0 4px 4px 0;
+    -webkit-clip-path: polygon( 5% 0, 5% 35%, 0 50%, 5% 65%,
+                                5% 100%, 100% 100%, 100% 0 );
+            clip-path: polygon( 5% 0, 5% 35%, 0 50%, 5% 65%,
+                                5% 100%, 100% 100%, 100% 0 );
+  } @else if (to-lower-case($direction) == 'up'
+      or to-lower-case($direction) == 'u' or to-lower-case($direction) == 'top'
+      or to-lower-case($direction) == 't') {
+  border-radius: 0 0 4px 4px;
+  -webkit-clip-path: polygon( 55% 15%, 50% 0, 45% 15%, 0 15%,
+                              0 100%, 100% 100%, 100% 15% );
+          clip-path: polygon( 55% 15%, 50% 0, 45% 15%, 0 15%,
+                              0 100%, 100% 100%, 100% 15% );
+  } @else if (to-lower-case($direction) == 'down'
+      or to-lower-case($direction) == 'd' or to-lower-case($direction) == 'b'
+      or to-lower-case($direction) == 'bottom') {
+  border-radius: 4px 4px 0 0;
+  -webkit-clip-path: polygon( 55% 85%, 50% 100%, 45% 85%, 0 85%,
+                              0 0, 100% 0, 100% 85% );
+          clip-path: polygon( 55% 85%, 50% 100%, 45% 85%, 0 85%,
+                              0 0, 100% 0, 100% 85% );
+  } @else {
+    @error 'Invalid $direction value of `#{inspect($direction)}` passed to the ' +
+        '`pointing-label` mixin.';
+  }
+  @if $fg-color {
+    color: $fg-color;
+  }
+  height: $height;
+  width: $width;
+}

@@ -1,0 +1,7 @@
+/// Turns the element into a circle.
+///
+/// @group Shapes
+@mixin circle {
+  background-clip: padding-box;
+  border-radius: 50%;
+}

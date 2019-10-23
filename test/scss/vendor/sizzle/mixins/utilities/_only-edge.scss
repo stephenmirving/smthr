@@ -1,0 +1,21 @@
+/// Uses an @supports query to apply the given styles only to MS Edge.
+///
+/// @content Styles that target MS Edge.
+///
+/// @group Utilities
+/// @alias edge-only
+@mixin only-edge {
+  @supports (position: -ms-page) {
+    @content;
+  }
+}
+
+/// Uses an @supports query to apply the given styles only to MS Edge.
+///
+/// @group Utilities
+/// @alias only-edge
+@mixin edge-only {
+  @supports (position: -ms-page) {
+    @content;
+  }
+}

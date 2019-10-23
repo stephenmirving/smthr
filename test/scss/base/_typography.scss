@@ -1,0 +1,7 @@
+// base/_typography.scss
+
+a {
+  @include on-event(true) {
+    text-decoration: none;
+  }
+}

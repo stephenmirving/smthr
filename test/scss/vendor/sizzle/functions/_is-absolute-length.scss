@@ -1,0 +1,11 @@
+/// Checks if a value is an absolute length.
+/// @access public
+///
+/// @param {*} $value - A value to be checked
+/// @return {Boolean} True if $value is an absolute length, false if it is not.
+@function is-absolute-length($value) {
+  @return (
+    type-of($value) == 'number' and
+    index('cm' 'mm' 'in' 'px' 'pt' 'pc', unit($value)) != null
+  );
+}

@@ -1,0 +1,15 @@
+/// Takes a given number value and returns that value multipled by pi.
+/// @access public
+///
+/// @param {Number} $number [1] - The given number. Can take any number,
+/// unitless or with any unit.
+/// @return {Number} - The new value.
+///
+/// @throw Invalid $number unit type.
+@function pi($number)
+  $pi: if(global-variable-exists("pi"), $pi, 3.1415926536)
+
+  @if type-of($number) != "number"
+    @error "Value of $number for pi() must be a valid number."
+
+  @return $number * $pi

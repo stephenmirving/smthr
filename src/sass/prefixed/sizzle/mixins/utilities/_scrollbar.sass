@@ -1,0 +1,88 @@
+/// Applies a fast custom scrollbar to the page, or to an internal element
+/// within the page. The effect works the best in webkit based browsers (Chrome,
+/// Safari, Opera, etc.), but it will apply the custom foreground and background
+/// color to the scrollbar in IE 6+, and in Firefox 64+ it will apply the
+/// background and foreground colors and can reduce the size of the bar.
+///
+/// @param {Length} $size - The height and width of the custom scrollbar.
+/// @param {Color|Gradient} $fg-color - The color of the foreground or 'handle'
+/// of the scrollbar.
+/// @param {Color|Gradient} $bg-color [mix($fg-color, #000, 50%)] - The color
+/// of the background of the scrollbar.
+/// @param {Lenth-Percentage} $radius [null] - The optional border radius
+/// value of the scrollbar.
+/// @param {Boolean} $is-internal [false] - Pass a true value if the scrollbar
+/// is inside of an element rather than being applied outside of any selector,
+/// which is the recommended way of applying this mixin to the browser window's
+/// scrollbar.
+///
+/// @group Utilities
+=scrollbar($size, $fg-color, $bg-color: mix($fg-color, #000, 50%), $radius: null, $is-internal: false)
+  $ff-scroll-size: if($size < 15, thin, auto)
+
+  @if $is-internal
+    &
+      // IE 6+
+      scrollbar-face-color: $fg-color
+      scrollbar-track-color: $bg-color
+      scrollbar-shadow-color: mix(#000, $bg-color, 30%)
+
+      // Firefox 64+
+      scrollbar-color: $fg-color $bg-color
+      scrollbar-width: $ff-scroll-size
+
+      &::-webkit-scrollbar
+        height: $size
+        width:$size
+
+        &-track
+          background: $bg-color
+
+          @if $radius
+            border-radius: $radius
+
+        &-thumb
+          background: $fg-color
+
+          @if $radius
+            border-radius: $radius
+
+          &:hover
+            background: mix(#000, $fg-color, 17.5%)
+
+          &:active
+            background: mix(#000, $fg-color, 35%)
+            box-shadow: inset 1px 1px 3px rgba(mix(#fff, $fg-color, 30%), .5)
+  @else
+    html
+      // IE 6+
+      scrollbar-face-color: $fg-color
+      scrollbar-track-color: $bg-color
+      scrollbar-shadow-color: mix(#000, $bg-color, 30%)
+
+      // Firefox 64+
+      scrollbar-color: $fg-color $bg-color
+      scrollbar-width: $ff-scroll-size
+
+    ::-webkit-scrollbar
+      height: $size
+      width: $size
+
+      &-track
+        background: $bg-color
+
+        @if $radius
+          border-radius: $radius
+
+      &-thumb
+        background: $fg-color
+
+        @if $radius
+          border-radius: $radius
+
+        &:hover
+          background: mix(#000, $fg-color, 17.5%)
+
+        &:active
+          background: mix(#000, $fg-color, 35%)
+          box-shadow: inset 1px 1px 3px rgba(mix(#fff, $fg-color, 30%), .5)

@@ -1,0 +1,30 @@
+/// A vendor prefix based utilitiy mixin that applies the justify-content
+/// property with the necessary vendor prefixes to ensure wide browser support.
+///
+/// @param {Keyword} $value [center] - The justify-content property's value.
+///
+/// @group Utilities
+@mixin justify-content($value: center) {
+  $legacy-value: $value;
+
+  @if ($value == 'space-between' or $value == 'justify') {
+    $value: space-between;
+    $legacy-value: justify;
+  } @else if ($value == 'space-around' or $value == 'distribute') {
+    $value: space-around;
+    $legacy-value: distribute;
+  } @else if ($value == 'flex-start' or $value == 'start') {
+    $value: flex-start;
+    $legacy-value: start;
+  } @else if ($value == 'flex-end' or $value == 'end') {
+    $value: flex-end;
+    $legacy-value: end;
+  }
+
+  @if ($value != 'space-around') {
+    -webkit-box-pack: #{$legacy-value}; // Chrome 4-20, iOS 3.2 -6.1, Safari 3.1-6
+  }
+  -ms-flex-pack: #{$legacy-value}; // IE 10
+  -webkit-justify-content: #{$value}; // Chrome 21-28, iOS 7-8.4, Safari 6.1-8, Opera 15-16
+          justify-content: #{$value}; // Chrome 29+, Safari 9+, iOS8.5+, Opera 12.1 & 17+, Firefox 20+
+}

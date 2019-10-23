@@ -1,0 +1,229 @@
+////
+/// sizzle.scss - A Sassy CSS Front-End Development Library
+/// @author Stephen M Irving -- www.stephenirving.net
+/// Version 0.4.6 08/30/2019
+///
+/// Sizzle is a Sassy CSS library of functions & mixins that aid your front-end
+/// development process by serving up the sizzle without requiring all the
+/// hassle. This is the version with browser vendor prefixes included.
+////
+
+////////////////////////////////////////
+// #PLACEHOLDERS ///////////////////////
+////////////////////////////////////////
+
+@import 'placeholders/variables';
+@import 'placeholders/animation-faces';
+@import 'placeholders/clearfix';
+@import 'placeholders/visually-hide';
+
+
+////////////////////////////////////////
+// #FUNCTIONS //////////////////////////
+////////////////////////////////////////
+
+// General Utility Functions
+@import 'functions/asset';
+@import 'functions/char';
+@import 'functions/missing-dependencies';
+@import 'functions/order-index';
+@import 'functions/str-replace';
+
+// Is-Type Functions
+@import 'functions/is-string';
+@import 'functions/is-number';
+@import 'functions/is-integer';
+@import 'functions/is-float';
+@import 'functions/is-percentage';
+@import 'functions/is-absolute-length';
+@import 'functions/is-relative-length';
+@import 'functions/is-length';
+@import 'functions/is-angle';
+@import 'functions/is-frequency';
+@import 'functions/is-position';
+@import 'functions/is-resolution';
+@import 'functions/is-time';
+@import 'functions/is-conventional';
+@import 'functions/is-true';
+
+// Math Functions
+@import 'functions/clamp';
+@import 'functions/exp';
+@import 'functions/exp-maclaurin';
+@import 'functions/factorial';
+@import 'functions/ln';
+@import 'functions/ln-maclaurin';
+@import 'functions/pi';
+@import 'functions/pow';
+@import 'functions/ratio-to-percentage';
+@import 'functions/summation';
+@import 'functions/to-fixed';
+
+// Conversion Functions
+@import 'functions/strip-unit';
+@import 'functions/conv-angle';
+@import 'functions/conv-to-em';
+@import 'functions/conv-to-px';
+@import 'functions/conv-to-rem';
+
+// List Functions
+@import 'functions/functions-walk';
+@import 'functions/in-list';
+@import 'functions/purge-list';
+@import 'functions/remove-list';
+@import 'functions/remove-where';
+@import 'functions/to-list';
+@import 'functions/update-list';
+@import 'functions/walk';
+
+// Map Functions
+@import 'functions/get-val';
+@import 'functions/get-deep-val';
+@import 'functions/font-stack';
+@import 'functions/map-to-list';
+
+// Color Functions
+@import 'functions/black';
+@import 'functions/white';
+@import 'functions/shade';
+@import 'functions/tint';
+@import 'functions/bottom-shadow';
+@import 'functions/top-shadow';
+@import 'functions/make-long-shadow';
+
+////////////////////////////////////////
+// #MIXINS /////////////////////////////
+////////////////////////////////////////
+
+// Utilities
+@import 'mixins/utilities/absolute-center';
+@import 'mixins/utilities/align-horizontally';
+@import 'mixins/utilities/align-items';
+@import 'mixins/utilities/align-vertically';
+@import 'mixins/utilities/bem';
+@import 'mixins/utilities/bg-image';
+@import 'mixins/utilities/bg-image-svg';
+@import 'mixins/utilities/border-radius';
+@import 'mixins/utilities/button-base';
+@import 'mixins/utilities/calc';
+@import 'mixins/utilities/card-depth';
+@import 'mixins/utilities/clearfix';
+@import 'mixins/utilities/columns';
+@import 'mixins/utilities/column-count';
+@import 'mixins/utilities/column-fill';
+@import 'mixins/utilities/column-gap';
+@import 'mixins/utilities/column-rule';
+@import 'mixins/utilities/column-span';
+@import 'mixins/utilities/column-width';
+@import 'mixins/utilities/cover';
+@import 'mixins/utilities/disable-outline';
+@import 'mixins/utilities/family';
+@import 'mixins/utilities/fixed-length';
+@import 'mixins/utilities/flex-center';
+@import 'mixins/utilities/flex-container';
+@import 'mixins/utilities/flex-direction';
+@import 'mixins/utilities/flex';
+@import 'mixins/utilities/flex-order';
+@import 'mixins/utilities/flex-wrap';
+@import 'mixins/utilities/font';
+@import 'mixins/utilities/font-size';
+@import 'mixins/utilities/ghost-button';
+@import 'mixins/utilities/gradient';
+@import 'mixins/utilities/hide';
+@import 'mixins/utilities/hide-text';
+@import 'mixins/utilities/hide-visually';
+@import 'mixins/utilities/inner-side-shadow';
+@import 'mixins/utilities/justify-content';
+@import 'mixins/utilities/long-shadow';
+@import 'mixins/utilities/max-width';
+@import 'mixins/utilities/min-to-max-width';
+@import 'mixins/utilities/min-width';
+@import 'mixins/utilities/no-select';
+@import 'mixins/utilities/on-event';
+@import 'mixins/utilities/only-chrome';
+@import 'mixins/utilities/only-edge';
+@import 'mixins/utilities/only-hidpi';
+@import 'mixins/utilities/only-ie';
+@import 'mixins/utilities/only-moz';
+@import 'mixins/utilities/only-safari';
+@import 'mixins/utilities/only-webkit';
+@import 'mixins/utilities/opacity';
+@import 'mixins/utilities/placeholder';
+@import 'mixins/utilities/position';
+@import 'mixins/utilities/prefix';
+@import 'mixins/utilities/prefixes';
+@import 'mixins/utilities/pseudo';
+@import 'mixins/utilities/reset';
+@import 'mixins/utilities/reset-list';
+@import 'mixins/utilities/responsive-font';
+@import 'mixins/utilities/responsive-ratio';
+@import 'mixins/utilities/scrollbar';
+@import 'mixins/utilities/size';
+@import 'mixins/utilities/smooth-retina-fonts';
+@import 'mixins/utilities/sticky';
+@import 'mixins/utilities/text-emboss';
+@import 'mixins/utilities/text-outline';
+@import 'mixins/utilities/text-shadow';
+@import 'mixins/utilities/transform';
+@import 'mixins/utilities/transition';
+@import 'mixins/utilities/translate';
+@import 'mixins/utilities/truncate';
+
+// Shapes
+@import 'mixins/shapes/arrow';
+@import 'mixins/shapes/arrow-curved-tail';
+@import 'mixins/shapes/bevel';
+@import 'mixins/shapes/chevron';
+@import 'mixins/shapes/circle';
+@import 'mixins/shapes/cross';
+@import 'mixins/shapes/diamond';
+@import 'mixins/shapes/frame';
+@import 'mixins/shapes/hamburger';
+@import 'mixins/shapes/heart';
+@import 'mixins/shapes/hexagon';
+@import 'mixins/shapes/infinity-symbol';
+@import 'mixins/shapes/octagon';
+@import 'mixins/shapes/point';
+@import 'mixins/shapes/pointing-label';
+@import 'mixins/shapes/price-tag';
+@import 'mixins/shapes/ribbon';
+@import 'mixins/shapes/shape-shadow';
+@import 'mixins/shapes/speech-bubble';
+@import 'mixins/shapes/star';
+@import 'mixins/shapes/star-six-pointed';
+@import 'mixins/shapes/triangle';
+@import 'mixins/shapes/x-shape';
+
+// Animations
+@import 'mixins/animations/animation-back-face';
+@import 'mixins/animations/animation-front-face';
+@import 'mixins/animations/animation-stage';
+@import 'mixins/animations/bounce';
+@import 'mixins/animations/bounciness';
+@import 'mixins/animations/color-shifter';
+@import 'mixins/animations/fade';
+@import 'mixins/animations/fast-frames';
+@import 'mixins/animations/flip';
+@import 'mixins/animations/flip-scale';
+@import 'mixins/animations/flip-scale-2';
+@import 'mixins/animations/pan-wipe';
+@import 'mixins/animations/puff';
+@import 'mixins/animations/roll';
+@import 'mixins/animations/rotate';
+@import 'mixins/animations/rotate-scale';
+@import 'mixins/animations/scale-down';
+@import 'mixins/animations/scale-up';
+@import 'mixins/animations/slide';
+@import 'mixins/animations/slit';
+@import 'mixins/animations/snappiness';
+@import 'mixins/animations/text-blur-out';
+@import 'mixins/animations/text-drop-shadow';
+@import 'mixins/animations/text-flicker';
+@import 'mixins/animations/text-focus-in';
+@import 'mixins/animations/text-glitch';
+@import 'mixins/animations/text-pop-shadow';
+@import 'mixins/animations/text-pop-up';
+@import 'mixins/animations/text-tracking-in';
+@import 'mixins/animations/text-tracking-out';
+@import 'mixins/animations/wobbliness';
+@import 'mixins/animations/zoom-in';

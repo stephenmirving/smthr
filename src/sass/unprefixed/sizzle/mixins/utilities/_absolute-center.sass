@@ -1,0 +1,18 @@
+/// Absolutely centers the element inside of its first parent using a method
+/// combining positioning and translation. The parent element must be non-static.
+///
+/// @group Utilities
+/// @alias abs-center
+=absolute-center
+  left: 50%
+  position: relative
+  top: 50%
+  transform: translate(-50%, -50%)
+
+/// Absolutely centers the element inside of its first parent using a method
+/// combining positioning and translation.
+///
+/// @group Utilities
+/// @alias absolute-center
+=abs-center
+  +absolute-center

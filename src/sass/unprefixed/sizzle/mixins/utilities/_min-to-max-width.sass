@@ -1,0 +1,14 @@
+/// Nest a combined max-width and min-width media query within a selector or on
+/// its own.
+/// @content Styles for screen widths equal to or larger than $min-threshold and
+/// equal to or smaller than $max-threshold.
+//
+/// @param {Length|Resolution} $max-threshold - The maximum screen dimension for
+/// the style.
+/// @param {Length|Resolution} $min-threshold - The minimum screen dimension for
+/// the style.
+///
+/// @group Utilities
+=min-to-max-width($min-threshold, $max-threshold)
+  @media only screen and (max-width: $max-threshold) and (min-width: $min-threshold)
+    @content

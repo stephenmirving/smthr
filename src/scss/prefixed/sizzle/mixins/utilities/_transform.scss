@@ -1,0 +1,18 @@
+/// A vendor prefix based utility mixin that applies the optimal browser-vendor
+/// prefixes for the transform property. The '-webkit' prefix is included to
+/// apply the transformation to Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, and
+/// Opera 15-22. The '-ms' prefix that can be applied by passing a true value to
+/// the $ie-9-support-2d parameter will give support for 2-D transformation to
+/// Internet Explorer 9.
+///
+/// @param {Transform-Function} $trans-val - The tranform value.
+/// @param {Boolean|String} $ie9-support-2d [false] - Mark true for 2-D
+/// transformations in order to support IE 9. If you do not wish to support IE 9
+/// or your animation is 3-D, then you can pass nothing, null, false, or 'f'.
+@mixin transform($trans-val, $ie9-support-2d: false) {
+  -webkit-transform: $trans-val; // Chrome 4-35, Safari 3.1-8, iOS 3.2-8.4, Opera 15-22
+  @if ($ie9-support-2d and $ie9-support-2d != 'f') {
+      -ms-transform: $trans-val;
+  }
+  transform: $trans-val;
+}

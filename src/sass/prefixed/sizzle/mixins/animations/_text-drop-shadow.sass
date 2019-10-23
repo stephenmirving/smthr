@@ -1,0 +1,91 @@
+/// Adds a shadow dropping animation to a given element's text
+///
+/// @param {String} $direction [center] - The direction the shadow will fall.
+/// @param {Time} $timing [.7s] The duration of the animation (s or ms).
+/// @param {Time} $delay [null] The duration of the optional animation delay.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @throw Invalid $direction value
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+=text-drop-shadow($direction: center, $timing: .7s, $delay: null, $anim-num: null)
+  $dir-vals: 0 0 18px
+
+  // Default of center
+
+  @if to-lower-case($direction) == 'bottom' or to-lower-case($direction) == 'b'
+    $dir-vals: 0 6px 18px
+  @else if to-lower-case($direction) == 'bottom-right' or to-lower-case($direction) == 'br'
+    $dir-vals: 6px 6px 18px
+  @else if to-lower-case($direction) == 'right' or to-lower-case($direction) == 'r'
+    $dir-vals: 6px 0 18px
+  @else if to-lower-case($direction) == 'top-left' or to-lower-case($direction) == 'tl'
+    $dir-vals: -6px -6px 18px
+  @else if to-lower-case($direction) == 'top-right' or to-lower-case($direction) == 'tr'
+    $dir-vals: 6px -6px 18px
+  @else if to-lower-case($direction) == 'left' or to-lower-case($direction) == 'l'
+    $dir-vals: -6px 0 18px
+  @else if to-lower-case($direction) == 'top' or to-lower-case($direction) == 't'
+    $dir-vals: 0 -6px 18px
+  @else if to-lower-case($direction) == 'bottom-left' or to-lower-case($direction) == 'bl'
+    $dir-vals: -6px 6px 18px
+  @else if to-lower-case($direction) != 'center' and to-lower-case($direction) != 'centre' and to-lower-case($direction) != 'cent' and to-lower-case($direction) != 'cen' and to-lower-case($direction) != 'c'
+    @error '`#{inspect($direction)}` is not a valid direction for the -text-shadow` mixin.'
+
+  @if type-of($timing) != 'number'
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-drop-shadow` . The timing property must be a number.'
+  @else if unitless($timing)
+    // If no there is no unit for $timing, assume seconds
+    $timing: $timing * 1s
+  @else if not index('s' 'ms', unit($timing))
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-drop-shadow` . The timing property must be in either s or ms units.'
+  @else if $timing % 10 == 0ms
+    // If time in ms would be shorter as seconds, convert it
+    $timing: $timing / 1000ms * 1s
+
+    // Get rid of possible leading zero in front of decimal place
+    @if str-slice($timing + '', 1, 2) == '0.'
+      $timing: unquote(str-slice($timing + '', 2))
+
+  @if $delay == 0 or $delay == 0s or $delay == 0ms or $delay == 'none' or $delay == 'no' or $delay == 'n' or $delay == 'n/a' or $delay == nil or not $delay
+    $delay: null
+
+  @if $delay
+    @if type-of($delay) != 'number'
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-drop-shadow` . The delay property must be a number.'
+    @else if unitless($delay)
+      // If no there is no unit for $delay, assume seconds
+      $delay: $delay * 1s
+    @else if not index('s' 'ms', unit($delay))
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-drop-shadow` . The delay property must be in either s or ms units.'
+    @else if $delay % 10 == 0ms
+      // If time in ms would be shorter as seconds, convert it
+      $delay: $delay / 1000ms * 1s
+
+      @if str-slice($delay + '', 1, 2) == '0.'
+        $delay: #{str-slice($delay + '', 2)}
+  @else
+    $delay: null
+
+  -webkit-animation: txt-shadow-drop#{$anim-num} #{$timing} #{$delay} both
+  animation: txt-shadow-drop#{$anim-num} #{$timing} #{$delay} both
+  text-transform: none
+
+  @at-root
+    @-webkit-keyframes txt-shadow-drop#{$anim-num}
+      0%
+        text-shadow: 0 0 0 rgba(0, 0, 0, 0)
+
+      100%
+        text-shadow: #{$dir-vals} rgba(0, 0, 0, .3)
+
+    @keyframes txt-shadow-drop#{$anim-num}
+      0%
+        text-shadow: 0 0 0 rgba(0, 0, 0, 0)
+
+      100%
+        text-shadow: #{$dir-vals} rgba(0, 0, 0, .3)

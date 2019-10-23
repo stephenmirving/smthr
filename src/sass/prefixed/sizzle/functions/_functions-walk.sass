@@ -1,0 +1,20 @@
+/// Return a list made of the result of each function call from `$functions`
+/// with `$args`.
+/// @author Hugo Giraudel
+/// @access public
+///
+/// @param {List} $functions - List of functions to call
+/// @param {Arglist} $args - Extra arguments to pass to each function
+/// @return {List} The result of the function(s) being applied to the list
+///
+/// @throw Invalid function name
+@function functions-walk($functions, $args...)
+  $list: ()
+
+  @each $function in $functions
+    @if not function-exists($function)
+      @error 'There is no `#{inspect($function)}` function.'
+
+    $list: append($list, call($function, $args...))
+
+  @return $list

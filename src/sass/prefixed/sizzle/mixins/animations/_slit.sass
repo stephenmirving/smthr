@@ -1,0 +1,198 @@
+/// Generates an animation that appears to either slit an element in or out on
+/// its axis.
+///
+/// @param {String|Boolean} $in-or-out [in] - Determines if the element will
+/// appear to slit `in` (or true, `i`) or `out` (or false, `o`).
+/// @param {String} $axis [right] - The axis on which the animation turns
+/// the element.
+/// @param {Time} $timing [.5s] - The duration of the animation (s or ms)
+/// @param {Time} $delay [null] - The optional delay time for the animation.
+/// @param {Number|String} $iterations [null] - The number of iterations
+/// to complete. If the value passed is not a number, it will be set to infinite
+/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// null assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for
+/// the animation. A default of null will apply a timing-function of ease-out
+/// on a slit-in animation and ease-in on a slit-out animation.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @throw Invalid $in-or-out value
+/// @throw Invalid $axis value
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+/// @throw Invalid $iterations value
+/// @throw Invalid $anim-dir value
+=slit($in-or-out: in, $axis: horizontal, $timing: .5s, $delay: null, $iterations: null, $anim-dir: null, $timing-func: null, $anim-num: null)
+  // Default tranform values for slit in on an $axis of 'horizontal'
+  $trans-val1: translateZ(-800px) rotateX(90deg)
+  $trans-val2: translateZ(-160px) rotateX(87deg)
+  $trans-val3: translateZ(0) rotateX(0)
+  $opacity-val1: 0
+  $opacity-val2: 1
+  $temp-val: null
+  $is-diagonal: false
+
+  // Input scrubbing
+  @if $in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i'
+    $in-or-out: true
+  @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o'
+    $in-or-out: false
+  @else
+    @error 'Invalid $in-or-out value of `#{inspect($in-or-out)}` for the `slit` mixin.'
+
+  @if $axis
+    @if to-lower-case($axis) == 'vertical' or to-lower-case($axis) == 'vert' or to-lower-case($axis) == 'ver' or to-lower-case($axis) == 'v'
+      $trans-val1: translateZ(-800px) rotateY(90deg)
+      $trans-val2: translateZ(-160px) rotateY(87deg)
+      $trans-val3: translateZ(0) rotateY(0)
+    @else if to-lower-case($axis) == 'diagonal' or to-lower-case($axis) == 'diagonal1' or to-lower-case($axis) == 'diag' or to-lower-case($axis) == 'diag1' or to-lower-case($axis) == 'd' or to-lower-case($axis) == 'd1'
+      $trans-val1: translateZ(-800px) rotate3d(1, 1, 0, 90deg)
+      $trans-val2: translateZ(-160px) rotate3d(1, 1, 0, 87deg)
+      $trans-val3: translateZ(0) rotate3d(1, 1, 0, 0)
+      $is-diagonal: true
+    @else if to-lower-case($axis) == 'diagonal2' or to-lower-case($axis) == 'diag2' or to-lower-case($axis) == 'd2'
+      $trans-val1: translateZ(-800px) rotate3d(-1, 1, 0, -90deg)
+      $trans-val2: translateZ(-160px) rotate3d(-1, 1, 0, -87deg)
+      $trans-val3: translateZ(0) rotate3d(-1, 1, 0, 0)
+      $is-diagonal: true
+    @else if to-lower-case($axis) != 'horizontal' and to-lower-case($axis) != 'horiz' and to-lower-case($axis) != 'horz' and to-lower-case($axis) != 'h'
+      @error 'Invalid axis of (#{inspect($axis)}) chosen for the `slit` mixin.'
+  @else
+    @error 'You must choose an axis for the `slit` mixin.'
+
+  @if not $in-or-out
+    // Swap values for a slit-out state
+    $temp-val: $trans-val1
+    $trans-val1: $trans-val3
+    $trans-val3: $temp-val
+    $opacity-val1: 0
+
+  @if type-of($timing) != 'number'
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `slit` mixin. The timing property must be a number.'
+  @else if unitless($timing)
+    // If no there is no unit for $timing, assume seconds
+    $timing: $timing * 1s
+  @else if not index('s' 'ms', unit($timing))
+    @error 'Invalid timing value of `#{inspect($timing)}` for the `slit` mixin.The timing property must be in either s or ms units.'
+  @else if unit($timing) == 'ms' and $timing % 10 == 0ms
+    // If time in ms would be shorter as seconds, convert it
+    $timing: $timing / 1000ms * 1s
+
+    // Get rid of possible leading zero in front of decimal place
+    @if str-slice($timing + '', 1, 2) == '0.'
+      $timing: unquote(str-slice($timing + '', 2))
+
+  @if $delay == 0 or $delay == 0s or $delay == 0ms or $delay == 'none' or $delay == 'no' or $delay == 'n' or $delay == 'n/a' or $delay == nil or not $delay
+    $delay: null
+
+  @if $delay
+    @if type-of($delay) != 'number'
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `slit` mixin.The delay property must be a number.'
+    @else if unitless($delay)
+      $delay: $delay * 1s
+    @else if not index('s' 'ms', unit($delay))
+      @error 'Invalid delay value of `#{inspect($delay)}` for the `slit` mixin.The delay property must be in either s or ms units.'
+    @else if unit($delay) == 'ms' and $delay % 10 == 0ms
+      $delay: $delay / 1000ms * 1s
+
+      @if str-slice($delay + '', 1, 2) == '0.'
+        $delay: #{str-slice($delay + '', 2)}
+  @else
+    $delay: null
+
+  @if $iterations
+    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+      $iterations: infinite
+    @else if unitless($iterations) and type-of($iterations) == 'number' or $iterations == initial or $iterations == inherit
+      $iterations: $iterations
+    @else
+      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the `slit` mixin.'
+  @else
+    $iteratons: null
+
+  @if not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
+    $anim-dir: null
+  @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r'
+    $anim-drection: reverse
+  @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+    $anim-dir: alternate
+  @else if $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or $anim-dir == 'ar'
+    $anim-dir: alternate-reverse
+  @else
+    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the `slit` mixin'
+
+  @if not $timing-func or $timing-func == true or $timing-func == 'none' or $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or $timing-func == 'default' or $timing-func == 'd'
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    $timing-func: if($in-or-out, ease-out, ease-in)
+
+  @if not $anim-num
+    $anim-num: null
+
+  -webkit-animation: slit#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations} #{$anim-dir} both
+  animation: slit#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations} #{$anim-dir} both
+  -moz-backface-visibility: hidden
+  -webkit-transform: translate3d(0, 0, 0)
+  transform: translate3d(0, 0, 0)
+  -webkit-transform-style: preserve-3d
+  transform-style: preserve-3d
+
+  @at-root
+    @-webkit-keyframes slit#{$anim-num}
+      0%
+        @if $in-or-out and $is-diagonal
+          animation-timing-function: ease-in
+
+        opacity: $opacity-val1
+        -webkit-transform: $trans-val1
+        transform: $trans-val1
+
+      54%
+        @if $in-or-out and $is-diagonal
+          animation-timing-function: ease-in-out
+
+        opacity: $opacity-val2
+        -webkit-transform: $trans-val2
+        transform: $trans-val2
+
+      100%
+        @if $in-or-out and $is-diagonal
+          animation-timing-function: ease-out
+
+        @if not $in-or-out
+          opacity: 0
+
+        -webkit-transform: $trans-val3
+        transform: $trans-val3
+
+    @keyframes slit#{$anim-num}
+      0%
+        @if $in-or-out and $is-diagonal
+          animation-timing-function: ease-in
+
+        opacity: $opacity-val1
+        -webkit-transform: $trans-val1
+        transform: $trans-val1
+
+      54%
+        @if $in-or-out and $is-diagonal
+          animation-timing-function: ease-in-out
+
+        opacity: $opacity-val2
+        -webkit-transform: $trans-val2
+        transform: $trans-val2
+
+      100%
+        @if $in-or-out and $is-diagonal
+          animation-timing-function: ease-out
+
+        @if not $in-or-out
+          opacity: 0
+
+        -webkit-transform: $trans-val3
+        transform: $trans-val3

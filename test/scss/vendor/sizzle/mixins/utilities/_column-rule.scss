@@ -1,0 +1,10 @@
+/// CSS Grid column-rule property with vendor prefixes
+///
+/// @param {Mixed} $values - The columnn-rule value
+///
+/// @group Utilities
+@mixin column-rule ($values) {
+  -webkit-column-rule: $values;
+     -moz-column-rule: $values;
+          column-rule: $values;
+}

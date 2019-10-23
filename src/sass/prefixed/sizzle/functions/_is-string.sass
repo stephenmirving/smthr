@@ -1,0 +1,7 @@
+/// Checks if a value is a string.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is a string, false if it is not.
+@function is-string($value)
+  @return type-of($value) == 'string'

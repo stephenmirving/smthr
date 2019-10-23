@@ -1,0 +1,22 @@
+/// A vendor prefix based utilitiy mixin that applies the flex property
+/// with the necessary vendor prefixes to ensure wide browser support. The mixin
+/// will optionally take a width value as the second argument.
+///
+/// @param {Keyword|Number|Length-Percentage|List} $flex-val [1] - The flex
+/// property's value.
+/// @param {Length-Percentage} $width [null] - You must use a set width on a
+/// flexed element to keep it from collapsing in old browsers.
+///
+/// @group Utilities
+@mixin flex($flex-val: 1, $width: null) {
+  $legacy-val: if(
+    $flex-val == 'auto', 1, if($flex-val == 'none', 0, nth($flex-val, 1))
+  );
+  -webkit-box-flex: $legacy-val; // Chrome 4-20, iOS 3.2 -6.1, Safari 3.1-6
+  -ms-flex: $flex-val; // IE 10
+  -webkit-flex: $flex-val; // Chrome 21-28, iOS 7-8.4, Safari 6.1-8, Opera 15-16
+          flex: $flex-val;
+  @if ($width) {
+    width: $width;
+  }
+}

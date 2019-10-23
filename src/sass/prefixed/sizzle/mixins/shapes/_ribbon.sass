@@ -1,0 +1,93 @@
+/// Creates a 3D ribbon shape for headers. Apply the ribbon to a header element
+/// and include an inner inline element for the header's content.
+///
+/// @example <h1 class="ribbon"><strong class="ribbon-content">HEADER</strong></h1>
+/// @link https://css-tricks.com/snippets/css/ribbon/
+///
+/// @param {Length-Percentage} $font-size [1em] - The font-size of the ribbon
+/// text.
+/// @param {Number} $ribbon-size [1] - A number value used to calculate the
+/// overall size of the ribbon.
+/// @param {Color} $bg-color [purple] - The background color for the ribbon.
+/// @param {Color} $fg-color [purple] - The color of the ribbon's text.
+/// @param {String} $content-suffix ['-content'] - The suffix that is added
+/// to the class name that this mixin is applied to, representing the internal
+/// inline class that contains the ribbon's text content.
+///
+/// @group Shapes
+/// @alias banner
+/// @throw Invalid $ribbon-size value
+=ribbon($font-size: 1em, $ribbon-size: 1, $bg-color: #BA89B6, $fg-color: #fff, $content-suffix: "-content")
+  @if type-of($ribbon-size) != "number" or not unitless($ribbon-size)
+    @error "Invalid $ribbon-size value for the `ribbon` mixin."
+
+  background: $bg-color
+
+  @if $fg-color
+    color: $fg-color
+
+  font-size: $font-size !important
+  line-height: 1
+  margin: ($ribbon-size * 2rem) auto ($ribbon-size * 3rem)
+  padding: ($ribbon-size * 1rem) ($ribbon-size * 2rem)
+  position: relative
+  text-align: center
+  width: 50%
+
+  &:before,
+  &:after
+    border: ($ribbon-size * 1.5rem) solid mix(#000, $bg-color, 18.5%)
+    bottom: -($ribbon-size * 1rem)
+    content: ''
+    display: block
+    position: absolute
+    z-index: -1
+
+  &:before
+    border-left-color: transparent
+    border-right-width: $ribbon-size * 1.5rem
+    left: -($ribbon-size * 2rem)
+
+  &:after
+    border-left-width: $ribbon-size * 1.5rem
+    border-right-color: transparent
+    right: -($ribbon-size * 2rem)
+
+  &#{$content-suffix}:before,
+  &#{$content-suffix}:after
+    border-color: mix(#000, $bg-color, 31%) transparent transparent
+    border-style: solid
+    bottom: -($ribbon-size * 1rem)
+    content: ''
+    display: block
+    position: absolute
+
+  &#{$content-suffix}:before
+    border-width: ($ribbon-size * 1rem) 0 0 ($ribbon-size * 1rem)
+    left: 0
+
+  &#{$content-suffix}:after
+    border-width: ($ribbon-size * 1rem) ($ribbon-size * 1rem) 0 0
+    right: 0
+
+/// Creates a 3D ribbon shape for headers. Apply the ribbon to a header element
+/// and include an inner inline element for the header's content.
+///
+/// @example <h1 class="ribbon"><strong class="ribbon-content">HEADER</strong></h1>
+/// @link https://css-tricks.com/snippets/css/ribbon/
+///
+/// @param {Length-Percentage} $font-size [1em] - The font-size of the ribbon
+/// text.
+/// @param {Number} $ribbon-size [1] - A number value used to calculate the
+/// overall size of the ribbon.
+/// @param {Color} $bg-color [purple] - The background color for the ribbon.
+/// @param {Color} $fg-color [purple] - The color of the ribbon's text.
+/// @param {String} $content-suffix ['-content'] - The suffix that is added
+/// to the class name that this mixin is applied to, representing the internal
+/// inline class that contains the ribbon's text content.
+///
+/// @group Shapes
+/// @alias ribbon
+/// @throw Invalid $ribbon-size value
+=banner($font-size: 1em, $ribbon-size: 1, $bg-color: #BA89B6, $fg-color: #fff, $content-suffix: '-content')
+  +ribbon($font-size, $ribbon-size, $bg-color, $fg-color, $content-suffix)

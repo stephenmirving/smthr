@@ -1,0 +1,18 @@
+/// Adds styles for the placeholder/watermark for an input element.
+///
+/// @content [The styles for the element's placeholder]
+///
+/// @group Utilities
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+}

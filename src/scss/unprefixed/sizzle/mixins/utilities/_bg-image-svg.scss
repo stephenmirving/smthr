@@ -1,0 +1,107 @@
+/// Apply an SVG background image with a fall-back PNG version and a PNG version
+/// that is scaled to 2x for Retina and other HiDPI displays.
+///
+/// @param {URL} $svg-img-name - File path for the image. The '.svg' file
+/// extension is not required, but if it is included the string must either be
+/// in quotes or inside a function to be read correctly.
+/// @param {Length-Percentage} $bg-width - Width component of the
+/// background-size property that sizes the image.
+/// @param {Length-Percentage} $bg-height [null] - Height component of the
+/// background-size property value for the image. If no height, or a height
+/// of auto is entered, the background-size property will use one value syntax.
+/// @param {Number} $ratio [1.3] - A minimum pixel ratio resolution value used
+/// to calculate the media query targeting Retina and other HiDPI screens.
+/// Common targeting ratios are 1.25, 1.3, 1.5, and 2.
+/// @param {String} $img-2x-suffix [$image-2x-suffix|'@2x']- The suffix that is
+/// appended to the end of image name to designate that it is the 2x version for
+/// HiDPI displays. Must be a quoted string to be read correctly.
+/// @param {Map} $extra-hidpi-properties [null] - You can pass this argument
+/// a map of property: value pairs that will be added to the HiDPI/Retina
+/// media query since the mixin will be the only way to access it.
+///
+/// @group Utilities
+/// @throw Value of $bg-width must not be null
+/// @throw Invalid $bg-width or $bg-height data type
+@mixin bg-image-svg(
+  $svg-img-name,
+  $bg-width,
+  $bg-height: null,
+  $ratio: 1.3,
+  $img-2x-suffix:
+    if(global-variable-exists(image-2x-suffix), $image-2x-suffix, '@2x'),
+  $extra-hidpi-properties: null,
+) {
+  $ret-png-img: null;
+
+  @if (
+    not $extra-hidpi-properties or $extra-hidpi-properties == 'none' or
+    $extra-hidpi-properties == 'no' or $extra-hidpi-properties == nil or
+    $extra-hidpi-properties == 'n/a' or $extra-hidpi-properties == ' ' or
+    $extra-hidpi-properties == () or $extra-hidpi-properties == ( )
+  ) {
+    $extra-hidpi-properties: null;
+  }
+
+  @if not $bg-width {
+    @error 'You must enter an image width for the $bg-width parameter of the ' +
+        '`bg-image-svg` mixin.';
+  } @else if (
+    type-of($bg-width) != 'number' or
+    ($bg-height and $bg-height != auto and type-of($bg-height) != 'number')
+  ) {
+    @error 'Invalid type for the dimensions used in the `bg-image-svg` mixin.';
+  } @else {
+    $bg-width: if(
+      type-of($bg-width) == 'number' and unitless($bg-width),
+      $bg-width * 1px,
+      $bg-width
+    );
+    $bg-height: if(
+      type-of($bg-height) == 'number' and unitless($bg-height),
+      $bg-height * 1px,
+      $bg-height
+    );
+  }
+
+  @if not $img-2x-suffix {
+    $img-2x-suffix: if(
+      global-variable-exists(image-2x-suffix),
+      $image-2x-suffix,
+      '@2x'
+    );
+  }
+
+  @if not str-index(to-lower-case($svg-img-name), '.svg') {
+    $svg-img-name: $svg-img-name + '.svg';
+    $ret-png-img: $svg-img-name + $img-2x-suffix + '.png';
+  }
+
+  $size: if(
+    not $bg-height or $bg-height == auto,
+    $bg-width,
+    $bg-width $bg-height
+  );
+  $png-img: str-slice($svg-img-name, 1, str-length($svg-img-name) - 4) + '.png';
+  $ret-png-img: str-insert($png-img, $img-2x-suffix, str-length($png-img) - 3);
+
+  // Normal sized PNG fallback image
+  background: url(unquote($png-img));
+  // SVG image with properties to ensure it overwrites PNG if SVG is supported
+  background: url(#{$svg-img-name}), linear-gradient(transparent, transparent);
+
+  // Scaled up version of the image for HiDPI displays
+  @media only screen and (min-device-pixel-ratio: $ratio),
+         only screen and (min-resolution: $ratio * 96dpi),
+         only screen and (min-resolution: $ratio * 1dppx) {
+    background: url(#{$ret-png-img}); // 2x PNG fallback image
+    background: url(#{$svg-img-name}), linear-gradient(transparent, transparent);
+    background-size: $size;
+
+    @if $extra-hidpi-properties {
+      $key-list: map-keys($extra-hidpi-properties);
+      @each $key in $key-list {
+        #{$key}: map-get($extra-hidpi-properties, $key);
+      }
+    }
+  }
+}

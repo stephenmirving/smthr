@@ -1,0 +1,67 @@
+/// Uses psuedo-elements and transform to turn an element into the shape of an
+/// arrow with a curved tail.
+///
+/// @param {String|Angle} $direction ['bottom-right'] The direction that the
+/// arrow is pointing. Can either be a direction or an angle in degrees.
+/// @param {Color|Mixed} $bg-color [#F00] The color of the arrow.
+/// @param {Length} $size [2rem] - The size of the arrow is calculated based on
+/// this value.
+///
+/// @group Shapes
+/// @throw Invalid unit type for $direction
+/// @throw Invalid $direction value
+=arrow-curved-tail($direction: 'bottom-right', $bg-color: #F00, $size: 2rem)
+  // Default angle for the 'bottom-right' direction
+  $angle: 10deg
+
+  @if $direction and type-of($direction) == 'number' and unit($direction) != 'deg' and not unitless($direction)
+    @error 'Invalid unit type for the $direction parameter of the `arrow-curved-tail` mixin.'
+
+  @if $direction and type-of($direction) == 'number' and (unitless($direction) or unit($direction) == 'deg')
+    $angle: $direction
+
+    @if unitless($angle)
+      $angle: $angle * 1deg
+
+    // Correct the angle so when the user enters 0deg, the arrow faces
+    // directly to the right when at 0deg
+    $angle: $angle - 45deg
+  @else if $direction == 'top' or $direction == 'up' or $direction == 't' or $direction == 'u'
+    $angle: 225deg
+  @else if $direction == 'right' or $direction == 'r'
+    $angle: -45deg
+  @else if $direction == 'left' or $direction == 'l'
+    $angle: 135deg
+  @else if $direction == 'down' or $direction == 'bottom' or $direction == 'd' or $direction == 'b' or $direction == 'btm' or $direction == 'dwn'
+    $angle: 45deg
+  @else if $direction == 'down-left' or $direction == 'left-down' or $direction == 'd-l' or $direction == 'l-d' or $direction == 'dl' or $direction == 'ld' or $direction == 'bottom-left' or $direction == 'left-bottom' or $direction == 'bl' or $direction == 'lb' or $direction == 'b-l' or $direction == 'l-b'
+    $angle: 100deg
+  @else if $direction == 'top-left' or $direction == 'left-top' or $direction == 't-l' or $direction == 'l-t' or $direction == 'tl' or $direction == 'lt' or $direction == 'up-left' or $direction == 'u-l' or $direction == 'ul' or $direction == 'left-up' or $direction == 'l-u' or $direction == 'lu'
+    $angle: 190deg
+  @else if $direction == 'top-right' or $direction == 'right-top' or $direction == 't-r' or $direction == 'r-t' or $direction == 'tr' or $direction == 'rt' or $direction == 'up-right' or $direction == 'u-r' or $direction == 'ur' or $direction == 'right-up' or $direction == 'r-u' or $direction == 'ru'
+    $angle: -80deg
+  @else if $direction != 'down-right' and $direction != 'right-down' and $direction != 'dr' and $direction != 'rd' and $direction != 'd-r' and $direction != 'r-d' and $direction != 'bottom-right' and $direction != 'right-bottom' and $direction != 'b-r' and $direction != 'r-b' and $direction != 'br' and $direction != 'rb'
+    @error 'Invalid direction value for the `arrow-curved-tail` mixin.'
+
+  border-right: ($size * 0.75) solid $bg-color
+  border-top: ($size * 0.75) solid transparent
+  height: 0
+  position: relative
+  -webkit-transform: rotate($angle)
+  -ms-tranform: rotate($angle)
+  transform: rotate($angle)
+  width: 0
+
+  &:after
+    border-radius: ($size * 1.6666666667) 0 0
+    border: 0 solid transparent
+    border-top: ($size / 4) solid $bg-color
+    content: ''
+    height: $size
+    left: $size * -0.75
+    position: absolute
+    top: -$size
+    -webkit-transform: rotate(45deg)
+    -ms-transform: rotate(45deg)
+    transform: rotate(45deg)
+    width: $size

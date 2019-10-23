@@ -1,0 +1,21 @@
+/// Uses a media query to apply the given styles to any version of Google Chrome
+/// and Apple Safari browsers.
+///
+/// @content Styles that target Chrome and Safari browsers.
+///
+/// @group Utilities
+/// @alias webkit-only
+=only-webkit
+  @media screen and (-webkit-min-device-pixel-ratio: 0)
+    @content
+
+/// Uses a media query to apply the given styles to any version of Google Chrome
+/// and Apple Safari browsers.
+///
+/// @content Styles that target Chrome and Safari browsers.
+///
+/// @group Utilities
+/// @alias only-webkit
+=webkit-only
+  @media screen and (-webkit-min-device-pixel-ratio: 0)
+    @content

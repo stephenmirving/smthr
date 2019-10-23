@@ -1,0 +1,11 @@
+/// Vendor prefixed shorthand property for column-width and column-count.
+///
+/// @param {Mixed} $values - The shorthand column property values.
+///
+/// @group Utilities
+/// @example 100px 3 would mean 100px width and 3 columns
+@mixin columns ($values) {
+  -webkit-columns: values;
+     -moz-columns: values;
+          columns: values;
+}

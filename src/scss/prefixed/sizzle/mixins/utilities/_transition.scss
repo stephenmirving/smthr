@@ -1,0 +1,8 @@
+/// A vendor prefixing utility mixin for the transition property.
+///
+/// @param {Mixed} $value - The value for the transition property.
+/// @group Utilities
+@mixin transition($value) {
+  -webkit-transition: $value;
+          transition: $value;
+}

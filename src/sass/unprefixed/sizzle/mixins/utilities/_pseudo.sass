@@ -1,0 +1,26 @@
+/// Applies the necessary properties for every psuedo-element.
+///
+/// @param {Keyword} $display [block] - The display type for the element.
+/// @param {Keyword} $pos [absolute] - The position value for the element.
+/// @param {String} $content [''] - The content value for the element.
+///
+/// @group Utilities
+/// @alias sudo
+=pseudo($display: block, $pos: absolute, $content: '')
+  content: $content
+  display: $display
+  position: $pos
+
+/// An alias for the psuedo mixin to avoid easy misspellings. Applies the
+/// necessary properties for every psuedo-element.
+///
+/// @param {Keyword} $display [block] - The display type for the element.
+/// @param {Keyword} $pos [absolute] - The position value for the element.
+/// @param {String} $content [''] - The content value for the element.
+///
+/// @group Utilities
+/// @alias pseudo
+=sudo($display: block, $pos: absolute, $content: '')
+  content: $content
+  display: $display
+  position: $pos

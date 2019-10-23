@@ -1,0 +1,17 @@
+// layout/_header.scss
+
+.header {
+  background: $blue;
+  color: $white;
+  height: 120px;
+  width: 100vw;
+}
+
+.page-heading {
+  @include slide(in, right, 1s);
+  display: block;
+  color: $white;
+  float: left;
+  font-size: 3em;
+  margin: 30px;
+}

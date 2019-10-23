@@ -1,0 +1,11 @@
+/// A vendor prefix based utilitiy mixin that applies the flex-wrap property
+/// with the necessary vendor prefixes to ensure wide browser support.
+///
+/// @param {Keyword} $value [wrap] - The flex-wrap value.
+///
+/// @group Utilities
+@mixin flex-wrap($value: wrap) {
+  -webkit-flex-wrap: $value;
+      -ms-flex-wrap: $value;
+          flex-wrap: $value;
+}

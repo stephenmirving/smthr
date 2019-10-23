@@ -1,0 +1,11 @@
+/// CSS Grid column-count property with vendor prefixes.
+///
+/// @param {Integer|Keyword} $value - The columnn-count value. Can be an integer
+/// or `auto`, as well as the global values of `inherit`, `initial`, and `unset`.
+///
+/// @group Utilities
+@mixin column-count ($value) {
+  -webkit-column-fill: $value;
+     -moz-column-fill: $value;
+          column-fill: $value;
+}

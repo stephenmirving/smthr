@@ -1,0 +1,20 @@
+/// Uses clip path to change an element to the shape of a square speech bubble.
+///
+/// @param {Color|Mixed} $bg [#fb8c00] The color or background value.
+/// @param {Length-Percentage} $size [15rem] - The size of the shape. If
+/// the $height property is not set explicitly, it is both height and width, if
+/// $height is set explicitly, then this value sets only the width.
+/// @param {Color} $fg-color [null] The color of any text in the shape
+/// @param {Length-Percentage} $height [$size] The height of the shape.
+///
+/// @group Shapes
+=speech-bubble($bg: #fb8c00, $size: 15rem, $fg-color: null, $height: $size)
+  background: $bg
+
+  @if $fg-color
+    color: $fg-color
+
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0 75%)
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0 75%)
+  height: $height
+  width: $size
