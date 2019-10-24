@@ -45,8 +45,8 @@ specifically (such as -webkit-appearance).
 To use this library, simply download the repo and first choose whether you are
 going to use the standard, and now more common, '.scss syntax' this library was
 originally written in, or if you want to use the old '.sass' syntax. Then you
-must choose between the prefixed or unprefixed version. Once you have gotten all
-that settled, you can choose whether you want to download the entire repo and
+must choose between the browser prefixed or unprefixed version. Once you have gotten
+all that settled, you can choose whether you want to download the entire repo and
 get each individual feature in its own file (which can be helpful for
 organizational purposes), or to download a single 'stipple.scss' file containing
 all the code from the library.
