@@ -5782,7 +5782,7 @@ $button-transition: background-color .3s ease-out, color .3s ease-out !default;
       }
     }
   } @else if $version1 == 7 {
-    @error 'The `only-ie` mixin cannot target a version range that beings with ' +
+    @error 'The `only-ie` mixin cannot target a version range that begins with ' +
           '7. Consider prepending your property values in the following way ' +
           'instead: *+html .ie7 { property: value; }';
   } @else if $version1 == 8 {

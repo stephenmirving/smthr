@@ -41,7 +41,7 @@
       @if $version2 == 6
         @warn 'The `only-ie` mixin cannot target only IE 6 alone. Consider prepending your property values with an `_` character. Targeting IE 6-8 instead now.'
   @else if $version1 == 7
-    @error 'The `only-ie` mixin cannot target a version range that beings with 7. Consider prepending your property values in the following way instead: *+html .ie7 { property: value; }'
+    @error 'The `only-ie` mixin cannot target a version range that begins with 7. Consider prepending your property values in the following way instead: *+html .ie7 { property: value; }'
   @else if $version1 == 8
     @if $version2 == 8
       @media \0screen
