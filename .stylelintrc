@@ -1,12 +1,9 @@
 {
   "ignoreFiles": ["node_modules/**", "**/*.min.css", "**/*.html", "**/*.sass"],
   "plugins": [
-    "stylelint-csstree-validator",
     "stylelint-group-selectors",
-    "stylelint-high-performance-animation",
     "stylelint-order",
     "stylelint-scss",
-    "stylelint-z-index-value-constraint"
   ],
   "rules": {
     "at-rule-empty-line-before": [
