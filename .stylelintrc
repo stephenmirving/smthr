@@ -52,6 +52,7 @@
           "return",
           "styleset",
           "supports",
+          "use",
           "viewport",
           "warn",
           "while"
