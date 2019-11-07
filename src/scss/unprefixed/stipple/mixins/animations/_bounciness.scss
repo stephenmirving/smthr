@@ -93,9 +93,6 @@
     $delay == 0 or $delay == 0s or $delay == 0ms or
     $delay == 'none' or $delay == 'no' or $delay == 'n' or
     $delay == 'n/a' or $delay == nil or not $delay
-  ) {delay == 'n/a' or $delay == nil or not $delay
-  ) {delay == 'n/a' or $delay == nil or not $delay
-  ) {delay == 'n/a' or $delay == nil or not $delay
   ) {
     $delay: null;
   }
@@ -130,7 +127,7 @@
       $iterations: $iterations;
     } @else {
       @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
-          '`slit` mixin.';
+          '`bounciness` mixin.';
     }
   } @else {
     $iteratons: null;
@@ -154,7 +151,7 @@
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
-        '`slit` mixin';
+        '`bounciness` mixin';
   }
 
   @if (not $timing-func or $timing-func == true or $timing-func == 'none'

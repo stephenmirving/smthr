@@ -127,7 +127,7 @@
       $iterations: $iterations;
     } @else {
       @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
-          '`slit` mixin.';
+          '`bounciness` mixin.';
     }
   } @else {
     $iteratons: null;
@@ -151,7 +151,7 @@
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
-        '`slit` mixin';
+        '`bounciness` mixin';
   }
 
   @if (not $timing-func or $timing-func == true or $timing-func == 'none'

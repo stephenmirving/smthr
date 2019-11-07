@@ -94,7 +94,7 @@
     @else if unitless($iterations) and type-of($iterations) == 'number' or $iterations == initial or $iterations == inherit
       $iterations: $iterations
     @else
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the `slit` mixin.'
+      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the `bounciness` mixin.'
   @else
     $iteratons: null
 
@@ -107,7 +107,7 @@
   @else if $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or $anim-dir == 'ar'
     $anim-dir: alternate-reverse
   @else
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the `slit` mixin'
+    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the `bounciness` mixin'
 
   @if not $timing-func or $timing-func == true or $timing-func == 'none' or $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or $timing-func == 'default' or $timing-func == 'd'
     // Take all potential values the user might pass to keep the default setting

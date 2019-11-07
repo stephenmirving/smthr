@@ -40,7 +40,7 @@
     $code: '\20B9'; // Indian Rupee ₹
   } @else if $char == 'peso' {
     $code: '\20B1'; // Mexican Peso ₱
-  } @else if $char == 'currency' or $char = 'curr' {
+  } @else if $char == 'currency' or $char == 'curr' {
     $code: '\00A4'; // Universal currency symbol ¤
   } @else if ($char == 'open-quote' or $char == 'openquote'
       or $char == 'oquote' or $char == 'o-quote' or $char == 'oq'
@@ -93,7 +93,7 @@
     $char == 'account' or $char == 'acc'
   ) {
     $char: '\2100'; // Account Of: ℀
-  } @else if str-slice($char, 1, 7) == 'address') {
+  } @else if str-slice($char, 1, 7) == 'address' {
     $char: '\2101'; // Addressed to the subject of: ℁
   } @else if $char == 'degree' or $char == 'degrees' or $char == 'deg' {
     $char: '\00B0'; // Degrees: °
@@ -109,7 +109,7 @@
     $char == 'degrees-farenheit' or $char == 'degree-farenheit' or
     $char == 'degreesfarenheit' or $char == 'degreefarenheit' or
     $char == 'farenheit' or $char == 'faren' or $char == 'degfar' or
-    $char == 'deg-far' or $char = 'deg-faren' or $char == 'deg-f' or
+    $char == 'deg-far' or $char == 'deg-faren' or $char == 'deg-f' or
     $char == 'degree-f' or $char == 'degrees-f' or $char == 'degf'
   ) {
     $char: '\2109'; // Degrees Celcius: ℉
