@@ -19,7 +19,7 @@ html {
   word-wrap: break-word;
 
   @media (prefers-reduced-motion: reduce) {
-    scroll-behavior: auto !important;
+    scroll-behavior: auto;
   }
 }
 
