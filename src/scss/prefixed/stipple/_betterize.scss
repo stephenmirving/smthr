@@ -37,24 +37,27 @@ html {
 
 body {
   color: if(global-variable-exists('off-black'), $off-black, #333);
-  font: 1em/1.4 if(
-    function-exists('font-stack'), font-stack('primary'), (
-      'Source Sans Pro',
-      Roboto,
-      Cantarell,
-      'Noto Sans',
-      Arial,
-      'Segoe UI',
-      Ubuntu,
-      -apple-system,
-      BlinkMacSystemFont,
-      sans-serif,
-      'Apple Color Emoji',
-      'Segoe UI Emoji',
-      'Segoe UI Symbol',
-      'Noto Color Emoji'
-    )
-  );
+  font:
+    1em/1.4 if(
+      function-exists('font-stack'),
+      font-stack('primary'),
+      (
+        'Source Sans Pro',
+        Roboto,
+        Cantarell,
+        'Noto Sans',
+        Arial,
+        'Segoe UI',
+        Ubuntu,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif,
+        'Apple Color Emoji',
+        'Segoe UI Emoji',
+        'Segoe UI Symbol',
+        'Noto Color Emoji'
+      )
+    );
   text-rendering: optimizeLegibility;
 }
 
