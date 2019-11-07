@@ -262,15 +262,6 @@
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
     "value-list-max-empty-lines": 0,
-    "order/order": [
-      "custom-properties",
-      "dollar-variables",
-      "at-variables",
-      "less-mixins",
-      "declarations",
-      "at-rules",
-      "rules"
-    ],
     "order/properties-alphabetical-order": true,
     "plugin/stylelint-group-selectors": true,
     "scss/at-else-closing-brace-newline-after": "always-last-in-chain",
