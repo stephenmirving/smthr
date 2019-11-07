@@ -1,9 +1,0 @@
-/// Used by the child-index mixin. It will returned the proper sorted numbers
-/// depending on the `$index` value.
-/// @access private
-///
-/// @param {number} $num - Number of children.
-/// @param {number} $index - Index of the sorting.
-@function order-index($i, $index) {
-  @return ($index + $i);
-}
