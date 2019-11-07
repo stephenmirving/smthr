@@ -33,12 +33,12 @@
       $timing-func: cubic-bezier(.25, .46, .45, .94)
 
   @if type-of($timing) != 'number'
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-focus-in` mixin. The timing property must be a number.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `text-focus-in` mixin. The timing property must be a number.'
   @else if unitless($timing)
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s
   @else if not index('s' 'ms', unit($timing))
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-focus-in` mixin. The timing property must be in either s or ms units.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `text-focus-in` mixin. The timing property must be in either s or ms units.'
   @else if $timing % 10 == 0ms
     // If time in ms would be shorter as seconds, convert it
     $timing: $timing / 1000ms * 1s
@@ -52,11 +52,11 @@
 
   @if $delay
     @if type-of($delay) != 'number'
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-focus-in` mixin. The delay property must be a number.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `text-focus-in` mixin. The delay property must be a number.'
     @else if unitless($delay)
       $delay: $delay * 1s
     @else if not index('s' 'ms', unit($delay))
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-focus-in` mixin. The delay property must be in either s or ms units.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `text-focus-in` mixin. The delay property must be in either s or ms units.'
     @else if $delay % 10 == 0ms
       $delay: $delay / 1000ms * 1s
 
@@ -71,7 +71,7 @@
     @else if unitless($iterations) and type-of($iterations) == 'number' or $iterations == initial or $iterations == inherit
       $iterations: $iterations
     @else
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the `text-focus-in` mixin.'
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for the `text-focus-in` mixin.'
 
   @if not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
     $anim-dir: null
@@ -82,7 +82,7 @@
   @else if $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or $anim-dir == 'ar'
     $anim-dir: alternate-reverse
   @else
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the `text-focus-in` mixin'
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the `text-focus-in` mixin'
 
   @if not $anim-num
     $anim-num: null

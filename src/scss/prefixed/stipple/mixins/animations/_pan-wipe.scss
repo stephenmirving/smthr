@@ -25,6 +25,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @throw Invalid $direction type
 /// @throw Invalid $direction value
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value
@@ -42,101 +43,107 @@
   $height: $size,
   $anim-num: null
 ) {
+  @if type-of($direction) != 'string' {
+    @error 'Invalid $direction unit type for the `pan-wipe` mixin. Value must' +
+        ' be of type "string".';
+  }
+
   // $direction default of `right` values
   $pos-val1: 0% 50%;
   $pos-val2: 100% 50%;
-  @if (to-lower-case($direction) == 'left' or to-lower-case($direction) == 'l') {
+  $direction: to-lower-case($direction);
+
+  @if $direction == 'left' or $direction == 'l' {
     $pos-val1: 100% 50%;
     $pos-val2: 0% 50%;
-  } @else if ($direction == to-lower-case('top')
-      or to-lower-case($direction) == 't' or to-lower-case($direction) == 'down'
-      or to-lower-case($direction) == 'd') {
+  } @else if (
+    $direction == 'top' or $direction == 't' or
+    $direction == 'down' or $direction == 'd'
+  ) {
     $pos-val1: 50% 100%;
     $pos-val2: 50% 0%;
-  } @else if (to-lower-case($direction) == 'bottom'
-      or to-lower-case($direction) == 'b' or to-lower-case($direction) == 'up'
-      or to-lower-case($direction) == 'u') {
+  } @else if (
+    $direction == 'bottom' or $direction == 'b' or
+    $direction == 'up' or $direction == 'u'
+  ) {
     $pos-val1: 50% 0%;
     $pos-val2: 50% 100%;
-  } @else if (to-lower-case($direction) == 'top-left'
-      or to-lower-case($direction) == 'topleft'
-      or to-lower-case($direction) == 'tl'
-      or to-lower-case($direction) == 'left-top'
-      or to-lower-case($direction) == 'lefttop'
-      or to-lower-case($direction) == 'lt') {
+  } @else if (
+    $direction == 'top-left' or $direction == 'topleft' or
+    $direction == 'tl' or $direction == 'left-top' or
+    $direction == 'lefttop' or $direction == 'lt'
+  ) {
     $pos-val1: 100% 100%;
     $pos-val2: 0% 0%;
-  } @else if (to-lower-case($direction) == 'top-right'
-      or to-lower-case($direction) == 'topright'
-      or to-lower-case($direction) == 'tr'
-      or to-lower-case($direction) == 'right-top'
-      or to-lower-case($direction) == 'righttop'
-      or to-lower-case($direction) == 'rt') {
+  } @else if (
+    $direction == 'top-right' or $direction == 'topright' or
+    $direction == 'tr' or $direction == 'right-top' or
+    $direction == 'righttop' or $direction == 'rt'
+  ) {
     $pos-val1: 0% 100%;
     $pos-val2: 100% 0%;
-  } @else if (to-lower-case($direction) == 'bottom-left'
-      or to-lower-case($direction) == 'bottomleft'
-      or to-lower-case($direction) == 'bl'
-      or to-lower-case($direction) == 'left-bottom'
-      or to-lower-case($direction) == 'leftbottom'
-      or to-lower-case($direction) == 'lb') {
+  } @else if (
+    $direction == 'bottom-left' or $direction == 'bottomleft' or
+    $direction == 'bl' or $direction == 'left-bottom' or
+    $direction == 'leftbottom' or $direction == 'lb'
+  ) {
     $pos-val1: 100% 0%;
     $pos-val2: 0% 100%;
-  } @else if (to-lower-case($direction) == 'bottom-right'
-      or to-lower-case($direction) == 'bottomright'
-      or to-lower-case($direction) == 'br'
-      or to-lower-case($direction) == 'right-bottom'
-      or to-lower-case($direction) == 'rightbottom'
-      or to-lower-case($direction) == 'rb') {
+  } @else if (
+    $direction == 'bottom-right' or $direction == 'bottomright' or
+    $direction == 'br' or $direction == 'right-bottom' or
+    $direction == 'rightbottom' or $direction == 'rb'
+  ) {
     $pos-val1: 0% 0%;
     $pos-val2: 100% 100%;
-  } @else if (to-lower-case($direction) != 'right'
-      and to-lower-case($direction) != 'r') {
-    @error 'Invalid direction of `#{inspect($direction)}` for the `pan-wipe` mixin.';
+  } @else if $direction != 'right' and $direction != 'r' {
+    @error 'Invalid direction of [#{inspect($direction)}] for the `pan-wipe` mixin.';
   }
 
   @if type-of($timing) != 'number' {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `pan-wipe` ' +
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `pan-wipe` ' +
         'mixin. The timing property must be a number.';
   } @else if unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not index('s' 'ms', unit($timing)) {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `pan-wipe` ' +
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `pan-wipe` ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if (unit($timing) == 'ms' and $timing % 10 == 0ms) {
+  } @else if ($timing % 10 == 0ms) {
     // If time in ms would be shorter as seconds, convert it
     $timing: ($timing / 1000ms) * 1s;
+
     // Get rid of possible leading zero in front of decimal place
     @if (str-slice($timing + '', 1, 2) == '0.') {
       $timing: unquote(str-slice($timing + '', 2));
     }
   }
 
-  @if ($delay == 0 or $delay == 0s or $delay == 0ms or $delay or $delay == 'none'
-      or $delay 'no' or $delay == 'n' or $delay == 'n/a' or $delay == nil) {
+  @if (
+    $delay == 0 or $delay == 0s or $delay == 0ms or
+    $delay == 'none' or $delay == 'no' or $delay == 'n' or
+    $delay == 'n/a' or $delay == nil or not $delay
+  ) {
     $delay: null;
   }
   @if $delay {
-    @if (type-of($delay) != 'number') {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `pan-wipe` ' +
+    @if type-of($delay) != 'number' {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `pan-wipe` ' +
           'mixin. The delay property must be a number.';
-    } @else if (unitless($delay)) {
+    } @else if unitless($delay) {
       $delay: $delay * 1s;
     } @else if not index('s' 'ms', unit($delay)) {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `pan-wipe` ' +
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `pan-wipe` ' +
           'mixin. The delay property must be in either s or ms units.';
-    } @else if (unit($delay) == 'ms' and $delay % 10 == 0ms) {
+    } @else if $delay % 10 == 0ms {
       $delay: ($delay / 1000ms) * 1s;
-      @if (str-slice($delay + '', 1, 2) == '0.') {
+      @if str-slice($delay + '', 1, 2) == '0.' {
         $delay: #{str-slice($delay + '', 2)};
       }
     }
-  } @else {
-    $delay: null;
   }
 
-  @if ($iterations) {
+  @if $iterations {
     @if (
       $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     ) {
@@ -147,8 +154,8 @@
     ) {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
-          '`text-flicker` mixin.';
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for ' +
+          'the `pan-wipe` mixin.';
     }
   } @else {
     $iterations: null;
@@ -160,7 +167,7 @@
     $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
   ) {
     $anim-dir: null;
-  } @else if ($anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r') {
+  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
   } @else if (
     $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
@@ -173,8 +180,8 @@
   ) {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
-        '`text-flicker` mixin';
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
+        '`pan-wipe` mixin';
   }
   -webkit-animation: pan-wipe#{$anim-num} #{$timing} #{$timing-func} #{$delay}
                       #{$iterations} #{$anim-dir} both;

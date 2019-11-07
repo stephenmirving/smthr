@@ -44,7 +44,7 @@
   @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o'
     $in-or-out: false
   @else
-    @error 'Invalid $in-or-out value of `#{inspect($in-or-out)}` for the `puff` mixin.'
+    @error 'Invalid $in-or-out value of [#{inspect($in-or-out)}] for the `puff` mixin.'
 
   @if $direction
     @if to-lower-case($direction) == 'top' or to-lower-case($direction) == 't' or to-lower-case($direction) == 'up' or to-lower-case($direction) == 'u'
@@ -86,7 +86,7 @@
     @else if to-lower-case($direction) == 'center' or to-lower-case($direction) == 'cent' or to-lower-case($direction) == 'c'
       $direction: 'center'
     @else
-      @error 'Invalid direction of `#{inspect($direction)}` chosen for the `puff` mixin.'
+      @error 'Invalid direction of [#{inspect($direction)}] chosen for the `puff` mixin.'
   @else
     $direction: 'center'
 
@@ -108,12 +108,12 @@
     $timing: if($in-or-out, .7s, 1s)
 
   @if type-of($timing) != 'number'
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `puff` mixin. The timing property must be a number.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `puff` mixin. The timing property must be a number.'
   @else if unitless($timing)
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s
   @else if not index('s' 'ms', unit($timing))
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `puff` mixin.The timing property must be in either s or ms units.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `puff` mixin.The timing property must be in either s or ms units.'
   @else if unit($timing) == 'ms' and $timing % 100 == 0ms
     // If time in ms would be shorter as seconds, convert it
     $timing: $timing / 1000ms * 1s
@@ -123,12 +123,12 @@
 
   @if $delay
     @if type-of($delay) != 'number'
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `puff` mixin.The delay property must be a number.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `puff` mixin.The delay property must be a number.'
     @else if unitless($delay)
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s
     @else if not index('s' 'ms', unit($delay))
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `puff` mixin.The delay property must be in either s or ms units.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `puff` mixin.The delay property must be in either s or ms units.'
     @else if unit($delay) == 'ms' and $delay % 100 == 0ms
       // If time in ms would be shorter as seconds, convert it
       $delay: $delay / 1000ms * 1s
@@ -141,7 +141,7 @@
     @else if unitless($iterations) and type-of($iterations) == 'number' or $iterations == initial or $iterations == inherit
       $iterations: $iterations
     @else
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the `puff` mixin.'
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for the `puff` mixin.'
 
   @if not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
     $anim-dir: null
@@ -152,7 +152,7 @@
   @else if $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or $anim-dir == 'ar'
     $anim-dir: alternate-reverse
   @else
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the `puff` mixin'
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the `puff` mixin'
 
   @if not $timing-func or $timing-func == true or $timing-func == 'none' or $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or $timing-func == 'default' or $timing-func == 'd'
     // Take all potential values the user might pass to keep the default setting

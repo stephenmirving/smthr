@@ -46,12 +46,13 @@
   $fwd-bck: false;
 
   // Input scrubbing
-  @if ($in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i') {
+  @if $in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
-  } @else if ($in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o') {
+  } @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
   } @else {
-    @error 'Invalid $in-or-out value of `#{inspect($in-or-out)}` for the `fade` mixin.';
+    @error 'Invalid value for $in-or-out of [#{inspect($in-or-out)}] for the' +
+        '`fade` mixin.';
   }
 
   @if $direction {
@@ -151,7 +152,7 @@
       $trans-val1: translateX(-50px) translateY(50px);
       $trans-val2: translateX(0) translateY(0);
     } @else {
-      @error 'Invalid direction of `#{inspect($direction)}` chosen for the ' +
+      @error 'Invalid direction of [#{inspect($direction)}] chosen for the ' +
           '`fade` mixin.';
     }
   } @else {
@@ -177,13 +178,13 @@
     }
   }
   @if type-of($timing) != 'number' {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `fade` ' +
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `fade` ' +
         'mixin. The timing property must be a number.';
   } @else if unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if (not index('s' 'ms', unit($timing)) ){
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `fade` mixin.' +
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `fade` mixin.' +
         'The timing property must be in either s or ms units.';
   } @else if (unit($timing) == 'ms' and $timing % 100 == 0ms) {
     // If time in ms would be shorter as seconds, convert it
@@ -198,24 +199,22 @@
     $delay: null;
   }
   @if $delay {
-    @if (type-of($delay) != 'number') {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `fade` mixin.' +
+    @if type-of($delay) != 'number' {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `fade` mixin.' +
           'The delay property must be a number.';
-    } @else if (unitless($delay)) {
+    } @else if unitless($delay) {
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s;
     } @else if not index('s' 'ms', unit($delay)) {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `fade` mixin.' +
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `fade` mixin.' +
           'The delay property must be in either s or ms units.';
     } @else if (unit($delay) == 'ms' and $delay % 100 == 0ms) {
       // If time in ms would be shorter as seconds, convert it
       $delay: ($delay / 1000ms) * 1s;
     }
-  } @else {
-    $delay: null;
   }
 
-  @if ($iterations) {
+  @if $iterations {
     @if (
       $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     ) {
@@ -226,7 +225,7 @@
     ) {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for the ' +
           '`fade` mixin.';
     }
   }
@@ -237,9 +236,9 @@
     $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
   ) {
     $anim-dir: null;
-  } @else if ($anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r') {
+  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
-  } @else if ($anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a') {
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a' {
     $anim-dir: alternate;
   } @else if (
     $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
@@ -248,13 +247,15 @@
   ) {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
         '`fade` mixin';
   }
 
-  @if (not $timing-func or $timing-func == true or $timing-func == 'none'
-      or $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def'
-      or $timing-func == 'default' or $timing-func == 'd') {
+  @if (
+    not $timing-func or $timing-func == true or $timing-func == 'none' or
+    $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or
+    $timing-func == 'default' or $timing-func == 'd'
+  ) {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     @if ($in-or-out) {

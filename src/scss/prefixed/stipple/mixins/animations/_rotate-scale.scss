@@ -50,35 +50,44 @@
   $is-on-axis: false;
   $is-diagonal: false;
 
-  @if ($up-or-down == true or $up-or-down == 'up' or $up-or-down == 'u'
-      or $up-or-down == 't') {
+  @if (
+    $up-or-down == true or $up-or-down == 'up' or
+    $up-or-down == 'u' or $up-or-down == 't'
+  ) {
     $up-or-down: true;
-  } @else if ($up-or-down == false or $up-or-down == 'down'
-      or $up-or-down == 'd' or $up-or-down == 'f') {
+  } @else if (
+    $up-or-down == false or $up-or-down == 'down' or
+    $up-or-down == 'd' or $up-or-down == 'f'
+  ) {
     $up-or-down: false;
     $trans-val2: scale(.5) rotateZ(180deg);
   } @else {
-    @error 'Invalid direction value of `#{inspect($up-or-down)}` for the ' +
+    @error 'Invalid direction value of [#{inspect($up-or-down)}] for the ' +
         '`rotate-scale` mixin.';
   }
 
-  @if ($axis and $axis != 'none' and $axis != 'no' and $axis != 'n') {
+  @if $axis and $axis != 'none' and $axis != 'no' and $axis != 'n' {
     $is-on-axis: true;
-    @if ($axis == 'vertical' or $axis == 'vert'
-        or $axis == 'ver' or $axis == 'v') {
+    @if (
+      $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
+    ) {
       $trans-val1: if($up-or-down, scale(1) rotateY(0), scale(1) rotateY(0));
       $trans-val2: if($up-or-down, scale(2) rotateY(180deg), scale(.5) rotateY(180deg));
       $trans-val3: if($up-or-down, scale(1) rotateY(360deg), scale(1) rotateY(360deg));
-    } @else if ($axis == 'horizontal' or $axis == 'horz' or $axis == 'hor'
-        or $axis == 'h') {
+    } @else if (
+      $axis == 'horizontal' or $axis == 'horz' or
+      $axis == 'hor' or $axis == 'h'
+    ) {
       $trans-val1: if($up-or-down, scale(1) rotateX(0), scale(1) rotateX(0));
       $trans-val2: if($up-or-down, scale(2) rotateX(-180deg), scale(.5) rotateX(-180deg));
       $trans-val3: if($up-or-down, scale(1) rotateX(-360deg), scale(1) rotateX(-360deg));
-    } @else if ($axis == 'diagonal' or $axis == 'diagonal1' or $axis == 'diag'
-        or $axis == 'diag1' or $axis == 'd' or $axis == 'd1'
-        or  $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2') {
+    } @else if (
+      $axis == 'diagonal' or $axis == 'diagonal1' or $axis == 'diag' or
+      $axis == 'diag1' or $axis == 'd' or $axis == 'd1' or
+      $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2'
+    ) {
       $is-diagonal: true;
-      @if ($axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2') {
+      @if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
         $trans-val1: if($up-or-down, scale(1) rotate3d(-1, 1, 0, 0), scale(1) rotate3d(-1, 1, 0, 0));
         $trans-val2: if($up-or-down, scale(2) rotate3d(-1, 1, 0, 180deg), scale(.5) rotate3d(-1, 1, 0, 180deg));
         $trans-val3: if($up-or-down, scale(1) rotate3d(-1, 1, 0, 360deg), scale(1) rotate3d(-1, 1, 0, 360deg));
@@ -88,22 +97,25 @@
         $trans-val3: if($up-or-down, scale(1) rotate3d(1, 1, 0, -360deg), scale(1) rotate3d(1, 1, 0, -360deg));
       }
     } @else {
-      @error 'Invalid $axis value of `#{inspect($axis)}` for the `rotate-scale` mixin.';
+      @error 'Invalid $axis value of [#{inspect($axis)}] for the ' +
+          '`rotate-scale` mixin.';
     }
   }
 
   @if type-of($timing) != 'number' {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `rotate-scale` ' +
-        'mixin. The timing property must be a number.';
+    @error 'Invalid timing value of [#{inspect($timing)}] for the ' +
+        '`rotate-scale` mixin. The timing property must be a number.';
   } @else if unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not index('s' 'ms', unit($timing)) {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `rotate-scale` ' +
-        'mixin. The timing property must be in either s or ms units.';
-  } @else if (unit($timing) == 'ms' and $timing % 10 == 0ms) {
+    @error 'Invalid timing value of [#{inspect($timing)}] for the ' +
+        '`rotate-scale` mixin. The timing property must be in either ' +
+        's or ms units.';
+  } @else if ($timing % 10 == 0ms) {
     // If time in ms would be shorter as seconds, convert it
     $timing: ($timing / 1000ms) * 1s;
+
     // Get rid of possible leading zero in front of decimal place
     @if (str-slice($timing + '', 1, 2) == '0.') {
       $timing: unquote(str-slice($timing + '', 2));
@@ -118,25 +130,23 @@
     $delay: null;
   }
   @if $delay {
-    @if (type-of($delay) != 'number') {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `rotate-scale` ' +
+    @if type-of($delay) != 'number' {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `rotate-scale` ' +
           'mixin. The delay property must be a number.';
-    } @else if (unitless($delay)) {
+    } @else if unitless($delay) {
       $delay: $delay * 1s;
     } @else if not index('s' 'ms', unit($delay)) {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `rotate-scale` ' +
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `rotate-scale` ' +
           'mixin. The delay property must be in either s or ms units.';
-    } @else if (unit($delay) == 'ms' and $delay % 10 == 0ms) {
+    } @else if $delay % 10 == 0ms {
       $delay: ($delay / 1000ms) * 1s;
-      @if (str-slice($delay + '', 1, 2) == '0.') {
+      @if str-slice($delay + '', 1, 2) == '0.' {
         $delay: #{str-slice($delay + '', 2)};
       }
     }
-  } @else {
-    $delay: null;
   }
 
-  @if ($iterations) {
+  @if $iterations {
     @if (
       $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     ) {
@@ -147,7 +157,7 @@
     ) {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for the ' +
           '`rotate-scale` mixin.';
     }
   } @else {
@@ -160,9 +170,9 @@
     $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
   ) {
     $anim-dir: null;
-  } @else if ($anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r') {
+  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
-  } @else if ($anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a') {
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a' {
     $anim-dir: alternate;
   } @else if (
     $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
@@ -171,13 +181,15 @@
   ) {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
         '`rotate-scale` mixin';
   }
 
-  @if (not $timing-func or $timing-func == true or $timing-func == 'none'
-      or $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def'
-      or $timing-func == 'default' or $timing-func == 'd') {
+  @if (
+    not $timing-func or $timing-func == true or $timing-func == 'none' or
+    $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or
+    $timing-func == 'default' or $timing-func == 'd'
+  ) {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: linear;

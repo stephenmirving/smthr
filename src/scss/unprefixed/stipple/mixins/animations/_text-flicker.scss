@@ -37,21 +37,22 @@
   } @else if (not $in-or-out or $in-or-out == 'out' or $in-or-out == 'o') {
     $in-or-out: false;
   } @else {
-    @error 'Invalid in-out value of `#{inspect($in-or-out)}` for the `text-flicer` mixin';
+    @error 'Invalid in-out value of [#{inspect($in-or-out)}] for the `text-flicer` mixin';
   }
 
   @if type-of($timing) != 'number' {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-flicker` ' +
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `text-flicker` ' +
         'mixin. The timing property must be a number.';
   } @else if unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not index('s' 'ms', unit($timing)) {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-flicker` ' +
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `text-flicker` ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if ($timing % 10 == 0ms) {
     // If time in ms would be shorter as seconds, convert it
     $timing: ($timing / 1000ms) * 1s;
+
     // Get rid of possible leading zero in front of decimal place
     @if (str-slice($timing + '', 1, 2) == '0.') {
       $timing: unquote(str-slice($timing + '', 2));
@@ -66,25 +67,24 @@
     $delay: null;
   }
   @if $delay {
-    @if (type-of($delay) != 'number') {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-tracking-in` ' +
-          'mixin. The delay property must be a number.';
-    } @else if (unitless($delay)) {
+    @if type-of($delay) != 'number' {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the ' +
+          '`text-flicker` mixin. The delay property must be a number.';
+    } @else if unitless($delay) {
       $delay: $delay * 1s;
     } @else if not index('s' 'ms', unit($delay)) {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-tracking-in` ' +
-          'mixin. The delay property must be in either s or ms units.';
-    } @else if ($delay % 10 == 0ms) {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the ' +
+          '`text-flicker` mixin. The delay property must be in either ' +
+          's or ms units.';
+    } @else if $delay % 10 == 0ms {
       $delay: ($delay / 1000ms) * 1s;
-      @if (str-slice($delay + '', 1, 2) == '0.') {
+      @if str-slice($delay + '', 1, 2) == '0.' {
         $delay: #{str-slice($delay + '', 2)};
       }
     }
-  } @else {
-    $delay: null;
   }
 
-  @if ($iterations) {
+  @if $iterations {
     @if (
       $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     ) {
@@ -95,8 +95,8 @@
     ) {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
-          '`text-flicker` mixin.';
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for ' +
+          'the `text-flicker` mixin.';
     }
   }
 
@@ -119,7 +119,7 @@
   ) {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
         '`text-flicker` mixin';
   }
 

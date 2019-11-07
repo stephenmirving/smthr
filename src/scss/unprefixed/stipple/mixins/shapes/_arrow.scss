@@ -75,7 +75,7 @@
         25% 0
       );
   } @else {
-    @error 'Invalid direction of `#{inspect($direction)}` for the `arrow` mixin';
+    @error 'Invalid direction of [#{inspect($direction)}] for the `arrow` mixin';
   }
 
   height: $height;

@@ -34,15 +34,15 @@
   @else if to-lower-case($direction) == 'bottom-left' or to-lower-case($direction) == 'bl'
     $dir-vals: -6px 6px 18px
   @else if to-lower-case($direction) != 'center' and to-lower-case($direction) != 'centre' and to-lower-case($direction) != 'cent' and to-lower-case($direction) != 'cen' and to-lower-case($direction) != 'c'
-    @error '`#{inspect($direction)}` is not a valid direction for the `drop-text-shadow` mixin.'
+    @error '[#{inspect($direction)}] is not a valid direction for the `drop-text-shadow` mixin.'
 
   @if type-of($timing) != 'number'
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-drop-shadow` mixin. The timing property must be a number.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `text-drop-shadow` mixin. The timing property must be a number.'
   @else if unitless($timing)
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s
   @else if not index('s' 'ms', unit($timing))
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-drop-shadow` mixin. The timing property must be in either s or ms units.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `text-drop-shadow` mixin. The timing property must be in either s or ms units.'
   @else if $timing % 10 == 0ms
     // If time in ms would be shorter as seconds, convert it
     $timing: $timing / 1000ms * 1s
@@ -56,12 +56,12 @@
 
   @if $delay
     @if type-of($delay) != 'number'
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-drop-shadow` mixin. The delay property must be a number.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `text-drop-shadow` mixin. The delay property must be a number.'
     @else if unitless($delay)
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s
     @else if not index('s' 'ms', unit($delay))
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-drop-shadow` mixin. The delay property must be in either s or ms units.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `text-drop-shadow` mixin. The delay property must be in either s or ms units.'
     @else if $delay % 10 == 0ms
       // If time in ms would be shorter as seconds, convert it
       $delay: $delay / 1000ms * 1s

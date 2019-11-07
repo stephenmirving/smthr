@@ -57,7 +57,7 @@
     @else if to-lower-case($direction) == 'bottom-left' or to-lower-case($direction) == 'bottomleft' or to-lower-case($direction) == 'b-l' or to-lower-case($direction) == 'bl' or to-lower-case($direction) == 'left-bottom' or to-lower-case($direction) == 'leftbottom' or to-lower-case($direction) == 'l-b' or to-lower-case($direction) == 'lb'
       $direction: 'bottom-left'
     @else
-      @error 'Invalid direction of `#{inspect($direction)}` chosen for the `flip` mixin.'
+      @error 'Invalid direction of [#{inspect($direction)}] chosen for the `flip` mixin.'
   @else
     @error 'You must choose a direction for the `flip` mixin.'
 
@@ -71,7 +71,7 @@
     @else if to-lower-case($axis) == 'diagonal2' or to-lower-case($axis) == 'diag2' or to-lower-case($axis) == 'd2'
       $axis: 'diagonal2'
     @else
-      @error 'Invalid axis of (#{inspect($axis)}) chosen for the `flip` mixin.'
+      @error 'Invalid axis of [#{inspect($axis)}] chosen for the `flip` mixin.'
   @else
     @error 'You must choose an axis for the `flip` mixin.'
 
@@ -85,7 +85,7 @@
       $trans-val1: translateZ(0) rotateX(0)
       $trans-val2: translateZ(-260px) rotateX(180deg)
     @else if $direction != 'top'
-      @error 'Invalid direction value of `#{inspect($direction)}` with an $axis of `horizontal`. For a horizontal axis, you must choose a direction of either `top`, `bottom`, `backward`, or `forward`.'
+      @error 'Invalid direction value of [#{inspect($direction)}] with an $axis of `horizontal`. For a horizontal axis, you must choose a direction of either `top`, `bottom`, `backward`, or `forward`.'
   @else if $axis == 'vertical'
     $trans-val1: rotateY(0)
     $trans-val2: rotateY(180deg)
@@ -99,7 +99,7 @@
       $trans-val1: translateZ(0) rotateY(0)
       $trans-val2: translateZ(160px) rotateY(180deg)
     @else if $direction != 'right'
-      @error 'Invalid direction value of `#{inspect($direction)}` with an $axis of `vertical`. For a vertical axis, you must choose a direction of either `left`, `right`, `backward`, or `forward`.'
+      @error 'Invalid direction value of [#{inspect($direction)}] with an $axis of `vertical`. For a vertical axis, you must choose a direction of either `left`, `right`, `backward`, or `forward`.'
   @else if $axis == 'diagonal1'
     $trans-val1: rotate3d(1, 1, 0, 0)
     $trans-val2: rotate3d(1, 1, 0, 180deg)
@@ -113,7 +113,7 @@
       $trans-val1: translateZ(0) rotate3d(1, 1, 0, 0)
       $trans-val2: translateZ(-260px) rotate3d(1, 1, 0, -180deg)
     @else if $direction != 'top-right'
-      @error 'Invalid direction value of `#{inspect($direction)}` with an $axis of `diagonal1`. For the diagonal1 axis, you must choose a direction of either `top-right`, `bottom-left`, `backward`, or `forward`.'
+      @error 'Invalid direction value of [#{inspect($direction)}] with an $axis of `diagonal1`. For the diagonal1 axis, you must choose a direction of either `top-right`, `bottom-left`, `backward`, or `forward`.'
   @else if $axis == 'diagonal2'
     $trans-val1: rotate3d(-1, 1, 0, 0)
     $trans-val2: rotate3d(-1, 1, 0, -180deg)
@@ -127,15 +127,15 @@
       $trans-val1: translateZ(0) rotate3d(-1, 1, 0, 0)
       $trans-val2: translateZ(-260px) rotate3d(-1, 1, 0, -180deg)
     @else if $direction != 'top-left'
-      @error 'Invalid direction value of `#{inspect($direction)}` with an $axis of `diagonal2`. For the diagonal1 axis, you must choose a direction of either `top-left`, `bottom-right`, `backward`, or `forward`.'
+      @error 'Invalid direction value of [#{inspect($direction)}] with an $axis of `diagonal2`. For the diagonal1 axis, you must choose a direction of either `top-left`, `bottom-right`, `backward`, or `forward`.'
 
   @if type-of($timing) != 'number'
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `flip` mixin. The timing property must be a number.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `flip` mixin. The timing property must be a number.'
   @else if unitless($timing)
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s
   @else if not index('s' 'ms', unit($timing))
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `flip` mixin.The timing property must be in either s or ms units.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `flip` mixin.The timing property must be in either s or ms units.'
   @else if $timing % 10 == 0ms
     // If time in ms would be shorter as seconds, convert it
     $timing: $timing / 1000ms * 1s
@@ -145,12 +145,12 @@
 
   @if $delay
     @if type-of($delay) != 'number'
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `flip` mixin.The delay property must be a number.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `flip` mixin.The delay property must be a number.'
     @else if unitless($delay)
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s
     @else if not index('s' 'ms', unit($delay))
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `flip` mixin.The delay property must be in either s or ms units.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `flip` mixin.The delay property must be in either s or ms units.'
     @else if $delay % 10 == 0ms
       // If time in ms would be shorter as seconds, convert it
       $delay: $delay / 1000ms * 1s
@@ -163,7 +163,7 @@
     @else if unitless($iterations) and type-of($iterations) == 'number' or $iterations == initial or $iterations == inherit
       $iterations: $iterations
     @else
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the `flip` mixin.'
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for the `flip` mixin.'
   @else
     $iterations: null
 
@@ -176,7 +176,7 @@
   @else if $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or $anim-dir == 'ar'
     $anim-dir: alternate-reverse
   @else
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the `flip` mixin'
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the `flip` mixin'
 
   @if not $timing-func or $timing-func == true or $timing-func == 'none' or $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or $timing-func == 'default' or $timing-func == 'd'
     // Take all potential values the user might pass to keep the default setting

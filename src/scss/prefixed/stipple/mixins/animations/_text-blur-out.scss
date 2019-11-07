@@ -35,11 +35,13 @@
   $timing-func: null,
   $anim-num: null
 ) {
-  @if (not $timing-func) {
-    @if (not $style or to-lower-case($style) == 'expand'
-        or to-lower-case($style) == 'exp'
-        or to-lower-case($style) == 'e' or to-lower-case($style) == 'forward'
-        or to-lower-case($style) == 'fwd' or to-lower-case($style) == 'f') {
+  @if not $timing-func {
+    @if (
+      not $style or to-lower-case($style) == 'expand' or
+      to-lower-case($style) == 'exp' or to-lower-case($style) == 'e' or
+      to-lower-case($style) == 'forward' or to-lower-case($style) == 'fwd' or
+      to-lower-case($style) == 'f'
+    ) {
       $timing-func: cubic-bezier(.25, .46, .45, .94);
     } @else {
       $timing-func: cubic-bezier(.55, .085, .68, .53);
@@ -47,17 +49,19 @@
   }
 
   @if type-of($timing) != 'number' {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-blur-out` ' +
-        'mixin. The timing property must be a number.';
+    @error 'Invalid timing value of [#{inspect($timing)}] for the ' +
+        '`text-blur-out` mixin. The timing property must be a number.';
   } @else if unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not index('s' 'ms', unit($timing)) {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-blur-out` ' +
-        'mixin. The timing property must be in either s or ms units.';
+    @error 'Invalid timing value of [#{inspect($timing)}] for the ' +
+        '`text-blur-out` mixin. The timing property must be in either ' +
+        's or ms units.';
   } @else if ($timing % 10 == 0ms) {
     // If time in ms would be shorter as seconds, convert it
     $timing: ($timing / 1000ms) * 1s;
+
     // Get rid of possible leading zero in front of decimal place
     @if (str-slice($timing + '', 1, 2) == '0.') {
       $timing: unquote(str-slice($timing + '', 2));
@@ -72,25 +76,24 @@
     $delay: null;
   }
   @if $delay {
-    @if (type-of($delay) != 'number') {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-blur-out` ' +
-          'mixin. The delay property must be a number.';
-    } @else if (unitless($delay)) {
+    @if type-of($delay) != 'number' {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the ' +
+          '`text-blur-out` mixin. The delay property must be a number.';
+    } @else if unitless($delay) {
       $delay: $delay * 1s;
     } @else if not index('s' 'ms', unit($delay)) {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-blur-out` ' +
-          'mixin. The delay property must be in either s or ms units.';
-    } @else if ($delay % 10 == 0ms) {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the ' +
+          '`text-blur-out` mixin. The delay property must be in either ' +
+          's or ms units.';
+    } @else if $delay % 10 == 0ms {
       $delay: ($delay / 1000ms) * 1s;
-      @if (str-slice($delay + '', 1, 2) == '0.') {
+      @if str-slice($delay + '', 1, 2) == '0.' {
         $delay: #{str-slice($delay + '', 2)};
       }
     }
-  } @else {
-    $delay: null;
   }
 
-  @if ($iterations) {
+  @if $iterations {
     @if (to-lower-case($iterations) == 'infinite'
         or to-lower-case($iterations) == 'inf'
         or to-lower-case($iterations) == 'i') {
@@ -101,39 +104,47 @@
     ) {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
-          '`text-blur-out` mixin.';
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for ' +
+          'the `text-blur-out` mixin.';
     }
   } @else {
     $iterations: null;
   }
 
-  @if (not $anim-dir or to-lower-case($anim-dir) == 'none'
-      or to-lower-case($anim-dir) == 'no'
-      or to-lower-case($anim-dir) == 'n/a'
-      or to-lower-case($anim-dir) == 'n'
-      or to-lower-case($anim-dir) == 'default'
-      or to-lower-case($anim-dir) == 'def'
-      or to-lower-case($anim-dir) == 'normal'
-      or to-lower-case($anim-dir) == 'nor') {
+  @if (
+    not $anim-dir or to-lower-case($anim-dir) == 'none' or
+    to-lower-case($anim-dir) == 'no' or
+    to-lower-case($anim-dir) == 'n/a' or
+    to-lower-case($anim-dir) == 'n' or
+    to-lower-case($anim-dir) == 'default' or
+    to-lower-case($anim-dir) == 'def' or
+    to-lower-case($anim-dir) == 'normal' or
+    to-lower-case($anim-dir) == 'nor'
+  ) {
     $anim-dir: null;
-  } @else if (to-lower-case($anim-dir) == 'reverse'
-      or to-lower-case($anim-dir) == 'rev'
-      or to-lower-case($anim-dir) == 'r') {
+  } @else if (
+    to-lower-case($anim-dir) == 'reverse' or
+    to-lower-case($anim-dir) == 'rev' or
+    to-lower-case($anim-dir) == 'r'
+  ) {
     $anim-drection: reverse;
-  } @else if (to-lower-case($anim-dir) == 'alternate'
-      or to-lower-case($anim-dir) == 'alt'
-      or to-lower-case($anim-dir) == 'a') {
+  } @else if (
+    to-lower-case($anim-dir) == 'alternate' or
+    to-lower-case($anim-dir) == 'alt' or
+    to-lower-case($anim-dir) == 'a'
+  ) {
     $anim-dir: alternate;
-  } @else if (to-lower-case($anim-dir) == 'alternate-reverse'
-      or to-lower-case($anim-dir) == 'alternatereverse'
-      or to-lower-case($anim-dir) == 'alt-rev'
-      or to-lower-case($anim-dir) == 'altrev'
-      or to-lower-case($anim-dir) == 'a-r'
-      or to-lower-case($anim-dir) == 'ar') {
+  } @else if (
+    to-lower-case($anim-dir) == 'alternate-reverse' or
+    to-lower-case($anim-dir) == 'alternatereverse' or
+    to-lower-case($anim-dir) == 'alt-rev' or
+    to-lower-case($anim-dir) == 'altrev' or
+    to-lower-case($anim-dir) == 'a-r' or
+    to-lower-case($anim-dir) == 'ar'
+  ) {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
         '`text-blur-out` mixin';
   }
   -webkit-animation: txt-blur-out#{$anim-num} #{$timing} #{$timing-func}
@@ -146,11 +157,12 @@
     @-webkit-keyframes txt-blur-out#{$anim-num} {
 
       0% {
-        @if (to-lower-case($style) == 'backward'
-            or to-lower-case($style) == 'bck' or to-lower-case($style) == 'back'
-            or to-lower-case($style) == 'b' or to-lower-case($style) == 'f'
-            or to-lower-case($style) == 'fwd'
-            or to-lower-case($style) == 'forward') {
+        @if (
+          to-lower-case($style) == 'backward' or
+          to-lower-case($style) == 'bck' or to-lower-case($style) == 'back' or
+          to-lower-case($style) == 'b' or to-lower-case($style) == 'f' or
+          to-lower-case($style) == 'fwd' or to-lower-case($style) == 'forward'
+        ) {
           -webkit-transform: translateZ(0);
                   transform: translateZ(0);
         }
@@ -159,20 +171,32 @@
       }
 
       100% {
-        @if (to-lower-case($style) == 'contract'
-            or to-lower-case($style) == 'cont' or to-lower-case($style) == 'c') {
+        @if (
+          to-lower-case($style) == 'contract' or
+          to-lower-case($style) == 'cont' or
+          to-lower-case($style) == 'c'
+        ) {
           letter-spacing: -.5em;
-        } @else if (to-lower-case($style) == 'backward'
-            or to-lower-case($style) == 'bck' or to-lower-case($style) == 'back'
-            or to-lower-case($style) == 'b') {
+        } @else if (
+          to-lower-case($style) == 'backward' or
+          to-lower-case($style) == 'bck' or
+          to-lower-case($style) == 'back' or
+          to-lower-case($style) == 'b'
+        ) {
           letter-spacing: -.5em;
           -webkit-transform: translateZ(-500px);
                   transform: translateZ(-500px);
-        } @else if (to-lower-case($style) == 'expand'
-            or to-lower-case($style) == 'exp' or to-lower-case($style) == 'e') {
+        } @else if (
+          to-lower-case($style) == 'expand' or
+          to-lower-case($style) == 'exp' or
+          to-lower-case($style) == 'e'
+        ) {
           letter-spacing: 1em;
-        } @else if (to-lower-case($style) == 'forward'
-            or to-lower-case($style) == 'fwd' or to-lower-case($style) == 'f') {
+        } @else if (
+          to-lower-case($style) == 'forward' or
+          to-lower-case($style) == 'fwd' or
+          to-lower-case($style) == 'f'
+        ) {
           letter-spacing: 1em;
           -webkit-transform: translateZ(300px);
                   transform: translateZ(300px);
@@ -184,11 +208,12 @@
 
     @keyframes txt-blur-out#{$anim-num} {
       0% {
-        @if (to-lower-case($style) == 'backward'
-            or to-lower-case($style) == 'bck' or to-lower-case($style) == 'back'
-            or to-lower-case($style) == 'b' or to-lower-case($style) == 'f'
-            or to-lower-case($style) == 'fwd'
-            or to-lower-case($style) == 'forward') {
+        @if (
+          to-lower-case($style) == 'backward' or
+          to-lower-case($style) == 'bck' or to-lower-case($style) == 'back' or
+          to-lower-case($style) == 'b' or to-lower-case($style) == 'f' or
+          to-lower-case($style) == 'fwd' or to-lower-case($style) == 'forward'
+        ) {
           -webkit-transform: translateZ(0);
                   transform: translateZ(0);
         }
@@ -197,31 +222,46 @@
       }
 
       100% {
-        @if (to-lower-case($style) == 'contract'
-            or to-lower-case($style) == 'cont' or to-lower-case($style) == 'c') {
+        @if (
+          to-lower-case($style) == 'contract' or
+          to-lower-case($style) == 'cont' or
+          to-lower-case($style) == 'c'
+        ) {
           letter-spacing: -.5em;
-        } @else if (to-lower-case($style) == 'backward'
-            or to-lower-case($style) == 'bck' or to-lower-case($style) == 'back'
-            or to-lower-case($style) == 'b') {
+        } @else if (
+          to-lower-case($style) == 'backward' or
+          to-lower-case($style) == 'bck' or
+          to-lower-case($style) == 'back' or
+          to-lower-case($style) == 'b'
+        ) {
           letter-spacing: -.5em;
           -webkit-transform: translateZ(-500px);
                   transform: translateZ(-500px);
-        } @else if (to-lower-case($style) == 'expand'
-            or to-lower-case($style) == 'exp' or to-lower-case($style) == 'e') {
+        } @else if (
+          to-lower-case($style) == 'expand' or
+          to-lower-case($style) == 'exp' or
+          to-lower-case($style) == 'e'
+        ) {
           letter-spacing: 1em;
-        } @else if (to-lower-case($style) == 'forward'
-            or to-lower-case($style) == 'fwd' or to-lower-case($style) == 'f') {
+        } @else if (
+          to-lower-case($style) == 'forward' or
+          to-lower-case($style) == 'fwd' or
+          to-lower-case($style) == 'f'
+        ) {
           letter-spacing: 1em;
           -webkit-transform: translateZ(300px);
                   transform: translateZ(300px);
-        } @else if ($style and to-lower-case($style) != 'none'
-            and to-lower-case($style) != 'no' and to-lower-case($style) != 'n'
-            and to-lower-case($style) != 'default'
-            and to-lower-case($style) != 'def'
-            and to-lower-case($style) != 'out'
-            and to-lower-case($style) != 'o') {
-          @error 'Invalid style value of `#{inspect($style)}` for the `text-blur-out` ' +
-              'mixin.';
+        } @else if (
+          $style and to-lower-case($style) != 'none' and
+          to-lower-case($style) != 'no' and
+          to-lower-case($style) != 'n' and
+          to-lower-case($style) != 'default' and
+          to-lower-case($style) != 'def' and
+          to-lower-case($style) != 'out' and
+          to-lower-case($style) != 'o'
+        ) {
+          @error 'Invalid style value of [#{inspect($style)}] for the ' +
+              '`text-blur-out` mixin.';
         }
         -webkit-filter: blur(12px) opacity(0);
                 filter: blur(12px) opacity(0);

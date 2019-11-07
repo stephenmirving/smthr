@@ -25,7 +25,7 @@
   @else if to-lower-case($direction) == 'down' or to-lower-case($direction) == 'd' or to-lower-case($direction) == 'bottom' or to-lower-case($direction) == 'b'
     clip-path: polygon(100% 75%, 50% 100%, 0 75%, 0 0, 50% 25%, 100% 0)
   @else
-    @error 'Invalid direction value of `#{inspect($direction)}` for the `chevron` mixin'
+    @error 'Invalid direction value of [#{inspect($direction)}] for the `chevron` mixin'
 
   height: $height
   width: $size

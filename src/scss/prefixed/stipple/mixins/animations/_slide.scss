@@ -46,12 +46,13 @@
   $temp-val: null;
 
   // Input scrubbing
-  @if ($in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i') {
+  @if $in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
-  } @else if ($in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o') {
+  } @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
   } @else {
-    @error 'Invalid $in-or-out value of `#{inspect($in-or-out)}` for the `slide` mixin.';
+    @error 'Invalid $in-or-out value of [#{inspect($in-or-out)}] for the ' +
+        '`slide` mixin.';
   }
 
   @if $direction {
@@ -120,7 +121,8 @@
       $trans-val1: translateY(1000px) translateX(-1000px);
       $trans-val2: translateY(0) translateX(0);
     } @else {
-      @error 'Invalid direction of `#{inspect($direction)}` chosen for the `slide` mixin.';
+      @error 'Invalid direction of [#{inspect($direction)}] chosen for the ' +
+          '`slide` mixin.';
     }
   } @else {
     $direction: null;
@@ -138,17 +140,18 @@
   }
 
   @if type-of($timing) != 'number' {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `slide` ' +
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `slide` ' +
         'mixin. The timing property must be a number.';
   } @else if unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not index('s' 'ms', unit($timing)) {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `slide` mixin.' +
-        'The timing property must be in either s or ms units.';
-  } @else if (unit($timing) == 'ms' and $timing % 10 == 0ms) {
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `slide` ' +
+        'mixin. The timing property must be in either s or ms units.';
+  } @else if ($timing % 10 == 0ms) {
     // If time in ms would be shorter as seconds, convert it
     $timing: ($timing / 1000ms) * 1s;
+
     // Get rid of possible leading zero in front of decimal place
     @if (str-slice($timing + '', 1, 2) == '0.') {
       $timing: unquote(str-slice($timing + '', 2));
@@ -164,24 +167,22 @@
   }
   @if $delay {
     @if type-of($delay) != 'number' {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `slide` mixin.' +
-          'The delay property must be a number.';
-    } @else if (unitless($delay)) {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `slide` ' +
+          'mixin. The delay property must be a number.';
+    } @else if unitless($delay) {
       $delay: $delay * 1s;
     } @else if not index('s' 'ms', unit($delay)) {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `slide` mixin.' +
-          'The delay property must be in either s or ms units.';
-    } @else if (unit($delay) == 'ms' and $delay % 10 == 0ms) {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `slide` ' +
+          'mixin. The delay property must be in either s or ms units.';
+    } @else if $delay % 10 == 0ms {
       $delay: ($delay / 1000ms) * 1s;
-      @if (str-slice($delay + '', 1, 2) == '0.') {
+      @if str-slice($delay + '', 1, 2) == '0.' {
         $delay: #{str-slice($delay + '', 2)};
       }
     }
-  } @else {
-    $delay: null;
   }
 
-  @if ($iterations) {
+  @if $iterations {
     @if (
       $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     ) {
@@ -192,8 +193,8 @@
     ) {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
-          '`slide` mixin.';
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for ' +
+          'the `slide` mixin.';
     }
   }
 
@@ -214,13 +215,15 @@
   ) {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
         '`slide` mixin';
   }
 
-  @if (not $timing-func or $timing-func == true or $timing-func == 'none'
-      or $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def'
-      or $timing-func == 'default' or $timing-func == 'd') {
+  @if (
+    not $timing-func or $timing-func == true or $timing-func == 'none' or
+    $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or
+    $timing-func == 'default' or $timing-func == 'd'
+  ) {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: if(

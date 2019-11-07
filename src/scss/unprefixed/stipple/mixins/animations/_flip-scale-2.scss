@@ -76,22 +76,23 @@
       and to-lower-case($direction) != 't'
       and to-lower-case($direction) != 'up'
       and to-lower-case($direction) != 'u') {
-    @error 'Invalid direction value of `#{inspect($direction)}` for the ' +
+    @error 'Invalid direction value of [#{inspect($direction)}] for the ' +
         '`flip-scale-2` mixin';
   }
 
   @if type-of($timing) != 'number' {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `flip-scale-2` ' +
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `flip-scale-2` ' +
         'mixin. The timing property must be a number.';
   } @else if unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not index('s' 'ms', unit($timing)) {
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `flip-scale-2` ' +
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `flip-scale-2` ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if (unit($timing) == 'ms' and $timing % 10 == 0ms) {
+  } @else if ($timing % 10 == 0ms) {
     // If time in ms would be shorter as seconds, convert it
     $timing: ($timing / 1000ms) * 1s;
+
     // Get rid of possible leading zero in front of decimal place
     @if (str-slice($timing + '', 1, 2) == '0.') {
       $timing: unquote(str-slice($timing + '', 2));
@@ -106,27 +107,25 @@
     $delay: null;
   }
   @if $delay {
-    @if (type-of($delay) != 'number') {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the flip-scale-2` ' +
+    @if type-of($delay) != 'number' {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the flip-scale-2` ' +
           'mixin. The delay property must be a number.';
-    } @else if (unitless($delay)) {
+    } @else if unitless($delay) {
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s;
     } @else if not index('s' 'ms', unit($delay)) {
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `flip-scale-2` ' +
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `flip-scale-2` ' +
           'mixin. The delay property must be in either s or ms units.';
-    } @else if (unit($delay) == 'ms' and $delay % 10 == 0ms) {
+    } @else if $delay % 10 == 0ms {
       // If time in ms would be shorter as seconds, convert it
       $delay: ($delay / 1000ms) * 1s;
-      @if (str-slice($delay + '', 1, 2) == '0.') {
+      @if str-slice($delay + '', 1, 2) == '0.' {
         $delay: #{str-slice($delay + '', 2)};
       }
     }
-  } @else {
-    $delay: null;
   }
 
-  @if ($iterations) {
+  @if $iterations {
     @if (
       $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     ) {
@@ -137,8 +136,8 @@
     ) {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the ' +
-          '`rotate-scale` mixin.';
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for the ' +
+          '`flip-scale-2` mixin.';
     }
   } @else {
     $iterations: null;
@@ -165,8 +164,8 @@
   ) {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the ' +
-        '`rotate-scale` mixin';
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
+        '`flip-scale-2` mixin';
   }
 
 

@@ -34,12 +34,12 @@
       $timing-func: cubic-bezier(.55, .085, .68, .53)
 
   @if type-of($timing) != 'number'
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-blur-out` . The timing property must be a number.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `text-blur-out` . The timing property must be a number.'
   @else if unitless($timing)
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s
   @else if not index('s' 'ms', unit($timing))
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `text-blur-out` . The timing property must be in either s or ms units.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `text-blur-out` . The timing property must be in either s or ms units.'
   @else if $timing % 10 == 0ms
     // If time in ms would be shorter as seconds, convert it
     $timing: $timing / 1000ms * 1s
@@ -53,11 +53,11 @@
 
   @if $delay
     @if type-of($delay) != 'number'
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-blur-out` . The delay property must be a number.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `text-blur-out` . The delay property must be a number.'
     @else if unitless($delay)
       $delay: $delay * 1s
     @else if not index('s' 'ms', unit($delay))
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `text-blur-out` . The delay property must be in either s or ms units.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `text-blur-out` . The delay property must be in either s or ms units.'
     @else if $delay % 10 == 0ms
       $delay: $delay / 1000ms * 1s
 
@@ -72,7 +72,7 @@
     @else if unitless($iterations) and type-of($iterations) == 'number' or $iterations == initial or $iterations == inherit
       $iterations: $iterations
     @else
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the -blur-out` mixin.'
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for the -blur-out` mixin.'
   @else
     $iterations: null
 
@@ -85,7 +85,7 @@
   @else if to-lower-case($anim-dir) == 'alternate-reverse' or to-lower-case($anim-dir) == 'alternatereverse' or to-lower-case($anim-dir) == 'alt-rev' or to-lower-case($anim-dir) == 'altrev' or to-lower-case($anim-dir) == 'a-r' or to-lower-case($anim-dir) == 'ar'
     $anim-dir: alternate-reverse
   @else
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the -blur-out` mixin'
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the -blur-out` mixin'
 
   -webkit-animation: txt-blur-out#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations} #{$anim-dir} both
   animation: txt-blur-out#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations} #{$anim-dir} both

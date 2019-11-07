@@ -51,7 +51,7 @@
       $flip-val2: rotate3d(-1, 1, 0, 90deg)
       $flip-val3: rotate3d(-1, 1, 0, 180deg)
     @else if to-lower-case($axis) != 'horizontal' and to-lower-case($axis) != 'horiz' and to-lower-case($axis) != 'horz' and to-lower-case($axis) != 'h'
-      @error 'Invalid axis value of (#{inspect($axis)}) for the `flip-scale` mixin'
+      @error 'Invalid axis value of [#{inspect($axis)}] for the `flip-scale` mixin'
   @else if to-lower-case($direction) == 'down' or to-lower-case($direction) == 'd' or to-lower-case($direction) == 'bottom' or to-lower-case($direction) == 'back' or to-lower-case($direction) == 'bck' or to-lower-case($direction) == 'b'
     $scale-val1: scale(1)
     $scale-val2: scale(.4)
@@ -74,17 +74,17 @@
       $flip-val2: rotate3d(-1, 1, 0, -90deg)
       $flip-val3: rotate3d(-1, 1, 0, -180deg)
     @else
-      @error 'Invalid axis value of (#{inspect($axis)}) for the `flip-scale` mixin'
+      @error 'Invalid axis value of [#{inspect($axis)}] for the `flip-scale` mixin'
   @else
-    @error 'Invalid direction value of `#{inspect($direction)}` for the `flip-scale` mixin'
+    @error 'Invalid direction value of [#{inspect($direction)}] for the `flip-scale` mixin'
 
   @if type-of($timing) != 'number'
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `flip-scale` mixin. The timing property must be a number.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `flip-scale` mixin. The timing property must be a number.'
   @else if unitless($timing)
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s
   @else if not index('s' 'ms', unit($timing))
-    @error 'Invalid timing value of `#{inspect($timing)}` for the `flip-scale` mixin. The timing property must be in either s or ms units.'
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `flip-scale` mixin. The timing property must be in either s or ms units.'
   @else if $timing % 10 == 0ms
     // If time in ms would be shorter as seconds, convert it
     $timing: $timing / 1000ms * 1s
@@ -98,11 +98,11 @@
 
   @if $delay
     @if type-of($delay) != 'number'
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `flip-scale` mixin. The delay property must be a number.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `flip-scale` mixin. The delay property must be a number.'
     @else if unitless($delay)
       $delay: $delay * 1s
     @else if not index('s' 'ms', unit($delay))
-      @error 'Invalid delay value of `#{inspect($delay)}` for the `flip-scale` mixin. The delay property must be in either s or ms units.'
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `flip-scale` mixin. The delay property must be in either s or ms units.'
     @else if $delay % 10 == 0ms
       $delay: $delay / 1000ms * 1s
 
@@ -117,7 +117,7 @@
     @else if unitless($iterations) and type-of($iterations) == 'number' or $iterations == initial or $iterations == inherit
       $iterations: $iterations
     @else
-      @error 'Invalid iteration-count value of `#{inspect($iterations)}` for the `flip-scale` mixin.'
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for the `flip-scale` mixin.'
   @else
     $iterations: null
 
@@ -130,7 +130,7 @@
   @else if $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or $anim-dir == 'ar'
     $anim-dir: alternate-reverse
   @else
-    @error 'Invalid animation-direction value of `#{inspect($anim-dir)}` for the `flip-scale` mixin'
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the `flip-scale` mixin'
 
   @if not $anim-num
     $anim-num: null
