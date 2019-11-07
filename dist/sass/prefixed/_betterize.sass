@@ -37,11 +37,9 @@ body
   font: 1em/1.4 if(function-exists('font-stack'), font-stack('primary'), ('Source Sans Pro', Roboto,  Cantarell, 'Noto Sans', Arial, 'Segoe UI', Ubuntu, -apple-system, BlinkMacSystemFont, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'))
   text-rendering: optimizeLegibility
 
-///
-/// 1. Render the <main> element correctly in IE 11-.
-/// 2. Add the correct display in Edge, IE 10+, and Firefox.
-/// 3. Render all HTML5 elements correctly in IE 8-.
-///
+/// Set the display type for the <main> element in IE 11-, all HTML5 semantic
+/// elements in IE 8-, Chrome 25-, Safari 6-, Firefox 20-, and Opera 12.1-, and
+/// and the <details> element in pre-Chromium Edge, IE 10+, and Firefox 48-.
 
 article,
 aside,
@@ -51,7 +49,6 @@ figure,
 footer,
 header,
 main,
-menu,
 nav,
 section
   display: block
@@ -125,8 +122,8 @@ figure
   margin: 1em 40px
 
 ///
-/// 1. Remove the gray background on active links in IE 10.
-/// 2. Remove gaps in links underline in iOS 8+ and Safari 8+.
+/// Remove the gray background on active links in IE 10 and the gaps in links'
+/// underlines in iOS 8+ and Safari 8+.
 ///
 
 a
@@ -134,8 +131,8 @@ a
   -webkit-text-decoration-skip: objects
 
 ///
-/// 1. Remove the bottom border in Chrome 57-
-/// 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+/// Remove the bottom border in Chrome 57- and add the correct text decoration
+/// in Chrome, Edge, IE, Opera, and Safari.
 ///
 
 abbr[title]
@@ -144,7 +141,7 @@ abbr[title]
   text-decoration: underline dotted
 
 ///
-/// Prevent the duplicate application of `bolder` by the next rule in Safari 6.
+/// Prevent the duplicate application of 'bolder' by the next rule in Safari 6.
 ///
 
 b,
@@ -160,8 +157,7 @@ strong
   font-weight: bolder
 
 ///
-/// 1. Correct the inheritance and scaling of font size in all browsers.
-/// 2. Correct the odd `em` font sizing in all browsers.
+/// Correct the font inheritance and size scaling issues seen in some browsers.
 ///
 
 code,
@@ -172,7 +168,7 @@ samp
   font-size: 1em
 
 ///
-/// Add the correct font size in all browsers.
+/// Normalize font size across all browsers.
 ///
 
 small
@@ -212,8 +208,8 @@ mark
   color: if(global-variable-exists('black'), $black, #000)
 
 ///
-/// Prevent `sub` and `sup` elements from affecting the line height in
-/// all browsers.
+/// Normalize <sub> and <sup> elements, preventing them from affecting
+/// line height in any browsers.
 ///
 
 sub,
@@ -278,7 +274,7 @@ audio:not([controls])
 ////////////////////////////////////////
 
 ///
-/// Change the font styles correctly in all browsers.
+/// Change the font styles correctly across browsers.
 ///
 
 button,
@@ -352,8 +348,8 @@ button:-moz-focusring,
   outline: 1px dotted ButtonText
 
 ///
-/// 1. Correct the text wrapping in Edge and IE.
-/// 2. Correct the color inheritance from `fieldset` elements in IE.
+/// Correct the text wrapping in Edge and IE and correct the color inheritance
+/// from <fieldset> elements in IE.
 ///
 
 legend
@@ -380,8 +376,8 @@ progress
   height: auto
 
 ///
-/// Correct the odd appearance in Chrome and Safari and correct the outline
-/// style in Safari.
+/// Correct the odd appearance in legacy versions of Chrome and Safari and the
+/// the outline style in Safari for the search type.
 ///
 
 [type='search']
@@ -389,7 +385,8 @@ progress
   outline-offset: -2px
 
 ///
-/// Remove the inner padding on search cancel buttons in Chrome and Safari on macOS.
+/// Remove the inner padding on search cancel buttons and search decorations in
+/// Chrome and Safari on macOS.
 ///
 
 [type='search']::-webkit-search-cancel-button,
@@ -398,7 +395,7 @@ progress
 
 ///
 /// Correct the inability to style clickable types in iOS and Safari and change
-/// font properties to `inherit` in Safari.
+/// font properties to inherit in Safari.
 ///
 
 ::-webkit-file-upload-button

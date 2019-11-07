@@ -1,5 +1,5 @@
 /// Takes a character or a string representation for the name of a character
-/// and returns the CSS entity char for that character.
+/// and returns the CSS entity code for that character.
 /// @access public
 ///
 /// @example char(&) and char(amp) both return '\0026'
@@ -7,101 +7,99 @@
 ///
 /// @param {String} $char - The character (if it is available on a standard
 /// keyboard), name of the character, or an abbreviated name for the character,
-/// being converted into a CSS entity char.
-/// @return {String} - The char for the desired character.
+/// being converted into a CSS entity code.
+/// @return {String} - The code for the desired character.
 ///
 /// @throw Value of $char not a valid string.
-@function char($char) {
-  $char: '\0020'; // char for a blank space
-
-  @if type-of($char) != 'string' {
-    @error 'Value of $char for char() must be a valid string.';
-  }
-
-  $char: to-lower-case($char);
+/// @throw Value of $char does not correspond to a known CSS entity code.
+@function entity($char) {
+  $entity: '\0020'; // Code for a blank space
 
   @if (type-of($char) != 'string') {
     @error 'Value of $char must be of type "string" in entity().';
   }
+
+  $char: to-lower-case($char);
+
   @if $char == '&' or str-slice($char, 1, 3) == 'amp' {
-    $char: '\0026'; // Ampersand: &
+    $entity: '\0026'; // Ampersand: &
   } @else if str-slice($char, 1, 4) == 'copy' or $char == 'cr' {
-    $char: '\00A9'; // Copyright: ©
+    $entity: '\00A9'; // Copyright: ©
   } @else if str-slice($char, 1, 3) == 'reg' or $char == 'rtm' {
-    $char: '\00AE'; // Registered: ®
+    $entity: '\00AE'; // Registered: ®
   } @else if str-slice($char, 1, 5) == 'trade' or $char == 'tm' {
-    $char: '\2122'; // Trademark: ™
+    $entity: '\2122'; // Trademark: ™
   } @else if $char == '$' or $char == 'dollar' or $char == 'dlr' {
-    $char: '\0024'; // Dollar: $
+    $entity: '\0024'; // Dollar: $
   } @else if $char == 'cents' or $char == 'cent' {
-    $char: '\00A2'; // Cents: ¢
+    $entity: '\00A2'; // Cents: ¢
   } @else if (str-slice($char, 1, 4) == 'euro' or $char == 'eu') {
-    $char: '\20AC'; // Euro: €
+    $entity: '\20AC'; // Euro: €
   } @else if (str-slice($char, 1, 5) == 'pound' or $char == 'gbp') {
-    $char: '\00A3'; // British Pound: £
+    $entity: '\00A3'; // British Pound: £
   } @else if $char == 'yen' {
-    $char: '\00A5'; // Japanese Yen ¥
+    $entity: '\00A5'; // Japanese Yen ¥
   } @else if $char == 'rupee' {
-    $char: '\20B9'; // Indian Rupee ₹
+    $entity: '\20B9'; // Indian Rupee ₹
   } @else if $char == 'peso' {
-    $char: '\20B1'; // Mexican Peso ₱
+    $entity: '\20B1'; // Mexican Peso ₱
   } @else if $char == 'currency' or $char == 'curr' {
-    $char: '\00A4'; // Universal currency symbol ¤
+    $entity: '\00A4'; // Universal currency symbol ¤
   } @else if ($char == 'open-quote' or $char == 'openquote'
       or $char == 'oquote' or $char == 'o-quote' or $char == 'oq'
       or $char == 'o"' or $char == 'o\'') {
-    $char: '\201C'; // Open double quote: “
+    $entity: '\201C'; // Open double quote: “
   } @else if (
     $char == 'close-quote' or $char == 'closed-quote' or
     $char == 'closequote' or $char == 'closedquote' or $char == 'cquote' or
     $char == 'c-quote' or $char == 'cq' or $char == 'c"'
   ) {
-    $char: '\201D'; // Close double quote: ”
+    $entity: '\201D'; // Close double quote: ”
   } @else if (
     $char == 'ldaq' or $char == 'left-double-angle-quote' or
     $char == 'left-double-angle' or $char == 'ldang'
   ) {
-    $char: '\00AB'; // Left-pointing double-angle quation mark: «
+    $entity: '\00AB'; // Left-pointing double-angle quation mark: «
   } @else if (
     $char == 'rdaq' or $char == 'right-double-angle-quote' or
     $char == 'rdang' or $char == 'right-double-angle'
   ) {
-    $char: '\00BB'; // Right-pointing double-angle quation mark: »
+    $entity: '\00BB'; // Right-pointing double-angle quation mark: »
   } @else if str-slice($char, 1, 4) == 'apos' $char == '\'' or $char == 'aps' {
-    $char: '\2019'; // Apostrophe: ’
+    $entity: '\2019'; // Apostrophe: ’
   } @else if $char == 'ndash' or $char == 'nd' {
-    $char: '\2013'; // En dash: –
+    $entity: '\2013'; // En dash: –
   } @else if $char == '--' or $char == 'mdash' or $char == 'md' {
-    $char: '\2014'; // Em dash: —
+    $entity: '\2014'; // Em dash: —
   } @else if (
     $char == '...' or str-slice($char, 1, 5) == 'ellip' or
     str-slice($char, 1, 4) == 'elip'
   ) {
-    $char: '\2026'; // Ellipsis: …
+    $entity: '\2026'; // Ellipsis: …
   } @else if (
     $char == '>' or $char == 'greater-than' or $char == 'greaterthan' or
     $char == 'greater-then' or $char == 'greaterthen'
   ) {
-    $char: '\003E'; // Greater than symbol: >
+    $entity: '\003E'; // Greater than symbol: >
   } @else if (
     $char == '<' or $char == 'less-than' or $char == 'lessthan' or
     $char == 'less-then' or $char == 'less-then'
   ) {
-    $char: '\003C'; // Less than symbol: <
+    $entity: '\003C'; // Less than symbol: <
   } @else if (
     $char == '^!' or $char == 'inverted-exclamation' or
     $char == 'inverted!' or $char == 'invert!' or $char == 'inv!'
   ) {
-    $char: '\00A1'; // Inverted exclamation mark ¡
+    $entity: '\00A1'; // Inverted exclamation mark ¡
   } @else if (
     $char == 'account-of' or $char == 'accountof' or $char == 'accof' or
     $char == 'account' or $char == 'acc'
   ) {
-    $char: '\2100'; // Account Of: ℀
+    $entity: '\2100'; // Account Of: ℀
   } @else if str-slice($char, 1, 7) == 'address' {
-    $char: '\2101'; // Addressed to the subject of: ℁
+    $entity: '\2101'; // Addressed to the subject of: ℁
   } @else if $char == 'degree' or $char == 'degrees' or $char == 'deg' {
-    $char: '\00B0'; // Degrees: °
+    $entity: '\00B0'; // Degrees: °
   } @else if (
     $char == 'degrees-celcius' or $char == 'degree-celcius' or
     $char == 'degreescelcius' or $char == 'degreecelcius' or
@@ -109,23 +107,23 @@
     $char == 'degree-c' or $char == 'degrees-c' or $char == 'deg-c' or
     $char == 'degc'
   ) {
-    $char: '\2103'; // Degrees Celcius: ℃
+    $entity: '\2103'; // Degrees Celcius: ℃
   } @else if (
     $char == 'degrees-farenheit' or $char == 'degree-farenheit' or
     $char == 'degreesfarenheit' or $char == 'degreefarenheit' or
     $char == 'farenheit' or $char == 'faren' or $char == 'degfar' or
-    $char == 'deg-far' or $char == 'deg-faren' or $char == 'deg-f' or
+    $char == 'deg-far' or $char = 'deg-faren' or $char == 'deg-f' or
     $char == 'degree-f' or $char == 'degrees-f' or $char == 'degf'
   ) {
-    $char: '\2109'; // Degrees Celcius: ℉
+    $entity: '\2109'; // Degrees Celcius: ℉
   } @else if $char == 'infinity' or $char == 'inf' {
-    $char: '\221E'; // Infinity: ∞
+    $entity: '\221E'; // Infinity: ∞
   } @else if $char == 'nbsp' or $char == 'nobreakspace' {
-    $char: '\00A0'; // Non-breaking space
+    $entity: '\00A0'; // Non-breaking space
   } @else if ($char != ' ') {
-    @error 'You must enter a valid character char $char in char(), ' +
-        'one that corresponds with a CSS entity character char.';
+    @error 'You must enter a valid character or string for $char in entity(),' +
+        ' one that corresponds with a CSS entity character.';
   }
 
-  @return $char;
+  @return $entity;
 }
