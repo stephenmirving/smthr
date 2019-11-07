@@ -261,9 +261,6 @@
     "value-list-comma-space-after": "always-single-line",
     "value-list-comma-space-before": "never",
     "value-list-max-empty-lines": 0,
-    "csstree/validator": {
-        "ignore": ["font-display"]
-    },
     "order/order": [
       "custom-properties",
       "dollar-variables",
@@ -274,17 +271,7 @@
       "rules"
     ],
     "order/properties-alphabetical-order": true,
-    "plugin/no-low-performance-animation-properties": [
-      true,
-      {
-        ignore: "paint-properties"
-      },
-    ],
     "plugin/stylelint-group-selectors": true,
-    "plugin/z-index-value-constraint": {
-      "min": 1,
-      "max": 999
-    },
     "scss/at-else-closing-brace-newline-after": "always-last-in-chain",
     "scss/at-else-closing-brace-space-after": "always-intermediate",
     "scss/at-else-empty-line-before": "never",
