@@ -69,8 +69,6 @@
       to-lower-case($direction) == 'fw' or
       to-lower-case($direction) == 'f'
     ) {
-      to-lower-case($direction) == 'f'
-    ) {
       $fwd-bck: true;
       $trans-val1: translateZ(-80px);
       $trans-val2: translateZ(0);

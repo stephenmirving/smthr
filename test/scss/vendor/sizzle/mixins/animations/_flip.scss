@@ -113,9 +113,6 @@
       to-lower-case($direction) == 'rightbottom' or
       to-lower-case($direction) == 'r-b' or
       to-lower-case($direction) == 'rb'
-    ) {' or
-      to-lower-case($direction) == 'r-b' or
-      to-lower-case($direction) == 'rb'
     ) {
       $direction: 'bottom-right';
     } @else if (

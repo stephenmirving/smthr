@@ -114,9 +114,6 @@
     $delay == 0 or $delay == 0s or $delay == 0ms or
     $delay == 'none' or $delay == 'no' or $delay == 'n' or
     $delay == 'n/a' or $delay == nil or not $delay
-  ) {delay == 'n/a' or $delay == nil or not $delay
-  ) {delay == 'n/a' or $delay == nil or not $delay
-  ) {delay == 'n/a' or $delay == nil or not $delay
   ) {
     $delay: null;
   }

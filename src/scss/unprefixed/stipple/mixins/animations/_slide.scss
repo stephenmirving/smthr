@@ -68,7 +68,6 @@
       $trans-val2: translateX(0);
     } @else if (
       to-lower-case($direction) == 'right' or to-lower-case($direction) == 'r'
-    ) {to-lower-case($direction) == 'r'
     ) {
       $trans-val1: translateX(1000px);
       $trans-val2: translateX(0);
@@ -115,9 +114,6 @@
       to-lower-case($direction) == 'bl' or
       to-lower-case($direction) == 'left-bottom' or
       to-lower-case($direction) == 'leftbottom' or
-      to-lower-case($direction) == 'l-b' or
-      to-lower-case($direction) == 'lb'
-    ) { or
       to-lower-case($direction) == 'l-b' or
       to-lower-case($direction) == 'lb'
     ) {

@@ -131,7 +131,7 @@
     ) {
       $trans-val1: translateX(-50px) translateY(50px);
       $trans-val2: translateX(0) translateY(0);
-    } @else if
+    } @else if (
       $direction == 'center' or $direction == 'cent' or $direction == 'c'
     ) {
       $direction: 'center';
