@@ -2,8 +2,8 @@
 /// and returns the CSS entity code for that character.
 /// @access public
 ///
-/// @example char(&) and char(amp) both return '\0026'
-/// @example char('trademark') and char(tm) both return '\2122'
+/// @example char('&') and char('amp') both return '\0026'
+/// @example char('trademark') and char('tm') both return '\2122'
 ///
 /// @param {String} $char - The character (if it is available on a standard
 /// keyboard), name of the character, or an abbreviated name for the character,
