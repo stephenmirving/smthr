@@ -115,15 +115,18 @@
   @if not $anim-num
     $anim-num: null
 
-  animation: bounce#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$infinite} both
+  -webkit-animation: bounciness#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations} both
+  animation: bounciness#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations} both
   height: $height
   width: $size
 
   @at-root
-    @keyframes bounce#{$anim-num}
+    @-webkit-keyframes bounciness#{$anim-num}
       0%
+        -webkit-animation-timing-function: ease-in
         animation-timing-function: ease-in
         opacity: 1
+        -webkit-transform: #{$dir-val1}
         transform: #{$dir-val1}
 
       24%
@@ -133,26 +136,89 @@
       55%,
       75%,
       87%
+        -webkit-animation-timing-function: ease-out
         animation-timing-function: ease-out
+        -webkit-transform: #{$dir-val6}
         transform: #{$dir-val6}
 
       40%
+        -webkit-animation-timing-function: ease-in
         animation-timing-function: ease-in
+        -webkit-transform: #{$dir-val2}
         transform: #{$dir-val2}
 
       65%
+        -webkit-animation-timing-function: ease-in
         animation-timing-function: ease-in
+        -webkit-transform: #{$dir-val3}
         transform: #{$dir-val3}
 
       82%
+        -webkit-animation-timing-function: ease-in
         animation-timing-function: ease-in
+        -webkit-transform: #{$dir-val4}
         transform: #{$dir-val4}
 
       93%
+        -webkit-animation-timing-function: ease-in
         animation-timing-function: ease-in
+        -webkit-transform: #{$dir-val5}
         transform: #{$dir-val5}
 
       100%
+        -webkit-animation-timing-function: ease-out
+        animation-timing-function: ease-out
+        -webkit-transform: #{$dir-val6}
+        transform: #{$dir-val6}
+        opacity: 1
+
+    @keyframes bounciness#{$anim-num}
+      0%
+        -webkit-animation-timing-function: ease-in
+        animation-timing-function: ease-in
+        opacity: 1
+        -webkit-transform: #{$dir-val1}
+        transform: #{$dir-val1}
+
+      24%
+        opacity: 1
+
+      25%,
+      55%,
+      75%,
+      87%
+        -webkit-animation-timing-function: ease-out
+        animation-timing-function: ease-out
+        -webkit-transform: #{$dir-val6}
+        transform: #{$dir-val6}
+
+      40%
+        -webkit-animation-timing-function: ease-in
+        animation-timing-function: ease-in
+        -webkit-transform: #{$dir-val2}
+        transform: #{$dir-val2}
+
+      65%
+        -webkit-animation-timing-function: ease-in
+        animation-timing-function: ease-in
+        -webkit-transform: #{$dir-val3}
+        transform: #{$dir-val3}
+
+      82%
+        -webkit-animation-timing-function: ease-in
+        animation-timing-function: ease-in
+        -webkit-transform: #{$dir-val4}
+        transform: #{$dir-val4}
+
+      93%
+        -webkit-animation-timing-function: ease-in
+        animation-timing-function: ease-in
+        -webkit-transform: #{$dir-val5}
+        transform: #{$dir-val5}
+
+      100%
+        -webkit-animation-timing-function: ease-out
         animation-timing-function: ease-out
         opacity: 1
+        -webkit-transform: #{$dir-val6}
         transform: #{$dir-val6}

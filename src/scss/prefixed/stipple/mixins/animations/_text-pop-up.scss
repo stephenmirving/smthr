@@ -105,14 +105,24 @@
     }
   }
 
-
   @if not $anim-num {
     $anim-num: null;
   }
-  -webkit-animation: txt-pop-up#{$anim-num} #{$timing} #{$timing-func}
-                      #{$delay} #{$infinite} both;
-          animation: txt-pop-up#{$anim-num} #{$timing} #{$timing-func}
-                      #{$delay} #{$infinite} both;
+
+  -webkit-animation:
+    txt-pop-up#{$anim-num}
+    #{$timing}
+    #{$timing-func}
+    #{$delay}
+    #{$infinite}
+    both;
+  animation:
+    txt-pop-up#{$anim-num}
+    #{$timing}
+    #{$timing-func}
+    #{$delay}
+    #{$infinite}
+    both;
   height: $height;
   text-transform: none;
   width: $size;

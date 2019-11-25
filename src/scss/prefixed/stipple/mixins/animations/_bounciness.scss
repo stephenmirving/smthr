@@ -68,18 +68,20 @@
     $dir-val6: translateY(0);
   } @else if (to-lower-case($direction) != 'top'
       and to-lower-case($direction) != 't') {
-    @error 'Invalid direction of [#{inspect($direction)}] for the `bounciness` mixin.';
+    @error 'Invalid direction of [#{inspect($direction)}] for the ' +
+        '`bounciness` mixin.';
   }
 
   @if type-of($timing) != 'number' {
-    @error 'Invalid timing value of [#{inspect($timing)}] for the `bounciness` ' +
-        'mixin. The timing property must be a number.';
+    @error 'Invalid timing value of [#{inspect($timing)}] for the ' +
+        '`bounciness` mixin. The timing property must be a number.';
   } @else if unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not index('s' 'ms', unit($timing)) {
-    @error 'Invalid timing value of [#{inspect($timing)}] for the `bounciness` ' +
-        'mixin. The timing property must be in either s or ms units.';
+    @error 'Invalid timing value of [#{inspect($timing)}] for the ' +
+        '`bounciness` mixin. The timing property must be in either s ' +
+        'or ms units.';
   } @else if ($timing % 10 == 0ms) {
     // If time in ms would be shorter as seconds, convert it
     $timing: ($timing / 1000ms) * 1s;
@@ -99,13 +101,13 @@
   }
   @if $delay {
     @if type-of($delay) != 'number' {
-      @error 'Invalid delay value of [#{inspect($delay)}] for the `bounciness` ' +
-          'mixin. The delay property must be a number.';
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `bounciness`' +
+          ' mixin. The delay property must be a number.';
     } @else if unitless($delay) {
       $delay: $delay * 1s;
     } @else if not index('s' 'ms', unit($delay)) {
-      @error 'Invalid delay value of [#{inspect($delay)}] for the `bounciness` ' +
-          'mixin. The delay property must be in either s or ms units.';
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `bounciness`' +
+          ' mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: ($delay / 1000ms) * 1s;
       @if str-slice($delay + '', 1, 2) == '0.' {
@@ -125,8 +127,8 @@
     ) {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for the ' +
-          '`bounciness` mixin.';
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for '
+          'the `bounciness` mixin.';
     }
   } @else {
     $iteratons: null;
@@ -149,8 +151,8 @@
   ) {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
-        '`bounciness` mixin';
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for '
+        'the `bounciness` mixin';
   }
 
   @if (
@@ -166,15 +168,13 @@
   @if not $anim-num {
     $anim-num: null;
   }
-  -webkit-animation: bounce#{$anim-num} #{$timing} #{$timing-func} #{$delay}
-                      #{$infinite} both;
-          animation: bounce#{$anim-num} #{$timing} #{$timing-func} #{$delay}
-                      #{$infinite} both;
-  height: $height;
-  width: $size;
+  -webkit-animation: bounciness#{$anim-num} #{$timing} #{$timing-func} #{$delay}
+                      #{$iterations} both;
+          animation: bounciness#{$anim-num} #{$timing} #{$timing-func} #{$delay}
+                      #{$iterations} both;
 
   @at-root {
-    @-webkit-keyframes bounce#{$anim-num} {
+    @-webkit-keyframes bounciness#{$anim-num} {
       0% {
         -webkit-animation-timing-function: ease-in;
                 animation-timing-function: ease-in;
@@ -234,7 +234,7 @@
       }
     }
 
-    @keyframes bounce#{$anim-num} {
+    @keyframes bounciness#{$anim-num} {
       0% {
         -webkit-animation-timing-function: ease-in;
                 animation-timing-function: ease-in;

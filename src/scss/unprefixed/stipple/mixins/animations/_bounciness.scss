@@ -149,8 +149,8 @@
   ) {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
-        '`bounciness` mixin';
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for' +
+        'the `bounciness` mixin';
   }
 
   @if (
@@ -166,13 +166,16 @@
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: bounce#{$anim-num} #{$timing} #{$timing-func} #{$delay}
-              #{$infinite} both;
-  height: $height;
-  width: $size;
+  animation:
+    bounciness#{$anim-num}
+    #{$timing}
+    #{$timing-func}
+    #{$delay}
+    #{$iterations}
+    both;
 
   @at-root {
-    @keyframes bounce#{$anim-num} {
+    @keyframes bounciness#{$anim-num} {
       0% {
         animation-timing-function: ease-in;
         opacity: 1;
