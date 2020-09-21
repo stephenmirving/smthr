@@ -1,0 +1,43 @@
+/// Helper utility to set both height and weight at the same time. Pass a single
+/// value to set both height and width to the same size. If the value passed is
+/// unitless and between 0 and 100, the mixin will assume percentage units. If
+/// the value is unitless and outsize that range, the mixin will assume rem
+/// units.
+///
+/// @param {Length-Percentage|String} $width - A length dimension (ex. 20rem or
+/// 300px or 10%). Passing 'max' is equivalent to passing 100%.
+/// @param {Length-Percentage} $height [$width] - A length dimension. If no
+/// value is entered $height is set equal to $width.
+///
+/// @group Utilities
+/// @throw Invalid data type for $width
+/// @throw Invalid data type for $height
+@mixin size($width, $height: $width) {
+  @if $width == 'max' {
+    $width: 100%;
+  }
+  @if $height == 'max' {
+    $height: 100%;
+  }
+  @if unitless($width) and $width > 0 and $width <= 100 {
+    @warn 'The $width parameter passed to the `size` mixin was unitless. ' +
+        'Assuming you meant [ #{inspect($width)}% ].';
+    $width: $width * 1%;
+  } @else if unitless($width) and $width != 0 {
+    @warn 'The $width parameter passed to the `size` mixin was unitless. ' +
+        'Assuming you meant [ #{inspect($width)}rem ].';
+    $width: $width * 1rem;
+  }
+  @if unitless($height) and $height > 0 and $height <= 100 {
+    @warn 'The $height parameter passed to the `size` mixin was unitless. ' +
+        'Assuming you meant [ #{inspect($height)}% ].';
+    $height: $height * 1%;
+  } @else if unitless($height) and $height != 0 {
+    @warn 'The $height parameter passed to the `size` mixin was unitless. ' +
+        'Assuming you meant [ #{inspect($height)}rem ].';
+    $height: $height * 1rem;
+  }
+
+  height: $height;
+  width: $width;
+}

@@ -1,0 +1,22 @@
+/// A fast way to create vendor-prefixed keyframes with only a 0% and 100% value.
+///
+/// @content
+/// @param {String} $animation-name - The name given to the animation.
+/// @param {Property} $property - The name of the property being animated.
+/// @param {*} $from - The value of the property at 0%.
+/// @param {*} $to - The value of the property at 100%.
+///
+/// @group Animations
+@mixin fast-frames($animation-name, $property, $from, $to) {
+  @at-root {
+    @keyframes #{$animation-name} {
+      0% {
+        #{$property}: $from;
+      }
+
+      100% {
+        #{$property}: $to;
+      }
+    }
+  }
+}

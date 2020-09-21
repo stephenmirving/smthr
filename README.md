@@ -11,14 +11,14 @@ having to mess with clip-path coordinates or animation keyframe creation.
 
 ## Stipple is in active development
 
-**This is *Stipple* version 0.0.3 - Last update: 10/23/2019 03:30PM EST**
+**This is *Stipple* version 0.0.5 - Last update: 02/17/2020 03:30PM EST**
 
 **_Stipple_ currently contains:**
 
 * 140+ mixins
 * 51+ functions
 * A modern, opinionated normalize file written in Sass called betterize
-* A small collection @extend placeholders and !default variables
+* A small collection of @extend placeholders and !default variables
 * The choice between .scss and classic .sass syntax
 
 ## Browser-Vendor Prefixes

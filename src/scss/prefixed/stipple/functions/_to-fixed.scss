@@ -1,13 +1,13 @@
-/// Fixes a float to a given number of decimal places.
+/// Fixes a number to a fixed number of decimal places.
 /// @access public
 ///
-/// @param {Number} $float - The number to format.
+/// @param {Number} $num - The number to format.
 /// @param {Integer} $digits [2] - Number of digits to leave after the decimal.
 /// @return {Number} The fixed digit number.
 ///
 /// @require {function} pow
 /// @throw $digits precision too high (if greater than 10).
-@function to-fixed($float, $digits: 2) {
+@function to-fixed($num, $digits: 2) {
   $sass-precision: 10;
 
   @if ($digits > $sass-precision) {
@@ -20,5 +20,5 @@
   }
 
   $pow: pow(10, $digits);
-  @return round($float * $pow) / $pow;
+  @return round($num * $pow) / $pow;
 }

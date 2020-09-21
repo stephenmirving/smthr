@@ -1,0 +1,17 @@
+/// Creates a square with relative, dynamically sized dimensions that are
+/// clamped by provided minimum and maximum sizes.
+///
+/// @param {Length-Percentage} $size - The size of the square given in relative
+/// units.
+/// @param {Length-Percentage} $min [$size] The minimum size of the square.
+/// @param {Length-Percentage} $max [$size] The maximum size of the square.
+///
+/// @group Utilities
+@mixin dynamic-square($size, $min: $size, $max: $size) {
+  height: $size;
+  max-height: $max;
+  max-width: $max;
+  min-height: $min;
+  min-width: $min;
+  width: $size;
+}

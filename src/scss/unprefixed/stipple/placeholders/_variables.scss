@@ -97,7 +97,7 @@ $black: #000 !default;
 
 /// Color used for off-black UI items.
 /// @type Color
-$off-black: #3e3e3e !default;
+$off-black: #202020 !default;
 
 /// Color used for dark gray UI items.
 /// @type Color
@@ -122,3 +122,9 @@ $white: #fff !default;
 /// Transitions for buttons.
 /// @type List
 $button-transition: background-color .3s ease-out, color .3s ease-out !default;
+
+// Misc constants
+
+/// Pi to the 10th digit.
+/// @type Number
+$pi: 3.1415926536 !default;

@@ -1,3 +1,5 @@
+@use 'sass:map';
+
 /// Given the key, safely returns a value from a map.
 /// @access public
 ///
@@ -9,10 +11,9 @@
     type-of($map) == 'map' or
     (type-of($map) == 'list' and length($map) == 0)
   ) {
-    @if map-has-key($map, $key) {
-      @return map-get($map, $key);
-    }
-    @else {
+    @if map.has-key($map, $key) {
+      @return map.get($map, $key);
+    } @else {
       @error 'Key: [#{inspect($key)}] is not available in [#{inspect($map)}]';
     }
   } @else {

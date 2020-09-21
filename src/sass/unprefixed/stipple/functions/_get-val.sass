@@ -6,8 +6,8 @@
 /// @return {List} Found value.
 @function get-val($map, $key)
   @if type-of($map) == 'map' or type-of($map) == 'list' and length($map) == 0
-    @if map-has-key($map, $key)
-      @return map-get($map, $key)
+    @if map.has-key($map, $key)
+      @return map.get($map, $key)
     @else
       @error 'Key: [#{inspect($key)}] is not available in [#{inspect($map)}]'
   @else

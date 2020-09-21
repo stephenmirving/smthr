@@ -1,7 +1,12 @@
 TODO:
 
   General Changes:
-    ☐ Go through betterize and remove anything that is for a dead browser
+    ☐ Convert code to use the new sass module system @started(20-02-14 16:06)
+      ☐ Get all the dependencies from built in sass modules switched over
+      ✔ Finish using applying what you learned about @forward in _index.scss files @done(20-02-16 16:56)
+      ☐ Check to see if it is working still
+    ✔ Go through betterize and remove anything that is for a dead browser @done(20-02-14 16:06)
+    ☐ Parse down all the direction decision trees using a direction alias map @started(20-02-14 15:46)
     ✔ Fix all the @error and @warn messages where a variable is interpolated, replace #{$var} with #{inspect($var)} @done(19-08-13 00:51)
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Make all alias mixins only reference the original instead of repeating code
@@ -14,8 +19,11 @@ TODO:
 
   Shapes Mixins:
     ☐ Go to shapes page with psuedo elements and add those
+    ☐ Propogate the updated version of arrow-curved-tail
 
   Utility Mixins:
+    ☐ Finish and propogate line-clamp mixin
+    ☐ Add .sass versions of dynamic-square mixin
     ☐ Fix _family fork - first-child/last-child mixin, adding of-type functionality to first/last
     ☐ Fix the `size` mixin, it errors out if you pass it function generated sizes like with calc
     ✔ Go back to the align-vertically, abs-center, and align-horizontally mixins and test whether to switch back to absolute positioning @done(19-08-13 01:07)
@@ -33,8 +41,22 @@ TODO:
     ☐ Finish propogating pseudo mixin to the dist folder
 
   Functions:
-      ☐ Add more entity codes to the entity function
-      ☐ Copy the entity() function to all versions
+    ☐ Finish and propogate trend-line() function:
+      ☐ Function finished
+      ☐ Function added to main build file
+      ☐ Function propogated to a prefixed version and sass versions
+    ☐ Finish and propogate linear-interpolation function:
+      ☐ Function finished
+      ☐ Function added to main build file
+      ☐ Function propogated to a prefixed version and sass versions
+    ☐ Finish doing everything from the smashing magazine article the above two came from
+    ☐ Finish and propogate the new precision function
+      ☐ Function finished
+      ☐ Function added to main build file
+      ☐ Function propogated to a prefixed version and sass versions
+    ☐ Change name of clamp function so as not to conflict with the native CSS clamp. `preclamp()` maybe?
+    ☐ Add more entity codes to the entity function
+    ☐ Copy the entity() function to all versions
     ☐ Convert mixins from _family.scss into functions for non-nested selector use
     ☐ Fix the ratio-to-percentage mixin
     ✔ Finish the pi() function and propogate across all versions @done(19-08-30 01:28)

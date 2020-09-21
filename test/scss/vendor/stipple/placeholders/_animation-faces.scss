@@ -1,0 +1,8 @@
+/// Extended in the `animation-front-face` and the `animation-back-face`
+/// mixins as the base styles for the subelements of a 3-D transformed element.
+%animation-faces {
+  backface-visibility: hidden;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}

@@ -9,8 +9,8 @@
   @extend %visually-hide;
 
   @if ($focusable) {
-    &:active,
-    &:focus {
+    &:focus,
+    &:active {
       clip: auto;
       -webkit-clip-path: none;
               clip-path: none;

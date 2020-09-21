@@ -13,25 +13,19 @@
     @error 'Invalid data type passed to black(). Opacity must be a number.';
   }
   @if not unitless($opacity) and unit($opacity) != '%' {
-    @error 'Invalid opacity unit type of [#{inspect(unit($opacity))}] passed ' +
-        'to black(). Opacity must be a unitless decimal or a percentage.';
+    @error 'Invalid opacity unit type of [ #{inspect(unit($opacity))} ] passed' +
+        ' to black(). Opacity must be a unitless decimal or a percentage.';
   }
   @if (
     (unit($opacity) == '%' and ($opacity < 0% or $opacity > 100%)) or
     (unitless($opacity) and ($opacity < 0 or $opacity > 1))
   ) {
-    @error 'Invalid opacity level of [#{inspect($opacity)}] passed to black().';
+    @error 'Invalid opacity level of [ #{inspect($opacity)} ] passed to black().';
   }
 
   @if unit($opacity) == '%' {
     $opacity: $opacity / 100%;
   }
 
-  @if $opacity == 1 {
-    @return #000;
-  } @else if $opacity == 0 {
-    @return transparent;
-  } @else {
-    @return rgba(#000, $opacity);
-  }
+  @return if($opacity == 1, #000, rgba(#000, $opacity));
 }

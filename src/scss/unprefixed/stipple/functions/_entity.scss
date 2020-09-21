@@ -120,12 +120,48 @@
     $char == 'degrees-farenheit' or $char == 'degree-farenheit' or
     $char == 'degreesfarenheit' or $char == 'degreefarenheit' or
     $char == 'farenheit' or $char == 'faren' or $char == 'degfar' or
-    $char == 'deg-far' or $char = 'deg-faren' or $char == 'deg-f' or
+    $char == 'deg-far' or $char == 'deg-faren' or $char == 'deg-f' or
     $char == 'degree-f' or $char == 'degrees-f' or $char == 'degf'
   ) {
     $entity: '\2109'; // Degrees Celcius: ℉
   } @else if $char == 'infinity' or $char == 'inf' {
     $entity: '\221E'; // Infinity: ∞
+  } @else if (
+    $char == 'small-triangle--up' or $char == 'sm-tri--up' or
+    $char == 'smalltriangleup' or  $char == 'small-triangle-up' or
+    $char == 'smtriup' or $char == 'triangleupsmall' or
+    $char == 'triangle-up-small' or $char == 'triupsm' or
+    $char == 'uptrianglesmall' or $char == 'up-triangle-small' or
+    $char == 'uptrism'
+  ) {
+    $entity: '\25B2'; // Small Triangle - Up: ▴
+  } @else if (
+    $char == 'small-triangle--down' or $char == 'sm-tri--down' or
+    $char == 'smalltriangledown' or $char == 'small-triangle-down' or
+    $char == 'smtridown' or $char == 'triangledownsmall' or
+    $char == 'triangle-down-small' or $char == 'trismdown' or
+    $char == 'downtrianglesmall' or $char == 'down-triangle-small' or
+    $char == 'downtrism'
+  ) {
+    $entity: '\25BE'; // Small Triangle - Down: ▾
+  } @else if (
+    $char == 'small-triangle--left' or $char == 'sm-tri--left' or
+    $char == 'smalltriangleleft' or $char == 'small-triangle-left' or
+    $char == 'smtrileft' or $char == 'triangleleftsmall' or
+    $char == 'triangle-left-small' or $char == 'trileftsm' or
+    $char == 'lefttrianglesmall' or $char == 'left-triangle-small' or
+    $char == 'lefttrism'
+  ) {
+    $entity: '\25C2'; // Small Triangle - Left: ◂
+  } @else if (
+    $char == 'small-triangle--right' or $char == 'sm-tri--right' or
+    $char == 'smalltriangleup' or $char == 'small-triangle-up' or
+    $char == 'smtriup' or $char == 'triangleupsmall' or
+    $char == 'triangle-up-small' or $char == 'triupsm' or
+    $char == 'uptrianglesmall' or $char == 'up-triangle-small' or
+    $char == 'uptrism'
+  ) {
+    $entity: '\25B8'; // Small Triangle - Right: ▸
   } @else if $char == 'nbsp' or $char == 'nobreakspace' {
     $entity: '\00A0'; // Non-breaking space
   } @else if $char != ' ' {

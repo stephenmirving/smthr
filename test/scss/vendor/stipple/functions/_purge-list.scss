@@ -1,0 +1,45 @@
+/// Removes all false and null values from `$list`.
+/// @access public
+///
+/// @param {List} $list - The list to purge.
+/// @return {List} The purged list.
+///
+/// @require {function} is-true
+/// @require {function} to-list
+/// @alias clean-list
+@function purge-list($list) {
+  $_: missing-dependencies('is-true', 'to-list');
+
+  $result: ();
+
+  @each $item in $list {
+    @if is-true($item) {
+      $result: append($result, $item, list-separator($list));
+    }
+  }
+
+  @return to-list($result);
+}
+
+/// Removes all false and null values from `$list`.
+/// @access public
+///
+/// @param {List} $list - The list to purge.
+/// @return {List} The purged list.
+///
+/// @require {function} is-true
+/// @require {function} to-list
+/// @alias purge-list
+@function clean-list($list) {
+  $_: missing-dependencies('is-true', 'to-list');
+
+  $result: ();
+
+  @each $item in $list {
+    @if is-true($item) {
+      $result: append($result, $item, list-separator($list));
+    }
+  }
+
+  @return to-list($result);
+}

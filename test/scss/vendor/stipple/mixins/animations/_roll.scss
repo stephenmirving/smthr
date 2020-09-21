@@ -1,0 +1,233 @@
+/// Generates an animation that rolls an element in or out from or towards a
+/// given direction.
+///
+/// @param {Boolean|String} $in-or-out [in] - Determines if the element will
+/// roll `in` (or true, `i`) our `out` (or false, `o`).
+/// @param {String} $direction [top] - Will either roll in from this
+/// direction or roll out towards this direction.
+/// @param {Boolean|String} $blurred [null] - If true, it will add a blur effect
+/// to the animation.
+/// @param {Time} $timing [null] - The duration of the animation (s or ms)
+/// @param {Time} $delay [null] - The optional delay time for the animation.
+/// @param {Number|String} $iterations [null] - The number of iterations
+/// to complete. If the value passed is not a number, it will be set to infinite
+/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// null assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for
+/// the animation. A null value passed here will default to the recommended
+/// timing function for this animation of `ease-out` on a roll-in animation, and
+/// a timing function of `ease-in` on a roll-out animation.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @throw Invalid $in-or-out value
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+/// @throw Invalid $iterations value
+/// @throw Invalid $anim-dir value
+@mixin roll(
+  $in-or-out: in,
+  $direction: left,
+  $blurred: null,
+  $timing: .6s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  // Default values for a roll in from the left
+  $opacity-val1: 0;
+  $opacity-val2: 1;
+  $trans-val1: translateX(-800px) rotate(-540deg);
+  $trans-val2: translateX(0) rotate(0);
+  $blur-val1: blur(50px);
+  $blur-val2: blur(0);
+  $temp-val: null;
+
+  // Input scrubbing
+  @if $in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i' {
+    $in-or-out: true;
+  } @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o' {
+    $in-or-out: false;
+  } @else {
+    @error 'Invalid $in-or-out value of [#{inspect($in-or-out)}] for the `roll` mixin.';
+  }
+
+  @if $direction {
+    @if (
+      to-lower-case($direction) == 'top' or
+      to-lower-case($direction) == 't' or
+      to-lower-case($direction) == 'up' or
+      to-lower-case($direction) == 'u'
+    ) {
+      $trans-val1: translateY(-800px) rotate(-540deg);
+      $trans-val2: translateY(0) rotate(0);
+    } @else if (
+      to-lower-case($direction) == 'bottom' or
+      to-lower-case($direction) == 'btm' or
+      to-lower-case($direction) == 'b'
+    ) {
+      $trans-val1: translateY(800px) rotate(540deg);
+      $trans-val2: translateY(0) rotate(0);
+    } @else if (
+      to-lower-case($direction) == 'right' or to-lower-case($direction) == 'r'
+    ) {
+      $trans-val1: translateX(800px) rotate(540deg);
+      $trans-val2: translateX(0) rotate(0);
+    } @else if (to-lower-case($direction) != 'left'
+        and to-lower-case($direction) != 'l') {
+      @error 'Invalid direction of [#{inspect($direction)}] chosen for the `roll` mixin.';
+    }
+  } @else {
+    $direction: null;
+  }
+
+  @if (not $blurred or $blurred == nil or $blurred == 0 or $blurred == 'none'
+      or $blurred == 'no' or $blurred == 'n/a' or $blurred == 'n') {
+    $blurred: false;
+  } @else if ($blurred == true or $blurred == 'blurred' or $blurred == 'blur'
+      or $blurred == 'yes' or $blurred == 'y' or $blurred == 'b') {
+    $blurred: true;
+  } @else {
+    @error 'Invalid $blurred value of `#{inspect($blurred)}` for the `roll` mixin. ' +
+        'Pass true or `blur` to blur the animation, false or null to leave as' +
+        ' default.';
+  }
+
+  @if not $in-or-out {
+    // Swap values for roll-out state
+    $temp-val: $opacity-val1;
+    $opacity-val1: $opacity-val2;
+    $opacity-val2: $temp-val;
+
+    $temp-val: $trans-val1;
+    $trans-val1: $trans-val2;
+    $trans-val2: $temp-val;
+
+    $temp-val: $blur-val1;
+    $blur-val1: $blur-val2;
+    $blur-val2: $temp-val;
+  }
+
+  @if type-of($timing) != 'number' {
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `roll` ' +
+        'mixin. The timing property must be a number.';
+  } @else if unitless($timing) {
+    // If no there is no unit for $timing, assume seconds
+    $timing: $timing * 1s;
+  } @else if not index('s' 'ms', unit($timing)) {
+    @error 'Invalid timing value of [#{inspect($timing)}] for the `roll` mixin.' +
+        'The timing property must be in either s or ms units.';
+  } @else if (unit($timing) == 'ms' and $timing % 100 == 0ms) {
+    // If time in ms would be shorter as seconds, convert it
+    $timing: ($timing / 1000ms) * 1s;
+  }
+
+  @if (
+    $delay == 0 or $delay == 0s or $delay == 0ms or
+    $delay == 'none' or $delay == 'no' or $delay == 'n' or
+    $delay == 'n/a' or $delay == nil or not $delay
+  ) {
+    $delay: null;
+  }
+  @if $delay {
+    @if type-of($delay) != 'number' {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `roll` mixin.' +
+          'The delay property must be a number.';
+    } @else if unitless($delay) {
+      // If no there is no unit for $delay, assume seconds
+      $delay: $delay * 1s;
+    } @else if not index('s' 'ms', unit($delay)) {
+      @error 'Invalid delay value of [#{inspect($delay)}] for the `roll` mixin.' +
+          'The delay property must be in either s or ms units.';
+    } @else if (unit($delay) == 'ms' and $delay % 100 == 0ms) {
+      // If time in ms would be shorter as seconds, convert it
+      $delay: ($delay / 1000ms) * 1s;
+    }
+  }
+
+  @if $iterations {
+    @if (
+      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    ) {
+      $iterations: infinite;
+    } @else if (
+      (unitless($iterations) and type-of($iterations) == 'number') or
+      $iterations == initial or $iterations == inherit
+    ) {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid iteration-count value of [#{inspect($iterations)}] for ' +
+          'the `roll` mixin.';
+    }
+  } @else {
+    $iterations: null;
+  }
+
+  @if (
+    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
+    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
+    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
+  ) {
+    $anim-dir: null;
+  } @else if (
+    $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r'
+  ) {
+    $anim-drection: reverse;
+  } @else if (
+    $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+  ) {
+    $anim-dir: alternate;
+  } @else if (
+    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
+    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
+    $anim-dir == 'ar'
+  ) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of [#{inspect($anim-dir)}] for the ' +
+        '`roll` mixin';
+  }
+
+  @if (
+    not $timing-func or $timing-func == true or $timing-func == 'none' or
+    $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or
+    $timing-func == 'default' or $timing-func == 'd'
+  ) {
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    $timing-func: if(($in-or-out), ease-out, ease-in);
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  }
+    animation: roll#{$anim-num} #{$timing} #{$timing-func}
+                #{$delay} #{$iterations} #{$anim-dir} both;
+
+  @at-root {
+
+    @keyframes roll#{$anim-num} {
+      0% {
+        @if ($blurred) {
+          filter: $blur-val1;
+        }
+        opacity: $opacity-val1;
+        transform: $trans-val1;
+      }
+
+      100% {
+        @if ($blurred) {
+          filter: $blur-val2;
+        }
+        opacity: $opacity-val2;
+        transform: $trans-val2;
+      }
+    }
+  }
+}

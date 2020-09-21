@@ -13,14 +13,14 @@
     @error 'Invalid data type passed to white(). Opacity must be a number.';
   }
   @if not unitless($opacity) and unit($opacity) != '%' {
-    @error 'Invalid opacity unit type of [#{inspect(unit($opacity))}] passed ' +
-        'to white(). Opacity must be a unitless decimal or a percentage.';
+    @error 'Invalid opacity unit type of [ #{inspect(unit($opacity))} ] ' +
+        'passed to white(). Opacity must be a unitless decimal or a percentage.';
   }
   @if (
     (unit($opacity) == '%' and ($opacity < 0% or $opacity > 100%)) or
     (unitless($opacity) and ($opacity < 0 or $opacity > 1))
   ) {
-    @error 'Invalid opacity level of [#{inspect($opacity)}] passed to white().';
+    @error 'Invalid opacity level of [ #{inspect($opacity)} ] passed to white().';
   }
 
   @if unit($opacity) == '%' {

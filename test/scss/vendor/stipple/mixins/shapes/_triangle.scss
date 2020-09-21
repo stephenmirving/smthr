@@ -1,0 +1,45 @@
+/// Creates a CSS triangle, which can be used for dropdown arrows, dropdown
+/// pips, and more. Use this mixin inside a `&::before` or `&::after` selector,
+/// to attach the triangle to an existing element.
+///
+/// @param {String} $direction [down] - Direction that the triangle points.
+/// Can be `up` (or `u`), `right` (or `r`), `down` (or `d`), or `left` (or `l`).
+/// @param {Number} $size [9px] - Width of the triangle.
+/// @param {Color} $color [#3e3e3e] - Color of the triangle.
+///
+/// @group Shapes
+/// @throw Invalid $direction value
+@mixin triangle($direction: down, $size: 9px, $color: #3e3e3e) {
+  border: inset $size;
+  @if (to-lower-case($direction) == 'down'
+      or to-lower-case($direction) == 'd') {
+    border-bottom-width: 0;
+    border-color: $color transparent transparent;
+    border-top-style: solid;
+  } @else if (
+    to-lower-case($direction) == 'up' or to-lower-case($direction) == 'u'
+  ) {
+    border-bottom-style: solid;
+    border-color: transparent transparent $color;
+    border-top-width: 0;
+  } @else if (
+    to-lower-case($direction) == 'right' or to-lower-case($direction) == 'r'
+  ) {
+    border-color: transparent transparent transparent $color;
+    border-left-style: solid;
+    border-right-width: 0;
+  } @else if (
+    to-lower-case($direction) == 'left' or
+    to-lower-case($direction) == 'l'
+  ) {
+    border-color: transparent $color transparent transparent;
+    border-left-width: 0;
+    border-right-style: solid;
+  } @else {
+    @error 'Invalid direction of [#{inspect($direction)}] for the `triangle` mixin.';
+  }
+  content: '';
+  display: block;
+  height: 0;
+  width: 0;
+}

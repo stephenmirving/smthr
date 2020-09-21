@@ -1,18 +1,19 @@
 // helpers/_utilities.scss
 
 // Apply the float clearing clearfix
+.group,
 .clearfix {
-  @extend %clearfix;
+  @include clearfix;
 }
 
 // Hide visually and from screen readers
 .hidden {
-  @include hide;
+  @include hide($maintain-layout: false);
 }
 
 // Hide visually, and from screen readers, but maintain layout
 .invisible {
-  @include hide(true);
+  @include hide($maintain-layout: true);
 }
 
 // Hide only visually, but have it available for screen readers:

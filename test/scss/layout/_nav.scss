@@ -1,7 +1,8 @@
 // layout/_nav.scss
 
 .nav {
-  @extend %clearfix;
+  @include clearfix;
+
   align-content: center;
   display: flex;
   height: 50%;

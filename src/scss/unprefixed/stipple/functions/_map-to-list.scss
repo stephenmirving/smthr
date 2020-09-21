@@ -18,11 +18,9 @@
 
     @if ($keep == 'keys') {
       @return $keys;
-    }
-    @else if ($keep == 'values') {
+    } @else if ($keep == 'values') {
       @return $values;
-    }
-    @else {
+    } @else {
       @return zip($keys, $values);
     }
   }

@@ -19,7 +19,7 @@
       $value: $value * $number;
     }
   } @else if ($exponent < 0) {
-    @for $i from 1 through -$exponent {
+    @for $i from 1 through $exponent {
       $value: $value / $number;
     }
   }
