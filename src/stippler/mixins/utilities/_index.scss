@@ -1,9 +1,6 @@
-@forward 'absolute-center';
-@forward 'align-horizontally';
-@forward 'align-vertically';
 @forward 'bem';
-@forward 'bg-image';
 @forward 'bg-image-svg';
+@forward 'bg-image';
 @forward 'border-radius';
 @forward 'button-base';
 @forward 'clearfix';
@@ -16,9 +13,9 @@
 @forward 'font';
 @forward 'ghost-button';
 @forward 'gradient';
-@forward 'hide';
 @forward 'hide-text';
 @forward 'hide-visually';
+@forward 'hide';
 @forward 'inner-side-shadow';
 @forward 'line-clamp';
 @forward 'long-shadow';
@@ -35,10 +32,13 @@
 @forward 'only-webkit';
 @forward 'opacity';
 @forward 'placeholder';
+@forward 'position-center';
+@forward 'position-horizontally';
+@forward 'position-vertically';
 @forward 'position';
 @forward 'pseudo';
-@forward 'reset';
 @forward 'reset-list';
+@forward 'reset';
 @forward 'responsive-font';
 @forward 'responsive-ratio';
 @forward 'scrollbar';

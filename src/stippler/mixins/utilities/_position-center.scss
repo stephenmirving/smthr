@@ -3,10 +3,10 @@
 ///
 /// @group Utilities
 /// @alias abs-center
-@mixin absolute-center {
-  left: 50%;
+@mixin position-center {
   position: relative;
   top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }
 
@@ -16,5 +16,5 @@
 /// @group Utilities
 /// @alias absolute-center
 @mixin abs-center {
-  @include absolute-center;
+  @include position-center;
 }

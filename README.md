@@ -1,6 +1,6 @@
-# Stippler
+# smthr
 
-_Stippler_ is a Sassy CSS (SCSS) library of simple-to-use functions &amp; mixins
+_smthr_ is a Sassy CSS (SCSS) library of simple-to-use functions &amp; mixins
 that aid your front-end development experience by serving up workflow
 enhancing utilities along with production ready element styles and animations.
 
@@ -9,11 +9,11 @@ library focuses heavily on aiding in the creation of CSS animations
 and clip-path shapes - allowing you to create a wide range of effects without
 having to mess with clip-path coordinates or animation keyframe creation.
 
-## Stippler is in active development
+## smthr is in active development
 
-**This is *Stippler* version 0.0.6 - Last update: 12/27/23*
+**This is *smthr* version 0.0.7 - Last update: 1/31/24*
 
-**_Stippler_ currently contains:**
+**_smthr_ currently contains:**
 
 * 140+ mixins
 * 51+ functions
@@ -24,52 +24,52 @@ having to mess with clip-path coordinates or animation keyframe creation.
 ## Deployment
 
 To use this library, simply download the repo and choose whether you are
-going to download the entire repo and get each individual feature of stippler in
+going to download the entire repo and get each individual feature of smthr in
 its own file (which can be helpful for organizational purposes), or to download
-a single 'stippler.scss' file containing all the code from the library.
+a single 'smthr.scss' file containing all the code from the library.
 
 ***
 
 **If you download the repo with individual build files...**
 
 Choose your syntax type, sass or scss, and then your version, prefixed or
-unprefixed, from the src folder, then copy the stipple folder that is inside your
+unprefixed, from the src folder, then copy the smth folder that is inside your
 chosen version's folder into your project's directory with the rest of the scss
 files, probably within the 'sass' or 'scss' folder, or within one of the
 subdirectories of that folder (most commonly the 'vendor' subdirectory). From
-there, just use an @import directive for the '_stipple.scss' file that is within
-the 'stipple' folder at the top of your 'main.scss' file (or 'style.scss', or
+there, just use an @import directive for the '_smth.scss' file that is within
+the 'smth' folder at the top of your 'main.scss' file (or 'style.scss', or
 whatever you have named your main stylesheet) where the rest of your imports
 are.
 
 **Like this:**
 
-> @import 'stipple/stipple';
+> @import 'smth/smth';
 
 Of if you were to place the folder within your vendor sub-folder in your sass
 directory, the import would look like this:
 
-> @import 'vendor/stipple/stipple';
+> @import 'vendor/smth/smth';
 
 ***
 
 **If you download the single distributed file...**
 
 Choose your syntax type, sass or scss, and then your version, prefixed or
-unprefixed, from the 'dist' folder, then copy the '_stipple.scss' file and put it
+unprefixed, from the 'dist' folder, then copy the '_smth.scss' file and put it
 in your scss folder in your project's directory, most usually within a 'vendor'
-folder. From there, just use an @import directive for the '_stipple.scss' file at
+folder. From there, just use an @import directive for the '_smth.scss' file at
 the top of your 'main.scss' file (or 'style.scss', or whatever you have named
 your main stylesheet) where the rest of your imports are.
 
 **Like this:**
 
-> @import 'stipple';
+> @import 'smth';
 
 Of if you were to place the folder within your vendor sub-folder in your sass
 directory, the import would look like this:
 
-> @import 'vendor/stipple';
+> @import 'vendor/smth';
 
 ***
 
