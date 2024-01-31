@@ -1,0 +1,15 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:list';
+
+/// Checks if a value is an absolute length.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is an absolute length, false if it is not.
+@function is-absolute-length($value) {
+  @return (
+    meta.typeof($value) == 'number' and
+    list.index('cm' 'mm' 'in' 'px' 'pt' 'pc', math.unit($value)) != null
+  );
+}

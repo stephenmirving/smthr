@@ -1,0 +1,12 @@
+@use 'sass:color';
+
+/// Darken a color by mixing it with black at a given percentage.
+/// @access public
+///
+/// @param {Color} $color - The color being darkened.
+/// @param {Number} $percentage - The percentage of black mixed into the
+/// returned color.
+/// @return {Color} - The darkened color.
+@function shade($color, $percentage) {
+  @return color.mix(#000, $color, $percentage);
+}

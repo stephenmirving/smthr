@@ -1,0 +1,17 @@
+@use 'sass:list';
+@use 'sass:math';
+
+/// Checks if a value is a relative length.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is a relative length, false if it is not.
+@function is-relative-length($value) {
+  @return (
+    meta.typeof($value) == 'number' and
+    list.index(
+      'em' 'ex' 'ch' 'rem' '%' 'vw' 'vh' 'vmin' 'vmax',
+      math.unit($value)
+    ) != null
+  );
+}

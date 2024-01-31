@@ -7,19 +7,27 @@ TODO:
       ☐ Check to see if it is working still
     ✔ Go through betterize and remove anything that is for a dead browser @done(20-02-14 16:06)
     ☐ Parse down all the direction decision trees using a direction alias map @started(20-02-14 15:46)
-    ✔ Fix all the @error and @warn messages where a variable is interpolated, replace #{$var} with #{inspect($var)} @done(19-08-13 00:51)
+    ✔ Fix all the @error and @warn messages where a variable is interpolated, replace #{$var} with #{meta.inspect($var)} @done(19-08-13 00:51)
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Make all alias mixins only reference the original instead of repeating code
     ✔ Add !important to display: none for the [hidden] attribute in _betterize.scss @done(19-08-13 00:52)
     ✔ Change documentation for bg-image and bg-image-svg, remove part where it says a quoted string is required @done(19-08-13 01:56)
     ✔ Make sure all the animations are fixed for chrome by adding the moz-only on the backface-visibility property on the animation @done(19-08-13 01:56)
+    ☐ Add .sass version back in
+    ☐ Modernize betterize.scss
 
   Animations Mixins:
     ☐ Find ones I haven't done yet and complete one
 
+  Button Mixins:
+    ☐ Create and add a bunch of button mixins for different style buttons
+
   Shapes Mixins:
     ☐ Go to shapes page with psuedo elements and add those
     ☐ Propogate the updated version of arrow-curved-tail
+
+  Color Mixins:
+    ☐ Fix color mixins by using the built in color.scale sass module
 
   Utility Mixins:
     ☐ Finish and propogate line-clamp mixin

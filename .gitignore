@@ -104,3 +104,7 @@ typings/
 *.rar
 *.tar
 *.zip
+
+#Image Source Files
+*.psd
+*.ai

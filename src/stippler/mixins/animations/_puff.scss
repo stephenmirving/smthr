@@ -1,0 +1,280 @@
+/// Generates an animation that puffs an element in or out. If a forward or
+/// backward direction is chosen to augment the puff, it is recommended that
+/// the `animation-stage` mixin be used on the parent element.
+///
+/// @param {String|Boolean} $in-or-out [in] - Determines if the element will
+/// puff `in` (or true, `i`) our `out` (or false, `o`).
+/// @param {String} $direction [null] - Will optionally either puff in from
+/// this direction or puff out towards this direction.
+/// @param {Time} $timing [.7s] - The duration of the animation (s or ms)
+/// @param {Time} $delay [null] - The optional delay time for the animation.
+/// @param {Number|String} $iterations [null] - The number of iterations
+/// to complete. If the value passed is not a number, it will be set to infinite
+/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// null assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. A null value passed here will default to the recommended timing
+/// function for this animation of `cubic-bezier(.39, .575, .565, 1)`.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @throw Invalid $in-or-out value
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+/// @throw Invalid $iterations value
+/// @throw Invalid $anim-dir value
+@mixin puff(
+  $in-or-out: in,
+  $direction: center,
+  $timing: .7s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  // Default values for a puff in with center direction
+  $opacity-val1: 0;
+  $opacity-val2: 1;
+  $trans-val1: scale(2);
+  $trans-val2: scale(1);
+  $blur-val1: blur(2px);
+  $blur-val2: blur(0);
+  $t-origin-val: null;
+  $temp-val: null;
+
+  // Input scrubbing
+  @if $in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i' {
+    $in-or-out: true;
+  } @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o' {
+    $in-or-out: false;
+  } @else {
+    @error 'Invalid $in-or-out value of [#{meta.inspect($in-or-out)}] for the `puff` mixin.';
+  }
+
+  @if $direction {
+    @if meta.typeof($direction) == 'string' {
+      $direction: string.to-lower-case($direction);
+    }
+    @if (
+      $direction == 'top' or $direction == 't' or
+      $direction == 'up' or $direction == 'u'
+    ) {
+      $blur-val1: blur(2px);
+      $blur-val2: blur(0);
+      $t-origin-val: 50% 0%;
+    } @else if (
+      $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
+    ) {
+      $trans-val1: translateY(50px);
+      $trans-val2: translateY(0);
+    } @else if (
+      $direction == 'forwards' or $direction == 'forward' or
+      $direction == 'fwd' or $direction == 'fw' or $direction == 'f'
+    ) {
+      $direction: 'forward';
+      $trans-val1: translateZ(-80px);
+      $trans-val2: translateZ(0);
+    } @else if (
+      $direction == 'backwards' or $direction == 'backward' or
+      $direction == 'bckwrd' or $direction == 'back' or
+      $direction == 'bck' or $direction == 'bw' or $direction == 'b'
+    ) {
+      $direction: 'backward';
+      $trans-val1: translateZ(80px);
+      $trans-val2: translateZ(0);
+    } @else if (
+      $direction == 'top' or $direction == 't' or
+      $direction == 'up' or $direction == 'u'
+    ) {
+      $trans-val1: translateY(-50px);
+      $trans-val2: translateY(0);
+    } @else if $direction == 'left' or $direction == 'l' {
+      $trans-val1: translateX(-50px);
+      $trans-val2: translateX(0);
+    } @else if $direction == 'right' or $direction == 'r' {
+      $trans-val1: translateX(50px);
+      $trans-val2: translateX(0);
+    } @else if (
+      $direction == 'top-left' or $direction == 'topleft' or
+      $direction == 't-l' or $direction == 'tl' or
+      $direction == 'left-top' or $direction == 'lefttop' or
+      $direction == 'l-t' or $direction == 'lt'
+    ) {
+      $trans-val1: translateX(-50px) translateY(-50px);
+      $trans-val2: translateX(0) translateY(0);
+    } @else if (
+      $direction == 'top-right' or $direction == 'topright' or
+      $direction == 't-r' or $direction == 'tr' or
+      $direction == 'right-top' or $direction == 'righttop' or
+      $direction == 'r-t' or $direction == 'rt'
+    ) {
+      $trans-val1: translateX(50px) translateY(-50px);
+      $trans-val2: translateX(0) translateY(0);
+    } @else if (
+      $direction == 'bottom-right' or $direction == 'bottomright' or
+      $direction == 'b-r' or $direction == 'br' or
+      $direction == 'right-bottom' or $direction == 'rightbottom' or
+      $direction == 'r-b' or $direction == 'rb'
+    ) {
+      $trans-val1: translateX(50px) translateY(50px);
+      $trans-val2: translateX(0) translateY(0);
+    } @else if (
+      $direction == 'bottom-left' or $direction == 'bottomleft' or
+      $direction == 'b-l' or $direction == 'bl' or
+      $direction == 'left-bottom' or $direction == 'leftbottom' or
+      $direction == 'l-b' or $direction == 'lb'
+    ) {
+      $trans-val1: translateX(-50px) translateY(50px);
+      $trans-val2: translateX(0) translateY(0);
+    } @else if (
+      $direction == 'center' or $direction == 'cent' or $direction == 'c'
+    ) {
+      $direction: 'center';
+    } @else {
+      @error 'Invalid direction of [#{meta.inspect($direction)}] chosen for the ' +
+          '`puff` mixin.';
+    }
+  } @else {
+    $direction: 'center';
+  }
+
+  @if not $in-or-out {
+    // Swap values for puff-out state
+    $temp-val: $opacity-val1;
+    $opacity-val1: $opacity-val2;
+    $opacity-val2: $temp-val;
+
+    $temp-val: $trans-val1;
+    $trans-val1: $trans-val2;
+    $trans-val2: $temp-val;
+
+    $temp-val: $blur-val1;
+    $blur-val1: $blur-val2;
+    $blur-val2: $temp-val;
+  }
+
+  @if not $timing {
+    $timing: if($in-or-out, .7s, 1s);
+  }
+
+  @if meta.typeof($timing) != 'number' {
+    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `puff` ' +
+        'mixin. The timing property must be a number.';
+  } @else if unitless($timing) {
+    // If no there is no unit for $timing, assume seconds
+    $timing: $timing * 1s;
+  } @else if (not list.index('s' 'ms', math.unit($timing)) ){
+    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `puff` mixin.' +
+        'The timing property must be in either s or ms units.';
+  } @else if (unit($timing) == 'ms' and $timing % 100 == 0ms) {
+    // If time in ms would be shorter as seconds, convert it
+    $timing: ($timing / 1000ms) * 1s;
+  }
+
+  @if (
+    $delay == 0 or $delay == 0s or $delay == 0ms or
+    $delay == 'none' or $delay == 'no' or $delay == 'n' or
+    $delay == 'n/a' or $delay == nil or not $delay
+  ) {
+    $delay: null;
+  }
+  @if $delay {
+    @if meta.typeof($delay) != 'number' {
+      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `puff` mixin.' +
+          'The delay property must be a number.';
+    } @else if unitless($delay) {
+      // If no there is no unit for $delay, assume seconds
+      $delay: $delay * 1s;
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `puff` mixin.' +
+          'The delay property must be in either s or ms units.';
+    } @else if (unit($delay) == 'ms' and $delay % 100 == 0ms) {
+      // If time in ms would be shorter as seconds, convert it
+      $delay: ($delay / 1000ms) * 1s;
+    }
+  }
+
+  @if $iterations {
+    @if (
+      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    ) {
+      $iterations: infinite;
+    } @else if (
+      (unitless($iterations) and meta.typeof($iterations) == 'number') or
+      $iterations == initial or $iterations == inherit
+    ) {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for the ' +
+          '`puff` mixin.';
+    }
+  }
+
+  @if (
+    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
+    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
+    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
+  ) {
+    $anim-dir: null;
+  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
+    $anim-drection: reverse;
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a' {
+    $anim-dir: alternate;
+  } @else if (
+    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
+    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
+    $anim-dir == 'ar'
+  ) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
+        '`puff` mixin';
+  }
+
+  @if (
+    not $timing-func or $timing-func == true or $timing-func == 'none' or
+    $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or
+    $timing-func == 'default' or $timing-func == 'd'
+  ) {
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    $timing-func: if(
+      $in-or-out,
+        cubic-bezier(.47, 0, .745, .715),
+        cubic-bezier(.165, .84, .44, 1)
+    );
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  }
+  animation: puff#{$anim-num} #{$timing} #{$timing-func}
+              #{$delay} #{$iterations} #{$anim-dir} both;
+
+  @at-root {
+    @keyframes puff#{$anim-num} {
+      0% {
+        filter: blur(2px);
+        opacity: 0;
+        transform: scale(2);
+        @if $direction != 'center' {
+          transform-origin: $t-origin-val;
+        }
+      }
+
+      100% {
+        filter: blur(0);
+        opacity: 1;
+        transform: scale(1);
+        @if $direction != 'center' {
+          transform-origin: $t-origin-val;
+        }
+      }
+    }
+  }
+}

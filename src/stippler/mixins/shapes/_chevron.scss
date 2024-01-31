@@ -1,0 +1,59 @@
+/// Uses clip path to change an element to the shape of a chevron arrow
+///
+/// @param {String} $direction [right] The direction the chevron is pointing
+/// @param {Color|Mixed} $bg [#fb8c00] The color or background value.
+/// @param {Length-Percentage} $size [15rem] - The size of the chevron.
+/// If the $height property is not set explicitly, it is both height and width,
+/// if $height is set explicitly, then this value sets only the width.
+/// @param {Color} $fg-color [null] The color of any text in the arrow.
+/// @param {Length-Percentage} $height [$size] The height of the chevron.
+///
+/// @group Shapes
+/// @throw Invalid $direciton value
+@mixin chevron(
+  $direction: right,
+  $bg: #fb8c00,
+  $size: 15rem,
+  $fg-color: null,
+  $height: $size
+) {
+  background: $bg;
+
+  @if ($fg-color) {
+    color: $fg-color;
+  }
+  @if (
+    string.to-lower-case($direction) == 'right' or
+    string.to-lower-case($direction) == 'r'
+  ) {
+    clip-path: polygon( 75% 0, 100% 50%, 75% 100%, 0 100%,
+                        25% 50%, 0 0);
+  } @else if (
+    string.to-lower-case($direction) == 'left' or
+    string.to-lower-case($direction) == 'l'
+  ) {
+    clip-path: polygon( 100% 0, 75% 50%, 100% 100%, 25% 100%,
+                        0 50%, 25% 0 );
+  } @else if (
+    string.to-lower-case($direction) == 'up' or
+    string.to-lower-case($direction) == 'u' or
+    string.to-lower-case($direction) == 'top' or
+    string.to-lower-case($direction) == 't'
+  ) {
+    clip-path: polygon( 100% 100%, 50% 75%, 0 100%, 0 25%,
+                        50% 0, 100% 25% );
+  } @else if (
+    string.to-lower-case($direction) == 'down' or
+    string.to-lower-case($direction) == 'd' or
+    string.to-lower-case($direction) == 'bottom' or
+    string.to-lower-case($direction) =='b'
+  ) {
+    clip-path: polygon( 100% 75%, 50% 100%, 0 75%, 0 0,
+                        50% 25%, 100% 0 );
+  } @else {
+    @error 'Invalid direction value of [#{meta.inspect($direction)}] for the `chevron` mixin';
+  }
+
+  height: $height;
+  width: $size;
+}

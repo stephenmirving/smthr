@@ -1,0 +1,13 @@
+/// Does a hard reset of the styles on an element.
+///
+/// @group Utilities
+@mixin reset {
+  display: initial;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: padding-box border-box;
+  box-shadow: none;
+  font: inherit;
+  text-shadow: none;
+}

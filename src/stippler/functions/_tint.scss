@@ -1,0 +1,12 @@
+@use 'sass:color';
+
+/// Lighten a color by mixing it with white at a given percentage.
+/// @access public
+///
+/// @param {Color} $color - The color being lightened.
+/// @param {Number} $percentage - The percentage of white in the returned color.
+///
+/// @return {Color} - The lightened color.
+@function tint($color, $percentage) {
+  @return color.mix(#fff, $color, $percentage);
+}

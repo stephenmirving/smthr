@@ -1,0 +1,11 @@
+@use 'sass:meta';
+@use 'sass:math';
+
+/// Checks if a value is an integer.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is an integer, false if it is not.
+@function is-integer($value) {
+  @return meta.typeof($value) == 'number' and math.round($value) == $value;
+}

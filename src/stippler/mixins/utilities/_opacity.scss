@@ -1,0 +1,30 @@
+/// Takes a given value in either 0-1 decimal or 2-100 integer scale and applies
+/// that level of opacity along with the -ms-filter property for IE8- support.
+///
+/// @param {Number-Percentage} $opacity - The opacity level. Can take a decimal
+/// beteen 0 and 1 inclusive, or either a unitless integer or a percentage
+/// between 2 and 100 inclusive.
+///
+/// @group Utilities
+/// @throw $opacity out of range
+@mixin opacity($opacity) {
+  @if ($opacity > 1 or math.unit($opacity) == '%') {
+    @if ($opacity > 100) {
+      @warn 'Opacity was set to #{meta.inspect($opacity)} on an element. Value has been ' +
+          'changed to the max of 1.';
+      $opacity: 100;
+    }
+    @if (unit($opacity == '%')) {
+      $opacity: $opacity / 100%;
+    } @else {
+      $opacity: $opacity / 100;
+    }
+  }
+
+  @if $opacity == 1 { // For IE 8
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(enabled=false)';
+  } @else {
+    -ms-filter: 'progid:DXImageTransform.Microsoft.Alpha(Opacity=#{round($opacity * 100)})';
+  }
+  opacity: $opacity;
+}

@@ -1,0 +1,36 @@
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:math';
+
+/// Calculate the definition of a line between two points
+/// @access public
+///
+/// @param {Map} $map - A map where the keys are viewport widths and each value
+/// associated is the desired pixel size at that given view width.
+/// @return A linear equation expressed as a calc() function
+/// @example font-size: linear-interpolation((320px: 18px, 768px: 26px));
+@function linear-interpolation($map) {
+  $keys: map.keys($map);
+
+  @if list.length($keys) != 2 {
+    @error 'The linear-interpolation() $map must be exactly 2 values.';
+  }
+
+  $slope: math.divide(
+    (map.get($map, list.nth($keys, 2)) - map.get($map, list.nth($keys, 1))),
+    (list.nth($keys, 2) - list.nth($keys, 1))
+  );
+
+  // The y-intercept
+  $y-intercept: map.get($map, list.nth($keys, 1)) - $slope * list.nth($keys, 1);
+
+  // Determine if the sign should be positive or negative
+  $sign: '+';
+
+  @if $y-intercept < 0 {
+    $sign: '-';
+    $y-intercept: math.abs($y-intercept);
+  }
+
+  @return calc(#{$slope * 100vw} #{$sign} #{$b});
+}

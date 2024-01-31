@@ -1,7 +1,7 @@
-# Stipple
+# Stippler
 
-_Stipple_ is a Sassy CSS (SCSS) library of simple-to-use functions &amp; mixins
-that aid your front-end UI/UX development experience by serving up workflow
+_Stippler_ is a Sassy CSS (SCSS) library of simple-to-use functions &amp; mixins
+that aid your front-end development experience by serving up workflow
 enhancing utilities along with production ready element styles and animations.
 
 Along with the many utility-based functions &amp; mixins, this
@@ -9,11 +9,11 @@ library focuses heavily on aiding in the creation of CSS animations
 and clip-path shapes - allowing you to create a wide range of effects without
 having to mess with clip-path coordinates or animation keyframe creation.
 
-## Stipple is in active development
+## Stippler is in active development
 
-**This is *Stipple* version 0.0.5 - Last update: 02/17/2020 03:30PM EST**
+**This is *Stippler* version 0.0.6 - Last update: 12/27/23*
 
-**_Stipple_ currently contains:**
+**_Stippler_ currently contains:**
 
 * 140+ mixins
 * 51+ functions
@@ -21,35 +21,12 @@ having to mess with clip-path coordinates or animation keyframe creation.
 * A small collection of @extend placeholders and !default variables
 * The choice between .scss and classic .sass syntax
 
-## Browser-Vendor Prefixes
-
-There are two versions of _Stipple_ available, one for those who use automatic
-vendor prefixing tools such as Autoprefixer, Prefixless, etc., and one version
-for those those who prefer to add their own vendor prefixed properties (-webkit-,
--moz-, and so forth).
-
-The prefixed version is in the 'dist/.../prefixed' folder (or in the
-'src/.../prefixed' folder folder if you prefer individual build files) and
-contains many utilities that aid in the writing of stylesheets with vendor
-prefixes that the unprefixed version does not have.
-
-The unprefixed version for those who prefer to add their vendor prefixes
-automatically is in the 'dist/unprefixed' folder (or in the 'src/prefixed'
-folder folder if you prefer individual build files) and only contains vendor
-prefixes for properties that do not have an adequate unprefixed version (such
-as -webkit-scrollbar), or for the purpose of targeting certain browser engines
-specifically (such as -webkit-appearance).
-
 ## Deployment
 
-To use this library, simply download the repo and first choose whether you are
-going to use the standard, and now more common, '.scss syntax' this library was
-originally written in, or if you want to use the old '.sass' syntax. Then you
-must choose between the browser prefixed or unprefixed version. Once you have gotten
-all that settled, you can choose whether you want to download the entire repo and
-get each individual feature in its own file (which can be helpful for
-organizational purposes), or to download a single 'stipple.scss' file containing
-all the code from the library.
+To use this library, simply download the repo and choose whether you are
+going to download the entire repo and get each individual feature of stippler in
+its own file (which can be helpful for organizational purposes), or to download
+a single 'stippler.scss' file containing all the code from the library.
 
 ***
 

@@ -1,0 +1,27 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+
+/// Converts a ratio into a percentage.
+/// @access public
+///
+/// @param {List|Number} $ratio - A ratio value represented either by a two
+/// value list (ex: `16 9` for a 16:9 ratio) or by a single number (ex: .75 for
+/// a 4:3 ratio)
+///
+/// @return {Length-Percentage} A percentage value equal to the given ratio
+@function ratio-to-percentage($ratio) {
+  $percentage: 100%;
+
+  @if meta.type-of($ratio) == 'list' and list.length($ratio) == 2 {
+    $percentage: math.div(list.nth($ratio, 2), list.nth($ratio, 1)) * 100%;
+  } @else if meta.type-of($ratio) == 'number' and math.unitless($ratio) {
+    $percentage: $ratio * 100%;
+  } @else {
+    @error 'Invalid $ratio value of `#{meta.inspect($ratio)}` for ' +
+        '`ratio-to-percentage()`. Value must be a ratio represented by either' +
+        ' a two value list or a single number.';
+  }
+
+  @return $percentage;
+}

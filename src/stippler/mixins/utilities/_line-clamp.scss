@@ -1,0 +1,15 @@
+/// Applies the properties necessary to clamp text to a given number of lines.
+///
+/// @param {Number} $lines - Clamp the text to this number of lines.
+///
+/// @group Utilities
+@mixin line-clamp($lines) {
+  @if meta.typeof($lines) != 'number' {
+    @error 'The $lines parameter in the `line-clamp` mixin must be a number.';
+  }
+
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  text-overflow: ellipsis;
+}

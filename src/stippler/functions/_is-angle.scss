@@ -1,0 +1,15 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+
+/// Checks if a value is an angle.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is an angle, false if it is not.
+@function is-angle($value) {
+  @return (
+    meta.typeof($value) == 'number' and
+    list.index('deg' 'rad' 'grad' 'turn', math.unit($value)) != null
+  );
+}

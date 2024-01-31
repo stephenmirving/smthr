@@ -1,0 +1,27 @@
+@use 'sass:list';
+@use 'sass:map';
+
+/// Apply `$function` with `$args` to each item from `$list`.
+/// @author Hugo Giraudel
+/// @access public
+///
+/// @param {List} $list - List of items
+/// @param {String} $function - Function to apply to every item from `$list`
+/// @param {Arglist} $args - Extra arguments to pass to `$function`
+/// @return {List} The result of the function being applied to the list
+/// @throw Invalid function name
+@function walk($list, $function, $args...) {
+  @if not meta.function-exists($function) {
+    @error 'There is no `#{meta.inspect($function)}` function.';
+  }
+
+  @for $i from 1 through list.length($list) {
+    $list: list.set-nth(
+      $list,
+      $i,
+      meta.call($function, list.nth($list, $i), $args...)
+    );
+  }
+
+  @return $list;
+}

@@ -1,0 +1,11 @@
+@use 'sass:math';
+@use 'sass:meta';
+
+/// Checks if a value is a floating point (decimal) number.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is a float, false if it is not.
+@function is-float($value) {
+  @return meta.typeof($value) == 'number' and math.round($value) != $value;
+}

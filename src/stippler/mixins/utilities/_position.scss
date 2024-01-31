@@ -1,0 +1,29 @@
+/// Applies position values to an element.
+///
+/// @param {Keyword} $position [absolute] - The position value for the element.
+/// @param {List} $top-left [0 0] - The top and left values for the element in a
+/// space-separated list.
+/// @param {List} $bottom-right [null] - The botton and right values for the
+/// element in a space-separated list.
+/// @param {Number} $z-val [null] - The z-index value for the element.
+///
+/// @group Utilities
+@mixin position(
+  $position: absolute,
+  $top-left: 0 0,
+  $bottom-right: null,
+  $z-val: null
+) {
+  position: $position;
+  @if $bottom-right {
+    bottom: list.nth($bottom-right, 0);
+    right: list.nth($bottom-right, 1);
+  }
+  @if $top-left {
+    left: list.nth($top-left, 1);
+    top: list.nth($top-left, 0);
+  }
+  @if $z-val {
+    z-index: $z-val;
+  }
+}

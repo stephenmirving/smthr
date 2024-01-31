@@ -1,0 +1,18 @@
+/// Takes a given number and returns the factorial of that number.
+/// @access public
+///
+/// @param {Number} $value - Any given number.
+/// @return {Number} The factorial of $value.
+@function factorial($value) {
+  $result: 1;
+
+  @if $value == 0 {
+    @return $result;
+  }
+
+  @for $index from 1 through $value {
+    $result: $result * $index;
+  }
+
+  @return $result;
+}

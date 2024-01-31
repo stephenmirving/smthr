@@ -1,0 +1,27 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+
+/// Checks if a value is a time.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is a time, false if it is not.
+///
+/// @alias is-duration
+@function is-time($value) {
+  @return meta.typeof($value) == 'number' and
+    list.index('ms' 's', math.unit($value)) != null;
+}
+
+/// Checks if a value is a duration.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is a duration, false if it is not.
+///
+/// @alias is-time
+@function is-duration($value) {
+  @return meta.typeof($value) == 'number' and
+    list.index('ms' 's', math.unit($value)) != null;
+}

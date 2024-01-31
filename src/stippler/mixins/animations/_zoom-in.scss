@@ -1,0 +1,147 @@
+/// Does a slow, artistic, Ken Burns style zoom in on the background image
+/// of an element
+///
+/// @param {String} $direction [bottom] - The direction of the angle the
+/// zoom-in will have. Accepts `top`, `t`, `up`, or `u` for the top,
+/// `left` or `l` for `left`, `right` or `r` for right, and either `bottom`,
+/// `b`, `down`, or `d` for the bottom. It also accepts `bottom-right` or
+/// `right-bottom` or rb` or `br` for the bottom-right, `top-right`,
+/// `right-top`, `rt`, or `tr` for the top-right, `bottom-left`, `left-bottom`,
+/// `lb`, or `bl` for the bottom-left and `top-left`, `left-top`, `lt`, or `tl`
+/// for the top-left.
+/// @param {Time} $timing [5s] - The duration of the animation's effect.
+/// @param {Time} $delay [null] - An optional delay before starting the effect.
+///
+/// @group Animations
+/// @throw Invalid keyword for $direction
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+@mixin zoom-in($direction: bottom, $timing: 5s, $delay: null) {
+  // Default values for bottom $direction
+  $dir-val1: scale(1) translateY(0);
+  $dir-val2: 50% 16%;
+  $dir-val3: scale(1.25) translateY(15px);
+  $dir-val4: bottom;
+
+  @if (string.to-lower-case($direction) == 'top' or string.to-lower-case($direction) == 'up'
+      or string.to-lower-case($direction) == 't' or string.to-lower-case($direction) == 'u') {
+    $dir-val1: scale(1) translateY(0);
+    $dir-val2: 50% 84%;
+    $dir-val3: scale(1.25) translateY(-15px);
+    $dir-val4: top;
+  } @else if (
+    string.to-lower-case($direction) == 'left' or
+    string.to-lower-case($direction) == 'l'
+  ) {
+    $dir-val1: scale(1) translate(0, 0);
+    $dir-val2: 16% 50%;
+    $dir-val3: scale(1.25) translate(-20px, 15px);
+    $dir-val4: left;
+  } @else if (
+    string.to-lower-case($direction) == 'right' or string.to-lower-case($direction) == 'r'
+  ) {
+    $dir-val1: scale(1) translateX(0);
+    $dir-val2: 84% 50%;
+    $dir-val3: scale(1.25) translateX(20px);
+    $dir-val4: right;
+  } @else if (string.to-lower-case($direction) == 'bottom-right'
+      or string.to-lower-case($direction) == 'right-bottom'
+      or string.to-lower-case($direction) == 'br'
+      or string.to-lower-case($direction) == 'rb') {
+    $dir-val1: scale(1) translate(0, 0);
+    $dir-val2: 84% 84%;
+    $dir-val3: scale(1.25) translate(20px, 15px);
+    $dir-val4: right bottom;
+  } @else if (string.to-lower-case($direction) == 'top-right'
+      or string.to-lower-case($direction) == 'right-top'
+      or string.to-lower-case($direction) == 'rt'
+      or string.to-lower-case($direction) == 'tr') {
+    $dir-val1: scale(1) translate(0, 0);
+    $dir-val2: 84% 16%;
+    $dir-val3: scale(1.25) translate(20px, -15px);
+    $dir-val4: right top;
+  } @else if (string.to-lower-case($direction) == 'bottom-left'
+      or string.to-lower-case($direction) == 'left-bottom'
+      or string.to-lower-case($direction) == 'lb'
+      or string.to-lower-case($direction) == 'bl') {
+    $dir-val1: scale(1) translate(0, 0);
+    $dir-val2: 16% 84%;
+    $dir-val3: scale(1.25) translate(-20px, 15px);
+    $dir-val4: left bottom;
+  } @else if (string.to-lower-case($direction) == 'top-left'
+      or string.to-lower-case($direction) == 'left-top'
+      or string.to-lower-case($direction) == 'lt'
+      or string.to-lower-case($direction) == 'tl') {
+    $dir-val1: scale(1) translate(0, 0);
+    $dir-val2: 16% 16%;
+    $dir-val3: scale(1.25) translate(-20px, -15px);
+    $dir-val4: left top;
+  } @else if (string.to-lower-case($direction) != 'bottom'
+      or string.to-lower-case($direction) != 'b'
+      or string.to-lower-case($direction) != 'down'
+      or string.to-lower-case($direction) != 'd') {
+    @error '[#{meta.inspect($direction)}] is not a valid direction for the `zoom-in` mixin';
+  }
+
+  @if meta.typeof($timing) != 'number' {
+    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `zoom-in` ' +
+        'mixin. The timing property must be a number.';
+  } @else if unitless($timing) {
+    // If no there is no unit for $timing, assume seconds
+    $timing: $timing * 1s;
+  } @else if not list.index('s' 'ms', math.unit($timing)) {
+    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `zoom-in` ' +
+        'mixin. The timing property must be in either s or ms units.';
+  } @else if ($timing % 10 == 0ms) {
+    // If time in ms would be shorter as seconds, convert it
+    $timing: ($timing / 1000ms) * 1s;
+
+    // Get rid of possible leading zero in front of decimal place
+    @if (string.slice($timing + '', 1, 2) == '0.') {
+      $timing: unquote(string.slice($timing + '', 2));
+    }
+  }
+
+  @if (
+    $delay == 0 or $delay == 0s or $delay == 0ms or
+    $delay == 'none' or $delay == 'no' or $delay == 'n' or
+    $delay == 'n/a' or $delay == nil or not $delay
+  ) {
+    $delay: null;
+  }
+  @if $delay {
+    @if meta.typeof($delay) != 'number' {
+      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `zoom-in` ' +
+          'mixin. The delay property must be a number.';
+    } @else if unitless($delay) {
+      $delay: $delay * 1s;
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `zoom-in` ' +
+          'mixin. The delay property must be in either s or ms units.';
+    } @else if $delay % 10 == 0ms {
+      $delay: ($delay / 1000ms) * 1s;
+      @if string.slice($delay + '', 1, 2) == '0.' {
+        $delay: #{string.slice($delay + '', 2)};
+      }
+    }
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  }
+  animation: zoom-in#{$anim-num} #{$timing} ease-out #{$delay} both;
+
+  @at-root {
+    @keyframes zoom-in#{$anim-num} {
+      0% {
+        transform: #{$dir-val1};
+        transform-origin: #{$dir-val2};
+      }
+
+      100% {
+        transform: #{$dir-val3};
+        transform-origin: #{$dir-val4};
+      }
+    }
+  }
+}
