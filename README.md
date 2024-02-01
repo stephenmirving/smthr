@@ -9,6 +9,8 @@ library focuses heavily on aiding in the creation of CSS animations
 and clip-path shapes - allowing you to create a wide range of effects without
 having to mess with clip-path coordinates or animation keyframe creation.
 
+This project is under active development to modernize the Sass syntax to comport with the new version, ver 16+.
+
 ## smthr is in active development
 
 **This is *smthr* version 0.0.7 - Last update: 1/31/24*

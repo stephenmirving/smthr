@@ -1,0 +1,165 @@
+@use 'sass:meta';
+@use 'sass:list';
+
+/// Base font size for unit conversion. Default is 16 for 16px at 100%
+/// Common alternate is 10 for 10px at 62.5% for easier conversion with rem and
+/// em units.
+/// @type Number
+/// @todo Change this to match your root font-size
+$base-font-size: 16 !default;
+
+/// Example font stack map with web-safe fonts. Use with the font-stack function.
+/// @access public
+/// @type Map
+/// @todo Fill out the stack with the fonts you choose for your theme
+$font-stack: (
+  'primary': (
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    Arial,
+    'Noto Sans',
+    'Segoe UI',
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji'
+  ),
+  'header': (
+    Lato,
+    Oxygen,
+    'Open Sans',
+    Montserrat,
+    'PT Sans',
+    Verdana,
+    Arial,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji'
+  ),
+  'georgia': (
+    Georgia,
+    'URW Bookman L',
+    serif
+  ),
+  'helvetica': (
+    Helvetica,
+    Arial,
+    'Nimbus Sans L',
+    sans-serif
+  ),
+  'lucida-grande': (
+    'Lucida Grande',
+    'Lucida Sans Unicode',
+    'Bitstream Vera Sans',
+    sans-serif
+  ),
+  'monospace': (
+    ui-monospace,
+    Consolas,
+    'Liberation Mono',
+    Menlo,
+    monospace
+  ),
+  'system': (
+    -apple-system,
+    system-ui,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell 'Fira Sans',
+    'Helvetica Neue',
+    Helvetica,
+    Arial,
+    sans-serif,
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'Noto Color Emoji'
+  ),
+  'verdana': (
+    Verdana,
+    Geneva,
+    'DejaVu Sans',
+    sans-serif
+  )
+) !default;
+
+/// Base path for assets (fonts, images, etc.), do not use a trailing slash.
+/// @access public
+/// @type String
+$asset-base-path: '../assets' !default;
+
+/// Suffix appended to the end of an image name to indicate that it is for HiDPI.
+/// Retina displays
+/// @access public
+/// @type String
+$image-suffix-2x: '@2x' !default;
+
+/// Colors used for buttons, callouts, links, etc.
+/// @type Map
+/// @todo Fill out with the colors you choose for your theme.
+$color-palette: (
+  'primary': #1779ba,
+  'secondary': #767676,
+  'accent': red,
+  'success': #3adb76,
+  'warning': #fb0,
+  'alert': #cc4b37
+) !default;
+
+/// Color used for black UI items.
+/// @type Color
+$black: hsl(0 0 0%) !default;
+
+/// Color used for off-black UI items.
+/// @type Color
+$off-black: hsl(0 0 12.55%) !default;
+
+/// Color used for dark gray UI items.
+/// @type Color
+$dark-gray: hsl(0 0 54.12%) !default;
+
+/// Color used for medium gray UI items.
+/// @type Color
+$medium-gray: hsl(0 0 79.22%) !default;
+
+/// Color used for light gray UI items.
+/// @type Color
+$light-gray: hsl(0 0 90.2%) !default;
+
+/// Color used for off-white UI items.
+/// @type Color
+$off-white: hsl(0 0 94.9%) !default;
+
+/// Color used for white UI items.
+/// @type Color
+$white: hsl(0 0 100%) !default;
+
+/// Button transition properties
+$btn-transition-properties: background-color, border-color, color, top !default;
+$btn-transition-duration: 0.3s !default;
+$btn-transition-timing-function: ease-out !default;
+
+/// Transitions for buttons.
+/// @type List
+$btn-transition: () !default;
+
+@each $property in $btn-transition-properties {
+  $btn-transition: list.append(
+    $btn-transition,
+    $property $btn-transition-duration $btn-transition-timing-function,
+    comma
+  );
+}
+
+$color-body: hsl(0 0 20%) !default;
+$color-body-bg: hsl(0 0 94.9%) !default;
+$color-selection-highlight: hsl(211.48 36.97% 32.35%) !default;
+$color-selection-text: hsl(0 0 100%) !default;
+$color-focus-ring: hsl(0 0 0%) !default;

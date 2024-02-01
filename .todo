@@ -121,7 +121,7 @@ Archive:
   ✔ Fix the font-stack to remove unnecessary quotes @done(19-07-11 01:08) @project(TODO)
   ✔ Ensure that rotate() is correct after changing transform-origin values before the keyframes to the $trans-origin-val var ???? @done(19-07-15 00:30)
   ✔ Figure out problem reported on linter for sass versions of rotate(), text-tracking-out() and bounce() @done(19-07-15 00:31)
-  ✔ Fix bg-image and bg-image-svg, causing errors related to unitless($number) for $bg-height @critical @done(19-07-15 00:30)
+  ✔ Fix bg-image and bg-image-svg, causing errors related to math.is-unitless($number) for $bg-height @critical @done(19-07-15 00:30)
     ✔ Copy fix over from primary-styles workspace @done(19-07-15 00:30)
     ✔ Propogate across all versions @done(19-07-15 00:30)
   ✔ Fix button base @started(19-07-22 09:47) @done(19-07-22 10:45) @lasted(58m27s)

@@ -1,0 +1,37 @@
+/// Hide an element only visually, while leaving it available for screen readers.
+///
+/// @param {Boolean} $focusable [false] - If true, it will allow the element to
+/// be focusable when navigated to via the keyboard.
+///
+/// @group Utilities
+/// @require {placeholder} visually-hide
+@mixin hide-visually($focusable: false) {
+  @extend %visually-hide;
+
+  @if $focusable {
+    &:active,
+    &:focus {
+      position: static;
+      overflow: visible;
+      clip: auto;
+      clip-path: none;
+      width: auto;
+      height: auto;
+      margin: 0;
+      white-space: inherit;
+    }
+  }
+}
+
+/// Reverses the effect of the `hide-visually()` mixin.
+///
+/// @group Utilities
+@mixin show-visually {
+  position: static !important;
+  overflow: visible;
+  clip: auto;
+  clip-path: none;
+  width: auto;
+  height: auto;
+  white-space: normal;
+}

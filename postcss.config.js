@@ -167,6 +167,7 @@ module.exports = {
         'line-height',
         'letter-spacing',
         'quotes',
+        "hanging-punctuation",
         'counter-increment',
         'counter-reset',
         '-ms-writing-mode',
@@ -191,11 +192,9 @@ module.exports = {
         'word-wrap',
         'word-break',
         'overflow-wrap',
-        'tab-size',
         'hyphens',
+        'tab-size',
         'interpolation-mode',
-
-        //
 
         'opacity',
         'visibility',

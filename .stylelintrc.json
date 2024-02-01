@@ -17,7 +17,12 @@
   ],
   "rules": {
     "alpha-value-notation": "number",
-    "annotation-no-unknown": true,
+    "annotation-no-unknown": [
+      true,
+      {
+        "ignoreAnnotations": ["default"]
+      }
+    ],
     "at-rule-empty-line-before": [
       "always",
       {
@@ -140,6 +145,7 @@
         "all",
         "content",
         "isolation",
+        "appearance",
         "position",
         "inset",
         "top",
@@ -320,14 +326,17 @@
         "src",
         "line-height",
         "letter-spacing",
+        "text-transform",
         "quotes",
+        "hanging-punctuation",
         "counter-increment",
         "counter-reset",
         "-ms-writing-mode",
-        "text-transform",
+        "white-space",
+        "white-space-collapse",
+        "text-decoration",
         "text-align",
         "text-align-last",
-        "text-decoration",
         "text-emphasis",
         "text-emphasis-position",
         "text-emphasis-style",
@@ -340,13 +349,14 @@
         "text-overflow-ellipsis",
         "text-overflow-mode",
         "text-shadow",
-        "white-space",
         "word-spacing",
         "word-wrap",
         "word-break",
         "overflow-wrap",
-        "tab-size",
+        "-webkit-hyphens",
         "hyphens",
+        "-moz-tab-size",
+        "tab-size",
         "interpolation-mode",
 
         "opacity",
@@ -386,10 +396,10 @@
         "stroke",
 
         "transition",
-        "transition-delay",
-        "transition-timing-function",
-        "transition-duration",
         "transition-property",
+        "transition-duration",
+        "transition-timing-function",
+        "transition-delay",
         "transform",
         "transform-origin",
         "animation",
@@ -400,11 +410,11 @@
         "animation-delay",
         "animation-iteration-count",
         "animation-direction",
-        "animation-fill-mode"
+        "animation-fill-mode",
+        "perspective"
       ],
       {
-        "unspecified": "bottom",
-        "severity": "warning"
+        "unspecified": "bottom"
       }
     ],
     "plugin/stylelint-group-selectors": true,
@@ -463,7 +473,7 @@
       "-moz-box-shadow",
       "-webkit-cursor"
     ],
-    "property-no-vendor-prefix": true,
+    "property-no-vendor-prefix": null,
     "property-no-unknown": true,
     "rem-over-px/rem-over-px": [
       true,
@@ -493,10 +503,19 @@
           "2px",
           "-2px",
           "1000px",
-          "1140px"
+          "1140px",
+          "$*"
         ],
         "ignoreAtRules": ["media", "function"],
-        "ignoreFunctions": ["url", "calc"],
+        "ignoreFunctions": [
+          "url",
+          "calc",
+          "translate",
+          "translateX",
+          "translateY",
+          "translateZ",
+          "translate3d"
+        ],
         "fontSize": 16
       }
     ],
@@ -520,8 +539,9 @@
         "ignore": ["attribute"]
       }
     ],
+    "selector-no-vendor-prefix": null,
     "selector-pseudo-class-no-unknown": true,
-    "selector-pseudo-element-colon-notation": "single",
+    "selector-pseudo-element-colon-notation": "double",
     "selector-pseudo-element-no-unknown": true,
     "selector-not-notation": "complex",
     "selector-type-case": "lower",
@@ -536,6 +556,12 @@
         "ignoreProperties": [
           "/^\\$_?[a-z]+(?:-{1,2}(?!-)[a-z]+)*(?:(?:-{1,2})[1-9]\\d*)?(?:-{1,2}(?!-)[a-z]+)*(?:(?:-{1,2})[1-9]\\d*)?$/"
         ]
+      }
+    ],
+    "value-no-vendor-prefix": [
+      true,
+      {
+        "ignoreValues": ["grab", "fit-content", "min-content", "max-content"]
       }
     ],
     "scss/at-else-closing-brace-newline-after": "always-last-in-chain",
@@ -611,7 +637,7 @@
     ],
     "scss/dollar-variable-first-in-block": null,
     "scss/dollar-variable-no-missing-interpolation": true,
-    "scss/dollar-variable-pattern": "^_?[a-z]+(?:-{1,2}[a-z]+)*(?:-[1-9]\\d*)?(?:-{1,2}[a-z]+)*(?:-[1-9]\\d*)?$",
+    "scss/dollar-variable-pattern": "^[a-z0-9]+(?:-{1,2}(?!-)[a-z0-9]+)*(?:(?:-{1,2})[1-9]\\d*)?(?:-{1,2}(?!-)[a-z0-9]+)*(?:(?:-{1,2})[1-9]\\d*)?_?$",
     "scss/percent-placeholder-pattern": "^_?[a-z]+(?:-{1,2}[a-z]+)*(?:-[1-9]\\d*)?(?:-{1,2}[a-z]+)*(?:-[1-9]\\d*)?$",
     "scss/double-slash-comment-whitespace-inside": "always",
     "scss/block-no-redundant-nesting": [
@@ -645,7 +671,7 @@
       true,
       {
         "ignoreInside": ["at-rule", "nested-at-rule"],
-        "ignoreInsideAtRules": ["if", "media", "else if", "function"],
+        "ignoreInsideAtRules": ["if", "media", "else if", "function", "mixin"],
         "ignoreDefaults": true
       }
     ],

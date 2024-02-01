@@ -1,0 +1,21 @@
+@use 'sass:meta';
+@use 'sass:math';
+
+/// Applied to the child element of the element with the `animation` mixin
+/// to represent the front-face of the card that the animation flips to the
+/// back of
+///
+/// @param {Number} $z-index [20] - The z-index value.
+///
+/// @group Animations
+/// @group Utilities
+/// @throw Invalid $z-index z-index value
+/// @require {placeholder} animation-faces
+@mixin animation-front-face($z-index: 20) {
+  @extend %animation-faces;
+
+  @if $z-index and meta.typeof($z-index) == 'number' and math.is-unitless($z-index)
+  {
+    z-index: $z-index;
+  }
+}

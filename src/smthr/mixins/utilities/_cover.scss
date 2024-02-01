@@ -1,0 +1,28 @@
+/// Fully cover an area with an element.
+///
+/// @param {Number} $z-val [999] - A z-index number value
+/// @param {Color|Mixed} $bg-val [null] - A shorthand background value
+/// @param {Number} $opacity [null] - A decimal value between 0 and 1
+///
+/// @group Utilities
+@mixin cover($z-val: 999, $bg-val: null, $opacity: null) {
+  @if $bg-val {
+    background: $bg-val;
+  }
+  position: absolute;
+  height: 100%;
+  left: 0;
+
+  @if $opacity and math.is-unitless($opacity) and $opacity >= 0 and $opacity <= 1 {
+    opacity: $opacity;
+  } @else if $opacity {
+    @error 'Invalid opacity value of `#{meta.inspect($opacity)}` for the ' +
+        '`cover` mixin.';
+  }
+
+  top: 0;
+  width: 100%;
+  @if $z-val and meta.typeof($z-val) == 'number' and math.is-unitless($z-val) {
+    z-index: $z-val;
+  }
+}

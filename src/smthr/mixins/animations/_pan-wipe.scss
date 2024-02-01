@@ -1,0 +1,204 @@
+/// Animates a panning wipe style effect on the background of an element
+///
+/// @param {String} $direction [right] - The direction the pan is heading
+/// @param {Time} $timing [6s] - The duration of the animation (s or ms)
+/// @param {Mixed} $bg
+/// [linear-gradient(270deg, #CC6AA5, #3E91CC, #2dCCA7) center / 600% 100%] -
+/// The shorthand background property for the element. For this effect it is
+/// recommended to use either a linear gradient, or an image.
+/// @param {Length-Percentage} $size [100%] - The size of the element. If the
+/// $height property is not set explicitly, this is both height and width, but
+/// if $height is set explicitly, then this value sets only the width.
+/// @param {Time} $delay [null] - The optional delay time for the animation.
+/// @param {Number|String} $iterations [null] - The number of iterations
+/// to complete. If the value passed is not a number, it will be set to infinite
+/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// null assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. The default of null will set it to the default timing function
+/// of ease.
+/// @param {Length-Percentage} $height [$size] - The height of the element.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @throw Invalid $direction type
+/// @throw Invalid $direction value
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+/// @throw Invalid $iterations value
+/// @throw Invalid $anim-dir value
+@mixin pan-wipe(
+  $direction: right,
+  $timing: 6s,
+  $bg: linear-gradient(270deg, #CC6AA5, #3E91CC, #2dCCA7) center / 600% 100%,
+  $size: 100%,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $height: $size,
+  $anim-num: null
+) {
+  @if meta.typeof($direction) != 'string' {
+    @error 'Invalid $direction unit type for the `pan-wipe` mixin. Value must' +
+        ' be of type "string".';
+  }
+
+  // $direction default of `right` values
+  $pos-val1: 0% 50%;
+  $pos-val2: 100% 50%;
+  $direction: string.to-lower-case($direction);
+
+  @if $direction == 'left' or $direction == 'l' {
+    $pos-val1: 100% 50%;
+    $pos-val2: 0% 50%;
+  } @else if (
+    $direction == 'top' or $direction == 't' or
+    $direction == 'down' or $direction == 'd'
+  ) {
+    $pos-val1: 50% 100%;
+    $pos-val2: 50% 0%;
+  } @else if (
+    $direction == 'bottom' or $direction == 'b' or
+    $direction == 'up' or $direction == 'u'
+  ) {
+    $pos-val1: 50% 0%;
+    $pos-val2: 50% 100%;
+  } @else if (
+    $direction == 'top-left' or $direction == 'topleft' or
+    $direction == 'tl' or $direction == 'left-top' or
+    $direction == 'lefttop' or $direction == 'lt'
+  ) {
+    $pos-val1: 100% 100%;
+    $pos-val2: 0% 0%;
+  } @else if (
+    $direction == 'top-right' or $direction == 'topright' or
+    $direction == 'tr' or $direction == 'right-top' or
+    $direction == 'righttop' or $direction == 'rt'
+  ) {
+    $pos-val1: 0% 100%;
+    $pos-val2: 100% 0%;
+  } @else if (
+    $direction == 'bottom-left' or $direction == 'bottomleft' or
+    $direction == 'bl' or $direction == 'left-bottom' or
+    $direction == 'leftbottom' or $direction == 'lb'
+  ) {
+    $pos-val1: 100% 0%;
+    $pos-val2: 0% 100%;
+  } @else if (
+    $direction == 'bottom-right' or $direction == 'bottomright' or
+    $direction == 'br' or $direction == 'right-bottom' or
+    $direction == 'rightbottom' or $direction == 'rb'
+  ) {
+    $pos-val1: 0% 0%;
+    $pos-val2: 100% 100%;
+  } @else if $direction != 'right' and $direction != 'r' {
+    @error 'Invalid direction of [#{meta.inspect($direction)}] for the `pan-wipe` mixin.';
+  }
+
+  @if meta.typeof($timing) != 'number' {
+    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `pan-wipe` ' +
+        'mixin. The timing property must be a number.';
+  } @else if math.is-unitless($timing) {
+    // If no there is no unit for $timing, assume seconds
+    $timing: $timing * 1s;
+  } @else if not list.index('s' 'ms', math.unit($timing)) {
+    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `pan-wipe` ' +
+        'mixin. The timing property must be in either s or ms units.';
+  } @else if ($timing % 10 == 0ms) {
+    // If time in ms would be shorter as seconds, convert it
+    $timing: math.div($timing, 1000ms) * 1s;
+
+    // Get rid of possible leading zero in front of decimal place
+    @if (string.slice($timing + '', 1, 2) == '0.') {
+      $timing: string.unquote(string.slice($timing + '', 2));
+    }
+  }
+
+  @if (
+    $delay == 0 or $delay == 0s or $delay == 0ms or
+    $delay == 'none' or $delay == 'no' or $delay == 'n' or
+    $delay == 'n/a' or $delay == nil or not $delay
+  ) {
+    $delay: null;
+  }
+  @if $delay {
+    @if meta.typeof($delay) != 'number' {
+      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `pan-wipe` ' +
+          'mixin. The delay property must be a number.';
+    } @else if math.is-unitless($delay) {
+      $delay: $delay * 1s;
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `pan-wipe` ' +
+          'mixin. The delay property must be in either s or ms units.';
+    } @else if $delay % 10 == 0ms {
+      $delay: math.div($delay, 1000ms) * 1s;
+      @if string.slice($delay + '', 1, 2) == '0.' {
+        $delay: #{string.slice($delay + '', 2)};
+      }
+    }
+  }
+
+  @if $iterations {
+    @if (
+      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    ) {
+      $iterations: infinite;
+    } @else if (
+      (math.is-unitless($iterations) and meta.typeof($iterations) == 'number') or
+      $iterations == initial or $iterations == inherit
+    ) {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for ' +
+          'the `pan-wipe` mixin.';
+    }
+  } @else {
+    $iterations: null;
+  }
+
+  @if (
+    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
+    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
+    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
+  ) {
+    $anim-dir: null;
+  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
+    $anim-drection: reverse;
+  } @else if (
+    $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+  ) {
+    $anim-dir: alternate;
+  } @else if (
+    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
+    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
+    $anim-dir == 'ar'
+  ) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
+        '`pan-wipe` mixin';
+  }
+  animation: pan-wipe#{$anim-num} #{$timing} #{$timing-func} #{$delay}
+              #{$iterations} #{$anim-dir} both;
+  background: $bg;
+  height: $height;
+  overflow: hidden;
+  width: $size;
+
+  @at-root {
+    @keyframes pan-wipe#{$anim-num} {
+      0% {
+        background-position: $pos-val1;
+      }
+
+      100% {
+        background-position: $pos-val2;
+      }
+    }
+  }
+}
