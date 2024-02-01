@@ -1,12 +1,10 @@
-// TODO: Fix these they do not work on modern edge
-
 /// Apply the given styles to MS Edge only by using an @supports query.
 ///
 /// @content Styles that target MS Edge.
 ///
 /// @group Utilities
 /// @alias edge-only
-@mixin only-edge {
+@mixin only-legacy-edge {
   @supports (position: -ms-page) {
     @content;
   }
@@ -16,7 +14,7 @@
 ///
 /// @group Utilities
 /// @alias only-edge
-@mixin edge-only {
+@mixin legacy-edge-only {
   @supports (position: -ms-page) {
     @content;
   }

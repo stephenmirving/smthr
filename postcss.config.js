@@ -167,7 +167,7 @@ module.exports = {
         'line-height',
         'letter-spacing',
         'quotes',
-        "hanging-punctuation",
+        'hanging-punctuation',
         'counter-increment',
         'counter-reset',
         '-ms-writing-mode',
@@ -238,6 +238,7 @@ module.exports = {
         'transition-duration',
         'transition-property',
         'transform',
+        'transform-style',
         'transform-origin',
         'animation',
         'animation-name',
@@ -252,4 +253,4 @@ module.exports = {
       'unspecified-properties-position': 'bottom'
     }
   }
-}
+};

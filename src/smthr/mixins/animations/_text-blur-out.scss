@@ -1,3 +1,8 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:string';
+
 /// Animates text from focused in, to blurred out, to invisible
 ///
 /// @param {String} $style [out] - The style of the blur-out effect. Can be
@@ -35,16 +40,42 @@
   $timing-func: null,
   $anim-num: null
 ) {
+  @if $style and meta.typeof($style) == 'string' {
+    $style: string.to-lower-case($style);
+  }
+
+  @if $delay and $meta.typeof($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
   @if not $timing-func {
     @if (
-      not $style or string.to-lower-case($style) == 'expand' or
-      string.to-lower-case($style) == 'exp' or string.to-lower-case($style) == 'e' or
-      string.to-lower-case($style) == 'forward' or string.to-lower-case($style) == 'fwd' or
-      string.to-lower-case($style) == 'f'
+      not
+        $style or
+        $style ==
+        'expand' or
+        $style ==
+        'exp' or
+        $style ==
+        'e' or
+        $style ==
+        'forward' or
+        $style ==
+        'fwd' or
+        $style ==
+        'f'
     ) {
-      $timing-func: cubic-bezier(.25, .46, .45, .94);
+      $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     } @else {
-      $timing-func: cubic-bezier(.55, .085, .68, .53);
+      $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53);
     }
   }
 
@@ -58,21 +89,34 @@
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the ' +
         '`text-blur-out` mixin. The timing property must be in either ' +
         's or ms units.';
-  } @else if ($timing % 10 == 0ms) {
+  } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if (string.slice($timing + '', 1, 2) == '0.') {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
 
-  @if (
-    $delay == 0 or $delay == 0s or $delay == 0ms or
-    $delay == 'none' or $delay == 'no' or $delay == 'n' or
-    $delay == 'n/a' or $delay == nil or not $delay
-  ) {
+  @if $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay ==
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil or not
+    $delay
+  {
     $delay: null;
   }
   @if $delay {
@@ -87,6 +131,7 @@
           's or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
+
       @if string.slice($delay + '', 1, 2) == '0.' {
         $delay: #{string.slice($delay + '', 2)};
       }
@@ -94,14 +139,22 @@
   }
 
   @if $iterations {
-    @if (string.to-lower-case($iterations) == 'infinite'
-        or string.to-lower-case($iterations) == 'inf'
-        or string.to-lower-case($iterations) == 'i') {
+    @if meta.typeof($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    {
       $iterations: infinite;
-    } @else if (
-      (math.is-unitless($iterations) and meta.typeof($iterations) == 'number') or
-      $iterations == initial or $iterations == inherit
-    ) {
+    } @else if
+      (
+        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
       $iterations: $iterations;
     } @else {
       @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for ' +
@@ -111,86 +164,96 @@
     $iterations: null;
   }
 
-  @if (
-    not $anim-dir or string.to-lower-case($anim-dir) == 'none' or
-    string.to-lower-case($anim-dir) == 'no' or
-    string.to-lower-case($anim-dir) == 'n/a' or
-    string.to-lower-case($anim-dir) == 'n' or
-    string.to-lower-case($anim-dir) == 'default' or
-    string.to-lower-case($anim-dir) == 'def' or
-    string.to-lower-case($anim-dir) == 'normal' or
-    string.to-lower-case($anim-dir) == 'nor'
-  ) {
+  @if not
+    $anim-dir or
+    $anim-dir ==
+    'none' or
+    $anim-dir ==
+    'no' or
+    $anim-dir ==
+    'n/a' or
+    $anim-dir ==
+    'n' or
+    $anim-dir ==
+    'default' or
+    $anim-dir ==
+    'def' or
+    $anim-dir ==
+    'normal' or
+    $anim-dir ==
+    'nor'
+  {
     $anim-dir: null;
-  } @else if (
-    string.to-lower-case($anim-dir) == 'reverse' or
-    string.to-lower-case($anim-dir) == 'rev' or
-    string.to-lower-case($anim-dir) == 'r'
-  ) {
+  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
-  } @else if (
-    string.to-lower-case($anim-dir) == 'alternate' or
-    string.to-lower-case($anim-dir) == 'alt' or
-    string.to-lower-case($anim-dir) == 'a'
-  ) {
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+  {
     $anim-dir: alternate;
-  } @else if (
-    string.to-lower-case($anim-dir) == 'alternate-reverse' or
-    string.to-lower-case($anim-dir) == 'alternatereverse' or
-    string.to-lower-case($anim-dir) == 'alt-rev' or
-    string.to-lower-case($anim-dir) == 'altrev' or
-    string.to-lower-case($anim-dir) == 'a-r' or
-    string.to-lower-case($anim-dir) == 'ar'
-  ) {
+  } @else if
+    $anim-dir ==
+    'alternate-reverse' or
+    $anim-dir ==
+    'alternatereverse' or
+    $anim-dir ==
+    'alt-rev' or
+    $anim-dir ==
+    'altrev' or
+    $anim-dir ==
+    'a-r' or
+    $anim-dir ==
+    'ar'
+  {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
-        '`text-blur-out` mixin';
+    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}]' +
+        ' for the `text-blur-out` mixin';
   }
-  animation: txt-blur-out#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+
+  animation: txt-blur-out#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
 
   @at-root {
     @keyframes txt-blur-out#{$anim-num} {
       0% {
-        filter: blur(.01px);
-        @if (
-          string.to-lower-case($style) == 'backward' or
-          string.to-lower-case($style) == 'bck' or string.to-lower-case($style) == 'back' or
-          string.to-lower-case($style) == 'b' or string.to-lower-case($style) == 'f' or
-          string.to-lower-case($style) == 'fwd' or string.to-lower-case($style) == 'forward'
-        ) {
+        filter: blur(0.01px);
+        @if $style ==
+          'backward' or
+          $style ==
+          'bck' or
+          $style ==
+          'back' or
+          $style ==
+          'b' or
+          $style ==
+          'f' or
+          $style ==
+          'fwd' or
+          $style ==
+          'forward'
+        {
           transform: translateZ(0);
         }
       }
 
       100% {
         filter: blur(12px) opacity(0);
-        @if (
-          string.to-lower-case($style) == 'contract' or
-          string.to-lower-case($style) == 'cont' or
-          string.to-lower-case($style) == 'c'
-        ) {
-          letter-spacing: -.5em;
-        } @else if (
-          string.to-lower-case($style) == 'backward' or
-          string.to-lower-case($style) == 'bck' or
-          string.to-lower-case($style) == 'back' or
-          string.to-lower-case($style) == 'b'
-        ) {
-          letter-spacing: -.5em;
+        @if $style == 'contract' or $style == 'cont' or $style == 'c' {
+          letter-spacing: -0.5em;
+        } @else if
+          $style ==
+          'backward' or
+          $style ==
+          'bck' or
+          $style ==
+          'back' or
+          $style ==
+          'b'
+        {
+          letter-spacing: -0.5em;
           transform: translateZ(-500px);
-        } @else if (
-          string.to-lower-case($style) == 'expand' or
-          string.to-lower-case($style) == 'exp' or
-          string.to-lower-case($style) == 'e'
-        ) {
+        } @else if $style == 'expand' or $style == 'exp' or $style == 'e' {
           letter-spacing: 1em;
-        } @else if (
-          string.to-lower-case($style) == 'forward' or
-          string.to-lower-case($style) == 'fwd' or
-          string.to-lower-case($style) == 'f'
-        ) {
+        } @else if $style == 'forward' or $style == 'fwd' or $style == 'f' {
           letter-spacing: 1em;
           transform: translateZ(300px);
         }

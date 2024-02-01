@@ -1,3 +1,8 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:string';
+
 /// Animates an element like it is a rubber band being pulled and snapped.
 ///
 /// @param {String} $direction [horizontal] - The direction of the animation
@@ -29,7 +34,7 @@
 /// @throw Invalid $anim-dir value
 @mixin snappiness(
   $direction: horizontal,
-  $timing: .9s,
+  $timing: 0.9s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -38,44 +43,75 @@
 ) {
   // Default $direction values for horizontal
   $dir-val1: scale3d(1, 1, 1);
-  $dir-val2: scale3d(1.25, .75, 1);
-  $dir-val3: scale3d(.75, 1.25, 1);
-  $dir-val4: scale3d(1.15, .85, 1);
-  $dir-val5: scale3d(.95, 1.05, 1);
-  $dir-val6: scale3d(1.05, .95, 1);
+  $dir-val2: scale3d(1.25, 0.75, 1);
+  $dir-val3: scale3d(0.75, 1.25, 1);
+  $dir-val4: scale3d(1.15, 0.85, 1);
+  $dir-val5: scale3d(0.95, 1.05, 1);
+  $dir-val6: scale3d(1.05, 0.95, 1);
 
-  @if (string.to-lower-case($direction) == 'vertical'
-      or string.to-lower-case($direction) == 'vert'
-      or string.to-lower-case($direction) == 'v') {
+  @if $direction and meta.typeof($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if $delay and $meta.typeof($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if $direction == 'vertical' or $direction == 'vert' or $direction == 'v' {
     $dir-val1: scale3d(1, 1, 1);
-    $dir-val2: scale3d(.75, 1.25, 1);
-    $dir-val3: scale3d(1.25, .75, 1);
-    $dir-val4: scale3d(.85, 1.15, 1);
-    $dir-val5: scale3d(1.05, .95, 1);
-    $dir-val6: scale3d(.95, 1.05, 1);
-  } @else if (string.to-lower-case($direction) == 'right-diagonal'
-      or string.to-lower-case($direction) == 'rd'
-      or string.to-lower-case($direction) == 'diagonal1'
-      or string.to-lower-case($direction) == 'd1') {
+    $dir-val2: scale3d(0.75, 1.25, 1);
+    $dir-val3: scale3d(1.25, 0.75, 1);
+    $dir-val4: scale3d(0.85, 1.15, 1);
+    $dir-val5: scale3d(1.05, 0.95, 1);
+    $dir-val6: scale3d(0.95, 1.05, 1);
+  } @else if
+    $direction ==
+    'right-diagonal' or
+    $direction ==
+    'rd' or
+    $direction ==
+    'diagonal1' or
+    $direction ==
+    'd1'
+  {
     $dir-val1: skew(0, 0);
     $dir-val2: skew(25deg, 25deg);
     $dir-val3: skew(-15deg, -15deg);
     $dir-val4: skew(15deg, 15deg);
     $dir-val5: skew(-5deg, -5deg);
     $dir-val6: skew(5deg, 5deg);
-  } @else if (string.to-lower-case($direction) == 'left-diagonal'
-      or string.to-lower-case($direction) == 'ld'
-      or string.to-lower-case($direction) == 'diagonal2'
-      or string.to-lower-case($direction) == 'd2') {
+  } @else if
+    $direction ==
+    'left-diagonal' or
+    $direction ==
+    'ld' or
+    $direction ==
+    'diagonal2' or
+    $direction ==
+    'd2'
+  {
     $dir-val1: skew(0, 0);
     $dir-val2: skew(-25deg, -25deg);
     $dir-val3: skew(15deg, 15deg);
     $dir-val4: skew(-15deg, -15deg);
     $dir-val5: skew(5deg, 5deg);
     $dir-val6: skew(-5deg, -5deg);
-  } @else if (string.to-lower-case($direction) != 'horizontal'
-      and string.to-lower-case($direction) != 'hor'
-      and string.to-lower-case($direction) != 'h') {
+  } @else if
+    $direction !=
+    'horizontal' and
+    $direction !=
+    'hor' and
+    $direction !=
+    'h'
+  {
     @error '[#{meta.inspect($direction)}] is not a valid direction for the ' +
         'snappiness mixin.';
   }
@@ -89,21 +125,34 @@
   } @else if not list.index('s' 'ms', math.unit($timing)) {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `snappinesss` ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if ($timing % 10 == 0ms) {
+  } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if (string.slice($timing + '', 1, 2) == '0.') {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
 
-  @if (
-    $delay == 0 or $delay == 0s or $delay == 0ms or
-    $delay == 'none' or $delay == 'no' or $delay == 'n' or
-    $delay == 'n/a' or $delay == nil or not $delay
-  ) {
+  @if $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay ==
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil or not
+    $delay
+  {
     $delay: null;
   }
   @if $delay {
@@ -118,6 +167,7 @@
           '(seconds) or `ms` (milliseconds) units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
+
       @if string.slice($delay + '', 1, 2) == '0.' {
         $delay: #{string.slice($delay + '', 2)};
       }
@@ -125,53 +175,96 @@
   }
 
   @if $iterations {
-    @if (
-      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    ) {
+    @if meta.typeof($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    {
       $iterations: infinite;
     } @else if (
-      (math.is-unitless($iterations) and meta.typeof($iterations) == 'number') or
-      $iterations == initial or $iterations == inherit
-    ) {
+        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for the ' +
-          '`snappiness` mixin.';
+      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}]' +
+          ' for the `snappiness` mixin.';
     }
   } @else {
     $iterations: null;
   }
 
   @if (
-    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
-    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
-    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
+    not
+      $anim-dir or
+      $anim-dir ==
+      'none' or
+      $anim-dir ==
+      'no' or
+      $anim-dir ==
+      'n/a' or
+      $anim-dir ==
+      'n' or
+      $anim-dir ==
+      'default' or
+      $anim-dir ==
+      'def' or
+      $anim-dir ==
+      'normal' or
+      $anim-dir ==
+      'nor'
   ) {
     $anim-dir: null;
-  } @else if (
-    $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r'
-  ) {
+  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
-  } @else if (
-    $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  ) {
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+  {
     $anim-dir: alternate;
   } @else if (
-    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
-    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
-    $anim-dir == 'ar'
-  ) {
+      $anim-dir ==
+        'alternate-reverse' or
+        $anim-dir ==
+        'alternatereverse' or
+        $anim-dir ==
+        'alt-rev' or
+        $anim-dir ==
+        'altrev' or
+        $anim-dir ==
+        'a-r' or
+        $anim-dir ==
+        'ar'
+    )
+  {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
-        '`snappiness` mixin';
+    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}]' +
+        ' for the `snappiness` mixin';
   }
 
   @if (
-    not $timing-func or $timing-func == true or $timing-func == 'none' or
-    $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or
-    $timing-func == 'default' or $timing-func == 'd' or
-    $timing-func == 'ease'
+    not
+      $timing-func or
+      $timing-func ==
+      true or
+      $timing-func ==
+      'none' or
+      $timing-func ==
+      'no' or
+      $timing-func ==
+      'n' or
+      $timing-func ==
+      'def' or
+      $timing-func ==
+      'default' or
+      $timing-func ==
+      'd' or
+      $timing-func ==
+      'ease'
   ) {
     $timing-func: null;
   }
@@ -179,8 +272,9 @@
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: snap#{$anim-num} #{$timing} #{$timing-func} #{$delay}
-              #{$iterations} #{$anim-dir} both;
+
+  animation: snap#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
 
   @at-root {
     @keyframes snap#{$anim-num} {

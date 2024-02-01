@@ -6,7 +6,7 @@
 ///
 /// @group Utilities
 @mixin min-width($threshold) {
-  @media only screen and (min-width: $threshold) {
+  @media screen and (min-width: $threshold) {
     @content;
   }
 }

@@ -94,8 +94,6 @@ body {
   min-height: 100dvh;
   margin: 0;
   color: smth.$color-body;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
   @if (
     meta.function-exists('font-stack') and
       meta.global-variable-exists('font-stack') and
@@ -103,6 +101,8 @@ body {
   ) {
     font-family: smth.font-stack('primary');
   }
+
+  @include smth.smooth-retina-fonts;
 
   @media screen and (min-width: 80em) {
     text-rendering: optimizelegibility;

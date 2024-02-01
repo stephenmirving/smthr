@@ -1,10 +1,15 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
+
 /// Animates text from a blurred to a focused state
 ///
 /// @param {String} $style [in] - The style of the focus-in effect. Can be
 /// `in` (or `i`, null, `none`, `no`, `n` `default`, or `def`), `expand`
 /// (or `exp`, or 'e'), `forward` (or `fwd` or `f`), `contract` (or `cont` or
 /// `c`), or `backward` (or `back`, `bck`, or `b`).
-/// @param {Time} $timing [.9s] - The duration of the animation (s or ms).
+/// @param {Time} $timing [0.9s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -27,19 +32,48 @@
 /// @throw Invalid $anim-dir value
 @mixin text-focus-in(
   $style: in,
-  $timing: .9s,
+  $timing: 0.9s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
   $timing-func: null,
   $anim-num: null
 ) {
+  @if $style and meta.typeof($style) == 'string' {
+    $style: string.to-lower-case($style);
+  }
+
+  @if $delay and $meta.typeof($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
   @if not $timing-func {
-    @if (not $style or $style == 'in' or $style == 'i' or $style == 'default'
-        or $style == 'def' or $style == 'no' or $style == 'none') {
-      $timing-func: cubic-bezier(.55, .085, .68, .53);
+    @if not
+      $style or
+      $style ==
+      'in' or
+      $style ==
+      'i' or
+      $style ==
+      'default' or
+      $style ==
+      'def' or
+      $style ==
+      'no' or
+      $style ==
+      'none'
+    {
+      $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53);
     } @else {
-      $timing-func: cubic-bezier(.25, .46, .45, .94);
+      $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
   }
 
@@ -53,34 +87,49 @@
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the ' +
         '`text-focus-in` mixin. The timing property must be in either ' +
         's or ms units.';
-  } @else if ($timing % 10 == 0ms) {
+  } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if (string.slice($timing + '', 1, 2) == '0.') {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
 
-  @if (
-    $delay == 0 or $delay == 0s or $delay == 0ms or
-    $delay == 'none' or $delay == 'no' or $delay == 'n' or
-    $delay == 'n/a' or $delay == nil or not $delay
-  ) {
+  @if $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay ==
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil or not
+    $delay
+  {
     $delay: null;
   }
   @if $delay {
     @if meta.typeof($delay) != 'number' {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `text-focus-in` ' +
-          'mixin. The delay property must be a number.';
+      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the ' +
+          '`text-focus-in` mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `text-focus-in` ' +
-          'mixin. The delay property must be in either s or ms units.';
+      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the ' +
+          '`text-focus-in` mixin. The delay property must be in either ' +
+          's (seconds) or ms (milliseconds) units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
+
       @if string.slice($delay + '', 1, 2) == '0.' {
         $delay: #{string.slice($delay + '', 2)};
       }
@@ -88,52 +137,95 @@
   }
 
   @if $iterations {
-    @if (
-      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    ) {
+    @if meta.typeof($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    {
       $iterations: infinite;
-    } @else if (
-      (math.is-unitless($iterations) and meta.typeof($iterations) == 'number') or
-      $iterations == initial or $iterations == inherit
-    ) {
+    } @else if
+      (
+        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for the ' +
-          '`text-focus-in` mixin.';
+      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}]' +
+          ' for the `text-focus-in` mixin.';
     }
   }
 
-  @if (
-    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
-    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
-    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
-  ) {
+  @if not
+    $anim-dir or
+    $anim-dir ==
+    'none' or
+    $anim-dir ==
+    'no' or
+    $anim-dir ==
+    'n/a' or
+    $anim-dir ==
+    'n' or
+    $anim-dir ==
+    'default' or
+    $anim-dir ==
+    'def' or
+    $anim-dir ==
+    'normal' or
+    $anim-dir ==
+    'nor'
+  {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
-  } @else if (
-    $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  ) {
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+  {
     $anim-dir: alternate;
-  } @else if (
-    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
-    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
-    $anim-dir == 'ar'
-  ) {
+  } @else if
+    $anim-dir ==
+    'alternate-reverse' or
+    $anim-dir ==
+    'alternatereverse' or
+    $anim-dir ==
+    'alt-rev' or
+    $anim-dir ==
+    'altrev' or
+    $anim-dir ==
+    'a-r' or
+    $anim-dir ==
+    'ar'
+  {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
-        '`text-focus-in` mixin';
+    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}]' +
+        ' for the `text-focus-in` mixin';
   }
 
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-focus-in#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
-  @if ($style == 'forward' or $style == 'fwd' or $style == 'f'
-      or $style == 'backward' or $style == 'bck' or $style == 'back'
-      or $style == 'b') {
+  animation: txt-focus-in#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
+  @if (
+    $style ==
+      'forward' or
+      $style ==
+      'fwd' or
+      $style ==
+      'f' or
+      $style ==
+      'backward' or
+      $style ==
+      'bck' or
+      $style ==
+      'back' or
+      $style ==
+      'b'
+  ) {
     transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
   }
@@ -143,35 +235,61 @@
       0% {
         filter: blur(12px);
         opacity: 0;
-        @if ($style == 'expand' or $style == 'exp' or $style == 'e') {
-          letter-spacing: -.5em;
-        } @else if ($style == 'forward' or $style == 'fwd' or $style == 'f') {
-          letter-spacing: -.5em;
+        @if $style == 'expand' or $style == 'exp' or $style == 'e' {
+          letter-spacing: -0.5em;
+        } @else if $style == 'forward' or $style == 'fwd' or $style == 'f' {
+          letter-spacing: -0.5em;
           transform: translateZ(-800px);
         } @else if ($style == 'contract' or $style == 'cont' or $style == 'c') {
           letter-spacing: 1em;
-        } @else if ($style == 'backward' or $style == 'bck' or $style == 'back'
-            or $style == 'b') {
+        } @else if
+          $style ==
+          'backward' or
+          $style ==
+          'bck' or
+          $style ==
+          'back' or
+          $style ==
+          'b'
+        {
           letter-spacing: 1em;
           transform: translateZ(300px);
-        } @else if ($style and $style != 'none'
-            and $style != 'no' and $style != 'n'
-            and $style != 'default'
-            and $style != 'def'
-            and $style != 'in' and $style != 'i') {
+        } @else if
+          $style and
+          $style !=
+          'none' and
+          $style !=
+          'no' and
+          $style !=
+          'n' and
+          $style !=
+          'default' and
+          $style !=
+          'def' and
+          $style !=
+          'in' and
+          $style !=
+          'i'
+        {
           @error 'Invalid style of `#{meta.inspect($style)}` for the `text-focus-in` mixin';
         }
       }
 
       100% {
-        filter: blur(0);
         opacity: 1;
-        @if ($style == 'forward' or $style == 'fwd'
-            or $style == 'f') {
+        filter: blur(0);
+        @if $style == 'forward' or $style == 'fwd' or $style == 'f' {
           transform: translateZ(0);
-        } @else if ($style == 'backward'
-            or $style == 'bck' or $style == 'back'
-            or $style == 'b') {
+        } @else if
+          $style ==
+          'backward' or
+          $style ==
+          'bck' or
+          $style ==
+          'back' or
+          $style ==
+          'b'
+        {
           transform: translateZ(12px);
         }
       }

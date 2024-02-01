@@ -1,3 +1,5 @@
+@use 'sass:meta';
+
 /// Thoroughly hide an element.
 ///
 /// @param {Boolean} $maintain-layout [false] - If true, it will hide the
@@ -6,9 +8,9 @@
 ///
 /// @group Utilities
 @mixin hide($maintain-layout: false) {
-  @if (not $maintain-layout) {
+  @if not $maintain-layout {
     display: none !important;
-  } @else if ($maintain-layout) {
+  } @else if $maintain-layout {
     visibility: hidden;
   } @else {
     @error 'Incorrect value of `#{meta.inspect($maintain-laout)}` for the `hide` ' +

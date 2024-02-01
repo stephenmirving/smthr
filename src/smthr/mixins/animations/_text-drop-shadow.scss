@@ -1,3 +1,8 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:string';
+
 /// Adds a shadow dropping animation to a given element's text
 ///
 /// @param {String} $direction [center] - The direction the shadow will fall.
@@ -14,72 +19,98 @@
 /// @throw Invalid $delay value
 @mixin text-drop-shadow(
   $direction: center,
-  $timing: .7s,
+  $timing: 0.7s,
   $delay: null,
   $anim-num: null
 ) {
   $dir-vals: 0 0 18px; // Default of center
 
-  @if (string.to-lower-case($direction) == 'bottom'
-      or string.to-lower-case($direction) == 'b') {
+  @if $direction and meta.typeof($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if $delay and $meta.typeof($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if $direction == 'bottom' or $direction == 'b' {
     $dir-vals: 0 6px 18px;
-  } @else if (string.to-lower-case($direction) == 'bottom-right'
-      or string.to-lower-case($direction) == 'br') {
+  } @else if $direction == 'bottom-right' or $direction == 'br' {
     $dir-vals: 6px 6px 18px;
-  } @else if (
-    string.to-lower-case($direction) == 'right' or string.to-lower-case($direction) == 'r'
-  ) {
+  } @else if $direction == 'right' or $direction == 'r' {
     $dir-vals: 6px 0 18px;
-  } @else if (string.to-lower-case($direction) == 'top-left'
-      or string.to-lower-case($direction) == 'tl') {
+  } @else if $direction == 'top-left' or $direction == 'tl' {
     $dir-vals: -6px -6px 18px;
-  } @else if (string.to-lower-case($direction) == 'top-right'
-      or string.to-lower-case($direction) == 'tr') {
+  } @else if $direction == 'top-right' or $direction == 'tr' {
     $dir-vals: 6px -6px 18px;
-  } @else if (
-    string.to-lower-case($direction) == 'left' or
-    string.to-lower-case($direction) == 'l'
-  ) {
+  } @else if $direction == 'left' or $direction == 'l' {
     $dir-vals: -6px 0 18px;
-  } @else if (string.to-lower-case($direction) == 'top'
-      or string.to-lower-case($direction) == 't') {
+  } @else if $direction == 'top' or $direction == 't' {
     $dir-vals: 0 -6px 18px;
-  } @else if (string.to-lower-case($direction) == 'bottom-left'
-      or string.to-lower-case($direction) == 'bl') {
+  } @else if $direction == 'bottom-left' or $direction == 'bl' {
     $dir-vals: -6px 6px 18px;
-  } @else if (string.to-lower-case($direction) != 'center'
-      and string.to-lower-case($direction) != 'centre'
-      and string.to-lower-case($direction) != 'cent'
-      and string.to-lower-case($direction) != 'cen'
-      and string.to-lower-case($direction) != 'c') {
+  } @else if
+    $direction !=
+    'center' and
+    $direction !=
+    'centre' and
+    $direction !=
+    'cent' and
+    $direction !=
+    'cen' and
+    $direction !=
+    'c'
+  {
     @error '[#{meta.inspect($direction)}] is not a valid direction for the ' +
         '`drop-text-shadow` mixin.';
   }
 
   @if meta.typeof($timing) != 'number' {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-drop-shadow` ' +
-        'mixin. The timing property must be a number.';
+    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the ' +
+        '`text-drop-shadow` mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-drop-shadow` ' +
-        'mixin. The timing property must be in either s or ms units.';
-  } @else if ($timing % 10 == 0ms) {
+    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the ' +
+        '`text-drop-shadow` mixin. The timing property must be in either ' +
+        's (seconds) or ms (milliseconds) units.';
+  } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if (string.slice($timing + '', 1, 2) == '0.') {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
 
-  @if (
-    $delay == 0 or $delay == 0s or $delay == 0ms or
-    $delay == 'none' or $delay == 'no' or $delay == 'n' or
-    $delay == 'n/a' or $delay == nil or not $delay
-  ) {
+  @if $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay ==
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil or not
+    $delay
+  {
     $delay: null;
   }
   @if $delay {
@@ -95,22 +126,24 @@
     } @else if $delay % 10 == 0ms {
       // If time in ms would be shorter as seconds, convert it
       $delay: math.div($delay, 1000ms) * 1s;
+
       @if string.slice($delay + '', 1, 2) == '0.' {
         $delay: #{string.slice($delay + '', 2)};
       }
     }
   }
-  animation: txt-shadow-drop#{$anim-num} #{$timing} #{$delay} both;
+
   text-transform: none;
+  animation: txt-shadow-drop#{$anim-num} #{$timing} #{$delay} both;
 
   @at-root {
     @keyframes txt-shadow-drop#{$anim-num} {
       0% {
-        text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+        text-shadow: 0 0 0 hsl(0 0 0 / 0);
       }
 
       100% {
-        text-shadow: #{$dir-vals} rgba(0, 0, 0, .3);
+        text-shadow: #{$dir-vals} hsl(0 0 0 / 0.3);
       }
     }
   }

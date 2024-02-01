@@ -267,9 +267,13 @@
   }
 
   @if $iterations {
-    @if (
+    @if meta.typeof($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if
       $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    ) {
+    {
       $iterations: infinite;
     } @else if
       (

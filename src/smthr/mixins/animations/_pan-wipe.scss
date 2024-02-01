@@ -1,3 +1,8 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:string';
+
 /// Animates a panning wipe style effect on the background of an element
 ///
 /// @param {String} $direction [right] - The direction the pan is heading
@@ -34,7 +39,14 @@
 @mixin pan-wipe(
   $direction: right,
   $timing: 6s,
-  $bg: linear-gradient(270deg, #CC6AA5, #3E91CC, #2dCCA7) center / 600% 100%,
+  $bg:
+    linear-gradient(
+      270deg,
+      hsl(323.88 49% 60.78%),
+      hsl(204.93 58.2% 52.16%),
+      hsl(166.04 63.86% 48.82%)
+    )
+    center / 600% 100%,
   $size: 100%,
   $delay: null,
   $iterations: null,
@@ -52,48 +64,106 @@
   $pos-val1: 0% 50%;
   $pos-val2: 100% 50%;
   $direction: string.to-lower-case($direction);
+  $delay: if(
+    meta.typeof($delay) == 'string',
+    string.to-lower-case($delay),
+    $delay
+  );
+  $anim-dir: if(
+    meta.typeof($anim-dir) == 'string',
+    string.to-lower-case($anim-dir),
+    $anim-dir
+  );
 
   @if $direction == 'left' or $direction == 'l' {
     $pos-val1: 100% 50%;
     $pos-val2: 0% 50%;
-  } @else if (
-    $direction == 'top' or $direction == 't' or
-    $direction == 'down' or $direction == 'd'
-  ) {
+  } @else if
+    $direction ==
+    'top' or
+    $direction ==
+    't' or
+    $direction ==
+    'down' or
+    $direction ==
+    'd'
+  {
     $pos-val1: 50% 100%;
     $pos-val2: 50% 0%;
-  } @else if (
-    $direction == 'bottom' or $direction == 'b' or
-    $direction == 'up' or $direction == 'u'
-  ) {
+  } @else if
+    $direction ==
+    'bottom' or
+    $direction ==
+    'b' or
+    $direction ==
+    'up' or
+    $direction ==
+    'u'
+  {
     $pos-val1: 50% 0%;
     $pos-val2: 50% 100%;
-  } @else if (
-    $direction == 'top-left' or $direction == 'topleft' or
-    $direction == 'tl' or $direction == 'left-top' or
-    $direction == 'lefttop' or $direction == 'lt'
-  ) {
+  } @else if
+    $direction ==
+    'top-left' or
+    $direction ==
+    'topleft' or
+    $direction ==
+    'tl' or
+    $direction ==
+    'left-top' or
+    $direction ==
+    'lefttop' or
+    $direction ==
+    'lt'
+  {
     $pos-val1: 100% 100%;
     $pos-val2: 0% 0%;
-  } @else if (
-    $direction == 'top-right' or $direction == 'topright' or
-    $direction == 'tr' or $direction == 'right-top' or
-    $direction == 'righttop' or $direction == 'rt'
-  ) {
+  } @else if
+    $direction ==
+    'top-right' or
+    $direction ==
+    'topright' or
+    $direction ==
+    'tr' or
+    $direction ==
+    'right-top' or
+    $direction ==
+    'righttop' or
+    $direction ==
+    'rt'
+  {
     $pos-val1: 0% 100%;
     $pos-val2: 100% 0%;
-  } @else if (
-    $direction == 'bottom-left' or $direction == 'bottomleft' or
-    $direction == 'bl' or $direction == 'left-bottom' or
-    $direction == 'leftbottom' or $direction == 'lb'
-  ) {
+  } @else if
+    $direction ==
+    'bottom-left' or
+    $direction ==
+    'bottomleft' or
+    $direction ==
+    'bl' or
+    $direction ==
+    'left-bottom' or
+    $direction ==
+    'leftbottom' or
+    $direction ==
+    'lb'
+  {
     $pos-val1: 100% 0%;
     $pos-val2: 0% 100%;
-  } @else if (
-    $direction == 'bottom-right' or $direction == 'bottomright' or
-    $direction == 'br' or $direction == 'right-bottom' or
-    $direction == 'rightbottom' or $direction == 'rb'
-  ) {
+  } @else if
+    $direction ==
+    'bottom-right' or
+    $direction ==
+    'bottomright' or
+    $direction ==
+    'br' or
+    $direction ==
+    'right-bottom' or
+    $direction ==
+    'rightbottom' or
+    $direction ==
+    'rb'
+  {
     $pos-val1: 0% 0%;
     $pos-val2: 100% 100%;
   } @else if $direction != 'right' and $direction != 'r' {
@@ -109,21 +179,34 @@
   } @else if not list.index('s' 'ms', math.unit($timing)) {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `pan-wipe` ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if ($timing % 10 == 0ms) {
+  } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if (string.slice($timing + '', 1, 2) == '0.') {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
 
-  @if (
-    $delay == 0 or $delay == 0s or $delay == 0ms or
-    $delay == 'none' or $delay == 'no' or $delay == 'n' or
-    $delay == 'n/a' or $delay == nil or not $delay
-  ) {
+  @if $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay ==
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil or not
+    $delay
+  {
     $delay: null;
   }
   @if $delay {
@@ -137,6 +220,7 @@
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
+
       @if string.slice($delay + '', 1, 2) == '0.' {
         $delay: #{string.slice($delay + '', 2)};
       }
@@ -144,14 +228,26 @@
   }
 
   @if $iterations {
-    @if (
-      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    ) {
+    @if meta.typeof($iterations) ==
+      'string' and
+      (
+        string.to-lower-case($iterations) ==
+          'infinite' or
+          string.to-lower-case($iterations) ==
+          'inf' or
+          string.to-lower-case($iterations) ==
+          'i'
+      )
+    {
       $iterations: infinite;
     } @else if (
-      (math.is-unitless($iterations) and meta.typeof($iterations) == 'number') or
-      $iterations == initial or $iterations == inherit
-    ) {
+        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
       $iterations: $iterations;
     } @else {
       @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for ' +
@@ -161,34 +257,57 @@
     $iterations: null;
   }
 
-  @if (
-    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
-    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
-    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
-  ) {
+  @if not
+    $anim-dir or
+    $anim-dir ==
+    'none' or
+    $anim-dir ==
+    'no' or
+    $anim-dir ==
+    'n/a' or
+    $anim-dir ==
+    'n' or
+    $anim-dir ==
+    'default' or
+    $anim-dir ==
+    'def' or
+    $anim-dir ==
+    'normal' or
+    $anim-dir ==
+    'nor'
+  {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
-  } @else if (
-    $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  ) {
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+  {
     $anim-dir: alternate;
-  } @else if (
-    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
-    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
-    $anim-dir == 'ar'
-  ) {
+  } @else if
+    $anim-dir ==
+    'alternate-reverse' or
+    $anim-dir ==
+    'alternatereverse' or
+    $anim-dir ==
+    'alt-rev' or
+    $anim-dir ==
+    'altrev' or
+    $anim-dir ==
+    'a-r' or
+    $anim-dir ==
+    'ar'
+  {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
         '`pan-wipe` mixin';
   }
-  animation: pan-wipe#{$anim-num} #{$timing} #{$timing-func} #{$delay}
-              #{$iterations} #{$anim-dir} both;
-  background: $bg;
-  height: $height;
+
   overflow: hidden;
   width: $size;
+  height: $height;
+  background: $bg;
+  animation: pan-wipe#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
 
   @at-root {
     @keyframes pan-wipe#{$anim-num} {

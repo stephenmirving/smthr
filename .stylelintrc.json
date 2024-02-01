@@ -401,6 +401,7 @@
         "transition-timing-function",
         "transition-delay",
         "transform",
+        "transform-style",
         "transform-origin",
         "animation",
         "animation-name",
@@ -514,7 +515,8 @@
           "translateX",
           "translateY",
           "translateZ",
-          "translate3d"
+          "translate3d",
+          "blur"
         ],
         "fontSize": 16
       }

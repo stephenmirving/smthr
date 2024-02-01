@@ -1,3 +1,8 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
+
 /// Adds a text pop-up animation to a given element.
 ///
 /// @param {String} $direction [top] - The direction the animation will appear
@@ -26,37 +31,65 @@
 /// @throw Invalid $anim-dir value
 @mixin text-pop-up(
   $direction: top,
-  $timing: .5s,
+  $timing: 0.5s,
   $size: 15rem,
   $delay: null,
-  $timing-func: cubic-bezier(.25, .46, .45, .94),
+  $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94),
   $infinite: null,
   $height: $size,
   $anim-num: null
 ) {
   $dir-val: translateY(-50px);
 
-  @if $infinite {
-    $infinite: infinite alternate
+  @if $direction and $meta.typeof($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
   }
 
-  @if ($direction == 'bottom' or $direction == 'b' or $direction == 'down') {
+  @if $delay and $meta.typeof($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $infinite {
+    $infinite: infinite alternate;
+  }
+
+  @if $direction == 'bottom' or $direction == 'b' or $direction == 'down' {
     $dir-val: translateY(50px);
-  } @else if ($direction == 'left' or $direction == 'l' or
-      $direction == 'left-side') {
+  } @else if
+    $direction ==
+    'left' or
+    $direction ==
+    'l' or
+    $direction ==
+    'left-side'
+  {
     $dir-val: translateX(-50px);
-  } @else if ($direction == 'right' or $direction == 'r' or
-      $direction == 'right-side') {
+  } @else if
+    $direction ==
+    'right' or
+    $direction ==
+    'r' or
+    $direction ==
+    'right-side'
+  {
     $dir-val: translateX(50px);
-  } @else if ($direction == 'top-right' or $direction == 'tr') {
+  } @else if $direction == 'top-right' or $direction == 'tr' {
     $dir-val: translateY(-50px) translateX(50px);
-  } @else if ($direction == 'top-left' or $direction == 'tl') {
+  } @else if $direction == 'top-left' or $direction == 'tl' {
     $dir-val: translateY(-50px) translateX(-50px);
-  } @else if ($direction == 'bottom-right' or $direction == 'br') {
+  } @else if $direction == 'bottom-right' or $direction == 'br' {
     $dir-val: translateY(50px) translateX(50px);
-  } @else if ($direction == 'bottom-left' or $direction == 'bl') {
+  } @else if $direction == 'bottom-left' or $direction == 'bl' {
     $dir-val: translateY(50px) translateX(-50px);
-  } @else if ($direction != 'top' and $direction != 't' and $direction != 'up') {
+  } @else if $direction != 'top' and $direction != 't' and $direction != 'up' {
     @error '[#{meta.inspect($direction)}] is not a valid direction for the ' +
         'text-pop-up mixin.';
   }
@@ -70,21 +103,34 @@
   } @else if not list.index('s' 'ms', math.unit($timing)) {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-pop-up` ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if ($timing % 10 == 0ms) {
+  } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if (string.slice($timing + '', 1, 2) == '0.') {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
 
-  @if (
-    $delay == 0 or $delay == 0s or $delay == 0ms or
-    $delay == 'none' or $delay == 'no' or $delay == 'n' or
-    $delay == 'n/a' or $delay == nil or not $delay
-  ) {
+  @if $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay ==
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil or not
+    $delay
+  {
     $delay: null;
   }
   @if $delay {
@@ -99,41 +145,45 @@
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
+
       @if string.slice($delay + '', 1, 2) == '0.' {
         $delay: #{string.slice($delay + '', 2)};
       }
     }
   }
 
-
   @if not $anim-num {
     $anim-num: null;
   }
-  animation:
-    txt-pop-up#{$anim-num}
-    #{$timing}
-    #{$timing-func}
-    #{$delay}
-    #{$infinite}
-    both;
+
+  width: $size;
   height: $height;
   text-transform: none;
-  width: $size;
+  animation: txt-pop-up#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$infinite}
+    both;
 
   @at-root {
     @keyframes txt-pop-up#{$anim-num} {
       0% {
+        text-shadow: none;
         transform: translateY(0);
         transform-origin: 50% 50%;
-        text-shadow: none;
       }
 
       100% {
+        text-shadow:
+          0 1px 0 hsl(0 0 80%),
+          0 2px 0 hsl(0 0 80%),
+          0 3px 0 hsl(0 0 80%),
+          0 4px 0 hsl(0 0 80%),
+          0 5px 0 hsl(0 0 80%),
+          0 6px 0 hsl(0 0 80%),
+          0 7px 0 hsl(0 0 80%),
+          0 8px 0 hsl(0 0 80%),
+          0 9px 0 hsl(0 0 80%),
+          0 50px 30px hsl(0 0 0 / 0.3);
         transform: #{$dir-val};
         transform-origin: 50% 50%;
-        text-shadow:  0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
-                      0 5px 0 #ccc, 0 6px 0 #ccc, 0 7px 0 #ccc, 0 8px 0 #ccc,
-                      0 9px 0 #ccc, 0 50px 30px rgba(0, 0, 0, .3);
       }
     }
   }

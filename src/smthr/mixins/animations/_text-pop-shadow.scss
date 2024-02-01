@@ -3,7 +3,7 @@
 /// @param {String} $direction [top] - The direction the shadow will be
 /// facing. Recommended to use this mixin with the animation-stage mixin or just
 /// the perspective property on the parent element.
-/// @param {Time} $timing [.6s] - The duration of the animation (s or ms).
+/// @param {Time} $timing [0.6s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -26,7 +26,7 @@
 /// @throw Invalid $anim-dir value
 @mixin text-pop-shadow(
   $direction: 'top',
-  $timing: .6s,
+  $timing: 0.6s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -121,12 +121,12 @@
   } @else if not list.index('s' 'ms', math.unit($timing)) {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-pop-shadow` ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if ($timing % 10 == 0ms) {
+  } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if (string.slice($timing + '', 1, 2) == '0.') {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
@@ -147,6 +147,7 @@
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
+
       @if string.slice($delay + '', 1, 2) == '0.' {
         $delay: #{string.slice($delay + '', 2)};
       }
@@ -154,9 +155,13 @@
   }
 
   @if $iterations {
-    @if (
+    @if meta.typeof($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if
       $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    ) {
+    {
       $iterations: infinite;
     } @else if (
       (math.is-unitless($iterations) and meta.typeof($iterations) == 'number') or

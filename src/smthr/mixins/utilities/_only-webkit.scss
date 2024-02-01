@@ -5,7 +5,7 @@
 ///
 /// @group Utilities
 /// @alias webkit-only
-@mixin only-webkit() {
+@mixin only-webkit {
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
     @content;
   }
@@ -18,7 +18,7 @@
 ///
 /// @group Utilities
 /// @alias only-webkit
-@mixin webkit-only() {
+@mixin webkit-only {
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
     @content;
   }

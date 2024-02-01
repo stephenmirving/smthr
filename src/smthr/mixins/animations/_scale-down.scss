@@ -1,3 +1,8 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:string';
+
 /// Animates an element by scaling it down.
 ///
 /// @param {String} $direction [top] - The direction the element will appear
@@ -32,7 +37,7 @@
 /// @throw Invalid $anim-dir value
 @mixin scale-down(
   $direction: 'center',
-  $timing: .4s,
+  $timing: 0.4s,
   $delay: null,
   $axis: null,
   $iterations: null,
@@ -40,70 +45,135 @@
   $timing-func: null,
   $anim-num: null
 ) {
+  @if $direction and meta.typeof($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if $delay and $meta.typeof($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $axis and meta.typeof($axis) == 'string' {
+    $axis: string.to-lower-case($axis);
+  }
+
+  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
   //  Default value for the 'center' direction
   $trans-val1: scale(1);
-  $trans-val2: scale(.5);
+  $trans-val2: scale(0.5);
   $trans-origin-val: null;
-  @if (string.to-lower-case($direction) == 'top' or string.to-lower-case($direction) == 't') {
+
+  @if $direction == 'top' or $direction == 't' {
     $trans-origin-val: 50% 0%;
     $direction: 'top';
-  } @else if (string.to-lower-case($direction) == 'top-right'
-      or string.to-lower-case($direction) == 'topright'
-      or string.to-lower-case($direction) == 'right-top'
-      or string.to-lower-case($direction) == 'righttop'
-      or string.to-lower-case($direction) == 't-r'
-      or string.to-lower-case($direction) == 'tr'
-      or string.to-lower-case($direction) == 'r-t'
-      or string.to-lower-case($direction) == 'rt') {
+  } @else if
+    $direction ==
+    'top-right' or
+    $direction ==
+    'topright' or
+    $direction ==
+    'right-top' or
+    $direction ==
+    'righttop' or
+    $direction ==
+    't-r' or
+    $direction ==
+    'tr' or
+    $direction ==
+    'r-t' or
+    $direction ==
+    'rt'
+  {
     $trans-origin-val: 100% 0%;
-  } @else if (
-    string.to-lower-case($direction) == 'right' or string.to-lower-case($direction) == 'r'
-  ) {
+  } @else if $direction == 'right' or $direction == 'r' {
     $trans-origin-val: 100% 50%;
     $direction: 'right';
-  } @else if (string.to-lower-case($direction) == 'bottom-right'
-      or string.to-lower-case($direction) == 'bottomright'
-      or string.to-lower-case($direction) == 'right-bottom'
-      or string.to-lower-case($direction) == 'rightbottom'
-      or string.to-lower-case($direction) == 'b-r'
-      or string.to-lower-case($direction) == 'br'
-      or string.to-lower-case($direction) == 'r-b'
-      or string.to-lower-case($direction) == 'r-b') {
+  } @else if
+    $direction ==
+    'bottom-right' or
+    $direction ==
+    'bottomright' or
+    $direction ==
+    'right-bottom' or
+    $direction ==
+    'rightbottom' or
+    $direction ==
+    'b-r' or
+    $direction ==
+    'br' or
+    $direction ==
+    'r-b' or
+    $direction ==
+    'r-b'
+  {
     transform-origin: 100% 50%;
-  } @else if (string.to-lower-case($direction) == 'bottom'
-      or string.to-lower-case($direction) == 'btm'
-      or string.to-lower-case($direction) == 'b') {
-    transform-origin: 50% 50%;
+  } @else if $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
+  {
     $direction: 'bottom';
-  } @else if (string.to-lower-case($direction) == 'bottom-left'
-      or string.to-lower-case($direction) == 'bottomleft'
-      or string.to-lower-case($direction) == 'left-bottom'
-      or string.to-lower-case($direction) == 'leftbottom'
-      or string.to-lower-case($direction) == 'b-l'
-      or string.to-lower-case($direction) == 'bl'
-      or string.to-lower-case($direction) == 'l-b'
-      or string.to-lower-case($direction) == 'lb') {
+
+    transform-origin: 50% 50%;
+  } @else if
+    $direction ==
+    'bottom-left' or
+    $direction ==
+    'bottomleft' or
+    $direction ==
+    'left-bottom' or
+    $direction ==
+    'leftbottom' or
+    $direction ==
+    'b-l' or
+    $direction ==
+    'bl' or
+    $direction ==
+    'l-b' or
+    $direction ==
+    'lb'
+  {
+    transform-origin: 0% 50%;
+  } @else if $direction == 'left' or $direction == 'l' {
+    $direction: 'left';
+
     transform-origin: 0% 50%;
   } @else if (
-    string.to-lower-case($direction) == 'left' or
-    string.to-lower-case($direction) == 'l'
-  ) {
-    transform-origin: 0% 50%;
-    $direction: 'left';
-  } @else if (string.to-lower-case($direction) == 'top-left'
-      or string.to-lower-case($direction) == 'topleft'
-      or string.to-lower-case($direction) == 'left-top'
-      or string.to-lower-case($direction) == 'lefttop'
-      or string.to-lower-case($direction) == 't-l'
-      or string.to-lower-case($direction) == 'tl'
-      or string.to-lower-case($direction) == 'l-t'
-      or string.to-lower-case($direction) == 'lt') {
+      $direction ==
+        'top-left' or
+        $direction ==
+        'topleft' or
+        $direction ==
+        'left-top' or
+        $direction ==
+        'lefttop' or
+        $direction ==
+        't-l' or
+        $direction ==
+        'tl' or
+        $direction ==
+        'l-t' or
+        $direction ==
+        'lt'
+    )
+  {
     transform-origin: 0% 0%;
-  } @else if (string.to-lower-case($direction) == 'center'
-      or string.to-lower-case($direction) != 'centre'
-      or string.to-lower-case($direction) != 'cent'
-      or string.to-lower-case($direction) != 'cen'
-      or string.to-lower-case($direction) != 'c') {
+  } @else if
+    $direction ==
+    'center' or
+    $direction ==
+    'centre' or
+    $direction ==
+    'cent' or
+    $direction ==
+    'cen' or
+    $direction ==
+    'c'
+  {
     $direction: 'center';
   } @else {
     @error 'Invalid direction value of [#{meta.inspect($direction)}] for the ' +
@@ -111,37 +181,56 @@
   }
 
   @if $axis and $axis != 'none' and $axis != 'no' and $axis != 'n' {
-    @if (
-      $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
-    ) {
+    @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
+    {
       $trans-val1: scaleY(1);
-      $trans-val2: scaleY(.3);
-      @if ($direction != 'top' and $direction != 'bottom'
-          and $direction != 'center') {
+      $trans-val2: scaleY(0.3);
+
+      @if $direction !=
+        'top' and
+        $direction !=
+        'bottom' and
+        $direction !=
+        'center'
+      {
         @error 'You have chosen an axis value of `vertical` that cannot be ' +
-            'used with the direction value of [#{meta.inspect($direction)}] for the ' +
-            '`scale-down` mixin. A vertical axis must have direction value of ' +
-            'either `top`, `bottom`, or `center`.';
-      } @else if ($direction == 'top') {
+            'used with the direction value of [#{meta.inspect($direction)}] ' +
+            'for the `scale-down` mixin. A vertical axis must have direction ' +
+            'value of either `top`, `bottom`, or `center`.';
+      } @else if $direction == 'top' {
         $trans-origin-val: 100% 0%;
-      } @else if ($direction == 'bottom') {
+      } @else if $direction == 'bottom' {
         $trans-origin-val: 0% 50%;
       }
     } @else if (
-      $axis == 'horizontal' or $axis == 'horz' or
-      $axis == 'hor' or $axis == 'h'
-    ) {
+        $axis ==
+          'horizontal' or
+          $axis ==
+          'horz' or
+          $axis ==
+          'hor' or
+          $axis ==
+          'h'
+      )
+    {
       $trans-val1: scaleX(1);
-      $trans-val2: scaleX(.3);
-      @if ($direction != 'left' and $direction != 'right'
-          and $direction != 'center') {
+      $trans-val2: scaleX(0.3);
+
+      @if (
+        $direction !=
+          'left' and
+          $direction !=
+          'right' and
+          $direction !=
+          'center'
+      ) {
         @error 'You have chosen an axis value of `horizontal` that cannot be ' +
             'used with the direction value of [#{meta.inspect($direction)}] for the ' +
             '`scale-down` mixin. A horizontal axis must have direction value of ' +
             'either `left`, `right`, or `center`.';
-      } @else if ($direction == 'left') {
+      } @else if $direction == 'left' {
         $trans-origin-val: 0% 0%;
-      } @else if ($direction == 'right') {
+      } @else if $direction == 'right' {
         $trans-origin-val: 100% 50%;
       }
     } @else {
@@ -158,21 +247,34 @@
   } @else if not list.index('s' 'ms', math.unit($timing)) {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `scale-down` ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if (math.unit($timing) == 'ms' and $timing % 50 == 0ms) {
+  } @else if math.unit($timing) == 'ms' and $timing % 50 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if (string.slice($timing + '', 1, 2) == '0.') {
+    @if  string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
 
-  @if (
-    $delay == 0 or $delay == 0s or $delay == 0ms or
-    $delay == 'none' or $delay == 'no' or $delay == 'n' or
-    $delay == 'n/a' or $delay == nil or not $delay
-  ) {
+  @if $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay ==
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil or not
+    $delay
+  {
     $delay: null;
   }
   @if $delay {
@@ -184,8 +286,9 @@
     } @else if not list.index('s' 'ms', math.unit($delay)) {
       @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `scale-down` ' +
           'mixin. The delay property must be in either s or ms units.';
-    } @else if (math.unit($delay) == 'ms' and $delay % 50 == 0ms) {
+    } @else if math.unit($delay) == 'ms' and $delay % 50 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
+
       @if string.slice($delay + '', 1, 2) == '0.' {
         $delay: #{string.slice($delay + '', 2)};
       }
@@ -193,14 +296,26 @@
   }
 
   @if $iterations {
+    @if meta.typeof($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
     @if (
       $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     ) {
       $iterations: infinite;
     } @else if (
-      (math.is-unitless($iterations) and meta.typeof($iterations) == 'number') or
-      $iterations == initial or $iterations == inherit
-    ) {
+        (
+            math.is-unitless($iterations) and
+              meta.typeof($iterations) ==
+              'number'
+          ) or
+          $iterations ==
+          initial or
+          $iterations ==
+          inherit
+      )
+    {
       $iterations: $iterations;
     } @else {
       @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for the ' +
@@ -210,55 +325,93 @@
     $iterations: null;
   }
 
-  @if (
-    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
-    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
-    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
-  ) {
+  @if not
+    $anim-dir or
+    $anim-dir ==
+    'none' or
+    $anim-dir ==
+    'no' or
+    $anim-dir ==
+    'n/a' or
+    $anim-dir ==
+    'n' or
+    $anim-dir ==
+    'default' or
+    $anim-dir ==
+    'def' or
+    $anim-dir ==
+    'normal' or
+    $anim-dir ==
+    'nor'
+  {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
-  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a' {
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+  {
     $anim-dir: alternate;
-  } @else if (
-    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
-    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
-    $anim-dir == 'ar'
-  ) {
+  } @else if
+    $anim-dir ==
+    'alternate-reverse' or
+    $anim-dir ==
+    'alternatereverse' or
+    $anim-dir ==
+    'alt-rev' or
+    $anim-dir ==
+    'altrev' or
+    $anim-dir ==
+    'a-r' or
+    $anim-dir ==
+    'ar'
+  {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
-        '`scale-down` mixin';
+    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}]' +
+        ' for the `scale-down` mixin';
   }
 
   @if (
-    not $timing-func or $timing-func == true or $timing-func == 'none' or
-    $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or
-    $timing-func == 'default' or $timing-func == 'd'
+    not
+      $timing-func or
+      $timing-func ==
+      true or
+      $timing-func ==
+      'none' or
+      $timing-func ==
+      'no' or
+      $timing-func ==
+      'n' or
+      $timing-func ==
+      'def' or
+      $timing-func ==
+      'default' or
+      $timing-func ==
+      'd'
   ) {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
-    $timing-func: cubic-bezier(.25, .46, .45, .94);
+    $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: scale-down#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+
+  animation: scale-down#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
 
   @at-root {
     @keyframes scale-down#{$anim-num} {
       0% {
         transform: $trans-val1;
-        @if ($direction != 'center') {
+        @if $direction != 'center' {
           transform-origin: $trans-origin-val1;
         }
       }
 
       100% {
         transform: $trans-val2;
-        @if ($direction != 'center') {
+        @if $direction != 'center' {
           transform-origin: $trans-origin-val2;
         }
       }

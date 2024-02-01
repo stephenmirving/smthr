@@ -11,6 +11,7 @@
   @if $width == 'max' {
     $width: 100%;
   }
+
   @if $height == 'max' {
     $height: 100%;
   }

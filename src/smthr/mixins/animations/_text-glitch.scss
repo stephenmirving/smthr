@@ -1,6 +1,11 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
+
 /// Animates text by making it appear to be glitching out.
 ///
-/// @param {Time} $timing [.5s] - The duration of the animation (s or ms).
+/// @param {Time} $timing [0.5s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -21,18 +26,30 @@
 /// @throw Invalid $delay value
 /// @throw Invalid $anim-dir value
 @mixin text-glitch(
-  $timing: .5s,
+  $timing: 0.5s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
   $timing-func: null,
   $anim-num: null
 ) {
-  $red: rgb(192, 20, 124);
-  $blue: rgb(0, 170, 255);
-  $yellow: rgb(255, 238, 0);
-  $green: rgb(0, 255, 128);
-  $colors: $red $blue $yellow $green;
+  $red: hsl(323.72 81.13% 41.57%);
+  $blue: hsl(200 100 50%);
+  $yellow: hsl(56 100 50%);
+  $green: hsl(150.12 100% 50%);
+  $colors: ($red $blue $yellow $green);
+
+  @if $delay and $meta.typeof($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
 
   @if meta.typeof($timing) != 'number' {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-glitch` ' +
@@ -43,21 +60,34 @@
   } @else if not list.index('s' 'ms', math.unit($timing)) {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-glitch` ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if ($timing % 10 == 0ms) {
+  } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if (string.slice($timing + '', 1, 2) == '0.') {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
 
-  @if (
-    $delay == 0 or $delay == 0s or $delay == 0ms or
-    $delay == 'none' or $delay == 'no' or $delay == 'n' or
-    $delay == 'n/a' or $delay == nil or not $delay
-  ) {
+  @if $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay ==
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil or not
+    $delay
+  {
     $delay: null;
   }
   @if $delay {
@@ -71,6 +101,7 @@
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
+
       @if string.slice($delay + '', 1, 2) == '0.' {
         $delay: #{string.slice($delay + '', 2)};
       }
@@ -78,14 +109,21 @@
   }
 
   @if $iterations {
-    @if (
-      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    ) {
+    @if meta.typeof($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    {
       $iterations: infinite;
     } @else if (
-      (math.is-unitless($iterations) and meta.typeof($iterations) == 'number') or
-      $iterations == initial or $iterations == inherit
-    ) {
+        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
       $iterations: $iterations;
     } @else {
       @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for ' +
@@ -96,22 +134,45 @@
   }
 
   @if (
-    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
-    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
-    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
+    not
+      $anim-dir or
+      $anim-dir ==
+      'none' or
+      $anim-dir ==
+      'no' or
+      $anim-dir ==
+      'n/a' or
+      $anim-dir ==
+      'n' or
+      $anim-dir ==
+      'default' or
+      $anim-dir ==
+      'def' or
+      $anim-dir ==
+      'normal' or
+      $anim-dir ==
+      'nor'
   ) {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
-  } @else if (
-    $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  ) {
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+  {
     $anim-dir: alternate;
-  } @else if (
-    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
-    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
-    $anim-dir == 'ar'
-  ) {
+  } @else if
+    $anim-dir ==
+    'alternate-reverse' or
+    $anim-dir ==
+    'alternatereverse' or
+    $anim-dir ==
+    'alt-rev' or
+    $anim-dir ==
+    'altrev' or
+    $anim-dir ==
+    'a-r' or
+    $anim-dir ==
+    'ar'
+  {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for ' +
@@ -119,9 +180,24 @@
   }
 
   @if (
-    not $timing-func or $timing-func == true or $timing-func == 'none' or
-    $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or
-    $timing-func == 'default' or $timing-func == 'd' or $timing-func == 0
+    not
+      $timing-func or
+      $timing-func ==
+      true or
+      $timing-func ==
+      'none' or
+      $timing-func ==
+      'no' or
+      $timing-func ==
+      'n' or
+      $timing-func ==
+      'def' or
+      $timing-func ==
+      'default' or
+      $timing-func ==
+      'd' or
+      $timing-func ==
+      0
   ) {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
@@ -131,19 +207,20 @@
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-glitch#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+
+  animation: txt-glitch#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
 
   @at-root {
     @keyframes txt-glitch {
-
       @for $i from 0 through 100 {
         $percent: 0% + $i;
 
         #{$percent} {
-          $color: list.nth($colors, random(length($colors)));
-          text-shadow: random(70px) - 35px 0px 0px $color;
-          left: random(12px) - 6px;
+          $color: list.nth($colors, math.random(list.length($colors)));
+
+          left: math.random(12px) - 6px;
+          text-shadow: math.random(70px) - 35px 0px 0px $color;
         }
       }
     }

@@ -54,7 +54,7 @@
 
         &:active {
           background: color.mix(#000, $fg-color, 35%);
-          box-shadow: inset 1px 1px 3px rgba(mix(#fff, $fg-color, 30%), 0.5);
+          box-shadow: inset 1px 1px 3px rgba(color.mix(#fff, $fg-color, 30%), 0.5);
         }
       }
     }

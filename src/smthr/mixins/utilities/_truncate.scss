@@ -9,9 +9,10 @@
   @if $display {
     display: $display;
   }
-  max-width: $max-width;
+
   overflow: hidden;
-  text-overflow: $overflow;
+  max-width: $max-width;
   white-space: nowrap;
-  word-wrap: normal;
+  text-overflow: $overflow;
+  overflow-wrap: normal;
 }
