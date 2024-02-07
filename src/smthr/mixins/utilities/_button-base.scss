@@ -32,7 +32,7 @@
 ) {
   @if $btn-transition == null {
     $btn-transition: if(
-      global-variable-exists(button-transition),
+      meta.global-variable-exists(button-transition),
       $button-transition,
       (background-color .2s ease-out, color .2s ease-out)
     );

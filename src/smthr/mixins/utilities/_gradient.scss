@@ -67,7 +67,7 @@
     background: linear-gradient(45deg, $start-color $start-percent, $end-color $end-percent);
   } @else if ($orientation == 'diagonal2' or $orientation == 'diag2' or $orientation == 'd2') {
     background: linear-gradient(135deg, $start-color $start-percent, $end-color $end-percent);
-  } @else if (type-of($orientation) != 'number'
+  } @else if (meta.type-of($orientation) != 'number'
       and list.index('deg' 'rad' 'grad' 'turn', math.unit($orientation))) {
     background: linear-gradient($orientation, $start-color $start-percent, $end-color $end-percent);
   } @else {

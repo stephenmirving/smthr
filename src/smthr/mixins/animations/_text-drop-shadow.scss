@@ -37,10 +37,6 @@
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $timing-func and $meta.typeof($timing-func) == 'string' {
-    $timing-func: string.to-lower-case($timing-func);
-  }
-
   @if $direction == 'bottom' or $direction == 'b' {
     $dir-vals: 0 6px 18px;
   } @else if $direction == 'bottom-right' or $direction == 'br' {

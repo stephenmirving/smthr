@@ -8,11 +8,11 @@
 /// @param {Map} $map - Map to retrieve a value from.
 /// @param {String} $key - Name of the map key.
 /// @return {List} Found value.
-@function get-val($map, $key) {
-  @if (
-    meta.typeof($map) == 'map' or
+@function map-get-val($map, $key) {
+  @if meta.typeof($map) ==
+    'map' or
     (meta.type-of($map) == 'list' and list.length($map) == 0)
-  ) {
+  {
     @if map.has-key($map, $key) {
       @return map.get($map, $key);
     } @else {

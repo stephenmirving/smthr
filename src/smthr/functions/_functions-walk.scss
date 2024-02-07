@@ -19,7 +19,7 @@
       @error 'There is no `#{meta.inspect($function)}` function.';
     }
 
-    $list: selector.append($list, meta.call($function, $args...));
+    $list: list.append($list, meta.call($function, $args...));
   }
 
   @return $list;

@@ -1,4 +1,3 @@
-@use 'sass:selector';
 @use 'sass:list';
 @use 'sass:meta';
 
@@ -17,7 +16,7 @@
 
   @each $element in $list {
     @if not meta.call($condition, $element) {
-      $new-list: selector.append($new-list, $element, $separator: $separator);
+      $new-list: list.append($new-list, $element, $separator: $separator);
     }
   }
 

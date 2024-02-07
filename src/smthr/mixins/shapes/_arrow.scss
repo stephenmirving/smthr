@@ -1,3 +1,6 @@
+@use 'sass:meta';
+@use 'sass:string';
+
 /// Uses clip path to change an element to the shape of an arrow.
 ///
 /// @param {String} $direction [right] The direction the arrow is pointing
@@ -10,70 +13,88 @@
 ///
 /// @group Shapes
 @mixin arrow(
-  $direction: right,
+  $direction: 'right',
   $bg: #fb8c00,
   $size: 15rem,
   $fg-color: null,
   $height: $size
 ) {
+  @if meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
   background: $bg;
 
-  @if ($fg-color) {
+  @if $fg-color {
     color: $fg-color;
   }
-  @if (
-    string.to-lower-case($direction) == 'right' or string.to-lower-case($direction) == 'r'
-  ) {
-    clip-path:
-      polygon(
-        0 20%,
-        60% 20%,
-        60% 0,
-        100% 50%,
-        60% 100%,
-        60% 80%,
-        0 80%
-      );
+  @if string.to-lower-case($direction) ==
+    'right' or
+    string.to-lower-case($direction) ==
+    'r'
+  {
+    clip-path: polygon(
+      0 20%,
+      60% 20%,
+      60% 0,
+      100% 50%,
+      60% 100%,
+      60% 80%,
+      0 80%
+    );
   } @else if
-    (string.to-lower-case($direction) == 'left' or string.to-lower-case($direction) == 'l') {
-    clip-path:
-      polygon(
-        40% 0,
-        40% 20%,
-        100% 20%,
-        100% 80%,
-        40% 80%,
-        40% 100%,
-        0 50%
-      );
-  } @else if (
-    string.to-lower-case($direction) == 'up' or string.to-lower-case($direction) == 'u' or
-    string.to-lower-case($direction) == 'top' or string.to-lower-case($direction) == 't'
-  ) {
-    clip-path:
-      polygon(
-        100% 50%,
-        75% 50%,
-        75% 100%,
-        25% 100%,
-        25% 50%,
-        0 50%,
-        50% 0
-      );
-  } @else if (
-    string.to-lower-case($direction) == 'down' or string.to-lower-case($direction) == 'd' or
-    string.to-lower-case($direction) == 'bottom' or string.to-lower-case($direction) == 'b'
-  ) {
-    clip-path:
-      polygon(
-        75% 0,
-        75% 50%,
-        100% 50%,
-        50% 100%,
-        0 50%,
-        25% 50%,
-        25% 0
-      );
+    string.to-lower-case($direction) ==
+    'left' or
+    string.to-lower-case($direction) ==
+    'l'
+  {
+    clip-path: polygon(
+      40% 0,
+      40% 20%,
+      100% 20%,
+      100% 80%,
+      40% 80%,
+      40% 100%,
+      0 50%
+    );
+  } @else if
+    string.to-lower-case($direction) ==
+    'up' or
+    string.to-lower-case($direction) ==
+    'u' or
+    string.to-lower-case($direction) ==
+    'top' or
+    string.to-lower-case($direction) ==
+    't'
+  {
+    clip-path: polygon(
+      100% 50%,
+      75% 50%,
+      75% 100%,
+      25% 100%,
+      25% 50%,
+      0 50%,
+      50% 0
+    );
+  } @else if
+    string.to-lower-case($direction) ==
+    'down' or
+    string.to-lower-case($direction) ==
+    'd' or
+    string.to-lower-case($direction) ==
+    'bottom' or
+    string.to-lower-case($direction) ==
+    'b'
+  {
+    clip-path: polygon(
+      75% 0,
+      75% 50%,
+      100% 50%,
+      50% 100%,
+      0 50%,
+      25% 50%,
+      25% 0
+    );
   } @else {
     @error 'Invalid direction of [#{meta.inspect($direction)}] for the `arrow` mixin';
   }

@@ -1,3 +1,7 @@
+@use 'sass:string';
+@use 'sass:map';
+@use 'sass:meta';
+
 /// Apply a background image with a version that is scaled to 2x for Retina and
 /// other HiDPI displays.
 ///
@@ -32,11 +36,22 @@
 ) {
   $hidpi-img: $img-name;
 
-  @if
-    not $extra-hidpi-properties or $extra-hidpi-properties == 'none' or
-    $extra-hidpi-properties == 'no' or $extra-hidpi-properties == nil or
-    $extra-hidpi-properties == 'n/a' or $extra-hidpi-properties == ' ' or
-    $extra-hidpi-properties == () or $extra-hidpi-properties == ( )
+  @if not
+    $extra-hidpi-properties or
+    $extra-hidpi-properties ==
+    'none' or
+    $extra-hidpi-properties ==
+    'no' or
+    $extra-hidpi-properties ==
+    nil or
+    $extra-hidpi-properties ==
+    'n/a' or
+    $extra-hidpi-properties ==
+    ' ' or
+    $extra-hidpi-properties ==
+    () or
+    $extra-hidpi-properties ==
+    ()
   {
     $extra-hidpi-properties: null;
   }
@@ -45,9 +60,17 @@
     @error 'You must enter an image width for the $bg-width parameter of the ' +
         '`bg-image` mixin.';
   } @else if (
-    meta.typeof($bg-width) != 'number' or
-    ($bg-height and $bg-height != auto and meta.typeof($bg-height) != 'number')
-  ) {
+      meta.typeof($bg-width) !=
+        'number' or
+        (
+          $bg-height and
+            $bg-height !=
+            auto and
+            meta.typeof($bg-height) !=
+            'number'
+        )
+    )
+  {
     @error 'Invalid type for the dimensions used in the `bg-image` mixin.';
   } @else {
     $bg-width: if(
@@ -56,7 +79,7 @@
       $bg-width
     );
     $bg-height: if(
-      (type-of($bg-height) == 'number' and math.is-unitless($bg-height)),
+      (meta.type-of($bg-height) == 'number' and math.is-unitless($bg-height)),
       $bg-height * 1px,
       $bg-height
     );
@@ -68,31 +91,56 @@
     $bg-width $bg-height
   );
 
-  @if (
-    string.index($img-name, '.png') or string.index($img-name, '.svg') or
-    string.index($img-name, '.gif') or string.index($img-name, '.jpg') or
-    string.index($img-name, '.jpx') or string.index($img-name, '.jp2') or
-    string.index($img-name, '.j2c') or string.index($img-name, '.j2k') or
-    string.index($img-name, '.jps') or string.index($img-name, '.ppm') or
-    string.index($img-name, '.iff') or string.index($img-name, '.tdi') or
-    string.index($img-name, '.dmc') or string.index($img-name, '.dc3') or
-    string.index($img-name, '.dic') or string.index($img-name, '.mpo') or
-    string.index($img-name, '.bmp') or string.index($img-name, '.pxr') or
-    string.index($img-name, '.tga') or string.index($img-name, '.vda') or
-    string.index($img-name, '.icb') or string.index($img-name, '.vst') or
-    string.index($img-name, '.pcx') or string.index($img-name, '.jpf') or
-    (not string.index($img-name, '.jpeg') and string.index($img-name, '.jpe')) or
+  @if string.index($img-name, '.png') or
+    string.index($img-name, '.svg') or
+    string.index($img-name, '.gif') or
+    string.index($img-name, '.jpg') or
+    string.index($img-name, '.jpx') or
+    string.index($img-name, '.jp2') or
+    string.index($img-name, '.j2c') or
+    string.index($img-name, '.j2k') or
+    string.index($img-name, '.jps') or
+    string.index($img-name, '.ppm') or
+    string.index($img-name, '.iff') or
+    string.index($img-name, '.tdi') or
+    string.index($img-name, '.dmc') or
+    string.index($img-name, '.dc3') or
+    string.index($img-name, '.dic') or
+    string.index($img-name, '.mpo') or
+    string.index($img-name, '.bmp') or
+    string.index($img-name, '.pxr') or
+    string.index($img-name, '.tga') or
+    string.index($img-name, '.vda') or
+    string.index($img-name, '.icb') or
+    string.index($img-name, '.vst') or
+    string.index($img-name, '.pcx') or
+    string.index($img-name, '.jpf') or
+    (
+      not string.index($img-name, '.jpeg') and string.index($img-name, '.jpe')
+    ) or
     (not string.index($img-name, '.tiff') and string.index($img-name, '.tif'))
-  ) {
-    $hidpi-img: str-insert($img-name, $img-2x-suffix, str-length($img-name) - 3);
-  } @else if (
+  {
+    $hidpi-img: string.insert(
+      $img-name,
+      $img-2x-suffix,
+      string.length($img-name) - 3
+    );
+  } @else if
     string.index($img-name, '.tiff') or
     string.index($img-name, '.jpeg') or
     string.index($img-name, '.webp')
-  ) {
-    $hidpi-img: str-insert($img-name, $img-2x-suffix, str-length($img-name) - 4);
+  {
+    $hidpi-img: string.insert(
+      $img-name,
+      $img-2x-suffix,
+      string.length($img-name) - 4
+    );
   } @else if string.index($img-name, '.') {
-    $hidpi-img: str-insert($img-name, $img-2x-suffix, string.index($img-name, '.'));
+    $hidpi-img: string.insert(
+      $img-name,
+      $img-2x-suffix,
+      string.index($img-name, '.')
+    );
 
     @warn 'You are using an unknown file type on the image you referenced in ' +
         'the `bg-image` mixin. Please ensure you are using a valid image file' +
@@ -103,18 +151,20 @@
         'file extension. Please use the full image name including the ' +
         'image\'s file extension.';
   }
+
   // Normal sized image
   background-image: url(#{$img-name});
 
   // Scaled up version of the image for HiDPI displays
   @media screen and (min-device-pixel-ratio: $ratio),
-         only screen and (min-resolution: $ratio * 96dpi),
-         only screen and (min-resolution: $ratio * 1dppx) {
+    only screen and (min-resolution: $ratio * 96dpi),
+    only screen and (min-resolution: $ratio * 1dppx) {
     background-image: url(#{$hidpi-img});
     background-size: $size;
 
     @if $extra-hidpi-properties {
       $key-list: map.keys($extra-hidpi-properties);
+
       @each $key in $key-list {
         #{$key}: map.get($extra-hidpi-properties, $key);
       }

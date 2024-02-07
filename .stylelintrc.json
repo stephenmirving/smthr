@@ -112,7 +112,7 @@
     "function-name-case": "lower",
     "function-no-unknown": null,
     "function-url-no-scheme-relative": true,
-    "function-url-quotes": "always",
+    "function-url-quotes": "never",
     "hue-degree-notation": "number",
     "import-notation": "string",
     "keyframe-block-no-duplicate-selectors": true,

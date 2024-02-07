@@ -1,3 +1,6 @@
+@use 'sass:string';
+@use 'sass:meta';
+
 /// Adds the border radius property along with the background-clip: padding box
 /// property, value pair.
 ///
@@ -5,9 +8,17 @@
 ///
 /// @group Utlities
 @mixin border-radius($radius: 8px) {
-  @if ($radius == 'circle') {
+  @if meta.type-of($radius) == 'string' {
+    $radius: string.to-lower-case($radius);
+  }
+
+  @if meta.type-of($radius) ==
+    'string' and
+    ($radius == 'circle' or $radius == 'circ' or $radius == 'cir')
+  {
     $radius: 50%;
   }
-  background-clip: padding-box; // Stops bg color from leaking outside the border
+
   border-radius: $radius;
+  background-clip: padding-box; // Stops bg color from leaking outside the border
 }

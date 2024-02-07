@@ -1,6 +1,5 @@
 @use 'sass:string';
 @use 'sass:math';
-@use 'sass:selector';
 @use 'sass:list';
 @use './strip-unit';
 
@@ -27,7 +26,7 @@
 
   @each $val in $rems {
     $val-in-pixels: strip-unit($val) * $base * 1px;
-    $px-vals: selector.selector.append($px-vals, $val-in-pixels);
+    $px-vals: list.append($px-vals, $val-in-pixels);
   }
 
   @if length($px-vals) == 1 {

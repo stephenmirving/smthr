@@ -72,7 +72,7 @@
   }
 
   @for $i from 1 through $count {
-    $rem-values: list.selector.append(
+    $rem-values: list.append(
       $rem-values,
       px-to-rem(list.nth($values, $i), $base)
     );

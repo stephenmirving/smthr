@@ -53,6 +53,7 @@ html {
 ::before,
 ::after {
   box-sizing: inherit;
+  min-width: 0;
   background-repeat: no-repeat;
 }
 

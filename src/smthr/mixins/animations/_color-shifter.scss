@@ -64,7 +64,7 @@
   $current-interval: 0;
 
   // Append the current interval (0%) to the interval list for the keyframes
-  $interval-values: selector.append($interval-values, 0);
+  $interval-values: list.append($interval-values, 0);
 
   // The combination variable for $infinite and $alternate
   $inf-alt: null;
@@ -72,7 +72,7 @@
   // Generate the full list of intervals for the keyframes
   @for $k from 1 through $num-intervals {
     $current-interval: $last-interval + $interval-multiple;
-    $interval-values: selector.append($interval-values, $current-interval);
+    $interval-values: list.append($interval-values, $current-interval);
     $last-interval: $current-interval;
   }
 

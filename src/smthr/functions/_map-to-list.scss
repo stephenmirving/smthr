@@ -1,6 +1,5 @@
 @use 'sass:list';
 @use 'sass:meta';
-@use 'sass:selector';
 
 /// Casts a map into a list.
 /// @access public
@@ -9,18 +8,15 @@
 /// @param {Map} $map - Map to pull a value from.
 /// @return {List} Depending on the flag, returns either $keys, $values or both
 @function map-to-list($map, $keep: 'both') {
-  $keep:
-    if list.index('keys' 'values', $keep),
-    $keep,
-    'both';
+  $keep: if(list.index('keys' 'values', $keep), $keep, 'both');
 
   @if type-of($map) == 'map' {
     $keys: ();
     $values: ();
 
     @each $key, $val in $map {
-      $keys: selector.append($keys, $key);
-      $values: selector.append($values, $val);
+      $keys: list.append($keys, $key);
+      $values: list.append($values, $val);
     }
 
     @if $keep == 'keys' {
