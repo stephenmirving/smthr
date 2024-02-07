@@ -8,13 +8,11 @@
 ///
 /// @group Shapes
 @mixin hexagon($bg: #fb8c00, $size: 15rem, $fg-color: null) {
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+  width: $size;
+  height: $size;
   background: $bg;
-
-  @if ($fg-color) {
+  @if $fg-color {
     color: $fg-color;
   }
-  clip-path: polygon( 50% 0, 100% 25%, 100% 75%,
-                      50% 100%, 0 75%, 0 25% );
-  height: $size;
-  width: $size;
 }

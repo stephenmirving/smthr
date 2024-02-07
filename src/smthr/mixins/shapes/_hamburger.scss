@@ -31,24 +31,23 @@
   $spacing: math.div(($height - ($weight * $bars)), ($bars - 1));
 
   @if math.unit($spacing) == 'px' {
-    $spacing: floor($spacing);
+    $spacing: math.floor($spacing);
   }
 
   @for $i from 2 through $bars {
     $offset: ($weight + $spacing) * ($i - 1);
     $shadow: list.append($shadow, 0 $offset 0 $color, comma);
   }
+
   position: relative;
   display: inline-block;
   vertical-align: middle;
   width: $width;
   height: $height;
-
-  // Hamburger container
   cursor: pointer;
 
   // Hamburger 'patties' / Horizontal icon bars
-  &:after {
+  &::after {
     content: '';
     position: absolute;
     top: 0;
@@ -71,7 +70,7 @@
       );
     }
 
-    &:hover:after {
+    &:hover::after {
       background: $color-hover;
       box-shadow: $hover-shadow;
     }

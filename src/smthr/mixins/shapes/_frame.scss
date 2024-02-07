@@ -11,13 +11,24 @@
 ///
 /// @group Shapes
 /// @throw Invalid $direction value
-@mixin frame($bg: #61300D, $size: 15rem, $fg-color: null, $height: $size) {
+@mixin frame($bg: #61300d, $size: 15rem, $fg-color: null, $height: $size) {
+  clip-path: polygon(
+    0 0,
+    0 100%,
+    20% 100%,
+    20% 20%,
+    80% 20%,
+    80% 80%,
+    20% 80%,
+    20% 100%,
+    100% 100%,
+    100% 0
+  );
+  width: $size;
+  height: $height;
   background: $bg;
+
   @if $fg-color {
     color: $fg-color;
   }
-  clip-path: polygon( 0 0, 0 100%, 20% 100%, 20% 20%, 80% 20%, 80% 80%,
-                      20% 80%, 20% 100%, 100% 100%, 100% 0 );
-  height: $height;
-  width: $size;
 }

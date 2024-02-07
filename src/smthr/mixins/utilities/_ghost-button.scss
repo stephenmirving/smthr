@@ -24,30 +24,34 @@
   $transition-speed,
   $hover-color
 ) {
+  display: inline-block;
+  padding: $padding;
   border: $border-size solid $border-color;
   color: $font-color;
-  display: inline-block;
-  @if ($font-fam and $font-size) {
-    @if ($font-weight and $font-weight != 400) {
+
+  @if $font-fam and $font-size {
+    @if $font-weight and $font-weight != 400 {
       font: $font-weight $font-size $font-fam;
     } @else {
       font: $font-size $font-fam;
     }
   } @else {
-    @if ($font-fam) {
+    @if $font-fam {
       font-family: $font-fam;
     }
-    @if ($font-size) {
+    @if $font-size {
       font-size: $font-size;
     }
-    @if ($font-weight and $font-weight != 400) {
+    @if $font-weight and $font-weight != 400 {
       font-weight: $font-weight;
     }
   }
-  padding: $padding;
-  text-decoration: none;
+
   text-transform: uppercase;
-  transition: color $transition-speed, background $transition-speed;
+  text-decoration: none;
+  transition:
+    color $transition-speed,
+    background $transition-speed;
 
   &:hover {
     background: $border-color;

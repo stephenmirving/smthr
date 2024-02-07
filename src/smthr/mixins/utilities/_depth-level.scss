@@ -10,6 +10,9 @@
 /// @require {function} top-shadow
 /// @require {function} bottom-shadow
 /// @throw Invalid $level value.
+/// @alias card-depth
+/// @alias shadow-depth
+/// @alias shadow-level
 @mixin depth-level($level) {
   @if meta.typeof($level) != 'number' or $level > 5 {
     @error 'Invalid $level of [ #{meta.inspect($level)} ] used in the mixin ' +
@@ -19,4 +22,61 @@
   } @else {
     box-shadow: bottom-shadow($level), top-shadow($level);
   }
+}
+
+/// Uses box-shadow to give an element a depth effect based on Google's
+/// Material Design principles.
+///
+/// @link https://material.io/design/environment/light-shadows.html
+/// @link https://material.io/design/environment/elevation.html
+///
+/// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+///
+/// @group Utilities
+/// @require {function} top-shadow
+/// @require {function} bottom-shadow
+/// @throw Invalid $level value.
+/// @alias depth-level
+/// @alias shadow-depth
+/// @alias shadow-level
+@mixin card-depth($level) {
+  @include depth-level($level);
+}
+
+/// Uses box-shadow to give an element a depth effect based on Google's
+/// Material Design principles.
+///
+/// @link https://material.io/design/environment/light-shadows.html
+/// @link https://material.io/design/environment/elevation.html
+///
+/// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+///
+/// @group Utilities
+/// @require {function} top-shadow
+/// @require {function} bottom-shadow
+/// @throw Invalid $level value.
+/// @alias depth-level
+/// @alias card-depth
+/// @alias shadow-level
+@mixin shadow-depth($level) {
+  @include depth-level($level);
+}
+
+/// Uses box-shadow to give an element a depth effect based on Google's
+/// Material Design principles.
+///
+/// @link https://material.io/design/environment/light-shadows.html
+/// @link https://material.io/design/environment/elevation.html
+///
+/// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+///
+/// @group Utilities
+/// @require {function} top-shadow
+/// @require {function} bottom-shadow
+/// @throw Invalid $level value.
+/// @alias depth-level
+/// @alias card-depth
+/// @alias shadow-depth
+@mixin shadow-level($level) {
+  @include depth-level($level);
 }

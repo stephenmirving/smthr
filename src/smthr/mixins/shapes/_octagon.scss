@@ -9,15 +9,23 @@
 ///
 /// @group Shapes
 @mixin octagon($bg: #8b0000, $size: 15rem, $fg-color: null) {
+  clip-path: polygon(
+    30% 0,
+    70% 0,
+    100% 30%,
+    100% 70%,
+    70% 100%,
+    30% 100%,
+    0 70%,
+    0 30%
+  );
+  width: $size;
+  height: $size;
   background: $bg;
 
-  @if ($fg-color) {
+  @if $fg-color {
     color: $fg-color;
   }
-  clip-path: polygon( 30% 0, 70% 0, 100% 30%, 100% 70%,
-                      70% 100%, 30% 100%, 0 70%, 0 30% );
-  height: $size;
-  width: $size;
 }
 
 /// References the octagon clip-path mixin to create a stop sign shape with a

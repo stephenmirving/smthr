@@ -1,3 +1,5 @@
+@use 'sass:meta';
+
 /// Easily generates the appropriate typographic properties for the given values,
 /// following the W3C specifications.
 /// @link https://developer.mozilla.org/en-US/docs/Web/CSS/font
@@ -26,53 +28,70 @@
   $kern: null
 ) {
   $stretch-no-keyword: false;
-  @if ($stretch and $stretch != ultra-condensed
-      and $stretch != extra-condensed and $stretch != condensed
-      and $stretch != semi-condensed and $stretch != normal
-      and $stretch != semi-expanded and $stretch != expanded
-      and $stretch != extra-expanded and $stretch != ultra-expanded) {
+
+  @if $stretch and
+    $stretch !=
+    ultra-condensed and
+    $stretch !=
+    extra-condensed and
+    $stretch !=
+    condensed and
+    $stretch !=
+    semi-condensed and
+    $stretch !=
+    normal and
+    $stretch !=
+    semi-expanded and
+    $stretch !=
+    expanded and
+    $stretch !=
+    extra-expanded and
+    $stretch !=
+    ultra-expanded
+  {
     // Stretch must be a keyword to be included in the font shorthand
     $stretch-no-keyword: true;
   }
-  @if ($kern and $kern != auto and $kern != normal and $kern != none) {
+  @if $kern and $kern != auto and $kern != normal and $kern != none {
     @warn 'You have tried giving an incorrect value of `#{meta.inspect($kern)}` ' +
       'for the font-kerning property in the `font` mixin. The value was' +
       ' reset to null and no font-kerning will be applied. Please check' +
       ' your stylesheet.';
+
     $kern: null;
   }
-  @if (not $family or not $size) {
-    @if ($family) {
+  @if not $family or not $size {
+    @if $family {
       font-family: $stretch;
     }
-    @if ($kern) {
+    @if $kern {
       font-kerning: $kern;
     }
-    @if ($size) {
+    @if $size {
       font-size: $size;
     }
-    @if ($stretch) {
+    @if $stretch {
       font-stretch: $stretch;
     }
-    @if ($style) {
+    @if $style {
       font-style: $style;
     }
-    @if ($variant) {
+    @if $variant {
       font-variant: $variant;
     }
-    @if ($weight) {
+    @if $weight {
       font-weight: $weight;
     }
-    @if ($spacing) {
+    @if $spacing {
       letter-spacing: $spacing;
     }
-    @if ($height) {
+    @if $height {
       line-height: $height;
     }
   } @else {
-    @if ($height) {
-      @if ($variant and $variant != small-caps and $variant != normal) {
-        @if ($stretch-no-keyword) {
+    @if $height {
+      @if $variant and $variant != small-caps and $variant != normal {
+        @if $stretch-no-keyword {
           font: $style $weight #{$size}/#{$height} $family;
           font-stretch: $stretch;
           font-variant: $variant;
@@ -81,7 +100,7 @@
           font-variant: $variant;
         }
       } @else {
-        @if ($stretch-no-keyword) {
+        @if $stretch-no-keyword {
           font: $style $variant $weight #{$size}/#{$height} $family;
           font-stretch: $stretch;
         } @else {
@@ -89,17 +108,17 @@
         }
       }
     } @else {
-      @if ($variant and $variant != small-caps and $variant != normal) {
-        @if ($stretch-no-keyword) {
+      @if $variant and $variant != small-caps and $variant != normal {
+        @if $stretch-no-keyword {
           font: $style $weight $size $family;
-          font-stretch: $stretch;
           font-variant: $variant;
+          font-stretch: $stretch;
         } @else {
           font: $style $weight $stretch $size $family;
           font-variant: $variant;
         }
       } @else {
-        @if ($stretch-no-keyword) {
+        @if $stretch-no-keyword {
           font: $style $variant $weight $size $family;
           font-stretch: $stretch;
         } @else {
@@ -107,10 +126,10 @@
         }
       }
     }
-    @if ($kern) {
+    @if $kern {
       font-kerning: $kern;
     }
-    @if ($spacing) {
+    @if $spacing {
       letter-spacing: $spacing;
     }
   }

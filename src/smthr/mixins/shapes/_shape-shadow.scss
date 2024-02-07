@@ -5,6 +5,9 @@
 /// @param {Color} $shadow-color [rgba(50, 50, 0, .5)] The shadow's color.
 ///
 /// @group Shapes
-@mixin shape-shadow($shadow-vars: -1px 6px 3px, $shadow-color: rgba(50, 50, 0, .5)) {
+@mixin shape-shadow(
+  $shadow-vars: -1px 6px 3px,
+  $shadow-color: rgba(50, 50, 0, 0.5)
+) {
   filter: drop-shadow(#{$shadow-vars} #{$shadow-color});
 }

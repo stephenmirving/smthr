@@ -1,0 +1,11 @@
+@use 'sass:map';
+
+/// Safely sets a single value at a shallow map's given key.
+///
+/// @param {Map} $map - The map with the value being set.
+/// @param {String} $key - The key whose value is being set.
+/// @param {*} $value - The value being set.
+/// @return {Map} - The modified map.
+@function map-set-val($map, $key, $value) {
+  @return map.merge($map, ($key: $value));
+}

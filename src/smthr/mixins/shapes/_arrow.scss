@@ -23,16 +23,7 @@
     $direction: string.to-lower-case($direction);
   }
 
-  background: $bg;
-
-  @if $fg-color {
-    color: $fg-color;
-  }
-  @if string.to-lower-case($direction) ==
-    'right' or
-    string.to-lower-case($direction) ==
-    'r'
-  {
+  @if $direction == 'right' or $direction == 'r' {
     clip-path: polygon(
       0 20%,
       60% 20%,
@@ -42,12 +33,7 @@
       60% 80%,
       0 80%
     );
-  } @else if
-    string.to-lower-case($direction) ==
-    'left' or
-    string.to-lower-case($direction) ==
-    'l'
-  {
+  } @else if $direction == 'left' or $direction == 'l' {
     clip-path: polygon(
       40% 0,
       40% 20%,
@@ -58,13 +44,13 @@
       0 50%
     );
   } @else if
-    string.to-lower-case($direction) ==
+    $direction ==
     'up' or
-    string.to-lower-case($direction) ==
+    $direction ==
     'u' or
-    string.to-lower-case($direction) ==
+    $direction ==
     'top' or
-    string.to-lower-case($direction) ==
+    $direction ==
     't'
   {
     clip-path: polygon(
@@ -77,13 +63,13 @@
       50% 0
     );
   } @else if
-    string.to-lower-case($direction) ==
+    $direction ==
     'down' or
-    string.to-lower-case($direction) ==
+    $direction ==
     'd' or
-    string.to-lower-case($direction) ==
+    $direction ==
     'bottom' or
-    string.to-lower-case($direction) ==
+    $direction ==
     'b'
   {
     clip-path: polygon(
@@ -99,6 +85,11 @@
     @error 'Invalid direction of [#{meta.inspect($direction)}] for the `arrow` mixin';
   }
 
-  height: $height;
   width: $size;
+  height: $height;
+  background: $bg;
+
+  @if $fg-color {
+    color: $fg-color;
+  }
 }

@@ -14,13 +14,12 @@
   $fg-color: null,
   $height: $size
 ) {
+  clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0 75%);
+  width: $size;
+  height: $height;
   background: $bg;
 
-  @if ($fg-color) {
+  @if $fg-color {
     color: $fg-color;
   }
-  clip-path: polygon( 0 0, 100% 0, 100% 75%, 75% 75%,
-                      75% 100%, 50% 75%, 0 75% );
-  height: $height;
-  width: $size;
 }

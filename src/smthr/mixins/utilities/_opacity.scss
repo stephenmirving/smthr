@@ -1,3 +1,7 @@
+@use 'sass:math';
+
+// TODO: Fix this function
+
 /// Takes a given value in either 0-1 decimal or 2-100 integer scale and applies
 /// that level of opacity along with the -ms-filter property for IE8- support.
 ///
@@ -14,10 +18,10 @@
           'changed to the max of 1.';
       $opacity: 100;
     }
-    @if (math.unit($opacity == '%')) {
-      $opacity: $opacity / 100%;
+    @if math.unit($opacity == '%') {
+      $opacity: math.div($opacity, 100%);
     } @else {
-      $opacity: $opacity / 100;
+      $opacity: math.div($opacity, 100);
     }
   }
 

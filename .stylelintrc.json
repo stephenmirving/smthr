@@ -9,7 +9,6 @@
     "stylelint-group-selectors",
     "stylelint-order",
     "stylelint-high-performance-animation",
-    "stylelint-rem-over-px",
     "stylelint-prettier"
   ],
   "extends": [
@@ -476,51 +475,6 @@
     ],
     "property-no-vendor-prefix": null,
     "property-no-unknown": true,
-    "rem-over-px/rem-over-px": [
-      true,
-      {
-        "ignore": [
-          "background",
-          "background-position",
-          "background-size",
-          "border",
-          "border-radius",
-          "border-width",
-          "box-shadow",
-          "outline",
-          "outline-width",
-          "outline-offset",
-          "perspective",
-          "text-shadow",
-          "transform",
-          "transform-origin",
-          "top",
-          "bottom",
-          "left",
-          "right",
-          "inset",
-          "1px",
-          "-1px",
-          "2px",
-          "-2px",
-          "1000px",
-          "1140px",
-          "$*"
-        ],
-        "ignoreAtRules": ["media", "function"],
-        "ignoreFunctions": [
-          "url",
-          "calc",
-          "translate",
-          "translateX",
-          "translateY",
-          "translateZ",
-          "translate3d",
-          "blur"
-        ],
-        "fontSize": 16
-      }
-    ],
     "rule-empty-line-before": [
       "always-multi-line",
       {

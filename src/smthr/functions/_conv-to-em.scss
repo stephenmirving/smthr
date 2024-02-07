@@ -18,11 +18,12 @@
         meta.typeof($pixels) ==
           'number' and not
           math.is-unitless($pixels) and
-          math.unit($pixels) != 'px'
+          math.unit($pixels) !=
+          'px'
       )
   ) {
-    @error 'Invalid value of (#{meta.inspect($pixels)}) passed to conv-to-em(). ' +
-        'Value of $pixels must be number in px units.';
+    @error 'Invalid value of (#{meta.inspect($pixels)}) passed to conv-to-em().' +
+        ' Value of $pixels must be number in px units.';
   }
 
   // If no base is defined, defer to the $base-font-size variable. If that does
@@ -43,5 +44,5 @@
     $base-context: $base-context * 1px;
   }
 
-  @return $pixels / $base-context * 1em;
+  @return math.div($pixels, $base-context) * 1em;
 }

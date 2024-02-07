@@ -13,11 +13,15 @@
     $is-important: string.to-lower-case($is-important);
   }
 
-  @if $is-important == true or
-    $is-important == 't' or
-    $is-important == 'imp' or
-    $is-important == 'important' or
-    $is-important == '!important'
+  @if $is-important or
+    $is-important ==
+    't' or
+    $is-important ==
+    'imp' or
+    $is-important ==
+    'important' or
+    $is-important ==
+    '!important'
   {
     $is-important: !important;
   } @else {

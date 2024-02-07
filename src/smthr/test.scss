@@ -1,0 +1,33 @@
+@use 'sass:meta';
+@use 'sass:math';
+
+@function strip-unit($num) {
+  @return math.div($num, ($num * 0 + 1));
+}
+
+@mixin test($direction: right) {
+  font: meta.type-of($direction);
+}
+
+@mixin responsive-ratio($x, $y, $content-class-name) {
+  position: relative;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: math.div($y, $x) * 100%;
+  }
+
+  > .#{$content-class-name} {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+div {
+  @include responsive-ratio(16, 9, 'container')
+}

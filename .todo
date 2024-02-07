@@ -7,9 +7,13 @@ TODO:
       ☐ Check to see if it is working still
     ✔ Go through betterize and remove anything that is for a dead browser @done(20-02-14 16:06)
     ☐ Parse down all the direction decision trees using a direction alias map @started(20-02-14 15:46)
+    ☐ Fix opacity function
+    ☐ Examine responsive font mixin
     ✔ Fix all the @error and @warn messages where a variable is interpolated, replace #{$var} with #{meta.inspect($var)} @done(19-08-13 00:51)
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Make all alias mixins only reference the original instead of repeating code
+    ☐ Look at the only-browser mixins and others to see if they are outdated and should be removed
+    ☐ Take a look at the line-clamp mixin
     ✔ Add !important to display: none for the [hidden] attribute in _betterize.scss @done(19-08-13 00:52)
     ✔ Change documentation for bg-image and bg-image-svg, remove part where it says a quoted string is required @done(19-08-13 01:56)
     ✔ Make sure all the animations are fixed for chrome by adding the moz-only on the backface-visibility property on the animation @done(19-08-13 01:56)
@@ -31,7 +35,7 @@ TODO:
 
   Utility Mixins:
     ☐ Finish and propogate line-clamp mixin
-    ☐ Add .sass versions of dynamic-square mixin
+    ☐ Add .sass versions of responsive-square mixin
     ☐ Fix _family fork - first-child/last-child mixin, adding of-type functionality to first/last
     ☐ Fix the `size` mixin, it errors out if you pass it function generated sizes like with calc
     ✔ Go back to the align-vertically, abs-center, and align-horizontally mixins and test whether to switch back to absolute positioning @done(19-08-13 01:07)

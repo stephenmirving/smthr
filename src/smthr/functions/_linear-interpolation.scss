@@ -16,7 +16,7 @@
     @error 'The linear-interpolation() $map must be exactly 2 values.';
   }
 
-  $slope: math.divide(
+  $slope: math.div(
     (map.get($map, list.nth($keys, 2)) - map.get($map, list.nth($keys, 1))),
     (list.nth($keys, 2) - list.nth($keys, 1))
   );

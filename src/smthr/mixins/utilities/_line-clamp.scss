@@ -8,8 +8,8 @@
     @error 'The $lines parameter in the `line-clamp` mixin must be a number.';
   }
 
-  -webkit-box-orient: vertical;
   display: -webkit-box;
-  -webkit-line-clamp: $lines;
   text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
 }

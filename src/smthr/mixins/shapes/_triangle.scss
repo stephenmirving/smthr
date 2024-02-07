@@ -1,3 +1,6 @@
+@use 'sass:meta';
+@use 'sass:string';
+
 /// Creates a CSS triangle, which can be used for dropdown arrows, dropdown
 /// pips, and more. Use this mixin inside a `&::before` or `&::after` selector,
 /// to attach the triangle to an existing element.
@@ -10,36 +13,34 @@
 /// @group Shapes
 /// @throw Invalid $direction value
 @mixin triangle($direction: down, $size: 9px, $color: #3e3e3e) {
+  @if meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+
   border: inset $size;
-  @if (string.to-lower-case($direction) == 'down'
-      or string.to-lower-case($direction) == 'd') {
-    border-bottom-width: 0;
+
+  @if $direction == 'down' or $direction == 'd' {
     border-color: $color transparent transparent;
     border-top-style: solid;
-  } @else if (
-    string.to-lower-case($direction) == 'up' or string.to-lower-case($direction) == 'u'
-  ) {
-    border-bottom-style: solid;
+    border-bottom-width: 0;
+  } @else if $direction == 'up' or $direction == 'u' {
     border-color: transparent transparent $color;
     border-top-width: 0;
-  } @else if (
-    string.to-lower-case($direction) == 'right' or string.to-lower-case($direction) == 'r'
-  ) {
+    border-bottom-style: solid;
+  } @else if $direction == 'right' or $direction == 'r' {
     border-color: transparent transparent transparent $color;
-    border-left-style: solid;
     border-right-width: 0;
-  } @else if (
-    string.to-lower-case($direction) == 'left' or
-    string.to-lower-case($direction) == 'l'
-  ) {
+    border-left-style: solid;
+  } @else if $direction == 'left' or $direction == 'l' {
     border-color: transparent $color transparent transparent;
-    border-left-width: 0;
     border-right-style: solid;
+    border-left-width: 0;
   } @else {
     @error 'Invalid direction of [#{meta.inspect($direction)}] for the `triangle` mixin.';
   }
-  content: '';
-  display: block;
-  height: 0;
-  width: 0;
 }

@@ -13,14 +13,14 @@
     &:visited,
     &:hover,
     &:active,
-    &:focus {
-        @content;
+    &:focus-visible {
+      @content;
     }
   } @else {
     &:hover,
     &:active,
-    &:focus {
-        @content;
+    &:focus-visible {
+      @content;
     }
   }
 }

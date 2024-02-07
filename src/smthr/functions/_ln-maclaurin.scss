@@ -8,5 +8,5 @@
 ///
 /// @require {function} pow
 @function ln-maclaurin($x, $n) {
-  @return (math.pow(-1, $n + 1) / $n) * (math.pow($x - 1, $n));
+  @return math.div(math.pow(-1, $n + 1), $n) * (math.pow($x - 1, $n));
 }

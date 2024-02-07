@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 /// Creates an infinity symbol out of an element, better browser support than
 /// clip-path.
 ///
@@ -9,30 +11,30 @@
 ///
 /// @group Shapes
 @mixin infinity-symbol($symbol-color: #000, $size: 60px, $rad-val: 50px) {
-  height: round($size * 1.666666667);
   position: relative;
-  width: round($size * 2.966666667);
+  width: math.round($size * 2.966666667);
+  height: math.round($size * 1.666666667);
 
-  &:before,
-  &:after {
-    border: 10px solid #{$symbol-color};
+  &::before,
+  &::after {
     content: '';
-    height: $size;
     position: absolute;
     top: 0;
     width: $size;
+    height: $size;
+    border: 10px solid #{$symbol-color};
   }
 
-  &:before {
-    border-radius: #{$rad-val} #{$rad-val} 0;
+  &::before {
     left: 0;
+    border-radius: #{$rad-val} #{$rad-val} 0;
     transform: rotate(-45deg);
   }
 
-  &:after {
-    border-radius: #{$rad-val} #{$rad-val} #{$rad-val} 0;
-    left: auto;
+  &::after {
     right: 0;
+    left: auto;
+    border-radius: #{$rad-val} #{$rad-val} #{$rad-val} 0;
     transform: rotate(45deg);
   }
 }

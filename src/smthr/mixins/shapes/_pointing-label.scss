@@ -1,3 +1,7 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:math';
+
 /// Creates a little pointing label from an element using clip-path.
 ///
 /// @param {String} $direction [right] - Indicates the direction the label
@@ -17,43 +21,77 @@
   $bg: #999,
   $width: 5rem,
   $fg-color: null,
-  $height: $width / 4
+  $height: math.div($width, 4)
 ) {
-  background: $bg;
-  background-clip: padding-box;
-  @if (
-    string.to-lower-case($direction) == 'right' or
-    string.to-lower-case($direction) == 'r'
-  ) {
+  @if meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if $direction == 'right' or $direction == 'r' {
+    clip-path: polygon(
+      95% 0,
+      95% 35%,
+      100% 50%,
+      95% 65%,
+      95% 100%,
+      0 100%,
+      0 0
+    );
     border-radius: 4px 0 0 4px;
-    clip-path: polygon( 95% 0, 95% 35%, 100% 50%, 95% 65%,
-                        95% 100%, 0 100%, 0 0 );
-  } @else if (
-    string.to-lower-case($direction) == 'left' or
-    string.to-lower-case($direction) == 'l'
-  ) {
+  } @else if $direction == 'left' or $direction == 'l' {
+    clip-path: polygon(5% 0, 5% 35%, 0 50%, 5% 65%, 5% 100%, 100% 100%, 100% 0);
     border-radius: 0 4px 4px 0;
-    clip-path: polygon( 5% 0, 5% 35%, 0 50%, 5% 65%,
-                        5% 100%, 100% 100%, 100% 0 );
-  } @else if (string.to-lower-case($direction) == 'up'
-      or string.to-lower-case($direction) == 'u' or string.to-lower-case($direction) == 'top'
-      or string.to-lower-case($direction) == 't') {
+  } @else if
+    $direction ==
+    'up' or
+    $direction ==
+    'u' or
+    $direction ==
+    'top' or
+    $direction ==
+    't'
+  {
+    clip-path: polygon(
+      55% 15%,
+      50% 0,
+      45% 15%,
+      0 15%,
+      0 100%,
+      100% 100%,
+      100% 15%
+    );
     border-radius: 0 0 4px 4px;
-    clip-path: polygon( 55% 15%, 50% 0, 45% 15%, 0 15%,
-                        0 100%, 100% 100%, 100% 15% );
-  } @else if (string.to-lower-case($direction) == 'down'
-      or string.to-lower-case($direction) == 'd' or string.to-lower-case($direction) == 'b'
-      or string.to-lower-case($direction) == 'bottom') {
+  } @else if
+    $direction ==
+    'down' or
+    $direction ==
+    'd' or
+    $direction ==
+    'b' or
+    $direction ==
+    'bottom'
+  {
+    clip-path: polygon(
+      55% 85%,
+      50% 100%,
+      45% 85%,
+      0 85%,
+      0 0,
+      100% 0,
+      100% 85%
+    );
     border-radius: 4px 4px 0 0;
-    clip-path: polygon( 55% 85%, 50% 100%, 45% 85%, 0 85%,
-                        0 0, 100% 0, 100% 85% );
   } @else {
     @error 'Invalid $direction value of [#{meta.inspect($direction)}] passed to the ' +
         '`pointing-label` mixin.';
   }
+
+  width: $width;
+  height: $height;
+  background: $bg;
+  background-clip: padding-box;
+
   @if $fg-color {
     color: $fg-color;
   }
-  height: $height;
-  width: $width;
 }

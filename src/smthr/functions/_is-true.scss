@@ -4,9 +4,5 @@
 /// @param {*} $value - A value to check.
 /// @return {Boolean} Returns true if `value` has truthiness.
 @function is-true($value) {
-  @return if(
-    not $value,
-    false,
-    $value and $value != '' and $value != () and $value != (())
-  );
+  @return $value and $value != '' and $value != () and $value != (());
 }

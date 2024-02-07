@@ -1,7 +1,8 @@
 @use 'sass:math';
 @use 'sass:meta';
-@use './strip-unit' as smth.strip-unit;
-@use './pi' as smth.pi;
+@use './is-angle';
+@use './strip-unit';
+@use './pi';
 @use './missing-dependencies';
 
 /// Takes a given $angle in either turns (turn), degrees (deg), gradians (grad),
@@ -20,7 +21,6 @@
 @function conv-angle($angle, $conv-unit) {
   $missing: missing-dependencies('is-angle', 'strip-unit', 'pi');
   $start-unit: math.unit($angle);
-  $divide-supported: if(meta.function-exists('divide'), true, false);
 
   @if not math.is-angle($angle) {
     @error 'Value of $angle in conv-angle() must be a valid angle.';
@@ -29,48 +29,42 @@
   @if $conv-unit == 'turn' or $conv-unit == 'turns' or $conv-unit == 't' {
     $conv-unit: turn;
   } @else if
-    (
-      $conv-unit ==
-        'degrees' or
-        $conv-unit ==
-        'degree' or
-        $conv-unit ==
-        'deg' or
-        $conv-unit ==
-        'degs' or
-        $conv-unit ==
-        'd'
-    )
+    $conv-unit ==
+    'degrees' or
+    $conv-unit ==
+    'degree' or
+    $conv-unit ==
+    'deg' or
+    $conv-unit ==
+    'degs' or
+    $conv-unit ==
+    'd'
   {
     $conv-unit: deg;
   } @else if
-    (
-      $conv-unit ==
-        'radians' or
-        $conv-unit ==
-        'radian' or
-        $conv-unit ==
-        'rads' or
-        $conv-unit ==
-        'rad' or
-        $conv-unit ==
-        'r'
-    )
+    $conv-unit ==
+    'radians' or
+    $conv-unit ==
+    'radian' or
+    $conv-unit ==
+    'rads' or
+    $conv-unit ==
+    'rad' or
+    $conv-unit ==
+    'r'
   {
     $conv-unit: rad;
   } @else if
-    (
-      $conv-unit ==
-        'gradians' or
-        $conv-unit ==
-        'gradian' or
-        $conv-unit ==
-        'grads' or
-        $conv-unit ==
-        'grad' or
-        $conv-unit ==
-        'g'
-    )
+    $conv-unit ==
+    'gradians' or
+    $conv-unit ==
+    'gradian' or
+    $conv-unit ==
+    'grads' or
+    $conv-unit ==
+    'grad' or
+    $conv-unit ==
+    'g'
   {
     $conv-unit: grad;
   }
@@ -79,13 +73,13 @@
     @return $angle;
   }
 
-  $angle: smth.strip-unit($angle);
+  $angle: strip-unit($angle);
 
   @if $start-unit == 'turn' {
     @if $conv-unit == 'deg' {
       $angle: 360deg * $angle;
     } @else if $conv-unit == 'rad' {
-      $angle: smth.pi(2rad) * $angle;
+      $angle: pi(2rad) * $angle;
     } @else if $conv-unit == 'grad' {
       $angle: 400grad * $angle;
     }
@@ -93,60 +87,60 @@
     @if $conv-unit == 'turn' {
       $angle: if(
         $divide-supported,
-        divide($angle, 360) * 1turn,
-        ($angle / 360) * 1turn
+        math.div($angle, 360) * 1turn,
+        math.div($angle, 360) * 1turn
       );
     } @else if $conv-unit == 'rad' {
       $angle: if(
         $divide-supported,
-        $angle * divide(pi(), 180) * 1rad,
-        $angle * (pi() / 180) * 1rad
+        $angle * math.div(pi(), 180) * 1rad,
+        $angle * math.div(pi(), 180) * 1rad
       );
     } @else if $conv-unit == 'grad' {
       $angle: if(
         $divide-supported,
-        $angle * divide(200, 180) * 1grad,
-        $angle * (200 / 180) * 1grad
+        $angle * math.div(200, 180) * 1grad,
+        $angle * math.div(200, 180) * 1grad
       );
     }
   } @else if $start-unit == 'rad' {
     @if $conv-unit == 'turn' {
       $angle: if(
         $divide-supported,
-        divide($angle, pi(2)) * 1turn,
-        ($angle / pi(2)) * 1turn
+        math.div($angle, pi(2)) * 1turn,
+        math.div($angle, pi(2)) * 1turn
       );
     } @else if $conv-unit == 'deg' {
       $angle: if(
         $divide-supported,
-        $angle * divide(180, pi()) * 1deg,
-        $angle * (180 / pi()) * 1deg
+        $angle * math.div(180, pi()) * 1deg,
+        $angle * math.div(180, pi()) * 1deg
       );
     } @else if $conv-unit == 'grad' {
       $angle: if(
         $divide-supported,
-        $angle * divide(200, pi()) * 1grad,
-        $angle * (200 / pi()) * 1grad
+        $angle * math.div(200, pi()) * 1grad,
+        $angle * math.div(200, pi()) * 1grad
       );
     }
   } @else if $start-unit == 'grad' {
     @if $conv-unit == 'turn' {
       $angle: if(
         $divide-supported,
-        divide($angle, 400) * 1turn,
-        $angle / 400 * 1turn
+        math.div($angle, 400) * 1turn,
+        math.div($angle, 400) * 1turn
       );
     } @else if $conv-unit == 'deg' {
       $angle: if(
         $divide-supported,
-        $angle * divide(180, 200) * 1deg,
-        $angle * (180 / 200) * 1deg
+        $angle * math.div(180, 200) * 1deg,
+        $angle * math.div(180, 200) * 1deg
       );
     } @else if $conv-unit == 'rad' {
       $angle: if(
         $divide-supported,
-        $angle * divide(pi(), 200) * 1rad,
-        $angle * (pi() / 200) * 1rad
+        $angle * math.div(pi(), 200) * 1rad,
+        $angle * math.div(pi(), 200) * 1rad
       );
     }
   }

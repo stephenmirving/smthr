@@ -1,14 +1,16 @@
-/// Helper mixin to incclude the -webkit- vendor prefix with a position: sticky
-/// derlaration.
+/// Helper mixin to for the associated styles with position: sticky;
 ///
 /// @param {Number} $z-index - The z-index property value
 /// @param {Length-Percentage} $top - The top property value
+/// @param {Length-Percentage} $left - The left property value
 ///
 /// @group Utilities
-@mixin sticky($z-index: 999, $top: -0.5px) {
+@mixin sticky($z-index: 999, $top: 0, $left: null) {
   position: sticky;
-  @if $top {
-    top: $top;
+  top: $top;
+  @if $left or $left == 0 {
+    left: $left;
   }
+
   z-index: $z-index;
 }

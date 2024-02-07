@@ -1,22 +1,26 @@
+@use 'sass:math';
+
 /// Creates a scalable element that maintains a given ratio.
 ///
 /// @example - @include responsive-ratio(16, 9);
 ///
 /// @param {Number} $x - The width portion of the ratio.
 /// @param {Number} $y - The height portion of the ratio.
+/// @parap {String} $content-class-name - The class name of the content that we
+/// want to keep at the given ratio.
 ///
 /// @group Utilities
-@mixin responsive-ratio($x, $y) {
+@mixin responsive-ratio($x, $y, $content-class-name) {
   position: relative;
 
-  &:before {
+  &::before {
     content: '';
     display: block;
     width: 100%;
-    padding-top: ($y / $x) * 100%;
+    padding-top: math.div($y, $x) * 100%;
   }
 
-  > .content {
+  > .#{$content} {
     position: absolute;
     top: 0;
     right: 0;

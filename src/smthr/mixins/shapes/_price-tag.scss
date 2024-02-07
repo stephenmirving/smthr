@@ -9,11 +9,11 @@
 ///
 /// @group Shapes
 @mixin price-tag($bg: #fb8c00, $fg-color: null, $padding: 2rem 3rem 2rem 4rem) {
-  background: $bg;
-
-  @if ($fg-color) {
-    color: $fg-color;
-  }
   clip-path: polygon(30px 0, 100% 0, 100% 100%, 30px 100%, 0 50%);
   padding: $padding;
+  background: $bg;
+
+  @if $fg-color {
+    color: $fg-color;
+  }
 }

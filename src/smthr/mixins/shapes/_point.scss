@@ -1,3 +1,6 @@
+@use 'sass:meta';
+@use 'sass:string';
+
 /// Uses clip path to change an element to the shape of a pentagonal arrow point.
 ///
 /// @param {String} $direction [right] The direction the arrow is pointing
@@ -17,25 +20,36 @@
   $fg-color: null,
   $height: $size
 ) {
-  background: $bg;
-  @if $fg-color {
-    color: $fg-color;
-  }
   @if $direction {
-    @if (string.to-lower-case($direction) == 'right'
-        or string.to-lower-case($direction) == 'r') {
+    @if meta.type-of($direction) == 'string' {
+      $direction: string.to-lower-case($direction);
+    }
+
+    @if $direction == 'right' or $direction == 'r' {
       clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
-    } @else if (
-      string.to-lower-case($direction) == 'left'or string.to-lower-case($direction) == 'l'
-    ) {
+    } @else if $direction == 'left' or $direction == 'l' {
       clip-path: polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0 50%);
-    } @else if (string.to-lower-case($direction) == 'up'
-        or string.to-lower-case($direction) == 'u' or string.to-lower-case($direction) == 't'
-        or string.to-lower-case($direction) == 'top') {
+    } @else if
+      $direction ==
+      'up' or
+      $direction ==
+      'u' or
+      $direction ==
+      't' or
+      $direction ==
+      'top'
+    {
       clip-path: polygon(100% 25%, 100% 100%, 0 100%, 0 25%, 50% 0);
-    } @else if (string.to-lower-case($direction) == 'down'
-        or string.to-lower-case($direction) == 'd' or string.to-lower-case($direction) =='b'
-        or string.to-lower-case($direction) == 'bottom') {
+    } @else if
+      $direction ==
+      'down' or
+      $direction ==
+      'd' or
+      $direction ==
+      'b' or
+      $direction ==
+      'bottom'
+    {
       clip-path: polygon(100% 0, 100% 75%, 50% 100%, 0 75%, 0 0);
     } @else {
       @error 'Invalid direction of [#{meta.inspect($direction)}] for the `point` mixin.';
@@ -44,6 +58,11 @@
     @error 'You must choose a direction for the `point` mixin.';
   }
 
-  height: $height;
   width: $size;
+  height: $height;
+  background: $bg;
+
+  @if $fg-color {
+    color: $fg-color;
+  }
 }

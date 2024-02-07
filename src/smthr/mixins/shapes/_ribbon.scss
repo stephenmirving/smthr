@@ -1,3 +1,7 @@
+@use 'sass:color';
+@use 'sass:meta';
+@use 'sass:math';
+
 /// Creates a 3D ribbon shape for headers. Apply the ribbon to a header element
 /// and include an inner inline element for the header's content.
 ///
@@ -20,65 +24,69 @@
 @mixin ribbon(
   $font-size: 1em,
   $ribbon-size: 1,
-  $bg-color: #BA89B6,
+  $bg-color: #ba89b6,
   $fg-color: #fff,
   $content-suffix: '-content'
 ) {
-  @if meta.typeof($ribbon-size) != 'number' or not math.is-unitless($ribbon-size) {
+  @if meta.typeof($ribbon-size) !=
+    'number' or not
+    math.is-unitless($ribbon-size)
+  {
     @error 'Invalid $ribbon-size value for the `ribbon` mixin.';
   }
+
+  position: relative;
+  width: 50%;
+  padding: ($ribbon-size * 1rem) ($ribbon-size * 2rem);
+  margin: ($ribbon-size * 2rem) auto ($ribbon-size * 3rem);
   background: $bg-color;
+  font-size: $font-size !important;
+  line-height: 1;
+  text-align: center;
   @if $fg-color {
     color: $fg-color;
   }
-  font-size: $font-size !important;
-  line-height: 1;
-  margin: ($ribbon-size * 2rem) auto ($ribbon-size * 3rem);
-  padding: ($ribbon-size * 1rem) ($ribbon-size * 2rem);
-  position: relative;
-  text-align: center;
-  width: 50%;
 
-  &:before,
-  &:after {
-    border: ($ribbon-size * 1.5rem) solid mix(#000, $bg-color, 18.5%);
-    bottom: -($ribbon-size * 1rem);
+  &::before,
+  &::after {
     content: '';
-    display: block;
     position: absolute;
+    bottom: -1 * ($ribbon-size * 1rem);
     z-index: -1;
+    display: block;
+    border: ($ribbon-size * 1.5rem) solid color.mix(#000, $bg-color, 18.5%);
   }
 
-  &:before {
-    border-left-color: transparent;
+  &::before {
+    left: -1 * ($ribbon-size * 2rem);
     border-right-width: $ribbon-size * 1.5rem;
-    left: -($ribbon-size * 2rem);
+    border-left-color: transparent;
   }
 
-  &:after {
-    border-left-width: $ribbon-size * 1.5rem;
+  &::after {
+    right: -1 * ($ribbon-size * 2rem);
     border-right-color: transparent;
-    right: -($ribbon-size * 2rem);
+    border-left-width: $ribbon-size * 1.5rem;
   }
 
   &#{$content-suffix}:before,
   &#{$content-suffix}:after {
-    border-color: mix(#000, $bg-color, 31%) transparent transparent;
-    border-style: solid;
-    bottom: -($ribbon-size * 1rem);
     content: '';
-    display: block;
     position: absolute;
+    bottom: -($ribbon-size * 1rem);
+    display: block;
+    border-style: solid;
+    border-color: color.mix(#000, $bg-color, 31%) transparent transparent;
   }
 
   &#{$content-suffix}:before {
-    border-width: ($ribbon-size * 1rem) 0 0 ($ribbon-size * 1rem);
     left: 0;
+    border-width: ($ribbon-size * 1rem) 0 0 ($ribbon-size * 1rem);
   }
 
   &#{$content-suffix}:after {
-    border-width: ($ribbon-size * 1rem) ($ribbon-size * 1rem) 0 0;
     right: 0;
+    border-width: ($ribbon-size * 1rem) ($ribbon-size * 1rem) 0 0;
   }
 }
 
@@ -104,9 +112,15 @@
 @mixin banner(
   $font-size: 1em,
   $ribbon-size: 1,
-  $bg-color: #BA89B6,
+  $bg-color: #ba89b6,
   $fg-color: #fff,
   $content-suffix: '-content'
 ) {
-  @include ribbon($font-size, $ribbon-size, $bg-color, $fg-color, $content-suffix);
+  @include ribbon(
+    $font-size,
+    $ribbon-size,
+    $bg-color,
+    $fg-color,
+    $content-suffix
+  );
 }

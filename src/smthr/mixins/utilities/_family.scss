@@ -1,3 +1,8 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:list';
+@use 'sass:string';
+
 ///
 /// This file is a fork of: family.scss
 /// @author Lucas Bonomi < @lukyvj -- lucasbonomi.com >
@@ -15,7 +20,7 @@
 ///
 /// @group Utilities
 @mixin first($num: 1) {
-  @if ($num == 1) {
+  @if $num == 1 {
     &:first-child {
       @content;
     }
@@ -36,7 +41,7 @@
 ///
 /// @group Utilities
 @mixin last($num: 1) {
-  @if ($num == 1) {
+  @if $num == 1 {
     &:last-child {
       @content;
     }
@@ -220,7 +225,7 @@
 ///
 /// @group Utilities
 @mixin middle($num) {
-  &:nth-child(#{round($num / 2)}) {
+  &:nth-child(#{math.round(math.div($num, 2))}) {
     @content;
   }
 }
@@ -304,7 +309,7 @@
 /// @group Utilities
 @mixin at-most($num) {
   $selector: &;
-  $child: list.nth(nth($selector, -1), -1);
+  $child: list.nth(list.nth($selector, -1), -1);
 
   &:nth-last-child(-n + #{$num}):first-child,
   &:nth-last-child(-n + #{$num}):first-child ~ #{$child} {
@@ -326,10 +331,11 @@
 /// @group Utilities
 @mixin in-between($min, $max) {
   $selector: &;
-  $child: list.nth(nth($selector, -1), -1);
+  $child: list.nth(list.nth($selector, -1), -1);
 
   &:nth-last-child(n + #{$min}):nth-last-child(-n + #{$max}):first-child,
-  &:nth-last-child(n + #{$min}):nth-last-child(-n + #{$max}):first-child ~ #{$child} {
+  &:nth-last-child(n + #{$min}):nth-last-child(-n + #{$max}):first-child
+    ~ #{$child} {
     @content;
   }
 }
@@ -451,21 +457,38 @@
 /// @group Utilities
 /// @throw Invalid $direction value
 @mixin child-index($num, $direction: 'forward', $index: 0) {
+  @if $direction and meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
   @for $i from 1 through $num {
-    @if (string.to-lower-case($direction) == 'forward'
-        or string.to-lower-case($direction) == 'fwd'
-        or string.to-lower-case($direction) == 'fw'
-        or string.to-lower-case($direction) == 'f') {
+    @if $direction ==
+      'forward' or
+      $direction ==
+      'fwd' or
+      $direction ==
+      'fw' or
+      $direction ==
+      'f'
+    {
       &:nth-child(#{$i}) {
         z-index: order-index($i, $index);
         @content;
       }
-    } @else if (string.to-lower-case($direction) == 'backward'
-        or string.to-lower-case($direction) == 'back'
-        or string.to-lower-case($direction) == 'bckwrd'
-        or string.to-lower-case($direction) == 'bw'
-        or string.to-lower-case($direction) == 'bck'
-        or string.to-lower-case($direction) == 'b') {
+    } @else if
+      $direction ==
+      'backward' or
+      $direction ==
+      'back' or
+      $direction ==
+      'bckwrd' or
+      $direction ==
+      'bw' or
+      $direction ==
+      'bck' or
+      $direction ==
+      'b'
+    {
       &:nth-last-child(#{$i}) {
         z-index: order-index($i, $index);
         @content;

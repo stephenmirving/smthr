@@ -9,12 +9,12 @@
 ///
 /// @group Shapes
 @mixin diamond($bg: #fb8c00, $size: 15rem, $fg-color: null, $height: $size) {
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  width: $size;
+  height: $height;
   background: $bg;
 
-  @if ($fg-color) {
+  @if $fg-color {
     color: $fg-color;
   }
-  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
-  height: $height;
-  width: $size;
 }

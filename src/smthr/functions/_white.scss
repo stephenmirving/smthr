@@ -27,7 +27,7 @@
   }
 
   @if math.unit($opacity) == '%' {
-    $opacity: $opacity / 100%;
+    $opacity: math.div($opacity, 100%);
   }
 
   @if $opacity == 1 {

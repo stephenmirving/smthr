@@ -16,16 +16,36 @@
   $f-dir: row;
   $orientation: horizontal;
 
-  @if $horizontal == true or
-    $horizontal == 't' or
-    $horizontal == 'yes' or
-    $horizontal == 'y'
+  @if meta.type-of($horizontal) == 'string' {
+    $horizontal: string.to-lower-case($horizontal);
+  }
+
+  @if meta.type-of($vertical) == 'string' {
+    $vertical: string.to-lower-case($vertical);
+  }
+
+  @if meta.type-of($flex-dir) == 'string' {
+    $flex-dir: string.to-lower-case($flex-dir);
+  }
+
+  @if $horizontal ==
+    true or
+    $horizontal ==
+    't' or
+    $horizontal ==
+    'yes' or
+    $horizontal ==
+    'y'
   {
     $horizontal: true;
-  } @else if not $horizontal or
-    $horizontal == 'f' or
-    $horizontal == 'no' or
-    $horizontal == 'n'
+  } @else if not
+    $horizontal or
+    $horizontal ==
+    'f' or
+    $horizontal ==
+    'no' or
+    $horizontal ==
+    'n'
   {
     $horizontal: false;
   } @else {
@@ -33,10 +53,15 @@
         'You must pass either true or false.';
   }
 
-  @if $vertical == true or
-    $vertical == 't' or
-    $vertical == 'yes' or
-    $vertical == 'y' {
+  @if $vertical ==
+    true or
+    $vertical ==
+    't' or
+    $vertical ==
+    'yes' or
+    $vertical ==
+    'y'
+  {
     $vertical: true;
   } @else if not
     $vertical or
@@ -54,38 +79,61 @@
   }
 
   @if $flex-dir {
-    @if $flex-dir == 'row-reverse' or
-      $flex-dir == 'r-r' or
-      $flex-dir == 'rr' or
-      $flex-dir =='row-rev' or
-      $flex-dir == 'rowrev'
+    @if $flex-dir ==
+      'row-reverse' or
+      $flex-dir ==
+      'r-r' or
+      $flex-dir ==
+      'rr' or
+      $flex-dir ==
+      'row-rev' or
+      $flex-dir ==
+      'rowrev'
     {
       $f-dir: row-reverse;
-    } @else if $flex-dir == 'column' or
-      $flex-dir == 'col' or
-      $flex-dir == 'c' or
-      string.slice($flex-dir + '', 1, 4) == 'vert' or
-      $flex-dir == 'v'
+    } @else if
+      $flex-dir ==
+      'column' or
+      $flex-dir ==
+      'col' or
+      $flex-dir ==
+      'c' or
+      string.slice($flex-dir + '', 1, 4) ==
+      'vert' or
+      $flex-dir ==
+      'v'
     {
       $f-dir: column;
       $orientation: vertical;
     } @else if
-      $flex-dir == 'column-reverse' or
-      $flex-dir == 'col-reverse' or
-      $flex-dir == 'col-rev' or
-      $flex-dir == 'colrev' or
-      $flex-dir == 'c-r' or
-      $flex-dir == 'c-rev' or
-      $flex-dir == 'cr'
+      $flex-dir ==
+      'column-reverse' or
+      $flex-dir ==
+      'col-reverse' or
+      $flex-dir ==
+      'col-rev' or
+      $flex-dir ==
+      'colrev' or
+      $flex-dir ==
+      'c-r' or
+      $flex-dir ==
+      'c-rev' or
+      $flex-dir ==
+      'cr'
     {
       $f-dir: column-reverse;
       $orientation: vertical;
     } @else if
-      $flex-dir != 'row' and
-      $flex-dir != 'r' and
-      $flex-dir != 'normal' and
-      string.slice($flex-dir + '', 1, 5) != 'horiz' and
-      $flex-dir != 'h'
+      $flex-dir !=
+      'row' and
+      $flex-dir !=
+      'r' and
+      $flex-dir !=
+      'normal' and
+      string.slice($flex-dir + '', 1, 5) !=
+      'horiz' and
+      $flex-dir !=
+      'h'
     {
       @error 'Invalid `$flex-dir` value passed to the `flex-center` mixin.';
     }

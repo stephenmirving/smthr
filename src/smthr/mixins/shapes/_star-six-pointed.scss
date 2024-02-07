@@ -5,22 +5,22 @@
 ///
 /// @group Shapes
 @mixin star-six-pointed($bg-color: #fb8c00, $size: 5rem) {
-  border-bottom: $size solid $bg-color;
-  border-left: ($size / 2) solid transparent;
-  border-right: ($size / 2) solid transparent;
-  height: 0;
   position: relative;
   width: 0;
+  height: 0;
+  border-right: math.div($size, 2) solid transparent;
+  border-bottom: $size solid $bg-color;
+  border-left: math.div($size, 2) solid transparent;
 
-  &:after {
-    border-left: ($size / 2) solid transparent;
-    border-right: ($size / 2) solid transparent;
-    border-top: $size solid $bg-color;
+  &::after {
     content: '';
-    height: 0;
-    left: $size * -.5;
     position: absolute;
-    top: $size * .3;
+    top: $size * 0.3;
+    left: $size * -0.5;
     width: 0;
+    height: 0;
+    border-top: $size solid $bg-color;
+    border-right: math.div($size, 2) solid transparent;
+    border-left: math.div($size, 2) solid transparent;
   }
 }

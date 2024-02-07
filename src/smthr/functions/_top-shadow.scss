@@ -8,7 +8,7 @@
 @function top-shadow($depth) {
   $primary-offset: list.nth(1.5 3 10 14 19, $depth) * 1px;
   $blur: list.nth(1.5 3 10 14 19, $depth) * 4px;
-  $color: rgba(black, list.nth(.12 .16 .19 .25 .3, $depth));
+  $color: rgba(black, list.nth(0.12 0.16 0.19 0.25 0.3, $depth));
 
   @return 0 $primary-offset $blur $color;
 }

@@ -3,11 +3,11 @@
 /// @group Utilities
 /// @alias text-hide
 @mixin hide-text {
-  color: transparent;
   overflow: hidden;
+  color: transparent;
+  white-space: nowrap;
   text-indent: 101%;
   text-shadow: none;
-  white-space: nowrap;
 }
 
 /// Thoroughly hide the text of an element.

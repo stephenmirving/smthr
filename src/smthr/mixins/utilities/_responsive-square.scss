@@ -7,11 +7,11 @@
 /// @param {Length-Percentage} $max [$size] The maximum size of the square.
 ///
 /// @group Utilities
-@mixin dynamic-square($size, $min: $size, $max: $size) {
-  height: $size;
-  max-height: $max;
-  max-width: $max;
-  min-height: $min;
-  min-width: $min;
+@mixin responsive-square($size, $min: $size, $max: $size) {
   width: $size;
+  min-width: $min;
+  max-width: $max;
+  height: $size;
+  min-height: $min;
+  max-height: $max;
 }
