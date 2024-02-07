@@ -13,7 +13,7 @@
 /// $height is set explicitly, then this value sets only the width.
 /// @param {Time} $delay [null] - The duration of the optional delay of the
 /// animation (s or ms).
-/// @param {Timing-Function} $timing-func [cubic-bezier(.25, .46, .45, .94)] -
+/// @param {Timing-Function} $timing-func [cubic-bezier(0.25, 0.46, 0.45, 0.94)] -
 /// The timing function for the animation.
 /// @param {*} $infinite [null] If any value other than null, or false is
 /// passed, the `infinite alternate` values will be applied to the animation.

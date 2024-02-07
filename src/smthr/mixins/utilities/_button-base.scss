@@ -16,7 +16,7 @@
 /// By default, a null value here will have the mixin search for a global
 /// $button-transition variable as is found in the variables file in this
 /// library. If no global variable is found, it will apply the following
-/// default: `background-color .2s ease-out, color .2s ease-out`.
+/// default: `background-color 0.2s ease-out, color 0.2s ease-out`.
 ///
 /// @group Utilities
 /// @require {mixin} disable-outline
@@ -101,7 +101,7 @@
 /// By default, a null value here will have the mixin search for a global
 /// $button-transition variable as is found in the variables file in this
 /// library. If no global variable is found, it will apply the following
-/// default: `background-color .2s ease-out, color .2s ease-out`.
+/// default: `background-color 0.2s ease-out, color 0.2s ease-out`.
 ///
 /// @group Utilities
 /// @require {mixin} disable-outline

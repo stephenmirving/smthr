@@ -1,3 +1,5 @@
+@use 'sass:list';
+
 /// Applies position values to an element.
 ///
 /// @param {Keyword} $position [absolute] - The position value for the element.
@@ -15,13 +17,13 @@
   $z-val: null
 ) {
   position: $position;
-  @if $bottom-right {
-    bottom: list.nth($bottom-right, 0);
-    right: list.nth($bottom-right, 1);
-  }
   @if $top-left {
-    left: list.nth($top-left, 1);
     top: list.nth($top-left, 0);
+    left: list.nth($top-left, 1);
+  }
+  @if $bottom-right {
+    right: list.nth($bottom-right, 1);
+    bottom: list.nth($bottom-right, 0);
   }
   @if $z-val {
     z-index: $z-val;

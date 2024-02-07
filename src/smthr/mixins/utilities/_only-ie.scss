@@ -1,3 +1,5 @@
+@use 'sass:meta';
+
 /// Uses media queries to apply the given styles to a given range of Internet
 /// Explorer versions only. Targets several different possible range
 /// combinations between IE 6 and IE 11. Pass only one value to attempt to only
@@ -17,7 +19,8 @@
 /// @alias ie-only
 @mixin only-ie($version1: null, $version2: $version1) {
   @if $version1 {
-    @if meta.typeof($version1) != 'number' or meta.typeof($version2) != 'number' {
+    @if meta.typeof($version1) != 'number' or meta.typeof($version2) != 'number'
+    {
       @error 'Invalid data type passed to the `only-ie` mixin. You must pass ' +
           'one or two numbers to indicate a range of IE versions being targeted.';
     }
@@ -43,7 +46,7 @@
         @content;
       }
     } @else if $version2 == 8 or $version2 == 6 {
-      @media \0screen\,screen\9 {
+      @media \0screen\, screen\9 {
         @content;
       }
       @if $version2 == 6 {
@@ -75,11 +78,11 @@
     }
   } @else if $version1 == 9 {
     @if $version2 == 9 {
-      @media screen and (min-width:0\0) and (min-resolution: .001dpcm) {
+      @media screen and (min-width: 0\0) and (min-resolution: 0.001dpcm) {
         @content;
       }
-    } @else if ($version2 == 10 or $version2 == 11) {
-      @media screen and (min-width:0\0) and (min-resolution: +72dpi) {
+    } @else if $version2 == 10 or $version2 == 11 {
+      @media screen and (min-width: 0\0) and (min-resolution: +72dpi) {
         @content;
       }
       @if $version2 == 10 {

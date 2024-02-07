@@ -16,7 +16,7 @@
 /// null assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
-/// function for this animation of `cubic-bezier(.455, .03, .515, .955)`;
+/// function for this animation of `cubic-bezier(0.455, 0.03, 0.515, 0.955)`;
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
