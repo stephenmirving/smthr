@@ -2,6 +2,8 @@
 ///
 /// @group Utilities
 @mixin reset {
+  -webkit-appearance: none;
+  appearance: none;
   display: initial;
   padding: 0;
   border: 0;
@@ -10,6 +12,4 @@
   box-shadow: none;
   font: inherit;
   text-shadow: none;
-  -webkit-appearance: none;
-  appearance: none;
 }

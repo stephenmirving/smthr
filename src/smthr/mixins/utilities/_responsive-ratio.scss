@@ -10,7 +10,7 @@
 /// want to keep at the given ratio.
 ///
 /// @group Utilities
-@mixin responsive-ratio($x, $y, $content-class-name) {
+@mixin responsive-ratio($x, $y, $child-content-class-name) {
   position: relative;
 
   &::before {
@@ -20,7 +20,7 @@
     padding-top: math.div($y, $x) * 100%;
   }
 
-  > .#{$content} {
+> .#{$child-content-class-name} {
     position: absolute;
     top: 0;
     right: 0;

@@ -1,7 +1,7 @@
-/// Uses a media query to apply the given styles to any Google Chrome versions
-/// 29 and up.
+/// Uses a media query to apply the given styles only to Chromium browesers,
+/// Chrome versions 29 and up.
 ///
-/// @content Styles that target Chrome browsers version 29 and up.
+/// @content Styles that target Chromium browsers version 29 and up.
 ///
 /// @group Utilities
 /// @alias chrome-only
@@ -11,8 +11,8 @@
   }
 }
 
-/// Uses a media query to apply the given styles to any Google Chrome versions
-/// 29 and up.
+/// Uses a media query to apply the given styles only to Chromium browesers,
+/// Chrome versions 29 and up.
 ///
 /// @content Styles that target Chromium browsers version 29 and up.
 ///

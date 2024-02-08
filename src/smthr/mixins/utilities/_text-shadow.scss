@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 /// Apply a text shadow effect.
 ///
 /// @param {Length} $x [2px] - The x-axis offset of the shadow.
@@ -13,10 +15,10 @@
 
   @if not $blur or
     $blur == 0px or
-    $blur == 0
+    $blur == 0 or
     $blur == 'none' or
     $blur == 'no' or
-    $blur == 'n'
+    $blur == 'n' or
     $blur == 'n/a'
   {
     text-shadow: $x $y $color;

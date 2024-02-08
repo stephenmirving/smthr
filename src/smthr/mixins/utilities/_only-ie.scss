@@ -98,7 +98,7 @@
       @warn 'The `only-ie` mixin can target IE 10 and up, but cannot target ' +
             'just IE10 alone. targeting IE versions 10 and up instead now. ' +
             'If you need to target only version 10, consider the following ' +
-            'syntax instead: _:-ms-lang(x), .ie10 { property: value\9; }';
+            'syntax instead: _:-ms-lang(x), .ie10 { property: value; }';
     }
   } @else if $version1 == 11 {
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {

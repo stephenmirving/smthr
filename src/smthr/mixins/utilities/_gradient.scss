@@ -1,3 +1,7 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:list';
+
 /// A robust and well supported down-n-dirty gradient mixin.
 ///
 /// @param {Color} $start-color - The starting color in the gradient.
@@ -22,55 +26,153 @@
   $start-percent: 0%,
   $end-percent: 100%
 ) {
-  @if meta.typeof($start-percent) != 'number' or meta.typeof($end-percent) != 'number' {
-    @error 'Invalid data type entered for the values in the `gradient()` mixin.'
-    + ' If you pass values for the `$start-percent` or `$end-percent` '
-    + 'parameters, you must pass percentage values. You passed '
-    + '`#{meta.inspect($start-percent)}` for `$start-percent` and `#{meta.inspect($end-percent)}` for '
-    + '`$end-percent`.';
+  @if meta.typeof($start-percent) !=
+    'number' or
+    meta.typeof($end-percent) !=
+    'number'
+  {
+    @error 'Invalid data type entered for the values in the `gradient()` mixin.' +
+      ' If you pass values for the `$start-percent` or `$end-percent` ' +
+      'parameters, you must pass percentage values. You passed ' +
+      '`#{meta.inspect($start-percent)}` for `$start-percent` and ' +
+      '`#{meta.inspect($end-percent)}` for `$end-percent`.';
   }
+
   @if math.is-unitless($start-percent) {
     $start-percent: $start-percent * 1%;
   }
+
   @if math.is-unitless($end-percent) {
     $end-percent: $end-percent * 1%;
   }
+
   @if math.unit($start-percent) != '%' or math.unit($end-percent) != '%' {
-    @error 'Invalid units entered for the values in the `gradient()` mixin. If '
-        + 'you pass values for the `$start-percent` or `$end-percent` '
-        + 'parameters, you must pass percentage values. You passed '
-        + '`#{meta.inspect($start-percent)}` for `$start-percent` and `#{meta.inspect($end-percent)}` for '
-        + '`$end-percent`.';
+    @error 'Invalid units entered for the values in the `gradient()` mixin. If' +
+      ' you pass values for the `$start-percent` or `$end-percent` ' +
+      'parameters, you must pass percentage values. You passed ' +
+      '`#{meta.inspect($start-percent)}` for `$start-percent` and ' +
+      '`#{meta.inspect($end-percent)}` for `$end-percent`.';
   }
+
   @if $start-percent < 0% or $start-percent > 100% {
-    @error 'Invalid $start-percent value of `#{meta.inspect($start-percent)}` for the ' +
-        '`gradient` mixin. The value is out of range.';
+    @error 'Invalid $start-percent value of `#{meta.inspect($start-percent)}`' +
+      ' for the `gradient` mixin. The value is out of range.';
   }
+
   @if $end-percent < 0% or $end-percent > 100% {
-    @error 'Invalid $end-percent value of `#{meta.inspect($end-percent)}` for the ' +
-        '`gradient` mixin. The value is out of range.';
+    @error 'Invalid $end-percent value of `#{meta.inspect($end-percent)}`' +
+      ' for the `gradient` mixin. The value is out of range.';
   }
+
   background: $start-color;
-  @if ($orientation == 'vertical' or $orientation == 'vert' or $orientation == 'v'
-      or $orientation == 'down' or $orientation == 'd' or $orientation == 'bottom'
-      or $orientation == 'to bottom' or $orientation == 'top' or $orientation == 'top to bottom') {
-    background: linear-gradient(to bottom, $start-color $start-percent, $end-color $end-percent);
-  } @else if ($orientation == 'horizontal' or $orientation == 'horiz'
-      or $orientation == 'h' or $orientation == 'right' or not $orientation
-      or $orientation == 'to right' or $orientation == 'left' or $orientation == 'left to right') {
-    background: linear-gradient(to right, $start-color $start-percent, $end-color $end-percent);
-  } @else if ($orientation == 'radial' or $orientation == 'rad' or $orientation == 'r'
-      or $orientation == 'circular' or $orientation == 'circle') {
-    background: radial-gradient(ellipse at center, $start-color $start-percent, $end-color $end-percent);
-  } @else if ($orientation == 'diagonal' or $orientation == 'diag' or $orientation == 'd'
-      or $orientation == 'd1' or $orientation == 'diagonal1' or $orientation == 'diag1') {
-    background: linear-gradient(45deg, $start-color $start-percent, $end-color $end-percent);
-  } @else if ($orientation == 'diagonal2' or $orientation == 'diag2' or $orientation == 'd2') {
-    background: linear-gradient(135deg, $start-color $start-percent, $end-color $end-percent);
-  } @else if (meta.type-of($orientation) != 'number'
-      and list.index('deg' 'rad' 'grad' 'turn', math.unit($orientation))) {
-    background: linear-gradient($orientation, $start-color $start-percent, $end-color $end-percent);
+
+  @if $orientation ==
+    'vertical' or
+    $orientation ==
+    'vert' or
+    $orientation ==
+    'v' or
+    $orientation ==
+    'down' or
+    $orientation ==
+    'd' or
+    $orientation ==
+    'bottom' or
+    $orientation ==
+    'to bottom' or
+    $orientation ==
+    'top' or
+    $orientation ==
+    'top to bottom'
+  {
+    background: linear-gradient(
+      to bottom,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if
+    $orientation ==
+    'horizontal' or
+    $orientation ==
+    'horiz' or
+    $orientation ==
+    'h' or
+    $orientation ==
+    'right' or not
+    $orientation or
+    $orientation ==
+    'to right' or
+    $orientation ==
+    'left' or
+    $orientation ==
+    'left to right'
+  {
+    background: linear-gradient(
+      to right,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if
+    $orientation ==
+    'radial' or
+    $orientation ==
+    'rad' or
+    $orientation ==
+    'r' or
+    $orientation ==
+    'circular' or
+    $orientation ==
+    'circle'
+  {
+    background: radial-gradient(
+      ellipse at center,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if
+    $orientation ==
+    'diagonal' or
+    $orientation ==
+    'diag' or
+    $orientation ==
+    'd' or
+    $orientation ==
+    'd1' or
+    $orientation ==
+    'diagonal1' or
+    $orientation ==
+    'diag1'
+  {
+    background: linear-gradient(
+      45deg,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if
+    $orientation ==
+    'diagonal2' or
+    $orientation ==
+    'diag2' or
+    $orientation ==
+    'd2'
+  {
+    background: linear-gradient(
+      135deg,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if
+    meta.type-of($orientation) !=
+    'number' and
+    list.index('deg' 'rad' 'grad' 'turn', math.unit($orientation))
+  {
+    background: linear-gradient(
+      $orientation,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
   } @else {
-    @error 'Invalid $orientation value of `#{meta.inspect($orientation)}` for the `gradient` mixin.';
+    @error 'Invalid $orientation value of `#{meta.inspect($orientation)}` for ' +
+      'the `gradient` mixin.';
   }
 }

@@ -56,7 +56,8 @@
     @warn 'You have tried giving an incorrect value of `#{meta.inspect($kern)}` ' +
       'for the font-kerning property in the `font` mixin. The value was' +
       ' reset to null and no font-kerning will be applied. Please check' +
-      ' your stylesheet.';
+      ' your stylesheet. The value of $kern must be one of the following:' +
+      ' [auto, normal, none].';
 
     $kern: null;
   }
@@ -93,8 +94,8 @@
       @if $variant and $variant != small-caps and $variant != normal {
         @if $stretch-no-keyword {
           font: $style $weight #{$size}/#{$height} $family;
-          font-stretch: $stretch;
           font-variant: $variant;
+          font-stretch: $stretch;
         } @else {
           font: $style $weight $stretch #{$size}/#{$height} $family;
           font-variant: $variant;

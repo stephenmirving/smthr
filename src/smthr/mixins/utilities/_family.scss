@@ -457,6 +457,7 @@
 ///
 /// @group Utilities
 /// @throw Invalid $direction value
+/// @require {function} order-index
 @mixin child-index($num, $direction: 'forward', $index: 0) {
   @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
@@ -495,9 +496,9 @@
         @content;
       }
     } @else {
-      @error 'Invalid direction value of [#{meta.inspect($direction)}] for the `child-index`' +
-          ' mixin. You must choose a direction of either `forward` or ' +
-          '`backward`.';
+      @error 'Invalid direction value of [#{meta.inspect($direction)}] for ' +
+          'the `child-index` mixin. You must choose a direction of either ' +
+          '`forward` or `backward`.';
     }
   }
 }

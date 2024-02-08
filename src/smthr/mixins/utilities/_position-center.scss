@@ -1,10 +1,14 @@
 /// Absolutely centers the element inside of its first parent using a method
-/// combining positioning and translation. The parent element must be non-static.
+/// combining positioning and translation.
+///
+/// @param {Keyword} $position [relative] - The position value desired,
+/// must use either relative or absolute positioning.
+///
 ///
 /// @group Utilities
 /// @alias abs-center
-@mixin position-center {
-  position: relative;
+@mixin position-center($position: relative) {
+  position: $position;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -15,6 +19,6 @@
 ///
 /// @group Utilities
 /// @alias absolute-center
-@mixin abs-center {
-  @include position-center;
+@mixin abs-center($position: relative) {
+  @include position-center($position);
 }
