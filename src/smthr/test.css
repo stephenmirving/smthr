@@ -1,20 +1,4 @@
-/* Error: Can't find stylesheet to import.
- *    ,
- * 39 | @forward 'pseudo';
- *    | ^^^^^^^^^^^^^^^^^
- *    '
- *   src\smthr\mixins\utilities\_index.scss 39:1  @forward
- *   src\smthr\mixins\_index.scss 3:1             @forward
- *   src\smthr\_smth.scss 15:1                    @use
- *   src\smthr\test.scss 7:1                      root stylesheet */
-
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a    \2577 \a 39 \2502  @forward 'pseudo';\a    \2502  ^^^^^^^^^^^^^^^^^\a    \2575 \a   src\\smthr\\mixins\\utilities\\_index.scss 39:1  @forward\a   src\\smthr\\mixins\\_index.scss 3:1             @forward\a   src\\smthr\\_smth.scss 15:1                    @use\a   src\\smthr\\test.scss 7:1                      root stylesheet";
+/* stylelint-disable prettier/prettier */
+div {
+  content: 3;
 }
