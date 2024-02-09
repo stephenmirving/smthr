@@ -27,39 +27,23 @@
 
   @if $flip-axis == 'vertical' or $flip-axis == 'vert' or $flip-axis == 'v' {
     $trans-val: rotateY(180deg);
-  } @else if
-    $flip-axis ==
-    'diagonal' or
-    $flip-axis ==
-    'diagonal1' or
-    $flip-axis ==
-    'diag' or
-    $flip-axis ==
-    'diag1' or
-    $flip-axis ==
-    'd' or
-    $flip-axis ==
-    'd1'
+  } @else if $flip-axis == 'diagonal' or
+             $flip-axis == 'diagonal1' or
+             $flip-axis == 'diag' or
+             $flip-axis == 'diag1' or
+             $flip-axis == 'd' or
+             $flip-axis == 'd1'
   {
     $trans-val: rotate3d(1, 1, 0, 180deg);
-  } @else if
-    $flip-axis ==
-    'diagonal2' or
-    $flip-axis ==
-    'diag2' or
-    $flip-axis ==
-    'd2'
+  } @else if $flip-axis == 'diagonal2' or
+             $flip-axis == 'diag2' or
+             $flip-axis == 'd2'
   {
     $trans-val: rotate3d(-1, 1, 0, -180deg);
-  } @else if
-    $flip-axis !=
-    'horizontal' and
-    $flip-axis !=
-    'horiz' and
-    $flip-axis !=
-    'horz' and
-    $flip-axis !=
-    'h'
+  } @else if $flip-axis != 'horizontal' and
+             $flip-axis != 'horiz' and
+             $flip-axis != 'horz' and
+             $flip-axis != 'h'
   {
     @error 'Invalid flip-axis value of `#{meta.inspect($flip-axis)}` for the ' +
         '`animation-back-face` mixin';

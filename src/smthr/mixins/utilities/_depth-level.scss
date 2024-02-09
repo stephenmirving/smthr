@@ -1,4 +1,6 @@
 @use 'sass:meta';
+@use '../../functions/bottom-shadow';
+@use '../../functions/top-shadow';
 
 /// Uses box-shadow to give an element a depth effect based on Google's
 /// Material Design principles.
@@ -7,6 +9,10 @@
 /// @link https://material.io/design/environment/elevation.html
 ///
 /// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+/// This value will change the strength of the shadow effect, with 0 being off,
+/// 1 being the lowest effective level, and 5 being the strongest. The higher
+/// the value, the deeper the shadow, the more the effect makes the element
+/// look like it is lifted off the screen.
 ///
 /// @group Utilities
 /// @require {function} top-shadow

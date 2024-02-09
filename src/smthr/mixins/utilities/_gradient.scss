@@ -1,3 +1,4 @@
+/* stylelint-disable prettier/prettier */
 @use 'sass:list';
 @use 'sass:meta';
 @use 'sass:math';
@@ -29,31 +30,30 @@
   $start-percent: 0%,
   $end-percent: 100%
 ) {
-  @if $orientation and meta.type-of($orientation) == 'string' {
-    $orientation: string.to-lower-case($orientation);
+  @if not $orientation {
+    $orientation: 'to right';
   }
 
-  @if $orientation and
-    meta.type-of($orientation) ==
-    'list' and
-    list.separator($orientation) ==
-    space
+  @if $orientation and meta.type-of($orientation) == 'list' and
+      list.separator($orientation) == space
   {
     $orientation: list-to-string($orientation, ' ');
   }
 
-  @if $start-percent == 'start' {
+  @if $orientation and meta.type-of($orientation) == 'string' {
+    $orientation: string.to-lower-case($orientation);
+  }
+
+  @if not $start-percent or $start-percent == 'start' {
     $start-percent: 0%;
   }
 
-  @if $start-percent == 'end' {
-    $start-percent: 100%;
+  @if not $end-percent or $end-percent == 'end' {
+    $end-percent: 100%;
   }
 
-  @if meta.type-of($start-percent) !=
-    'number' or
-    meta.type-of($end-percent) !=
-    'number'
+  @if meta.type-of($start-percent) != 'number' or
+      $end-percent and meta.type-of($end-percent) != 'number'
   {
     @error 'Invalid data type entered for the values in the `gradient()` mixin.' +
       ' If you pass values for the `$start-percent` or `$end-percent` ' +
@@ -98,477 +98,307 @@
 
   background: $start-color;
 
-  @if $orientation ==
-    'vertical' or
-    $orientation ==
-    'vert' or
-    $orientation ==
-    'v' or
-    $orientation ==
-    'down' or
-    $orientation ==
-    'd' or
-    $orientation ==
-    'top' or
-    $orientation ==
-    'to bottom' or
-    $orientation ==
-    'top to bottom' or
-    $orientation ==
-    't to b' or
-    $orientation ==
-    'tb' or
-    $orientation ==
-    180 or
-    $orientation ==
-    '180' or
-    $orientation ==
-    '180deg' or
-    $orientation ==
-    '180d' or
-    $orientation == -180 or
-    $orientation ==
-    '-180' or
-    $orientation ==
-    '-180deg' or
-    $orientation ==
-    '-180d' or
-    $orientation ==
-    0.5 or
-    $orientation ==
-    0.5turn or
-    $orientation ==
-    '0.5turn' or
-    $orientation ==
-    '0.5t' or
-    $orientation == -0.5 or
-    $orientation == -0.5turn or
-    $orientation ==
-    '-0.5' or
-    $orientation ==
-    '-0.5turn' or
-    $orientation ==
-    '-0.5t'
+  @if $orientation == 'vertical' or
+      $orientation == 'vert' or
+      $orientation == 'v' or
+      $orientation == 'down' or
+      $orientation == 'd' or
+      $orientation == 'top' or
+      $orientation == 'to bottom' or
+      $orientation == 'top to bottom' or
+      $orientation == 't to b' or
+      $orientation == 'tb' or
+      $orientation == 180 or
+      $orientation == '180' or
+      $orientation == '180deg' or
+      $orientation == '180d' or
+      $orientation == 180d or
+      $orientation == -180 or
+      $orientation == '-180' or
+      $orientation == '-180deg' or
+      $orientation == '-180d' or
+      $orientation == -180d or
+      $orientation == 0.5 or
+      $orientation == 0.5t or
+      $orientation == 0.5turn or
+      $orientation == '0.5turn' or
+      $orientation == '0.5t' or
+      $orientation == -0.5 or
+      $orientation == -0.5turn or
+      $orientation == -0.5t or
+      $orientation == '-0.5' or
+      $orientation == '-0.5turn' or
+      $orientation == '-0.5t'
   {
     background-image: linear-gradient(
       180deg,
       $start-color $start-percent,
       $end-color $end-percent
     );
-  } @else if
-    $orientation ==
-    'up' or
-    $orientation ==
-    'u' or
-    $orientation ==
-    'bottom' or
-    $orientation ==
-    'to top' or
-    $orientation ==
-    'bottom to top' or
-    $orientation ==
-    'b to t' or
-    $orientation ==
-    'bt' or
-    $orientation ==
-    0 or
-    $orientation ==
-    '0' or
-    $orientation ==
-    '0deg' or
-    $orientation ==
-    '0d' or
-    $orientation == -360 or
-    $orientation == -360deg or
-    $orientation ==
-    '-360' or
-    $orientation ==
-    '-360deg' or
-    $orientation ==
-    '-360d' or
-    $orientation ==
-    0turn or
-    $orientation ==
-    '0turn' or
-    $orientation ==
-    '0' or
-    $orientation == -1turn or
-    $orientation == -1 or
-    $orientation ==
-    '-1turn' or
-    $orientation ==
-    '-1t' or
-    $orientation ==
-    '-1'
+  } @else if $orientation == 'up' or
+             $orientation == 'u' or
+             $orientation == 'bottom' or
+             $orientation == 'to top' or
+             $orientation == 'bottom to top' or
+             $orientation == 'b to t' or
+             $orientation == 'bt' or
+             $orientation == 0 or
+             $orientation == '0' or
+             $orientation == '0deg' or
+             $orientation == '0d' or
+             $orientation == 0d or
+             $orientation == -360 or
+             $orientation == -360deg or
+             $orientation == -360d or
+             $orientation == '-360' or
+             $orientation == '-360deg' or
+             $orientation == '-360d' or
+             $orientation == 0turn or
+             $orientation == '0turn' or
+             $orientation == '0' or
+             $orientation == -1turn or
+             $orientation == -1 or
+             $orientation == '-1turn' or
+             $orientation == '-1t' or
+             $orientation == -1t or
+             $orientation == '-1'
   {
     background-image: linear-gradient(
       0deg,
       $start-color $start-percent,
       $end-color $end-percent
     );
-  } @else if not
-    $orientation or
-    $orientation ==
-    'horizontal' or
-    $orientation ==
-    'horiz' or
-    $orientation ==
-    'h' or
-    $orientation ==
-    'left' or
-    $orientation ==
-    'l' or
-    $orientation ==
-    'to right' or
-    $orientation ==
-    'left to right' or
-    $orientation ==
-    'l to r' or
-    $orientation ==
-    'lr' or
-    $orientation ==
-    90 or
-    $orientation ==
-    '90' or
-    $orientation ==
-    '90deg' or
-    $orientation ==
-    '90d' or
-    $orientation == -270 or
-    $orientation == -270deg or
-    $orientation ==
-    '-270' or
-    $orientation ==
-    '-270deg' or
-    $orientation ==
-    '-270d' or
-    $orientation ==
-    0.25 or
-    $orientation ==
-    '0.25' or
-    $orientation ==
-    '.25' or
-    $orientation ==
-    '0.25turn' or
-    $orientation ==
-    '.25turn' or
-    $orientation ==
-    '0.25t' or
-    $orientation ==
-    '.25t' or
-    $orientation == -0.75 or
-    $orientation == -0.75turn or
-    $orientation ==
-    '-0.75' or
-    $orientation ==
-    '-0.75turn' or
-    $orientation ==
-    '-0.75t'
+  } @else if $orientation == 'horizontal' or
+             $orientation == 'horiz' or
+             $orientation == 'h' or
+             $orientation == 'left' or
+             $orientation == 'l' or
+             $orientation == 'to right' or
+             $orientation == 'left to right' or
+             $orientation == 'l to r' or
+             $orientation == 'lr' or
+             $orientation == 90 or
+             $orientation == '90' or
+             $orientation == '90deg' or
+             $orientation == '90d' or
+             $orientation == -270 or
+             $orientation == -270deg or
+             $orientation == '-270' or
+             $orientation == '-270deg' or
+             $orientation == '-270d' or
+             $orientation == -270d or
+             $orientation == 0.25 or
+             $orientation == 0.25t or
+             $orientation == '0.25' or
+             $orientation == '.25' or
+             $orientation == '0.25turn' or
+             $orientation == '.25turn' or
+             $orientation == '0.25t' or
+             $orientation == '.25t' or
+             $orientation == -0.75 or
+             $orientation == -0.75turn or
+             $orientation == '-0.75' or
+             $orientation == '-0.75turn' or
+             $orientation == '-0.75t'
   {
     background-image: linear-gradient(
       90deg,
       $start-color $start-percent,
       $end-color $end-percent
     );
-  } @else if
-    $orientation ==
-    'right' or
-    $orientation ==
-    'r' or
-    $orientation ==
-    'to left' or
-    $orientation ==
-    'right to left' or
-    $orientation ==
-    'right left' or
-    $orientation ==
-    'r to l' or
-    $orientation ==
-    'rl' or
-    $orientation ==
-    270 or
-    $orientation ==
-    '270' or
-    $orientation ==
-    '270deg' or
-    $orientation ==
-    '270d' or
-    $orientation == -90 or
-    $orientation == -90deg or
-    $orientation ==
-    '-90' or
-    $orientation ==
-    '-90deg'
-    $orientation ==
-    '-90d' or
-    $orientation ==
-    0.75 or
-    $orientation ==
-    '0.75turn' or
-    $orientation ==
-    '.75turn' or
-    $orientation ==
-    '0.75t' or
-    $orientation ==
-    '.75t' or
-    $orientation == -0.25 or
-    $orientation == -0.25turn or
-    $orientation ==
-    '-0.25turn' or
-    $orientation ==
-    '-.25turn' or
-    $orientation ==
-    '-0.25t' or
-    $orientation ==
-    '-.25t'
+  } @else if $orientation == 'right' or
+             $orientation == 'r' or
+             $orientation == 'to left' or
+             $orientation == 'right to left' or
+             $orientation == 'right left' or
+             $orientation == 'r to l' or
+             $orientation == 'rl' or
+             $orientation == 270 or
+             $orientation == 270d or
+             $orientation == '270' or
+             $orientation == '270deg' or
+             $orientation == '270d' or
+             $orientation == -90 or
+             $orientation == -90deg or
+             $orientation == '-90' or
+             $orientation == '-90deg' or
+             $orientation == '-90d' or
+             $orientation == -90d or
+             $orientation == 0.75 or
+             $orientation == 0.75t or
+             $orientation == '0.75turn' or
+             $orientation == '.75turn' or
+             $orientation == '0.75t' or
+             $orientation == '.75t' or
+             $orientation == -0.25 or
+             $orientation == -0.25turn or
+             $orientation == '-0.25turn' or
+             $orientation == '-.25turn' or
+             $orientation == '-0.25t' or
+             $orientation == '-.25t'
   {
     background-image: linear-gradient(
       270deg,
       $start-color $start-percent,
       $end-color $end-percent
     );
-  } @else if
-    $orientation ==
-    'diagonal' or
-    $orientation ==
-    'diag' or
-    $orientation ==
-    'd' or
-    $orientation ==
-    'd1' or
-    $orientation ==
-    'diagonal1' or
-    $orientation ==
-    'diag1' or
-    $orientation ==
-    'bottom left to top right' or
-    $orientation ==
-    'bl to tr' or
-    $orientation ==
-    'bltr' or
-    $orientation ==
-    45 or
-    $orientation ==
-    '45' or
-    $orientation ==
-    '45deg' or
-    $orientation ==
-    '45d' or
-    $orientation == -315 or
-    $orientation == -315deg or
-    $orientation ==
-    '-315' or
-    $orientation ==
-    '-315deg' or
-    $orientation ==
-    '-315d' or
-    $orientation ==
-    0.125 or
-    $orientation ==
-    '0.125' or
-    $orientation ==
-    '.125' or
-    $orientation ==
-    '0.125t' or
-    $orientation ==
-    '.125t' or
-    $orientation == -0.875 or
-    $orientation == -0.875turn or
-    $orientation ==
-    '-0.875' or
-    $orientation ==
-    '-.875' or
-    $orientation ==
-    '-0.875turn' or
-    $orientation ==
-    '-.875turn' or
-    $orientation ==
-    '-0.875t'
-    $orientation ==
-    '-.875t'
+  } @else if $orientation == 'diagonal' or
+             $orientation == 'diag' or
+             $orientation == 'd' or
+             $orientation == 'd1' or
+             $orientation == 'diagonal1' or
+             $orientation == 'diag1' or
+             $orientation == 'bottom left to top right' or
+             $orientation == 'bl to tr' or
+             $orientation == 'bltr' or
+             $orientation == 45 or
+             $orientation == 45d or
+             $orientation == '45' or
+             $orientation == '45deg' or
+             $orientation == '45d' or
+             $orientation == -315 or
+             $orientation == -315d or
+             $orientation == -315deg or
+             $orientation == '-315' or
+             $orientation == '-315deg' or
+             $orientation == '-315d' or
+             $orientation == 0.125 or
+             $orientation == 0.125t or
+             $orientation == '0.125' or
+             $orientation == '.125' or
+             $orientation == '0.125t' or
+             $orientation == '.125t' or
+             $orientation == -0.875 or
+             $orientation == -0.875t or
+             $orientation == -0.875turn or
+             $orientation == '-0.875' or
+             $orientation == '-.875' or
+             $orientation == '-0.875turn' or
+             $orientation == '-.875turn' or
+             $orientation == '-0.875t' or
+             $orientation == '-.875t'
   {
     background-image: linear-gradient(
       45deg,
       $start-color $start-percent,
       $end-color $end-percent
     );
-  } @else if
-    $orientation ==
-    'diagonal2' or
-    $orientation ==
-    'diag2' or
-    $orientation ==
-    'd2' or
-    $orientation ==
-    'bottom right to top left' or
-    $orientation ==
-    'bottom right top left' or
-    $orientation ==
-    'br to tl' or
-    $orientation ==
-    'brtl' or
-    $orientation ==
-    135 or
-    $orientation ==
-    '135' or
-    $orientation ==
-    '135deg' or
-    $orientation ==
-    '135d' or
-    $orientation == -225 or
-    $orientation == -225deg or
-    $orientation ==
-    '-225' or
-    $orientation ==
-    '-225deg' or
-    $orientation ==
-    '-225d' or
-    $orientation ==
-    0.375 or
-    $orientation ==
-    0.375turn or
-    $orientation ==
-    '0.375' or
-    $orientation ==
-    '0.375turn' or
-    $orientation ==
-    '0.375t' or
-    $orientation == -0.625 or
-    $orientation ==
-    '-0.625' or
-    $orientation ==
-    '-0.625t'
+  } @else if $orientation == 'diagonal2' or
+             $orientation == 'diag2' or
+             $orientation == 'd2' or
+             $orientation == 'bottom right to top left' or
+             $orientation == 'bottom right top left' or
+             $orientation == 'br to tl' or
+             $orientation == 'brtl' or
+             $orientation == 135 or
+             $orientation == 135d or
+             $orientation == '135' or
+             $orientation == '135deg' or
+             $orientation == '135d' or
+             $orientation == -225 or
+             $orientation == -225deg or
+             $orientation == -225d or
+             $orientation == '-225' or
+             $orientation == '-225deg' or
+             $orientation == '-225d' or
+             $orientation == 0.375 or
+             $orientation == 0.375turn or
+             $orientation == 0.375t or
+             $orientation == '0.375' or
+             $orientation == '0.375turn' or
+             $orientation == '0.375t' or
+             $orientation == -0.625 or
+             $orientation == -0.625t or
+             $orientation == '-0.625' or
+             $orientation == '-0.625t'
   {
     background-image: linear-gradient(
       135deg,
       $start-color $start-percent,
       $end-color $end-percent
     );
-  } @else if
-    $orientation ==
-    'diagonal3' or
-    $orientation ==
-    'diag3' or
-    $orientation ==
-    'd3' or
-    $orientation ==
-    'top right to bottom left' or
-    $orientation ==
-    'top right bottom left' or
-    $orientation ==
-    'tr to bl' or
-    $orientation ==
-    'trbl' or
-    $orientation ==
-    225 or
-    $orientation ==
-    '225' or
-    $orientation ==
-    '225deg' or
-    $orientation ==
-    '225d' or
-    $orientation == -135 or
-    $orientation == -135deg or
-    $orientation ==
-    '-135' or
-    $orientation ==
-    '-135deg' or
-    $orientation ==
-    '-135d' or
-    $orientation ==
-    0.625 or
-    $orientation ==
-    '0.625' or
-    $orientation ==
-    '0.625t' or
-    $orientation == -0.375 or
-    $orientation == -0.375turn or
-    $orientation ==
-    '-0.375' or
-    $orientation ==
-    '-0.375turn' or
-    $orientation ==
-    '-0.375t'
+  } @else if $orientation == 'diagonal3' or
+             $orientation == 'diag3' or
+             $orientation == 'd3' or
+             $orientation == 'top right to bottom left' or
+             $orientation == 'top right bottom left' or
+             $orientation == 'tr to bl' or
+             $orientation == 'trbl' or
+             $orientation == 225 or
+             $orientation == 225d or
+             $orientation == '225' or
+             $orientation == '225deg' or
+             $orientation == '225d' or
+             $orientation == -135 or
+             $orientation == -135deg or
+             $orientation == -135d or
+             $orientation == '-135' or
+             $orientation == '-135deg' or
+             $orientation == '-135d' or
+             $orientation == 0.625 or
+             $orientation == 0.625t or
+             $orientation == '0.625' or
+             $orientation == '0.625t' or
+             $orientation == -0.375 or
+             $orientation == -0.375turn or
+             $orientation == -0.375t or
+             $orientation == '-0.375' or
+             $orientation == '-0.375turn' or
+             $orientation == '-0.375t'
   {
     background-image: linear-gradient(
       225deg,
       $start-color $start-percent,
       $end-color $end-percent
     );
-  } @else if
-    $orientation ==
-    'diagonal2' or
-    $orientation ==
-    'diag2' or
-    $orientation ==
-    'd2' or
-    $orientation ==
-    'top left to bottom right ' or
-    $orientation ==
-    'top left bottom right ' or
-    $orientation ==
-    'tl to br' or
-    $orientation ==
-    'tlbr' or
-    $orientation ==
-    315 or
-    $orientation ==
-    '315' or
-    $orientation ==
-    '315deg' or
-    $orientation ==
-    '315d' or
-    $orientation == -45 or
-    $orientation == -45deg or
-    $orientation ==
-    '-45' or
-    $orientation ==
-    '-45deg' or
-    $orientation ==
-    '-45d' or
-    $orientation ==
-    0.375 or
-    $orientation ==
-    '0.375' or
-    $orientation ==
-    '0.375t' or
-    $orientation == -0.875 or
-    $orientation == -0.875turn or
-    $orientation ==
-    '-0.875' or
-    $orientation ==
-    '-0.875turn' or
-    $orientation ==
-    '-0.875t'
+  } @else if $orientation == 'diagonal2' or
+             $orientation == 'diag2' or
+             $orientation == 'd2' or
+             $orientation == 'top left to bottom right ' or
+             $orientation == 'top left bottom right ' or
+             $orientation == 'tl to br' or
+             $orientation == 'tlbr' or
+             $orientation == 315 or
+             $orientation == 315d or
+             $orientation == '315' or
+             $orientation == '315deg' or
+             $orientation == '315d' or
+             $orientation == -45 or
+             $orientation == -45d or
+             $orientation == -45deg or
+             $orientation == '-45' or
+             $orientation == '-45deg' or
+             $orientation == '-45d' or
+             $orientation == 0.375 or
+             $orientation == 0.375t or
+             $orientation == '0.375' or
+             $orientation == '0.375t' or
+             $orientation == -0.875 or
+             $orientation == -0.875turn or
+             $orientation == -0.875t or
+             $orientation == '-0.875' or
+             $orientation == '-0.875turn' or
+             $orientation == '-0.875t'
   {
     background-image: linear-gradient(
       135deg,
       $start-color $start-percent,
       $end-color $end-percent
     );
-  } @else if
-    $orientation ==
-    'radial' or
-    $orientation ==
-    'rad' or
-    $orientation ==
-    'r' or
-    $orientation ==
-    'circular' or
-    $orientation ==
-    'circle' or
-    $orientation ==
-    'ellipse'
+  } @else if $orientation == 'radial' or
+             $orientation == 'rad' or
+             $orientation == 'r' or
+             $orientation == 'circular' or
+             $orientation == 'circle' or
+             $orientation == 'ellipse'
   {
     background-image: radial-gradient(
       ellipse at center,
       $start-color $start-percent,
       $end-color $end-percent
     );
-  } @else if
-    meta.type-of($orientation) !=
-    'number' and
-    list.index('deg' 'rad' 'grad' 'turn', math.unit($orientation))
+  } @else if meta.type-of($orientation) == 'number' and
+             list.index('deg' 'rad' 'grad' 'turn', math.unit($orientation))
   {
     background-image: linear-gradient(
       $orientation,

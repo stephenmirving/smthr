@@ -34,8 +34,8 @@
   $anim-num: null
 ) {
   $red: hsl(323.72 81.13% 41.57%);
-  $blue: hsl(200 100 50%);
-  $yellow: hsl(56 100 50%);
+  $blue: hsl(200 100% 50%);
+  $yellow: hsl(56 100% 50%);
   $green: hsl(150.12 100% 50%);
   $colors: ($red $blue $yellow $green);
 

@@ -1,4 +1,19 @@
-div {
-  color: blue;
-  content: 1;
+/* Error: Can't find stylesheet to import.
+ *    ,
+ * 24 | @forward 'clamp';
+ *    | ^^^^^^^^^^^^^^^^
+ *    '
+ *   src\smthr\functions\_index.scss 24:1  @use
+ *   src\smthr\_smth.scss 14:1             @use
+ *   src\smthr\test.scss 7:1               root stylesheet */
+
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Can't find stylesheet to import.\a    \2577 \a 24 \2502  @forward 'clamp';\a    \2502  ^^^^^^^^^^^^^^^^\a    \2575 \a   src\\smthr\\functions\\_index.scss 24:1  @use\a   src\\smthr\\_smth.scss 14:1             @use\a   src\\smthr\\test.scss 7:1               root stylesheet";
 }

@@ -4,10 +4,7 @@
 @use 'sass:selector';
 @use 'sass:math';
 @use 'sass:list';
-
-@function strip-unit($num) {
-  @return math.div($num, ($num * 0 + 1));
-}
+@use './smth' as smth;
 
 @mixin responsive-ratio($x, $y, $content-class-name) {
   position: relative;
@@ -28,16 +25,7 @@
   }
 }
 
-@mixin test($orientation) {
-  $var: meta.type-of($orientation) != 'Number' and
-    list.index('deg' 'rad' 'grad' 'turn', math.unit($orientation));
-
-  content: $var;
-}
 
 div {
-  color: blue;
-  @if 1 {
-    @include test(90deg);
-  }
+  content: smth.strip-unit(3rem);
 }

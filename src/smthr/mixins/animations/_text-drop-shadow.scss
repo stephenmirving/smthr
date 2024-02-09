@@ -135,11 +135,11 @@
   @at-root {
     @keyframes txt-shadow-drop#{$anim-num} {
       0% {
-        text-shadow: 0 0 0 hsl(0 0 0 / 0);
+        text-shadow: 0 0 0 hsl(0 0% 0% / 0);
       }
 
       100% {
-        text-shadow: #{$dir-vals} hsl(0 0 0 / 0.3);
+        text-shadow: #{$dir-vals} hsl(0 0% 0% / 0.3);
       }
     }
   }

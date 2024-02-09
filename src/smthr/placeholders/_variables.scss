@@ -111,31 +111,31 @@ $color-palette: (
 
 /// Color used for black UI items.
 /// @type Color
-$black: hsl(0 0 0%) !default;
+$black: hsl(0 0% 0%) !default;
 
 /// Color used for off-black UI items.
 /// @type Color
-$off-black: hsl(0 0 12.55%) !default;
+$off-black: hsl(0 0% 12.55%) !default;
 
 /// Color used for dark gray UI items.
 /// @type Color
-$dark-gray: hsl(0 0 54.12%) !default;
+$dark-gray: hsl(0 0% 54.12%) !default;
 
 /// Color used for medium gray UI items.
 /// @type Color
-$medium-gray: hsl(0 0 79.22%) !default;
+$medium-gray: hsl(0 0% 79.22%) !default;
 
 /// Color used for light gray UI items.
 /// @type Color
-$light-gray: hsl(0 0 90.2%) !default;
+$light-gray: hsl(0 0% 90.2%) !default;
 
 /// Color used for off-white UI items.
 /// @type Color
-$off-white: hsl(0 0 94.9%) !default;
+$off-white: hsl(0 0% 94.9%) !default;
 
 /// Color used for white UI items.
 /// @type Color
-$white: hsl(0 0 100%) !default;
+$white: hsl(0 0% 100%) !default;
 
 /// Button transition properties
 $btn-transition-properties:
@@ -159,8 +159,8 @@ $btn-transition: () !default;
   );
 }
 
-$color-body: hsl(0 0 20%) !default;
-$color-body-bg: hsl(0 0 94.9%) !default;
+$color-body: hsl(0 0% 20%) !default;
+$color-body-bg: hsl(0 0% 94.9%) !default;
 $color-selection-highlight: hsl(211.48 36.97% 32.35%) !default;
-$color-selection-text: hsl(0 0 100%) !default;
-$color-focus-ring: hsl(0 0 0%) !default;
+$color-selection-text: hsl(0 0% 100%) !default;
+$color-focus-ring: hsl(0 0% 0%) !default;
