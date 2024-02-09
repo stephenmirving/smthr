@@ -1,6 +1,7 @@
 # smthr
 
-_smthr_ is a Sassy CSS (SCSS) library of simple-to-use functions &amp; mixins
+_smthr_ is a Sassy CSS (SCSS) library designed for a smoother Sass experience.
+Smoother is filled with simple-to-use functions &amp; mixins
 that aid your front-end development experience by serving up workflow
 enhancing utilities along with production ready element styles and animations.
 
@@ -9,19 +10,21 @@ library focuses heavily on aiding in the creation of CSS animations
 and clip-path shapes - allowing you to create a wide range of effects without
 having to mess with clip-path coordinates or animation keyframe creation.
 
-This project is under active development to modernize the Sass syntax to comport with the new version, ver 1.6+.
+This project is under active development to modernize the Sass syntax to comport
+with Sass ver 1.6+.
 
 ## smthr is in active development
 
-**This is *smthr* version 0.0.7 - Last update: 1/31/24*
+**This is *smthr* version 0.1.5 - Last update: 02/09/24*
 
 **_smthr_ currently contains:**
 
-* 140+ mixins
-* 51+ functions
+* 100+ mixins
+* 60+ functions
 * A modern, opinionated normalize file written in Sass called betterize
+* A modern, opinionated print style file written in Sass
 * A small collection of @extend placeholders and !default variables
-* The choice between .scss and classic .sass syntax
+* The choice between .scss and classic .sass syntax (.sass not yet supported)
 
 ## Deployment
 
@@ -46,32 +49,12 @@ are.
 
 **Like this:**
 
-> @import 'smth/smth';
+> @use 'smth/smth';
 
 Of if you were to place the folder within your vendor sub-folder in your sass
-directory, the import would look like this:
+directory, the @use would look like this:
 
-> @import 'vendor/smth/smth';
-
-***
-
-**If you download the single distributed file...**
-
-Choose your syntax type, sass or scss, and then your version, prefixed or
-unprefixed, from the 'dist' folder, then copy the '_smth.scss' file and put it
-in your scss folder in your project's directory, most usually within a 'vendor'
-folder. From there, just use an @import directive for the '_smth.scss' file at
-the top of your 'main.scss' file (or 'style.scss', or whatever you have named
-your main stylesheet) where the rest of your imports are.
-
-**Like this:**
-
-> @import 'smth';
-
-Of if you were to place the folder within your vendor sub-folder in your sass
-directory, the import would look like this:
-
-> @import 'vendor/smth';
+> @use 'vendor/smth/smth' as smth;
 
 ***
 
@@ -99,6 +82,7 @@ This includes work by:
 
 Thank you to my father, Michael Graham Irving.
 
-Thank you to the creators and writers at [css-tricks.com](https://css-tricks.com/)
-and the [Mozilla Developer's Network](https://developer.mozilla.org/), whom
-I have learned so much from.
+Thank you to the creators and writers at [css-tricks.com](https://css-tricks.com/),
+[Smashing Magazine](https://www.smashingmagazine.com/) and the
+[Mozilla Developer's Network](https://developer.mozilla.org/), from whom I have
+learned so much from.
