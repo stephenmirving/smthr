@@ -397,6 +397,10 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   animation: scale-down#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 

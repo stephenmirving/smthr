@@ -355,6 +355,10 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   animation: rotate-scale#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
   @if $is-on-axis {

@@ -156,6 +156,10 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   width: $size;
   height: $height;
   text-transform: none;

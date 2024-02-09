@@ -208,11 +208,15 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   animation: txt-glitch#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
-    @keyframes txt-glitch {
+    @keyframes txt-glitch#{$anim-num} {
       @for $i from 0 through 100 {
         $percent: 0% + $i;
 

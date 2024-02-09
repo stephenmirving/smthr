@@ -300,6 +300,10 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   @if $direction {
     transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;

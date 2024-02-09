@@ -192,6 +192,10 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   animation: zoom-in#{$anim-num} #{$timing} ease-out #{$delay} both;
 
   @at-root {

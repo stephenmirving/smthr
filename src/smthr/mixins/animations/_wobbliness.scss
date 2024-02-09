@@ -29,6 +29,7 @@
 /// @throw Incorrect keyword value for $direction
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value
+/// @alias wobble
 @mixin wobbliness(
   $direction: bottom,
   $timing: 0.8s,
@@ -262,6 +263,10 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   animation: wobble#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
@@ -294,4 +299,51 @@
       }
     }
   }
+}
+
+/// Adds a wobble animation to a given element
+///
+/// @param {String} $direction [bottom] - The base from which the wobble is
+/// generated. Takes 'top`, `t`, or `up` for the top, `left` or `l` for `left`,
+/// `right` or `r` for right, and either `bottom`, `b`, `down`, or `d` for the
+/// bottom.
+/// @param {Time} $timing [.8s] - The full duration of the animation
+/// @param {Time} $delay [null] - A time value either in milliseconds (ms) or
+/// seconds (s)
+/// @param {Number|String} $iterations [null] - The number of iterations
+/// to complete. If the value passed is not a number, it will be set to infinite
+/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// null assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. The default of null will set it to the default timing function
+/// of ease.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @throw Incorrect keyword value for $direction
+/// @throw Invalid $timing value
+/// @throw Invalid $delay value
+/// @alias wobbliness
+@mixin wobble(
+  $direction: bottom,
+  $timing: 0.8s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  @include wobbliness(
+    $direction,
+    $timing,
+    $delay,
+    $iterations,
+    $anim-dir,
+    $timing-func,
+    $anim-num
+  );
 }

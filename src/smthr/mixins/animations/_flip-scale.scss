@@ -320,6 +320,10 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
   animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}

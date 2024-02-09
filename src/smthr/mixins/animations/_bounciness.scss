@@ -236,6 +236,10 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   animation: bounciness#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     both;
 

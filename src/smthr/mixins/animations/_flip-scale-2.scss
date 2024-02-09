@@ -33,7 +33,7 @@
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
-@mixin flip-scale(
+@mixin flip-scale-2(
   $direction: top,
   $axis: horizontal,
   $timing: 0.5s,
@@ -224,17 +224,21 @@
     $anim-num: null;
   }
 
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
   animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
-  transform-style: preserve-3d;
 
   @include only-moz {
     backface-visibility: hidden;
   }
 
   @at-root {
-    @keyframes flip-and-scale#{$anim-num} {
+    @keyframes flip-and-scale-2#{$anim-num} {
       0% {
         transform: $trans-val1;
         transform-origin: $trans-orig-val1;

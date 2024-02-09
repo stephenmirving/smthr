@@ -1,3 +1,8 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+
 /// Animates text by popping forward out from a shadow.
 ///
 /// @param {String} $direction [top] - The direction the shadow will be
@@ -33,81 +38,187 @@
   $timing-func: null,
   $anim-num: null
 ) {
-  //  Default value for the 'top' direction
+  // Default value for the 'top' direction
   $trans-val1: translateY(0);
-  $shadow-val: 0 -1px #555, 0 -2px #555, 0 -3px #555, 0 -4px #555,
-               0 -5px #555, 0 -6px #555, 0 -7px #555, 0 -8px #555;
+  $shadow-val:
+    0 -1px #555,
+    0 -2px #555,
+    0 -3px #555,
+    0 -4px #555,
+    0 -5px #555,
+    0 -6px #555,
+    0 -7px #555,
+    0 -8px #555;
   $trans-val2: translateY(8px);
-  @if (string.to-lower-case($direction) == 'top-right'
-      or string.to-lower-case($direction) == 'topright'
-      or string.to-lower-case($direction) == 'right-top'
-      or string.to-lower-case($direction) == 'righttop'
-      or string.to-lower-case($direction) == 't-r'
-      or string.to-lower-case($direction) == 'tr'
-      or string.to-lower-case($direction) == 'r-t'
-      or string.to-lower-case($direction) == 'rt') {
+
+  @if meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if meta.type-of($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if $direction ==
+    'top-right' or
+    $direction ==
+    'topright' or
+    $direction ==
+    'right-top' or
+    $direction ==
+    'righttop' or
+    $direction ==
+    't-r' or
+    $direction ==
+    'tr' or
+    $direction ==
+    'r-t' or
+    $direction ==
+    'rt'
+  {
     $trans-val1: translateX(0) translateY(0);
     $trans-val2: translateX(-8px) translateY(8px);
-    $shadow-val: 1px -1px #555, 2px -2px #555, 3px -3px #555, 4px -4px #555,
-                 5px -5px #555, 6px -6px #555, 7px -7px #555, 8px -8px #555;
-  } @else if (
-    string.to-lower-case($direction) == 'right' or string.to-lower-case($direction) == 'r'
-  ) {
+    $shadow-val:
+      1px -1px #555,
+      2px -2px #555,
+      3px -3px #555,
+      4px -4px #555,
+      5px -5px #555,
+      6px -6px #555,
+      7px -7px #555,
+      8px -8px #555;
+  } @else if $direction == 'right' or $direction == 'r' {
     $trans-val1: translateX(0);
     $trans-val2: translateX(-8px);
-    $shadow-val: 1px 0 #555, 2px 0 #555, 3px 0 #555, 4px 0 #555,
-                 5px 0 #555, 6px 0 #555, 7px 0 #555, 8px 0 #555;
-  } @else if (string.to-lower-case($direction) == 'bottom-right'
-      or string.to-lower-case($direction) == 'bottomright'
-      or string.to-lower-case($direction) == 'right-bottom'
-      or string.to-lower-case($direction) == 'rightbottom'
-      or string.to-lower-case($direction) == 'b-r'
-      or string.to-lower-case($direction) == 'br'
-      or string.to-lower-case($direction) == 'r-b'
-      or string.to-lower-case($direction) == 'r-b') {
+    $shadow-val:
+      1px 0 #555,
+      2px 0 #555,
+      3px 0 #555,
+      4px 0 #555,
+      5px 0 #555,
+      6px 0 #555,
+      7px 0 #555,
+      8px 0 #555;
+  } @else if
+    $direction ==
+    'bottom-right' or
+    $direction ==
+    'bottomright' or
+    $direction ==
+    'right-bottom' or
+    $direction ==
+    'rightbottom' or
+    $direction ==
+    'b-r' or
+    $direction ==
+    'br' or
+    $direction ==
+    'r-b' or
+    $direction ==
+    'r-b'
+  {
     $trans-val1: translateX(0) translateY(0);
     $trans-val2: translateX(-8px) translateY(-8px);
-    $shadow-val: 1px 1px #555, 2px 2px #555, 3px 3px #555, 4px 4px #555,
-                 5px 5px #555, 6px 6px #555, 7px 7px #555, 8px 8px #555;
-  } @else if (string.to-lower-case($direction) == 'bottom'
-      or string.to-lower-case($direction) == 'btm'
-      or string.to-lower-case($direction) == 'b') {
+    $shadow-val:
+      1px 1px #555,
+      2px 2px #555,
+      3px 3px #555,
+      4px 4px #555,
+      5px 5px #555,
+      6px 6px #555,
+      7px 7px #555,
+      8px 8px #555;
+  } @else if $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
+  {
     $trans-val2: translateY(-8px);
-    $shadow-val: 0 1px #555, 0 2px #555, 0 3px #555, 0 4px #555,
-                 0 5px #555, 0 6px #555, 0 7px #555, 0 8px #555;
-  } @else if (string.to-lower-case($direction) == 'bottom-left'
-      or string.to-lower-case($direction) == 'bottomleft'
-      or string.to-lower-case($direction) == 'left-bottom'
-      or string.to-lower-case($direction) == 'leftbottom'
-      or string.to-lower-case($direction) == 'b-l'
-      or string.to-lower-case($direction) == 'bl'
-      or string.to-lower-case($direction) == 'l-b'
-      or string.to-lower-case($direction) == 'lb') {
+    $shadow-val:
+      0 1px #555,
+      0 2px #555,
+      0 3px #555,
+      0 4px #555,
+      0 5px #555,
+      0 6px #555,
+      0 7px #555,
+      0 8px #555;
+  } @else if
+    $direction ==
+    'bottom-left' or
+    $direction ==
+    'bottomleft' or
+    $direction ==
+    'left-bottom' or
+    $direction ==
+    'leftbottom' or
+    $direction ==
+    'b-l' or
+    $direction ==
+    'bl' or
+    $direction ==
+    'l-b' or
+    $direction ==
+    'lb'
+  {
     $trans-val1: translateX(0) translateY(0);
     $trans-val2: translateX(8px) translateY(-8px);
-    $shadow-val: -1px 1px #555, -2px 2px #555, -3px 3px #555, -4px 4px #555,
-                 -5px 5px #555, -6px 6px #555, -7px 7px #555, -8px 8px #555;
-  } @else if (string.to-lower-case($direction) == 'left'
-  or string.to-lower-case($direction) == 'l') {
+    $shadow-val:
+      -1px 1px #555,
+      -2px 2px #555,
+      -3px 3px #555,
+      -4px 4px #555,
+      -5px 5px #555,
+      -6px 6px #555,
+      -7px 7px #555,
+      -8px 8px #555;
+  } @else if $direction == 'left' or $direction == 'l' {
     $trans-val1: translateX(0);
     $trans-val2: translateX(8px);
-    $shadow-val: -1px 0 #555, -2px 0 #555, -3px 0 #555, -4px 0 #555,
-                 -5px 0 #555, -6px 0 #555, -7px 0 #555, -8px 0 #555;
-  } @else if (string.to-lower-case($direction) == 'top-left'
-      or string.to-lower-case($direction) == 'topleft'
-      or string.to-lower-case($direction) == 'left-top'
-      or string.to-lower-case($direction) == 'lefttop'
-      or string.to-lower-case($direction) == 't-l'
-      or string.to-lower-case($direction) == 'tl'
-      or string.to-lower-case($direction) == 'l-t'
-      or string.to-lower-case($direction) == 'lt') {
+    $shadow-val:
+      -1px 0 #555,
+      -2px 0 #555,
+      -3px 0 #555,
+      -4px 0 #555,
+      -5px 0 #555,
+      -6px 0 #555,
+      -7px 0 #555,
+      -8px 0 #555;
+  } @else if
+    $direction ==
+    'top-left' or
+    $direction ==
+    'topleft' or
+    $direction ==
+    'left-top' or
+    $direction ==
+    'lefttop' or
+    $direction ==
+    't-l' or
+    $direction ==
+    'tl' or
+    $direction ==
+    'l-t' or
+    $direction ==
+    'lt'
+  {
     $trans-val1: translateX(0) translateY(0);
     $trans-val2: translateX(8px) translateY(8px);
-    $shadow-val: -1px -1px #555, -2px -2px #555, -3px -3px #555,
-                 -4px -4px #555, -5px -5px #555, -6px -6px #555,
-                 -7px -7px #555, -8px -8px #555;
-  } @else if (string.to-lower-case($direction) != 'top'
-      and string.to-lower-case($direction) != 't') {
+    $shadow-val:
+      -1px -1px #555,
+      -2px -2px #555,
+      -3px -3px #555,
+      -4px -4px #555,
+      -5px -5px #555,
+      -6px -6px #555,
+      -7px -7px #555,
+      -8px -8px #555;
+  } @else if $direction != 'top' and $direction != 't' {
     @error 'Invalid direction value of [#{meta.inspect($direction)}] for the ' +
         '`text-pop-shadow` mixin.';
   }
@@ -131,8 +242,23 @@
     }
   }
 
-  @if ($delay == 0 or $delay == 0s or $delay == 0ms or $delay == 'none'
-      or $delay 'no' or $delay == 'n' or $delay == 'n/a' or $delay == nil) {
+  @if $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil
+  {
     $delay: null;
   }
   @if $delay {
@@ -159,14 +285,17 @@
       $iterations: string.to-lower-case($iterations);
     }
 
-    @if
-      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
     } @else if (
-      (math.is-unitless($iterations) and meta.type-of($iterations) == 'number') or
-      $iterations == initial or $iterations == inherit
-    ) {
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
       $iterations: $iterations;
     } @else {
       @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for the ' +
@@ -176,36 +305,68 @@
     $iterations: null;
   }
 
-  @if (
-    not $anim-dir or $anim-dir == 'none' or $anim-dir == 'no' or
-    $anim-dir == 'n/a' or $anim-dir == 'n' or $anim-dir == 'default' or
-    $anim-dir == 'def' or $anim-dir == 'normal' or $anim-dir == 'nor'
-  ) {
+  @if not
+    $anim-dir or
+    $anim-dir ==
+    'none' or
+    $anim-dir ==
+    'no' or
+    $anim-dir ==
+    'n/a' or
+    $anim-dir ==
+    'n' or
+    $anim-dir ==
+    'default' or
+    $anim-dir ==
+    'def' or
+    $anim-dir ==
+    'normal' or
+    $anim-dir ==
+    'nor'
+  {
     $anim-dir: null;
-  } @else if (
-    $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r'
-  ) {
+  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
-  } @else if (
-    $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  ) {
+  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
+  {
     $anim-dir: alternate;
-  } @else if (
-    $anim-dir == 'alternate-reverse' or $anim-dir == 'alternatereverse' or
-    $anim-dir == 'alt-rev' or $anim-dir == 'altrev' or $anim-dir == 'a-r' or
-    $anim-dir == 'ar'
-  ) {
+  } @else if
+    $anim-dir ==
+    'alternate-reverse' or
+    $anim-dir ==
+    'alternatereverse' or
+    $anim-dir ==
+    'alt-rev' or
+    $anim-dir ==
+    'altrev' or
+    $anim-dir ==
+    'a-r' or
+    $anim-dir ==
+    'ar'
+  {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
         '`text-pop-shadow` mixin';
   }
 
-  @if (
-    not $timing-func or $timing-func == true or $timing-func == 'none' or
-    $timing-func == 'no' or $timing-func == 'n' or $timing-func == 'def' or
-    $timing-func == 'default' or $timing-func == 'd'
-  ) {
+  @if not
+    $timing-func or
+    $timing-func ==
+    true or
+    $timing-func ==
+    'none' or
+    $timing-func ==
+    'no' or
+    $timing-func ==
+    'n' or
+    $timing-func ==
+    'def' or
+    $timing-func ==
+    'default' or
+    $timing-func ==
+    'd'
+  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: null;
@@ -214,14 +375,26 @@
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-shadow-pop#{$anim-num} #{$timing} #{$timing-func}
-              #{$delay} #{$iterations} #{$anim-dir} both;
+
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
+  animation: txt-pop-shadow#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
 
   @at-root {
-    @keyframes txt-shadow-pop#{$anim-num} {
+    @keyframes txt-pop-shadow#{$anim-num} {
       0% {
-        text-shadow: 0 0 #555, 0 0 #555, 0 0 #555, 0 0 #555,
-                     0 0 #555, 0 0 #555, 0 0 #555, 0 0 #555;
+        text-shadow:
+          0 0 #555,
+          0 0 #555,
+          0 0 #555,
+          0 0 #555,
+          0 0 #555,
+          0 0 #555,
+          0 0 #555,
+          0 0 #555;
         transform: #{$trans-val1};
       }
 

@@ -208,8 +208,11 @@
   @if not $anim-num {
     $anim-num: null;
   }
-  animation: txt-focus-in#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+
+  @if $anim-num {
+    $anim-num: '-' + $anim-num;
+  }
+
   @if (
     $style ==
       'forward' or
@@ -229,6 +232,9 @@
     transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
   }
+
+  animation: txt-focus-in#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
 
   @at-root {
     @keyframes txt-focus-in#{$anim-num} {
