@@ -19,12 +19,38 @@
   @for $i from 1 through string.length($string) {
     $char: string.slice($string, $i, $i);
 
-    @if (
-      not list.index(
-        '-' 'a' 'b' 'c' 'd' 'e' 'f' 'g' 'h' 'i' 'j' 'k' 'l' 'm' 'n'
-        'o' 'p' 'q' 'r' 's' 't' 'u' 'v' 'w' 'x' 'y' 'z', $char
+    @if not
+      list.index(
+        '-'
+          'a'
+          'b'
+          'c'
+          'd'
+          'e'
+          'f'
+          'g'
+          'h'
+          'i'
+          'j'
+          'k'
+          'l'
+          'm'
+          'n'
+          'o'
+          'p'
+          'q'
+          'r'
+          's'
+          't'
+          'u'
+          'v'
+          'w'
+          'x'
+          'y'
+          'z',
+        $char
       )
-    ) {
+    {
       @return false;
     }
   }

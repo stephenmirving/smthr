@@ -1,4 +1,5 @@
 @use 'sass:list';
+@use 'sass:meta';
 @use 'sass:map';
 
 /// Apply `$function` with `$args` to each item from `$list`.

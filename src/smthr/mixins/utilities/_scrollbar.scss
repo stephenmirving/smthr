@@ -65,8 +65,8 @@
     }
 
     ::-webkit-scrollbar {
-      height: $size;
       width: $size;
+      height: $size;
 
       &-track {
         background: $bg-color;
@@ -82,12 +82,12 @@
         }
 
         &:hover {
-          background: mix(#000, $fg-color, 17.5%);
+          background: color.mix(#000, $fg-color, 17.5%);
         }
 
         &:active {
-          background: mix(#000, $fg-color, 35%);
-          box-shadow: inset 1px 1px 3px rgba(mix(#fff, $fg-color, 30%), 0.5);
+          background: color.mix(#000, $fg-color, 35%);
+          box-shadow: inset 1px 1px 3px rgba(color.mix(#fff, $fg-color, 30%), 0.5);
         }
       }
     }

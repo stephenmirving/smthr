@@ -1,5 +1,6 @@
 @use 'sass:list';
 @use 'sass:math';
+@use 'sass:meta';
 
 /// Checks if a value is a relative length.
 /// @access public

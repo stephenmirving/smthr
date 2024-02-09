@@ -6,6 +6,7 @@
 /// @return {Mixed} The value string for the long shadow effect.
 @function make-long-shadow($color, $longness) {
   $val: 0 0 $color;
+
   @for $i from 1 through $longness {
     $val:
       #{$val},

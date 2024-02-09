@@ -15,7 +15,7 @@
   $list: ();
 
   @each $function in $functions {
-    @if not meta.function-exists($function) {
+    @if not meta.function-exists($function, 'smth') {
       @error 'There is no `#{meta.inspect($function)}` function.';
     }
 
