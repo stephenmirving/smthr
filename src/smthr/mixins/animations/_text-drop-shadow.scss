@@ -29,7 +29,7 @@
     $direction: string.to-lower-case($direction);
   }
 
-  @if $delay and $meta.type-of($delay) == 'string' {
+  @if $delay and meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 

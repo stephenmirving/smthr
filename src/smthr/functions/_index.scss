@@ -21,14 +21,13 @@
 @forward 'is-true';
 
 // Math Functions
-@forward 'clamp';
+@forward 'clamp-val';
 @forward 'exp';
 @forward 'exp-maclaurin';
 @forward 'factorial';
 @forward 'ln';
 @forward 'ln-maclaurin';
 @forward 'pi';
-@forward 'pow';
 @forward 'ratio-to-percentage';
 @forward 'summation';
 @forward 'to-fixed';

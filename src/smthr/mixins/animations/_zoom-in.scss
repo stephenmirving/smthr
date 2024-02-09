@@ -28,11 +28,11 @@
   $dir-val3: scale(1.25) translateY(15px);
   $dir-val4: bottom;
 
-  @if $direction and $meta.type-of($direction) == 'string' {
+  @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
   }
 
-  @if $delay and $meta.type-of($delay) == 'string' {
+  @if $delay and meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 

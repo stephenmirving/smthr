@@ -41,15 +41,15 @@
 ) {
   $dir-val: translateY(-50px);
 
-  @if $direction and $meta.type-of($direction) == 'string' {
+  @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
   }
 
-  @if $delay and $meta.type-of($delay) == 'string' {
+  @if $delay and meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $timing-func and $meta.type-of($timing-func) == 'string' {
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
     $timing-func: string.to-lower-case($timing-func);
   }
 

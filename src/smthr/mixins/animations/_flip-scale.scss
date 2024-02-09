@@ -60,7 +60,7 @@
     $axis: string.to-lower-case($axis);
   }
 
-  @if $delay and $meta.type-of($delay) == 'string' {
+  @if $delay and meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 
@@ -68,7 +68,7 @@
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $timing-func and $meta.type-of($timing-func) == 'string' {
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
     $timing-func: string.to-lower-case($timing-func);
   }
 

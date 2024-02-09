@@ -1,0 +1,16 @@
+/// Clamp `$number` between `$min` and `$max`. Because the CSS version of
+/// `clamp()` still does not have full support for all Safari versions in use,
+/// this version will provide the same effect with the more supported `min()`
+/// and `max()` methods but with the more simplified clamp() syntax that is the
+/// same as in the CSS version.
+/// @access public
+///
+/// @param {Number} $min - The minimum value.
+/// @param {Number} $value - The number to clamp between $min and $max.
+/// @param {Number} $max - The maximum value.
+/// @return {Number} If number is within the limits, returns the number, if it
+/// is below the limit, it will return the min, if it is above the max, it will
+/// return the max.
+@function clamp-val($min, $value, $max) {
+  @return min(max($min, $value), $max);
+}

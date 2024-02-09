@@ -46,11 +46,11 @@
   $dir-val5: translateX(9px) rotate(2.4deg);
   $dir-val6: translateX(-6px) rotate(-1.2deg);
 
-  @if $direction and $meta.type-of($direction) == 'string' {
+  @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
   }
 
-  @if $delay and $meta.type-of($delay) == 'string' {
+  @if $delay and meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 
@@ -58,7 +58,7 @@
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $timing-func and $meta.type-of($timing-func) == 'string' {
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
     $timing-func: string.to-lower-case($timing-func);
   }
 

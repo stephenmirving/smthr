@@ -49,19 +49,19 @@
   $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53),
   $anim-num: null
 ) {
-  @if $expand-contract and $meta.type-of($expand-contract) == 'string' {
+  @if $expand-contract and meta.type-of($expand-contract) == 'string' {
     $expand-contract: string.to-lower-case($expand-contract);
   }
 
-  @if $direction and $meta.type-of($direction) == 'string' {
+  @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
   }
 
-  @if $origin and $meta.type-of($origin) == 'string' {
+  @if $origin and meta.type-of($origin) == 'string' {
     $origin: string.to-lower-case($origin);
   }
 
-  @if $delay and $meta.type-of($delay) == 'string' {
+  @if $delay and meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 
@@ -69,7 +69,7 @@
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $timing-func and $meta.type-of($timing-func) == 'string' {
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
     $timing-func: string.to-lower-case($timing-func);
   }
 

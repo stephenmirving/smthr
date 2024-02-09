@@ -10,6 +10,6 @@
 
 @charset "UTF-8";
 
-@use 'placeholders' as smth;
-@use 'functions' as smth;
-@use 'mixins' as smth;
+@forward 'placeholders';
+@forward 'functions';
+@forward 'mixins';

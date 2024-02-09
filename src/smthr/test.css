@@ -1,11 +1,14 @@
-/* Error: Can't find stylesheet to import.
+/* Error: Two forwarded modules both define a mixin named flip-scale.
  *    ,
- * 24 | @forward 'clamp';
- *    | ^^^^^^^^^^^^^^^^
+ * 10 | @forward 'flip-scale';
+ *    | ===================== original @forward
+ * 11 | @forward 'flip-scale-2';
+ *    | ^^^^^^^^^^^^^^^^^^^^^^^ new @forward
  *    '
- *   src\smthr\functions\_index.scss 24:1  @use
- *   src\smthr\_smth.scss 14:1             @use
- *   src\smthr\test.scss 7:1               root stylesheet */
+ *   src\smthr\mixins\animations\_index.scss 11:1  @forward
+ *   src\smthr\mixins\_index.scss 1:1              @forward
+ *   src\smthr\_smth.scss 15:1                     @use
+ *   src\smthr\test.scss 7:1                       root stylesheet */
 
 body::before {
   font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
@@ -15,5 +18,5 @@ body::before {
   padding: 1em;
   margin-bottom: 1em;
   border-bottom: 2px solid black;
-  content: "Error: Can't find stylesheet to import.\a    \2577 \a 24 \2502  @forward 'clamp';\a    \2502  ^^^^^^^^^^^^^^^^\a    \2575 \a   src\\smthr\\functions\\_index.scss 24:1  @use\a   src\\smthr\\_smth.scss 14:1             @use\a   src\\smthr\\test.scss 7:1               root stylesheet";
+  content: "Error: Two forwarded modules both define a mixin named flip-scale.\a    \2577 \a 10 \2502  @forward 'flip-scale';\a    \2502  \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501 \2501  original @forward\a 11 \2502  @forward 'flip-scale-2';\a    \2502  ^^^^^^^^^^^^^^^^^^^^^^^ new @forward\a    \2575 \a   src\\smthr\\mixins\\animations\\_index.scss 11:1  @forward\a   src\\smthr\\mixins\\_index.scss 1:1              @forward\a   src\\smthr\\_smth.scss 15:1                     @use\a   src\\smthr\\test.scss 7:1                       root stylesheet";
 }
