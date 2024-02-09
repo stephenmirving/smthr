@@ -5,6 +5,7 @@
 @forward 'order-index';
 
 // Is-Type Functions
+@forward 'is-color';
 @forward 'is-number';
 @forward 'is-integer';
 @forward 'is-float';
@@ -21,7 +22,7 @@
 @forward 'is-true';
 
 // Math Functions
-@forward 'clamp-val';
+@forward 'clamp-size';
 @forward 'exp';
 @forward 'exp-maclaurin';
 @forward 'factorial';
@@ -69,6 +70,8 @@
 @forward 'white';
 @forward 'shade';
 @forward 'tint';
+@forward 'to-hex';
+@forward 'conv-color';
 @forward 'bottom-shadow';
 @forward 'top-shadow';
 @forward 'make-long-shadow';

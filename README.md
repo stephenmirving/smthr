@@ -19,7 +19,7 @@ with Sass ver 1.6+.
 
 **_smthr_ currently contains:**
 
-* 100+ mixins
+* 130+ mixins
 * 60+ functions
 * A modern, opinionated normalize file written in Sass called betterize
 * A modern, opinionated print style file written in Sass

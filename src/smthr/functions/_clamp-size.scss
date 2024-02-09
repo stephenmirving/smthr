@@ -1,0 +1,53 @@
+@use 'sass:meta';
+@use './is-length';
+
+/// Clamp `$number` between `$min` and `$max`. Because the CSS version of
+/// `clamp()` still does not have full support for all Safari versions in use,
+/// this version will provide the same effect with the more supported `min()`
+/// and `max()` methods but with the more simplified clamp() syntax that is the
+/// same as in the CSS version.
+/// @access public
+///
+/// @param {Length} $min - The minimum value.
+/// @param {Length} $value - The number to clamp between $min and $max.
+/// @param {Length} $max - The maximum value.
+/// @return {Length} If $value is within the limits, returns the $value, if it
+/// is below the limit, it will return the $min, if it is above the $max, it
+/// will return the $max.
+/// @alias clamp-val
+@function clamp-size($min, $value, $max) {
+  @if not is-length($min) {
+    @error 'Invalid $min value of `#{meta.inspect($min)}` for ' +
+        '`clamp-size()` function. Value must be a valid length unit.';
+  }
+
+  @if not is-length($value) {
+    @error 'Invalid $value value of `#{meta.inspect($value)}` for ' +
+        '`clamp-size()` function. Value must be a valid length unit.';
+  }
+
+  @if not is-length($max) {
+    @error 'Invalid $max value of `#{meta.inspect($max)}` for ' +
+        '`clamp-size()` function. Value must be a valid length unit.';
+  }
+
+  @return min(max($min, $value), $max);
+}
+
+/// Clamp `$number` between `$min` and `$max`. Because the CSS version of
+/// `clamp()` still does not have full support for all Safari versions in use,
+/// this version will provide the same effect with the more supported `min()`
+/// and `max()` methods but with the more simplified clamp() syntax that is the
+/// same as in the CSS version.
+/// @access public
+///
+/// @param {Length} $min - The minimum value.
+/// @param {Length} $value - The number to clamp between $min and $max.
+/// @param {Length} $max - The maximum value.
+/// @return {Length} If $value is within the limits, returns the $value, if it
+/// is below the limit, it will return the $min, if it is above the $max, it
+/// will return the $max.
+/// @alias clamp-size
+@function clamp-val($min, $value, $max) {
+  @return min(max($min, $value), $max);
+}

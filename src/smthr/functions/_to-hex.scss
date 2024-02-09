@@ -1,0 +1,129 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:color';
+@use 'sass:string';
+
+/// Converts a given color to hex notation in either 3, 6, or 8 digit
+/// notation based on the input.
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into.
+///
+/// @throw Invalid data type for $color
+/// @throw Invalid color syntax type for $syntax
+/// @alias color-to-hex
+/// @alias conv-to-hex
+/// @alias convert-to-hex
+/// @require {function} component-to-hex
+@function to-hex($color) {
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid data type passed to `conv-color()` function. You passed ' +
+      '#{meta.inspect($color)} for the $color argument, which is not a ' +
+      'valid color.';
+  }
+
+  // Extract RGB components and alpha channel
+  $red-component: color.red($color);
+  $green-component: color.green($color);
+  $blue-component: color.blue($color);
+  $alpha-component: color.alpha($color);
+
+  // Convert each RGB component to hex
+  $red-hex: string.to-lower-case(component-to-hex($red-component));
+  $green-hex: string.to-lower-case(component-to-hex($green-component));
+  $blue-hex: string.to-lower-case(component-to-hex($blue-component));
+
+  // Check if color can be expressed in shorter 3-digit hex notation
+  @if $red-component % 17 == 0 and
+      $green-component % 17 == 0 and
+      $blue-component % 17 == 0 and
+      $alpha-component == 1
+  {
+    $red-hex: string.slice($red-hex, 1, 1);
+    $green-hex: string.slice($green-hex, 1, 1);
+    $blue-hex: string.slice($blue-hex, 1, 1);
+
+    @return #{'#' + $red-hex + $green-hex + $blue-hex};
+  }
+
+  // Handle alpha for 8-digit hex, if necessary
+  @if $alpha-component < 1 {
+    $alpha: math.round($alpha-component * 255);
+    $alpha-hex: component-to-hex($alpha);
+
+    @return #{'#' + $red-hex + $green-hex + $blue-hex + $alpha-hex};
+  }
+
+  // Return 6-digit hex code
+  @return #{'#' + $red-hex + $green-hex + $blue-hex};
+}
+
+/// Converts a given color to hex notation in either 3, 6, or 8 digit
+/// notation based on the input.
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into.
+///
+/// @throw Invalid data type for $color
+/// @throw Invalid color syntax type for $syntax
+/// @alias to-hex
+/// @alias conv-to-hex
+/// @alias convert-to-hex
+/// @require {function} component-to-hex
+@function color-to-hex($color) {
+  @return to-hex($color);
+}
+
+/// Converts a given color to hex notation in either 3, 6, or 8 digit
+/// notation based on the input.
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into.
+///
+/// @throw Invalid data type for $color
+/// @throw Invalid color syntax type for $syntax
+/// @alias to-hex
+/// @alias color-to-hex
+/// @alias convert-to-hex
+/// @require {function} component-to-hex
+@function conv-to-hex($color) {
+  @return to-hex($color);
+}
+
+/// Converts a given color to hex notation in either 3, 6, or 8 digit
+/// notation based on the input.
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into.
+///
+/// @throw Invalid data type for $color
+/// @throw Invalid color syntax type for $syntax
+/// @alias to-hex
+/// @alias color-to-hex
+/// @alias conv-to-hex
+/// @require {function} component-to-hex
+@function convert-to-hex($color) {
+  @return to-hex($color);
+}
+
+/// Helper function to convert a single component to a hex string.
+/// Used only by the `to-hex()` function below.
+/// @access private
+///
+/// @param {Number} $component - The red, green, or blue color component number.
+@function component-to-hex($component) {
+  $index1: math.ceil(math.div($component, 16));
+  $index2: $component % 16 + 1;
+  $hex: string.slice('0123456789ABCDEF', $index1, $index1) +
+    string.slice('0123456789ABCDEF', $index2, $index2);
+
+  @if $component < 16 and $hex == '0' {
+    $hex: '0' + $hex;
+  }
+
+  @return $hex;
+}

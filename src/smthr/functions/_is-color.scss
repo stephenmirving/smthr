@@ -1,0 +1,12 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+
+/// Checks if a value is a color.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Boolean} True if $value is an color, false if it is not.
+@function is-color($value) {
+  @return meta.type-of($value) == 'color';
+}

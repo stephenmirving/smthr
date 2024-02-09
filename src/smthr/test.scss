@@ -1,32 +1,12 @@
-@use 'sass:meta';
-@use 'sass:map';
 @use 'sass:color';
-@use 'sass:selector';
-@use 'sass:math';
 @use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:selector';
+@use 'sass:string';
 @use './smth' as smth;
 
-@forward './betterize';
-
-@mixin responsive-ratio($x, $y, $content-class-name) {
-  position: relative;
-
-  &::before {
-    content: '';
-    display: block;
-    width: 100%;
-    padding-top: math.div($y, $x) * 100%;
-  }
-
-  > .#{$content-class-name} {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-  }
-}
-
 div {
-  content: smth.strip-unit(3rem);
+  color: smth.conv-color(rgb(180, 24, 4));
 }
