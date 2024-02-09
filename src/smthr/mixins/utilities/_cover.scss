@@ -38,7 +38,7 @@
         '`cover` mixin.';
   }
 
-  @if $z-val and meta.typeof($z-val) == 'number' and math.is-unitless($z-val) {
+  @if $z-val and meta.type-of($z-val) == 'number' and math.is-unitless($z-val) {
     z-index: $z-val;
   }
 }

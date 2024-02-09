@@ -28,7 +28,7 @@
   $fg-color: #fff,
   $content-suffix: '-content'
 ) {
-  @if meta.typeof($ribbon-size) !=
+  @if meta.type-of($ribbon-size) !=
     'number' or not
     math.is-unitless($ribbon-size)
   {

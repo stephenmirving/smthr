@@ -16,7 +16,7 @@
 /// @throw Value of $char not a valid string.
 /// @throw Value of $char does not correspond to a known CSS entity code.
 @function entity($char) {
-  @if meta.typeof($char) != 'string' {
+  @if meta.type-of($char) != 'string' {
     @error 'Value of $char must be of type "string" in entity().';
   }
 

@@ -60,13 +60,13 @@
     @error 'You must enter an image width for the $bg-width parameter of the ' +
         '`bg-image` mixin.';
   } @else if (
-      meta.typeof($bg-width) !=
+      meta.type-of($bg-width) !=
         'number' or
         (
           $bg-height and
             $bg-height !=
             auto and
-            meta.typeof($bg-height) !=
+            meta.type-of($bg-height) !=
             'number'
         )
     )
@@ -74,7 +74,7 @@
     @error 'Invalid type for the dimensions used in the `bg-image` mixin.';
   } @else {
     $bg-width: if(
-      meta.typeof($bg-width) == 'number' and math.is-unitless($bg-width),
+      meta.type-of($bg-width) == 'number' and math.is-unitless($bg-width),
       $bg-width * 1px,
       $bg-width
     );
@@ -156,7 +156,7 @@
   background-image: url(#{$img-name});
 
   // Scaled up version of the image for HiDPI displays
-  @media screen and (min-device-pixel-ratio: $ratio),
+  @media screen and (-webkit-min-device-pixel-ratio: $ratio),
     only screen and (min-resolution: $ratio * 96dpi),
     only screen and (min-resolution: $ratio * 1dppx) {
     background-image: url(#{$hidpi-img});

@@ -1,0 +1,46 @@
+@use 'sass:list';
+@use 'sass:string';
+
+/// Takes a string and converts it into a list
+/// @access public
+///
+/// @param {String} $string - The initial string.
+/// @param {String} $separator - The separator to use between list values.
+/// @return {List} The converted list.
+/// @alias string-to-list
+@function str-to-list($string, $separator: ' ') {
+  $list: ();
+  $index: string.index($string, $separator);
+
+  @while $index != null {
+    // Extract the substring from the start to the found separator index
+    $item: string.slice($string, 1, $index - 1);
+
+    // Append the item to the list
+    $list: list.append($list, $item, comma);
+
+    // Remove the processed item and separator from the string
+    $string: string.slice($string, $index + string.length($separator));
+
+    // Find the next separator in the remaining string
+    $index: string.index($string, $separator);
+  }
+
+  // Check if there is any remaining string to add as the last item
+  @if string.length($string) > 0 {
+    $list: list.append($list, $string, comma);
+  }
+
+  @return $list;
+}
+
+/// Takes a string and converts it into a list
+/// @access public
+///
+/// @param {String} $string - The initial string.
+/// @param {String} $separator - The separator to use between list values.
+/// @return {List} The converted list.
+/// @alias str-to-list
+@function string-to-list($string, $separator: ' ') {
+  @return str-to-list($string, $separator);
+}

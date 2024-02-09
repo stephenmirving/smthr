@@ -1,4 +1,3 @@
-@use 'sass:meta';
 @use 'sass:list';
 
 /// Base font size for unit conversion. Default is 16 for 16px at 100%
@@ -15,6 +14,7 @@ $base-font-size: 16 !default;
 $font-stack: (
   'primary': (
     Roboto,
+    system-ui,
     Ubuntu,
     Cantarell,
     Arial,
@@ -37,8 +37,7 @@ $font-stack: (
     sans-serif,
     'Apple Color Emoji',
     'Segoe UI Emoji',
-    'Segoe UI Symbol',
-    'Noto Color Emoji'
+    'Segoe UI Symbol'
   ),
   'georgia': (
     Georgia,
@@ -65,16 +64,13 @@ $font-stack: (
     monospace
   ),
   'system': (
-    -apple-system,
     system-ui,
+    -apple-system,
     BlinkMacSystemFont,
     'Segoe UI',
-    Roboto,
-    Oxygen,
     Ubuntu,
-    Cantarell 'Fira Sans',
-    'Helvetica Neue',
     Helvetica,
+    'Helvetica Neue',
     Arial,
     sans-serif,
     'Apple Color Emoji',
@@ -107,10 +103,10 @@ $image-suffix-2x: '@2x' !default;
 $color-palette: (
   'primary': #1779ba,
   'secondary': #767676,
-  'accent': red,
+  'accent': #0d004b,
   'success': #3adb76,
   'warning': #fb0,
-  'alert': #cc4b37
+  'alert': red
 ) !default;
 
 /// Color used for black UI items.
@@ -142,7 +138,12 @@ $off-white: hsl(0 0 94.9%) !default;
 $white: hsl(0 0 100%) !default;
 
 /// Button transition properties
-$btn-transition-properties: background-color, border-color, color, top !default;
+$btn-transition-properties:
+  background-color,
+  border-color,
+  box-shadow,
+  color,
+  top !default;
 $btn-transition-duration: 0.3s !default;
 $btn-transition-timing-function: ease-out !default;
 

@@ -9,7 +9,7 @@
 ///
 /// @throw Invalid $number unit type.
 @function pi($number: 1) {
-  @if meta.typeof($number) != 'number' {
+  @if meta.type-of($number) != 'number' {
     @error 'Value of $number for pi() must be a valid number.';
   }
 

@@ -1,15 +1,15 @@
+///
+/// This file is an updated fork of _family.scss for Sass versions 16+.
+/// @author Lucas Bonomi < @lukyvj -- lucasbonomi.com >
+/// @ Taken from the family.scss library - http://lukyvj.github.io/family.scss/
+/// Copyright 2016 - MIT Licence
+///
+
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:list';
 @use 'sass:string';
 @use '../../functions/order-index';
-
-///
-/// This file is a fork of: family.scss
-/// @author Lucas Bonomi < @lukyvj -- lucasbonomi.com >
-/// Taken from the family.scss library - http://lukyvj.github.io/family.scss/
-/// Copyright 2016 - MIT Licence
-///
 
 /// Select all children from the first to `$num`.
 ///
@@ -247,13 +247,13 @@
 }
 
 /// This quantity-query mixin will only select the first of `$limit` items. It
-/// will not work if the quantity of child elements is different than `$limit`.
+/// will not work if the quantity of child elements is less than `$limit`.
 ///
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $limit - If the quantity of child elements is equal to
-/// limit, the first of those elements is selected.
+/// @param {Integer} $limit - If the quantity of child elements is equal to or
+/// greater than `$limit`, the first of those elements is selected.
 ///
 /// @group Utilities
 @mixin first-of($limit) {
@@ -263,13 +263,15 @@
 }
 
 /// This quantity-query mixin will only select the last of `$limit` items. It
-/// will not if there is not as many items as you set in `$limit`.
+/// will not work if the quantity of child elements of the same type
+/// is less than `$limit`.
 ///
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $limit - If the quantity of child elements is equal to
-/// limit, the last of those elements is selected.
+/// @param {Integer} $limit - If the quantity of child elements of the same type
+/// is greater than or equal to `$limit`, the last of those elements, determined
+/// by `$limit`, is selected.
 ///
 /// @group Utilities
 @mixin last-of($limit) {
@@ -279,18 +281,19 @@
 }
 
 /// This quantity-query mixin will select every items if there is at least `$num`
-/// items. It will not if there is not as much as item as you set in `$num`.
+/// items. It will not select anything if there is not as many item as `$num`.
 ///
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
 /// @param {Integer} $num - If the number of child elements is equal to or
-/// greater than this number, then all will be selected.
+/// greater than this number, then all will be selected. If the number of child
+/// elements is less than this number, then none are selected.
 ///
 /// @group Utilities
 @mixin at-least($num) {
   $selector: &;
-  $child: list.nth(nth($selector, -1), -1);
+  $child: list.nth(list.nth($selector, -1), -1);
 
   &:nth-last-child(n + #{$num}),
   &:nth-last-child(n + #{$num}) ~ #{$child} {
@@ -335,8 +338,7 @@
   $child: list.nth(list.nth($selector, -1), -1);
 
   &:nth-last-child(n + #{$min}):nth-last-child(-n + #{$max}):first-child,
-  &:nth-last-child(n + #{$min}):nth-last-child(-n + #{$max}):first-child
-    ~ #{$child} {
+  &:nth-last-child(n + #{$min}):nth-last-child(-n + #{$max}):first-child ~ #{$child} {
     @content;
   }
 }
@@ -348,7 +350,7 @@
 ///
 /// @group Utilities
 @mixin first-child {
-  &:first-of-type {
+  &:first-child {
     @content;
   }
 }
@@ -360,6 +362,30 @@
 ///
 /// @group Utilities
 @mixin last-child {
+  &:last-child {
+    @content;
+  }
+}
+
+/// Select the first child element of the type.
+///
+/// @content [Write the style you want to apply to the children, and it will be
+/// added within the @content directive]
+///
+/// @group Utilities
+@mixin first-of-type {
+  &:first-of-type {
+    @content;
+  }
+}
+
+/// Select the last child element of the type.
+///
+/// @content [Write the style you want to apply to the children, and it will be
+/// added within the @content directive]
+///
+/// @group Utilities
+@mixin last-of-type {
   &:last-of-type {
     @content;
   }
@@ -437,7 +463,22 @@
 /// added within the @content directive]
 ///
 /// @group Utilities
+/// @alias not-only-child
 @mixin not-unique {
+  &:not(:only-child) {
+    @content;
+  }
+}
+
+/// Will only select children if they are not unique. Meaning if there is at
+/// least 2 children, the style is applied.
+///
+/// @content [Write the style you want to apply to the children, and it will be
+/// added within the @content directive]
+///
+/// @group Utilities
+/// @alias not-unique
+@mixin not-only-child {
   &:not(:only-child) {
     @content;
   }

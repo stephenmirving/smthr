@@ -43,13 +43,13 @@
   $trans-val1: rotateX(0);
   $trans-val2: rotateX(180deg);
   $anim-dir: if(
-    meta.typeof($anim-dir) == 'string',
+    meta.type-of($anim-dir) == 'string',
     string.to-lower-case($anim-dir),
     $anim-dir
   );
   $timing-func: if(
-    $timing-func and meta.typeof($timing-func) == 'string',
-    string.tolowercase($timing-func),
+    $timing-func and meta.type-of($timing-func) == 'string',
+    string.to-lower-case($timing-func),
     $timing-func
   );
 
@@ -302,7 +302,7 @@
     }
   }
 
-  @if meta.typeof($timing) != 'number' {
+  @if meta.type-of($timing) != 'number' {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `flip` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
@@ -337,7 +337,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.typeof($delay) != 'number' {
+    @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `flip` mixin.' +
           'The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -354,7 +354,7 @@
 
   @if $iterations {
     $iterations: if(
-      meta.typeof($iterations) == 'string',
+      meta.type-of($iterations) == 'string',
       string.to-lower-case($iterations),
       $iterations
     );
@@ -363,7 +363,7 @@
     {
       $iterations: infinite;
     } @else if (
-        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
       initial or

@@ -12,10 +12,10 @@
 /// @throw Invalid data type or units for $pixels
 @function conv-to-em($pixels, $base-context: null) {
   @if (
-    meta.typeof($pixels) !=
+    meta.type-of($pixels) !=
       'number' or
       (
-        meta.typeof($pixels) ==
+        meta.type-of($pixels) ==
           'number' and not
           math.is-unitless($pixels) and
           math.unit($pixels) !=

@@ -12,7 +12,7 @@
 /// @throw Invalid unit type for $opacity
 /// @throw $opacity value out of range
 @function black($opacity: 1) {
-  @if meta.typeof($opacity) != 'number' {
+  @if meta.type-of($opacity) != 'number' {
     @error 'Invalid data type passed to black(). Opacity must be a number.';
   }
   @if not math.is-unitless($opacity) and math.unit($opacity) != '%' {

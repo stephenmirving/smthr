@@ -9,7 +9,7 @@
 /// @return {Boolean} True if $value is an absolute length, false if it is not.
 @function is-absolute-length($value) {
   @return (
-    meta.typeof($value) == 'number' and
+    meta.type-of($value) == 'number' and
     list.index('cm' 'mm' 'in' 'px' 'pt' 'pc', math.unit($value)) != null
   );
 }

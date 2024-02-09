@@ -1,18 +1,17 @@
 @use 'sass:meta';
-@use './disable-outline';
 
 /// Generates the base visual styles for a button element.
 ///
-/// @param {Color} $btn-background - The background of the button.
+/// @param {Color} $btn-background - The background color of the button.
 /// @param {Color} $btn-color - The button text color.
-/// @param {Color} $btn-border - The border property for the buttton.
-/// @param {Color} $btn-radius - The border radius property.
-/// @param {Color} $btn-margin - The button's margin property.
-/// @param {Color} $btn-padding - The button's padding property.
-/// @param {Color} $btn-font-family - The button's font-family property.
-/// @param {Color} $btn-font-size [1rem] - The button's font-size property.
-/// @param {Color} $btn-font-weight [400] - The button's font-weight property.
-/// @param {Color} $btn-transition [null] - The button's transition property.
+/// @param {String} $btn-border - The border value for the buttton.
+/// @param {Length} $btn-radius - The border radius value.
+/// @param {Length} $btn-margin - The button's margin value.
+/// @param {Length} $btn-padding - The button's padding value.
+/// @param {List} $btn-font-family - The button's font-family stack.
+/// @param {Length} $btn-font-size [1rem] - The button's font-size.
+/// @param {Number|Keyword} $btn-font-weight [400] - The button's font-weight.
+/// @param {String} $btn-transition [null] - The button's transition value.
 /// By default, a null value here will have the mixin search for a global
 /// $button-transition variable as is found in the variables file in this
 /// library. If no global variable is found, it will apply the following
@@ -39,20 +38,18 @@
       $button-transition,
       (background-color 0.2s ease-out, color 0.2s ease-out)
     );
-  } @else if (
-      $btn-transition ==
-        false or
-        $btn-transition ==
-        'none' or
-        $btn-transition ==
-        'no' or
-        $btn-transition ==
-        'n/a'
-    )
+  } @else if
+    $btn-transition ==
+    false or
+    $btn-transition ==
+    'none' or
+    $btn-transition ==
+    'no' or
+    $btn-transition ==
+    'n/a'
   {
     $btn-transition: null;
   }
-  @include disable-outline;
 
   display: inline-block;
   vertical-align: middle;
@@ -71,14 +68,44 @@
       font: $btn-font-size $btn-font-family;
     }
   } @else {
-    @if $btn-font-family {
-      font-family: $btn-font-family;
-    }
-    @if $btn-font-size {
-      font-size: $btn-font-size;
-    }
-    @if $btn-font-weight {
-      font-weight: $btn-font-weight;
+    @if $btn-font-family and
+      $btn-font-size and
+      $btn-font-weight and
+      $btn-font-weight and
+      $btn-font-weight !=
+      400 and
+      $btn-font-weight !=
+      normal
+    {
+      font: $btn-font-weight $btn-font-size $btn-font-family;
+    } @else if
+      $btn-font-family and
+      $btn-font-size and
+      (
+        not
+          $btn-font-weight or
+          $btn-font-weight ==
+          400 or
+          $btn-font-weight ==
+          normal
+      )
+    {
+      font: $btn-font-size $btn-font-family;
+    } @else {
+      @if $btn-font-family {
+        font-family: $btn-font-family;
+      }
+      @if $btn-font-size {
+        font-size: $btn-font-size;
+      }
+      @if $btn-font-weight and
+        $btn-font-weight !=
+        400 and
+        $btn-font-weight !=
+        normal
+      {
+        font-weight: $btn-font-weight;
+      }
     }
   }
   @if $btn-transition {
@@ -88,16 +115,16 @@
 
 /// Generates the base visual styles for a button element.
 ///
-/// @param {Color} $btn-background - The background of the button.
+/// @param {Color} $btn-background - The background color of the button.
 /// @param {Color} $btn-color - The button text color.
-/// @param {Color} $btn-border - The border property for the buttton.
-/// @param {Color} $btn-radius - The border radius property.
-/// @param {Color} $btn-margin - The button's margin property.
-/// @param {Color} $btn-padding - The button's padding property.
-/// @param {Color} $btn-font-family - The button's font-family property.
-/// @param {Color} $btn-font-size [1rem] - The button's font-size property.
-/// @param {Color} $btn-font-weight [400] - The button's font-weight property.
-/// @param {Color} $btn-transition [null] - The button's transition property.
+/// @param {String} $btn-border - The border value for the buttton.
+/// @param {Length} $btn-radius - The border radius value.
+/// @param {Length} $btn-margin - The button's margin value.
+/// @param {Length} $btn-padding - The button's padding value.
+/// @param {List} $btn-font-family - The button's font-family stack.
+/// @param {Length} $btn-font-size [1rem] - The button's font-size.
+/// @param {Number|Keyword} $btn-font-weight [400] - The button's font-weight.
+/// @param {String} $btn-transition [null] - The button's transition value.
 /// By default, a null value here will have the mixin search for a global
 /// $button-transition variable as is found in the variables file in this
 /// library. If no global variable is found, it will apply the following

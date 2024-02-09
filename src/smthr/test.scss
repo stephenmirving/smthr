@@ -1,12 +1,12 @@
 @use 'sass:meta';
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:selector';
 @use 'sass:math';
+@use 'sass:list';
 
 @function strip-unit($num) {
   @return math.div($num, ($num * 0 + 1));
-}
-
-@mixin test($direction: right) {
-  font: meta.type-of($direction);
 }
 
 @mixin responsive-ratio($x, $y, $content-class-name) {
@@ -28,6 +28,16 @@
   }
 }
 
+@mixin test($orientation) {
+  $var: meta.type-of($orientation) != 'Number' and
+    list.index('deg' 'rad' 'grad' 'turn', math.unit($orientation));
+
+  content: $var;
+}
+
 div {
-  @include responsive-ratio(16, 9, 'container')
+  color: blue;
+  @if 1 {
+    @include test(90deg);
+  }
 }

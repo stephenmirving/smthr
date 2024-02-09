@@ -54,23 +54,23 @@
   $blur-val2: blur(0);
   $temp-val: null;
 
-  @if $in-our-out and meta.typeof($in-or-out) == 'string' {
+  @if $in-our-out and meta.type-of($in-or-out) == 'string' {
     $in-or-out: string.to-lower-case($in-or-out);
   }
 
-  @if $blurred and meta.typeof($blurred) == 'string' {
+  @if $blurred and meta.type-of($blurred) == 'string' {
     $blurred: string.to-lower-case($blurred);
   }
 
-  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $delay and $meta.typeof($delay) == 'string' {
+  @if $delay and $meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+  @if $timing-func and $meta.type-of($timing-func) == 'string' {
     $timing-func: string.to-lower-case($timing-func);
   }
 
@@ -84,7 +84,7 @@
   }
 
   @if $direction {
-    @if meta.typeof($direction) == 'string' {
+    @if meta.type-of($direction) == 'string' {
       $direction: string.to-lower-case($direction);
     }
 
@@ -173,7 +173,7 @@
     $blur-val2: $temp-val;
   }
 
-  @if meta.typeof($timing) != 'number' {
+  @if meta.type-of($timing) != 'number' {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `roll` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
@@ -208,7 +208,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.typeof($delay) != 'number' {
+    @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of [#{meta.inspect($delay)}] for the ' +
           '`roll` mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -224,14 +224,14 @@
   }
 
   @if $iterations {
-    @if meta.typeof($iterations) != 'string' {
+    @if meta.type-of($iterations) != 'string' {
       $iterations: string.to-lower-case($iterations);
     }
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
     } @else if (
-        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
       initial or

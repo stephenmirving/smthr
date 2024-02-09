@@ -9,7 +9,7 @@
 /// @return {Boolean} True if $value is a frequency, false if it is not.
 @function is-frequency($value) {
   @return (
-    meta.typeof($value) == 'number' and
+    meta.type-of($value) == 'number' and
       list.index('Hz' 'kHz', math.unit($value)) != null
   );
 }

@@ -4,7 +4,7 @@
 ///
 /// @group Utilities
 @mixin line-clamp($lines) {
-  @if meta.typeof($lines) != 'number' {
+  @if meta.type-of($lines) != 'number' {
     @error 'The $lines parameter in the `line-clamp` mixin must be a number.';
   }
 

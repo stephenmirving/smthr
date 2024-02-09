@@ -225,7 +225,7 @@
       $timing: if((not $direction), 1s, 0.7s);
     }
   }
-  @if meta.typeof($timing) != 'number' {
+  @if meta.type-of($timing) != 'number' {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `fade` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
@@ -261,7 +261,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.typeof($delay) != 'number' {
+    @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `fade` mixin.' +
           'The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -280,7 +280,7 @@
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
-    } @else if (math.is-unitless($iterations) and meta.typeof($iterations) == 'number') or
+    } @else if (math.is-unitless($iterations) and meta.type-of($iterations) == 'number') or
       $iterations ==
       initial or
       $iterations ==

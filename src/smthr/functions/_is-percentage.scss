@@ -7,5 +7,5 @@
 /// @param {*} $value - A value to be checked.
 /// @return {Boolean} True if $value is a percentage, false if it is not.
 @function is-percentage($value) {
-  @return meta.typeof($value) == 'number' and math.unit($value) == '%';
+  @return meta.type-of($value) == 'number' and math.unit($value) == '%';
 }

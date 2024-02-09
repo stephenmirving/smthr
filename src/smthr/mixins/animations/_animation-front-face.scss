@@ -14,7 +14,7 @@
 @mixin animation-front-face($z-index: 20) {
   @extend %animation-faces;
 
-  @if $z-index and meta.typeof($z-index) == 'number' and math.is-unitless($z-index)
+  @if $z-index and meta.type-of($z-index) == 'number' and math.is-unitless($z-index)
   {
     z-index: $z-index;
   }

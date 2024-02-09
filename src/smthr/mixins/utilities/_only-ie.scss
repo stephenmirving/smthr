@@ -19,7 +19,7 @@
 /// @alias ie-only
 @mixin only-ie($version1: null, $version2: $version1) {
   @if $version1 {
-    @if meta.typeof($version1) != 'number' or meta.typeof($version2) != 'number'
+    @if meta.type-of($version1) != 'number' or meta.type-of($version2) != 'number'
     {
       @error 'Invalid data type passed to the `only-ie` mixin. You must pass ' +
           'one or two numbers to indicate a range of IE versions being targeted.';

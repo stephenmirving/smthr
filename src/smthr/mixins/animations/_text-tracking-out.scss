@@ -49,27 +49,27 @@
   $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53),
   $anim-num: null
 ) {
-  @if $expand-contract and $meta.typeof($expand-contract) == 'string' {
+  @if $expand-contract and $meta.type-of($expand-contract) == 'string' {
     $expand-contract: string.to-lower-case($expand-contract);
   }
 
-  @if $direction and $meta.typeof($direction) == 'string' {
+  @if $direction and $meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
   }
 
-  @if $origin and $meta.typeof($origin) == 'string' {
+  @if $origin and $meta.type-of($origin) == 'string' {
     $origin: string.to-lower-case($origin);
   }
 
-  @if $delay and $meta.typeof($delay) == 'string' {
+  @if $delay and $meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+  @if $timing-func and $meta.type-of($timing-func) == 'string' {
     $timing-func: string.to-lower-case($timing-func);
   }
 
@@ -141,7 +141,7 @@
         '`text-tracking-out` mixin.';
   }
 
-  @if meta.typeof($timing) != 'number' {
+  @if meta.type-of($timing) != 'number' {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the ' +
         '`text-tracking-out` mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
@@ -182,7 +182,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.typeof($delay) != 'number' {
+    @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of [#{meta.inspect($delay)}] for the ' +
           '`text-tracking-out` mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -203,7 +203,7 @@
   }
 
   @if $iterations {
-    @if meta.typeof($iterations) == 'string' {
+    @if meta.type-of($iterations) == 'string' {
       $iterations: string.to-lower-case($iterations);
     }
 
@@ -211,7 +211,7 @@
     {
       $iterations: infinite;
     } @else if (
-        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
       initial or

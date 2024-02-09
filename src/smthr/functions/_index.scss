@@ -3,7 +3,6 @@
 @forward 'entity';
 @forward 'missing-dependencies';
 @forward 'order-index';
-@forward 'str-replace';
 
 // Is-Type Functions
 @forward 'is-number';
@@ -41,9 +40,15 @@
 @forward 'conv-to-em';
 @forward 'conv-to-rem';
 
+// String Functions
+
+@forward 'str-replace';
+@forward 'str-to-list';
+
 // List Functions
 @forward 'functions-walk';
 @forward 'in-list';
+@forward 'list-to-string';
 @forward 'purge-list';
 @forward 'remove-list';
 @forward 'remove-where';
@@ -52,12 +57,12 @@
 @forward 'walk';
 
 // Map Functions
-@forward 'get-val';
-@forward 'map-get-deep-val';
+@forward 'font-stack';
 @forward 'map-get-val';
+@forward 'map-get-deep-val';
 @forward 'map-set-val';
 @forward 'map-set-deep';
-@forward 'font-stack';
+@forward 'map-to-string';
 @forward 'map-to-list';
 
 // Color Functions

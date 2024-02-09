@@ -19,7 +19,7 @@
     $size: $size * 1px;
   }
 
-  @if $side and meta.typeof($side) == 'string' {
+  @if $side and meta.type-of($side) == 'string' {
     $side: string.to-lower-case($side);
   }
 

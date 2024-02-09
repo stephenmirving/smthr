@@ -9,7 +9,7 @@
 /// @return {Boolean} True if $value is a resolution, false if it is not.
 @function is-resolution($value) {
   @return (
-    meta.typeof($value) == 'number' and
+    meta.type-of($value) == 'number' and
     list.index('dpi' 'dpcm' 'dppx' 'x', math.unit($value)) != null
   );
 }

@@ -61,19 +61,19 @@
     @error 'You must enter an image width for the $bg-width parameter of the ' +
         '`bg-image-svg` mixin.';
   } @else if
-    meta.typeof($bg-width) !=
+    meta.type-of($bg-width) !=
     'number' or
-    ($bg-height and $bg-height != auto and meta.typeof($bg-height) != 'number')
+    ($bg-height and $bg-height != auto and meta.type-of($bg-height) != 'number')
   {
     @error 'Invalid type for the dimensions used in the `bg-image-svg` mixin.';
   } @else {
     $bg-width: if(
-      meta.typeof($bg-width) == 'number' and math.is-unitless($bg-width),
+      meta.type-of($bg-width) == 'number' and math.is-unitless($bg-width),
       $bg-width * 1px,
       $bg-width
     );
     $bg-height: if(
-      meta.typeof($bg-height) == 'number' and math.is-unitless($bg-height),
+      meta.type-of($bg-height) == 'number' and math.is-unitless($bg-height),
       $bg-height * 1px,
       $bg-height
     );
@@ -112,7 +112,7 @@
   background: url(#{$svg-img-name}), linear-gradient(transparent, transparent);
 
   // Scaled up version of the image for HiDPI displays
-  @media screen and (min-device-pixel-ratio: $ratio),
+  @media screen and (-webkit-min-device-pixel-ratio: $ratio),
     only screen and (min-resolution: $ratio * 96dpi),
     only screen and (min-resolution: $ratio * 1dppx) {
     background: url(#{$ret-png-img}); // 2x PNG fallback image

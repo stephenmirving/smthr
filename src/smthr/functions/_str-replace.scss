@@ -1,10 +1,13 @@
+@use 'sass:string';
+
 /// Replace `$search` with `$replace` in `$string`.
 /// @access public
 ///
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.
-/// @param {String} $replace ('') - The new value that replaces `$search`.
+/// @param {String} $replace [''] - The new value that replaces `$search`.
 /// @return {String} The updated string.
+/// @alias string-replace
 @function str-replace($string, $search, $replace: '') {
   $index: string.index($string, $search);
 
@@ -20,4 +23,16 @@
   }
 
   @return $string;
+}
+
+/// Replace `$search` with `$replace` in `$string`.
+/// @access public
+///
+/// @param {String} $string - The initial string.
+/// @param {String} $search - The substring to replace.
+/// @param {String} $replace ('') - The new value that replaces `$search`.
+/// @return {String} The updated string.
+/// @alias str-replace
+@function string-replace($string, $search, $replace: '') {
+  @return str-replace($string, $search, $replace);
 }

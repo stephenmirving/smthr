@@ -80,7 +80,7 @@
   @if not $timing {
     $timing: list.length($colors) * 2s;
   } @else {
-    @if meta.typeof($timing) != 'number' {
+    @if meta.type-of($timing) != 'number' {
       @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `color-shifter` ' +
           'mixin. The timing property must be a number.';
     }
@@ -126,7 +126,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.typeof($delay) != 'number' {
+    @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `color-shifter` ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {

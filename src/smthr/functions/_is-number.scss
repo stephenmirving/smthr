@@ -6,5 +6,5 @@
 /// @param {*} $value - A value to be checked.
 /// @return {Boolean} True if $value is a number, false if it is not.
 @function is-number($value) {
-  @return meta.typeof($value) == 'number';
+  @return meta.type-of($value) == 'number';
 }

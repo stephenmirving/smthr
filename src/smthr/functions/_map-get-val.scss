@@ -9,7 +9,7 @@
 /// @param {String} $key - Name of the map key.
 /// @return {List} Found value.
 @function map-get-val($map, $key) {
-  @if meta.typeof($map) ==
+  @if meta.type-of($map) ==
     'map' or
     (meta.type-of($map) == 'list' and list.length($map) == 0)
   {

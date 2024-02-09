@@ -18,7 +18,7 @@
   // Default rotation for the flip-axis value of horizontal
   $trans-val: rotateX(180deg);
 
-  @if meta.typeof($flip-axis) != 'string' {
+  @if meta.type-of($flip-axis) != 'string' {
     @error 'Value of $flip-axis passed to the `animation-back-face` mixin ' +
         'must be of type "string".';
   }
@@ -69,7 +69,7 @@
 
   transform: $trans-val;
 
-  @if $z-val and meta.typeof($z-val) == 'number' and math.is-unitless($z-val) {
+  @if $z-val and meta.type-of($z-val) == 'number' and math.is-unitless($z-val) {
     z-index: $z-val;
   }
 }

@@ -56,23 +56,23 @@
   $is-on-axis: false;
   $is-diagonal: false;
 
-  @if $up-or-down and meta.typeof($up-or-down) == 'string' {
+  @if $up-or-down and meta.type-of($up-or-down) == 'string' {
     $up-or-down: string.to-lower-case($up-or-down);
   }
 
-  @if $axis and meta.typeof($axis) == 'string' {
+  @if $axis and meta.type-of($axis) == 'string' {
     $axis: string.to-lower-case($axis);
   }
 
-  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $delay and $meta.typeof($delay) == 'string' {
+  @if $delay and $meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+  @if $timing-func and $meta.type-of($timing-func) == 'string' {
     $timing-func: string.to-lower-case($timing-func);
   }
 
@@ -201,7 +201,7 @@
     }
   }
 
-  @if meta.typeof($timing) != 'number' {
+  @if meta.type-of($timing) != 'number' {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the ' +
         '`rotate-scale` mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
@@ -242,7 +242,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.typeof($delay) != 'number' {
+    @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `rotate-scale` ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -260,7 +260,7 @@
   }
 
   @if $iterations {
-    @if meta.typeof($iterations) != 'string' {
+    @if meta.type-of($iterations) != 'string' {
       $iterations: string.to-lower-case($iterations);
     }
 
@@ -268,7 +268,7 @@
     {
       $iterations: infinite;
     } @else if (
-        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
       initial or

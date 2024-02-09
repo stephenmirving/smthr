@@ -1,4 +1,4 @@
-@use './get-val';
+@use './map-get-val';
 
 /// Returns the font stack chosen from a font-stack map.
 /// @access public
@@ -7,7 +7,7 @@
 /// @param {Map} $map - Map to retrieve a font-stack value from.
 /// @return {List} Found font-stack value.
 ///
-/// @require {function} get-val
+/// @require {function} map-get-val
 @function font-stack($stack, $map: $font-stack) {
-  @return get-val($map, $stack);
+  @return map-get-val($map, $stack);
 }

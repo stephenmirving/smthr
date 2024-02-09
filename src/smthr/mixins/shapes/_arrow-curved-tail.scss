@@ -20,7 +20,7 @@
 
   // Mixin will only accept direction keywords and degree units
   @if $direction and
-    meta.typeof($direction) ==
+    meta.type-of($direction) ==
     'number' and
     math.unit($direction) !=
     'deg' and not
@@ -32,7 +32,7 @@
 
   @if $direction {
     @if
-      meta.typeof($direction) ==
+      meta.type-of($direction) ==
         'number' and
         (math.is-unitless($direction) or math.unit($direction) == 'deg')
     {

@@ -1,3 +1,5 @@
+@use 'sass:meta';
+
 /// Uses box-shadow to give an element a depth effect based on Google's
 /// Material Design principles.
 ///
@@ -13,8 +15,9 @@
 /// @alias card-depth
 /// @alias shadow-depth
 /// @alias shadow-level
+/// @alias add-shadow
 @mixin depth-level($level) {
-  @if meta.typeof($level) != 'number' or $level > 5 {
+  @if meta.type-of($level) != 'number' or $level > 5 {
     @error 'Invalid $level of [ #{meta.inspect($level)} ] used in the mixin ' +
       ' [ depth-level ]. Value must be a number between 0 and 5 inclusive.';
   } @else if $level < 1 {
@@ -39,6 +42,7 @@
 /// @alias depth-level
 /// @alias shadow-depth
 /// @alias shadow-level
+/// @alias add-shadow
 @mixin card-depth($level) {
   @include depth-level($level);
 }
@@ -58,6 +62,7 @@
 /// @alias depth-level
 /// @alias card-depth
 /// @alias shadow-level
+/// @alias add-shadow
 @mixin shadow-depth($level) {
   @include depth-level($level);
 }
@@ -77,6 +82,27 @@
 /// @alias depth-level
 /// @alias card-depth
 /// @alias shadow-depth
+/// @alias add-shadow
 @mixin shadow-level($level) {
+  @include depth-level($level);
+}
+
+/// Uses box-shadow to give an element a depth effect based on Google's
+/// Material Design principles.
+///
+/// @link https://material.io/design/environment/light-shadows.html
+/// @link https://material.io/design/environment/elevation.html
+///
+/// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+///
+/// @group Utilities
+/// @require {function} top-shadow
+/// @require {function} bottom-shadow
+/// @throw Invalid $level value.
+/// @alias depth-level
+/// @alias card-depth
+/// @alias shadow-depth
+/// @alias shadow-level
+@mixin add-shadow($level) {
   @include depth-level($level);
 }

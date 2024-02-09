@@ -9,7 +9,7 @@
 ///
 /// @group Utilities
 @mixin text-outline($color: hsl(0 0 0.392), $is-important: false) {
-  @if meta.typeof($is-important) == 'string' {
+  @if meta.type-of($is-important) == 'string' {
     $is-important: string.to-lower-case($is-important);
   }
 

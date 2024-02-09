@@ -55,7 +55,7 @@
   $height: $size,
   $anim-num: null
 ) {
-  @if meta.typeof($direction) != 'string' {
+  @if meta.type-of($direction) != 'string' {
     @error 'Invalid $direction unit type for the `pan-wipe` mixin. Value must' +
         ' be of type "string".';
   }
@@ -65,12 +65,12 @@
   $pos-val2: 100% 50%;
   $direction: string.to-lower-case($direction);
   $delay: if(
-    meta.typeof($delay) == 'string',
+    meta.type-of($delay) == 'string',
     string.to-lower-case($delay),
     $delay
   );
   $anim-dir: if(
-    meta.typeof($anim-dir) == 'string',
+    meta.type-of($anim-dir) == 'string',
     string.to-lower-case($anim-dir),
     $anim-dir
   );
@@ -170,7 +170,7 @@
     @error 'Invalid direction of [#{meta.inspect($direction)}] for the `pan-wipe` mixin.';
   }
 
-  @if meta.typeof($timing) != 'number' {
+  @if meta.type-of($timing) != 'number' {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `pan-wipe` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
@@ -210,7 +210,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.typeof($delay) != 'number' {
+    @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `pan-wipe` ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -228,7 +228,7 @@
   }
 
   @if $iterations {
-    @if meta.typeof($iterations) ==
+    @if meta.type-of($iterations) ==
       'string' and
       (
         string.to-lower-case($iterations) ==
@@ -241,7 +241,7 @@
     {
       $iterations: infinite;
     } @else if (
-        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
       initial or

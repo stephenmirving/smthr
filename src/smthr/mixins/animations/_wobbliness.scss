@@ -46,19 +46,19 @@
   $dir-val5: translateX(9px) rotate(2.4deg);
   $dir-val6: translateX(-6px) rotate(-1.2deg);
 
-  @if $direction and $meta.typeof($direction) == 'string' {
+  @if $direction and $meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
   }
 
-  @if $delay and $meta.typeof($delay) == 'string' {
+  @if $delay and $meta.type-of($delay) == 'string' {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and meta.typeof($anim-dir) == 'string' {
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $timing-func and $meta.typeof($timing-func) == 'string' {
+  @if $timing-func and $meta.type-of($timing-func) == 'string' {
     $timing-func: string.to-lower-case($timing-func);
   }
 
@@ -105,7 +105,7 @@
       '`wobbliness` mixin.';
   }
 
-  @if meta.typeof($timing) != 'number' {
+  @if meta.type-of($timing) != 'number' {
     @error 'Invalid timing value of [#{meta.inspect($timing)}] for the ' +
         '`wobbliness` mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
@@ -146,7 +146,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.typeof($delay) != 'number' {
+    @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `wobbliness` ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -164,7 +164,7 @@
   }
 
   @if $iterations {
-    @if meta.typeof($iterations) == 'string' {
+    @if meta.type-of($iterations) == 'string' {
       $iterations: string.to-lower-case($iterations);
     }
 
@@ -172,7 +172,7 @@
     {
       $iterations: infinite;
     } @else if (
-        math.is-unitless($iterations) and meta.typeof($iterations) == 'number'
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
       initial or
