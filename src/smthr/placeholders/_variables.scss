@@ -11,7 +11,7 @@ $base-font-size: 16 !default;
 /// @access public
 /// @type Map
 /// @todo Fill out the stack with the fonts you choose for your theme
-$font-stack: (
+$font-stacks: (
   'primary': (
     Roboto,
     system-ui,

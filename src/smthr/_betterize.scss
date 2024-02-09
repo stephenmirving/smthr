@@ -8,7 +8,7 @@
 
 @use 'sass:meta';
 @use 'sass:map';
-@use './smth';
+@use './smth' as smth;
 
 ////////////////////////////////////////
 // BASE STYLES: opinionated defaults ///
@@ -70,8 +70,8 @@ html {
 }
 
 ::selection {
-  background: $color-selection-highlight;
-  color: $color-selection-text;
+  background: smth.$color-selection-highlight;
+  color: smth.$color-selection-text;
   text-shadow: none;
 }
 
@@ -95,11 +95,12 @@ body {
   min-height: 100dvh;
   margin: 0;
   color: smth.$color-body;
-  @if (
-    meta.function-exists('font-stack') and
-      meta.global-variable-exists('font-stack') and
-      map.has-key($font-stack, 'primary')
-  ) {
+
+  @if
+    meta.function-exists('font-stack', 'smth') and
+    meta.global-variable-exists('font-stack', 'smth') and
+    map.has-key(smth.$font-stacks, 'primary')
+  {
     font-family: smth.font-stack('primary');
   }
 
@@ -214,9 +215,9 @@ samp {
   $font-family: ui-monospace, Consolas, 'Liberation Mono', Menlo, monospace;
 
   @if (
-    meta.function-exists('font-stack') and
-      meta.global-variable-exists('font-stack') and
-      map.has-key($font-stack, 'monospace')
+    meta.function-exists('font-stack', 'smth') and
+      meta.global-variable-exists('font-stack', 'smth') and
+      map.has-key(smth.$font-stacks, 'monospace')
   ) {
     $font-family: smth.font-stack('monospace');
   }
@@ -285,8 +286,8 @@ dialog {
   padding: 1em;
   border: solid;
   margin: auto;
-  background-color: if(meta.global-variable-exists('white'), $white, #fff);
-  color: if(meta.global-variable-exists('off-black'), $off-black, #222);
+  background-color: if(meta.global-variable-exists('white', 'smth'), smth.$white, #fff);
+  color: if(meta.global-variable-exists('off-black', 'smth'), smth.$off-black, #222);
 }
 
 ///
@@ -673,7 +674,7 @@ svg:not([fill]) {
 }
 
 .clearfix {
-  @include clearfix;
+  @include smth.clearfix;
 }
 
 // Modern way to clear floats

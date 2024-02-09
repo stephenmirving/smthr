@@ -6,7 +6,16 @@
 /// @group Utilities
 /// @require {placeholder} visually-hide
 @mixin hide-visually($focusable: false) {
-  @extend %visually-hide;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(100%);
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  white-space: nowrap;
 
   @if $focusable {
     &:active,
@@ -27,7 +36,7 @@
 ///
 /// @group Utilities
 @mixin show-visually {
-  position: static !important;
+  position: static;
   overflow: visible;
   clip: auto;
   clip-path: none;

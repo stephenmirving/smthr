@@ -6,6 +6,8 @@
 @use 'sass:list';
 @use './smth' as smth;
 
+@forward './betterize';
+
 @mixin responsive-ratio($x, $y, $content-class-name) {
   position: relative;
 
@@ -24,7 +26,6 @@
     left: 0;
   }
 }
-
 
 div {
   content: smth.strip-unit(3rem);
