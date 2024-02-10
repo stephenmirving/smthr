@@ -41,6 +41,6 @@
     border-right-style: solid;
     border-left-width: 0;
   } @else {
-    @error 'Invalid direction of [#{meta.inspect($direction)}] for the `triangle` mixin.';
+    @error 'Invalid direction of [ #{meta.inspect($direction)} ] for the `triangle` mixin.';
   }
 }

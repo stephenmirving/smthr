@@ -55,7 +55,7 @@
   } @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
   } @else {
-    @error 'Invalid value for $in-or-out of [#{meta.inspect($in-or-out)}] ' +
+    @error 'Invalid value for $in-or-out of [ #{meta.inspect($in-or-out)} ] ' +
         'for the `bounce` mixin.';
   }
 
@@ -107,7 +107,7 @@
   {
     $direction: 'top';
   } @else {
-    @error '[#{meta.inspect($direction)}] is not a valid direction for the `bounce` mixin.';
+    @error '[ #{meta.inspect($direction)} ] is not a valid direction for the `bounce` mixin.';
   }
 
   @if $in-or-out {
@@ -209,13 +209,13 @@
     $timing: if(($in-or-out), 1.1s, 1.5s);
   }
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `bounce` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `bounce` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `bounce` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `bounce` ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -250,12 +250,12 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `bounce` ' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `bounce` ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `bounce` ' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `bounce` ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -286,7 +286,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for the ' +
+      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ] for the ' +
           '`bounce` mixin.';
     }
   }
@@ -333,7 +333,7 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
+    @error 'Invalid animation-direction value of [ #{meta.inspect($anim-dir)} ] for the ' +
         '`bounce` mixin';
   }
 

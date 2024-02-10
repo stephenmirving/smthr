@@ -51,7 +51,7 @@
   {
     clip-path: polygon(100% 75%, 50% 100%, 0 75%, 0 0, 50% 25%, 100% 0);
   } @else {
-    @error 'Invalid direction value of [#{meta.inspect($direction)}] for the `chevron` mixin';
+    @error 'Invalid direction value of [ #{meta.inspect($direction)} ] for the `chevron` mixin';
   }
 
   width: $size;

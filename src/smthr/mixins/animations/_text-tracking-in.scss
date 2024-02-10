@@ -109,7 +109,7 @@
   {
     $direction: false;
   } @else {
-    @error 'Invalid $direction value of [#{meta.inspect($direction)}] for the ' +
+    @error 'Invalid $direction value of [ #{meta.inspect($direction)} ] for the ' +
         '`text-tracking-in` mixin.';
   }
 
@@ -141,13 +141,13 @@
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-tracking-in` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `text-tracking-in` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-tracking-in` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `text-tracking-in` ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -181,12 +181,12 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `text-tracking-in` ' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `text-tracking-in` ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `text-tracking-in` ' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `text-tracking-in` ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -215,7 +215,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for the ' +
+      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ] for the ' +
           '`text-tracking-in` mixin.';
     }
   } @else {
@@ -263,7 +263,7 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] ' +
+    @error 'Invalid animation-direction value of [ #{meta.inspect($anim-dir)} ] ' +
         'for the `text-tracking-in` mixin';
   }
 

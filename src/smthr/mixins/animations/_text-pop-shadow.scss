@@ -30,8 +30,9 @@
 /// @throw Invalid $delay value
 /// @throw Invalid $anim-dir value
 @mixin text-pop-shadow(
-  $direction: 'top',
-  $timing: 0.6s,
+  $direction: 'bottom-left',
+  $timing: 0.7s,
+  $color: #555,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -41,15 +42,24 @@
   // Default value for the 'top' direction
   $trans-val1: translateY(0);
   $shadow-val:
-    0 -1px #555,
-    0 -2px #555,
-    0 -3px #555,
-    0 -4px #555,
-    0 -5px #555,
-    0 -6px #555,
-    0 -7px #555,
-    0 -8px #555;
+    0 -1px $color,
+    0 -2px $color,
+    0 -3px $color,
+    0 -4px $color,
+    0 -5px $color,
+    0 -6px $color,
+    0 -7px $color,
+    0 -8px $color;
   $trans-val2: translateY(8px);
+
+  @if $color and meta.type-of($color) != 'color' {
+    @error 'Invalid $color value of [ #{meta.inspect($color)} ] for the '
+        '[ text-pop-shadow ] mixin.';
+  }
+
+  @if not $color {
+    $color: #555;
+  }
 
   @if meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
@@ -87,26 +97,26 @@
     $trans-val1: translateX(0) translateY(0);
     $trans-val2: translateX(-8px) translateY(8px);
     $shadow-val:
-      1px -1px #555,
-      2px -2px #555,
-      3px -3px #555,
-      4px -4px #555,
-      5px -5px #555,
-      6px -6px #555,
-      7px -7px #555,
-      8px -8px #555;
+      1px -1px $color,
+      2px -2px $color,
+      3px -3px $color,
+      4px -4px $color,
+      5px -5px $color,
+      6px -6px $color,
+      7px -7px $color,
+      8px -8px $color;
   } @else if $direction == 'right' or $direction == 'r' {
     $trans-val1: translateX(0);
     $trans-val2: translateX(-8px);
     $shadow-val:
-      1px 0 #555,
-      2px 0 #555,
-      3px 0 #555,
-      4px 0 #555,
-      5px 0 #555,
-      6px 0 #555,
-      7px 0 #555,
-      8px 0 #555;
+      1px 0 $color,
+      2px 0 $color,
+      3px 0 $color,
+      4px 0 $color,
+      5px 0 $color,
+      6px 0 $color,
+      7px 0 $color,
+      8px 0 $color;
   } @else if
     $direction ==
     'bottom-right' or
@@ -128,26 +138,26 @@
     $trans-val1: translateX(0) translateY(0);
     $trans-val2: translateX(-8px) translateY(-8px);
     $shadow-val:
-      1px 1px #555,
-      2px 2px #555,
-      3px 3px #555,
-      4px 4px #555,
-      5px 5px #555,
-      6px 6px #555,
-      7px 7px #555,
-      8px 8px #555;
+      1px 1px $color,
+      2px 2px $color,
+      3px 3px $color,
+      4px 4px $color,
+      5px 5px $color,
+      6px 6px $color,
+      7px 7px $color,
+      8px 8px $color;
   } @else if $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
   {
     $trans-val2: translateY(-8px);
     $shadow-val:
-      0 1px #555,
-      0 2px #555,
-      0 3px #555,
-      0 4px #555,
-      0 5px #555,
-      0 6px #555,
-      0 7px #555,
-      0 8px #555;
+      0 1px $color,
+      0 2px $color,
+      0 3px $color,
+      0 4px $color,
+      0 5px $color,
+      0 6px $color,
+      0 7px $color,
+      0 8px $color;
   } @else if
     $direction ==
     'bottom-left' or
@@ -169,26 +179,26 @@
     $trans-val1: translateX(0) translateY(0);
     $trans-val2: translateX(8px) translateY(-8px);
     $shadow-val:
-      -1px 1px #555,
-      -2px 2px #555,
-      -3px 3px #555,
-      -4px 4px #555,
-      -5px 5px #555,
-      -6px 6px #555,
-      -7px 7px #555,
-      -8px 8px #555;
+      -1px 1px $color,
+      -2px 2px $color,
+      -3px 3px $color,
+      -4px 4px $color,
+      -5px 5px $color,
+      -6px 6px $color,
+      -7px 7px $color,
+      -8px 8px $color;
   } @else if $direction == 'left' or $direction == 'l' {
     $trans-val1: translateX(0);
     $trans-val2: translateX(8px);
     $shadow-val:
-      -1px 0 #555,
-      -2px 0 #555,
-      -3px 0 #555,
-      -4px 0 #555,
-      -5px 0 #555,
-      -6px 0 #555,
-      -7px 0 #555,
-      -8px 0 #555;
+      -1px 0 $color,
+      -2px 0 $color,
+      -3px 0 $color,
+      -4px 0 $color,
+      -5px 0 $color,
+      -6px 0 $color,
+      -7px 0 $color,
+      -8px 0 $color;
   } @else if
     $direction ==
     'top-left' or
@@ -210,27 +220,27 @@
     $trans-val1: translateX(0) translateY(0);
     $trans-val2: translateX(8px) translateY(8px);
     $shadow-val:
-      -1px -1px #555,
-      -2px -2px #555,
-      -3px -3px #555,
-      -4px -4px #555,
-      -5px -5px #555,
-      -6px -6px #555,
-      -7px -7px #555,
-      -8px -8px #555;
+      -1px -1px $color,
+      -2px -2px $color,
+      -3px -3px $color,
+      -4px -4px $color,
+      -5px -5px $color,
+      -6px -6px $color,
+      -7px -7px $color,
+      -8px -8px $color;
   } @else if $direction != 'top' and $direction != 't' {
-    @error 'Invalid direction value of [#{meta.inspect($direction)}] for the ' +
+    @error 'Invalid direction value of [ #{meta.inspect($direction)} ] for the ' +
         '`text-pop-shadow` mixin.';
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-pop-shadow` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `text-pop-shadow` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-pop-shadow` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `text-pop-shadow` ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -263,13 +273,13 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `text-pop-shadow` ' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `text-pop-shadow` ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `text-pop-shadow` ' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `text-pop-shadow` ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -298,7 +308,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for the ' +
+      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ] for the ' +
           '`text-pop-shadow` mixin.';
     }
   } @else {
@@ -346,14 +356,12 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
+    @error 'Invalid animation-direction value of [ #{meta.inspect($anim-dir)} ] for the ' +
         '`text-pop-shadow` mixin';
   }
 
   @if not
     $timing-func or
-    $timing-func ==
-    true or
     $timing-func ==
     'none' or
     $timing-func ==
@@ -365,7 +373,9 @@
     $timing-func ==
     'default' or
     $timing-func ==
-    'd'
+    'd' or
+    $timing-func ==
+    'ease'
   {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
@@ -387,14 +397,14 @@
     @keyframes txt-pop-shadow#{$anim-num} {
       0% {
         text-shadow:
-          0 0 #555,
-          0 0 #555,
-          0 0 #555,
-          0 0 #555,
-          0 0 #555,
-          0 0 #555,
-          0 0 #555,
-          0 0 #555;
+          0 0 $color,
+          0 0 $color,
+          0 0 $color,
+          0 0 $color,
+          0 0 $color,
+          0 0 $color,
+          0 0 $color,
+          0 0 $color;
         transform: #{$trans-val1};
       }
 

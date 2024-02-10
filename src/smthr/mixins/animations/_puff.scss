@@ -74,7 +74,7 @@
   } @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
   } @else {
-    @error 'Invalid $in-or-out value of [#{meta.inspect($in-or-out)}] for the `puff` mixin.';
+    @error 'Invalid $in-or-out value of [ #{meta.inspect($in-or-out)} ] for the `puff` mixin.';
   }
 
   @if $direction {
@@ -246,7 +246,7 @@
     {
       $direction: 'center';
     } @else {
-      @error 'Invalid direction of [#{meta.inspect($direction)}] chosen for the ' +
+      @error 'Invalid direction of [ #{meta.inspect($direction)} ] chosen for the ' +
           '`puff` mixin.';
     }
   } @else {
@@ -273,13 +273,13 @@
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `puff` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `puff` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `puff` mixin.' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `puff` mixin.' +
         'The timing property must be in either s or ms units.';
   } @else if math.unit($timing) == 'ms' and $timing % 100 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -308,13 +308,13 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `puff` mixin.' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `puff` mixin.' +
           'The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `puff` mixin.' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `puff` mixin.' +
           'The delay property must be in either s or ms units.';
     } @else if math.unit($delay) == 'ms' and $delay % 100 == 0ms {
       // If time in ms would be shorter as seconds, convert it
@@ -326,6 +326,7 @@
     @if meta.type-of($iterations) != 'string' {
       $iterations: string.to-lower-case($iterations);
     }
+
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
@@ -339,7 +340,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}]' +
+      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ]' +
           ' for the `puff` mixin.';
     }
   }
@@ -369,24 +370,23 @@
   } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
   {
     $anim-dir: alternate;
-  } @else if (
-      $anim-dir ==
-        'alternate-reverse' or
-        $anim-dir ==
-        'alternatereverse' or
-        $anim-dir ==
-        'alt-rev' or
-        $anim-dir ==
-        'altrev' or
-        $anim-dir ==
-        'a-r' or
-        $anim-dir ==
-        'ar'
-    )
+  } @else if
+    $anim-dir ==
+    'alternate-reverse' or
+    $anim-dir ==
+    'alternatereverse' or
+    $anim-dir ==
+    'alt-rev' or
+    $anim-dir ==
+    'altrev' or
+    $anim-dir ==
+    'a-r' or
+    $anim-dir ==
+    'ar'
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
+    @error 'Invalid animation-direction value of [ #{meta.inspect($anim-dir)} ] for the ' +
         '`puff` mixin';
   }
 

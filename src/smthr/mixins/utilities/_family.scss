@@ -537,7 +537,7 @@
         @content;
       }
     } @else {
-      @error 'Invalid direction value of [#{meta.inspect($direction)}] for ' +
+      @error 'Invalid direction value of [ #{meta.inspect($direction)} ] for ' +
           'the `child-index` mixin. You must choose a direction of either ' +
           '`forward` or `backward`.';
     }

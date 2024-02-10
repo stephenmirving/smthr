@@ -74,7 +74,7 @@
   } @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
   } @else {
-    @error 'Invalid $in-or-out value of [#{meta.inspect($in-or-out)}] for the ' +
+    @error 'Invalid $in-or-out value of [ #{meta.inspect($in-or-out)} ] for the ' +
         '`slit` mixin.';
   }
 
@@ -136,13 +136,13 @@
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `slit` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `slit` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `slit` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `slit` ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -176,12 +176,12 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `slit`' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `slit`' +
           ' mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `slit`' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `slit`' +
           ' mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -214,7 +214,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}]' +
+      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ]' +
           ' for the `slit` mixin.';
     }
   } @else {
@@ -262,7 +262,7 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}]' +
+    @error 'Invalid animation-direction value of [ #{meta.inspect($anim-dir)} ]' +
         ' for the `slit` mixin';
   }
 

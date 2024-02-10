@@ -58,17 +58,17 @@
   } @else if not $in-or-out or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
   } @else {
-    @error 'Invalid in-out value of [#{meta.inspect($in-or-out)}] for the `text-flicer` mixin';
+    @error 'Invalid in-out value of [ #{meta.inspect($in-or-out)} ] for the `text-flicer` mixin';
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-flicker` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `text-flicker` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `text-flicker` ' +
+    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `text-flicker` ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -102,12 +102,12 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the ' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the ' +
           '`text-flicker` mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the ' +
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the ' +
           '`text-flicker` mixin. The delay property must be in either ' +
           's or ms units.';
     } @else if $delay % 10 == 0ms {
@@ -137,7 +137,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for ' +
+      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ] for ' +
           'the `text-flicker` mixin.';
     }
   }
@@ -184,7 +184,7 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
+    @error 'Invalid animation-direction value of [ #{meta.inspect($anim-dir)} ] for the ' +
         '`text-flicker` mixin';
   }
 

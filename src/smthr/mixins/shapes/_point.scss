@@ -52,7 +52,7 @@
     {
       clip-path: polygon(100% 0, 100% 75%, 50% 100%, 0 75%, 0 0);
     } @else {
-      @error 'Invalid direction of [#{meta.inspect($direction)}] for the `point` mixin.';
+      @error 'Invalid direction of [ #{meta.inspect($direction)} ] for the `point` mixin.';
     }
   } @else {
     @error 'You must choose a direction for the `point` mixin.';

@@ -2,7 +2,8 @@
 @use 'sass:list';
 @use 'sass:math';
 
-/// Applied to the parent element of an element that includes a 3-D animation.
+/// Apply the animation stage to the parent element of any element that has
+/// a 3-D animation.
 ///
 /// @param {Length|Keyword} $perspective [500px] - The perspective value that
 /// will effect the child element's 3-d animation.
@@ -31,9 +32,24 @@
   $z-index: null,
   $height: null
 ) {
+  @if $width {
+    width: $width;
+  }
+
   @if $height {
     height: $height;
   }
+
+  @if $z-index and
+    meta.type-of($z-index) ==
+    'number' and
+    math.is-unitless($z-index)
+  {
+    z-index: $z-index;
+  }
+
+  user-select: none;
+
   @if (
       meta.type-of($perspective) ==
         'number' and
@@ -48,13 +64,6 @@
   {
     perspective: $perspective;
   }
+
   perspective-origin: $p-origin;
-  user-select: none;
-  @if $width {
-    width: $width;
-  }
-  @if $z-index and meta.type-of($z-index) == 'number' and math.is-unitless($z-index)
-  {
-    z-index: $z-index;
-  }
 }
