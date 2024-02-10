@@ -72,13 +72,5 @@
 /// @group Utilities
 /// @alias center-horizontally
 @mixin horizontal-center($position: relative) {
-  @if $position != relative and $position != absolute {
-    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
-        '`horizontal-center()` mixin is invalid. You must choose between ' +
-        'relative or absolute positioning.';
-  }
-
-  position: $position;
-  left: 50%;
-  transform: translateX(-50%);
+  @include center-horizontally($position);
 }

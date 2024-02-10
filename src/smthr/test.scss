@@ -8,7 +8,6 @@
 @use './smth' as smth;
 
 div {
-  color: smth.conv-color(rgb(180, 24, 4));
-
-  content: smth.to-fixed(1.81818181deg);
+  color: smth.conv-color(lightblue, hsl);
+  @include smth.size(smth.clamp-size(1rem, 4vw, 10rem));
 }

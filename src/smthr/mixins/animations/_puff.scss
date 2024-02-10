@@ -81,16 +81,14 @@
     @if meta.type-of($direction) == 'string' {
       $direction: string.to-lower-case($direction);
     }
-    @if (
-      $direction ==
-        'top' or
+    @if $direction == 'top' or
         $direction ==
         't' or
         $direction ==
         'up' or
         $direction ==
         'u'
-    ) {
+    {
       $blur-val1: blur(2px);
       $blur-val2: blur(0);
       $t-origin-val: 50% 0%;
@@ -390,11 +388,7 @@
         '`puff` mixin';
   }
 
-  @if (
-    not
-      $timing-func or
-      $timing-func ==
-      true or
+  @if not $timing-func or
       $timing-func ==
       'none' or
       $timing-func ==
@@ -407,7 +401,7 @@
       'default' or
       $timing-func ==
       'd'
-  ) {
+  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: if(

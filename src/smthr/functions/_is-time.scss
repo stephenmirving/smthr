@@ -22,6 +22,5 @@
 ///
 /// @alias is-time
 @function is-duration($value) {
-  @return meta.type-of($value) == 'number' and
-    list.index('ms' 's', math.unit($value)) != null;
+  @return is-time($value);
 }

@@ -2,6 +2,7 @@
 @use 'sass:math';
 @use 'sass:list';
 @use './strip-unit' as *;
+@use '../placeholders/variables' as *;
 
 /// Converts values into rem units.
 /// @access public
@@ -18,7 +19,12 @@
   // If no base is defined, defer to the $base-font-size variable. If that does
   // not exist, default to 16
   @if not $base {
-    $base: if(meta.global-variable-exists(base-font-size), $base-font-size, 16);
+    $base: if(
+      meta.variable-exists('base-font-size') or
+      meta.global-variable-exists('base-font-size', smth),
+      $base-font-size,
+      16
+    );
   }
 
   // If the base font size is a %, then multiply it by 16px
@@ -60,7 +66,7 @@
 @function _px-to-rem($value, $base: null) {
   @if meta.type-of($value) != 'number' {
     @error meta.inspect($value) + ', which is not a number, was passed ' +
-        'to conv-to-rem().';
+        'to the [ conv-to-rem() ] function.';
   }
 
   // Transform em into rem if someone hands over 'em's

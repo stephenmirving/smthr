@@ -1,4 +1,3 @@
-@use 'sass:meta';
 @use 'sass:math';
 
 /// Helper function that mixes black with a given opacity level.
@@ -16,14 +15,13 @@
     @error 'Invalid data type passed to black(). Opacity must be a number.';
   }
   @if not math.is-unitless($opacity) and math.unit($opacity) != '%' {
-    @error 'Invalid opacity unit type of [ #{meta.inspect(math.unit($opacity))} ] passed' +
+    @error 'Invalid opacity unit type of [ #{math.unit($opacity)} ] passed' +
         ' to black(). Opacity must be a unitless decimal or a percentage.';
   }
-  @if (
-    (math.unit($opacity) == '%' and ($opacity < 0% or $opacity > 100%)) or
+  @if (math.unit($opacity) == '%' and ($opacity < 0% or $opacity > 100%)) or
       (math.is-unitless($opacity) and ($opacity < 0 or $opacity > 1))
-  ) {
-    @error 'Invalid opacity level of [ #{meta.inspect($opacity)} ] passed to black().';
+  {
+    @error 'Invalid opacity level of [ #{$opacity} ] passed to black().';
   }
 
   @if math.unit($opacity) == '%' {

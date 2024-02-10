@@ -1,5 +1,6 @@
 @use 'sass:meta';
 @use 'sass:string';
+@use '../placeholders/variables' as *;
 
 /// A simply asset file location builder.
 /// @access private
@@ -11,7 +12,7 @@
 /// @require {variable} $asset-base-path
 @function _asset($type, $file) {
   $asset-path: if(
-    meta.global-variable-exists(asset-base-path),
+    meta.variable-exists('asset-base-path') or meta.global-variable-exists('asset-base-path', smth),
     $asset-base-path,
     '../assets'
   );

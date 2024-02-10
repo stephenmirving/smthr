@@ -34,7 +34,8 @@
 ) {
   @if not $btn-transition {
     $btn-transition: if(
-      meta.global-variable-exists(button-transition),
+      meta.variable-exists('button-transition') or
+      meta.global-variable-exists('button-transition', smth),
       $button-transition,
       (background-color 0.2s ease-out, color 0.2s ease-out)
     );

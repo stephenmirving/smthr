@@ -17,17 +17,17 @@
 /// @alias clamp-val
 @function clamp-size($min, $value, $max) {
   @if not is-length($min) {
-    @error 'Invalid $min value of `#{meta.inspect($min)}` for ' +
+    @error 'Invalid $min value of `#{$min}` for ' +
         '`clamp-size()` function. Value must be a valid length unit.';
   }
 
   @if not is-length($value) {
-    @error 'Invalid $value value of `#{meta.inspect($value)}` for ' +
+    @error 'Invalid $value value of `#{$value}` for ' +
         '`clamp-size()` function. Value must be a valid length unit.';
   }
 
   @if not is-length($max) {
-    @error 'Invalid $max value of `#{meta.inspect($max)}` for ' +
+    @error 'Invalid $max value of `#{$max}` for ' +
         '`clamp-size()` function. Value must be a valid length unit.';
   }
 
@@ -49,5 +49,5 @@
 /// will return the $max.
 /// @alias clamp-size
 @function clamp-val($min, $value, $max) {
-  @return min(max($min, $value), $max);
+  @return clamp-size($min, $value, $max)
 }

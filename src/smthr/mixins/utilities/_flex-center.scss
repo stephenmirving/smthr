@@ -41,14 +41,10 @@
     'y'
   {
     $horizontal: true;
-  } @else if not
-    $horizontal or
-    $horizontal ==
-    'f' or
-    $horizontal ==
-    'no' or
-    $horizontal ==
-    'n'
+  } @else if not $horizontal or
+    $horizontal == 'f' or
+    $horizontal =='no' or
+    $horizontal == 'n'
   {
     $horizontal: false;
   } @else {

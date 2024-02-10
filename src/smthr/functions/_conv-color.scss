@@ -21,11 +21,16 @@
 @function conv-color($color, $syntax: hsl) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to `conv-color()` function. You passed ' +
-      '[ #{meta.inspect($color)} ] for the $color argument, which is not a ' +
-      'valid color.';
+      '[ #{$color} ] for the $color argument, which is not a ' +
+      'a color that can be converted from.';
   }
 
   $color-alpha: color.alpha($color);
+  $color-hue: to-fixed(color.hue($color));
+  $color-lightness: to-fixed(color.lightness($color));
+  $color-saturation: to-fixed(color.saturation($color));
+  $color-whiteness: to-fixed(color.whiteness($color));
+  $color-blackness: to-fixed(color.blackness($color));
 
   @if meta.type-of($syntax) == 'string' {
     $syntax: string.to-lower-case($syntax);
@@ -34,7 +39,7 @@
        'the `conv-color()` function. Value of $syntax must be a string.';
   }
 
-  @if $syntax == 'hex' {
+  @if $syntax == 'hex' or $syntax == '#' {
     @return to-hex($color);
   } @else if $syntax == 'rgb' {
     @if $color-alpha == 1 {
@@ -49,52 +54,44 @@
       color.blue($color) + ', ' + $color-alpha + ')'};
   } @else if $syntax == 'hsl' {
     @if $color-alpha == 1 {
-      @return #{'hsl(' + to-fixed(color.hue($color)) + ' ' +
+      @return #{'hsl(' + strip-unit($color-hue) + ' ' +
         to-fixed(color.saturation($color)) + ' ' +
         to-fixed(color.lightness($color)) + ')'};
     } @else {
-      @return #{'hsl(' + to-fixed(color.hue($color)) + ' ' +
+      @return #{'hsl(' + strip-unit($color-hue) + ' ' +
         to-fixed(color.saturation($color)) + ' ' +
         to-fixed(color.lightness($color)) + ' / ' + $color-alpha + ')'};
     }
   } @else if $syntax == 'hsla' {
-    @return #{'hsla(' + to-fixed(color.hue($color)) + ', ' +
-      to-fixed(color.saturation($color)) + '%, ' +
-      to-fixed(color.lightness($color)) + '%, ' + $color-alpha + ')'};
-  } @else if $syntax == 'lab' {
-    @if $color-alpha == 1 {
-      @return #{'lab(' + math.round(color.lab-lightness($color)) + '% ' +
-        math.round(color.lab-a($color)) + ' ' + math.round(color.lab-b($color)) +
-        ')'};
-    } @else {
-      @return #{'lab(' + math.round(color.lab-lightness($color)) + '% ' +
-        math.round(color.lab-a($color)) + ' ' + math.round(color.lab-b($color)) +
-        ' / ' + $color-alpha + ')'};
-    }
+    @return #{'hsla(' + strip-unit($color-hue) + ', ' +
+      to-fixed(color.saturation($color)) + ', ' +
+      to-fixed(color.lightness($color)) + ', ' + $color-alpha + ')'};
   } @else if $syntax == 'lch' {
     @if $color-alpha == 1 {
-      @return #{'lch(' + math.round(color.lch-lightness($color)) + '% ' +
-        math.round(color.lch-chroma($color)) + ' ' +
-        math.round(color.lch-hue($color)) + ')'};
+      @return #{'lch(' + math.round(color.lightness($color)) + '% ' +
+        math.round(color.saturation($color)) + ' ' +
+        math.round(color.hue($color)) + ')'};
     } @else {
-      @return #{'lch(' + math.round(color.lch-lightness($color)) + '% ' +
-        math.round(color.lch-chroma($color)) + ' ' +
-        math.round(color.lch-hue($color)) + ' / ' + $color-alpha + ')'};
+      @return #{'lch(' + math.round(color.lightness($color)) + '% ' +
+        math.round(color.saturation($color)) + ' ' +
+        math.round(color.hue($color)) + ' / ' + $color-alpha + ')'};
     }
   } @else if $syntax == 'hwb' {
     @if $color-alpha == 1 {
-      @return #{'hwb(' + math.round(color.hue($color)) + ' ' +
+      @return #{'hwb(' + math.round($color-hue) + ' ' +
         math.round(color.whiteness($color)) + '% ' +
         math.round(color.blackness($color)) + '%)'};
     } @else {
-      @return #{'hwb(' + math.round(color.hue($color)) + ' ' +
+      @return #{'hwb(' + math.round($color-hue) + ' ' +
         math.round(color.whiteness($color)) + '% ' +
         math.round(color.blackness($color)) + '% / ' + $color-alpha + ')'};
     }
   } @else {
-    @error 'Invalid value of [ #{meta.inspect($syntax)} ] passed to ' +
+    @error 'Invalid $syntax value of [ #{$syntax} ] passed to ' +
        'the `conv-color()` function. Value of $syntax must be a string ' +
-       'representing a valid CSS color function specification.';
+       'representing a valid CSS color function specification. This function ' +
+       'supports the following $syntax values: [ hex, \'#\', rgb, rgba, hsl, ' +
+       'hsla, ';
   }
 }
 

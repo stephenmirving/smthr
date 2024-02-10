@@ -2,7 +2,7 @@
 // -------------------------------------------------------------------------- //
 // betterize.scss - Opinionated normalization for better cross-browser design //
 // @author Stephen M Irving -- <@metric_dev> -------------------------------- //
-// @version 0.9.9 01/16/2024 ------------------------------------------------ //
+// @version 0.9.9 02/10/2024 ------------------------------------------------ //
 // -------------------------------------------------------------------------- //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -96,8 +96,7 @@ body {
   margin: 0;
   color: smth.$color-body;
 
-  @if
-    meta.function-exists('font-stack', 'smth') and
+  @if meta.function-exists('font-stack', 'smth') and
     meta.global-variable-exists('font-stack', 'smth') and
     map.has-key(smth.$font-stacks, 'primary')
   {
@@ -214,11 +213,13 @@ pre,
 samp {
   $font-family: ui-monospace, Consolas, 'Liberation Mono', Menlo, monospace;
 
-  @if (
-    meta.function-exists('font-stack', 'smth') and
-      meta.global-variable-exists('font-stack', 'smth') and
-      map.has-key(smth.$font-stacks, 'monospace')
-  ) {
+  @if meta.function-exists('font-stack', 'smth') and
+    (
+      meta.variable-exists('font-stack') or
+        meta.global-variable-exists('font-stack', smth)
+    ) and
+    map.has-key(smth.$font-stacks, 'monospace')
+  {
     $font-family: smth.font-stack('monospace');
   }
 
@@ -286,8 +287,16 @@ dialog {
   padding: 1em;
   border: solid;
   margin: auto;
-  background-color: if(meta.global-variable-exists('white', 'smth'), smth.$white, #fff);
-  color: if(meta.global-variable-exists('off-black', 'smth'), smth.$off-black, #222);
+  background-color: if(
+    meta.global-variable-exists('white', 'smth'),
+    smth.$white,
+    #fff
+  );
+  color: if(
+    meta.global-variable-exists('off-black', 'smth'),
+    smth.$off-black,
+    #222
+  );
 }
 
 ///

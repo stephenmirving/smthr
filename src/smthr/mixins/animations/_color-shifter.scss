@@ -104,8 +104,7 @@
     }
   }
 
-  @if (
-    $delay ==
+  @if $delay ==
       0 or
       $delay ==
       0s or
@@ -122,7 +121,7 @@
       $delay ==
       nil or not
       $delay
-  ) {
+  {
     $delay: null;
   }
   @if $delay {

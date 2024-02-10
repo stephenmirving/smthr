@@ -69,13 +69,5 @@
 /// @group Utilities
 /// @alias center-vertically
 @mixin vertical-center($position: relative) {
-  @if $position != relative and $position != absolute {
-    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
-        '`vertical-center()` mixin is invalid. You must choose between ' +
-        'relative or absolute positioning.';
-  }
-
-  position: $position;
-  top: 50%;
-  transform: translateY(-50%);
+  @include center-vertically($position);
 }

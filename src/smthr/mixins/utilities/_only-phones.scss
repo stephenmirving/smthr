@@ -81,34 +81,7 @@
   $target-all-devices: false,
   $min-resolution-ratio: 1.8
 ) {
-  @if math.is-unitless($max-phone-width) {
-    $max-phone-width: $max-phone-width * 1px;
-  }
-
-  @if math.unit($max-phone-width) == 'rem' {
-    $max-phone-width: strip-unit($max-phone-width) * 1em;
-  }
-
-  @if math.unit($max-phone-width) == 'px' {
-    $max-phone-width: conv-to-em($max-phone-width);
-  }
-
-  @if not $target-all-devices or $min-resolution == 1 {
-    @media screen and (max-width: $max-phone-width) {
-      @content;
-    }
-  } @else {
-    @media
-      screen and (max-width: $maxwidth) and
-      (-webkit-min-device-pixel-ratio: $min-resolution-ratio),
-
-      screen and (max-width: $max-phone-width) and
-      (min-resolution: ($min-resolution-ratio * 96dpi)),
-
-      screen and (max-width: $max-phone-width) and
-      (min-resolution: ($min-resolution-ratio * 1dppx))
-    {
-      @content;
-    }
+  @include only-phones {
+    @content;
   }
 }

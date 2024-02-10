@@ -19,7 +19,7 @@
 /// @group Utilities
 /// @alias only-webkit
 @mixin webkit-only {
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
+  @include only-webkit {
     @content;
   }
 }

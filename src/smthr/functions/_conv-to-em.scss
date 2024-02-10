@@ -1,5 +1,6 @@
 @use 'sass:meta';
 @use 'sass:math';
+@use '../placeholders/variables' as *;
 
 /// Converts a pixel value into em units.
 /// @access public
@@ -11,17 +12,16 @@
 /// @require {function} strip-unit
 /// @throw Invalid data type or units for $pixels
 @function conv-to-em($pixels, $base-context: null) {
-  @if (
-    meta.type-of($pixels) !=
-      'number' or
-      (
-        meta.type-of($pixels) ==
-          'number' and not
-          math.is-unitless($pixels) and
-          math.unit($pixels) !=
-          'px'
-      )
-  ) {
+  @if meta.type-of($pixels) !=
+    'number' or
+    (
+      meta.type-of($pixels) ==
+        'number' and not
+        math.is-unitless($pixels) and
+        math.unit($pixels) !=
+        'px'
+    )
+  {
     @error 'Invalid value of (#{meta.inspect($pixels)}) passed to conv-to-em().' +
         ' Value of $pixels must be number in px units.';
   }
@@ -30,7 +30,8 @@
   // not exist, default to 16
   @if not $base-context {
     $base-context: if(
-      meta.global-variable-exists(base-font-size),
+      meta.variable-exists('base-font-size') or
+        meta.global-variable-exists('base-font-size', smth),
       $base-font-size,
       16
     );

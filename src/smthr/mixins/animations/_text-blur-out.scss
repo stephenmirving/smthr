@@ -57,22 +57,20 @@
   }
 
   @if not $timing-func {
-    @if (
-      not
-        $style or
-        $style ==
-        'expand' or
-        $style ==
-        'exp' or
-        $style ==
-        'e' or
-        $style ==
-        'forward' or
-        $style ==
-        'fwd' or
-        $style ==
-        'f'
-    ) {
+    @if not $style or
+      $style ==
+      'expand' or
+      $style ==
+      'exp' or
+      $style ==
+      'e' or
+      $style ==
+      'forward' or
+      $style ==
+      'fwd' or
+      $style ==
+      'f'
+    {
       $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     } @else {
       $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53);

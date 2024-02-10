@@ -1,6 +1,7 @@
 @use 'sass:string';
 @use 'sass:map';
 @use 'sass:meta';
+@use '../../placeholders/variables' as *;
 
 /// Apply a background image with a version that is scaled to 2x for Retina and
 /// other HiDPI displays.
@@ -30,8 +31,12 @@
   $bg-width,
   $bg-height: $bg-width,
   $ratio: 1.3,
-  $img-2x-suffix:
-    if(meta.global-variable-exists(image-2x-suffix), $image-suffix-2x, '@2x'),
+  $img-2x-suffix: if(
+    meta.variable-exists('image-suffix-2x') or
+    meta.global-variable-exists('image-suffix-2x' smth),
+    $image-suffix-2x,
+    '@2x'
+  ),
   $extra-hidpi-properties: null
 ) {
   $hidpi-img: $img-name;
@@ -143,11 +148,11 @@
     );
 
     @warn 'You are using an unknown file type on the image you referenced in ' +
-        'the `bg-image` mixin. Please ensure you are using a valid image file' +
+        'the [ bg-image() ] mixin. Please ensure you are using a valid image file' +
         ' type. If you use an unknown file type with multiple `.` characters ' +
         'the `bg-image` mixin may not work correctly.';
   } @else {
-    @error 'The image you referenced in the `bg-image` mixin does not have a ' +
+    @error 'The image you referenced in the [ bg-image() ] mixin does not have a ' +
         'file extension. Please use the full image name including the ' +
         'image\'s file extension.';
   }

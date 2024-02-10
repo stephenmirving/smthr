@@ -227,8 +227,7 @@
     }
   }
 
-  @if (
-    $delay ==
+  @if $delay ==
       0 or
       $delay ==
       0s or
@@ -245,7 +244,7 @@
       $delay ==
       nil or not
       $delay
-  ) {
+  {
     $delay: null;
   }
   @if $delay {
@@ -291,9 +290,7 @@
     }
   }
 
-  @if (
-    not
-      $anim-dir or
+  @if not $anim-dir or
       $anim-dir ==
       'none' or
       $anim-dir ==
@@ -310,7 +307,7 @@
       'normal' or
       $anim-dir ==
       'nor'
-  ) {
+  {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
@@ -337,11 +334,7 @@
         '`bounce` mixin';
   }
 
-  @if (
-    not
-      $timing-func or
-      $timing-func ==
-      true or
+  @if not $timing-func or
       $timing-func ==
       'none' or
       $timing-func ==
@@ -356,7 +349,7 @@
       'd' or
       $timing-func ==
       'ease'
-  ) {
+  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: null;

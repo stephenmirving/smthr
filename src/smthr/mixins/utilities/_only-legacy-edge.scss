@@ -17,7 +17,7 @@
 /// @group Utilities
 /// @alias only-edge
 @mixin legacy-edge-only {
-  @supports (position: -ms-page) {
+  @include only-legacy-edge {
     @content;
   }
 }

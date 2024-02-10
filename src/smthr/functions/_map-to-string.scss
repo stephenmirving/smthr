@@ -8,7 +8,7 @@
 /// @param {String} $pair-separator [', '] - The separator to use between
 /// the key and value of each pair.
 ///
-/// @returns {String} The converted string.
+/// @return {String} The converted string.
 @function map-to-string($map, $separator: ', ', $pair-separator: ': ') {
   $str: '';
 

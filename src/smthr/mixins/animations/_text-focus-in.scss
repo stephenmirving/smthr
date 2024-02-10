@@ -213,9 +213,7 @@
     $anim-num: '-' + $anim-num;
   }
 
-  @if (
-    $style ==
-      'forward' or
+  @if $style == 'forward' or
       $style ==
       'fwd' or
       $style ==
@@ -228,7 +226,7 @@
       'back' or
       $style ==
       'b'
-  ) {
+  {
     transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
   }

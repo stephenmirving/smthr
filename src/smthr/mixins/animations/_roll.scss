@@ -121,9 +121,7 @@
     $direction: null;
   }
 
-  @if (
-    not
-      $blurred or
+  @if not $blurred or
       $blurred ==
       nil or
       $blurred ==
@@ -136,7 +134,7 @@
       'n/a' or
       $blurred ==
       'n'
-  ) {
+  {
     $blurred: false;
   } @else if
     $blurred ==
@@ -248,9 +246,7 @@
     $iterations: null;
   }
 
-  @if (
-    not
-      $anim-dir or
+  @if not $anim-dir or
       $anim-dir ==
       'none' or
       $anim-dir ==
@@ -267,7 +263,7 @@
       'normal' or
       $anim-dir ==
       'nor'
-  ) {
+  {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;

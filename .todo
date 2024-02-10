@@ -1,13 +1,15 @@
 TODO:
 
   General Changes:
-    ☐ Convert code to use the new sass module system @started(20-02-14 16:06)
-      ☐ Get all the dependencies from built in sass modules switched over
+    ☐ Convert color mixin needs more testing and
+    ☐ add display-p3 vivid color funtion
+    ✔ Convert code to use the new sass module system @started(20-02-14 16:06) @done(24-02-09 23:10) @lasted(3y51w4d7h4m33s)
+      ✔ Get all the dependencies from built in sass modules switched over @done(24-02-09 23:10)
       ✔ Finish using applying what you learned about @forward in _index.scss files @done(20-02-16 16:56)
-      ☐ Check to see if it is working still
+      ✔ Check to see if it is working still @done(24-02-09 23:10)
     ✔ Go through betterize and remove anything that is for a dead browser @done(20-02-14 16:06)
     ☐ Parse down all the direction decision trees using a direction alias map @started(20-02-14 15:46)
-    ☐ Fix opacity function
+    ✔ Fix opacity function @done(24-02-09 23:17)
     ☐ Examine responsive font mixin
     ✔ Fix all the @error and @warn messages where a variable is interpolated, replace #{$var} with #{meta.inspect($var)} @done(19-08-13 00:51)
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
@@ -37,7 +39,7 @@ TODO:
     ☐ Finish and propogate line-clamp mixin
     ☐ Add .sass versions of responsive-square mixin
     ☐ Fix _family fork - first-child/last-child mixin, adding of-type functionality to first/last
-    ☐ Fix the `size` mixin, it errors out if you pass it function generated sizes like with calc
+    ✔ Fix the `size` mixin, it errors out if you pass it function generated sizes like with calc @done(24-02-10 02:18)
     ✔ Go back to the align-vertically, abs-center, and align-horizontally mixins and test whether to switch back to absolute positioning @done(19-08-13 01:07)
     ☐ Add !important flag to mixins that may need to have it, text-outline for example
     ☐ Create more flex-box prefix mixins
@@ -68,14 +70,13 @@ TODO:
       ☐ Function propogated to a prefixed version and sass versions
     ☐ Change name of clamp function so as not to conflict with the native CSS clamp. `preclamp()` maybe?
     ☐ Add more entity codes to the entity function
-    ☐ Copy the entity() function to all versions
-    ☐ Convert mixins from _family.scss into functions for non-nested selector use
+    ✔ Copy the entity() function to all versions @done(24-02-09 23:33)
     ☐ Fix the ratio-to-percentage mixin
     ✔ Finish the pi() function and propogate across all versions @done(19-08-30 01:28)
     ✔ Finish the angle conversion function and propogate across all versions @done(19-08-30 01:27)
     ✔ Propogate is-string() across all versions @started(19-09-15 19:42) @done(19-09-15 19:45) @lasted(3m25s)
     ☐ Special character detecting function, finish and propogate
-    ☐ Check if a string contains a reserved word
+    ✔ Check if a string contains a reserved word @done(24-02-10 02:18)
 
   Test Site:
     ☐ Mobile first

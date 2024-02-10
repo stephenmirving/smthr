@@ -142,7 +142,8 @@
     $direction: 'left';
 
     transform-origin: 0% 50%;
-  } @else if (
+  } @else if
+    (
       $direction ==
         'top-left' or
         $direction ==
@@ -202,7 +203,8 @@
       } @else if $direction == 'bottom' {
         $trans-origin-val: 0% 50%;
       }
-    } @else if (
+    } @else if
+      (
         $axis ==
           'horizontal' or
           $axis ==
@@ -216,14 +218,13 @@
       $trans-val1: scaleX(1);
       $trans-val2: scaleX(0.3);
 
-      @if (
+      @if $direction !=
+        'left' and
         $direction !=
-          'left' and
-          $direction !=
-          'right' and
-          $direction !=
-          'center'
-      ) {
+        'right' and
+        $direction !=
+        'center'
+      {
         @error 'You have chosen an axis value of `horizontal` that cannot be ' +
             'used with the direction value of [ #{meta.inspect($direction)} ] for the ' +
             '`scale-down` mixin. A horizontal axis must have direction value of ' +
@@ -252,7 +253,7 @@
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if  string.slice($timing + '', 1, 2) == '0.' {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.unquote(string.slice($timing + '', 2));
     }
   }
@@ -300,11 +301,11 @@
       $iterations: string.to-lower-case($iterations);
     }
 
-    @if (
-      $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    ) {
+    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
+    {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         (
             math.is-unitless($iterations) and
               meta.type-of($iterations) ==
@@ -370,24 +371,21 @@
         ' for the `scale-down` mixin';
   }
 
-  @if (
-    not
-      $timing-func or
-      $timing-func ==
-      true or
-      $timing-func ==
-      'none' or
-      $timing-func ==
-      'no' or
-      $timing-func ==
-      'n' or
-      $timing-func ==
-      'def' or
-      $timing-func ==
-      'default' or
-      $timing-func ==
-      'd'
-  ) {
+  @if not
+    $timing-func or
+    $timing-func ==
+    'none' or
+    $timing-func ==
+    'no' or
+    $timing-func ==
+    'n' or
+    $timing-func ==
+    'def' or
+    $timing-func ==
+    'default' or
+    $timing-func ==
+    'd'
+  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);

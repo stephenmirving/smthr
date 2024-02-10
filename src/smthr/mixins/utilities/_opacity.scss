@@ -1,5 +1,7 @@
 @use 'sass:math';
 @use 'sass:meta';
+@use '../../functions/is-percentage' as *;
+@use '../../functions/strip-unit' as *;
 
 /// Takes a given value in either 0-1 decimal or 2-100 integer scale and applies
 /// that level of opacity.
@@ -11,10 +13,17 @@
 /// @group Utilities
 /// @throw $opacity out of range
 @mixin opacity($opacity) {
+  @if not math.is-unitless($opacity) and math.unit($opacity) != '%' {
+    @error 'Invalid opacity value of [ #{meta.inspect($opacity)} ] passed to' +
+        'the [ opacity() ] mixin. $opacity must be a decimal between 0 and 1 ' +
+        'inclusive or a percentage value between 0% and 100% inclusive.';
+  }
+
   @if $opacity > 1 or math.unit($opacity) == '%' {
     @if $opacity > 100 {
-      @warn 'Opacity was set to [ #{meta.inspect($opacity)} ] on an element. ' +
-          'Value has been changed to the max of 1.';
+      @warn 'The $opacity was set to [ #{meta.inspect($opacity)} ] on an ' +
+          'element by the [ opacity ] mixin. The value has been changed ' +
+          'to the max of 1.';
 
       $opacity: 100;
     }

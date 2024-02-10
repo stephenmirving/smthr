@@ -133,9 +133,7 @@
     $iterations: null;
   }
 
-  @if (
-    not
-      $anim-dir or
+  @if not $anim-dir or
       $anim-dir ==
       'none' or
       $anim-dir ==
@@ -152,7 +150,7 @@
       'normal' or
       $anim-dir ==
       'nor'
-  ) {
+  {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
@@ -179,26 +177,15 @@
         'for the [ text-glitch ] mixin';
   }
 
-  @if (
-    not
-      $timing-func or
-      $timing-func ==
-      true or
-      $timing-func ==
-      'none' or
-      $timing-func ==
-      'no' or
-      $timing-func ==
-      'n' or
-      $timing-func ==
-      'def' or
-      $timing-func ==
-      'default' or
-      $timing-func ==
-      'd' or
-      $timing-func ==
-      0
-  ) {
+  @if not $timing-func or
+      $timing-func == 'none' or
+      $timing-func == 'no' or
+      $timing-func == 'n' or
+      $timing-func == 'def' or
+      $timing-func == 'default' or
+      $timing-func == 'd' or
+      $timing-func == 0
+  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: null;
