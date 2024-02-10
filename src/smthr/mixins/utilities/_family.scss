@@ -32,6 +32,27 @@
   }
 }
 
+/// Select all children of type from the first to `$num`.
+///
+/// @content [Write the style you want to apply to the children, and it will be
+/// added within the @content directive]
+///
+/// @param {Integer} $num - All child elements counted from the first to this
+/// number will be selected.
+///
+/// @group Utilities
+@mixin first-of-type($num: 1) {
+  @if $num == 1 {
+    &:first-of-type {
+      @content;
+    }
+  } @else {
+    &:nth-of-type(-n + #{$num}) {
+      @content;
+    }
+  }
+}
+
 /// Select all children from the last to `$num`.
 ///
 /// @content [Write the style you want to apply to the children, and it will be
@@ -48,6 +69,27 @@
     }
   } @else {
     &:nth-last-child(-n + #{$num}) {
+      @content;
+    }
+  }
+}
+
+/// Select all children of type from the last to `$num`.
+///
+/// @content [Write the style you want to apply to the children, and it will be
+/// added within the @content directive]
+///
+/// @param {Integer} $num - All child elements counted from the last to this
+/// number will be selected.
+///
+/// @group Utilities
+@mixin last-of-type($num: 1) {
+  @if $num == 1 {
+    &:last-of-type {
+      @content;
+    }
+  } @else {
+    &:nth-last-of-type(-n + #{$num}) {
       @content;
     }
   }

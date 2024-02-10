@@ -1,26 +1,12 @@
 TODO:
 
   General Changes:
-    ☐ Convert color mixin needs more testing and
-    ☐ add display-p3 vivid color funtion
-    ✔ Convert code to use the new sass module system @started(20-02-14 16:06) @done(24-02-09 23:10) @lasted(3y51w4d7h4m33s)
-      ✔ Get all the dependencies from built in sass modules switched over @done(24-02-09 23:10)
-      ✔ Finish using applying what you learned about @forward in _index.scss files @done(20-02-16 16:56)
-      ✔ Check to see if it is working still @done(24-02-09 23:10)
-    ✔ Go through betterize and remove anything that is for a dead browser @done(20-02-14 16:06)
-    ☐ Parse down all the direction decision trees using a direction alias map @started(20-02-14 15:46)
-    ✔ Fix opacity function @done(24-02-09 23:17)
+    ☐ Parse down all the direction decision trees using a direction alias map
     ☐ Examine responsive font mixin
-    ✔ Fix all the @error and @warn messages where a variable is interpolated, replace #{$var} with #{meta.inspect($var)} @done(19-08-13 00:51)
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
-    ☐ Make all alias mixins only reference the original instead of repeating code
-    ☐ Look at the only-browser mixins and others to see if they are outdated and should be removed
     ☐ Take a look at the line-clamp mixin
-    ✔ Add !important to display: none for the [hidden] attribute in _betterize.scss @done(19-08-13 00:52)
-    ✔ Change documentation for bg-image and bg-image-svg, remove part where it says a quoted string is required @done(19-08-13 01:56)
-    ✔ Make sure all the animations are fixed for chrome by adding the moz-only on the backface-visibility property on the animation @done(19-08-13 01:56)
     ☐ Add .sass version back in
-    ☐ Modernize betterize.scss
+    ✔ Modernize betterize.scss @done(24-02-10 14:55)
 
   Animations Mixins:
     ☐ Find ones I haven't done yet and complete one
@@ -33,24 +19,21 @@ TODO:
     ☐ Propogate the updated version of arrow-curved-tail
 
   Color Mixins:
-    ☐ Fix color mixins by using the built in color.scale sass module
+    ✔ Fix color mixins by using the built in color.scale sass module @done(24-02-10 14:54)
 
   Utility Mixins:
     ☐ Finish and propogate line-clamp mixin
     ☐ Add .sass versions of responsive-square mixin
-    ☐ Fix _family fork - first-child/last-child mixin, adding of-type functionality to first/last
-    ✔ Fix the `size` mixin, it errors out if you pass it function generated sizes like with calc @done(24-02-10 02:18)
-    ✔ Go back to the align-vertically, abs-center, and align-horizontally mixins and test whether to switch back to absolute positioning @done(19-08-13 01:07)
-    ☐ Add !important flag to mixins that may need to have it, text-outline for example
+    ✔ Fix _family fork - first-child/last-child mixin, adding of-type functionality to first/last @done(24-02-10 14:53)
+    ✔ Add !important flag to mixins that may need to have it, text-outline for example @done(24-02-10 14:53)
     ☐ Create more flex-box prefix mixins
-      ✔ Finished flex-flow mixin @done(19-08-13 01:54)
       ☐ Finish testing and copying over flex-flow mixin
+    ☐ Create new CSS grid mixins and functions
     ☐ Copy over page-break mixin from the print-reports workspace
       ☐ Finish it if necessary
       ☐ Propogate it across all
     ☐ Finish the font-face mixin then propogate it
     ☐ Allow opacity mixin to take percentages
-    ☐ Add rem-fallback mixin - exisisting version currently saved to OneDrive
     ☐ Finish propogating responsive-ratio mixin to the dist folder
     ☐ Finish propogating pseudo mixin to the dist folder
 
@@ -68,15 +51,10 @@ TODO:
       ☐ Function finished
       ☐ Function added to main build file
       ☐ Function propogated to a prefixed version and sass versions
-    ☐ Change name of clamp function so as not to conflict with the native CSS clamp. `preclamp()` maybe?
+    ✔ Change name of clamp function so as not to conflict with the native CSS clamp. `preclamp()` maybe? @done(24-02-10 14:52)
     ☐ Add more entity codes to the entity function
-    ✔ Copy the entity() function to all versions @done(24-02-09 23:33)
     ☐ Fix the ratio-to-percentage mixin
-    ✔ Finish the pi() function and propogate across all versions @done(19-08-30 01:28)
-    ✔ Finish the angle conversion function and propogate across all versions @done(19-08-30 01:27)
-    ✔ Propogate is-string() across all versions @started(19-09-15 19:42) @done(19-09-15 19:45) @lasted(3m25s)
     ☐ Special character detecting function, finish and propogate
-    ✔ Check if a string contains a reserved word @done(24-02-10 02:18)
 
   Test Site:
     ☐ Mobile first
@@ -91,6 +69,27 @@ TODO:
 ================================================================================
 
 Archive:
+  ✔ Convert color mixin needs more testing and @done(24-02-10 03:04) @project(TODO.General Changes)
+  ✔ Convert code to use the new sass module system @started(20-02-14 16:06) @done(24-02-09 23:10) @lasted(3y51w4d7h4m33s) @project(TODO.General Changes)
+  ✔ Get all the dependencies from built in sass modules switched over @done(24-02-09 23:10) @project(TODO.General Changes)
+  ✔ Finish using applying what you learned about @forward in _index.scss files @done(20-02-16 16:56) @project(TODO.General Changes)
+  ✔ Check to see if it is working still @done(24-02-09 23:10) @project(TODO.General Changes)
+  ✔ Go through betterize and remove anything that is for a dead browser @done(20-02-14 16:06) @project(TODO.General Changes)
+  ✔ Fix opacity function @done(24-02-09 23:17) @project(TODO.General Changes)
+  ✔ Fix all the @error and @warn messages where a variable is interpolated, replace #{$var} with #{meta.inspect($var)} @done(19-08-13 00:51) @project(TODO.General Changes)
+  ✔ Make all alias mixins only reference the original instead of repeating code @done(24-02-10 04:14) @project(TODO.General Changes)
+  ✔ Look at the only-browser mixins and others to see if they are outdated and should be removed @done(24-02-10 04:14) @project(TODO.General Changes)
+  ✔ Add !important to display: none for the [hidden] attribute in _betterize.scss @done(19-08-13 00:52) @project(TODO.General Changes)
+  ✔ Change documentation for bg-image and bg-image-svg, remove part where it says a quoted string is required @done(19-08-13 01:56) @project(TODO.General Changes)
+  ✔ Make sure all the animations are fixed for chrome by adding the moz-only on the backface-visibility property on the animation @done(19-08-13 01:56) @project(TODO.General Changes)
+  ✔ Fix the `size` mixin, it errors out if you pass it function generated sizes like with calc @done(24-02-10 02:18) @project(TODO.Utility Mixins)
+  ✔ Go back to the align-vertically, abs-center, and align-horizontally mixins and test whether to switch back to absolute positioning @done(19-08-13 01:07) @project(TODO.Utility Mixins)
+  ✔ Finished flex-flow mixin @done(19-08-13 01:54) @project(TODO.Utility Mixins)
+  ✔ Copy the entity() function to all versions @done(24-02-09 23:33) @project(TODO.Functions)
+  ✔ Finish the pi() function and propogate across all versions @done(19-08-30 01:28) @project(TODO.Functions)
+  ✔ Finish the angle conversion function and propogate across all versions @done(19-08-30 01:27) @project(TODO.Functions)
+  ✔ Propogate is-string() across all versions @started(19-09-15 19:42) @done(19-09-15 19:45) @lasted(3m25s) @project(TODO.Functions)
+  ✔ Check if a string contains a reserved word @done(24-02-10 02:18) @project(TODO.Functions)
   ✔ Modify black() and white() to allow for percentages as well as decimals @done(19-08-01 00:24) @project(TODO.Utility Mixins)
   ✔ Rename all normalize versions 'betterize' @started(19-07-28 00:29) @done(19-07-28 00:30) @lasted(1m12s) @project(TODO.General Changes)
   ✔ Reorder all elements into groups in the import files @done(19-07-26 00:17) @project(TODO.General Changes)

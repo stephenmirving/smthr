@@ -67,10 +67,13 @@
 @forward 'map-to-list';
 
 // Color Functions
+@forward 'color-invert';
+@forward 'color-complement';
 @forward 'black';
 @forward 'white';
 @forward 'shade';
 @forward 'tint';
+@forward 'to-cmyk';
 @forward 'to-hex';
 @forward 'conv-color';
 @forward 'bottom-shadow';

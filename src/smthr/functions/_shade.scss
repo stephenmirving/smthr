@@ -1,12 +1,44 @@
 @use 'sass:color';
+@use 'sass:meta';
+@use './is-percentage' as *;
 
-/// Darken a color by mixing it with black at a given percentage.
+/// Darken a color by a given percentage using the built-in color.scale() method.
 /// @access public
 ///
 /// @param {Color} $color - The color being darkened.
-/// @param {Number} $percentage - The percentage of black mixed into the
-/// returned color.
+/// @param {Number} $percentage - The percentage of lightness to remove from
+/// the color.
 /// @return {Color} - The darkened color.
+///
+/// @throw Invalid $color type error.
+/// @throw Invalid $percentage type error.
+/// @alias darker
 @function shade($color, $percentage) {
-  @return color.mix(#000, $color, $percentage);
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid data type passed to [ shade() ] function. You passed ' +
+      '[ #{$color} ] for the $color argument, which is not a ' +
+      'a color that can be darkened by this function.';
+  }
+
+  // If $percentage is a unitless number, convert to a percentage.
+  @if meta.type-of($percentage) == 'number' and math.is-unitless($percentage) {
+    $percentage: $percentage * 1%;
+  }
+
+  @if not is-percentage($percentage) {
+    @error 'Invalid data type passed to [ shade() ] function. '
+      'You passed [ #{$percentage} ] for the $percentage argument, which is '
+      'not a valid perecentage value.';
+  }
+
+  // If $percentage is a positive value, converts it to the equivalent negative.
+  @if $percentage > 0 {
+    $percentage: -1 * $percentage;
+  }
+
+  @return color.scale($color, $percentage);
+}
+
+@function darker($color, $percentage) {
+  @return shade($color, $percentage);
 }

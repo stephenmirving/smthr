@@ -1,0 +1,42 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:meta';
+@use './conv-color' as *;
+
+/// Takes a given color and gives its complement in the specified color syntax.
+/// This is the equivalent of doing color.adjust($color, $hue: 180deg).
+/// @param {Color} $color - The color to find the complement.
+/// @param {String} $syntax [hsl] - The color syntax to convert into.
+/// @return {Color} - The color's complement in the given syntax.
+///
+/// @throw Invalid $color syntax error.
+/// @throw Invalid $syntax error.
+/// @alias complement-color
+@function color-complement($color, $syntax: 'hsl') {
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid $color value of [ #{meta.inspect($color)} ] passed to the ' +
+        '[ invert-color() ] function.';
+  }
+
+  @if not list.index(('hex' '#' 'rgb' 'rgba' 'hsl' 'hsla' 'hwb'), $syntax) {
+    @error 'Invalid $syntax value of [ #{$syntax} ] passed to ' +
+        'the [ invert-color() ] function. Value of $syntax must be a string ' +
+        'representing a valid CSS color function specification. This function ' +
+        'supports converting into the following $syntax values: ' +
+        '[ hex, \'#\', rgb, rgba, hsl, hsla, hwb, cmyk ].';
+  }
+
+  @return conv-color(color.complement($color), $syntax);
+}
+
+/// Takes a given color and gives its complement in the specified color syntax.
+/// @param {Color} $color - The color to find the complement.
+/// @param {String} $syntax [hsl] - The color syntax to convert into.
+/// @return {Color} - The color's complement in the given syntax.
+///
+/// @throw Invalid $color syntax error.
+/// @throw Invalid $syntax error.
+/// @alias color-complement
+@function complement-color($color, $syntax: 'hsl') {
+  @return color-complement($color, $syntax);
+}

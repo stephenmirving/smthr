@@ -8,6 +8,5 @@
 @use './smth' as smth;
 
 div {
-  color: smth.conv-color(lightblue, hsl);
-  @include smth.size(smth.clamp-size(1rem, 4vw, 10rem));
+  content: smth.color-complement(#4edb07);
 }

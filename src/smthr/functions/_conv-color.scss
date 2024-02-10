@@ -2,6 +2,7 @@
 @use 'sass:math';
 @use 'sass:color';
 @use 'sass:string';
+@use './to-cmyk' as *;
 @use './to-hex' as *;
 @use './to-fixed' as *;
 @use './strip-unit' as *;
@@ -12,25 +13,32 @@
 ///
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsl] - The color syntax to convert into.
+/// @return {Color} The converted color in the given syntax.
 ///
+/// @require strip-unit
+/// @require to-hex
+/// @require to-fixed
+/// @require to-cmyk
 /// @throw Invalid data type for $color
 /// @throw Invalid color syntax type for $syntax
 /// @alias convert-color
 /// @alias convert-color-to
-/// @require to-hex
 @function conv-color($color, $syntax: hsl) {
   @if meta.type-of($color) != 'color' {
-    @error 'Invalid data type passed to `conv-color()` function. You passed ' +
+    @error 'Invalid data type passed to [ conv-color() ] function. You passed ' +
       '[ #{$color} ] for the $color argument, which is not a ' +
-      'a color that can be converted from.';
+      'a color that can be converted by this function.';
   }
 
   $color-alpha: color.alpha($color);
-  $color-hue: to-fixed(color.hue($color));
+  $color-red: color.red($color);
+  $color-green: color.green($color);
+  $color-blue: color.blue($color);
+  $color-hue: strip-unit(to-fixed(color.hue($color)));
   $color-lightness: to-fixed(color.lightness($color));
   $color-saturation: to-fixed(color.saturation($color));
-  $color-whiteness: to-fixed(color.whiteness($color));
-  $color-blackness: to-fixed(color.blackness($color));
+  $color-whiteness: math.round(color.whiteness($color));
+  $color-blackness: math.round(color.blackness($color));
 
   @if meta.type-of($syntax) == 'string' {
     $syntax: string.to-lower-case($syntax);
@@ -43,55 +51,41 @@
     @return to-hex($color);
   } @else if $syntax == 'rgb' {
     @if $color-alpha == 1 {
-      @return #{'rgb(' + color.red($color) + ' ' + color.green($color) + ' ' +
-        color.blue($color) + ')'};
+      @return #{'rgb(' + $color-red + ' ' + $color-green + ' ' + $color-blue + ')'};
     } @else {
-      @return #{'rgb(' + color.red($color) + ' ' + color.green($color) + ' ' +
-        color.blue($color) + ' / ' + $color-alpha + ')'};
+      @return #{'rgb(' + $color-red + ' ' + $color-green + ' ' + $color-blue +
+        ' / ' + $color-alpha + ')'};
     }
   } @else if $syntax == 'rgba' {
-    @return #{'rgba(' + color.red($color) + ', ' + color.green($color) + ', ' +
-      color.blue($color) + ', ' + $color-alpha + ')'};
+    @return #{'rgba(' + $color-red + ', ' + $color-green + ', ' + $color-blue +
+      ', ' + $color-alpha + ')'};
   } @else if $syntax == 'hsl' {
     @if $color-alpha == 1 {
-      @return #{'hsl(' + strip-unit($color-hue) + ' ' +
-        to-fixed(color.saturation($color)) + ' ' +
-        to-fixed(color.lightness($color)) + ')'};
+      @return #{'hsl(' + $color-hue + ' ' + $color-saturation + ' ' +
+        $color-lightness + ')'};
     } @else {
-      @return #{'hsl(' + strip-unit($color-hue) + ' ' +
-        to-fixed(color.saturation($color)) + ' ' +
-        to-fixed(color.lightness($color)) + ' / ' + $color-alpha + ')'};
+      @return #{'hsl(' + $color-hue + ' ' + $color-saturation + ' ' +
+        $color-lightness + ' / ' + $color-alpha + ')'};
     }
   } @else if $syntax == 'hsla' {
-    @return #{'hsla(' + strip-unit($color-hue) + ', ' +
-      to-fixed(color.saturation($color)) + ', ' +
-      to-fixed(color.lightness($color)) + ', ' + $color-alpha + ')'};
-  } @else if $syntax == 'lch' {
-    @if $color-alpha == 1 {
-      @return #{'lch(' + math.round(color.lightness($color)) + '% ' +
-        math.round(color.saturation($color)) + ' ' +
-        math.round(color.hue($color)) + ')'};
-    } @else {
-      @return #{'lch(' + math.round(color.lightness($color)) + '% ' +
-        math.round(color.saturation($color)) + ' ' +
-        math.round(color.hue($color)) + ' / ' + $color-alpha + ')'};
-    }
+    @return #{'hsla(' + $color-hue + ', ' + $color-saturation + ', ' +
+      $color-lightness + ', ' + $color-alpha + ')'};
   } @else if $syntax == 'hwb' {
     @if $color-alpha == 1 {
-      @return #{'hwb(' + math.round($color-hue) + ' ' +
-        math.round(color.whiteness($color)) + '% ' +
-        math.round(color.blackness($color)) + '%)'};
+      @return #{'hwb(' + $color-hue + ' ' + $color-whiteness + ' ' +
+        $color-blackness + ')'};
     } @else {
-      @return #{'hwb(' + math.round($color-hue) + ' ' +
-        math.round(color.whiteness($color)) + '% ' +
-        math.round(color.blackness($color)) + '% / ' + $color-alpha + ')'};
+      @return #{'hwb(' + $color-hue + ' ' + $color-whiteness + ' ' +
+        $color-blackness + ' / ' + $color-alpha + ')'};
     }
+  } @else if $syntax == 'cmyk' {
+    @return to-cmyk($color);
   } @else {
     @error 'Invalid $syntax value of [ #{$syntax} ] passed to ' +
-       'the `conv-color()` function. Value of $syntax must be a string ' +
+       'the [ conv-color() ] function. Value of $syntax must be a string ' +
        'representing a valid CSS color function specification. This function ' +
-       'supports the following $syntax values: [ hex, \'#\', rgb, rgba, hsl, ' +
-       'hsla, ';
+       'supports converting into the following $syntax values: ' +
+       '[ hex, \'#\', rgb, rgba, hsl, hsla, hwb, cmyk ].';
   }
 }
 
@@ -102,6 +96,10 @@
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsl] - The color syntax to convert into.
 ///
+/// @require strip-unit
+/// @require to-hex
+/// @require to-fixed
+/// @require to-cmyk
 /// @throw Invalid data type for $color
 /// @throw Invalid color syntax type for $syntax
 /// @alias conv-color
@@ -116,7 +114,10 @@
 ///
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsl] - The color syntax to convert into.
-///
+/// @require strip-unit
+/// @require to-hex
+/// @require to-fixed
+/// @require to-cmyk
 /// @throw Invalid data type for $color
 /// @throw Invalid color syntax type for $syntax
 /// @alias convert-color
