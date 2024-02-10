@@ -96,7 +96,8 @@
     'ldang'
   {
     $entity: '\00AB'; // Left-pointing double-angle quation mark: «
-  } @else if (
+  } @else if
+    (
       $char ==
         'rdaq' or
         $char ==
@@ -108,16 +109,39 @@
     )
   {
     $entity: '\00BB'; // Right-pointing double-angle quation mark: »
-  } @else if string.slice($char, 1, 4) == 'apos' or $char == "'" or $char == 'aps'
+  } @else if
+    string.slice($char, 1, 4) ==
+    'apos' or
+    $char ==
+    "'" or
+    $char ==
+    'aps'
   {
     $entity: '\2019'; // Apostrophe: ’
-  } @else if $char == '-' or $char == 'ndash' or $char == 'endash' or $char == 'nd'
+  } @else if
+    $char ==
+    '-' or
+    $char ==
+    'ndash' or
+    $char ==
+    'endash' or
+    $char ==
+    'nd'
   {
     $entity: '\2013'; // En dash: –
-  } @else if $char == '--' or $char == 'mdash' or $char == 'emdash' or $char == 'md'
+  } @else if
+    $char ==
+    '--' or
+    $char ==
+    'mdash' or
+    $char ==
+    'emdash' or
+    $char ==
+    'md'
   {
     $entity: '\2014'; // Em dash: —
-  } @else if (
+  } @else if
+    (
       $char =='...' or
         string.slice($char, 1, 5) ==
         'ellip' or
@@ -126,7 +150,8 @@
     )
   {
     $entity: '\2026'; // Ellipsis: …
-  } @else if (
+  } @else if
+    (
       $char ==
         '>' or
         $char ==

@@ -15,7 +15,7 @@
 /// @alias color-to-hex
 /// @alias conv-to-hex
 /// @alias convert-to-hex
-/// @require {function} component-to-hex
+/// @require {function} _component-to-hex
 @function to-hex($color) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to `conv-color()` function. You passed ' +
@@ -30,9 +30,9 @@
   $alpha-component: color.alpha($color);
 
   // Convert each RGB component to hex
-  $red-hex: string.to-lower-case(component-to-hex($red-component));
-  $green-hex: string.to-lower-case(component-to-hex($green-component));
-  $blue-hex: string.to-lower-case(component-to-hex($blue-component));
+  $red-hex: string.to-lower-case(_component-to-hex($red-component));
+  $green-hex: string.to-lower-case(_component-to-hex($green-component));
+  $blue-hex: string.to-lower-case(_component-to-hex($blue-component));
 
   // Check if color can be expressed in shorter 3-digit hex notation
   @if $red-component % 17 == 0 and
@@ -50,7 +50,7 @@
   // Handle alpha for 8-digit hex, if necessary
   @if $alpha-component < 1 {
     $alpha: math.round($alpha-component * 255);
-    $alpha-hex: component-to-hex($alpha);
+    $alpha-hex: _component-to-hex($alpha);
 
     @return #{'#' + $red-hex + $green-hex + $blue-hex + $alpha-hex};
   }
@@ -115,7 +115,7 @@
 /// @access private
 ///
 /// @param {Number} $component - The red, green, or blue color component number.
-@function component-to-hex($component) {
+@function _component-to-hex($component) {
   $index1: math.ceil(math.div($component, 16));
   $index2: $component % 16 + 1;
   $hex: string.slice('0123456789ABCDEF', $index1, $index1) +

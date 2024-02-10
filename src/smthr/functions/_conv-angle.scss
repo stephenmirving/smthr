@@ -1,9 +1,9 @@
 @use 'sass:math';
 @use 'sass:meta';
-@use './is-angle';
-@use './strip-unit';
-@use './pi';
-@use './missing-dependencies';
+@use './is-angle' as *;
+@use './strip-unit' as *;
+@use './pi' as *;
+@use './missing-dependencies' as *;
 
 /// Takes a given $angle in either turns (turn), degrees (deg), gradians (grad),
 /// or radian (rad) units, and converts that angle into an alternate unit type
@@ -22,7 +22,7 @@
   $missing: missing-dependencies('is-angle', 'strip-unit', 'pi');
   $start-unit: math.unit($angle);
 
-  @if not math.is-angle($angle) {
+  @if not is-angle($angle) {
     @error 'Value of $angle in conv-angle() must be a valid angle.';
   }
 

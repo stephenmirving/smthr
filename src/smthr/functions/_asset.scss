@@ -9,7 +9,7 @@
 ///
 /// @return {String} A file location leading to the asset.
 /// @require {variable} $asset-base-path
-@function asset($type, $file) {
+@function _asset($type, $file) {
   $asset-path: if(
     meta.global-variable-exists(asset-base-path),
     $asset-base-path,
@@ -27,7 +27,7 @@
 ///
 /// @require {function} asset
 @function image($file) {
-  @return asset('img', $file);
+  @return _asset('img', $file);
 }
 
 /// Font asset helper
@@ -38,5 +38,5 @@
 ///
 /// @require {function} asset
 @function font($file) {
-  @return asset('fonts', $file);
+  @return _asset('fonts', $file);
 }

@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use './factorial';
+@use './factorial' as *;
 
 /// Complete the Maclaurin exponentiation. Used for the `pow` function that
 /// takes a number to a given power.

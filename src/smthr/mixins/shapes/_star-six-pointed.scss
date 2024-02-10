@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 /// Uses psuedo-elements and borders to turn an element into a six-pointed star.
 ///
 /// @param {Color} $bg-color [#fb8c00] The color of the star.

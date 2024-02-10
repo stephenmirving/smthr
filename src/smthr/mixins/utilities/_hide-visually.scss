@@ -4,7 +4,6 @@
 /// be focusable when navigated to via the keyboard.
 ///
 /// @group Utilities
-/// @require {placeholder} visually-hide
 @mixin hide-visually($focusable: false) {
   position: absolute;
   overflow: hidden;

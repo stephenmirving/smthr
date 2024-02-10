@@ -15,15 +15,19 @@
   @if meta.type-of($opacity) != 'number' {
     @error 'Invalid data type passed to white(). Opacity must be a number.';
   }
+
   @if not math.is-unitless($opacity) and math.unit($opacity) != '%' {
     @error 'Invalid opacity unit type of [ #{meta.inspect(math.unit($opacity))} ] ' +
-        'passed to white(). Opacity must be a unitless decimal or a percentage.';
+        'passed to the [ white() ] function. Opacity must be a unitless ' +
+        'decimal or a percentage.';
   }
-  @if (
+
+  @if
     (math.unit($opacity) == '%' and ($opacity < 0% or $opacity > 100%)) or
     (math.is-unitless($opacity) and ($opacity < 0 or $opacity > 1))
-  ) {
-    @error 'Invalid opacity level of [ #{meta.inspect($opacity)} ] passed to white().';
+   {
+    @error 'Invalid opacity level of [ #{meta.inspect($opacity)} ] passed to ' +
+        'the [ white() ] function.';
   }
 
   @if math.unit($opacity) == '%' {

@@ -5,10 +5,10 @@
 ///
 /// @param {Number} $depth - The depth level.
 /// @return {List} Computed values for the top-shadow.
-@function top-shadow($depth) {
+@function top-shadow($depth, $color) {
   $primary-offset: list.nth(1.5 3 10 14 19, $depth) * 1px;
   $blur: list.nth(1.5 3 10 14 19, $depth) * 4px;
-  $color: rgba(black, list.nth(0.12 0.16 0.19 0.25 0.3, $depth));
+  $color: rgba($color, list.nth(0.12 0.16 0.19 0.25 0.3, $depth));
 
   @return 0 $primary-offset $blur $color;
 }

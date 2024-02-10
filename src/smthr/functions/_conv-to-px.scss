@@ -1,7 +1,7 @@
 @use 'sass:string';
 @use 'sass:math';
 @use 'sass:list';
-@use './strip-unit';
+@use './strip-unit' as *;
 
 /// Converts a REM value into pixel units.
 /// @access public

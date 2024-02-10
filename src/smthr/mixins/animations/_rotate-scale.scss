@@ -2,7 +2,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
-@use '../utilities/only-moz';
+@use '../utilities/only-moz' as *;
 
 /// Animates an element by rotating it along a point and/or an axis while either
 /// scaling it up or down. For optimal effect, use the `animation-stage` mixin

@@ -9,7 +9,7 @@
 @use 'sass:math';
 @use 'sass:list';
 @use 'sass:string';
-@use '../../functions/order-index';
+@use '../../functions/order-index' as *;
 
 /// Select all children from the first to `$num`.
 ///

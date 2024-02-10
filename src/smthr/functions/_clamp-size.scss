@@ -1,5 +1,5 @@
 @use 'sass:meta';
-@use './is-length';
+@use './is-length' as *;
 
 /// Clamp `$number` between `$min` and `$max`. Because the CSS version of
 /// `clamp()` still does not have full support for all Safari versions in use,

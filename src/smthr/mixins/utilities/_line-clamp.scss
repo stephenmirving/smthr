@@ -1,11 +1,14 @@
+@use 'sass:meta';
+@use '../../functions/is-integer' as *;
+
 /// Applies the properties necessary to clamp text to a given number of lines.
 ///
 /// @param {Number} $lines - Clamp the text to this number of lines.
 ///
 /// @group Utilities
 @mixin line-clamp($lines) {
-  @if meta.type-of($lines) != 'number' {
-    @error 'The $lines parameter in the `line-clamp` mixin must be a number.';
+  @if not is-integer($lines) {
+    @error 'The $lines parameter of the [ line-clamp ] mixin must be an integer.';
   }
 
   display: -webkit-box;

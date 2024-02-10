@@ -1,44 +1,9 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:list';
-@use './strip-unit';
+@use './strip-unit' as *;
 
-/// Converts a pixel value to matching rem value. *Any* value passed, regardless
-/// of unit, is assumed to be a pixel value. By default, the base pixel value
-/// used to calculate the rem value is taken from the `$base-font-size` variable.
-/// @access private
-///
-/// @param {Number} $value - Pixel value to convert.
-/// @param {Number} $base [null] - Base for pixel conversion.
-/// @return {Number} A number in rems, calculated based on the given value and
-/// the base pixel value. rem values are passed through as is.
-///
-/// @require {function} strip-unit
-@function px-to-rem($value, $base: null) {
-  @if meta.type-of($value) != 'number' {
-    @error meta.inspect($value) + ', which is not a number, was passed ' +
-        'to conv-to-rem().';
-  }
-
-  // Transform em into rem if someone hands over 'em's
-  @if math.unit($value) == 'em' {
-    $value: strip-unit($value) * 1rem;
-  }
-
-  // Calculate rem if units for $value is not rem or em
-  @if math.unit($value) != 'rem' {
-    $value: math.div(strip-unit($value), strip-unit($base)) * 1rem;
-  }
-
-  // Eliminate units for 0rem
-  @if $value == 0 {
-    $value: 0;
-  }
-
-  @return $value;
-}
-
-/// Converts values into REM units.
+/// Converts values into rem units.
 /// @access public
 ///
 /// @param {Length-Percentage} $values - Values to convert to REM units.
@@ -68,15 +33,50 @@
   }
 
   @if $count == 1 {
-    @return px-to-rem($values, $base);
+    @return _px-to-rem($values, $base);
   }
 
   @for $i from 1 through $count {
     $rem-values: list.append(
       $rem-values,
-      px-to-rem(list.nth($values, $i), $base)
+      _px-to-rem(list.nth($values, $i), $base)
     );
   }
 
   @return $rem-values;
+}
+
+/// Converts a pixel value to matching rem value. *Any* value passed, regardless
+/// of unit, is assumed to be a pixel value. By default, the base pixel value
+/// used to calculate the rem value is taken from the `$base-font-size` variable.
+/// @access private
+///
+/// @param {Number} $value - Pixel value to convert.
+/// @param {Number} $base [null] - Base for pixel conversion.
+/// @return {Number} A number in rems, calculated based on the given value and
+/// the base pixel value. rem values are passed through as is.
+///
+/// @require {function} strip-unit
+@function _px-to-rem($value, $base: null) {
+  @if meta.type-of($value) != 'number' {
+    @error meta.inspect($value) + ', which is not a number, was passed ' +
+        'to conv-to-rem().';
+  }
+
+  // Transform em into rem if someone hands over 'em's
+  @if math.unit($value) == 'em' {
+    $value: strip-unit($value) * 1rem;
+  }
+
+  // Calculate rem if units for $value is not rem or em
+  @if math.unit($value) != 'rem' {
+    $value: math.div(strip-unit($value), strip-unit($base)) * 1rem;
+  }
+
+  // Eliminate units for 0rem
+  @if $value == 0 {
+    $value: 0;
+  }
+
+  @return $value;
 }

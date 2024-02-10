@@ -1,6 +1,7 @@
 @use 'sass:list';
-@use './missing-dependencies';
-@use './is-true';
+@use './missing-dependencies' as *;
+@use './is-true' as *;
+@use './to-list' as *;
 
 /// Removes all false and null values from `$list`.
 /// @access public
@@ -11,6 +12,7 @@
 /// @require {function} is-true
 /// @require {function} to-list
 /// @alias clean-list
+/// @alias list-purge
 @function purge-list($list) {
   $missing: missing-dependencies('is-true', 'to-list');
 
@@ -34,18 +36,9 @@
 /// @require {function} is-true
 /// @require {function} to-list
 /// @alias purge-list
+/// @alias list-purge
 @function clean-list($list) {
-  $missing: missing-dependencies('is-true', 'to-list');
-
-  $result: ();
-
-  @each $item in $list {
-    @if is-true($item) {
-      $result: list.append($result, $item, list.separator($list));
-    }
-  }
-
-  @return to-list($result);
+  @return purge-list($list);
 }
 
 /// Removes all false and null values from `$list`.

@@ -2,7 +2,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
-@use '../utilities/only-moz';
+@use '../utilities/only-moz' as *;
 
 /// Generates an animation that appears to either slit an element in or out on
 /// its axis.

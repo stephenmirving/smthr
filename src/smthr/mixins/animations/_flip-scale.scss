@@ -2,7 +2,7 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:math';
-@use '../utilities/only-moz';
+@use '../utilities/only-moz' as *;
 
 /// Generates an animation that flips an element over while scaling it. The
 /// element this mixin is applied to must have a front-face and a back-face

@@ -2,7 +2,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
-@use '../utilities/only-moz';
+@use '../utilities/only-moz' as *;
 
 /// Animates an element by rotating it along a point and/or an axis. For the the
 /// best effect on a diagonal rotation, use the `animation-stage` mixin on the

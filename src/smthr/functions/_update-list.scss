@@ -1,10 +1,10 @@
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
-@use './missing-dependencies';
-@use './is-true';
-@use './purge-list';
-@use './to-list';
+@use './missing-dependencies' as *;
+@use './is-true' as *;
+@use './purge-list' as *;
+@use './to-list' as *;
 
 /// Replaces `$old-value` with `$new-value` in `$list`.
 /// @access public

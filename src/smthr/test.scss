@@ -9,4 +9,6 @@
 
 div {
   color: smth.conv-color(rgb(180, 24, 4));
+
+  content: smth.to-fixed(1.81818181deg);
 }

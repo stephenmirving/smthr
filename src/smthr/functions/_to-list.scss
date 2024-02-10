@@ -21,5 +21,5 @@
 ///
 /// @alias to-list
 @function parse-list($value, $separator: list.separator($value)) {
-  @return list.join((), $value, $separator);
+  @return to-list($value, $separator);
 }

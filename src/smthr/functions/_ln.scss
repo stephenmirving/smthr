@@ -1,5 +1,5 @@
 @use 'sass:math';
-@use './summation';
+@use './summation' as *;
 
 /// Returns the result of a natural logarithm.
 /// @access public

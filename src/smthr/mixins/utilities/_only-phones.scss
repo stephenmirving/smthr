@@ -1,7 +1,7 @@
 @use 'sass:meta';
 @use 'sass:math';
-@use '../../functions/conv-to-em';
-@use '../../functions/strip-unit';
+@use '../../functions/conv-to-em' as *;
+@use '../../functions/strip-unit' as *;
 
 /// Targets phones and phone-sized devices
 ///

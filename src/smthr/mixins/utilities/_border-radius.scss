@@ -4,10 +4,10 @@
 /// Adds the border radius property along with the background-clip: padding box
 /// property, value pair.
 ///
-/// @param {Length-Percentage} $radius [8px] - The border-radius value.
+/// @param {Length-Percentage} $radius [10px] - The border-radius value.
 ///
 /// @group Utlities
-@mixin border-radius($radius: 8px) {
+@mixin border-radius($radius: 10px) {
   @if meta.type-of($radius) == 'string' {
     $radius: string.to-lower-case($radius);
   }

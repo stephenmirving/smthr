@@ -1,4 +1,4 @@
-@use './summation';
+@use './summation' as *;
 
 /// Complete an exponentiation. Used for the `pow` function that takes a number
 /// to a given power.

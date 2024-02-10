@@ -1,3 +1,9 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
+@use '../utilities/only-moz' as *;
+
 /// Generates an animation that flips an element over. The element this mixin is
 /// applied to must have a front-face and a back-face child element. It is
 /// recommended that you use this mixin in conjunction with the
@@ -181,7 +187,7 @@
     {
       $direction: 'bottom-left';
     } @else {
-      @error 'Invalid direction of [#{meta.inspect($direction)}] chosen for the `flip` mixin.';
+      @error 'Invalid direction of [ #{meta.inspect($direction)} ] chosen for the [ flip ] mixin.';
     }
   } @else {
     @error 'You must choose a direction for the `flip` mixin.';
@@ -229,7 +235,7 @@
     } @else if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
       $axis: 'diagonal2';
     } @else {
-      @error 'Invalid axis of [#{meta.inspect($axis)}] chosen for the `flip` mixin.';
+      @error 'Invalid axis of [ #{meta.inspect($axis)} ] chosen for the [ flip ] mixin.';
     }
   } @else {
     @error 'You must choose an axis for the `flip` mixin.';
@@ -245,7 +251,7 @@
       $trans-val1: translateZ(0) rotateX(0);
       $trans-val2: translateZ(-260px) rotateX(180deg);
     } @else if $direction != 'top' {
-      @error 'Invalid direction value of [#{meta.inspect($direction)}] with an $axis of ' +
+      @error 'Invalid direction value of [ #{meta.inspect($direction)} ] with an $axis of ' +
           '`horizontal`. For a horizontal axis, you must choose a direction ' +
           'of either `top`, `bottom`, `backward`, or `forward`.';
     }
@@ -262,7 +268,7 @@
       $trans-val1: translateZ(0) rotateY(0);
       $trans-val2: translateZ(160px) rotateY(180deg);
     } @else if $direction != 'right' {
-      @error 'Invalid direction value of [#{meta.inspect($direction)}] with an $axis of ' +
+      @error 'Invalid direction value of [ #{meta.inspect($direction)} ] with an $axis of ' +
       '`vertical`. For a vertical axis, you must choose a direction ' +
       'of either `left`, `right`, `backward`, or `forward`.';
     }
@@ -279,8 +285,8 @@
       $trans-val1: translateZ(0) rotate3d(1, 1, 0, 0);
       $trans-val2: translateZ(-260px) rotate3d(1, 1, 0, -180deg);
     } @else if $direction != 'top-right' {
-      @error 'Invalid direction value of [#{meta.inspect($direction)}] with an $axis of ' +
-      '`diagonal1`. For the diagonal1 axis, you must choose a direction ' +
+      @error 'Invalid direction value of [ #{meta.inspect($direction)} ] with ' +
+      'an $axis of `diagonal1`. For the diagonal1 axis, you must choose a direction ' +
       'of either `top-right`, `bottom-left`, `backward`, or `forward`.';
     }
   } @else if $axis == 'diagonal2' {
@@ -296,21 +302,21 @@
       $trans-val1: translateZ(0) rotate3d(-1, 1, 0, 0);
       $trans-val2: translateZ(-260px) rotate3d(-1, 1, 0, -180deg);
     } @else if $direction != 'top-left' {
-      @error 'Invalid direction value of [#{meta.inspect($direction)}] with an $axis of ' +
-      '`diagonal2`. For the diagonal1 axis, you must choose a direction ' +
-      'of either `top-left`, `bottom-right`, `backward`, or `forward`.';
+      @error 'Invalid direction value of [ #{meta.inspect($direction)} ] with ' +
+          'an $axis of [ diagonal2 ]. For the diagonal1 axis, you must choose ' +
+          'a direction of either `top-left`, `bottom-right`, `backward`, or `forward`.';
     }
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `flip` ' +
-        'mixin. The timing property must be a number.';
+    @error 'Invalid timing value of [ #{meta.inspect($timing)} ] for the ' +
+        '[ flip ] mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid timing value of [#{meta.inspect($timing)}] for the `flip` mixin.' +
-        'The timing property must be in either s or ms units.';
+    @error 'Invalid timing value of [ #{meta.inspect($timing)} ] for the ' +
+        '[ flip ] mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
@@ -338,14 +344,14 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `flip` mixin.' +
-          'The delay property must be a number.';
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the ' +
+          '[ flip ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [#{meta.inspect($delay)}] for the `flip` mixin.' +
-          'The delay property must be in either s or ms units.';
+      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the ' +
+          '[ flip ] mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       // If time in ms would be shorter as seconds, convert it
       $delay: math.div($delay, 1000ms) * 1s;
@@ -372,8 +378,8 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [#{meta.inspect($iterations)}] for the ' +
-          '`flip` mixin.';
+      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ] ' +
+          'for the [ flip ] mixin.';
     }
   } @else {
     $iterations: null;
@@ -420,8 +426,8 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [#{meta.inspect($anim-dir)}] for the ' +
-        '`flip` mixin';
+    @error 'Invalid animation-direction value of [ #{meta.inspect($anim-dir)} ] ' +
+        'for the [ flip ] mixin';
   }
 
   @if not
@@ -455,9 +461,10 @@
   }
 
   transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
   animation: flip#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
-  transform-style: preserve-3d;
+
   @include only-moz {
     backface-visibility: hidden;
   }

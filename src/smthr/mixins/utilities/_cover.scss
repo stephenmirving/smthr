@@ -1,6 +1,6 @@
 @use 'sass:meta';
 @use 'sass:math';
-@use '../../functions/strip-unit';
+@use '../../functions/strip-unit' as *;
 
 /// Fully cover an area with an element.
 ///

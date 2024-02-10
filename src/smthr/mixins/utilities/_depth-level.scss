@@ -1,6 +1,7 @@
 @use 'sass:meta';
-@use '../../functions/bottom-shadow';
-@use '../../functions/top-shadow';
+@use '../../functions/bottom-shadow' as *;
+@use '../../functions/top-shadow' as *;
+@use '../../functions/is-integer' as *;
 
 /// Uses box-shadow to give an element a depth effect based on Google's
 /// Material Design principles.
@@ -17,19 +18,27 @@
 /// @group Utilities
 /// @require {function} top-shadow
 /// @require {function} bottom-shadow
+/// @require {function} is-integer
 /// @throw Invalid $level value.
 /// @alias card-depth
 /// @alias shadow-depth
 /// @alias shadow-level
 /// @alias add-shadow
-@mixin depth-level($level) {
-  @if meta.type-of($level) != 'number' or $level > 5 {
-    @error 'Invalid $level of [ #{meta.inspect($level)} ] used in the mixin ' +
-      ' [ depth-level ]. Value must be a number between 0 and 5 inclusive.';
-  } @else if $level < 1 {
+@mixin depth-level($level, $color: #000) {
+  @if not is-integer($level) or $level < 0 or $level > 5 {
+    @error 'Invalid $level of [ #{meta.inspect($level)} ] used in the ' +
+      '[ depth-level ] mixin. Value must be an integer between 0 and 5 inclusive.';
+  }
+
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid $color of [ #{meta.inspect($color)} ] used in the ' +
+     '[ depth-level ] mixin. Value must be a color.';
+  }
+
+  @if $level == 0 {
     box-shadow: none;
   } @else {
-    box-shadow: bottom-shadow($level), top-shadow($level);
+    box-shadow: bottom-shadow($level, $color), top-shadow($level, $color);
   }
 }
 
@@ -49,8 +58,8 @@
 /// @alias shadow-depth
 /// @alias shadow-level
 /// @alias add-shadow
-@mixin card-depth($level) {
-  @include depth-level($level);
+@mixin card-depth($level, $color: #000) {
+  @include depth-level($level, $color);
 }
 
 /// Uses box-shadow to give an element a depth effect based on Google's
@@ -69,8 +78,8 @@
 /// @alias card-depth
 /// @alias shadow-level
 /// @alias add-shadow
-@mixin shadow-depth($level) {
-  @include depth-level($level);
+@mixin shadow-depth($level, $color: #000) {
+  @include depth-level($level, $color);
 }
 
 /// Uses box-shadow to give an element a depth effect based on Google's
@@ -89,8 +98,8 @@
 /// @alias card-depth
 /// @alias shadow-depth
 /// @alias add-shadow
-@mixin shadow-level($level) {
-  @include depth-level($level);
+@mixin shadow-level($level, $color: #000) {
+  @include depth-level($level, $color);
 }
 
 /// Uses box-shadow to give an element a depth effect based on Google's
@@ -109,6 +118,6 @@
 /// @alias card-depth
 /// @alias shadow-depth
 /// @alias shadow-level
-@mixin add-shadow($level) {
-  @include depth-level($level);
+@mixin add-shadow($level, $color: #000) {
+  @include depth-level($level, $color);
 }

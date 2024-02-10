@@ -1,3 +1,5 @@
+@use '../../functions/make-long-shadow' as *;
+
 /// Creates a long text shadow effect.
 ///
 /// @param {Color} $color - The color of the long shadow.

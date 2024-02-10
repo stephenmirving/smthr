@@ -1,6 +1,6 @@
 /// Used by the child-index mixin in _family.scss. It will return the proper
 /// sorted numbers depending on the `$index` value.
-/// @access private
+/// @access public
 ///
 /// @param {number} $num - The number of children.
 /// @param {number} $index - The index of the sorting.

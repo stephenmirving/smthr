@@ -2,7 +2,9 @@
 @use 'sass:math';
 @use 'sass:color';
 @use 'sass:string';
-@use './to-hex';
+@use './to-hex' as *;
+@use './to-fixed' as *;
+@use './strip-unit' as *;
 
 /// Takes a given color in virtually any notation and converts it into the given
 /// color syntax types.
@@ -19,7 +21,7 @@
 @function conv-color($color, $syntax: hsl) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to `conv-color()` function. You passed ' +
-      '#{meta.inspect($color)} for the $color argument, which is not a ' +
+      '[ #{meta.inspect($color)} ] for the $color argument, which is not a ' +
       'valid color.';
   }
 
@@ -28,7 +30,7 @@
   @if meta.type-of($syntax) == 'string' {
     $syntax: string.to-lower-case($syntax);
   } @else {
-    @error 'Invalid value of (#{meta.inspect($syntax)}) passed to ' +
+    @error 'Invalid value of [ #{meta.inspect($syntax)} ] passed to ' +
        'the `conv-color()` function. Value of $syntax must be a string.';
   }
 
@@ -36,40 +38,61 @@
     @return to-hex($color);
   } @else if $syntax == 'rgb' {
     @if $color-alpha == 1 {
-      @return #{'rgb(' + color.red($color) + ' ' + color.green($color) + ' ' + color.blue($color) + ')'};
+      @return #{'rgb(' + color.red($color) + ' ' + color.green($color) + ' ' +
+        color.blue($color) + ')'};
     } @else {
-      @return #{'rgb(' + color.red($color) + ' ' + color.green($color) + ' ' + color.blue($color) + ' / ' + $color-alpha + ')'};
+      @return #{'rgb(' + color.red($color) + ' ' + color.green($color) + ' ' +
+        color.blue($color) + ' / ' + $color-alpha + ')'};
     }
   } @else if $syntax == 'rgba' {
-    @return #{'rgba(' + color.red($color) + ', ' + color.green($color) + ', ' + color.blue($color) + ', ' + $color-alpha + ')'};
+    @return #{'rgba(' + color.red($color) + ', ' + color.green($color) + ', ' +
+      color.blue($color) + ', ' + $color-alpha + ')'};
   } @else if $syntax == 'hsl' {
     @if $color-alpha == 1 {
-      @return #{'hsl(' + math.round(color.hue($color)) + ' ' + math.round(color.saturation($color)) + '% ' + math.round(color.lightness($color)) + '%)'};
+      @return #{'hsl(' + to-fixed(color.hue($color)) + ' ' +
+        to-fixed(color.saturation($color)) + ' ' +
+        to-fixed(color.lightness($color)) + ')'};
     } @else {
-      @return #{'hsl(' + math.round(color.hue($color)) + ' ' + math.round(color.saturation($color)) + '% ' + math.round(color.lightness($color)) + '% / ' + $color-alpha + ')'};
+      @return #{'hsl(' + to-fixed(color.hue($color)) + ' ' +
+        to-fixed(color.saturation($color)) + ' ' +
+        to-fixed(color.lightness($color)) + ' / ' + $color-alpha + ')'};
     }
   } @else if $syntax == 'hsla' {
-    @return #{'hsla(' + math.round(color.hue($color)) + ', ' + math.round(color.saturation($color)) + '%, ' + math.round(color.lightness($color)) + '%, ' + $color-alpha + ')'};
+    @return #{'hsla(' + to-fixed(color.hue($color)) + ', ' +
+      to-fixed(color.saturation($color)) + '%, ' +
+      to-fixed(color.lightness($color)) + '%, ' + $color-alpha + ')'};
   } @else if $syntax == 'lab' {
     @if $color-alpha == 1 {
-      @return #{'lab(' + math.round(color.lab-lightness($color)) + '% ' + math.round(color.lab-a($color)) + ' ' + math.round(color.lab-b($color)) + ')'};
+      @return #{'lab(' + math.round(color.lab-lightness($color)) + '% ' +
+        math.round(color.lab-a($color)) + ' ' + math.round(color.lab-b($color)) +
+        ')'};
     } @else {
-      @return #{'lab(' + math.round(color.lab-lightness($color)) + '% ' + math.round(color.lab-a($color)) + ' ' + math.round(color.lab-b($color)) + ' / ' + $color-alpha + ')'};
+      @return #{'lab(' + math.round(color.lab-lightness($color)) + '% ' +
+        math.round(color.lab-a($color)) + ' ' + math.round(color.lab-b($color)) +
+        ' / ' + $color-alpha + ')'};
     }
   } @else if $syntax == 'lch' {
     @if $color-alpha == 1 {
-      @return #{'lch(' + math.round(color.lch-lightness($color)) + '% ' + math.round(color.lch-chroma($color)) + ' ' + math.round(color.lch-hue($color)) + ')'};
+      @return #{'lch(' + math.round(color.lch-lightness($color)) + '% ' +
+        math.round(color.lch-chroma($color)) + ' ' +
+        math.round(color.lch-hue($color)) + ')'};
     } @else {
-      @return #{'lch(' + math.round(color.lch-lightness($color)) + '% ' + math.round(color.lch-chroma($color)) + ' ' + math.round(color.lch-hue($color)) + ' / ' + $color-alpha + ')'};
+      @return #{'lch(' + math.round(color.lch-lightness($color)) + '% ' +
+        math.round(color.lch-chroma($color)) + ' ' +
+        math.round(color.lch-hue($color)) + ' / ' + $color-alpha + ')'};
     }
   } @else if $syntax == 'hwb' {
     @if $color-alpha == 1 {
-      @return #{'hwb(' + math.round(color.hue($color)) + ' ' + math.round(color.whiteness($color)) + '% ' + math.round(color.blackness($color)) + '%)'};
+      @return #{'hwb(' + math.round(color.hue($color)) + ' ' +
+        math.round(color.whiteness($color)) + '% ' +
+        math.round(color.blackness($color)) + '%)'};
     } @else {
-      @return #{'hwb(' + math.round(color.hue($color)) + ' ' + math.round(color.whiteness($color)) + '% ' + math.round(color.blackness($color)) + '% / ' + $color-alpha + ')'};
+      @return #{'hwb(' + math.round(color.hue($color)) + ' ' +
+        math.round(color.whiteness($color)) + '% ' +
+        math.round(color.blackness($color)) + '% / ' + $color-alpha + ')'};
     }
   } @else {
-    @error 'Invalid value of (#{meta.inspect($syntax)}) passed to '+
+    @error 'Invalid value of [ #{meta.inspect($syntax)} ] passed to ' +
        'the `conv-color()` function. Value of $syntax must be a string ' +
        'representing a valid CSS color function specification.';
   }

@@ -3,7 +3,7 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
-@use '../../functions/list-to-string';
+@use '../../functions/list-to-string' as *;
 
 /// A robust and well supported down-n-dirty gradient mixin.
 ///

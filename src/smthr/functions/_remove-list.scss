@@ -1,5 +1,5 @@
-@use './missing-dependencies';
-@use './update-list';
+@use './missing-dependencies' as *;
+@use './update-list' as *;
 
 /// Removes `$value` from `$list`.
 /// @access public
@@ -17,6 +17,7 @@
 }
 
 /// Removes `$value` from `$list`.
+/// @access public
 ///
 /// @param {List} $list - The list to update.
 /// @param {*} $value - The value to remove from `$list`.
@@ -25,7 +26,5 @@
 /// @require {function} update-list
 /// @alias remove-list
 @function trim-list($list, $value) {
-  $missing: missing-dependencies('update-list');
-
-  @return update-list($list, $value, null);
+  @return remove-list($list, $value);
 }

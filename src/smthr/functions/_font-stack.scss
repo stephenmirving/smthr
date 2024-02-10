@@ -1,5 +1,5 @@
-@use './map-get-val';
-@use '../placeholders/variables';
+@use './map-get-val' as *;
+@use '../placeholders/variables' as *;
 
 /// Returns the font stack chosen from a font-stack map.
 /// @access public

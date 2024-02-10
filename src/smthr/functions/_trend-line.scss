@@ -15,7 +15,8 @@
   $num-points: list.length(map.keys($map));
 
   @if $num-points < 2 {
-    @error 'The trend-line() $map must contain at least 2 values.';
+    @error 'The $map passed to the [ trend-line() ] fucntion must contain ' +
+        'at least 2 values.';
   }
 
   // Then calculate the averages

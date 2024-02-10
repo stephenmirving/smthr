@@ -1,3 +1,7 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:string';
+
 /// Uses psuedo-elements and transform to turn an element into the shape of an
 /// arrow with a curved tail.
 ///
@@ -31,6 +35,10 @@
   }
 
   @if $direction {
+    @if meta.type-of($direction) == 'string' {
+      $direction: string.to-lower-case($direction);
+    }
+
     @if
       meta.type-of($direction) ==
         'number' and

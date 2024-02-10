@@ -3,6 +3,7 @@
 @forward 'entity';
 @forward 'missing-dependencies';
 @forward 'order-index';
+@forward 'strip-unit';
 
 // Is-Type Functions
 @forward 'is-color';
@@ -34,7 +35,6 @@
 @forward 'to-fixed';
 
 // Conversion Functions
-@forward 'strip-unit';
 @forward 'conv-angle';
 @forward 'conv-to-px';
 @forward 'conv-to-em';

@@ -1,3 +1,5 @@
+@use 'sass:meta';
+
 /// Uses @supports queries and a clever hack to apply the given styles to
 /// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
 /// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
