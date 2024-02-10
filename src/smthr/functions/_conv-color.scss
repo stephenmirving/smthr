@@ -13,6 +13,7 @@
 ///
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsl] - The color syntax to convert into.
+///
 /// @return {Color} The converted color in the given syntax.
 ///
 /// @require strip-unit
@@ -23,7 +24,7 @@
 /// @throw Invalid color syntax type for $syntax
 /// @alias convert-color
 /// @alias convert-color-to
-@function conv-color($color, $syntax: hsl) {
+@function conv-color($color, $syntax: 'hsl') {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to [ conv-color() ] function. You passed ' +
       '[ #{$color} ] for the $color argument, which is not a ' +
@@ -96,6 +97,8 @@
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsl] - The color syntax to convert into.
 ///
+/// @return {Color} The converted color in the given syntax.
+///
 /// @require strip-unit
 /// @require to-hex
 /// @require to-fixed
@@ -104,7 +107,7 @@
 /// @throw Invalid color syntax type for $syntax
 /// @alias conv-color
 /// @alias convert-color-to
-@function convert-color($color, $syntax) {
+@function convert-color($color, $syntax: 'hsl') {
   @return conv-color($color, $syntax);
 }
 
@@ -114,6 +117,9 @@
 ///
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsl] - The color syntax to convert into.
+///
+/// @return {Color} The converted color in the given syntax.
+///
 /// @require strip-unit
 /// @require to-hex
 /// @require to-fixed
@@ -122,6 +128,6 @@
 /// @throw Invalid color syntax type for $syntax
 /// @alias convert-color
 /// @alias convert-color-to
-@function convert-color-to($color, $syntax) {
+@function convert-color-to($color, $syntax: 'hsl') {
   @return conv-color($color, $syntax);
 }

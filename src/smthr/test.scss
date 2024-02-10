@@ -8,5 +8,5 @@
 @use './smth' as smth;
 
 div {
-  content: smth.color-complement(#4edb07);
+  content: smth.get-color-type(#f00);
 }

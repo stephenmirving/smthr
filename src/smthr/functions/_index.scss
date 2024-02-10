@@ -69,6 +69,8 @@
 // Color Functions
 @forward 'color-invert';
 @forward 'color-complement';
+@forward 'color-to-string';
+@forward 'get-color-type';
 @forward 'black';
 @forward 'white';
 @forward 'shade';

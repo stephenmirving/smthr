@@ -1,22 +1,25 @@
 @use 'sass:color';
 @use 'sass:list';
 @use 'sass:meta';
-@use './is-percentage' as *;
 @use './conv-color' as *;
+@use './get-color-type' as *;
+@use './is-percentage' as *;
 
 /// Inverts a given color and inverts it then convert it to a specified color
 /// syntax.
 /// @param {Color} $color - The color to invert.
 /// @param {Percentage} $weight [100%] - How much to invert the color. Must be
 /// a percentage between 0% and 100%.
-/// @param {String} $syntax [hsl] - The color syntax to convert into.
+/// @param {String} $syntax [get-color-type($color)] - The color syntax to
+/// convert into. Defaults to the color notation used by $color.
+///
 /// @return {Color} - The inverted color in the given syntax.
 ///
 /// @throw Invalid $color syntax error.
 /// @throw Invalid $weight value error.
 /// @throw Invalid $syntax error.
 /// @alias invert-color
-@function color-invert($color, $weight: 100%, $syntax: 'hsl') {
+@function color-invert($color, $weight: 100%, $syntax: get-color-type($color)) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid $color value of [ #{meta.inspect($color)} ] passed to the ' +
         '[ invert-color() ] function.';
@@ -36,21 +39,19 @@
         '[ hex, \'#\', rgb, rgba, hsl, hsla, hwb, cmyk ].';
   }
 
-  // Invert the color by subtracting each RGB component from 255
-  $inverted: color.invert($color, $weight);
-
-  // Use the conv-color function to convert the inverted color to the desired syntax
-  @return conv-color($inverted, $syntax);
+  @return conv-color(color.invert($color, $weight), $syntax);
 }
 
 /// Inverts a given color and converts it to a specified color syntax.
 /// @param {Color} $color - The color to invert.
-/// @param {String} $syntax [hsl] - The color syntax to convert into.
+/// @param {String} $syntax [get-color-type($color)] - The color syntax to
+/// convert into. Defaults to the color notation used by $color.
+///
 /// @return {Color} - The inverted color in the given syntax.
 ///
 /// @throw Invalid $color syntax error.
 /// @throw Invalid $syntax error.
 /// @alias color-invert
-@function invert-color($color, $weight: 100%, $syntax: 'hsl') {
+@function invert-color($color, $weight: 100%, $syntax: get-color-type($color)) {
   @return color-invert($color, $weight, $syntax);
 }

@@ -38,14 +38,16 @@ html {
   scrollbar-gutter: stable;
   -webkit-tap-highlight-color: transparent;
   -webkit-text-size-adjust: 100%;
+}
 
-  @media (prefers-reduced-motion: no-preference) {
+@media (prefers-reduced-motion: no-preference) {
+  html {
     scroll-behavior: smooth;
+  }
 
-    :has(:target) {
-      scroll-behavior: smooth;
-      scroll-padding-top: 3rem;
-    }
+ :has(:target) {
+    scroll-behavior: smooth;
+    scroll-padding-top: 3rem;
   }
 }
 

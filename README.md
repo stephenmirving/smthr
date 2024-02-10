@@ -8,53 +8,50 @@ enhancing utilities along with production ready element styles and animations.
 Along with the many utility-based functions &amp; mixins, this
 library focuses heavily on aiding in the creation of CSS animations
 and clip-path shapes - allowing you to create a wide range of effects without
-having to mess with clip-path coordinates or animation keyframe creation.
-
-This project is under active development to modernize the Sass syntax to comport
-with Sass ver 1.6+.
+having to mess with clip-path coordinates or complicated animation keyframe
+creation.
 
 ## smthr is in active development
 
-**This is *smthr* version 0.1.5 - Last update: 02/09/24*
+**This is *smthr* version 0.1.8 - Last update: 02/10/24*
 
 **_smthr_ currently contains:**
 
 * 130+ mixins
-* 60+ functions
-* A modern, opinionated normalize file written in Sass called betterize
-* A modern, opinionated print style file written in Sass
+* 65+ functions
+* A modern, opinionated normalize file written in Sass called _betterize.scss
+* A modern, opinionated print style file written in Sass called _print.scss
 * A small collection of @extend placeholders and !default variables
-* The choice between .scss and classic .sass syntax (.sass not yet supported)
 
 ## Deployment
 
-To use this library, simply download the repo and choose whether you are
-going to download the entire repo and get each individual feature of smthr in
-its own file (which can be helpful for organizational purposes), or to download
-a single 'smthr.scss' file containing all the code from the library.
-
-***
-
-**If you download the repo with individual build files...**
-
-Choose your syntax type, sass or scss, and then your version, prefixed or
-unprefixed, from the src folder, then copy the smth folder that is inside your
-chosen version's folder into your project's directory with the rest of the scss
+Copy the smthr folder into your project's directory with the rest of the scss
 files, probably within the 'sass' or 'scss' folder, or within one of the
 subdirectories of that folder (most commonly the 'vendor' subdirectory). From
-there, just use an @import directive for the '_smth.scss' file that is within
+there, just use an @use directive for the '_smth.scss' file that is within
 the 'smth' folder at the top of your 'main.scss' file (or 'style.scss', or
 whatever you have named your main stylesheet) where the rest of your imports
 are.
 
 **Like this:**
 
-> @use 'smth/smth';
+> @use 'smthr/smth' as smth;
 
 Of if you were to place the folder within your vendor sub-folder in your sass
 directory, the @use would look like this:
 
-> @use 'vendor/smth/smth' as smth;
+> @use 'vendor/smthr/smth' as smth;
+
+If you want to use the normalization file _betterize.scss or the print style
+file _print.scss, simply keep them in the same directory as the _smth.scss file
+and import them into your project's stylesheet using the @forward directive.
+You could also use the @import directive but that is in the process of being
+deprecated and will be removed in future versions of Sass.
+
+**Like this:**
+
+> @forward 'vendor/smthr/betterize;
+> @forward 'vendor/smthr/print;
 
 ***
 
@@ -62,7 +59,7 @@ directory, the @use would look like this:
 
 Because this project is currently in development, there is not a comprehensive
 wiki, and the testing/example page has not yet been completed either. However,
-there are very detailed comments in the individual files that should give you an
+there are detailed comments in the individual files that should give you an
 idea of how to use the library.
 
 ## Authors

@@ -1,0 +1,33 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use './color-to-string' as *;
+
+/// Takes a color value and returns a string representing what type of notation
+/// is used for the color. Valid types are:
+/// [ 'hex', 'rgb', 'rgba', 'hsl', 'hsla', 'hwb' ]
+/// @access public
+///
+/// @param {Color} $color - A color value
+///
+/// @return {String} The type of notation used for the $color value.
+///
+/// @throw Invalid $color value error.
+@function get-color-type($color) {
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid data type passed to [ get-color-type() ] function. You ' +
+      'passed [ #{$color} ] for the $color argument, which is not a ' +
+      'a valid color that can be converted by this function.';
+  }
+
+  $color-string: color-to-string($color);
+
+  @if string.slice($color-string, 1, 1) == '#' {
+    @return 'hex';
+  } @else {
+    @return string.slice(
+      $color-string,
+      1,
+      string.index($color-string, '(') - 1
+    );
+  }
+}

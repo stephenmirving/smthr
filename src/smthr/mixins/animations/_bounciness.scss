@@ -44,6 +44,22 @@
   $dir-val5: translateY(-4px);
   $dir-val6: translateY(0);
 
+  @if $direction and meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if $delay and meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
   @if string.to-lower-case($direction) ==
     'bottom' or
     string.to-lower-case($direction) ==
@@ -89,20 +105,20 @@
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `bounciness` ' +
+    @error 'Invalid $timing value of [ #{$timing} ] for the `bounciness` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of [ #{meta.inspect($timing)} ] for the `bounciness` ' +
+    @error 'Invalid $timing value of [ #{$timing} ] for the `bounciness` ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if  string.slice($timing + '', 1, 2) == '0.' {
+    @if string.slice($timing + '', 1, 2) == '0.' {
       $timing: string.slice($timing + '', 2);
     }
   }
@@ -146,10 +162,15 @@
   }
 
   @if $iterations {
-    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    {
+    @if meta.type-of($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i' {
       $iterations: infinite;
-    } @else if (math.is-unitless($iterations) and meta.type-of($iterations) == 'number') or
+    } @else if (
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
+      ) or
       $iterations ==
       initial or
       $iterations ==
@@ -164,23 +185,24 @@
     $iteratons: null;
   }
 
-  @if not $anim-dir or
-      $anim-dir ==
-      'none' or
-      $anim-dir ==
-      'no' or
-      $anim-dir ==
-      'n/a' or
-      $anim-dir ==
-      'n' or
-      $anim-dir ==
-      'default' or
-      $anim-dir ==
-      'def' or
-      $anim-dir ==
-      'normal' or
-      $anim-dir ==
-      'nor'
+  @if not
+    $anim-dir or
+    $anim-dir ==
+    'none' or
+    $anim-dir ==
+    'no' or
+    $anim-dir ==
+    'n/a' or
+    $anim-dir ==
+    'n' or
+    $anim-dir ==
+    'default' or
+    $anim-dir ==
+    'def' or
+    $anim-dir ==
+    'normal' or
+    $anim-dir ==
+    'nor'
   {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
@@ -204,14 +226,12 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [ #{meta.inspect($anim-dir)} ] for' +
+    @error 'Invalid animation-direction value of [ #{$anim-dir} ] for' +
         'the `bounciness` mixin';
   }
 
   @if not
     $timing-func or
-    $timing-func ==
-    true or
     $timing-func ==
     'none' or
     $timing-func ==

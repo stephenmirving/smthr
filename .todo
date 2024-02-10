@@ -6,7 +6,6 @@ TODO:
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Take a look at the line-clamp mixin
     ☐ Add .sass version back in
-    ✔ Modernize betterize.scss @done(24-02-10 14:55)
 
   Animations Mixins:
     ☐ Find ones I haven't done yet and complete one
@@ -18,18 +17,12 @@ TODO:
     ☐ Go to shapes page with psuedo elements and add those
     ☐ Propogate the updated version of arrow-curved-tail
 
-  Color Mixins:
-    ✔ Fix color mixins by using the built in color.scale sass module @done(24-02-10 14:54)
-
   Utility Mixins:
     ☐ Finish and propogate line-clamp mixin
     ☐ Add .sass versions of responsive-square mixin
-    ✔ Fix _family fork - first-child/last-child mixin, adding of-type functionality to first/last @done(24-02-10 14:53)
-    ✔ Add !important flag to mixins that may need to have it, text-outline for example @done(24-02-10 14:53)
     ☐ Create more flex-box prefix mixins
       ☐ Finish testing and copying over flex-flow mixin
     ☐ Create new CSS grid mixins and functions
-    ☐ Copy over page-break mixin from the print-reports workspace
       ☐ Finish it if necessary
       ☐ Propogate it across all
     ☐ Finish the font-face mixin then propogate it
@@ -51,7 +44,6 @@ TODO:
       ☐ Function finished
       ☐ Function added to main build file
       ☐ Function propogated to a prefixed version and sass versions
-    ✔ Change name of clamp function so as not to conflict with the native CSS clamp. `preclamp()` maybe? @done(24-02-10 14:52)
     ☐ Add more entity codes to the entity function
     ☐ Fix the ratio-to-percentage mixin
     ☐ Special character detecting function, finish and propogate
@@ -69,6 +61,11 @@ TODO:
 ================================================================================
 
 Archive:
+  ✔ Modernize betterize.scss @done(24-02-10 14:55) @project(TODO.General Changes)
+  ✔ Fix color mixins by using the built in color.scale sass module @done(24-02-10 14:54) @project(TODO.Color Mixins)
+  ✔ Fix _family fork - first-child/last-child mixin, adding of-type functionality to first/last @done(24-02-10 14:53) @project(TODO.Utility Mixins)
+  ✔ Add !important flag to mixins that may need to have it, text-outline for example @done(24-02-10 14:53) @project(TODO.Utility Mixins)
+  ✔ Change name of clamp function so as not to conflict with the native CSS clamp. `preclamp()` maybe? @done(24-02-10 14:52) @project(TODO.Functions)
   ✔ Convert color mixin needs more testing and @done(24-02-10 03:04) @project(TODO.General Changes)
   ✔ Convert code to use the new sass module system @started(20-02-14 16:06) @done(24-02-09 23:10) @lasted(3y51w4d7h4m33s) @project(TODO.General Changes)
   ✔ Get all the dependencies from built in sass modules switched over @done(24-02-09 23:10) @project(TODO.General Changes)

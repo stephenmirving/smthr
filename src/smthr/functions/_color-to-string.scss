@@ -1,0 +1,19 @@
+@use 'sass:meta';
+
+/// Converts a color into a string representation of that color.
+/// @access public
+///
+/// @param {Color} $color - The color to convert into a string.
+///
+/// @return {String} A color value wrapped inside a string.
+///
+/// @throw Invalid $color value error.
+@function color-to-string($color) {
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid data type passed to [ color-to-string() ] function. You ' +
+      'passed [ #{$color} ] for the $color argument, which is not a ' +
+      'a valid color that can be converted by this function.';
+  }
+
+  @return '#{$color}';
+}
