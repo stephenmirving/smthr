@@ -1,6 +1,8 @@
 @use 'sass:list';
 @use 'sass:meta';
 @use 'sass:math';
+@use 'sass:string';
+@use './decimal-to-ratio' as *;
 
 /// Converts a ratio into a percentage.
 /// @access public
@@ -10,18 +12,78 @@
 /// a 4:3 ratio)
 ///
 /// @return {Length-Percentage} A percentage value equal to the given ratio
+///
+/// @throw Invalid ratio format error.
 @function ratio-to-percentage($ratio) {
-  $percentage: 100%;
+  $separators: (':', '/', ' ');
+  $found-separators: 0;
+  $percentage: null;
+  $width: null;
+  $height: null;
+
+  @if not $ratio {
+    @error 'No value passed to the [ ratio-to-percentage ] function. You must ' +
+        'specify a ratio value when calling this function.';
+  }
+
+  @if meta.type-of($ratio) == 'string' {
+    @each $separator in $separators {
+      @if string.index($ratio, $separator) {
+        $found-separators: $found-separators + 1;
+      }
+    }
+
+    @if $found-separators > 1 {
+      @error 'Invalid ratio format of [ #{$ratio} ] passed to the ' +
+      '[ ratio-to-percentage() ] function.';
+    }
+
+    @each $separator in $separators {
+      @if string.index($ratio, $separator) {
+        // Split the string into a list
+        $parts: string.split($ratio, $separator);
+        $width: #{list.nth($parts, 1)};
+        $height: #{list.nth($parts, 2)};
+
+        @if meta.type-of($width) != 'number' or meta.type-of($height) != 'number' {
+          @error 'Invalid $ratio value of `#{meta.inspect($ratio)}` for' +
+              'the [ ratio-to-percentage() ] function. Value must be a ratio ' +
+              'represented by either a single number or a two value list ' +
+              'separated by a space, comma, or colon.';
+        }
+
+        $ratio: ($width $height);
+      }
+    }
+  }
+
+  @if meta.type-of($ratio) == 'number' and math.is-unitless($ratio) {
+    $ratio: decimal-to-ratio($ratio);
+  }
 
   @if meta.type-of($ratio) == 'list' and list.length($ratio) == 2 {
     $percentage: math.div(list.nth($ratio, 2), list.nth($ratio, 1)) * 100%;
-  } @else if meta.type-of($ratio) == 'number' and math.is-unitless($ratio) {
-    $percentage: $ratio * 100%;
   } @else {
-    @error 'Invalid $ratio value of `#{meta.inspect($ratio)}` for ' +
-        '`ratio-to-percentage()`. Value must be a ratio represented by either' +
-        ' a two value list or a single number.';
+    @error 'Invalid $ratio value of `#{meta.inspect($ratio)}` for the ' +
+        '[ ratio-to-percentage() ] function. Value must be a ratio ' +
+        'represented by either a single number or a two value list ' +
+        'separated by a space, comma, or colon.';
   }
 
   @return $percentage;
+}
+
+/// Converts a ratio into a percentage.
+/// @access public
+///
+/// @param {List|Number} $ratio - A ratio value represented either by a two
+/// value list (ex: `16 9` for a 16:9 ratio) or by a single number (ex: 0.75 for
+/// a 4:3 ratio)
+///
+/// @return {Length-Percentage} A percentage value equal to the given ratio
+///
+/// @throw Invalid ratio format error.
+/// @alias ratio-to-percentage
+@function ratio-to-percent($ratio) {
+  @return ratio-to-percentage($ratio);
 }

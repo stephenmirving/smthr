@@ -8,5 +8,5 @@
 @use './smth' as smth;
 
 div {
-  content: smth.get-color-type(#f00);
+  padding-top: smth.ratio-to-percentage(16 9);
 }
