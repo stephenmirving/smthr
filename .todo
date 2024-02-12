@@ -66,6 +66,7 @@ TODO:
   Publishing:
     ☐ Create website and API guide using Github Pages
     ☐ Publish as an npm package
+    ☐ Use SassDoc to generate web documentation from files
 
   Test Site:
     ☐ Mobile first

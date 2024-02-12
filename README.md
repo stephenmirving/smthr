@@ -116,8 +116,8 @@ libraries, please refer to the official
 
 Because this project is currently in development, there is not a comprehensive
 wiki, and the testing/example page has not yet been completed either. However,
-there are detailed comments in the individual files that should give you an
-idea of how to use the library.
+there are detailed [SassDoc](http://sassdoc.com/) comments in the individual
+files that should give you an idea of how to use the library.
 
 ## Authors
 
