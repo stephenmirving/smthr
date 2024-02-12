@@ -5,8 +5,8 @@
 @use 'sass:meta';
 @use 'sass:selector';
 @use 'sass:string';
-@use './smth' as *;
+@use './smth' as _;
 
 div {
-
+  color: _.black(0.5);
 }

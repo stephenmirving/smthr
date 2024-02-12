@@ -33,26 +33,64 @@ your project's stylesheet except for the parts that you actually use.
 Copy the smthr folder into your project's directory with the rest of the scss
 files, probably within the 'sass' or 'scss' folder, or within one of the
 subdirectories of that folder (most commonly the 'vendor' subdirectory). From
-there, just use a @forward directive for the '_smth.scss' file that is within
-the 'smth' folder at the top of your 'main.scss' file (or 'style.scss', or
+there, just use either the @use or @forward directive,
+depending on your project structure, for the '_smth.scss' file that is within
+the 'smth' folder at the top of your 'style.scss' file (or 'main.scss', or
 whatever you have named your main stylesheet) where the rest of your imports
 are.
 
 **Like this:**
 
-> @forward 'smthr/smth' as smth;
+```scss
+@use 'smthr/smth' as smth;
+```
 
 Of if you were to place the folder within your vendor sub-folder in your sass
 directory, the @use would look like this:
 
-> @forward 'vendor/smthr/smth' as smth;
+```scss
+@use 'vendor/smthr/smth' as smth;
+```
 
-Doing this namespaces the library to smth and you can call the functions, mixins, and variables in the library using that as a prefix, like this:
+Doing this namespaces the library to smth and you can call the functions,
+mixins, and variables in the library using that as a prefix, like this:
 
-> @include smth.bounciness();
-> color: smth.invert-color($color-brand)
-> font-family: smth.font-stack('primary', smth.$font-stacks);
+```scss
+.element {
+  @include smth.bounciness();
 
+  font-family: smth.font-stack('primary', smth.$font-stacks);
+  color: smth.invert-color($color-brand)
+}
+```
+
+If you prefer to namespace it to something shorter, you can choose anything you
+want that is not used by another module, for example:
+
+```scss
+@use 'vendor/smthr/smth' as _;
+
+.element {
+  color: _.invert-color($color-brand)
+}
+
+```
+
+
+If you aren't worried about potential namespace collisions between Smoother,
+other third-party libraries, and your own code, then you can import it into the
+global namespace by using `as *` and not have to worry about using a namespace
+prefix when calling the functions, mixins, or variables in the library.
+That looks like this:
+
+```scss
+@use 'vendor/smthr/smth' as *;
+
+.element {
+  color: invert-color($color-brand)
+}
+
+```
 
 If you want to use the normalization file _betterize.scss or the print style
 file _print.scss, simply keep them in the same directory as the _smth.scss file
@@ -62,11 +100,17 @@ deprecated and will be removed in future versions of Sass.
 
 **Like this:**
 
-> @forward 'vendor/smthr/betterize;
-> @forward 'vendor/smthr/print;
+```scss
+@forward 'vendor/smthr/betterize;
+@forward 'vendor/smthr/print;
+```
 
 If you choose to use _betterize.scss, you can remove any other CSS normalization
 or reset files such as normalize.css or reset.css.
+
+For more information about how to structure your project with 3rd party
+libraries, please refer to the official
+[Sass Documentation](https://sass-lang.com/documentation/)
 
 ## Testing and Documentation
 

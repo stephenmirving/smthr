@@ -22,11 +22,10 @@
         'decimal or a percentage.';
   }
 
-  @if
-    (math.unit($opacity) == '%' and ($opacity < 0% or $opacity > 100%)) or
+  @if (math.unit($opacity) == '%' and ($opacity < 0% or $opacity > 100%)) or
     (math.is-unitless($opacity) and ($opacity < 0 or $opacity > 1))
-   {
-    @error 'Invalid opacity level of [ #{meta.inspect($opacity)} ] passed to ' +
+  {
+    @error 'Invalid opacity level of `#{meta.inspect($opacity)}` passed to ' +
         'the [ white() ] function.';
   }
 
@@ -39,6 +38,6 @@
   } @else if $opacity == 0 {
     @return transparent;
   } @else {
-    @return rgba(#fff, $opacity);
+    @return #{hsla(0, 0%, 100%, $opacity)};
   }
 }

@@ -14,14 +14,14 @@
 /// @throw $opacity out of range
 @mixin opacity($opacity) {
   @if not math.is-unitless($opacity) and math.unit($opacity) != '%' {
-    @error 'Invalid opacity value of [ #{meta.inspect($opacity)} ] passed to' +
+    @error 'Invalid opacity value of `#{meta.inspect($opacity)}` passed to' +
         'the [ opacity() ] mixin. $opacity must be a decimal between 0 and 1 ' +
         'inclusive or a percentage value between 0% and 100% inclusive.';
   }
 
   @if $opacity > 1 or math.unit($opacity) == '%' {
     @if $opacity > 100 {
-      @warn 'The $opacity was set to [ #{meta.inspect($opacity)} ] on an ' +
+      @warn 'The $opacity was set to `#{meta.inspect($opacity)}` on an ' +
           'element by the [ opacity ] mixin. The value has been changed ' +
           'to the max of 1.';
 

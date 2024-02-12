@@ -34,6 +34,6 @@
   } @else if $opacity == 0 {
     @return transparent;
   } @else {
-    @return #{hsl(0 0% 0% / $opacity)};
+    @return #{hsla(0, 0%, 0%, $opacity)};
   }
 }
