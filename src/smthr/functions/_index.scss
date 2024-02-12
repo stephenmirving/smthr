@@ -29,6 +29,7 @@
 @forward 'decimal-to-ratio';
 @forward 'exp-maclaurin';
 @forward 'factorial';
+@forward 'linear-interpolation';
 @forward 'pi';
 @forward 'ratio-to-percentage';
 @forward 'to-fixed';
@@ -56,11 +57,8 @@
 @forward 'walk';
 
 // Map Functions
+@forward 'extend-map';
 @forward 'font-stack';
-@forward 'map-get-val';
-@forward 'map-get-deep-val';
-@forward 'map-set-val';
-@forward 'map-set-deep';
 @forward 'map-to-string';
 @forward 'map-to-list';
 

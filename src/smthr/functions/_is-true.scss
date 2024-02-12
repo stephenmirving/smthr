@@ -2,7 +2,7 @@
 /// @access public
 ///
 /// @param {*} $value - A value to check.
-/// @return {Boolean} Returns true if `value` has truthiness.
+/// @return {Bool} Returns true if `value` has truthiness.
 @function is-true($value) {
   @return $value and $value != '' and $value != () and $value != (());
 }

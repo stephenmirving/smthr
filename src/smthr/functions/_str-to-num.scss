@@ -7,9 +7,6 @@
 /// Note: This function assumes the input string is a valid numerical value.
 /// @access public
 ///
-/// @author Hugo Giraudel
-/// @author Stephen M Irving
-///
 /// @param {String|Number} $string - Value to be parsed.
 ///
 /// @return {Number} - The numerical representation of the input string.
@@ -171,7 +168,14 @@
     'dppx': 1dppx,
     'dpcm': 1dpcm,
     'dpi': 1dpi,
-    'q': 1Q
+    'q': 1Q,
+    'x': 1x,
+    'deg': 1deg,
+    'rad': 1rad,
+    'grad': 1grad,
+    'turn': 1turn,
+    'Hz': 1Hz,
+    'kHz': 1kHz
   );
 
   @if not list.index(map.keys($units), $unit) {

@@ -6,7 +6,7 @@
 /// Sass, and returns false if it is not a reserved word.
 ///
 /// @param {String} $word - The word being checked to see if it is reserved.
-/// @return {Boolean} Returns true if $word is reserved, otherwise returns false.
+/// @return {Bool} Returns true if $word is reserved, otherwise returns false.
 /// @throw Invalid data type for $word
 @function is-reserved($word) {
   $reserved-words: (
@@ -36,7 +36,7 @@
     'counter-increment', 'counter-reset', 'clamp', 'fit-content', 'min-content',
     'max-content', 'min-height', 'min-width', 'max-height', 'max-width',
     'px', 'pt', 'cm', 'mm', 'q', 'x', 'ex', 'em', 'em', 'dpi', 'dppx', 'dpcm',
-    'rem', 'hz', 'khz', 'deg', 'rad', 'turn', 'rotate', 'vw', 'vh', 'vmin',
+    'rem', 'Hz', 'kHz', 'deg', 'rad', 'turn', 'rotate', 'vw', 'vh', 'vmin',
     'vmax', 'svw', 'svh', 'svmin', 'svmax', 'lvw', 'lvh', 'lvmin', 'lvmax',
     'dvw', 'dvh', 'dvmin', 'dvmax', 'lh', 'rlh', 'vb', 'vi', 'svb', 'svi',
     'lvb', 'lvi', 'dvb', 'dvi', 'lch', 'hwb', 'font-family',

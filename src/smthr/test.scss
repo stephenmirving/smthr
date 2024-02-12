@@ -5,8 +5,47 @@
 @use 'sass:meta';
 @use 'sass:selector';
 @use 'sass:string';
-@use './smth' as *;
+@use './smth' as smth;
+
+$map-with-deep-val: (
+  'a': 'thing',
+  'b': 'green',
+  'c': 'blue',
+  'd': (
+    'e': 'thing',
+    'f': 'green',
+    'g': 'blue',
+  )
+);
 
 div {
-  content: is-reserved('slash');
+  font-family: smth.font-stack('primary', smth.$font-stacks);
+}
+
+$map-1: (
+  "first": "test",
+  "second": "string",
+  "third": (
+    "nested": "gloubi",
+    "map": 1337
+  )
+);
+
+$map-2: (
+  "first": 1,
+  "second": ( "ohai": true ),
+  "third": (
+    "map": 42
+  )
+);
+
+$map-3: (
+  "new": "pwet",
+  "third": (
+    "are cool": 100
+  )
+);
+test {
+  extend-standard  : inspect(smth.extend($map-1, $map-2, $map-3));
+  extend-recursive : inspect(smth.extend($map-1, $map-2, $map-3, true));
 }

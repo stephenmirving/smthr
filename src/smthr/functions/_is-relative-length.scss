@@ -7,7 +7,7 @@
 /// @access public
 ///
 /// @param {*} $value - A value to be checked.
-/// @return {Boolean} True if $value is a relative length, false if it is not.
+/// @return {Bool} True if $value is a relative length, false if it is not.
 @function is-relative-length($value) {
   $rel-length-units: (
     'em',

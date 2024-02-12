@@ -1,3 +1,8 @@
 div {
-  content: true;
+  font-family: Roboto, system-ui, Ubuntu, Cantarell, Arial, "Noto Sans", "Segoe UI", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+test {
+  extend-standard: ("first": 1, "second": ("ohai": true), "third": ("are cool": 100), "new": "pwet");
+  extend-recursive: ("first": 1, "second": ("ohai": true), "third": ("nested": "gloubi", "map": 42, "are cool": 100), "new": "pwet");
 }

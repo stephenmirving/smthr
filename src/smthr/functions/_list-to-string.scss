@@ -1,33 +1,62 @@
+@use 'sass:list';
 @use 'sass:meta';
 
 /// Iterates over a list and returns it as a converted string
 /// @access public
 ///
 /// @param {List} $list - The list to convert into a string.
+/// @param {Bool} $extra-space [false] - Pass true to use an extra space
+/// between list items in the resulting string.
 /// @param {String} $separator [' '] - The separator to use between
-/// the list elements
+/// the list elements. By default this is the separator used in $list.
 ///
 /// @return {String} The converted string.
 ///
 /// @throw Invalid $list type error
 /// @throw Invalid $separator type error
 /// @alias list-to-str
-@function list-to-string($list, $separator: ' ') {
+@function list-to-string(
+  $list,
+  $extra-space: false,
+  $separator: if(meta.type-of($list) == 'list', list.separator($list), ' ')
+) {
   $str: '';
+
+  @if meta.type-of($list) == 'string' {
+    @warn 'You passed a string value to the [ list-to-string() ] function.' +
+        'Returning original string of #{$list}';
+
+    @return $list;
+  }
 
   @if meta.type-of($list) != 'list' {
     @error 'Invalid $list type passed to the `list-to-string()` function. You ' +
-        'passed `#{meta.inspect($list)}`, which is not a valid list.';
+        'passed `#{meta.inspect($list)}`, which is of type: '
+        '[ #{meta.type-of($list)} ].';
   }
 
-  @if meta.type-of($separator) != 'string' and $separator != comma {
-    @error 'Invalid $separator type passed to the `list-to-string()` ' +
+  @if $separator == comma or $separator == ',' or $separator == ', ' {
+    @if $extra-space {
+      $separator: ', ';
+    } @else {
+      $separator: ',';
+    }
+  } @else if $separator == space or $separator == ' ' or $separator == '  ' {
+    @if $extra-space{
+      $separator: '  ';
+    } @else {
+      $separator: ' ';
+    }
+  } @else if $separator == slash or $separator == '/' or $separator == ' / '{
+    @if $extra-space {
+      $separator: ' / ';
+    } @else {
+      $separator: '/';
+    }
+  } @else {
+    @error 'Invalid $separator type passed to the [ list-to-string() ]' +
         'function. You passed `#{meta.inspect($list)}`, which is not ' +
         'a valid separator string. Use something like \', \' or \' \' instead.';
-  }
-
-  @if $separator == comma {
-    $separator: ', ';
   }
 
   @each $item in $list {
@@ -42,16 +71,23 @@
 }
 
 /// Iterates over a list and returns it as a converted string
+/// @access public
 ///
 /// @param {List} $list - The list to convert into a string.
+/// @param {Bool} $extra-space [false] - Pass true to use an extra space
+/// between list items in the resulting string.
 /// @param {String} $separator [' '] - The separator to use between
-/// the list elements
+/// the list elements. By default this is the separator used in $list.
 ///
 /// @return {String} The converted string.
 ///
 /// @throw Invalid $list type error
 /// @throw Invalid $separator type error
-/// @alias list-to-str
-@function list-to-str($list, $separator: ' ') {
-  @return list-to-string($list, $separator);
+/// @alias list-to-string
+@function list-to-str(
+  $list,
+  $extra-space: false,
+  $separator: if(meta.type-of($list) == 'list', list.separator($list), ' ')
+) {
+  @return list-to-string($list, $extra-space, $separator);
 }

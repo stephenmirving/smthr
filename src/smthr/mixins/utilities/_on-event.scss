@@ -3,7 +3,7 @@
 /// @link https://twitter.com/csswizardry/status/478938530342006784
 /// @content
 ///
-/// @param {Boolean} $self (false) - Whether or not to include current selector.
+/// @param {Bool} $self (false) - Whether or not to include current selector.
 ///
 /// @group Utilities
 @mixin on-event($self: false) {

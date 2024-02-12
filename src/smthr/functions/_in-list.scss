@@ -5,7 +5,7 @@
 ///
 /// @param {List} $list - The list to check.
 /// @param {*} $value - The value to look in `$list` for.
-/// @return {Boolean} True if `$list` contains `$value`.
+/// @return {Bool} True if `$list` contains `$value`.
 /// @alias list-contains
 @function in-list($list, $value) {
   @return not not list.index($list, $value);
@@ -16,7 +16,7 @@
 ///
 /// @param {List} $list - The list to check.
 /// @param {*} $value - The value to look in `$list` for.
-/// @return {Boolean} True if `$list` contains `$value`.
+/// @return {Bool} True if `$list` contains `$value`.
 /// @alias in-list
 @function list-contains($list, $value) {
   @return in-list($list, $value);

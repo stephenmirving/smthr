@@ -7,16 +7,16 @@
 /// @access public
 ///
 /// @param {String} $string - The string to check.
-/// @param {Boolean} $allow-nums [false] - Whether to allow for number
+/// @param {Bool} $allow-nums [false] - Whether to allow for number
 /// characters in the string.
-/// @param {Boolean} $allow-bem [false] - Whether to allow for BEM naming
+/// @param {Bool} $allow-bem [false] - Whether to allow for BEM naming
 /// convention characters, which effectively means adding the underscore '_'
 /// character to the list of allowed characters.
-/// @param {Boolean} $allow-capitals [false] - If true, the function will
+/// @param {Bool} $allow-capitals [false] - If true, the function will
 /// allow for capital letters. When false, the function will return as false if
 /// $string contains capital letter characters.
 ///
-/// @return {Boolean} True if $string only contians hyphens, numbers if
+/// @return {Bool} True if $string only contians hyphens, numbers if
 /// $allow-nums is true, underscores if $allow-bem is true, and characters from
 /// the 26 character alphabet. Otherwise returns false.
 @function is-conventional(

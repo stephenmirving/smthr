@@ -1,4 +1,4 @@
-@use './map-get-val' as *;
+@use 'sass:map';
 @use '../placeholders/variables' as *;
 
 /// Returns the font stack chosen from a font-stack map.
@@ -10,5 +10,5 @@
 ///
 /// @require {function} map-get-val
 @function font-stack($stack, $map: $font-stacks) {
-  @return map-get-val($map, $stack);
+  @return map.get($map, $stack);
 }

@@ -1,0 +1,144 @@
+@use 'sass:meta';
+@use 'sass:map';
+@use 'sass:list';
+
+/// Designed to improve on the built-in map.merge() functionality so that it
+/// is recursive and able to merge more than 2 maps at once.
+///
+/// About `map-merge()`:
+/// * only takes 2 arguments
+/// * is not recursive
+///
+/// @param {Map} $object - first map
+/// @param {ArgList} $objects - other maps
+/// @param {Bool} $deep - recursive mode
+///
+/// @return {Map} The merged map
+///
+/// @throw Invalid $objects type error.
+/// @throw Invalid $deep type error.
+/// @alias extend
+@function extend-map($object, $objects... /*, $deep */) {
+  @if meta.type-of($object) != 'map' {
+    @error 'Invalid $object type passed to the [ extend-map() ] function. ' +
+        'Objects passed must be maps.';
+  }
+
+  @each $cur-obj in $objects {
+    @if meta.type-of($cur-obj) != 'map' {
+      @error 'Invalid $objects type passed to the [ extend-map() ] function. ' +
+          'Objects passed must be maps.';
+    }
+  }
+
+  $last: list.nth($objects, -1);
+  $deep: $last == true;
+  $max: if($deep, list.length($objects) - 1, list.length($objects));
+
+  // Loop through all maps in $objects...
+  @for $i from 1 through $max {
+    // Store current map
+    $current: list.nth($objects, $i);
+
+    // If not in deep mode, simply merge current map with object
+    @if not $deep {
+      $object: map.merge($object, $current);
+    } @else {
+      @if meta.type-of($deep) != 'bool' {
+        @error 'Invalid $deep value of `#{meta.inspect($deep)}` passed to the ' +
+            '[ extend-map() ] function. If you pass a value for the $deep ' +
+            'argument, it must be a Boolean.';
+      }
+      @each $key, $value in $current {
+        // If value is a nested map and the same key from $object
+        // is a nested map as well
+        @if type-of($value) == 'map' and
+            type-of(map.get($object, $key)) == 'map'
+        {
+          // Recursive extend
+          $value: extend(map.get($object, $key), $value, true);
+        }
+
+        // Merge current tuple with object
+        $object: map.merge(
+          $object,
+          (
+            $key: $value
+          )
+        );
+      }
+    }
+  }
+
+  @return $object;
+}
+
+/// Designed to improve on the built-in map.merge() functionality so that it
+/// is recursive and able to merge more than 2 maps at once.
+///
+/// About `map-merge()`:
+/// * only takes 2 arguments
+/// * is not recursive
+///
+/// @param {Map} $object - first map
+/// @param {ArgList} $objects - other maps
+/// @param {Bool} $deep - recursive mode
+///
+/// @return {Map} The merged map
+///
+/// @throw Invalid $objects type error.
+/// @throw Invalid $deep type error.
+/// @alias extend
+@function extend($object, $objects... /*, $deep */) {
+  @if meta.type-of($object) != 'map' {
+    @error 'Invalid $object type passed to the [ extend() ] function. ' +
+        'Objects passed must be maps.';
+  }
+
+  $last: list.nth($objects, -1);
+  $deep: $last == true;
+  $max: if($deep, list.length($objects) - 1, list.length($objects));
+
+  // Loop through all maps in $objects...
+  @for $i from 1 through $max {
+    // Store current map
+    $current: list.nth($objects, $i);
+
+    @if meta.type-of($current) != map {
+      @error 'Invalid $objects type of #{meta.type-of($cur-obj)} passed to the [ extend-map() ] function. ' +
+          'Objects passed must be maps.';
+    }
+
+    // If not in deep mode, simply merge current map with object
+    @if not $deep {
+      $object: map.merge($object, $current);
+    } @else {
+      @each $key, $value in $current {
+        @if meta.type-of($deep) != 'bool' {
+          @error 'Invalid $deep value of `#{meta.inspect($deep)}` passed to the ' +
+              '[ extend() ] function. If you pass a value for the $deep ' +
+              'argument, it must be a Boolean.';
+        }
+
+        // If value is a nested map and the same key from $object
+        // is a nested map as well
+        @if type-of($value) == 'map' and
+            type-of(map.get($object, $key)) == 'map'
+        {
+          // Recursive extend
+          $value: extend(map.get($object, $key), $value, true);
+        }
+
+        // Merge current tuple with object
+        $object: map.merge(
+          $object,
+          (
+            $key: $value
+          )
+        );
+      }
+    }
+  }
+
+  @return $object;
+}

@@ -5,7 +5,7 @@
 /// @access public
 ///
 /// @param {ArgList} $functions - list of functions to check for
-/// @return {Boolean} Whether or not there are missing dependencies
+/// @return {Bool} Whether or not there are missing dependencies
 @function missing-dependencies($functions...) {
   $missing-dependencies: ();
 

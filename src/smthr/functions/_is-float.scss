@@ -5,7 +5,7 @@
 /// @access public
 ///
 /// @param {*} $value - A value to be checked.
-/// @return {Boolean} True if $value is a float, false if it is not.
+/// @return {Bool} True if $value is a float, false if it is not.
 @function is-float($value) {
   @return meta.type-of($value) == 'number' and math.round($value) != $value;
 }

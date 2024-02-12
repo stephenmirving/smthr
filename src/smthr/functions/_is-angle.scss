@@ -6,7 +6,7 @@
 /// @access public
 ///
 /// @param {*} $value - A value to be checked.
-/// @return {Boolean} True if $value is an angle, false if it is not.
+/// @return {Bool} True if $value is an angle, false if it is not.
 @function is-angle($value) {
   @return (
     meta.type-of($value) == 'number' and

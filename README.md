@@ -76,7 +76,6 @@ Created by Stephen M Irving
 This library also contains work inspired by others, as well as some forked code.
 This includes work by:
 
-* [Hugo Giraudel](https://hugogiraudel.com/)
 * [Harry Roberts](https://csswizardry.com/)
 * [Eduardo Boucas](https://eduardoboucas.com/)
 * [Chris Coyier](https://chriscoyier.net/)

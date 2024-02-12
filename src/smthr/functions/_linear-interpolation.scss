@@ -2,13 +2,15 @@
 @use 'sass:list';
 @use 'sass:math';
 
-/// Calculate the definition of a line between two points
+/// Calculate the definition of a line between two points. This is very useful
+/// for things like setting responsive font-sizes.
 /// @access public
 ///
 /// @param {Map} $map - A map where the keys are viewport widths and each value
 /// associated is the desired pixel size at that given view width.
+///
 /// @return A linear equation expressed as a calc() function
-/// @example font-size: linear-interpolation((320px: 18px, 768px: 26px));
+/// @example font-size: linear-interpolation((320px: 16px, 768px: 20px));
 @function linear-interpolation($map) {
   $keys: map.keys($map);
 
@@ -32,5 +34,5 @@
     $y-intercept: math.abs($y-intercept);
   }
 
-  @return calc(#{$slope * 100vw} #{$sign} #{$b});
+  @return calc(#{$slope * 100vw} #{$sign} #{$y-intercept});
 }
