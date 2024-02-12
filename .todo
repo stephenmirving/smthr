@@ -12,6 +12,8 @@ TODO:
       ☐ Determine difference between linear-interpolation and trend-line functions.
     ☐ Mixin Testing
       ☐ Test all Animation mixins
+        ✔ Testing complete through animations/bouniness @done(24-02-12 17:30)
+        ☐ Start testing again at color-shifter.
       ☐ Test all Shape mixins
       ☐ Test all Utilities mixins
   General Changes:

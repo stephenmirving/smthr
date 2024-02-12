@@ -101,7 +101,7 @@ deprecated and will be removed in future versions of Sass.
 **Like this:**
 
 ```scss
-@forward 'vendor/smthr/betterize;
+@forward 'vendor/smthr/betterize';
 @forward 'vendor/smthr/print;
 ```
 
