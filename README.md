@@ -5,11 +5,12 @@ Smoother is filled with simple-to-use functions &amp; mixins
 that aid your front-end development experience by serving up workflow
 enhancing utilities along with production ready element styles and animations.
 
-Along with the many utility-based functions &amp; mixins, this
-library focuses heavily on aiding in the creation of CSS animations
-and clip-path shapes - allowing you to create a wide range of effects without
-having to mess with clip-path coordinates or complicated animation keyframe
-creation.
+Along with the many utility functions that extend and improve on the
+functionality of the built-in Sass modules, and mixins that allow for intuitive
+and fast style development, this library focuses heavily on aiding in the
+creation of CSS animations and clip-path shapes. Smoother allows you to create
+a wide range of effects with a single @include reference, without having to deal
+with messy clip-path coordinates or complicated animation keyframe creation.
 
 ## smthr is in active development
 
