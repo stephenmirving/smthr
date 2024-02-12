@@ -1,6 +1,6 @@
-# smthr
+# _smth.scss
 
-_smthr_ is a Sassy CSS (SCSS) library designed for a smoother Sass experience.
+_Smoother_ is a Sassy CSS (SCSS) library designed for a smoother Sass experience.
 Smoother is filled with simple-to-use functions &amp; mixins
 that aid your front-end development experience by serving up workflow
 enhancing utilities along with production ready element styles and animations.
@@ -13,7 +13,7 @@ creation.
 
 ## smthr is in active development
 
-**This is *smthr* version 0.1.9 - Last update: 02/11/24*
+**This is *smthr* version 0.1.9 - Last update: 02/12/24*
 
 **_smthr_ currently contains:**
 
@@ -22,6 +22,10 @@ creation.
 * A modern, opinionated normalize file written in Sass called _betterize.scss
 * A modern, opinionated print style file written in Sass called _print.scss
 * A small collection of @extend placeholders and !default variables
+
+Because _smth.scss is a library entirely of Sass functions, mixins and variables,
+importing it into your project won't add any overhead or increased filesize to
+your project's stylesheet except for the parts that you actually use.
 
 ## Deployment
 
@@ -60,7 +64,8 @@ deprecated and will be removed in future versions of Sass.
 > @forward 'vendor/smthr/betterize;
 > @forward 'vendor/smthr/print;
 
-***
+If you choose to use _betterize.scss, you can remove any other CSS normalization
+or reset files such as normalize.css or reset.css.
 
 ## Testing and Documentation
 
