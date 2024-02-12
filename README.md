@@ -13,7 +13,7 @@ creation.
 
 ## smthr is in active development
 
-**This is *smthr* version 0.1.8 - Last update: 02/10/24*
+**This is *smthr* version 0.1.9 - Last update: 02/11/24*
 
 **_smthr_ currently contains:**
 

@@ -8,5 +8,5 @@
 @use './smth' as *;
 
 div {
-  content: is-absolute-length(1rem);
+  content: is-reserved('slash');
 }

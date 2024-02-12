@@ -3,7 +3,8 @@ TODO:
   TESTING:
     ☐ Test all functions and mixins and placeholders.
       ✔ Currently tested up to finishing the functions that start with 'g' @done(24-02-11 17:50)
-      ☐ Start testing again with 'is-absolute-length'
+      ✔ Start testing again with 'is-absolute-length' @done(24-02-11 20:51)
+      ☐ Start testing again with 'linear-interpolation'
     ☐ Fix functions-walk or remove it
   General Changes:
     ✔ Color convert's cmyk conversion's backup rgb color is giving wrong output @done(24-02-11 01:17)
