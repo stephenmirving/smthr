@@ -5,14 +5,22 @@ TODO:
       ✔ Currently tested up to finishing the functions that start with 'g' @done(24-02-11 17:50)
       ✔ Start testing again with 'is-absolute-length' @done(24-02-11 20:51)
       ✔ Start testing again with 'linear-interpolation' @done(24-02-11 23:18)
-    ☐ Fix functions-walk() and walk() or remove them
+    ☐ Function testing
+      ✔ All other functions completed testing. @done(24-02-12 03:38)
+      ☐ Fix functions-walk() and walk() or remove them
+      ☐ In the same vein as fixing functions-walk and walk, also need to fix missing-dependences or remove it
+      ☐ Determine difference between linear-interpolation and trend-line functions.
+    ☐ Mixin Testing
+      ☐ Test all Animation mixins
+      ☐ Test all Shape mixins
+      ☐ Test all Utilities mixins
   General Changes:
     ✔ Color convert's cmyk conversion's backup rgb color is giving wrong output @done(24-02-11 01:17)
     ☐ Parse down all the direction decision trees using a direction alias map
     ☐ Examine responsive font mixin
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Take a look at the line-clamp mixin
-    ☐ Add .sass version back in
+    ☐ Add .sass version back in (once scss version is fully released)
 
   Animations Mixins:
     ☐ Find ones I haven't done yet and complete one
@@ -54,6 +62,10 @@ TODO:
     ☐ Add more entity codes to the entity function
     ☐ Fix the ratio-to-percentage mixin
     ☐ Special character detecting function, finish and propogate
+
+  Publishing:
+    ☐ Create website and API guide using Github Pages
+    ☐ Publish as an npm package
 
   Test Site:
     ☐ Mobile first

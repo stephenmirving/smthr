@@ -3,7 +3,7 @@
 @use './is-true' as *;
 @use './to-list' as *;
 
-/// Removes all false and null values from `$list`.
+/// Removes all false and null values from $list.
 /// @access public
 ///
 /// @param {List} $list - The list to purge.
@@ -14,7 +14,7 @@
 /// @alias clean-list
 /// @alias list-purge
 @function purge-list($list) {
-  $missing: missing-dependencies('is-true', 'to-list');
+  // $_: missing-dependencies('is-true', 'to-list');
 
   $result: ();
 

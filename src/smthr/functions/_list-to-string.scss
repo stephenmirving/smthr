@@ -30,7 +30,7 @@
   }
 
   @if meta.type-of($list) != 'list' {
-    @error 'Invalid $list type passed to the `list-to-string()` function. You ' +
+    @error 'Invalid $list type passed to the [ list-to-string() ] function. You ' +
         'passed `#{meta.inspect($list)}`, which is of type: '
         '[ #{meta.type-of($list)} ].';
   }
@@ -56,7 +56,7 @@
   } @else {
     @error 'Invalid $separator type passed to the [ list-to-string() ]' +
         'function. You passed `#{meta.inspect($list)}`, which is not ' +
-        'a valid separator string. Use something like \', \' or \' \' instead.';
+        'a valid separator string. Use something like comma, space, or slash.';
   }
 
   @each $item in $list {

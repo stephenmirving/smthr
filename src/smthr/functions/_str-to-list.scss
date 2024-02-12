@@ -1,14 +1,41 @@
 @use 'sass:list';
+@use 'sass:meta';
 @use 'sass:string';
 
 /// Takes a string and converts it into a list
 /// @access public
 ///
 /// @param {String} $string - The initial string.
-/// @param {String} $separator - The separator to use between list values.
+/// @param {String} $separator - The separator in the $string to divide the
+/// string into list values.
+/// @param {String|Keyword} $list-separarator [comma] - The separator that will
+/// be used between values in the new list.
+///
 /// @return {List} The converted list.
+///
+/// @throw Invalid $string type error.
+/// @throw Invalid $separator type error.
 /// @alias string-to-list
 @function str-to-list($string, $separator: ' ') {
+  @if meta.type-of($string) == 'list' {
+    @warn 'You passed a list value to the [ str-to-list() ] function.' +
+        'Returning original list of #{$list}';
+
+    @return $list;
+  }
+
+  @if meta.type-of($string) != 'string' {
+    @error 'Invalid $string type passed to the [ str-to-list() ] function. ' +
+        'You passed `#{meta.inspect($string)}`, which is of type: '
+        '[ #{meta.type-of($string)} ].';
+  }
+
+  @if meta.type-of($separator) != 'string' {
+    @error 'Invalid $separator type passed to the [ str-to-list() ] function. ' +
+       'You passed `#{meta.inspect($separator)}`, which is of type: ' +
+        '[ #{meta.type-of($separator)} ]. This value must be of type string.';
+  }
+
   $list: ();
   $index: string.index($string, $separator);
 
@@ -38,8 +65,14 @@
 /// @access public
 ///
 /// @param {String} $string - The initial string.
-/// @param {String} $separator - The separator to use between list values.
+/// @param {String} $separator - The separator in the $string to divide the
+/// string into list values.
+/// @param {String|Keyword} $list-separarator [comma] - The separator that will
+/// be used between values in the new list.
+///
 /// @return {List} The converted list.
+///
+/// @throw
 /// @alias str-to-list
 @function string-to-list($string, $separator: ' ') {
   @return str-to-list($string, $separator);

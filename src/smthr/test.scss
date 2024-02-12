@@ -33,10 +33,9 @@ $map-1: (
 
 $map-2: (
   "first": 1,
-  "second": ( "ohai": true ),
-  "third": (
-    "map": 42
-  )
+  "second": 2,
+  "third": false,
+  "map": 4
 );
 
 $map-3: (
@@ -45,7 +44,7 @@ $map-3: (
     "are cool": 100
   )
 );
-test {
-  extend-standard  : inspect(smth.extend($map-1, $map-2, $map-3));
-  extend-recursive : inspect(smth.extend($map-1, $map-2, $map-3, true));
+
+div {
+  color: smth.white(0.75);
 }

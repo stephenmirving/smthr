@@ -1,3 +1,4 @@
+@use 'sass:meta';
 @use 'sass:string';
 
 /// Replace `$search` with `$replace` in `$string`.
@@ -6,9 +7,20 @@
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.
 /// @param {String} $replace [''] - The new value that replaces `$search`.
+///
 /// @return {String} The updated string.
+///
+/// @throw Invalid data type error for $string, $search, or $replace.
 /// @alias string-replace
 @function str-replace($string, $search, $replace: '') {
+  @if meta.type-of($string) != 'string' or
+      meta.type-of($search) != 'string' or
+      meta.type-of($replace) != 'string'
+  {
+    @error 'Invalid data type passed to [ str-replace() ] function. All ' +
+        'parameters passed to this function must be strings.';
+  }
+
   $index: string.index($string, $search);
 
   @if $index {
@@ -31,7 +43,9 @@
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.
 /// @param {String} $replace ('') - The new value that replaces `$search`.
+///
 /// @return {String} The updated string.
+///
 /// @alias str-replace
 @function string-replace($string, $search, $replace: '') {
   @return str-replace($string, $search, $replace);

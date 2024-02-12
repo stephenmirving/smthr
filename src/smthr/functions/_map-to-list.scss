@@ -5,7 +5,10 @@
 /// @access public
 ///
 /// @param {Map} $map - Map to pull a value from.
-/// @return {List} Depending on the flag, returns either $keys, $values or both
+/// @param {String} ['both'] - Whether to keep just the 'keys', just the 'values'
+/// or 'both' from the $map.
+///
+/// @return {List} Depending on the flag, returns either keys, values or both
 @function map-to-list($map, $keep: 'both') {
   $keep: if(list.index('keys' 'values', $keep), $keep, 'both');
 

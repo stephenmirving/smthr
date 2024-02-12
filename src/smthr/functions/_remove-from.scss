@@ -10,8 +10,8 @@
 ///
 /// @require {function} update-list
 /// @alias trim-list
-@function remove-list($list, $value) {
-  $missing: missing-dependencies('update-list');
+@function remove-from($list, $value) {
+  // $missing: missing-dependencies('update-list');
 
   @return update-list($list, $value, null);
 }
@@ -24,7 +24,7 @@
 /// @return {List} The updated list.
 ///
 /// @require {function} update-list
-/// @alias remove-list
+/// @alias remove-from-list
 @function trim-list($list, $value) {
-  @return remove-list($list, $value);
+  @return remove-from-list($list, $value);
 }

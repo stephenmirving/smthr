@@ -4,6 +4,8 @@
 ///
 /// @param {number} $num - The number of children.
 /// @param {number} $index - The index of the sorting.
+///
+/// @return {number} The order index
 @function order-index($i, $index) {
   @return ($index + $i);
 }

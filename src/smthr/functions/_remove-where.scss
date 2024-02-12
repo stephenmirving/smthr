@@ -9,7 +9,10 @@
 /// removed.
 /// @param {*} $condition - A conditional statement used to check every value in
 /// $list.
+///
 /// @return {List} The updated list.
+///
+/// @example smth.remove-where(80deg 30% 80% 0.5, meta.get-function('is-angle', $module: 'smth'));
 @function remove-where($list, $condition) {
   $new-list: ();
   $separator: list.separator($list);
