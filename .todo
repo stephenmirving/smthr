@@ -1,6 +1,12 @@
 TODO:
 
+  TESTING:
+    ☐ Test all functions and mixins and placeholders.
+      ✔ Currently tested up to finishing the functions that start with 'g' @done(24-02-11 17:50)
+      ☐ Start testing again with 'is-absolute-length'
+    ☐ Fix functions-walk or remove it
   General Changes:
+    ✔ Color convert's cmyk conversion's backup rgb color is giving wrong output @done(24-02-11 01:17)
     ☐ Parse down all the direction decision trees using a direction alias map
     ☐ Examine responsive font mixin
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property

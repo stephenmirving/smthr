@@ -39,10 +39,10 @@
   $y: math.round($y * 100) * 1%;
   $k: math.round($k * 100) * 1%;
 
-  // Round backup rgb values
-  $r: math.round($red-component);
-  $g: math.round($green-component);
-  $b: math.round($blue-component);
+  // backup rgb values
+  $r: color.red($color);
+  $g: color.green($color);
+  $b: color.blue($color);
 
   @if $alpha-component < 1 {
     @return #{'device-cmyk(#{$c} #{$m} #{$y} #{$k} / #{$alpha-component}, ' +

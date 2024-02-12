@@ -7,51 +7,33 @@
 /// @access public
 ///
 /// @param {Number} $number - The decimal number to convert.
-/// @param {Number} $accuracy [10000] - The search limit for the denominator.
+/// @param {Number} $accuracy [50000] - The search limit for the denominator.
 ///
 /// @return {List} - The number converted into a ratio.
 ///
 /// @throw Invalid number value error.
 /// @alias num-to-ratio
-@function decimal-to-ratio($number, $accuracy: 10000) {
-  $numerator: 1;
-  $denominator: 1;
-  $closest: 1;
-  $min-difference: math.abs($number - $closest);
-  $found: false;
+@function decimal-to-ratio($number, $accuracy: 50000) {
+  $closest-numerator: 1;
+  $closest-denominator: 1;
+  $min-difference: math.abs($number - math.div($closest-numerator, $closest-denominator));
 
-  @if not $number {
-    @error 'No value passed to the [ decimal-to-ratio ] function. You must ' +
-        'specify a decimal value for the $number argument when calling ' +
-        'this function.';
-  }
+  @for $denominator from 1 through $accuracy + 1 {
+    $numerator: math.round($number * $denominator);
+    $difference: math.abs($number - math.div($numerator, $denominator));
 
-  @for $i from 1 through $accuracy {
-    @if not $found {
-      @for $j from 1 through $accuracy {
-        @if not $found {
-          $current: math.div($i, $j);
-          $difference: math.abs($number - $current);
+    @if $difference < $min-difference {
+      $min-difference: $difference;
+      $closest-numerator: $numerator;
+      $closest-denominator: $denominator;
 
-          // If the current fraction is closer to the number than
-          // the previous closest, update closest
-          @if $difference < $min-difference {
-            $min-difference: $difference;
-            $closest: $current;
-            $numerator: $i;
-            $denominator: $j;
-          }
-
-          // If a match or a very close match is found, return early
-          @if $min-difference == 0 or $difference > $min-difference {
-            $found: true;
-          }
-        }
+      @if $min-difference == 0 or $difference > $min-difference{
+        @return ($closest-numerator $closest-denominator);
       }
     }
   }
 
-  @return #{'(#{$numerator} #{$denominator})'};
+  @return ($closest-numerator $closest-denominator);
 }
 
 /// Converts a decimal number into a ratio expressed as a space-separated list.

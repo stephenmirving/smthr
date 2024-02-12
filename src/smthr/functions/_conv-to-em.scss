@@ -22,8 +22,8 @@
         'px'
     )
   {
-    @error 'Invalid value of (#{meta.inspect($pixels)}) passed to conv-to-em().' +
-        ' Value of $pixels must be number in px units.';
+    @error 'Invalid value of [ #{meta.inspect($pixels)} ] passed to the ' +
+        '[ conv-to-em() ] function. Value of $pixels must be number in px units.';
   }
 
   // If no base is defined, defer to the $base-font-size variable. If that does

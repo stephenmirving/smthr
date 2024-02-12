@@ -16,12 +16,23 @@
   $rem-values: ();
   $count: list.length($values);
 
+  @each $value in $values {
+    @if meta.type-of($value) !=
+      'number' or
+      (not math.is-unitless($value) and list.index(('px' 'rem' 'em'), $value))
+    {
+      @error 'Invalid $values unit of [ #{meta.inspect($values)} ] ' +
+            'passed to the [ conv-to-rem() ] function. You must pass a valid ' +
+            'length in px units.';
+    }
+  }
+
   // If no base is defined, defer to the $base-font-size variable. If that does
   // not exist, default to 16
   @if not $base {
     $base: if(
       meta.variable-exists('base-font-size') or
-      meta.global-variable-exists('base-font-size', smth),
+        meta.global-variable-exists('base-font-size', smth),
       $base-font-size,
       16
     );
@@ -65,8 +76,8 @@
 /// @require {function} strip-unit
 @function _px-to-rem($value, $base: null) {
   @if meta.type-of($value) != 'number' {
-    @error meta.inspect($value) + ', which is not a number, was passed ' +
-        'to the [ conv-to-rem() ] function.';
+    @error 'Invalid $value of [ #{meta.inspect($value)} ], was passed ' +
+        'to the [ conv-to-rem() ] function. You must use a valid number.';
   }
 
   // Transform em into rem if someone hands over 'em's

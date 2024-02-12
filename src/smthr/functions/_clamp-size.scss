@@ -1,4 +1,6 @@
+@use 'sass:math';
 @use 'sass:meta';
+@use 'sass:string';
 @use './is-length' as *;
 
 /// Clamp `$number` between `$min` and `$max`. Because the CSS version of
@@ -11,27 +13,22 @@
 /// @param {Length} $min - The minimum value.
 /// @param {Length} $value - The number to clamp between $min and $max.
 /// @param {Length} $max - The maximum value.
+///
 /// @return {Length} If $value is within the limits, returns the $value, if it
 /// is below the limit, it will return the $min, if it is above the $max, it
 /// will return the $max.
+///
+/// @throw Minimum greater than maximum error.
 /// @alias clamp-val
 @function clamp-size($min, $value, $max) {
-  @if not is-length($min) {
-    @error 'Invalid $min value of `#{$min}` for ' +
-        '`clamp-size()` function. Value must be a valid length unit.';
-  }
+  @if meta.type-of($min) == 'number' and meta.type-of($max) == 'number' and
+      math.unit($min) == math.unit($max) and $min > $max {
+     @error 'Invalid $min and $max value of [ $min: #{$min}, $max: #{$max} ] ' +
+         'for the [ clamp-size() ] function. The minimum value must be less ' +
+         'than the maximum value.';
+    }
 
-  @if not is-length($value) {
-    @error 'Invalid $value value of `#{$value}` for ' +
-        '`clamp-size()` function. Value must be a valid length unit.';
-  }
-
-  @if not is-length($max) {
-    @error 'Invalid $max value of `#{$max}` for ' +
-        '`clamp-size()` function. Value must be a valid length unit.';
-  }
-
-  @return min(max($min, $value), $max);
+  @return min(max(#{'#{$min}'}, #{'#{$value}'}), #{'#{$max}'});
 }
 
 /// Clamp `$number` between `$min` and `$max`. Because the CSS version of

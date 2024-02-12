@@ -1,12 +1,17 @@
 @use 'sass:meta';
 
 /// Iterates over a list and returns it as a converted string
+/// @access public
 ///
 /// @param {List} $list - The list to convert into a string.
 /// @param {String} $separator [' '] - The separator to use between
 /// the list elements
 ///
 /// @return {String} The converted string.
+///
+/// @throw Invalid $list type error
+/// @throw Invalid $separator type error
+/// @alias list-to-str
 @function list-to-string($list, $separator: ' ') {
   $str: '';
 
@@ -34,4 +39,19 @@
   }
 
   @return $str;
+}
+
+/// Iterates over a list and returns it as a converted string
+///
+/// @param {List} $list - The list to convert into a string.
+/// @param {String} $separator [' '] - The separator to use between
+/// the list elements
+///
+/// @return {String} The converted string.
+///
+/// @throw Invalid $list type error
+/// @throw Invalid $separator type error
+/// @alias list-to-str
+@function list-to-str($list, $separator: ' ') {
+  @return list-to-string($list, $separator);
 }

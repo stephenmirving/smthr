@@ -5,8 +5,8 @@
 @use 'sass:meta';
 @use 'sass:selector';
 @use 'sass:string';
-@use './smth' as smth;
+@use './smth' as *;
 
 div {
-  padding-top: smth.ratio-to-percentage(16 9);
+  content: is-absolute-length(1rem);
 }

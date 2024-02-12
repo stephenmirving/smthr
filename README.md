@@ -28,19 +28,26 @@ creation.
 Copy the smthr folder into your project's directory with the rest of the scss
 files, probably within the 'sass' or 'scss' folder, or within one of the
 subdirectories of that folder (most commonly the 'vendor' subdirectory). From
-there, just use an @use directive for the '_smth.scss' file that is within
+there, just use a @forward directive for the '_smth.scss' file that is within
 the 'smth' folder at the top of your 'main.scss' file (or 'style.scss', or
 whatever you have named your main stylesheet) where the rest of your imports
 are.
 
 **Like this:**
 
-> @use 'smthr/smth' as smth;
+> @forward 'smthr/smth' as smth;
 
 Of if you were to place the folder within your vendor sub-folder in your sass
 directory, the @use would look like this:
 
-> @use 'vendor/smthr/smth' as smth;
+> @forward 'vendor/smthr/smth' as smth;
+
+Doing this namespaces the library to smth and you can call the functions, mixins, and variables in the library using that as a prefix, like this:
+
+> @include smth.bounciness();
+> color: smth.invert-color($color-brand)
+> font-family: smth.font-stack('primary', smth.$font-stacks);
+
 
 If you want to use the normalization file _betterize.scss or the print style
 file _print.scss, simply keep them in the same directory as the _smth.scss file

@@ -1,4 +1,5 @@
 // General Utilitiy Functions
+@forward 'functions-walk';
 @forward 'asset';
 @forward 'entity';
 @forward 'missing-dependencies';
@@ -26,14 +27,11 @@
 // Math Functions
 @forward 'clamp-size';
 @forward 'decimal-to-ratio';
-@forward 'exp';
 @forward 'exp-maclaurin';
 @forward 'factorial';
-@forward 'ln';
 @forward 'ln-maclaurin';
 @forward 'pi';
 @forward 'ratio-to-percentage';
-@forward 'summation';
 @forward 'to-fixed';
 
 // Conversion Functions
@@ -46,9 +44,9 @@
 
 @forward 'str-replace';
 @forward 'str-to-list';
+@forward 'str-to-num';
 
 // List Functions
-@forward 'functions-walk';
 @forward 'in-list';
 @forward 'list-to-string';
 @forward 'purge-list';
