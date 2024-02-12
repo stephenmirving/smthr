@@ -95,13 +95,13 @@
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of [ #{$timing} ] for the `text-pop-up` ' +
+    @error 'Invalid $timing value of `#{$timing}` for the `text-pop-up` ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of [ #{$timing} ] for the `text-pop-up` ' +
+    @error 'Invalid $timing value of `#{$timing}` for the `text-pop-up` ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -135,13 +135,13 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `text-pop-up` ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `text-pop-up` ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `text-pop-up` ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `text-pop-up` ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;

@@ -5,8 +5,10 @@
 @forward 'missing-dependencies';
 @forward 'order-index';
 @forward 'strip-unit';
+@forward 'resolve-alias';
 
 // Is-Type Functions
+@forward 'is-alias';
 @forward 'is-color';
 @forward 'is-number';
 @forward 'is-integer';

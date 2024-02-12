@@ -5,46 +5,8 @@
 @use 'sass:meta';
 @use 'sass:selector';
 @use 'sass:string';
-@use './smth' as smth;
-
-$map-with-deep-val: (
-  'a': 'thing',
-  'b': 'green',
-  'c': 'blue',
-  'd': (
-    'e': 'thing',
-    'f': 'green',
-    'g': 'blue',
-  )
-);
+@use './smth' as *;
 
 div {
-  font-family: smth.font-stack('primary', smth.$font-stacks);
-}
-
-$map-1: (
-  "first": "test",
-  "second": "string",
-  "third": (
-    "nested": "gloubi",
-    "map": 1337
-  )
-);
-
-$map-2: (
-  "first": 1,
-  "second": 2,
-  "third": false,
-  "map": 4
-);
-
-$map-3: (
-  "new": "pwet",
-  "third": (
-    "are cool": 100
-  )
-);
-
-div {
-  color: smth.white(0.75);
+  content: is-alias('fart')
 }

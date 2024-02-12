@@ -1,0 +1,47 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:list';
+@use '../placeholders/variables' as *;
+
+/// Takes a given alias and returns the corresponding keyword based on an
+/// alias resolution map.
+///
+/// @param {String} $keyword - The name of the keyword.
+/// @param {String} $alias - The shortcut or alias used for the keyword.
+/// @param {Map} $resolution-map [$direction-resolution-map] - The map of
+/// keywords as keys with lists of their aliases as values.
+///
+/// @return {Bool} Returns true if the given alias is found in the map's list
+/// for the given keyword, otherwise returns false.
+///
+/// @throw Invalid $keyword data type error.
+/// @throw Invalid $alias data type error.
+/// @throw Invalid $resolution-map data type error.
+@function resolve-alias($alias, $resolution-map: $alias-resolution-map) {
+  @if meta.type-of($alias) != 'string' {
+    @error 'Invalid data type of [ #{meta.type-of($alias)} ] for $alias ' +
+        'passed to the [ is-alias() ] function. The data type of $alias must ' +
+        'be a string.';
+  }
+
+  @if meta.type-of($resolution-map) != 'map' {
+    @error 'Invalid data type of [ #{meta.type-of($resolution-map)} ] for ' +
+        '$resolution-map passed to the [ is-alias() ] function. The data type ' +
+        'of $resolution-map must be a map.';
+  }
+
+  $keys: map.keys($resolution-map);
+
+  @each $key in $keys {
+    $aliases: map.get($resolution-map, $key);
+
+    @if list.index($aliases, $alias) {
+      @return $key;
+    }
+  }
+
+  @warn 'Alias could not be resolved to a keyword in the given $resolution-map.' +
+      ' Returning null instead.';
+
+  @return null;
+}

@@ -8,7 +8,7 @@
 /// @param {String|Boolean} $in-or-out [in] - Determines if the element will
 /// bounce `in` (or true, `i`) our `out` (or false, `o`).
 /// @param {String} $direction [top] - The direction the animation will appear
-/// to be bouncing in from or bouncing out towards.
+/// to be bouncing `in` from or bouncing `out` towards (based on $in-or-out).
 /// @param {Time} $timing [null] The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
@@ -46,7 +46,7 @@
   $dir-val3: translateY(-65px);
   $dir-val4: translateY(-28px);
   $dir-val5: translateY(-8px);
-  $xtra-val: null;
+  $extra-translate-val: null;
   $fwd-bck: false;
 
   @if $in-or-out and meta.type-of($in-or-out) == 'string' {
@@ -71,10 +71,10 @@
 
   @if $in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
-  } @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o' {
+  } @else if not $in-or-out or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
   } @else {
-    @error 'Invalid value for $in-or-out of [ #{meta.inspect($in-or-out)} ] ' +
+    @error 'Invalid value for $in-or-out of `#{meta.inspect($in-or-out)}` ' +
         'for the [ bounce() ] mixin.';
   }
 
@@ -96,7 +96,7 @@
     $direction ==
     'f'
   {
-    $direction: 'forward';
+    $direction: 'forwards';
     $fwd-bck: true;
   } @else if
     $direction ==
@@ -112,7 +112,7 @@
     $direction ==
     'b'
   {
-    $direction: 'backward';
+    $direction: 'backwards';
     $fwd-bck: true;
   } @else if
     $direction ==
@@ -126,9 +126,10 @@
   {
     $direction: 'top';
   } @else {
-    @error '[ #{$direction} ] is not a valid direction for the [ bounce ] mixin.';
+    @error '`#{$direction}` is not a valid direction for the [ bounce() ] mixin.';
   }
 
+  // If bounce is bouncing 'in'
   @if $in-or-out {
     @if $direction == 'bottom' {
       $dir-val1: translateY(500px);
@@ -148,24 +149,13 @@
       $dir-val3: translateX(-68px);
       $dir-val4: translateX(-32px);
       $dir-val5: translateX(-8px);
-    } @else if $direction == 'forward' {
+    } @else if $direction == 'forwards' {
       $dir-val1: scale(0);
       $dir-val2: scale(1);
       $dir-val3: scale(0.7);
       $dir-val4: scale(0.84);
       $dir-val5: scale(0.95);
-    } @else if
-      $direction ==
-      'backward' or
-      $direction ==
-      'bckwrd' or
-      $direction ==
-      'back' or
-      $direction ==
-      'bck' or
-      $direction ==
-      'b'
-    {
+    } @else if $direction == 'backwards' {
       $dir-val1: scale(7);
       $dir-val2: scale(1);
       $dir-val3: scale(1.5);
@@ -173,6 +163,7 @@
       $dir-val5: scale(1.04);
     }
   } @else {
+    // If bounce is bouncing 'out'
     @if $direction == 'top' {
       $dir-val1: translateY(0);
       $dir-val2: translateY(-30px);
@@ -203,24 +194,14 @@
       $dir-val3: translateZ(95px);
       $dir-val4: translateZ(150px);
       $dir-val5: translateZ(500px);
-    } @else if
-      $direction ==
-      'backward' or
-      $direction ==
-      'bckwrd' or
-      $direction ==
-      'back' or
-      $direction ==
-      'bck' or
-      $direction ==
-      'b'
+    } @else if $direction == 'backwards'
     {
       $dir-val1: translateZ(0);
       $dir-val2: translateZ(-100px);
       $dir-val3: translateZ(-110px);
       $dir-val4: translateZ(-200px);
       $dir-val5: translateZ(-900px) scale(0);
-      $xtra-val: translateZ(0) scale(1);
+      $extra-translate-val: translateZ(0) scale(1);
     }
   }
 
@@ -228,13 +209,13 @@
     $timing: if(($in-or-out), 1.1s, 1.5s);
   }
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of [ #{$timing} ] for the [ bounce() ] ' +
+    @error 'Invalid $timing value of `#{$timing}` for the [ bounce() ] ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of [ #{$timing} ] for the [ bounce() ] ' +
+    @error 'Invalid $timing value of `#{$timing}` for the [ bounce() ] ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -268,12 +249,12 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the [ bounce() ] ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ bounce() ] ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the [ bounce() ] ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ bounce() ] ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -307,7 +288,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ] for the ' +
+      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for the ' +
           '[ bounce() ] mixin.';
     }
   }
@@ -455,7 +436,7 @@
         }
 
         70% {
-          transform: if(($direction != 'backward'), #{$dir-val1}, #{$xtra-val});
+          transform: if(($direction != 'backward'), #{$dir-val1}, #{$extra-translate-val});
           animation-timing-function: ease-out;
         }
 

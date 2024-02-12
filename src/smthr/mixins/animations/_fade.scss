@@ -60,7 +60,7 @@
   } @else if not $in-or-out or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
   } @else {
-    @error 'Invalid value for $in-or-out of [ #{meta.inspect($in-or-out)} ] ' +
+    @error 'Invalid value for $in-or-out of `#{meta.inspect($in-or-out)}` ' +
         'in the [ fade ] mixin. Value must be either `in`, `out`, true, or false.';
   }
 
@@ -232,13 +232,13 @@
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of [ #{$timing} ] for the ' +
+    @error 'Invalid $timing value of `#{$timing}` for the ' +
         '[ fade ] mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of [ #{$timing} ] for the ' +
+    @error 'Invalid $timing value of `#{$timing}` for the ' +
         '[ fade ] mixin. The timing property must be in either s or ms units.';
   } @else if math.unit($timing) == 'ms' and $timing % 100 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -268,13 +268,13 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `fade` mixin.' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `fade` mixin.' +
           'The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `fade` mixin.' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `fade` mixin.' +
           'The delay property must be in either s or ms units.';
     } @else if math.unit($delay) == 'ms' and $delay % 100 == 0ms {
       // If time in ms would be shorter as seconds, convert it
@@ -297,7 +297,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ] for the ' +
+      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for the ' +
           '`fade` mixin.';
     }
   }

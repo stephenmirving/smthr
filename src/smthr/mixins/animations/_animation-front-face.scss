@@ -10,12 +10,21 @@
 /// @group Animations
 /// @group Utilities
 /// @throw Invalid $z-index z-index value
-/// @require {placeholder} animation-faces
 @mixin animation-front-face($z-index: 20) {
-  @extend %animation-faces;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 
-  @if $z-index and meta.type-of($z-index) == 'number' and math.is-unitless($z-index)
+  @if $z-index and
+    meta.type-of($z-index) ==
+    'number' and
+    math.is-unitless($z-index)
   {
     z-index: $z-index;
+  } @else if $z-val {
+    @error 'Invalid $z-val z-index value of `#{meta.inspect($z-val)}` for the ' +
+        '[ animation-front-face() ] mixin';
   }
 }

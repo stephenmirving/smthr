@@ -60,58 +60,39 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if string.to-lower-case($direction) ==
-    'bottom' or
-    string.to-lower-case($direction) ==
-    'b'
-  {
+  @if $direction == 'bottom' or $direction == 'b' {
     $dir-val1: translateY(45px);
     $dir-val2: translateY(24px);
     $dir-val3: translateY(12px);
     $dir-val4: translateY(6px);
     $dir-val5: translateY(4px);
     $dir-val6: translateY(0);
-  } @else if
-    string.to-lower-case($direction) ==
-    'left' or
-    string.to-lower-case($direction) ==
-    'l'
-  {
+  } @else if $direction == 'left' or $direction == 'l' {
     $dir-val1: translateX(-48px);
     $dir-val2: translateX(-26px);
     $dir-val3: translateX(-13px);
     $dir-val4: translateX(-6.5px);
     $dir-val5: translateY(-4px);
     $dir-val6: translateY(0);
-  } @else if
-    string.to-lower-case($direction) ==
-    'right' or
-    string.to-lower-case($direction) ==
-    'r'
-  {
+  } @else if $direction == 'right' or $direction == 'r' {
     $dir-val1: translateX(48px);
     $dir-val2: translateX(26px);
     $dir-val3: translateX(13px);
     $dir-val4: translateX(6.5px);
     $dir-val5: translateY(4px);
     $dir-val6: translateY(0);
-  } @else if
-    string.to-lower-case($direction) !=
-    'top' and
-    string.to-lower-case($direction) !=
-    't'
-  {
-    @error 'Invalid direction of [ #{meta.inspect($direction)} ] for the `bounciness` mixin.';
+  } @else if $direction != 'top' and $direction != 't' {
+    @error 'Invalid direction of [ #{meta.inspect($direction)} ] for the [ bounciness() ] mixin.';
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of [ #{$timing} ] for the `bounciness` ' +
+    @error 'Invalid $timing value of `#{$timing}` for the [ bounciness() ] ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of [ #{$timing} ] for the `bounciness` ' +
+    @error 'Invalid $timing value of `#{$timing}` for the [ bounciness() ] ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -145,12 +126,12 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `bounciness` ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ bounciness() ] ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of [ #{meta.inspect($delay)} ] for the `bounciness` ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ bounciness() ] ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -178,8 +159,8 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of [ #{meta.inspect($iterations)} ] for the ' +
-          '`bounciness` mixin.';
+      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for the ' +
+          '[ bounciness() ] mixin.';
     }
   } @else {
     $iteratons: null;
@@ -227,7 +208,7 @@
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of [ #{$anim-dir} ] for' +
-        'the `bounciness` mixin';
+        'the [ bounciness() ] mixin';
   }
 
   @if not
