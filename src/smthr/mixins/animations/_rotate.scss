@@ -57,8 +57,7 @@
   $trans-val-1: rotate(0);
   $trans-val-2: rotate(360deg);
   $trans-origin-val: null;
-  $trans-val-d: null;
-  $is-on-axis: false;
+  $trans-val-diag: null;
   $is-diagonal: false;
   $anim-suffix: '-around';
 
@@ -83,7 +82,7 @@
   }
 
   @if $point == 'top' or $point == 't' {
-    $trans-origin-val: 0%;
+    $trans-origin-val: 50% 0%;
     $point: 'top';
   } @else if
     $point ==
@@ -103,10 +102,10 @@
     $point ==
     'rt'
   {
-    $trans-origin-val: 0% 50%;
+    $trans-origin-val: 100% 0%;
     $point: 'top-right';
   } @else if $point == 'right' or $point == 'r' {
-    $trans-origin-val: 100%;
+    $trans-origin-val: 100% 50%;
     $point: 'right';
   } @else if
     $point ==
@@ -124,10 +123,10 @@
     $point ==
     'r-b'
   {
-    $trans-origin-val: 100% 50%;
+    $trans-origin-val: 100% 100%;
     $point: 'bottom-right';
   } @else if $point == 'bottom' or $point == 'btm' or $point == 'b' {
-    $trans-origin-val: 100%;
+    $trans-origin-val: 50% 100%;
     $point: 'bottom';
   } @else if
     $point ==
@@ -147,7 +146,7 @@
     $point ==
     'lb'
   {
-    $trans-origin-val: 100% 0%;
+    $trans-origin-val: 0% 100%;
     $point: 'bottom-left';
   } @else if $point == 'left' or $point == 'l' {
     $trans-origin-val: 0%;
@@ -175,13 +174,13 @@
   } @else if
     $point ==
     'center' or
-    $point !=
+    $point ==
     'centre' or
-    $point !=
+    $point ==
     'cent' or
-    $point !=
+    $point ==
     'cen' or
-    $point !=
+    $point ==
     'c'
   {
     $point: 'center';
@@ -190,13 +189,36 @@
         '[ rotate() ] mixin.';
   }
 
-  @if $axis and $axis != 'none' and $axis != 'no' and $axis != 'n' {
-    $is-on-axis: true;
+  $anim-suffix: string.insert(
+    $anim-suffix,
+    '-#{$point}',
+    string.length($anim-suffix) + 1
+  );
 
+  @if not
+    $axis or
+    $axis ==
+    'none' or
+    $axis ==
+    'no' or or
+    $axis ==
+    'n/a' or
+    $axis ==
+    'n'
+  {
+    $axis: null;
+  }
+
+  @if $axis {
     @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
     {
       $trans-val-1: rotateY(0);
       $trans-val-2: rotateY(360deg);
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        '-vertically',
+        string.length($anim-suffix) + 1
+      );
 
       @if $point != 'left' and $point != 'right' and $point != 'center' {
         @error 'You have chosen an axis value of `vertical` that cannot be ' +
@@ -204,9 +226,9 @@
             '[ rotate() ] mixin. A vertical axis must have $point value of ' +
             'either `left`, `right`, or `center`.';
       } @else if $point == 'left' {
-        $trans-origin-val: 0%;
+        $trans-origin-val: 0% 50%;
       } @else if $point == 'right' {
-        $trans-origin-val: 100%;
+        $trans-origin-val: 100% 50%;
       }
     } @else if
       $axis ==
@@ -220,6 +242,11 @@
     {
       $trans-val-1: rotateX(0);
       $trans-val-2: rotateX(-360deg);
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        '-horizontally',
+        string.length($anim-suffix) + 1
+      );
 
       @if $point != 'top' and $point != 'bottom' and $point != 'center' {
         @error 'You have chosen an axis value of `horizontal` that cannot be ' +
@@ -227,9 +254,9 @@
             '`rotate` mixin. A horizontal axis must have $point value of ' +
             'either `top`, `bottom`, or `center`.';
       } @else if $point == 'top' {
-        $trans-origin-val: 0%;
+        $trans-origin-val: 50% 0%;
       } @else if $point == 'bottom' {
-        $trans-origin-val: 100%;
+        $trans-origin-val: 50% 100%;
       }
     } @else if
       $axis ==
@@ -252,6 +279,11 @@
       'd2'
     {
       $is-diagonal: true;
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        '-diagonally',
+        string.length($anim-suffix) + 1
+      );
 
       @if $point !=
         'center' and
@@ -272,31 +304,31 @@
       } @else if $point == 'center' {
         @if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
           $trans-val-1: rotate3d(-1, 1, 0, 0);
-          $trans-val-d: rotate3d(-1, 1, 0, 180deg);
+          $trans-val-diag: rotate3d(-1, 1, 0, 180deg);
           $trans-val-2: rotate3d(-1, 1, 0, 360deg);
         } @else {
           $trans-val-1: rotate3d(1, 1, 0, 0);
-          $trans-val-d: rotate3d(1, 1, 0, -180deg);
+          $trans-val-diag: rotate3d(1, 1, 0, -180deg);
           $trans-val-2: rotate3d(1, 1, 0, -360deg);
         }
       } @else if $point == 'top-right' {
         $trans-val-1: rotate3d(1, 1, 0, 0);
-        $trans-val-d: rotate3d(1, 1, 0, -180deg);
+        $trans-val-diag: rotate3d(1, 1, 0, -180deg);
         $trans-val-2: rotate3d(1, 1, 0, -360deg);
         $trans-origin-val: 100% 0%;
       } @else if $point == 'bottom-right' {
         $trans-val-1: rotate3d(-1, 1, 0, 0);
-        $trans-val-d: rotate3d(-1, 1, 0, -180deg);
+        $trans-val-diag: rotate3d(-1, 1, 0, -180deg);
         $trans-val-2: rotate3d(-1, 1, 0, -360deg);
-        $trans-origin-val: 100% 50%;
+        $trans-origin-val: 100% 100%;
       } @else if $point == 'bottom-left' {
         $trans-val-1: rotate3d(1, 1, 0, 0);
-        $trans-val-d: rotate3d(1, 1, 0, 180deg);
+        $trans-val-diag: rotate3d(1, 1, 0, 180deg);
         $trans-val-2: rotate3d(1, 1, 0, 360deg);
-        $trans-origin-val: 0% 50%;
+        $trans-origin-val: 0% 100%;
       } @else if $point == 'top-left' {
         $trans-val-1: rotate3d(-1, 1, 0, 0);
-        $trans-val-d: rotate3d(-1, 1, 0, 180deg);
+        $trans-val-diag: rotate3d(-1, 1, 0, 180deg);
         $trans-val-2: rotate3d(-1, 1, 0, 360deg);
         $trans-origin-val: 0% 0%;
       }
@@ -462,12 +494,6 @@
     );
   }
 
-  $anim-suffix: string.insert(
-    $anim-suffix,
-    '-#{$point}',
-    string.length($anim-suffix) + 1
-  );
-
   @if not $anim-num {
     $anim-num: null;
   } @else {
@@ -478,8 +504,7 @@
     );
   }
 
-
-  @if $is-on-axis {
+  @if $axis {
     transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
 
@@ -495,6 +520,7 @@
     @keyframes rotate#{$anim-suffix} {
       0% {
         transform: $trans-val-1;
+
         @if $point != 'center' {
           transform-origin: $trans-origin-val;
         }
@@ -502,7 +528,8 @@
 
       @if $is-diagonal {
         50% {
-          transform: $trans-val-d;
+          transform: $trans-val-diag;
+
           @if $point != 'center' {
             transform-origin: $trans-origin-val;
           }
@@ -511,6 +538,7 @@
 
       100% {
         transform: $trans-val-2;
+
         @if $point != 'center' {
           transform-origin: $trans-origin-val;
         }

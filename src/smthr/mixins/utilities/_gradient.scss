@@ -164,7 +164,7 @@
              $orientation == '-1'
   {
     background-image: linear-gradient(
-      0deg,
+      0,
       $start-color $start-percent,
       $end-color $end-percent
     );

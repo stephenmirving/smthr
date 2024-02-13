@@ -92,7 +92,7 @@
     $direction ==
     'rt'
   {
-    $trans-origin-val: 100% 0%;
+    $trans-origin-val: 100% 0;
     $direction: 'top-right';
   } @else if $direction == 'right' or $direction == 'r' {
     $trans-origin-val: 100% 50%;
@@ -115,14 +115,12 @@
     $direction ==
     'r-b'
   {
+    $transform-origin-val: 100% 100%;
     $direction: 'bottom-right';
-
-    transform-origin: 100% 50%;
   } @else if $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
   {
+    $transform-origin-val: 50% 100%;
     $direction: 'bottom';
-
-    transform-origin: 50% 50%;
   } @else if
     $direction ==
     'bottom-left' or
@@ -141,36 +139,31 @@
     $direction ==
     'lb'
   {
+    $transform-origin-val: 0% 100%;
     $direction: 'bottom-left';
-
-    transform-origin: 0% 50%;
   } @else if $direction == 'left' or $direction == 'l' {
+    $transform-origin-val: 0% 50%;
     $direction: 'left';
-
-    transform-origin: 0% 50%;
   } @else if
-    (
-      $direction ==
-        'top-left' or
-        $direction ==
-        'topleft' or
-        $direction ==
-        'left-top' or
-        $direction ==
-        'lefttop' or
-        $direction ==
-        't-l' or
-        $direction ==
-        'tl' or
-        $direction ==
-        'l-t' or
-        $direction ==
-        'lt'
-    )
+    $direction ==
+    'top-left' or
+    $direction ==
+    'topleft' or
+    $direction ==
+    'left-top' or
+    $direction ==
+    'lefttop' or
+    $direction ==
+    't-l' or
+    $direction ==
+    'tl' or
+    $direction ==
+    'l-t' or
+    $direction ==
+    'lt'
   {
+    $transform-origin-val: 0% 0%;
     $direction: 'top-left';
-
-    transform-origin: 0% 0%;
   } @else if
     $direction ==
     'center' or
@@ -194,6 +187,7 @@
     {
       $trans-val-1: scaleY(1);
       $trans-val-2: scaleY(0.3);
+      $anim-suffix: '-vertically-to';
 
       @if $direction !=
         'top' and
@@ -209,7 +203,7 @@
       } @else if $direction == 'top' {
         $trans-origin-val: 100% 0%;
       } @else if $direction == 'bottom' {
-        $trans-origin-val: 0% 50%;
+        $trans-origin-val: 0% 100%;
       }
     } @else if
       (
@@ -225,6 +219,7 @@
     {
       $trans-val-1: scaleX(1);
       $trans-val-2: scaleX(0.3);
+      $anim-suffix: '-horizontally-to';
 
       @if $direction !=
         'left' and
@@ -240,7 +235,7 @@
       } @else if $direction == 'left' {
         $trans-origin-val: 0% 0%;
       } @else if $direction == 'right' {
-        $trans-origin-val: 100% 50%;
+        $trans-origin-val: 100% 100%;
       }
     } @else {
       @error 'Invalid $axis value of `#{meta.inspect($axis)} for the `scale-down` mixin.';

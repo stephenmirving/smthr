@@ -116,14 +116,12 @@
         'r-b'
     )
   {
+    $trans-origin-val: 100% 100%;
     $direction: 'bottom-right';
-
-    transform-origin: 100% 50%;
   } @else if $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
   {
+    $trans-origin-val: 50% 100%;
     $direction: 'bottom';
-
-    transform-origin: 50% 50%;
   } @else if
     $direction ==
     'bottom-left' or
@@ -142,13 +140,11 @@
     $direction ==
     'lb'
   {
+    $trans-origin-val: 0% 100%;
     $direction: 'bottom-left';
-
-    transform-origin: 0% 50%;
   } @else if $direction == 'left' or $direction == 'l' {
+    $trans-origin-val: 0% 50%;
     $direction: 'left';
-
-    transform-origin: 0% 50%;
   } @else if
     $direction ==
     'top-left' or
@@ -167,9 +163,8 @@
     $direction ==
     'lt'
   {
+    $trans-origin-val: 0% 0%;
     $direction: 'top-left';
-
-    transform-origin: 0% 0%;
   } @else if
     $direction ==
     'center' or
@@ -193,6 +188,7 @@
     {
       $trans-val-1: scaleY(0.4);
       $trans-val-2: scaleY(1);
+      $anim-suffix: '-vertically-from';
 
       @if $direction !=
         'top' and
@@ -208,7 +204,7 @@
       } @else if $direction == 'top' {
         $trans-origin-val: 100% 0%;
       } @else if $direction == 'bottom' {
-        $trans-origin-val: 0% 50%;
+        $trans-origin-val: 0% 100%;
       }
     } @else if
       $axis ==
@@ -222,6 +218,7 @@
     {
       $trans-val-1: scaleX(0.4);
       $trans-val-2: scaleX(1);
+      $anim-suffix: '-horizontally-from';
 
       @if $direction !=
         'left' and
@@ -237,7 +234,7 @@
       } @else if $direction == 'left' {
         $trans-origin-val: 0% 0%;
       } @else if $direction == 'right' {
-        $trans-origin-val: 100% 50%;
+        $trans-origin-val: 100% 100%;
       }
     } @else {
       @error 'Invalid $axis value of `#{meta.inspect($axis)}` for the `scale-up` mixin.';
@@ -431,6 +428,7 @@
 
       100% {
         transform: $trans-val-2;
+
         @if $direction != 'center' {
           transform-origin: $trans-origin-val;
         }
