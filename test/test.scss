@@ -28,11 +28,13 @@ body {
   @include size(100px);
   @include flex-center;
 
-  @include rotate();
-
   background: red;
   font:
     700 2.25rem system-ui,
     sans-serif;
   text-align: center;
+
+  &:hover {
+    @include scale-up(top);
+  }
 }

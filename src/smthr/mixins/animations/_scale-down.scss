@@ -6,7 +6,7 @@
 /// Animates an element by scaling it down.
 ///
 /// @param {String} $direction [top] - The direction the element will appear
-/// to be scaling up from.
+/// to be scaling down from.
 /// @param {Time} $timing [0.4s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally start along an
@@ -45,6 +45,12 @@
   $timing-func: null,
   $anim-num: null
 ) {
+  // Default value for the 'center' direction
+  $trans-val-1: scale(1);
+  $trans-val-2: scale(0.5);
+  $trans-origin-val: null;
+  $anim-suffix: '-to';
+
   @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
   }
@@ -64,11 +70,6 @@
   @if $timing-func and meta.type-of($timing-func) == 'string' {
     $timing-func: string.to-lower-case($timing-func);
   }
-
-  //  Default value for the 'center' direction
-  $trans-val-1: scale(1);
-  $trans-val-2: scale(0.5);
-  $trans-origin-val: null;
 
   @if $direction == 'top' or $direction == 't' {
     $trans-origin-val: 50% 0%;
@@ -92,6 +93,7 @@
     'rt'
   {
     $trans-origin-val: 100% 0%;
+    $direction: 'top-right';
   } @else if $direction == 'right' or $direction == 'r' {
     $trans-origin-val: 100% 50%;
     $direction: 'right';
@@ -113,6 +115,8 @@
     $direction ==
     'r-b'
   {
+    $direction: 'bottom-right';
+
     transform-origin: 100% 50%;
   } @else if $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
   {
@@ -137,6 +141,8 @@
     $direction ==
     'lb'
   {
+    $direction: 'bottom-left';
+
     transform-origin: 0% 50%;
   } @else if $direction == 'left' or $direction == 'l' {
     $direction: 'left';
@@ -162,6 +168,8 @@
         'lt'
     )
   {
+    $direction: 'top-left';
+
     transform-origin: 0% 0%;
   } @else if
     $direction ==
@@ -401,28 +409,38 @@
     $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   }
 
+  $anim-suffix: string.insert(
+    $anim-suffix,
+    '-#{$direction}',
+    string.length($anim-suffix) + 1
+  );
+
   @if not $anim-num {
     $anim-num: null;
   } @else {
-    $anim-num: '-#{$anim-num}';
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
 
-  animation: scale-down#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: scale-down#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
-    @keyframes scale-down#{$anim-num} {
+    @keyframes scale-down#{$anim-suffix} {
       0% {
         transform: $trans-val-1;
         @if $direction != 'center' {
-          transform-origin: $trans-origin-val1;
+          transform-origin: $trans-origin-val;
         }
       }
 
       100% {
         transform: $trans-val-2;
         @if $direction != 'center' {
-          transform-origin: $trans-origin-val2;
+          transform-origin: $trans-origin-val;
         }
       }
     }

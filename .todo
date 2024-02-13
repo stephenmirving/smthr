@@ -29,6 +29,12 @@ TODO:
   Animations Mixins:
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
     ☐ Find ones I haven't done yet and complete one
+    ☐ Add custom timing functions from https://animista.net/ to a timing functions map variable.
+      ☐ Create a function to call these timing functions easily.
+    ☐ Add all animations from
+        ☐ https://animista.net/
+        ☐ https://animate.style/
+        ☐ https://www.minimamente.com/project/magic/
 
   Button Mixins:
     ☐ Create and add a bunch of button mixins for different style buttons

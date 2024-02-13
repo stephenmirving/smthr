@@ -60,7 +60,7 @@
   $trans-val-d: null;
   $is-on-axis: false;
   $is-diagonal: false;
-  $anim-suffix: '-around-';
+  $anim-suffix: '-around';
 
   @if $point and meta.type-of($point) == 'string' {
     $point: string.to-lower-case($point);
@@ -189,12 +189,6 @@
     @error 'Invalid $point value of `#{meta.inspect($point)}` for the ' +
         '[ rotate() ] mixin.';
   }
-
-  $anim-suffix: string.insert(
-    $anim-suffix,
-    '#{$point}',
-    string.length($anim-suffix) + 1
-  );
 
   @if $axis and $axis != 'none' and $axis != 'no' and $axis != 'n' {
     $is-on-axis: true;
@@ -468,7 +462,13 @@
     );
   }
 
-  @if not($anim-num) {
+  $anim-suffix: string.insert(
+    $anim-suffix,
+    '-#{$point}',
+    string.length($anim-suffix) + 1
+  );
+
+  @if not $anim-num {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(

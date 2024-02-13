@@ -1,42 +1,18 @@
-body {
-  height: 100dvh;
-  margin: 0;
-  display: grid;
-  place-items: center;
-}
+/* Error: Undefined variable.
+ *     ,
+ * 428 |           transform-origin: $trans-origin-val1;
+ *     |                             ^^^^^^^^^^^^^^^^^^
+ *     '
+ *   src\smthr\mixins\animations\_scale-up.scss 428:29  scale-up()
+ *   test\test.scss 38:5                                root stylesheet */
 
-.anim-stage {
-  width: 80%;
-  height: 80vh;
-  user-select: none;
-  perspective: 500px;
-  perspective-origin: 55% 50%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin: 3rem auto;
-  border: 4px solid red;
-  background: lightblue;
-}
-
-.animation-element {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  animation: rotate-around-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  background: red;
-  font: 700 2.25rem system-ui, sans-serif;
-  text-align: center;
-}
-@keyframes rotate-around-center {
-  0% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: "Error: Undefined variable.\a     \2577 \a 428 \2502            transform-origin: $trans-origin-val1;\a     \2502                              ^^^^^^^^^^^^^^^^^^\a     \2575 \a   src\\smthr\\mixins\\animations\\_scale-up.scss 428:29  scale-up()\a   test\\test.scss 38:5                                root stylesheet";
 }
