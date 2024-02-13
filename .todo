@@ -14,7 +14,8 @@ TODO:
       ☐ Test all Animation mixins
         ✔ Testing complete through animations/bounciness @done(24-02-12 17:30)
         ✔ Testing complete through animations/pan-wipe @done(24-02-12 23:56)
-        ☐ Ceck Puff against vdersion in Manley workspace, especially the blur filter part @started(24-02-13 15:18)
+        ✔ Ceck Puff against version in Manley workspace, especially the blur filter part @started(24-02-13 15:18) @done(24-02-13 17:05) @lasted(1h47m57s)
+        ☐ Check values against animations on https://animista.net/
         ☐ Test animations puff through snappiness
     ☐ Test all Shape mixins
       ☐ Test all Utilities mixins

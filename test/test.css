@@ -30,17 +30,15 @@ body {
   background: red;
   font: 700 2.25rem system-ui, sans-serif;
   text-align: center;
-  animation: puff-in-from-front 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) both;
+  animation: fade-in-from-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
-@keyframes puff-in-from-front {
+@keyframes fade-in-from-top {
   0% {
     opacity: 0;
-    filter: blur(2px);
-    transform: translateZ(80px);
+    transform: translateY(-50px);
   }
   100% {
     opacity: 1;
-    filter: blur(0);
-    transform: translateZ(0);
+    transform: translateY(0);
   }
 }

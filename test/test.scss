@@ -35,5 +35,5 @@ body {
     sans-serif;
   text-align: center;
 
-  @include puff(in, front);
+  @include fade(in, top);
 }
