@@ -627,7 +627,7 @@
       true,
       {
         "ignoreInside": ["at-rule", "nested-at-rule"],
-        "ignoreInsideAtRules": ["if", "media", "else if", "function", "mixin"],
+        "ignoreInsideAtRules": ["if", "media", "else", "function", "mixin"],
         "ignoreDefaults": true
       }
     ],

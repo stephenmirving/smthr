@@ -142,13 +142,13 @@
       $vertical: $swap;
     }
 
+    display: flex;
     flex-direction: $f-dir;
   }
   @if $vertical {
     align-items: center;
   }
 
-  display: flex;
   @if $horizontal {
     justify-content: center;
   }

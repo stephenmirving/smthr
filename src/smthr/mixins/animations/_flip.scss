@@ -48,16 +48,18 @@
   // Default tranform values for $direction of `top` and $axis of `horizontal`
   $trans-val1: rotateX(0);
   $trans-val2: rotateX(180deg);
-  $anim-dir: if(
-    meta.type-of($anim-dir) == 'string',
-    string.to-lower-case($anim-dir),
-    $anim-dir
-  );
-  $timing-func: if(
-    $timing-func and meta.type-of($timing-func) == 'string',
-    string.to-lower-case($timing-func),
-    $timing-func
-  );
+
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir),
+  }
+
+  @if $delay and meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func),
+  }
 
   // Input scrubbing
   @if $direction {
@@ -328,13 +330,13 @@
     0s or
     $delay ==
     0ms or
-    string.to-lower-case($delay) ==
+    $delay ==
     'none' or
-    string.to-lower-case($delay) ==
+    $delay ==
     'no' or
-    string.to-lower-case($delay) ==
+    $delay ==
     'n' or
-    string.to-lower-case($delay) ==
+    $delay ==
     'n/a' or
     $delay ==
     nil or not
@@ -359,11 +361,9 @@
   }
 
   @if $iterations {
-    $iterations: if(
-      meta.type-of($iterations) == 'string',
-      string.to-lower-case($iterations),
-      $iterations
-    );
+    @if meta.type-of($iterations)!= 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
 
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
@@ -426,7 +426,7 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [ #{$anim-dir} ] ' +
+    @error 'Invalid animation-direction value of `#{$anim-dir}` ' +
         'for the [ flip ] mixin';
   }
 

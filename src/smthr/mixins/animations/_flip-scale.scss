@@ -270,23 +270,24 @@
     $iterations: null;
   }
 
-  @if not $anim-dir or
-      $anim-dir ==
-      'none' or
-      $anim-dir ==
-      'no' or
-      $anim-dir ==
-      'n/a' or
-      $anim-dir ==
-      'n' or
-      $anim-dir ==
-      'default' or
-      $anim-dir ==
-      'def' or
-      $anim-dir ==
-      'normal' or
-      $anim-dir ==
-      'nor'
+  @if not
+    $anim-dir or
+    $anim-dir ==
+    'none' or
+    $anim-dir ==
+    'no' or
+    $anim-dir ==
+    'n/a' or
+    $anim-dir ==
+    'n' or
+    $anim-dir ==
+    'default' or
+    $anim-dir ==
+    'def' or
+    $anim-dir ==
+    'normal' or
+    $anim-dir ==
+    'nor'
   {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
@@ -310,7 +311,7 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [ #{$anim-dir} ]' +
+    @error 'Invalid animation-direction value of `#{$anim-dir}`' +
         ' for the `flip-scale` mixin';
   }
 
@@ -324,7 +325,7 @@
 
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: flip-scale#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @include only-moz {
@@ -332,7 +333,7 @@
   }
 
   @at-root {
-    @keyframes flip-and-scale#{$anim-num} {
+    @keyframes flip-scale#{$anim-num} {
       0% {
         transform: #{$scale-val1} #{$flip-val1};
       }

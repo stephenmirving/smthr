@@ -31,15 +31,23 @@
   $bg-width,
   $bg-height: $bg-width,
   $ratio: 1.3,
-  $img-2x-suffix: if(
-    meta.variable-exists('image-suffix-2x') or
-    meta.global-variable-exists('image-suffix-2x' smth),
-    $image-suffix-2x,
-    '@2x'
-  ),
+  $img-2x-suffix:
+    if(
+      meta.variable-exists('image-suffix-2x') or
+        meta.global-variable-exists('image-suffix-2x', smth),
+      $image-suffix-2x,
+      '@2x'
+    ),
   $extra-hidpi-properties: null
 ) {
   $hidpi-img: $img-name;
+
+  @if $extra-hidpi-properties and
+    meta.type-of($extra-hidpi-properties) ==
+    'string'
+  {
+    $extra-hidpi-properties: string.to-lower-case($extra-hidpi-properties);
+  }
 
   @if not
     $extra-hidpi-properties or
@@ -64,7 +72,8 @@
   @if not $bg-width {
     @error 'You must enter an image width for the $bg-width parameter of the ' +
         '`bg-image` mixin.';
-  } @else if (
+  } @else if
+    (
       meta.type-of($bg-width) !=
         'number' or
         (

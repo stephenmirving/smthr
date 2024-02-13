@@ -89,7 +89,7 @@ $font-stacks: (
 /// Base path for assets (fonts, images, etc.), do not use a trailing slash.
 /// @access public
 /// @type String
-$asset-base-path: '../assets' !default;
+$asset-base-path: 'assets' !default;
 
 /// Suffix appended to the end of an image name to indicate that it is for HiDPI.
 /// Retina displays
@@ -189,7 +189,7 @@ $alias-resolution-map: (
     'b',
     'v',
     'down',
-    'd',
+    'd'
   ),
   'top': (
     'top',
@@ -461,7 +461,7 @@ $alias-resolution-map: (
     3.14rad,
     '3.14rad',
     200grad,
-    '200grad',
+    '200grad'
   ),
   'bottom-to-top': (
     'bottom-to-top',
@@ -506,7 +506,7 @@ $alias-resolution-map: (
     0rad,
     '0rad',
     0grad,
-    '0grad',
+    '0grad'
   ),
   'bottom-left-to-top-right': (
     'diagonal-1',
@@ -755,17 +755,17 @@ $alias-resolution-map: (
     '350grad'
   ),
   'radial': (
-    'radial',
-    'rad',
-    'circular',
-    'circle',
-    'ellipse',
     'ellipse at center',
     'ellipse-at-center',
     'center-ellipse',
     'center ellipse',
     'ellipse-center',
-    'ellipse center'
+    'ellipse center',
+    'circular',
+    'ellipse',
+    'circle',
+    'radial',
+    'rad'
   ),
   'forwards': (
     'forwards',
@@ -824,5 +824,51 @@ $alias-resolution-map: (
     'normal',
     'norm',
     'def'
+  ),
+  'background': (
+    'background',
+    'bground',
+    'bg'
+  ),
+  'foreground': (
+    'foreground',
+    'fground',
+    'fg'
+  ),
+  'background-color': (
+    'background-color',
+    'background color',
+    'bground-color',
+    'bground color',
+    'bg-color',
+    'bg color',
+    'bgcolor',
+    'bg-col',
+    'bg col',
+    'bgcol',
+    'bg-c',
+    'bg c',
+    'bgc'
+  ),
+  'background-image': (
+    'background-image',
+    'background image',
+    'background-img',
+    'background img',
+    'bground-image',
+    'bground-img',
+    'bg-image',
+    'bg image',
+    'bgimage',
+    'bg-img',
+    'bg img',
+    'bgimg',
+    'bg-i',
+    'bg i',
+    'bgi'
+  ),
+  'infinite': (
+    'infinite',
+    'inf'
   )
 ) !default;

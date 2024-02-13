@@ -224,7 +224,7 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [ #{$anim-dir} ]' +
+    @error 'Invalid animation-direction value of `#{$anim-dir}`' +
         ' for the `snappiness` mixin';
   }
 

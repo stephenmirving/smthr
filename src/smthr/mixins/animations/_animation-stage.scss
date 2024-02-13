@@ -30,7 +30,7 @@
   $p-origin: 55% 50%,
   $width: null,
   $z-index: null,
-  $height: null
+  $height: $width
 ) {
   @if $width {
     width: $width;

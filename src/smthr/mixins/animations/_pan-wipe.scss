@@ -2,15 +2,17 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/is-length' as *;
 
-/// Animates a panning wipe style effect on the background of an element
+/// Animates a panning wipe style effect on the background-image property
+/// of an element. Works best with a gradient or an image.
 ///
 /// @param {String} $direction [right] - The direction the pan is heading
 /// @param {Time} $timing [6s] - The duration of the animation (s or ms)
 /// @param {Mixed} $bg
 /// [linear-gradient(270deg, #CC6AA5, #3E91CC, #2dCCA7) center / 600% 100%] -
 /// The shorthand background property for the element. For this effect it is
-/// recommended to use either a linear gradient, or an image.
+/// recommended to use either a gradient or an image.
 /// @param {Length-Percentage} $size [100%] - The size of the element. If the
 /// $height property is not set explicitly, this is both height and width, but
 /// if $height is set explicitly, then this value sets only the width.
@@ -55,25 +57,29 @@
   $height: $size,
   $anim-num: null
 ) {
-  @if meta.type-of($direction) != 'string' {
-    @error 'Invalid $direction unit type for the `pan-wipe` mixin. Value must' +
-        ' be of type "string".';
+  @if meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  } @else {
+    @error 'Invalid $direction unit type for the [ pan-wipe() ] mixin. Value must' +
+    ' be of type "string".';
+  }
+
+  @if $delay and meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if not is-length($size) or not is-length($height) {
+    @error 'Invalid data type for $size of $height passed to the [ pan-wipe() ] ' +
+        'mixin. You must pass length units for these parameters.';
   }
 
   // $direction default of `right` values
   $pos-val1: 0% 50%;
   $pos-val2: 100% 50%;
-  $direction: string.to-lower-case($direction);
-  $delay: if(
-    meta.type-of($delay) == 'string',
-    string.to-lower-case($delay),
-    $delay
-  );
-  $anim-dir: if(
-    meta.type-of($anim-dir) == 'string',
-    string.to-lower-case($anim-dir),
-    $anim-dir
-  );
 
   @if $direction == 'left' or $direction == 'l' {
     $pos-val1: 100% 50%;
@@ -167,17 +173,17 @@
     $pos-val1: 0% 0%;
     $pos-val2: 100% 100%;
   } @else if $direction != 'right' and $direction != 'r' {
-    @error 'Invalid direction of [ #{meta.inspect($direction)} ] for the `pan-wipe` mixin.';
+    @error 'Invalid direction of [ #{meta.inspect($direction)} ] for the [ pan-wipe() ] mixin.';
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the `pan-wipe` ' +
+    @error 'Invalid $timing value of `#{$timing}` for the [ pan-wipe() ] ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the `pan-wipe` ' +
+    @error 'Invalid $timing value of `#{$timing}` for the [ pan-wipe() ] ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -211,12 +217,12 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `pan-wipe` ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ pan-wipe() ] ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `pan-wipe` ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ pan-wipe() ] ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -228,19 +234,14 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) ==
-      'string' and
-      (
-        string.to-lower-case($iterations) ==
-          'infinite' or
-          string.to-lower-case($iterations) ==
-          'inf' or
-          string.to-lower-case($iterations) ==
-          'i'
-      )
+    @if meta.type-of($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -250,8 +251,8 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for ' +
-          'the `pan-wipe` mixin.';
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'used in the the [ pan-wipe() ] mixin.';
     }
   } @else {
     $iterations: null;
@@ -298,8 +299,8 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [ #{$anim-dir} ] for the ' +
-        '`pan-wipe` mixin';
+    @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
+        '[ pan-wipe() ] mixin';
   }
 
   overflow: hidden;

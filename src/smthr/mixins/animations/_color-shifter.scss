@@ -1,6 +1,6 @@
-@use 'sass:meta';
 @use 'sass:list';
 @use 'sass:math';
+@use 'sass:meta';
 @use 'sass:string';
 
 /// Animates the shift between any quantity of given colors.
@@ -105,22 +105,22 @@
   }
 
   @if $delay ==
-      0 or
-      $delay ==
-      0s or
-      $delay ==
-      0ms or
-      $delay ==
-      'none' or
-      $delay ==
-      'no' or
-      $delay ==
-      'n' or
-      $delay ==
-      'n/a' or
-      $delay ==
-      nil or not
-      $delay
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    $delay ==
+    'none' or
+    $delay ==
+    'no' or
+    $delay ==
+    'n' or
+    $delay ==
+    'n/a' or
+    $delay ==
+    nil or not
+    $delay
   {
     $delay: null;
   }

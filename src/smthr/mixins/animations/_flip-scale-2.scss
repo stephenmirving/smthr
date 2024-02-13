@@ -2,6 +2,7 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
+@use '../utilities/only-moz' as *;
 
 /// Generates an animation that flips an element over while scaling it. The
 /// effect is slightly different than in `flip-scale`. The element this mixin is
@@ -11,7 +12,7 @@
 /// child elements and the 'animation-stage` mixin for the parent element.
 ///
 /// @param {String} $direction [top] - The direction the animation appears to
-/// be fliping from.
+/// be fliping from. Can be either 'top'/'up' or 'bottom'/'down'
 /// @param {Time} $timing [.5s] - The duration of the animation (s or ms)
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
@@ -50,8 +51,18 @@
   $trans-orig-val2: 50% 50%; // Same for all $direction values
   $trans-val3: translateY(-100%) rotateX(-180deg) scale(1);
   $trans-orig-val3: 50% 100%;
-  $direction: string.to-lower-case($direction);
-  $anim-dir: string.to-lower-case($anim-dir);
+
+  @if $direction and meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if $delay and meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
 
   @if $direction == 'right' or $direction == 'r' {
     $trans-val1: translateX(0) rotateY(0) scale(1);
@@ -155,6 +166,10 @@
   }
 
   @if $iterations {
+    @if meta.type-of($iterations)!= 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
@@ -216,7 +231,7 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [ #{$anim-dir} ] for the ' +
+    @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
         '`flip-scale-2` mixin';
   }
 
@@ -230,7 +245,7 @@
 
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: flip-and-scale#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: flip-scale-2#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @include only-moz {
@@ -238,7 +253,7 @@
   }
 
   @at-root {
-    @keyframes flip-and-scale-2#{$anim-num} {
+    @keyframes flip-scale-2#{$anim-num} {
       0% {
         transform: $trans-val1;
         transform-origin: $trans-orig-val1;

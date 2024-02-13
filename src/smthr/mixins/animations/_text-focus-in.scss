@@ -52,7 +52,7 @@
   }
 
   @if $timing-func and meta.type-of($timing-func) == 'string' {
-    $timing-func: string.to-lower-case($timing-func);
+    $timing-func: #{string.to-lower-case($timing-func)};
   }
 
   @if not $timing-func {
@@ -79,13 +79,13 @@
 
   @if meta.type-of($timing) != 'number' {
     @error 'Invalid $timing value of `#{$timing}` for the ' +
-        '`text-focus-in` mixin. The timing property must be a number.';
+        '[ text-focus-in() ] mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
     @error 'Invalid $timing value of `#{$timing}` for the ' +
-        '`text-focus-in` mixin. The timing property must be in either ' +
+        '[ text-focus-in() ] mixin. The timing property must be in either ' +
         's or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -120,12 +120,12 @@
   @if $delay {
     @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`text-focus-in` mixin. The delay property must be a number.';
+          '[ text-focus-in() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`text-focus-in` mixin. The delay property must be in either ' +
+          '[ text-focus-in() ] mixin. The delay property must be in either ' +
           's (seconds) or ms (milliseconds) units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -144,8 +144,7 @@
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
-    } @else if
-      (
+    } @else if (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -156,7 +155,7 @@
       $iterations: $iterations;
     } @else {
       @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}`' +
-          ' for the `text-focus-in` mixin.';
+          ' for the [ text-focus-in() ] mixin.';
     }
   }
 
@@ -201,8 +200,8 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [ #{$anim-dir} ]' +
-        ' for the `text-focus-in` mixin';
+    @error 'Invalid animation-direction value of `#{$anim-dir}`' +
+        ' for the [ text-focus-in() ] mixin';
   }
 
   @if not $anim-num {
@@ -213,19 +212,24 @@
     $anim-num: '-' + $anim-num;
   }
 
-  @if $style == 'forward' or
-      $style ==
-      'fwd' or
-      $style ==
-      'f' or
-      $style ==
-      'backward' or
-      $style ==
-      'bck' or
-      $style ==
-      'back' or
-      $style ==
-      'b'
+  @if $style ==
+    'forwards' or
+    $style ==
+    'forward' or
+    $style ==
+    'fwd' or
+    $style ==
+    'f' or
+    $style ==
+    'backwards' or
+    $style ==
+    'backward' or
+    $style ==
+    'bck' or
+    $style ==
+    'back' or
+    $style ==
+    'b'
   {
     transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
@@ -237,16 +241,27 @@
   @at-root {
     @keyframes txt-focus-in#{$anim-num} {
       0% {
-        filter: blur(12px);
         opacity: 0;
+        filter: blur(12px);
         @if $style == 'expand' or $style == 'exp' or $style == 'e' {
           letter-spacing: -0.5em;
-        } @else if $style == 'forward' or $style == 'fwd' or $style == 'f' {
+        } @else if
+          $style ==
+          'forwards' or
+          $style ==
+          'forward' or
+          $style ==
+          'fwd' or
+          $style ==
+          'f'
+        {
           letter-spacing: -0.5em;
           transform: translateZ(-800px);
-        } @else if ($style == 'contract' or $style == 'cont' or $style == 'c') {
+        } @else if $style == 'contract' or $style == 'cont' or $style == 'c' {
           letter-spacing: 1em;
         } @else if
+          $style ==
+          'backwards' or
           $style ==
           'backward' or
           $style ==
@@ -275,16 +290,27 @@
           $style !=
           'i'
         {
-          @error 'Invalid style of `#{meta.inspect($style)}` for the `text-focus-in` mixin';
+          @error 'Invalid $style value of `#{meta.inspect($style)}` used for ' +
+            'the [ text-focus-in() ] mixin';
         }
       }
 
       100% {
         opacity: 1;
         filter: blur(0);
-        @if $style == 'forward' or $style == 'fwd' or $style == 'f' {
+        @if $style ==
+          'forwards' or
+          $style ==
+          'forward' or
+          $style ==
+          'fwd' or
+          $style ==
+          'f'
+        {
           transform: translateZ(0);
         } @else if
+          $style ==
+          'backwards' or
           $style ==
           'backward' or
           $style ==

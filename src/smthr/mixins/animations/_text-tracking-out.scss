@@ -268,7 +268,7 @@
   {
     $anim-dir: alternate-reverse;
   } @else {
-    @error 'Invalid animation-direction value of [ #{$anim-dir} ] for the ' +
+    @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
         '`text-tracking-out` mixin';
   }
 

@@ -12,19 +12,21 @@ TODO:
       ☐ Determine difference between linear-interpolation and trend-line functions.
     ☐ Mixin Testing
       ☐ Test all Animation mixins
-        ✔ Testing complete through animations/bouniness @done(24-02-12 17:30)
-        ☐ Start testing again at color-shifter.
+        ✔ Testing complete through animations/bounciness @done(24-02-12 17:30)
+        ✔ Testing complete through animations/pan-wipe @done(24-02-12 23:56)
+        ☐ Test animations puff through snappiness
       ☐ Test all Shape mixins
       ☐ Test all Utilities mixins
   General Changes:
     ✔ Color convert's cmyk conversion's backup rgb color is giving wrong output @done(24-02-11 01:17)
-    ☐ Parse down all the direction decision trees using the alias resolution map
+    ☐ Parse down all the direction decision trees in the Mixins using the alias resolution map
     ☐ Examine responsive font mixin
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Take a look at the line-clamp mixin
     ☐ Add .sass version back in (once scss version is fully released)
 
   Animations Mixins:
+    ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
     ☐ Find ones I haven't done yet and complete one
 
   Button Mixins:

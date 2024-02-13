@@ -1,0 +1,41 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:selector';
+@use 'sass:string';
+@use '../src/smthr/smth' as *;
+
+body {
+  height: 100dvh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+}
+
+.anim-stage {
+  @include size(80%, 80vh);
+  @include animation-stage;
+  @include flex-center;
+
+  margin: 3rem auto;
+  border: 4px solid red;
+  background: lightblue;
+}
+
+.animation-element {
+  @include size(1000px);
+  @include flex-center;
+
+  font:
+    700 2.25rem system-ui,
+    sans-serif;
+  text-align: center;
+}
+
+.test {
+  $var: ease-in-out;
+
+  content: meta.type-of($var);
+}

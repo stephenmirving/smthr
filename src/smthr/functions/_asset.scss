@@ -14,7 +14,7 @@
   $asset-path: if(
     meta.variable-exists('asset-base-path') or meta.global-variable-exists('asset-base-path', smth),
     $asset-base-path,
-    '../assets'
+    'assets'
   );
 
   @return string.unquote($asset-path + '/' + $type + '/' + $file);
