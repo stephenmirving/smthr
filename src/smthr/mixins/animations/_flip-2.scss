@@ -4,6 +4,8 @@
 @use 'sass:math';
 @use '../utilities/only-moz' as *;
 
+// TODO: Change the values on this according to flip-2 here: https://animista.net/play/basic/flip-2
+
 /// Generates an animation that flips an element over. The element this mixin is
 /// applied to must have a front-face and a back-face child element. It is
 /// recommended that you use this mixin in conjunction with the

@@ -17,7 +17,7 @@
 /// @throw Invalid $keyword data type error.
 /// @throw Invalid $alias data type error.
 /// @throw Invalid $resolution-map data type error.
-@function is-alias($keyword, $alias, $resolution-map: $alias-resolution-map) {
+@function is-alias($keyword, $alias, $resolution-map: $map-alias-resolutions) {
   @if meta.type-of($keyword) != 'string' {
     @error 'Invalid data type of [ #{meta.type-of($keyword)} ] for $keyword ' +
         'passed to the [ is-alias() ] function. The data type of $keyword ' +

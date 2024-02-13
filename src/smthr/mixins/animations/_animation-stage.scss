@@ -48,6 +48,7 @@
     z-index: $z-index;
   }
 
+  -webkit-user-select: none;
   user-select: none;
 
   @if (

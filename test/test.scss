@@ -8,32 +8,57 @@
 @use '../src/smthr/smth' as *;
 
 body {
-  height: 100dvh;
-  margin: 0;
   display: grid;
   place-items: center;
+  height: 100dvh;
+  margin: 0;
 }
 
-.anim-stage {
-  @include size(80%, 80vh);
-  @include animation-stage;
+.stage {
+  @include animation-stage(500px, 50% 55%, 80%, 999, 80vh);
   @include flex-center;
 
+  border: 4px solid #000;
   margin: 3rem auto;
-  border: 4px solid red;
   background: lightblue;
-
 }
 
-.animation-element {
-  @include size(100px);
-  @include flex-center;
+.card {
+  @include size(200px);
+  @include rotate(center, 1.2s, null, d);
 
-  background: red;
   font:
     700 2.25rem system-ui,
     sans-serif;
   text-align: center;
+}
 
-  @include fade(in, top);
+.front {
+  @include animation-front-face;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid red;
+  border-radius: 10px;
+  background: #2dccb8 padding-box;
+  text-align: center;
+}
+
+.back {
+  @include animation-back-face('diagonal');
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid red;
+  border-radius: 10px;
+  background: #53a3dc padding-box;
+  text-align: center;
+}
+
+.txt {
+  display: inline;
+  font-size: 3em;
+  text-align: center;
 }

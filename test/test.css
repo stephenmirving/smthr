@@ -1,44 +1,88 @@
 body {
-  height: 100dvh;
-  margin: 0;
   display: grid;
   place-items: center;
+  height: 100dvh;
+  margin: 0;
 }
 
-.anim-stage {
+.stage {
   width: 80%;
   height: 80vh;
+  z-index: 999;
+  -webkit-user-select: none;
   user-select: none;
   perspective: 500px;
-  perspective-origin: 55% 50%;
+  perspective-origin: 50% 55%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  border: 4px solid #000;
   margin: 3rem auto;
-  border: 4px solid red;
   background: lightblue;
 }
 
-.animation-element {
-  width: 100px;
-  height: 100px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  background: red;
+.card {
+  width: 200px;
+  height: 200px;
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  animation: rotate-around-center-diagonally 1.2s linear both;
   font: 700 2.25rem system-ui, sans-serif;
   text-align: center;
-  animation: fade-in-from-top 0.6s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
-@keyframes fade-in-from-top {
+@-moz-document url-prefix() {
+  .card {
+    backface-visibility: hidden;
+  }
+}
+@keyframes rotate-around-center-diagonally {
   0% {
-    opacity: 0;
-    transform: translateY(-50px);
+    transform: rotate3d(1, 1, 0, 0);
+  }
+  50% {
+    transform: rotate3d(1, 1, 0, -180deg);
   }
   100% {
-    opacity: 1;
-    transform: translateY(0);
+    transform: rotate3d(1, 1, 0, -360deg);
   }
+}
+
+.front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid red;
+  border-radius: 10px;
+  background: #2dccb8 padding-box;
+  text-align: center;
+}
+
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate3d(1, 1, 0, 180deg);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid red;
+  border-radius: 10px;
+  background: #53a3dc padding-box;
+  text-align: center;
+}
+
+.txt {
+  display: inline;
+  font-size: 3em;
+  text-align: center;
 }

@@ -200,7 +200,7 @@
     $axis ==
     'none' or
     $axis ==
-    'no' or or
+    'no' or
     $axis ==
     'n/a' or
     $axis ==
@@ -403,7 +403,8 @@
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -440,7 +441,16 @@
     'nor'
   {
     $anim-dir: null;
-  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'rvs' or $anim-dir == 'r' {
+  } @else if
+    $anim-dir ==
+    'reverse' or
+    $anim-dir ==
+    'rev' or
+    $anim-dir ==
+    'rvs' or
+    $anim-dir ==
+    'r'
+  {
     $anim-drection: reverse;
   } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
   {
