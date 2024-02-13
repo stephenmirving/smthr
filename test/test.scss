@@ -34,6 +34,6 @@ body {
     700 2.25rem system-ui,
     sans-serif;
   text-align: center;
-  transform: scale(0.5);
-  @include scale-up(bottom, 1s, $delay: 2s, $axis: vertical);
+
+  @include puff(in, front);
 }

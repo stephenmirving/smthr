@@ -4,7 +4,7 @@
 @use 'sass:string';
 
 /// Generates an animation that puffs an element in or out. If a forward or
-/// backward direction is chosen to augment the puff, it is recommended that
+/// backward $direction is chosen to augment the puff, it is recommended that
 /// the `animation-stage` mixin be used on the parent element.
 ///
 /// @param {String|Boolean} $in-or-out [in] - Determines if the element will
@@ -49,8 +49,9 @@
   $trans-val-2: scale(1);
   $blur-val-1: blur(2px);
   $blur-val-2: blur(0);
-  $t-origin-val: null;
+  $trans-origin-val: null;
   $temp-val: null;
+  $anim-suffix: '';
 
   @if $in-or-out and meta.type-of($in-or-out) == 'string' {
     $in-or-out: string.to-lower-case($in-or-out);
@@ -70,8 +71,10 @@
 
   @if $in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
+    $anim-suffix: '-in-from';
   } @else if not $in-or-out or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
+    $anim-suffix: '-out-to';
   } @else {
     @error 'Invalid $in-or-out value of `#{meta.inspect($in-or-out)}` for the ' +
         '[ puff() ] mixin. Value must be either "in" or "out"';
@@ -91,9 +94,10 @@
       $direction ==
       'u'
     {
-      $blur-val-1: blur(2px);
-      $blur-val-2: blur(0);
-      $t-origin-val: 50% 0%;
+      $direction: 'top';
+      $trans-val-1: translateY(-50px);
+      $trans-val-2: translateY(0);
+      $trans-origin-val: 50% 0%;
     } @else if
       $direction ==
       'bottom' or
@@ -102,13 +106,17 @@
       $direction ==
       'b'
     {
+      $direction: 'bottom';
       $trans-val-1: translateY(50px);
       $trans-val-2: translateY(0);
+      $trans-origin-val: 50% 100%;
     } @else if
       $direction ==
       'forwards' or
       $direction ==
       'forward' or
+      $direction ==
+      'front' or
       $direction ==
       'fwd' or
       $direction ==
@@ -116,8 +124,8 @@
       $direction ==
       'f'
     {
-      $direction: 'forward';
-      $trans-val-1: translateZ(-80px);
+      $direction: 'front';
+      $trans-val-1: translateZ(80px);
       $trans-val-2: translateZ(0);
     } @else if
       $direction ==
@@ -135,27 +143,19 @@
       $direction ==
       'b'
     {
-      $direction: 'backward';
-      $trans-val-1: translateZ(80px);
+      $direction: 'back';
+      $trans-val-1: translateZ(-80px);
       $trans-val-2: translateZ(0);
-    } @else if
-      $direction ==
-      'top' or
-      $direction ==
-      't' or
-      $direction ==
-      'up' or
-      $direction ==
-      'u'
-    {
-      $trans-val-1: translateY(-50px);
-      $trans-val-2: translateY(0);
     } @else if $direction == 'left' or $direction == 'l' {
+      $direction: 'left';
       $trans-val-1: translateX(-50px);
       $trans-val-2: translateX(0);
+      $trans-origin-val: 0% 50%;
     } @else if $direction == 'right' or $direction == 'r' {
+      $direction: 'right';
       $trans-val-1: translateX(50px);
       $trans-val-2: translateX(0);
+      $trans-origin-val: 100% 50%;
     } @else if
       $direction ==
       'top-left' or
@@ -174,8 +174,10 @@
       $direction ==
       'lt'
     {
+      $direction: 'top-left';
       $trans-val-1: translateX(-50px) translateY(-50px);
       $trans-val-2: translateX(0) translateY(0);
+      $trans-origin-val: 0% 0%;
     } @else if
       $direction ==
       'top-right' or
@@ -194,8 +196,10 @@
       $direction ==
       'rt'
     {
+      $direction: 'top-right';
       $trans-val-1: translateX(50px) translateY(-50px);
       $trans-val-2: translateX(0) translateY(0);
+      $trans-orig-val: 100% 0%;
     } @else if
       $direction ==
       'bottom-right' or
@@ -214,8 +218,10 @@
       $direction ==
       'rb'
     {
+      $direction: 'bottom-right';
       $trans-val-1: translateX(50px) translateY(50px);
       $trans-val-2: translateX(0) translateY(0);
+      $trans-orig-val: 100% 100%;
     } @else if
       $direction ==
       'bottom-left' or
@@ -234,8 +240,10 @@
       $direction ==
       'lb'
     {
+      $direction: 'bottom-left';
       $trans-val-1: translateX(-50px) translateY(50px);
       $trans-val-2: translateX(0) translateY(0);
+      $trans-orig-val: 0% 100%;
     } @else if
       $direction ==
       'center' or
@@ -257,14 +265,12 @@
   @if not $in-or-out {
     $opacity-val-1: 1;
     $opacity-val-2: 0;
+    $blur-val-1: blur(0);
+    $blur-val-2: blur(2px);
 
     $temp-val: $trans-val-1;
     $trans-val-1: $trans-val-2;
     $trans-val-2: $temp-val;
-
-    $temp-val: $blur-val-1;
-    $blur-val-1: $blur-val-2;
-    $blur-val-2: $temp-val;
   }
 
   @if not $timing {
@@ -419,34 +425,44 @@
     );
   }
 
+  $anim-suffix: string.insert(
+    $anim-suffix,
+    '-#{$direction}',
+    string.length($anim-suffix) + 1
+  );
+
   @if not $anim-num {
     $anim-num: null;
   } @else {
-    $anim-num: '-#{$anim-num}';
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
 
-  animation: puff#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: puff#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
-    @keyframes puff#{$anim-num} {
+    @keyframes puff#{$anim-suffix} {
       0% {
-        opacity: 0;
-        filter: blur(2px);
-        transform: scale(2);
+        opacity: $opacity-val-1;
+        filter: $blur-val-1;
+        transform: $trans-val-1;
 
-        @if $direction != 'center' {
-          transform-origin: $t-origin-val;
+        @if $trans-origin-val {
+          transform-origin: $trans-origin-val;
         }
       }
 
       100% {
-        opacity: 1;
-        filter: blur(0);
-        transform: scale(1);
+        opacity: $opacity-val-2;
+        filter: $blur-val-2;
+        transform: $trans-val-2;
 
-        @if $direction != 'center' {
-          transform-origin: $t-origin-val;
+        @if $trans-origin-val {
+          transform-origin: $trans-origin-val;
         }
       }
     }

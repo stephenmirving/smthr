@@ -30,16 +30,17 @@ body {
   background: red;
   font: 700 2.25rem system-ui, sans-serif;
   text-align: center;
-  transform: scale(0.5);
-  animation: scale-up-vertically-from-bottom 1s cubic-bezier(0.39, 0.575, 0.565, 1) 2s both;
+  animation: puff-in-from-front 0.7s cubic-bezier(0.47, 0, 0.745, 0.715) both;
 }
-@keyframes scale-up-vertically-from-bottom {
+@keyframes puff-in-from-front {
   0% {
-    transform: scaleY(0.4);
-    transform-origin: 0% 100%;
+    opacity: 0;
+    filter: blur(2px);
+    transform: translateZ(80px);
   }
   100% {
-    transform: scaleY(1);
-    transform-origin: 0% 100%;
+    opacity: 1;
+    filter: blur(0);
+    transform: translateZ(0);
   }
 }
