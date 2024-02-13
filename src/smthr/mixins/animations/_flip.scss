@@ -13,7 +13,7 @@
 /// @param {String} $direction [top] - The direction the scale effect causes
 /// the element to seem to be moving towards
 /// @param {String} $axis [horizontal] - The axis the element will flip over
-/// @param {Time} $timing [.5s] - The duration of the animation (s or ms)
+/// @param {Time} $timing [0.5s] - The duration of the animation (s or ms)
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
@@ -46,8 +46,8 @@
   $anim-num: null
 ) {
   // Default tranform values for $direction of `top` and $axis of `horizontal`
-  $trans-val1: rotateX(0);
-  $trans-val2: rotateX(180deg);
+  $trans-val-1: rotateX(0);
+  $trans-val-2: rotateX(180deg);
 
   @if $anim-dir and meta.type-of($anim-dir) == 'string' {
     $anim-dir: string.to-lower-case($anim-dir),
@@ -61,7 +61,6 @@
     $timing-func: string.to-lower-case($timing-func),
   }
 
-  // Input scrubbing
   @if $direction {
     $direction: string.to-lower-case($direction);
 
@@ -189,7 +188,7 @@
     {
       $direction: 'bottom-left';
     } @else {
-      @error 'Invalid direction of [ #{meta.inspect($direction)} ] chosen for the [ flip ] mixin.';
+      @error 'Invalid direction of `#{meta.inspect($direction)}` chosen for the [ flip ] mixin.';
     }
   } @else {
     @error 'You must choose a direction for the `flip` mixin.';
@@ -245,66 +244,66 @@
 
   @if $axis == 'horizontal' {
     @if $direction == 'bottom' {
-      $trans-val2: rotateX(-180deg);
+      $trans-val-2: rotateX(-180deg);
     } @else if $direction == 'forward' {
-      $trans-val1: translateZ(0) rotateX(0);
-      $trans-val2: translateZ(160px) rotateX(-180deg);
+      $trans-val-1: translateZ(0) rotateX(0);
+      $trans-val-2: translateZ(160px) rotateX(-180deg);
     } @else if $direction == 'backward' {
-      $trans-val1: translateZ(0) rotateX(0);
-      $trans-val2: translateZ(-260px) rotateX(180deg);
+      $trans-val-1: translateZ(0) rotateX(0);
+      $trans-val-2: translateZ(-260px) rotateX(180deg);
     } @else if $direction != 'top' {
-      @error 'Invalid direction value of [ #{meta.inspect($direction)} ] with an $axis of ' +
+      @error 'Invalid direction value of `#{meta.inspect($direction)}` with an $axis of ' +
           '`horizontal`. For a horizontal axis, you must choose a direction ' +
           'of either `top`, `bottom`, `backward`, or `forward`.';
     }
   } @else if $axis == 'vertical' {
-    $trans-val1: rotateY(0);
-    $trans-val2: rotateY(180deg);
+    $trans-val-1: rotateY(0);
+    $trans-val-2: rotateY(180deg);
 
     @if $direction == 'left' {
-      $trans-val2: rotateY(-180deg);
+      $trans-val-2: rotateY(-180deg);
     } @else if $direction == 'forward' {
-      $trans-val1: translateZ(0) rotateY(0);
-      $trans-val2: translateZ(160px) rotateY(180deg);
+      $trans-val-1: translateZ(0) rotateY(0);
+      $trans-val-2: translateZ(160px) rotateY(180deg);
     } @else if $direction == 'backward' {
-      $trans-val1: translateZ(0) rotateY(0);
-      $trans-val2: translateZ(160px) rotateY(180deg);
+      $trans-val-1: translateZ(0) rotateY(0);
+      $trans-val-2: translateZ(160px) rotateY(180deg);
     } @else if $direction != 'right' {
-      @error 'Invalid direction value of [ #{meta.inspect($direction)} ] with an $axis of ' +
+      @error 'Invalid direction value of `#{meta.inspect($direction)}` with an $axis of ' +
       '`vertical`. For a vertical axis, you must choose a direction ' +
       'of either `left`, `right`, `backward`, or `forward`.';
     }
   } @else if $axis == 'diagonal1' {
-    $trans-val1: rotate3d(1, 1, 0, 0);
-    $trans-val2: rotate3d(1, 1, 0, 180deg);
+    $trans-val-1: rotate3d(1, 1, 0, 0);
+    $trans-val-2: rotate3d(1, 1, 0, 180deg);
 
     @if $direction == 'bottom-left' {
-      $trans-val2: rotate3d(1, 1, 0, -180deg);
+      $trans-val-2: rotate3d(1, 1, 0, -180deg);
     } @else if $direction == 'forward' {
-      $trans-val1: translateZ(0) rotate3d(1, 1, 0, 0);
-      $trans-val2: translateZ(160px) rotate3d(1, 1, 0, 180deg);
+      $trans-val-1: translateZ(0) rotate3d(1, 1, 0, 0);
+      $trans-val-2: translateZ(160px) rotate3d(1, 1, 0, 180deg);
     } @else if $direction == 'backward' {
-      $trans-val1: translateZ(0) rotate3d(1, 1, 0, 0);
-      $trans-val2: translateZ(-260px) rotate3d(1, 1, 0, -180deg);
+      $trans-val-1: translateZ(0) rotate3d(1, 1, 0, 0);
+      $trans-val-2: translateZ(-260px) rotate3d(1, 1, 0, -180deg);
     } @else if $direction != 'top-right' {
-      @error 'Invalid direction value of [ #{meta.inspect($direction)} ] with ' +
+      @error 'Invalid direction value of `#{meta.inspect($direction)}` with ' +
       'an $axis of `diagonal1`. For the diagonal1 axis, you must choose a direction ' +
       'of either `top-right`, `bottom-left`, `backward`, or `forward`.';
     }
   } @else if $axis == 'diagonal2' {
-    $trans-val1: rotate3d(-1, 1, 0, 0);
-    $trans-val2: rotate3d(-1, 1, 0, -180deg);
+    $trans-val-1: rotate3d(-1, 1, 0, 0);
+    $trans-val-2: rotate3d(-1, 1, 0, -180deg);
 
     @if $direction == 'bottom-right' {
-      $trans-val2: rotate3d(-1, 1, 0, 180deg);
+      $trans-val-2: rotate3d(-1, 1, 0, 180deg);
     } @else if $direction == 'forward' {
-      $trans-val1: translateZ(0) rotate3d(-1, 1, 0, 0);
-      $trans-val2: translateZ(160px) rotate3d(-1, 1, 0, 180deg);
+      $trans-val-1: translateZ(0) rotate3d(-1, 1, 0, 0);
+      $trans-val-2: translateZ(160px) rotate3d(-1, 1, 0, 180deg);
     } @else if $direction == 'backward' {
-      $trans-val1: translateZ(0) rotate3d(-1, 1, 0, 0);
-      $trans-val2: translateZ(-260px) rotate3d(-1, 1, 0, -180deg);
+      $trans-val-1: translateZ(0) rotate3d(-1, 1, 0, 0);
+      $trans-val-2: translateZ(-260px) rotate3d(-1, 1, 0, -180deg);
     } @else if $direction != 'top-left' {
-      @error 'Invalid direction value of [ #{meta.inspect($direction)} ] with ' +
+      @error 'Invalid direction value of `#{meta.inspect($direction)}` with ' +
           'an $axis of [ diagonal2 ]. For the diagonal1 axis, you must choose ' +
           'a direction of either `top-left`, `bottom-right`, `backward`, or `forward`.';
     }
@@ -378,7 +377,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` ' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
           'for the [ flip ] mixin.';
     }
   } @else {
@@ -414,11 +413,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==
@@ -452,10 +461,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   transform: translate3d(0, 0, 0);
@@ -470,11 +477,11 @@
   @at-root {
     @keyframes flip#{$anim-num} {
       0% {
-        transform: $trans-val1;
+        transform: $trans-val-1;
       }
 
       100% {
-        transform: $trans-val2;
+        transform: $trans-val-2;
       }
     }
   }

@@ -7,7 +7,7 @@
 ///
 /// @param {String} $direction [center] - The direction the element will appear
 /// to be scaling up from.
-/// @param {Time} $timing [.4s] - The duration of the animation (s or ms).
+/// @param {Time} $timing [0.4s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally start along an
 /// axis line. This value can be null (or false, `no`, `n`), `horizontal` (or
@@ -66,8 +66,8 @@
   }
 
   // Default value for the 'center' direction
-  $trans-val1: scale(0.5);
-  $trans-val2: scale(1);
+  $trans-val-1: scale(0.5);
+  $trans-val-2: scale(1);
   $trans-origin-val: null;
 
   @if $direction == 'top' or $direction == 't' {
@@ -176,15 +176,15 @@
   {
     $direction: 'center';
   } @else {
-    @error 'Invalid direction value of [ #{meta.inspect($direction)} ] for the ' +
+    @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
     '`scale-up` mixin.';
   }
 
   @if $axis and $axis != 'none' and $axis != 'no' and $axis != 'n' {
     @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
     {
-      $trans-val1: scaleY(0.4);
-      $trans-val2: scaleY(1);
+      $trans-val-1: scaleY(0.4);
+      $trans-val-2: scaleY(1);
 
       @if $direction !=
         'top' and
@@ -194,7 +194,7 @@
         'center'
       {
         @error 'You have chosen an axis value of `vertical` that cannot be ' +
-            'used with the direction value of [ #{meta.inspect($direction)} ] for' +
+            'used with the direction value of `#{meta.inspect($direction)}` for' +
             ' the `scale-up` mixin. A vertical axis must have direction value' +
             ' of either `top`, `bottom`, or `center`.';
       } @else if $direction == 'top' {
@@ -212,8 +212,8 @@
       $axis ==
       'h'
     {
-      $trans-val1: scaleX(0.4);
-      $trans-val2: scaleX(1);
+      $trans-val-1: scaleX(0.4);
+      $trans-val-2: scaleX(1);
 
       @if $direction !=
         'left' and
@@ -223,7 +223,7 @@
         'center'
       {
         @error 'You have chosen an axis value of `horizontal` that cannot be ' +
-            'used with the direction value of [ #{meta.inspect($direction)} ] ' +
+            'used with the direction value of `#{meta.inspect($direction)}` ' +
             'for the `scale-up` mixin. A horizontal axis must have direction ' +
             'value of either `left`, `right`, or `center`.';
       } @else if $direction == 'left' {
@@ -294,7 +294,7 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) != 'string' {
+    @if meta.type-of($iterations) == 'string' {
       $iterations: string.to-lower-case($iterations);
     }
 
@@ -311,7 +311,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}`' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
           'for the `scale-up` mixin.';
     }
   } @else {
@@ -347,11 +347,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==
@@ -385,10 +395,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   animation: scale-up#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
@@ -396,7 +404,7 @@
   @at-root {
     @keyframes scale-up#{$anim-num} {
       0% {
-        transform: $trans-val1;
+        transform: $trans-val-1;
 
         @if $direction != 'center' {
           transform-origin: $t rans-origin-val1;
@@ -404,7 +412,7 @@
       }
 
       100% {
-        transform: $trans-val2;
+        transform: $trans-val-2;
         @if $direction != 'center' {
           transform-origin: $trans-origin-val2;
         }

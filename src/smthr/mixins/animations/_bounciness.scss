@@ -7,7 +7,7 @@
 ///
 /// @param {String} $direction [top] - The direction the animation will appear
 /// to be bouncing towards.
-/// @param {Time} $timing [.9s] The duration of the animation (s or ms).
+/// @param {Time} $timing [0.9s] The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
@@ -82,7 +82,7 @@
     $dir-val5: translateY(4px);
     $dir-val6: translateY(0);
   } @else if $direction != 'top' and $direction != 't' {
-    @error 'Invalid direction of [ #{meta.inspect($direction)} ] for the [ bounciness() ] mixin.';
+    @error 'Invalid direction of `#{meta.inspect($direction)}` for the [ bounciness() ] mixin.';
   }
 
   @if meta.type-of($timing) != 'number' {
@@ -159,7 +159,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for the ' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
           '[ bounciness() ] mixin.';
     }
   } @else {
@@ -195,11 +195,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==
@@ -233,10 +243,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   animation: bounciness#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}

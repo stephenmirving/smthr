@@ -43,14 +43,13 @@
   $anim-num: null
 ) {
   // Default values for a fade in with no direction
-  $opacity-val1: 0;
-  $opacity-val2: 1;
-  $trans-val1: null;
-  $trans-val2: null;
+  $opacity-val-1: 0;
+  $opacity-val-2: 1;
+  $trans-val-1: null;
+  $trans-val-2: null;
   $temp-val: null;
   $fwd-bck: false;
 
-  // Input scrubbing
   @if meta.type-of($in-or-out) == 'string' {
     $in-or-out: string.to-lower-case($in-or-out);
   }
@@ -70,8 +69,8 @@
     }
 
     @if $direction == 'bottom' or $direction == 'btm' or $direction == 'b' {
-      $trans-val1: translateY(50px);
-      $trans-val2: translateY(0);
+      $trans-val-1: translateY(50px);
+      $trans-val-2: translateY(0);
     } @else if
       $direction ==
       'forwards' or
@@ -85,8 +84,8 @@
       'f'
     {
       $fwd-bck: true;
-      $trans-val1: translateZ(-80px);
-      $trans-val2: translateZ(0);
+      $trans-val-1: translateZ(-80px);
+      $trans-val-2: translateZ(0);
     } @else if
       $direction ==
       'backwards' or
@@ -104,8 +103,8 @@
       'b'
     {
       $fwd-bck: true;
-      $trans-val1: translateZ(80px);
-      $trans-val2: translateZ(0);
+      $trans-val-1: translateZ(80px);
+      $trans-val-2: translateZ(0);
     } @else if
       $direction ==
       'top' or
@@ -116,14 +115,14 @@
       $direction ==
       'u'
     {
-      $trans-val1: translateY(-50px);
-      $trans-val2: translateY(0);
+      $trans-val-1: translateY(-50px);
+      $trans-val-2: translateY(0);
     } @else if $direction == 'left' or $direction == 'l' {
-      $trans-val1: translateX(-50px);
-      $trans-val2: translateX(0);
+      $trans-val-1: translateX(-50px);
+      $trans-val-2: translateX(0);
     } @else if $direction == 'right' or $direction == 'r' {
-      $trans-val1: translateX(50px);
-      $trans-val2: translateX(0);
+      $trans-val-1: translateX(50px);
+      $trans-val-2: translateX(0);
     } @else if
       $direction ==
       'top-left' or
@@ -142,8 +141,8 @@
       $direction ==
       'lt'
     {
-      $trans-val1: translateX(-50px) translateY(-50px);
-      $trans-val2: translateX(0) translateY(0);
+      $trans-val-1: translateX(-50px) translateY(-50px);
+      $trans-val-2: translateX(0) translateY(0);
     } @else if
       $direction ==
       'top-right' or
@@ -162,8 +161,8 @@
       $direction ==
       'rt'
     {
-      $trans-val1: translateX(50px) translateY(-50px);
-      $trans-val2: translateX(0) translateY(0);
+      $trans-val-1: translateX(50px) translateY(-50px);
+      $trans-val-2: translateX(0) translateY(0);
     } @else if
       $direction ==
       'bottom-right' or
@@ -182,8 +181,8 @@
       $direction ==
       'rb'
     {
-      $trans-val1: translateX(50px) translateY(50px);
-      $trans-val2: translateX(0) translateY(0);
+      $trans-val-1: translateX(50px) translateY(50px);
+      $trans-val-2: translateX(0) translateY(0);
     } @else if
       $direction ==
       'bottom-left' or
@@ -202,25 +201,24 @@
       $direction ==
       'lb'
     {
-      $trans-val1: translateX(-50px) translateY(50px);
-      $trans-val2: translateX(0) translateY(0);
+      $trans-val-1: translateX(-50px) translateY(50px);
+      $trans-val-2: translateX(0) translateY(0);
     } @else {
-      @error 'Invalid direction of [ #{meta.inspect($direction)} ] chosen for the ' +
+      @error 'Invalid direction of `#{meta.inspect($direction)}` chosen for the ' +
           '`fade` mixin.';
     }
   } @else {
     $direction: null;
   }
 
+  // If fade is out rather than in, swap and reverse the necessary values
   @if not $in-or-out {
-    // Swap values for fade-out state
-    $temp-val: $opacity-val1;
-    $opacity-val1: $opacity-val2;
-    $opacity-val2: $temp-val;
+    $opacity-val-1: 1;
+    $opacity-val-2: 0;
 
-    $temp-val: $trans-val1;
-    $trans-val1: $trans-val2;
-    $trans-val2: $temp-val;
+    $temp-val: $trans-val-1;
+    $trans-val-1: $trans-val-2;
+    $trans-val-2: $temp-val;
   }
 
   @if not $timing {
@@ -297,7 +295,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for the ' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
           '`fade` mixin.';
     }
   }
@@ -330,11 +328,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==
@@ -376,10 +384,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   animation: fade#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
@@ -392,16 +398,16 @@
   @at-root {
     @keyframes fade#{$anim-num} {
       0% {
-        opacity: $opacity-val1;
+        opacity: $opacity-val-1;
         @if $direction {
-          transform: $trans-val1;
+          transform: $trans-val-1;
         }
       }
 
       100% {
-        opacity: $opacity-val2;
+        opacity: $opacity-val-2;
         @if $direction {
-          transform: $trans-val2;
+          transform: $trans-val-2;
         }
       }
     }

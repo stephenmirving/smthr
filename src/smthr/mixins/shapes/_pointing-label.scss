@@ -82,7 +82,7 @@
     );
     border-radius: 4px 4px 0 0;
   } @else {
-    @error 'Invalid $direction value of [ #{meta.inspect($direction)} ] passed to the ' +
+    @error 'Invalid $direction value of `#{meta.inspect($direction)}` passed to the ' +
         '`pointing-label` mixin.';
   }
 

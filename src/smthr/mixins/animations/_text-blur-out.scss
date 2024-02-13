@@ -155,7 +155,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for ' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for ' +
           'the `text-blur-out` mixin.';
     }
   } @else {
@@ -191,11 +191,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==

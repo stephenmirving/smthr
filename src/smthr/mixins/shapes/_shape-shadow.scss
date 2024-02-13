@@ -2,7 +2,7 @@
 /// a drop shadow to the clipped shape.
 ///
 /// @param {List} $shadow-vars [-1px 6px 3px] - The values for the drop shadow.
-/// @param {Color} $shadow-color [rgba(50, 50, 0, .5)] The shadow's color.
+/// @param {Color} $shadow-color [rgba(50, 50, 0, 0.5)] The shadow's color.
 ///
 /// @group Shapes
 @mixin shape-shadow(

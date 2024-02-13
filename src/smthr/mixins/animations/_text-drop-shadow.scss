@@ -6,7 +6,7 @@
 /// Adds a shadow dropping animation to a given element's text
 ///
 /// @param {String} $direction [center] - The direction the shadow will fall.
-/// @param {Time} $timing [.7s] The duration of the animation (s or ms).
+/// @param {Time} $timing [0.7s] The duration of the animation (s or ms).
 /// @param {Time} $delay [null] The duration of the optional animation delay.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
@@ -65,7 +65,7 @@
     $direction !=
     'c'
   {
-    @error '[ #{meta.inspect($direction)} ] is not a valid direction for the ' +
+    @error '`#{meta.inspect($direction)}` is not a valid direction for the ' +
         '`drop-text-shadow` mixin.';
   }
 

@@ -173,7 +173,7 @@
     $pos-val1: 0% 0%;
     $pos-val2: 100% 100%;
   } @else if $direction != 'right' and $direction != 'r' {
-    @error 'Invalid direction of [ #{meta.inspect($direction)} ] for the [ pan-wipe() ] mixin.';
+    @error 'Invalid direction of `#{meta.inspect($direction)}` for the [ pan-wipe() ] mixin.';
   }
 
   @if meta.type-of($timing) != 'number' {
@@ -287,11 +287,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==

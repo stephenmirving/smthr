@@ -13,7 +13,7 @@
 ///
 /// @param {String} $direction [top] - The direction the animation appears to
 /// be fliping from. Can be either 'top'/'up' or 'bottom'/'down'
-/// @param {Time} $timing [.5s] - The duration of the animation (s or ms)
+/// @param {Time} $timing [0.5s] - The duration of the animation (s or ms)
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -45,11 +45,11 @@
   $anim-num: null
 ) {
   // Default tranform values for $direction of `top`
-  $trans-val1: translateY(0) rotateX(0) scale(1); // Same for top and bottom
+  $trans-val-1: translateY(0) rotateX(0) scale(1); // Same for top and bottom
   $trans-orig-val1: 50% 0%;
-  $trans-val2: translateY(-50%) rotateX(-90deg) scale(2);
+  $trans-val-2: translateY(-50%) rotateX(-90deg) scale(2);
   $trans-orig-val2: 50% 50%; // Same for all $direction values
-  $trans-val3: translateY(-100%) rotateX(-180deg) scale(1);
+  $trans-val-3: translateY(-100%) rotateX(-180deg) scale(1);
   $trans-orig-val3: 50% 100%;
 
   @if $direction and meta.type-of($direction) == 'string' {
@@ -65,16 +65,16 @@
   }
 
   @if $direction == 'right' or $direction == 'r' {
-    $trans-val1: translateX(0) rotateY(0) scale(1);
+    $trans-val-1: translateX(0) rotateY(0) scale(1);
     $trans-orig-val1: 100% 50%;
-    $trans-val2: translateX(50%) rotateY(-90deg) scale(2);
-    $trans-val3: translateX(100%) rotateY(-180deg) scale(1);
+    $trans-val-2: translateX(50%) rotateY(-90deg) scale(2);
+    $trans-val-3: translateX(100%) rotateY(-180deg) scale(1);
     $trans-orig-val3: 0% 50%;
   } @else if $direction == 'left' or $direction == 'l' {
-    $trans-val1: translateX(0) rotateY(0) scale(1);
+    $trans-val-1: translateX(0) rotateY(0) scale(1);
     $trans-orig-val1: 0% 50%;
-    $trans-val2: translateX(-50%) rotateY(90deg) scale(2);
-    $trans-val3: translateX(-100%) rotateY(180deg) scale(1);
+    $trans-val-2: translateX(-50%) rotateY(90deg) scale(2);
+    $trans-val-3: translateX(-100%) rotateY(180deg) scale(1);
     $trans-orig-val3: 100% 50%;
   } @else if
     $direction ==
@@ -89,8 +89,8 @@
     'd'
   {
     $trans-orig-val1: 50% 100%;
-    $trans-val2: translateY(50%) rotateX(90deg) scale(2);
-    $trans-val3: translateY(100%) rotateX(180deg) scale(1);
+    $trans-val-2: translateY(50%) rotateX(90deg) scale(2);
+    $trans-val-3: translateY(100%) rotateX(180deg) scale(1);
     $trans-orig-val3: 50% 0%;
   } @else if
     $direction !=
@@ -102,7 +102,7 @@
     $direction !=
     'u'
   {
-    @error 'Invalid direction value of [ #{meta.inspect($direction)} ] for the ' +
+    @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
         '`flip-scale-2` mixin';
   }
 
@@ -183,7 +183,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for the ' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
           '`flip-scale-2` mixin.';
     }
   } @else {
@@ -219,11 +219,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==
@@ -237,10 +247,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   transform: translate3d(0, 0, 0);
@@ -255,17 +263,17 @@
   @at-root {
     @keyframes flip-scale-2#{$anim-num} {
       0% {
-        transform: $trans-val1;
+        transform: $trans-val-1;
         transform-origin: $trans-orig-val1;
       }
 
       50% {
-        transform: $trans-val2;
+        transform: $trans-val-2;
         transform-origin: $trans-orig-val2;
       }
 
       100% {
-        transform: $trans-val3;
+        transform: $trans-val-3;
         transform-origin: $trans-orig-val3;
       }
     }

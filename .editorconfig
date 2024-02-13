@@ -13,6 +13,10 @@ trim_trailing_whitespace = true
 [*.html]
 indent_style = tab
 
-[*.min.css, *.min.js]
+[.min.css]
+indent_size = 1
+insert_final_newline = false
+
+[.min.js]
 indent_size = 1
 insert_final_newline = false

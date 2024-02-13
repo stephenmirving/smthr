@@ -25,17 +25,14 @@ body {
 }
 
 .animation-element {
-  @include size(1000px);
+  @include size(100px);
   @include flex-center;
 
+  @include rotate();
+
+  background: red;
   font:
     700 2.25rem system-ui,
     sans-serif;
   text-align: center;
-}
-
-.test {
-  $var: ease-in-out;
-
-  content: meta.type-of($var);
 }

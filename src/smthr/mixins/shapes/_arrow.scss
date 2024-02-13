@@ -82,7 +82,7 @@
       25% 0
     );
   } @else {
-    @error 'Invalid direction of [ #{meta.inspect($direction)} ] for the [ arrow ] mixin';
+    @error 'Invalid direction of `#{meta.inspect($direction)}` for the [ arrow ] mixin';
   }
 
   width: $size;

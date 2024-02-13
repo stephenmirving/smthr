@@ -10,7 +10,7 @@
 /// (`vertical`, `vert`, or `v`), right diagonal (`right-diagonal`, `rd`,
 /// `diagonal1` or `d1`) or left-diagonal (`left-diagonal`, `ld`, `diagonal2`,
 /// or `d2`).
-/// @param {Time} $timing [.9s] - The duration of the animation (s or ms).
+/// @param {Time} $timing [0.9s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay of the animation (ms or s)
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -104,7 +104,7 @@
     $direction != 'hor' and
     $direction != 'h'
   {
-    @error '[ #{meta.inspect($direction)} ] is not a valid direction for the ' +
+    @error '`#{meta.inspect($direction)}` is not a valid direction for the ' +
         '[ snappiness() ] mixin.';
   }
 
@@ -176,7 +176,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}`' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
           ' for the `snappiness` mixin.';
     }
   } @else {
@@ -242,10 +242,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   animation: snap#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
@@ -288,7 +286,7 @@
 /// (`vertical`, `vert`, or `v`), right diagonal (`right-diagonal`, `rd`,
 /// `diagonal1` or `d1`) or left-diagonal (`left-diagonal`, `ld`, `diagonal2`,
 /// or `d2`).
-/// @param {Time} $timing [.9s] - The duration of the animation (s or ms).
+/// @param {Time} $timing [0.9s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay of the animation (ms or s)
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will

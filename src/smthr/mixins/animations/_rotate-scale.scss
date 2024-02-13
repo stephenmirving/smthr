@@ -13,7 +13,7 @@
 /// @param {String|Boolean} $up-or-down [up] - Whether the elelment is
 /// scaling up or down. This value can be `up` (or true, `u`, `t`) or `down` (or
 /// false, `down`, `d`, `f`).
-/// @param {Time} $timing [.4s] - The duration of the animation (s or ms).
+/// @param {Time} $timing [0.4s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally rotate along an
 /// axis line. This value can be null (or false, `no`, `n`), `horizontal` (or
@@ -50,11 +50,12 @@
   $anim-num: null
 ) {
   // Values for a default scale up
-  $trans-val1: scale(1) rotateZ(0);
-  $trans-val2: scale(2) rotateZ(180deg);
-  $trans-val3: scale(1) rotateZ(360deg);
+  $trans-val-1: scale(1) rotateZ(0);
+  $trans-val-2: scale(2) rotateZ(180deg);
+  $trans-val-3: scale(1) rotateZ(360deg);
   $is-on-axis: false;
   $is-diagonal: false;
+  $anim-suffix: '';
 
   @if $up-or-down and meta.type-of($up-or-down) == 'string' {
     $up-or-down: string.to-lower-case($up-or-down);
@@ -76,28 +77,21 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $up-or-down ==
-    true or
-    $up-or-down ==
-    'up' or
-    $up-or-down ==
-    'u' or
-    $up-or-down ==
-    't'
+  @if $up-or-down == true or
+    $up-or-down == 'up' or
+    $up-or-down == 'u' or
+    $up-or-down == 't'
   {
     $up-or-down: true;
-  } @else if
-    $up-or-down ==
-    false or
-    $up-or-down ==
-    'down' or
-    $up-or-down ==
-    'd' or
-    $up-or-down ==
-    'f'
+    $anim-suffix: '-up';
+  } @else if not $up-or-down or
+    $up-or-down == 'down' or
+    $up-or-down == 'd' or
+    $up-or-down == 'f'
   {
     $up-or-down: false;
-    $trans-val2: scale(0.5) rotateZ(180deg);
+    $trans-val-2: scale(0.5) rotateZ(180deg);
+    $anim-suffix: '-down';
   } @else {
     @error 'Invalid direction value of [#{meta.inspect($up-or-down)}] for the ' +
         '`rotate-scale` mixin.';
@@ -108,13 +102,13 @@
 
     @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
     {
-      $trans-val1: if($up-or-down, scale(1) rotateY(0), scale(1) rotateY(0));
-      $trans-val2: if(
+      $trans-val-1: if($up-or-down, scale(1) rotateY(0), scale(1) rotateY(0));
+      $trans-val-2: if(
         $up-or-down,
         scale(2) rotateY(180deg),
         scale(0.5) rotateY(180deg)
       );
-      $trans-val3: if(
+      $trans-val-3: if(
         $up-or-down,
         scale(1) rotateY(360deg),
         scale(1) rotateY(360deg)
@@ -129,13 +123,13 @@
       $axis ==
       'h'
     {
-      $trans-val1: if($up-or-down, scale(1) rotateX(0), scale(1) rotateX(0));
-      $trans-val2: if(
+      $trans-val-1: if($up-or-down, scale(1) rotateX(0), scale(1) rotateX(0));
+      $trans-val-2: if(
         $up-or-down,
         scale(2) rotateX(-180deg),
         scale(0.5) rotateX(-180deg)
       );
-      $trans-val3: if(
+      $trans-val-3: if(
         $up-or-down,
         scale(1) rotateX(-360deg),
         scale(1) rotateX(-360deg)
@@ -163,33 +157,33 @@
       $is-diagonal: true;
 
       @if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
-        $trans-val1: if(
+        $trans-val-1: if(
           $up-or-down,
           scale(1) rotate3d(-1, 1, 0, 0),
           scale(1) rotate3d(-1, 1, 0, 0)
         );
-        $trans-val2: if(
+        $trans-val-2: if(
           $up-or-down,
           scale(2) rotate3d(-1, 1, 0, 180deg),
           scale(0.5) rotate3d(-1, 1, 0, 180deg)
         );
-        $trans-val3: if(
+        $trans-val-3: if(
           $up-or-down,
           scale(1) rotate3d(-1, 1, 0, 360deg),
           scale(1) rotate3d(-1, 1, 0, 360deg)
         );
       } @else {
-        $trans-val1: if(
+        $trans-val-1: if(
           $up-or-down,
           scale(1) rotate3d(1, 1, 0, 0),
           scale(1) rotate3d(1, 1, 0, 0)
         );
-        $trans-val2: if(
+        $trans-val-2: if(
           $up-or-down,
           scale(2) rotate3d(1, 1, 0, -180deg),
           scale(0.5) rotate3d(1, 1, 0, -180deg)
         );
-        $trans-val3: if(
+        $trans-val-3: if(
           $up-or-down,
           scale(1) rotate3d(1, 1, 0, -360deg),
           scale(1) rotate3d(1, 1, 0, -360deg)
@@ -260,7 +254,7 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) != 'string' {
+    @if meta.type-of($iterations) == 'string' {
       $iterations: string.to-lower-case($iterations);
     }
 
@@ -277,7 +271,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for the ' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
           '`rotate-scale` mixin.';
     }
   } @else {
@@ -313,11 +307,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==
@@ -351,13 +355,15 @@
 
   @if not $anim-num {
     $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
 
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
-  }
-
-  animation: rotate-scale#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: rotate-scale#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
   @if $is-on-axis {
     transform: translate3d(0, 0, 0);
@@ -369,17 +375,17 @@
   }
 
   @at-root {
-    @keyframes rotate-scale#{$anim-num} {
+    @keyframes rotate-scale#{$anim-suffix} {
       0% {
-        transform: $trans-val1;
+        transform: $trans-val-1;
       }
 
       50% {
-        transform: $trans-val2;
+        transform: $trans-val-2;
       }
 
       100% {
-        transform: $trans-val3;
+        transform: $trans-val-3;
       }
     }
   }

@@ -14,7 +14,7 @@
 /// rotating around. Can be `center`, `top`, `top-right,` `right,
 /// `bottom-right`, `bottom`, `bottom-left`, `left, or `top-left`. Several
 /// aliases aliases also exist for these values.
-/// @param {Time} $timing [.4s] - The duration of the animation (s or ms).
+/// @param {Time} $timing [0.4s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally rotate along an
 /// axis line. This value can be null (or false, `no`, `n`), `horizontal` (or
@@ -54,12 +54,13 @@
   $anim-num: null
 ) {
   // Default value for the 'center' direction
-  $trans-val1: rotate(0);
-  $trans-val2: rotate(360deg);
+  $trans-val-1: rotate(0);
+  $trans-val-2: rotate(360deg);
   $trans-origin-val: null;
   $trans-val-d: null;
   $is-on-axis: false;
   $is-diagonal: false;
+  $anim-suffix: '-around-';
 
   @if $point and meta.type-of($point) == 'string' {
     $point: string.to-lower-case($point);
@@ -103,7 +104,7 @@
     'rt'
   {
     $trans-origin-val: 0% 50%;
-    $point: 'right-top';
+    $point: 'top-right';
   } @else if $point == 'right' or $point == 'r' {
     $trans-origin-val: 100%;
     $point: 'right';
@@ -185,22 +186,28 @@
   {
     $point: 'center';
   } @else {
-    @error 'Invalid $point value of [ #{meta.inspect($point)} ] for the ' +
-        '[ rotate ] mixin.';
+    @error 'Invalid $point value of `#{meta.inspect($point)}` for the ' +
+        '[ rotate() ] mixin.';
   }
+
+  $anim-suffix: string.insert(
+    $anim-suffix,
+    '#{$point}',
+    string.length($anim-suffix) + 1
+  );
 
   @if $axis and $axis != 'none' and $axis != 'no' and $axis != 'n' {
     $is-on-axis: true;
 
     @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
     {
-      $trans-val1: rotateY(0);
-      $trans-val2: rotateY(360deg);
+      $trans-val-1: rotateY(0);
+      $trans-val-2: rotateY(360deg);
 
       @if $point != 'left' and $point != 'right' and $point != 'center' {
         @error 'You have chosen an axis value of `vertical` that cannot be ' +
-            'used with the $point value of [ #{meta.inspect($point)} ] for the ' +
-            '[ rotate ] mixin. A vertical axis must have $point value of ' +
+            'used with the $point value of `#{meta.inspect($point)}` for the ' +
+            '[ rotate() ] mixin. A vertical axis must have $point value of ' +
             'either `left`, `right`, or `center`.';
       } @else if $point == 'left' {
         $trans-origin-val: 0%;
@@ -217,12 +224,12 @@
       $axis ==
       'h'
     {
-      $trans-val1: rotateX(0);
-      $trans-val2: rotateX(-360deg);
+      $trans-val-1: rotateX(0);
+      $trans-val-2: rotateX(-360deg);
 
       @if $point != 'top' and $point != 'bottom' and $point != 'center' {
         @error 'You have chosen an axis value of `horizontal` that cannot be ' +
-            'used with the $point value of [ #{meta.inspect($point)} ] for the ' +
+            'used with the $point value of `#{meta.inspect($point)}` for the ' +
             '`rotate` mixin. A horizontal axis must have $point value of ' +
             'either `top`, `bottom`, or `center`.';
       } @else if $point == 'top' {
@@ -264,56 +271,56 @@
         'bottom-left'
       {
         @error 'You have chosen an axis value of `diagonal` that cannot be ' +
-            'used with the $point value of [ #{meta.inspect($point)} ] for the ' +
-            '[ rotate ] mixin. A diagonal axis must have $point value of ' +
+            'used with the $point value of `#{meta.inspect($point)}` for the ' +
+            '[ rotate() ] mixin. A diagonal axis must have $point value of ' +
             'either `top-left`, `top-right`, `bottom-right`, `bottom-left`, ' +
             'or `center`.';
       } @else if $point == 'center' {
         @if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
-          $trans-val1: rotate3d(-1, 1, 0, 0);
+          $trans-val-1: rotate3d(-1, 1, 0, 0);
           $trans-val-d: rotate3d(-1, 1, 0, 180deg);
-          $trans-val2: rotate3d(-1, 1, 0, 360deg);
+          $trans-val-2: rotate3d(-1, 1, 0, 360deg);
         } @else {
-          $trans-val1: rotate3d(1, 1, 0, 0);
+          $trans-val-1: rotate3d(1, 1, 0, 0);
           $trans-val-d: rotate3d(1, 1, 0, -180deg);
-          $trans-val2: rotate3d(1, 1, 0, -360deg);
+          $trans-val-2: rotate3d(1, 1, 0, -360deg);
         }
       } @else if $point == 'top-right' {
-        $trans-val1: rotate3d(1, 1, 0, 0);
+        $trans-val-1: rotate3d(1, 1, 0, 0);
         $trans-val-d: rotate3d(1, 1, 0, -180deg);
-        $trans-val2: rotate3d(1, 1, 0, -360deg);
+        $trans-val-2: rotate3d(1, 1, 0, -360deg);
         $trans-origin-val: 100% 0%;
       } @else if $point == 'bottom-right' {
-        $trans-val1: rotate3d(-1, 1, 0, 0);
+        $trans-val-1: rotate3d(-1, 1, 0, 0);
         $trans-val-d: rotate3d(-1, 1, 0, -180deg);
-        $trans-val2: rotate3d(-1, 1, 0, -360deg);
+        $trans-val-2: rotate3d(-1, 1, 0, -360deg);
         $trans-origin-val: 100% 50%;
       } @else if $point == 'bottom-left' {
-        $trans-val1: rotate3d(1, 1, 0, 0);
+        $trans-val-1: rotate3d(1, 1, 0, 0);
         $trans-val-d: rotate3d(1, 1, 0, 180deg);
-        $trans-val2: rotate3d(1, 1, 0, 360deg);
+        $trans-val-2: rotate3d(1, 1, 0, 360deg);
         $trans-origin-val: 0% 50%;
       } @else if $point == 'top-left' {
-        $trans-val1: rotate3d(-1, 1, 0, 0);
+        $trans-val-1: rotate3d(-1, 1, 0, 0);
         $trans-val-d: rotate3d(-1, 1, 0, 180deg);
-        $trans-val2: rotate3d(-1, 1, 0, 360deg);
+        $trans-val-2: rotate3d(-1, 1, 0, 360deg);
         $trans-origin-val: 0% 0%;
       }
     } @else {
       @error 'Invalid $axis value of [ #{meta.inspect($axis)} ] for the ' +
-          '[ rotate ] mixin.';
+          '[ rotate() ] mixin.';
     }
   }
 
   @if meta.type-of($timing) != 'number' {
     @error 'Invalid $timing value of `#{$timing}` for the ' +
-        '[ rotate ] mixin. The timing property must be a number.';
+        '[ rotate() ] mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
     @error 'Invalid $timing value of `#{$timing}` for the ' +
-        '[ rotate ] mixin. The timing property must be in either s or ms units.';
+        '[ rotate() ] mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
@@ -347,12 +354,12 @@
   @if $delay {
     @if meta.type-of($delay) != 'number' {
       @error 'Invalid $delay value of `#{meta.inspect($delay)}` for the ' +
-          '[ rotate ] mixin. The delay property must be a number.';
+          '[ rotate() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
       @error 'Invalid $delay value of `#{meta.inspect($delay)}` for the ' +
-          '[ rotate ] mixin. The delay property must be in either s or ms units.';
+          '[ rotate() ] mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
 
@@ -363,13 +370,15 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) != 'string' {
+    @if meta.type-of($iterations) == 'string' {
       $iterations: string.to-lower-case($iterations);
     }
+
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -379,33 +388,32 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` ' +
-          'for the [ rotate ] mixin.';
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ rotate() ] mixin.';
     }
   } @else {
     $iterations: null;
   }
 
-  @if
-    not
-      $anim-dir or
-      $anim-dir ==
-      'none' or
-      $anim-dir ==
-      'no' or
-      $anim-dir ==
-      'n/a' or
-      $anim-dir ==
-      'n' or
-      $anim-dir ==
-      'default' or
-      $anim-dir ==
-      'def' or
-      $anim-dir ==
-      'normal' or
-      $anim-dir ==
-      'nor'
-   {
+  @if not
+    $anim-dir or
+    $anim-dir ==
+    'none' or
+    $anim-dir ==
+    'no' or
+    $anim-dir ==
+    'n/a' or
+    $anim-dir ==
+    'n' or
+    $anim-dir ==
+    'default' or
+    $anim-dir ==
+    'def' or
+    $anim-dir ==
+    'normal' or
+    $anim-dir ==
+    'nor'
+  {
     $anim-dir: null;
   } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'r' {
     $anim-drection: reverse;
@@ -413,20 +421,22 @@
   {
     $anim-dir: alternate;
   } @else if
-
-      $anim-dir ==
-        'alternate-reverse' or
-        $anim-dir ==
-        'alternatereverse' or
-        $anim-dir ==
-        'alt-rev' or
-        $anim-dir ==
-        'altrev' or
-        $anim-dir ==
-        'a-r' or
-        $anim-dir ==
-      'ar'
-
+    $anim-dir ==
+    'alternate-reverse' or
+    $anim-dir ==
+    'alternatereverse' or
+    $anim-dir ==
+    'alt-rev' or
+    $anim-dir ==
+    'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'altrvs' or
+    $anim-dir ==
+    'a-r' or
+    $anim-dir ==
+    'ar'
   {
     $anim-dir: alternate-reverse;
   } @else {
@@ -434,24 +444,21 @@
         '`rotate` mixin';
   }
 
-  @if
-    not
-      $timing-func or
-      $timing-func ==
-      true or
-      $timing-func ==
-      'none' or
-      $timing-func ==
-      'no' or
-      $timing-func ==
-      'n' or
-      $timing-func ==
-      'def' or
-      $timing-func ==
-      'default' or
-      $timing-func ==
-      'd'
-   {
+  @if not
+    $timing-func or
+    $timing-func ==
+    'none' or
+    $timing-func ==
+    'no' or
+    $timing-func ==
+    'n' or
+    $timing-func ==
+    'def' or
+    $timing-func ==
+    'default' or
+    $timing-func ==
+    'd'
+  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: if(
@@ -463,7 +470,14 @@
 
   @if not($anim-num) {
     $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
+
 
   @if $is-on-axis {
     transform: translate3d(0, 0, 0);
@@ -474,13 +488,13 @@
     }
   }
 
-  animation: rotate#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: rotate#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
-    @keyframes rotate#{$anim-num} {
+    @keyframes rotate#{$anim-suffix} {
       0% {
-        transform: $trans-val1;
+        transform: $trans-val-1;
         @if $point != 'center' {
           transform-origin: $trans-origin-val;
         }
@@ -496,7 +510,7 @@
       }
 
       100% {
-        transform: $trans-val2;
+        transform: $trans-val-2;
         @if $point != 'center' {
           transform-origin: $trans-origin-val;
         }

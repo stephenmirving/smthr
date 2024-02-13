@@ -11,7 +11,7 @@
 /// appear to slit `in` (or true, `i`) or `out` (or false, `o`).
 /// @param {String} $axis [right] - The axis on which the animation turns
 /// the element.
-/// @param {Time} $timing [.5s] - The duration of the animation (s or ms)
+/// @param {Time} $timing [0.5s] - The duration of the animation (s or ms)
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
@@ -44,11 +44,11 @@
   $anim-num: null
 ) {
   // Default tranform values for slit in on an $axis of 'horizontal'
-  $trans-val1: translateZ(-800px) rotateX(90deg);
-  $trans-val2: translateZ(-160px) rotateX(87deg);
-  $trans-val3: translateZ(0) rotateX(0);
-  $opacity-val1: 0;
-  $opacity-val2: 1;
+  $trans-val-1: translateZ(-800px) rotateX(90deg);
+  $trans-val-2: translateZ(-160px) rotateX(87deg);
+  $trans-val-3: translateZ(0) rotateX(0);
+  $opacity-val-1: 0;
+  $opacity-val-2: 1;
   $temp-val: null;
   $is-diagonal: false;
 
@@ -68,14 +68,13 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  // Input scrubbing
   @if $in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
-  } @else if $in-or-out == false or $in-or-out == 'out' or $in-or-out == 'o' {
+  } @else if not $in-or-out or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
   } @else {
     @error 'Invalid $in-or-out value of `#{meta.inspect($in-or-out)}` for the ' +
-        '`slit` mixin.';
+        '[ slit() ] mixin.';
   }
 
   @if $axis {
@@ -85,9 +84,9 @@
 
     @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
     {
-      $trans-val1: translateZ(-800px) rotateY(90deg);
-      $trans-val2: translateZ(-160px) rotateY(87deg);
-      $trans-val3: translateZ(0) rotateY(0);
+      $trans-val-1: translateZ(-800px) rotateY(90deg);
+      $trans-val-2: translateZ(-160px) rotateY(87deg);
+      $trans-val-3: translateZ(0) rotateY(0);
     } @else if
       $axis ==
       'diagonal' or
@@ -102,14 +101,14 @@
       $axis ==
       'd1'
     {
-      $trans-val1: translateZ(-800px) rotate3d(1, 1, 0, 90deg);
-      $trans-val2: translateZ(-160px) rotate3d(1, 1, 0, 87deg);
-      $trans-val3: translateZ(0) rotate3d(1, 1, 0, 0);
+      $trans-val-1: translateZ(-800px) rotate3d(1, 1, 0, 90deg);
+      $trans-val-2: translateZ(-160px) rotate3d(1, 1, 0, 87deg);
+      $trans-val-3: translateZ(0) rotate3d(1, 1, 0, 0);
       $is-diagonal: true;
     } @else if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
-      $trans-val1: translateZ(-800px) rotate3d(-1, 1, 0, -90deg);
-      $trans-val2: translateZ(-160px) rotate3d(-1, 1, 0, -87deg);
-      $trans-val3: translateZ(0) rotate3d(-1, 1, 0, 0);
+      $trans-val-1: translateZ(-800px) rotate3d(-1, 1, 0, -90deg);
+      $trans-val-2: translateZ(-160px) rotate3d(-1, 1, 0, -87deg);
+      $trans-val-3: translateZ(0) rotate3d(-1, 1, 0, 0);
       $is-diagonal: true;
     } @else if
       $axis !=
@@ -121,28 +120,29 @@
       $axis !=
       'h'
     {
-      @error 'Invalid axis of [#{meta.inspect($axis)}] chosen for the `slit` mixin.';
+      @error 'Invalid axis of [#{meta.inspect($axis)}] chosen for the [ slit() ] mixin.';
     }
   } @else {
-    @error 'You must choose an axis for the `slit` mixin.';
+    @error 'You must choose an axis for the [ slit() ] mixin.';
   }
 
+  // If animation slits out rather than in, swap and reverse the necessary values
   @if not $in-or-out {
-    // Swap values for a slit-out state
-    $temp-val: $trans-val1;
-    $trans-val1: $trans-val3;
-    $trans-val3: $temp-val;
-    $opacity-val1: 0;
+    $temp-val: $trans-val-1;
+    $trans-val-1: $trans-val-3;
+    $trans-val-3: $temp-val;
+    $opacity-val-1: 1;
+    $opacity-val-2: 0;
   }
 
   @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the `slit` ' +
+    @error 'Invalid $timing value of `#{$timing}` for the [ slit() ] ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the `slit` ' +
+    @error 'Invalid $timing value of `#{$timing}` for the [ slit() ] ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -176,12 +176,12 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `slit`' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ slit() ]' +
           ' mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `slit`' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ slit() ]' +
           ' mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -202,10 +202,9 @@
       $iterations: infinite;
     } @else if (
         (
-            math.is-unitless($iterations) and
-              meta.type-of($iterations) ==
-              'number'
-          ) or
+          math.is-unitless($iterations) and
+          meta.type-of($iterations) == 'number'
+        ) or
           $iterations ==
           initial or
           $iterations ==
@@ -214,8 +213,8 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}`' +
-          ' for the `slit` mixin.';
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
+          ' for the [ slit() ] mixin.';
     }
   } @else {
     $iteratons: null;
@@ -250,11 +249,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==
@@ -263,7 +272,7 @@
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
-        ' for the `slit` mixin';
+        ' for the [ slit() ] mixin';
   }
 
   @if not
@@ -288,10 +297,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   transform: translate3d(0, 0, 0);
@@ -310,8 +317,8 @@
           animation-timing-function: ease-in;
         }
 
-        opacity: $opacity-val1;
-        transform: $trans-val1;
+        opacity: $opacity-val-1;
+        transform: $trans-val-1;
       }
 
       54% {
@@ -319,8 +326,8 @@
           animation-timing-function: ease-in-out;
         }
 
-        opacity: $opacity-val2;
-        transform: $trans-val2;
+        opacity: $opacity-val-2;
+        transform: $trans-val-2;
       }
 
       100% {
@@ -331,7 +338,7 @@
           opacity: 0;
         }
 
-        transform: $trans-val3;
+        transform: $trans-val-3;
       }
     }
   }

@@ -16,7 +16,7 @@
 /// be extracting from or contracting towards. Can be `top` (or `t`), `bottom`
 /// (or `btm`, `b`), or null (or false, `default`, `def`, `no`, `n/a`,
 /// `none`, `n`).
-/// @param {Time} $timing [.9s] - The duration of the animation (s or ms).
+/// @param {Time} $timing [0.9s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -110,7 +110,7 @@
   {
     $direction: false;
   } @else {
-    @error 'Invalid $direction value of [ #{meta.inspect($direction)} ] for the ' +
+    @error 'Invalid $direction value of `#{meta.inspect($direction)}` for the ' +
         '`text-tracking-out` mixin.';
   }
 
@@ -220,7 +220,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for the ' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
           '`text-tracking-out` mixin.';
     }
   } @else {
@@ -256,11 +256,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==
@@ -296,10 +306,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   @if $direction {

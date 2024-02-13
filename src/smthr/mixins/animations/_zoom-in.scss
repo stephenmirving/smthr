@@ -125,7 +125,7 @@
     $direction !=
     'd'
   {
-    @error '[ #{meta.inspect($direction)} ] is not a valid direction for the ' +
+    @error '`#{meta.inspect($direction)}` is not a valid direction for the ' +
         '`zoom-in` mixin';
   }
 
@@ -190,10 +190,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   animation: zoom-in#{$anim-num} #{$timing} ease-out #{$delay} both;

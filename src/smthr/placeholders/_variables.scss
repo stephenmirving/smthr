@@ -773,6 +773,7 @@ $alias-resolution-map: (
     'fwards',
     'fward',
     'fwd',
+    'fw',
     'f'
   ),
   'backwards': (
@@ -783,6 +784,7 @@ $alias-resolution-map: (
     'bward',
     'back',
     'bck',
+    'bw',
     'b'
   ),
   'in': (
@@ -814,8 +816,13 @@ $alias-resolution-map: (
     'alt-rev',
     'alt rev',
     'altrev',
+    'alternate-rvs',
+    'alt-rvs',
+    'alt rvs',
+    'altrvs',
     'alt-r',
     'a-rev',
+    'a-rvs',
     'a-r',
     'ar'
   ),

@@ -40,7 +40,7 @@
   $anim-num: null
 ) {
   // Default value for the 'top' direction
-  $trans-val1: translateY(0);
+  $trans-val-1: translateY(0);
   $shadow-val:
     0 -1px $color,
     0 -2px $color,
@@ -50,7 +50,7 @@
     0 -6px $color,
     0 -7px $color,
     0 -8px $color;
-  $trans-val2: translateY(8px);
+  $trans-val-2: translateY(8px);
 
   @if $color and meta.type-of($color) != 'color' {
     @error 'Invalid $color value of [ #{meta.inspect($color)} ] for the '
@@ -94,8 +94,8 @@
     $direction ==
     'rt'
   {
-    $trans-val1: translateX(0) translateY(0);
-    $trans-val2: translateX(-8px) translateY(8px);
+    $trans-val-1: translateX(0) translateY(0);
+    $trans-val-2: translateX(-8px) translateY(8px);
     $shadow-val:
       1px -1px $color,
       2px -2px $color,
@@ -106,8 +106,8 @@
       7px -7px $color,
       8px -8px $color;
   } @else if $direction == 'right' or $direction == 'r' {
-    $trans-val1: translateX(0);
-    $trans-val2: translateX(-8px);
+    $trans-val-1: translateX(0);
+    $trans-val-2: translateX(-8px);
     $shadow-val:
       1px 0 $color,
       2px 0 $color,
@@ -135,8 +135,8 @@
     $direction ==
     'r-b'
   {
-    $trans-val1: translateX(0) translateY(0);
-    $trans-val2: translateX(-8px) translateY(-8px);
+    $trans-val-1: translateX(0) translateY(0);
+    $trans-val-2: translateX(-8px) translateY(-8px);
     $shadow-val:
       1px 1px $color,
       2px 2px $color,
@@ -148,7 +148,7 @@
       8px 8px $color;
   } @else if $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
   {
-    $trans-val2: translateY(-8px);
+    $trans-val-2: translateY(-8px);
     $shadow-val:
       0 1px $color,
       0 2px $color,
@@ -176,8 +176,8 @@
     $direction ==
     'lb'
   {
-    $trans-val1: translateX(0) translateY(0);
-    $trans-val2: translateX(8px) translateY(-8px);
+    $trans-val-1: translateX(0) translateY(0);
+    $trans-val-2: translateX(8px) translateY(-8px);
     $shadow-val:
       -1px 1px $color,
       -2px 2px $color,
@@ -188,8 +188,8 @@
       -7px 7px $color,
       -8px 8px $color;
   } @else if $direction == 'left' or $direction == 'l' {
-    $trans-val1: translateX(0);
-    $trans-val2: translateX(8px);
+    $trans-val-1: translateX(0);
+    $trans-val-2: translateX(8px);
     $shadow-val:
       -1px 0 $color,
       -2px 0 $color,
@@ -217,8 +217,8 @@
     $direction ==
     'lt'
   {
-    $trans-val1: translateX(0) translateY(0);
-    $trans-val2: translateX(8px) translateY(8px);
+    $trans-val-1: translateX(0) translateY(0);
+    $trans-val-2: translateX(8px) translateY(8px);
     $shadow-val:
       -1px -1px $color,
       -2px -2px $color,
@@ -229,7 +229,7 @@
       -7px -7px $color,
       -8px -8px $color;
   } @else if $direction != 'top' and $direction != 't' {
-    @error 'Invalid direction value of [ #{meta.inspect($direction)} ] for the ' +
+    @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
         '`text-pop-shadow` mixin.';
   }
 
@@ -308,7 +308,7 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid iteration-count value of `#{meta.inspect($iterations)}` for the ' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
           '`text-pop-shadow` mixin.';
     }
   } @else {
@@ -344,11 +344,21 @@
     $anim-dir ==
     'alternate-reverse' or
     $anim-dir ==
+    'alternate reverse' or
+    $anim-dir ==
     'alternatereverse' or
     $anim-dir ==
     'alt-rev' or
     $anim-dir ==
+    'alt rev' or
+    $anim-dir ==
     'altrev' or
+    $anim-dir ==
+    'alt-rvs' or
+    $anim-dir ==
+    'alt rvs' or
+    $anim-dir ==
+    'altrvs' or
     $anim-dir ==
     'a-r' or
     $anim-dir ==
@@ -384,10 +394,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   animation: txt-pop-shadow#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
@@ -405,12 +413,12 @@
           0 0 $color,
           0 0 $color,
           0 0 $color;
-        transform: #{$trans-val1};
+        transform: #{$trans-val-1};
       }
 
       100% {
         text-shadow: #{$shadow-val};
-        transform: #{$trans-val2};
+        transform: #{$trans-val-2};
       }
     }
   }

@@ -7,7 +7,7 @@
 ///
 /// @param {String} $direction [top] - The direction the animation will appear
 /// to be going in.
-/// @param {Time} $timing [.5s] The duration of the animation (s or ms).
+/// @param {Time} $timing [0.5s] The duration of the animation (s or ms).
 /// @param {Length-Percentage} $size [15rem] - The size of the element. If
 /// the $height property is not set explicitly, it is both height and width, if
 /// $height is set explicitly, then this value sets only the width.
@@ -90,7 +90,7 @@
   } @else if $direction == 'bottom-left' or $direction == 'bl' {
     $dir-val: translateY(50px) translateX(-50px);
   } @else if $direction != 'top' and $direction != 't' and $direction != 'up' {
-    @error '[ #{meta.inspect($direction)} ] is not a valid direction for the ' +
+    @error '`#{meta.inspect($direction)}` is not a valid direction for the ' +
         'text-pop-up mixin.';
   }
 
@@ -154,10 +154,8 @@
 
   @if not $anim-num {
     $anim-num: null;
-  }
-
-  @if $anim-num {
-    $anim-num: '-' + $anim-num;
+  } @else {
+    $anim-num: '-#{$anim-num}';
   }
 
   width: $size;
