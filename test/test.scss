@@ -36,7 +36,7 @@
 }
 
 .active-anim {
-  @include rotate(tl, 0.5s, $axis: diagonal);
+  @include flip(back, diagonal);
 }
 
 .front {

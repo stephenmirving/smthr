@@ -38,25 +38,19 @@
 .active-anim {
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: rotate-around-top-left-diagonally 0.5s linear both;
+  animation: flip 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 }
 @-moz-document url-prefix() {
   .active-anim {
     backface-visibility: hidden;
   }
 }
-@keyframes rotate-around-top-left-diagonally {
+@keyframes flip {
   0% {
-    transform: rotate3d(-1, 1, 0, 0);
-    transform-origin: 0% 0%;
-  }
-  50% {
-    transform: rotate3d(-1, 1, 0, 180deg);
-    transform-origin: 0% 0%;
+    transform: translateZ(0) rotate3d(1, 1, 0, 0);
   }
   100% {
-    transform: rotate3d(-1, 1, 0, 360deg);
-    transform-origin: 0% 0%;
+    transform: translateZ(-260px) rotate3d(1, 1, 0, -180deg);
   }
 }
 
