@@ -36,16 +36,27 @@
 }
 
 .active-anim {
-  animation: rotate-around-top 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  animation: rotate-around-top-left-diagonally 0.5s linear both;
 }
-@keyframes rotate-around-top {
+@-moz-document url-prefix() {
+  .active-anim {
+    backface-visibility: hidden;
+  }
+}
+@keyframes rotate-around-top-left-diagonally {
   0% {
-    transform: rotate(0);
-    transform-origin: 50% 0%;
+    transform: rotate3d(-1, 1, 0, 0);
+    transform-origin: 0% 0%;
+  }
+  50% {
+    transform: rotate3d(-1, 1, 0, 180deg);
+    transform-origin: 0% 0%;
   }
   100% {
-    transform: rotate(360deg);
-    transform-origin: 50% 0%;
+    transform: rotate3d(-1, 1, 0, 360deg);
+    transform-origin: 0% 0%;
   }
 }
 
@@ -69,7 +80,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  transform: rotateX(180deg);
+  transform: rotate3d(1, 1, 0, 180deg);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   z-index: 10;

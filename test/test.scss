@@ -33,11 +33,10 @@
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
   position: relative;
-  // @include rotate(top, 0.5s);
 }
 
-.activate-anim {
-  @include rotate(top, 0.8s);
+.active-anim {
+  @include rotate(tl, 0.5s, $axis: diagonal);
 }
 
 .front {
@@ -53,7 +52,7 @@
 }
 
 .back {
-  @include animation-back-face();
+  @include animation-back-face(diagonal);
 
   display: flex;
   align-items: center;

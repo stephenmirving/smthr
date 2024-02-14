@@ -77,17 +77,25 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $up-or-down == true or
-    $up-or-down == 'up' or
-    $up-or-down == 'u' or
-    $up-or-down == 't'
+  @if $up-or-down ==
+    true or
+    $up-or-down ==
+    'up' or
+    $up-or-down ==
+    'u' or
+    $up-or-down ==
+    't'
   {
     $up-or-down: true;
     $anim-suffix: '-up';
-  } @else if not $up-or-down or
-    $up-or-down == 'down' or
-    $up-or-down == 'd' or
-    $up-or-down == 'f'
+  } @else if not
+    $up-or-down or
+    $up-or-down ==
+    'down' or
+    $up-or-down ==
+    'd' or
+    $up-or-down ==
+    'f'
   {
     $up-or-down: false;
     $trans-val-2: scale(0.5) rotateZ(180deg);
@@ -138,25 +146,49 @@
       $axis ==
       'diagonal' or
       $axis ==
+      'diagonal-1' or
+      $axis ==
       'diagonal1' or
       $axis ==
       'diag' or
+      $axis ==
+      'diag-1' or
       $axis ==
       'diag1' or
       $axis ==
       'd' or
       $axis ==
+      'd-1' or
+      $axis ==
       'd1' or
+      $axis ==
+      'diagonal-2' or
       $axis ==
       'diagonal2' or
       $axis ==
+      'diag-2' or
+      $axis ==
       'diag2' or
+      $axis ==
+      'd-2'
       $axis ==
       'd2'
     {
       $is-diagonal: true;
 
-      @if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
+      @if $axis ==
+        'diagonal-2' or
+        $axis ==
+        'diagonal2' or
+        $axis ==
+        'diag-2' or
+        $axis ==
+        'diag2' or
+        $axis ==
+        'd-2' or
+        $axis ==
+        'd2'
+      {
         $trans-val-1: if(
           $up-or-down,
           scale(1) rotate3d(-1, 1, 0, 0),
@@ -173,6 +205,7 @@
           scale(1) rotate3d(-1, 1, 0, 360deg)
         );
       } @else {
+        // diagonal-1 values
         $trans-val-1: if(
           $up-or-down,
           scale(1) rotate3d(1, 1, 0, 0),
@@ -261,7 +294,8 @@
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -298,7 +332,16 @@
     'nor'
   {
     $anim-dir: null;
-  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'rvs' or $anim-dir == 'r' {
+  } @else if
+    $anim-dir ==
+    'reverse' or
+    $anim-dir ==
+    'rev' or
+    $anim-dir ==
+    'rvs' or
+    $anim-dir ==
+    'r'
+  {
     $anim-drection: reverse;
   } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
   {

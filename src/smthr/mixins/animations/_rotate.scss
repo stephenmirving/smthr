@@ -138,6 +138,14 @@
     $point ==
     'leftbottom' or
     $point ==
+    'left-btm' or
+    $point ==
+    'btm-left' or
+    $point ==
+    'leftbtm' or
+    $point ==
+    'btmleft' or
+    $point ==
     'b-l' or
     $point ==
     'bl' or
@@ -262,19 +270,31 @@
       $axis ==
       'diagonal' or
       $axis ==
+      'diagonal-1' or
+      $axis ==
       'diagonal1' or
       $axis ==
       'diag' or
+      $axis ==
+      'diag-1' or
       $axis ==
       'diag1' or
       $axis ==
       'd' or
       $axis ==
+      'd-1' or
+      $axis ==
       'd1' or
+      $axis ==
+      'diagonal-2' or
       $axis ==
       'diagonal2' or
       $axis ==
+      'diag-2' or
+      $axis ==
       'diag2' or
+      $axis ==
+      'd-2'
       $axis ==
       'd2'
     {
@@ -302,7 +322,19 @@
             'either `top-left`, `top-right`, `bottom-right`, `bottom-left`, ' +
             'or `center`.';
       } @else if $point == 'center' {
-        @if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
+        @if $axis ==
+          'diagonal-2' or
+          $axis ==
+          'diagonal2' or
+          $axis ==
+          'diag-2' or
+          $axis ==
+          'diag2' or
+          $axis ==
+          'd2' or
+          $axis ==
+          'd2'
+        {
           $trans-val-1: rotate3d(-1, 1, 0, 0);
           $trans-val-diag: rotate3d(-1, 1, 0, 180deg);
           $trans-val-2: rotate3d(-1, 1, 0, 360deg);
