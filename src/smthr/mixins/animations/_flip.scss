@@ -3,6 +3,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use '../utilities/only-moz' as *;
+@use '../../functions/resolve-alias' as *;
 
 /// Generates an animation that flips an element over. The element this mixin is
 /// applied to must have a front-face and a back-face child element. It is
@@ -29,6 +30,10 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Mixin} only-moz
+/// @require {Function} resolve-alias
+/// @require {Map} $map-alias-resolutions
+///
 /// @throw Invalid $direction value
 /// @throw Invalid $axis value
 /// @throw Invalid $timing value
@@ -36,7 +41,7 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin flip(
-  $direction: 'top',
+  $direction: 'up',
   $axis: 'horizontal',
   $timing: 0.5s,
   $delay: null,
@@ -48,9 +53,10 @@
   // Default tranform values for $direction of `top` and $axis of `horizontal`
   $trans-val-1: rotateX(0);
   $trans-val-2: rotateX(180deg);
+  $anim-suffix: '';
 
   @if $anim-dir and meta.type-of($anim-dir) == 'string' {
-    $anim-dir: string.to-lower-case($anim-dir),
+    $anim-dir: string.to-lower-case($anim-dir);
   }
 
   @if $delay and meta.type-of($delay) == 'string' {
@@ -58,14 +64,14 @@
   }
 
   @if $timing-func and meta.type-of($timing-func) == 'string' {
-    $timing-func: string.to-lower-case($timing-func),
+    $timing-func: string.to-lower-case($timing-func);
   }
 
   @if $direction {
     $direction: string.to-lower-case($direction);
 
     @if $direction == 'bottom' or $direction == 'btm' or $direction == 'b' {
-      $direction: 'bottom';
+      $direction: 'down';
     } @else if
       $direction ==
       'forwards' or
@@ -80,7 +86,7 @@
       $direction ==
       'f'
     {
-      $direction: 'forward';
+      $direction: 'forwards';
     } @else if
       $direction ==
       'backwards' or
@@ -97,7 +103,7 @@
       $direction ==
       'b'
     {
-      $direction: 'backward';
+      $direction: 'backwards';
     } @else if
       $direction ==
       'top' or
@@ -108,7 +114,7 @@
       $direction ==
       'u'
     {
-      $direction: 'top';
+      $direction: 'up';
     } @else if $direction == 'left' or $direction == 'l' {
       $direction: 'left';
     } @else if $direction == 'right' or $direction == 'r' {
@@ -209,6 +215,11 @@
       'h'
     {
       $axis: 'horizontal';
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        '-horizontally',
+        string.length($anim-suffix) + 1
+      );
     } @else if
       $axis ==
       'vertical' or
@@ -220,40 +231,70 @@
       'v'
     {
       $axis: 'vertical';
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        '-vertically',
+        string.length($anim-suffix) + 1
+      );
     } @else if
       $axis ==
-      'diagonal' or
+      'diagonal-1' or
       $axis ==
       'diagonal1' or
       $axis ==
-      'diag' or
+      'diagonal' or
+      $axis ==
+      'diag-1' or
       $axis ==
       'diag1' or
+      $axis ==
+      'diag' or
       $axis ==
       'd' or
       $axis ==
       'd1'
     {
       $axis: 'diagonal1';
-    } @else if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
+    } @else if
+      $axis ==
+      'diagonal2' or
+      $axis ==
+      'diagonal-2' or
+      $axis ==
+      'diag2' or
+      $axis==
+      'diag-2' or
+      $axis ==
+      'd-2' or
+      $axis ==
+      'd2'
+    {
       $axis: 'diagonal2';
     } @else {
-      @error 'Invalid axis of [ #{meta.inspect($axis)} ] chosen for the [ flip ] mixin.';
+      @error 'Invalid axis of [ #{meta.inspect($axis)} ] chosen for the [ flip() ] mixin.';
     }
   } @else {
     @error 'You must choose an axis for the `flip` mixin.';
   }
 
+  @if $axis == 'diagonal1' or $axis == 'diagonal2' {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-diagonally',
+      string.length($anim-suffix) + 1
+    );
+  }
+
   @if $axis == 'horizontal' {
-    @if $direction == 'bottom' {
+    @if $direction == 'down' {
       $trans-val-2: rotateX(-180deg);
-    } @else if $direction == 'forward' {
+    } @else if $direction == 'forwards' {
       $trans-val-1: translateZ(0) rotateX(0);
       $trans-val-2: translateZ(160px) rotateX(-180deg);
-    } @else if $direction == 'backward' {
+    } @else if $direction == 'backwards' {
       $trans-val-1: translateZ(0) rotateX(0);
       $trans-val-2: translateZ(-260px) rotateX(180deg);
-    } @else if $direction != 'top' {
+    } @else if $direction != 'up' {
       @error 'Invalid direction value of `#{meta.inspect($direction)}` with an $axis of ' +
           '`horizontal`. For a horizontal axis, you must choose a direction ' +
           'of either `top`, `bottom`, `backward`, or `forward`.';
@@ -264,10 +305,10 @@
 
     @if $direction == 'left' {
       $trans-val-2: rotateY(-180deg);
-    } @else if $direction == 'forward' {
+    } @else if $direction == 'forwards' {
       $trans-val-1: translateZ(0) rotateY(0);
       $trans-val-2: translateZ(160px) rotateY(180deg);
-    } @else if $direction == 'backward' {
+    } @else if $direction == 'backwards' {
       $trans-val-1: translateZ(0) rotateY(0);
       $trans-val-2: translateZ(160px) rotateY(180deg);
     } @else if $direction != 'right' {
@@ -281,10 +322,10 @@
 
     @if $direction == 'bottom-left' {
       $trans-val-2: rotate3d(1, 1, 0, -180deg);
-    } @else if $direction == 'forward' {
+    } @else if $direction == 'forwards' {
       $trans-val-1: translateZ(0) rotate3d(1, 1, 0, 0);
       $trans-val-2: translateZ(160px) rotate3d(1, 1, 0, 180deg);
-    } @else if $direction == 'backward' {
+    } @else if $direction == 'backwards' {
       $trans-val-1: translateZ(0) rotate3d(1, 1, 0, 0);
       $trans-val-2: translateZ(-260px) rotate3d(1, 1, 0, -180deg);
     } @else if $direction != 'top-right' {
@@ -298,10 +339,10 @@
 
     @if $direction == 'bottom-right' {
       $trans-val-2: rotate3d(-1, 1, 0, 180deg);
-    } @else if $direction == 'forward' {
+    } @else if $direction == 'forwards' {
       $trans-val-1: translateZ(0) rotate3d(-1, 1, 0, 0);
       $trans-val-2: translateZ(160px) rotate3d(-1, 1, 0, 180deg);
-    } @else if $direction == 'backward' {
+    } @else if $direction == 'backwards' {
       $trans-val-1: translateZ(0) rotate3d(-1, 1, 0, 0);
       $trans-val-2: translateZ(-260px) rotate3d(-1, 1, 0, -180deg);
     } @else if $direction != 'top-left' {
@@ -362,14 +403,15 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations)!= 'string' {
+    @if meta.type-of($iterations) != 'string' {
       $iterations: string.to-lower-case($iterations);
     }
 
     @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
     {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -406,7 +448,16 @@
     'nor'
   {
     $anim-dir: null;
-  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'rvs' or $anim-dir == 'r' {
+  } @else if
+    $anim-dir ==
+    'reverse' or
+    $anim-dir ==
+    'rev' or
+    $anim-dir ==
+    'rvs' or
+    $anim-dir ==
+    'r'
+  {
     $anim-drection: reverse;
   } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
   {
@@ -461,15 +512,25 @@
     $timing-func: cubic-bezier(0.455, 0.03, 0.515, 0.955);
   }
 
+  $anim-suffix: string.insert(
+    $anim-suffix,
+    '-#{$direction}',
+    string.length($anim-suffix) + 1
+  );
+
   @if not $anim-num {
     $anim-num: null;
   } @else {
-    $anim-num: '-#{$anim-num}';
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
 
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: flip#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: flip#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @include only-moz {
@@ -477,7 +538,7 @@
   }
 
   @at-root {
-    @keyframes flip#{$anim-num} {
+    @keyframes flip#{$anim-suffix} {
       0% {
         transform: $trans-val-1;
       }

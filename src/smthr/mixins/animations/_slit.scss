@@ -89,13 +89,17 @@
       $trans-val-3: translateZ(0) rotateY(0);
     } @else if
       $axis ==
-      'diagonal' or
+      'diagonal-1' or
       $axis ==
       'diagonal1' or
       $axis ==
-      'diag' or
+      'diagonal' or
+      $axis ==
+      'diag-1' or
       $axis ==
       'diag1' or
+      $axis ==
+      'diag' or
       $axis ==
       'd' or
       $axis ==
@@ -105,7 +109,7 @@
       $trans-val-2: translateZ(-160px) rotate3d(1, 1, 0, 87deg);
       $trans-val-3: translateZ(0) rotate3d(1, 1, 0, 0);
       $is-diagonal: true;
-    } @else if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
+    } @else if $axis == 'diagonal2' or $axis == 'diagonal-2' or $axis == 'diag2' or $axis=='diag-2' or $axis == 'd-2' or $axis == 'd2' {
       $trans-val-1: translateZ(-800px) rotate3d(-1, 1, 0, -90deg);
       $trans-val-2: translateZ(-160px) rotate3d(-1, 1, 0, -87deg);
       $trans-val-3: translateZ(0) rotate3d(-1, 1, 0, 0);

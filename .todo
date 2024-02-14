@@ -15,7 +15,7 @@ TODO:
         ✔ Testing complete through animations/bounciness @done(24-02-12 17:30)
         ✔ Testing complete through animations/pan-wipe @done(24-02-12 23:56)
         ✔ Ceck Puff against version in Manley workspace, especially the blur filter part @started(24-02-13 15:18) @done(24-02-13 17:05) @lasted(1h47m57s)
-        ☐ Add anim-suffix to flip.
+        ✔ Add anim-suffix to flip. @done(24-02-13 22:35)
         ☐ Copy it and update values for flip-2
         ☐ Continue testing from flip-2 to snappiness
         ☐ Check values against animations on https://animista.net/
@@ -34,8 +34,7 @@ TODO:
   Animations Mixins:
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
     ✔ Add custom timing functions from https://animista.net/ to a timing functions map variable. @done(24-02-13 20:43)
-      ☐ Create a function to call these timing functions easily.
-    ☐ Find ones I haven't done yet and complete one
+      ✔ Create a function to call these timing functions easily. @done(24-02-13 22:12)
     ☐ Add all animations from
         ☐ https://animista.net/
         ☐ https://animate.style/

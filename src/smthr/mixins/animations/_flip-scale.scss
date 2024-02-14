@@ -51,6 +51,7 @@
   $flip-val2: rotateX(-90deg);
   $scale-val3: scale(1);
   $flip-val3: rotateX(-180deg);
+  $anim-suffix: '';
 
   @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
@@ -93,13 +94,17 @@
       $flip-val3: rotateY(180deg);
     } @else if
       $axis ==
-      'diagonal' or
+      'diagonal-1' or
       $axis ==
       'diagonal1' or
       $axis ==
-      'diag' or
+      'diagonal' or
+      $axis ==
+      'diag-1' or
       $axis ==
       'diag1' or
+      $axis ==
+      'diag' or
       $axis ==
       'd' or
       $axis ==
@@ -108,7 +113,7 @@
       $flip-val1: rotate3d(1, 1, 0, 0);
       $flip-val2: rotate3d(1, 1, 0, 90deg);
       $flip-val3: rotate3d(1, 1, 0, 180deg);
-    } @else if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
+    } @else if $axis == 'diagonal2' or $axis == 'diagonal-2' or $axis == 'diag2' or $axis=='diag-2' or $axis == 'd-2' or $axis == 'd2' {
       $flip-val1: rotate3d(-1, 1, 0, 0);
       $flip-val2: rotate3d(-1, 1, 0, 90deg);
       $flip-val3: rotate3d(-1, 1, 0, 180deg);
@@ -160,13 +165,17 @@
       $flip-val3: rotateY(-180deg);
     } @else if
       $axis ==
-      'diagonal' or
+      'diagonal-1' or
       $axis ==
       'diagonal1' or
       $axis ==
-      'diag' or
+      'diagonal' or
+      $axis ==
+      'diag-1' or
       $axis ==
       'diag1' or
+      $axis ==
+      'diag' or
       $axis ==
       'd' or
       $axis ==
@@ -175,7 +184,7 @@
       $flip-val1: rotate3d(1, 1, 0, 0);
       $flip-val2: rotate3d(1, 1, 0, -90deg);
       $flip-val3: rotate3d(1, 1, 0, -180deg);
-    } @else if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
+    } @else if $axis == 'diagonal2' or $axis == 'diagonal-2' or $axis == 'diag2' or $axis=='diag-2' or $axis == 'd-2' or $axis == 'd2' {
       $flip-val1: rotate3d(-1, 1, 0, 0);
       $flip-val2: rotate3d(-1, 1, 0, -90deg);
       $flip-val3: rotate3d(-1, 1, 0, -180deg);

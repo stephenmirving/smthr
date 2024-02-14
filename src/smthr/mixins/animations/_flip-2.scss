@@ -37,7 +37,7 @@
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
-@mixin flip(
+@mixin flip-2(
   $direction: 'top',
   $axis: 'horizontal',
   $timing: 0.5s,
@@ -224,20 +224,24 @@
       $axis: 'vertical';
     } @else if
       $axis ==
-      'diagonal' or
+      'diagonal-1' or
       $axis ==
       'diagonal1' or
       $axis ==
-      'diag' or
+      'diagonal' or
+      $axis ==
+      'diag-1' or
       $axis ==
       'diag1' or
+      $axis ==
+      'diag' or
       $axis ==
       'd' or
       $axis ==
       'd1'
     {
       $axis: 'diagonal1';
-    } @else if $axis == 'diagonal2' or $axis == 'diag2' or $axis == 'd2' {
+    } @else if $axis == 'diagonal2' or $axis == 'diagonal-2' or $axis == 'diag2' or $axis=='diag-2' or $axis == 'd-2' or $axis == 'd2' {
       $axis: 'diagonal2';
     } @else {
       @error 'Invalid axis of [ #{meta.inspect($axis)} ] chosen for the [ flip ] mixin.';

@@ -531,7 +531,7 @@
     "scss/at-import-partial-extension": "never",
     "scss/at-mixin-argumentless-call-parentheses": "never",
     "scss/at-mixin-parentheses-space-before": "never",
-    "scss/at-mixin-pattern": "^_?[a-z]+(?:-[a-z]+)*$",
+    "scss/at-mixin-pattern": "^_?[a-z]+(?:-{1,2}[a-z]+)*(?:-[1-9]\\d*)?(?:-{1,2}[a-z]+)*(?:-[1-9]\\d*)?$",
     "scss/at-rule-no-unknown": [
       true,
       {

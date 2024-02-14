@@ -30,13 +30,14 @@
 
 .card {
   @include size(200px);
+
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
   position: relative;
 }
 
 .active-anim {
-  @include flip(back, diagonal);
+  @include flip(front, diagonal);
 }
 
 .front {
@@ -63,8 +64,14 @@
   text-align: center;
 }
 
-// .txt {
-//   display: inline;
-//   font-size: 3em;
-//   text-align: center;
-// }
+.txt {
+  display: inline;
+  font-size: 3em;
+  text-align: center;
+}
+
+.test {
+  $test: 'btmleft';
+
+  content: resolve-alias($test);
+}

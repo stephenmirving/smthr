@@ -38,19 +38,19 @@
 .active-anim {
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: flip 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+  animation: flip-diagonally-forwards 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 }
 @-moz-document url-prefix() {
   .active-anim {
     backface-visibility: hidden;
   }
 }
-@keyframes flip {
+@keyframes flip-diagonally-forwards {
   0% {
     transform: translateZ(0) rotate3d(1, 1, 0, 0);
   }
   100% {
-    transform: translateZ(-260px) rotate3d(1, 1, 0, -180deg);
+    transform: translateZ(160px) rotate3d(1, 1, 0, 180deg);
   }
 }
 
@@ -85,4 +85,14 @@
   border-radius: 10px;
   background: #53a3dc padding-box;
   text-align: center;
+}
+
+.txt {
+  display: inline;
+  font-size: 3em;
+  text-align: center;
+}
+
+.test {
+  content: "bottom-left";
 }

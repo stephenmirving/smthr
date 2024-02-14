@@ -11,11 +11,14 @@
 ///
 /// @return {Function} The cubic-bezier curve
 ///
+/// @example animation: fade-in 2s timing(ease-in-quad) 50ms both
+///
+/// @require $map-timing-functions
 /// @throw Invalid $func-name type error.
 /// @throw Invalid $alias-map type error.
 /// @throw Function name not found in alias map error.
 @function timing($func-name, $alias-map: $map-timing-functions) {
-   @if meta.type-of($func-name) != 'string' {
+  @if meta.type-of($func-name) != 'string' {
     @error 'Invalid data type of [ #{meta.type-of($func-name)} ] for $func-name ' +
         'passed to the [ timing() ] function. The data type of $func-name must ' +
         'be a string.';
