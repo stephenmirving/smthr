@@ -36,23 +36,17 @@
 }
 
 .active-anim {
-  transform: translate3d(0, 0, 0);
-  transform-style: preserve-3d;
-  animation: rotate-around-top-horizontally 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: txt-blur-out-expand-backwards 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
-@-moz-document url-prefix() {
-  .active-anim {
-    backface-visibility: hidden;
-  }
-}
-@keyframes rotate-around-top-horizontally {
+@keyframes txt-blur-out-expand-backwards {
   0% {
-    transform: rotateX(0);
-    transform-origin: 50% 0%;
+    filter: blur(0.01px);
+    transform: translateZ(0);
   }
   100% {
-    transform: rotateX(-360deg);
-    transform-origin: 50% 0%;
+    filter: blur(12px) opacity(0);
+    letter-spacing: -0.5em;
+    transform: translateZ(-500px);
   }
 }
 

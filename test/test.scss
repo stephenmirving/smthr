@@ -37,7 +37,7 @@
 }
 
 .active-anim {
-  @include rotate('top', $axis: 'horizontal');
+  @include text-blur-out('backwards');
 }
 
 .front {
@@ -68,4 +68,7 @@
   display: inline;
   font-size: 3em;
   text-align: center;
+}
+
+.front .txt {
 }

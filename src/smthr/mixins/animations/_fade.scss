@@ -12,7 +12,7 @@
 /// fade `in` (or true, `i`) our `out` (or false, `o`).
 /// @param {String} $direction [null] - Will optionally either fade in from
 /// this direction or fade out towards this direction, depending on $in-or-out.
-/// @param {Time} $timing [null] - The duration of the animation (s or ms).
+/// @param {Time} $duration [null] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite.
@@ -31,14 +31,14 @@
 /// @require {Function} is-alias
 ///
 /// @throw Invalid $in-or-out value
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin fade(
   $in-or-out: in,
   $direction: null,
-  $timing: null,
+  $duration: null,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -158,26 +158,26 @@
     $trans-val-2: $temp-val;
   }
 
-  @if not $timing {
+  @if not $duration {
     @if $in-or-out {
-      $timing: if((not $direction), 1.2s, 0.6s);
+      $duration: if((not $direction), 1.2s, 0.6s);
     } @else {
-      $timing: if((not $direction), 1s, 0.7s);
+      $duration: if((not $direction), 1s, 0.7s);
     }
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '[ fade ] mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '[ fade ] mixin. The timing property must be in either s or ms units.';
-  } @else if math.unit($timing) == 'ms' and $timing % 100 == 0ms {
+  } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
   }
 
   @if not
@@ -272,7 +272,7 @@
     );
   }
 
-  animation: fade#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: fade#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @if $is-fwd-or-bck {

@@ -27,12 +27,12 @@ TODO:
         ✔ Test and update roll @done(24-02-14 13:23)
         ✔ Test and update rotate-scale @done(24-02-14 14:25)
         ✔ Test and update rotate @done(24-02-14 14:35)
-        ☐ Test and update scale-down
-        ☐ Test and update scale-up
-        ☐ Test and update slide
-        ☐ Test and update slit
-        ☐ Test and update snappiness
-        ☐ Test and update text-blur-out
+        ✔ Test and update scale-down @done(24-02-14 14:59)
+        ✔ Test and update scale-up @done(24-02-14 15:08)
+        ✔ Test and update slide @done(24-02-14 15:10)
+        ✔ Test and update slit @done(24-02-14 15:33)
+        ✔ Test and update snappiness @done(24-02-14 16:13)
+        ✔ Test and update text-blur-out @done(24-02-14 16:45)
         ☐ Test and update text-drop-shadow
         ☐ Test and update text-flicker
         ☐ Test and update text-focus-in

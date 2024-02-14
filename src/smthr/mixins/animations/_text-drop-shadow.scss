@@ -7,7 +7,7 @@
 /// Adds a shadow dropping animation to a given element's text
 ///
 /// @param {String} $direction [center] - The direction the shadow will fall.
-/// @param {Time} $timing [0.7s] The duration of the animation (s or ms).
+/// @param {Time} $duration [0.7s] The duration of the animation (s or ms).
 /// @param {Time} $delay [null] The duration of the optional animation delay.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
@@ -18,11 +18,11 @@
 /// @require {Function} is-alias
 ///
 /// @throw Invalid $direction value
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 @mixin text-drop-shadow(
   $direction: center,
-  $timing: 0.7s,
+  $duration: 0.7s,
   $delay: null,
   $anim-num: null
 ) {
@@ -72,23 +72,23 @@
         '`drop-text-shadow` mixin.';
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '`text-drop-shadow` mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '`text-drop-shadow` mixin. The timing property must be in either ' +
         's (seconds) or ms (milliseconds) units.';
-  } @else if $timing % 10 == 0ms {
+  } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if string.slice($timing + '', 1, 2) == '0.' {
-      $timing: string.unquote(string.slice($timing + '', 2));
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: string.unquote(string.slice($duration + '', 2));
     }
   }
 
@@ -125,7 +125,7 @@
   }
 
   text-transform: none;
-  animation: txt-shadow-drop#{$anim-num} #{$timing} #{$delay} both;
+  animation: txt-shadow-drop#{$anim-num} #{$duration} #{$delay} both;
 
   @at-root {
     @keyframes txt-shadow-drop#{$anim-num} {

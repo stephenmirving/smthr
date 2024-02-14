@@ -10,7 +10,7 @@
 /// generated. Takes 'top`, `t`, or `up` for the top, `left` or `l` for `left`,
 /// `right` or `r` for right, and either `bottom`, `b`, `down`, or `d` for the
 /// bottom.
-/// @param {Time} $timing [0.8s] - The full duration of the animation
+/// @param {Time} $duration [0.8s] - The full duration of the animation
 /// @param {Time} $delay [null] - A time value either in milliseconds (ms) or
 /// seconds (s)
 /// @param {Number|String} $iterations [null] - The number of iterations
@@ -30,12 +30,12 @@
 /// @alias {Function} is-alias
 ///
 /// @throw Incorrect keyword value for $direction
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @alias wobble
 @mixin wobbliness(
   $direction: bottom,
-  $timing: 0.8s,
+  $duration: 0.8s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -109,23 +109,23 @@
       '`wobbliness` mixin.';
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '`wobbliness` mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '`wobbliness` mixin. The timing property must be in either ' +
         's (seconds) or ms (milliseconds) units.';
-  } @else if $timing % 10 == 0ms {
+  } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if string.slice($timing + '', 1, 2) == '0.' {
-      $timing: string.unquote(string.slice($timing + '', 2));
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: string.unquote(string.slice($duration + '', 2));
     }
   }
 
@@ -183,24 +183,7 @@
     $iterations: null;
   }
 
-  @if not $anim-dir or
-      $anim-dir ==
-      'none' or
-      $anim-dir ==
-      'no' or
-      $anim-dir ==
-      'n/a' or
-      $anim-dir ==
-      'n' or
-      $anim-dir ==
-      'default' or
-      $anim-dir ==
-      'def' or
-      $anim-dir ==
-      'normal' or
-      $anim-dir ==
-      'nor'
-  {
+  @if not $anim-dir or is-alias('none', $anim-dir) or is-alias('normal', $anim-dir) {
     $anim-dir: null;
   } @else if is-alias('reverse' $anim-dir) {
     $anim-drection: reverse;
@@ -213,23 +196,7 @@
         'for the wobbliness` mixin';
   }
 
-  @if not
-    $timing-func or
-    $timing-func ==
-    'none' or
-    $timing-func ==
-    'no' or
-    $timing-func ==
-    'n' or
-    $timing-func ==
-    'def' or
-    $timing-func ==
-    'default' or
-    $timing-func ==
-    'd' or
-    $timing-func ==
-    'ease'
-  {
+  @if not $timing-func or $timing-func == 'ease' or is-alias('none', $timing-func) or is-alias('normal', $timing-func)  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: null;
@@ -241,7 +208,7 @@
     $anim-num: '-#{$anim-num}';
   }
 
-  animation: wobble#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: wobble#{$anim-num} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
@@ -281,7 +248,7 @@
 /// generated. Takes 'top`, `t`, or `up` for the top, `left` or `l` for `left`,
 /// `right` or `r` for right, and either `bottom`, `b`, `down`, or `d` for the
 /// bottom.
-/// @param {Time} $timing [0.8s] - The full duration of the animation
+/// @param {Time} $duration [0.8s] - The full duration of the animation
 /// @param {Time} $delay [null] - A time value either in milliseconds (ms) or
 /// seconds (s)
 /// @param {Number|String} $iterations [null] - The number of iterations
@@ -301,12 +268,12 @@
 /// @alias {Function} is-alias
 ///
 /// @throw Incorrect keyword value for $direction
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @alias wobbliness
 @mixin wobble(
   $direction: bottom,
-  $timing: 0.8s,
+  $duration: 0.8s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -315,7 +282,7 @@
 ) {
   @include wobbliness(
     $direction,
-    $timing,
+    $duration,
     $delay,
     $iterations,
     $anim-dir,

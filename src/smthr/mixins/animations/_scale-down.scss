@@ -8,7 +8,7 @@
 ///
 /// @param {String} $direction [top] - The direction the element will appear
 /// to be scaling down from.
-/// @param {Time} $timing [0.4s] - The duration of the animation (s or ms).
+/// @param {Time} $duration [0.4s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally start along an
 /// axis line. This value can be null (or false, `no`, `n`), `horizontal` (or
@@ -35,12 +35,12 @@
 ///
 /// @throw Invalid $direction value
 /// @throw Invalid $axis value
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $anim-dir value
 @mixin scale-down(
   $direction: 'center',
-  $timing: 0.4s,
+  $duration: 0.4s,
   $delay: null,
   $axis: null,
   $iterations: null,
@@ -74,115 +74,37 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $direction == 'top' or $direction == 't' {
+  @if is-alias('top', $direction) {
     $trans-origin-val: 50% 0%;
     $direction: 'top';
-  } @else if
-    $direction ==
-    'top-right' or
-    $direction ==
-    'topright' or
-    $direction ==
-    'right-top' or
-    $direction ==
-    'righttop' or
-    $direction ==
-    't-r' or
-    $direction ==
-    'tr' or
-    $direction ==
-    'r-t' or
-    $direction ==
-    'rt'
-  {
+  } @else if is-alias('top-right', $direction) {
     $trans-origin-val: 100% 0;
     $direction: 'top-right';
   } @else if is-alias('right', $direction) {
     $trans-origin-val: 100% 50%;
     $direction: 'right';
-  } @else if
-    $direction ==
-    'bottom-right' or
-    $direction ==
-    'bottomright' or
-    $direction ==
-    'right-bottom' or
-    $direction ==
-    'rightbottom' or
-    $direction ==
-    'b-r' or
-    $direction ==
-    'br' or
-    $direction ==
-    'r-b' or
-    $direction ==
-    'r-b'
-  {
-    $transform-origin-val: 100% 100%;
+  } @else if is-alias('bottom-right', $direction) {
+    $trans-origin-val: 100% 100%;
     $direction: 'bottom-right';
-  } @else if $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
-  {
-    $transform-origin-val: 50% 100%;
+  } @else if is-alias('bottom', $direction) {
+    $trans-origin-val: 50% 100%;
     $direction: 'bottom';
-  } @else if
-    $direction ==
-    'bottom-left' or
-    $direction ==
-    'bottomleft' or
-    $direction ==
-    'left-bottom' or
-    $direction ==
-    'leftbottom' or
-    $direction ==
-    'b-l' or
-    $direction ==
-    'bl' or
-    $direction ==
-    'l-b' or
-    $direction ==
-    'lb'
-  {
-    $transform-origin-val: 0% 100%;
+  } @else if is-alias('bottom-left', $direction) {
+    $trans-origin-val: 0% 100%;
     $direction: 'bottom-left';
   } @else if is-alias('left', $direction) {
-    $transform-origin-val: 0% 50%;
+    $trans-origin-val: 0% 50%;
     $direction: 'left';
-  } @else if
-    $direction ==
-    'top-left' or
-    $direction ==
-    'topleft' or
-    $direction ==
-    'left-top' or
-    $direction ==
-    'lefttop' or
-    $direction ==
-    't-l' or
-    $direction ==
-    'tl' or
-    $direction ==
-    'l-t' or
-    $direction ==
-    'lt'
-  {
-    $transform-origin-val: 0% 0%;
+  } @else if is-alias('top-left', $direction) {
+    $trans-origin-val: 0% 0%;
     $direction: 'top-left';
-  } @else if
-    $direction ==
-    'center' or
-    $direction ==
-    'centre' or
-    $direction ==
-    'cent' or
-    $direction ==
-    'cen' or
-    $direction ==
-    'c'
-  {
+  } @else if is-alias('center', $direction) {
     $direction: 'center';
   } @else {
-    @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
-        '`scale-down` mixin.';
+    @error 'Invalid $direction value of `#{meta.inspect($direction)}` for the ' +
+        '[ scale-down() ] mixin. The value of $direction must be one of the ' +
+        'following: `top`, `top-right`, `right`, `bottom-right`, `bottom`' +
+        '`bottom-left`, `left`, `top-left`, or `center`.';
   }
 
   @if $axis and not is-alias('none', $axis) {
@@ -200,25 +122,14 @@
       {
         @error 'You have chosen an axis value of `vertical` that cannot be ' +
             'used with the direction value of `#{meta.inspect($direction)}` ' +
-            'for the `scale-down` mixin. A vertical axis must have direction ' +
+            'for the [ scale-down() ] mixin. A vertical axis must have direction ' +
             'value of either `top`, `bottom`, or `center`.';
       } @else if $direction == 'top' {
         $trans-origin-val: 100% 0%;
       } @else if $direction == 'bottom' {
         $trans-origin-val: 0% 100%;
       }
-    } @else if
-      (
-        $axis ==
-          'horizontal' or
-          $axis ==
-          'horz' or
-          $axis ==
-          'hor' or
-          $axis ==
-          'h'
-      )
-    {
+    } @else if is-alias('left-to-right', $axis) {
       $trans-val-1: scaleX(1);
       $trans-val-2: scaleX(0.3);
       $anim-suffix: '-horizontally-to';
@@ -232,7 +143,7 @@
       {
         @error 'You have chosen an axis value of `horizontal` that cannot be ' +
             'used with the direction value of `#{meta.inspect($direction)}` for the ' +
-            '`scale-down` mixin. A horizontal axis must have direction value of ' +
+            '[ scale-down() ] mixin. A horizontal axis must have direction value of ' +
             'either `left`, `right`, or `center`.';
       } @else if $direction == 'left' {
         $trans-origin-val: 0% 0%;
@@ -240,26 +151,27 @@
         $trans-origin-val: 100% 100%;
       }
     } @else {
-      @error 'Invalid $axis value of `#{meta.inspect($axis)} for the `scale-down` mixin.';
+      @error 'Invalid $axis value of `#{meta.inspect($axis)} for the ' +
+          '[ scale-down() ] mixin.';
     }
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the `scale-down` ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the [ scale-down() ] ' +
         'mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the `scale-down` ' +
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the [ scale-down() ] ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if math.unit($timing) == 'ms' and $timing % 50 == 0ms {
+  } @else if math.unit($duration) == 'ms' and $duration % 50 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if string.slice($timing + '', 1, 2) == '0.' {
-      $timing: string.unquote(string.slice($timing + '', 2));
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: string.unquote(string.slice($duration + '', 2));
     }
   }
 
@@ -275,14 +187,15 @@
   {
     $delay: null;
   }
+
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `scale-down` ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ scale-down() ] ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `scale-down` ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ scale-down() ] ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if math.unit($delay) == 'ms' and $delay % 50 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -300,23 +213,18 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (
-        (
-            math.is-unitless($iterations) and
-              meta.type-of($iterations) ==
-              'number'
-          ) or
-          $iterations ==
-          initial or
-          $iterations ==
-          inherit
-      )
+    } @else if (
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
-          '`scale-down` mixin.';
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ scale-down() ] mixin.';
     }
   } @else {
     $iterations: null;
@@ -336,7 +244,7 @@
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
-        ' for the `scale-down` mixin';
+        ' for the [ scale-down() ] mixin';
   }
 
   @if not
@@ -365,13 +273,14 @@
     );
   }
 
-  animation: scale-down#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: scale-down#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
     @keyframes scale-down#{$anim-suffix} {
       0% {
         transform: $trans-val-1;
+
         @if $direction != 'center' {
           transform-origin: $trans-origin-val;
         }
@@ -379,6 +288,7 @@
 
       100% {
         transform: $trans-val-2;
+
         @if $direction != 'center' {
           transform-origin: $trans-origin-val;
         }

@@ -9,7 +9,7 @@
 /// @param {String} $direction [top] - The direction the shadow will be
 /// facing. Recommended to use this mixin with the animation-stage mixin or just
 /// the perspective property on the parent element.
-/// @param {Time} $timing [0.6s] - The duration of the animation (s or ms).
+/// @param {Time} $duration [0.6s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -29,12 +29,12 @@
 /// @require {Function} is-alias
 ///
 /// @throw Invalid $direction value
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $anim-dir value
 @mixin text-pop-shadow(
   $direction: 'bottom-left',
-  $timing: 0.7s,
+  $duration: 0.7s,
   $color: #555,
   $delay: null,
   $iterations: null,
@@ -120,24 +120,7 @@
       6px 0 $color,
       7px 0 $color,
       8px 0 $color;
-  } @else if
-    $direction ==
-    'bottom-right' or
-    $direction ==
-    'bottomright' or
-    $direction ==
-    'right-bottom' or
-    $direction ==
-    'rightbottom' or
-    $direction ==
-    'b-r' or
-    $direction ==
-    'br' or
-    $direction ==
-    'r-b' or
-    $direction ==
-    'r-b'
-  {
+  } @else if is-alias('bottom-right', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(-8px) translateY(-8px);
     $shadow-val:
@@ -149,8 +132,7 @@
       6px 6px $color,
       7px 7px $color,
       8px 8px $color;
-  } @else if $direction == 'bottom' or $direction == 'btm' or $direction == 'b'
-  {
+  } @else if is-alias('bottom', $direction) {
     $trans-val-2: translateY(-8px);
     $shadow-val:
       0 1px $color,
@@ -161,24 +143,7 @@
       0 6px $color,
       0 7px $color,
       0 8px $color;
-  } @else if
-    $direction ==
-    'bottom-left' or
-    $direction ==
-    'bottomleft' or
-    $direction ==
-    'left-bottom' or
-    $direction ==
-    'leftbottom' or
-    $direction ==
-    'b-l' or
-    $direction ==
-    'bl' or
-    $direction ==
-    'l-b' or
-    $direction ==
-    'lb'
-  {
+  } @else if is-alias('bottom-left', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(8px) translateY(-8px);
     $shadow-val:
@@ -202,24 +167,7 @@
       -6px 0 $color,
       -7px 0 $color,
       -8px 0 $color;
-  } @else if
-    $direction ==
-    'top-left' or
-    $direction ==
-    'topleft' or
-    $direction ==
-    'left-top' or
-    $direction ==
-    'lefttop' or
-    $direction ==
-    't-l' or
-    $direction ==
-    'tl' or
-    $direction ==
-    'l-t' or
-    $direction ==
-    'lt'
-  {
+  } @else if is-alias('top-left', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(8px) translateY(8px);
     $shadow-val:
@@ -236,22 +184,22 @@
         '`text-pop-shadow` mixin.';
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the `text-pop-shadow` ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the `text-pop-shadow` ' +
         'mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the `text-pop-shadow` ' +
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the `text-pop-shadow` ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if $timing % 10 == 0ms {
+  } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if string.slice($timing + '', 1, 2) == '0.' {
-      $timing: string.unquote(string.slice($timing + '', 2));
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: string.unquote(string.slice($duration + '', 2));
     }
   }
 
@@ -334,23 +282,7 @@
         '`text-pop-shadow` mixin';
   }
 
-  @if not
-    $timing-func or
-    $timing-func ==
-    'none' or
-    $timing-func ==
-    'no' or
-    $timing-func ==
-    'n' or
-    $timing-func ==
-    'def' or
-    $timing-func ==
-    'default' or
-    $timing-func ==
-    'd' or
-    $timing-func ==
-    'ease'
-  {
+  @if not $timing-func or $timing-func == 'ease' or is-alias('none', $timing-func) or is-alias('normal', $timing-func)  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: null;
@@ -362,7 +294,7 @@
     $anim-num: '-#{$anim-num}';
   }
 
-  animation: txt-pop-shadow#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: txt-pop-shadow#{$anim-num} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {

@@ -10,7 +10,7 @@
 /// `in` (or `i`, null, `none`, `no`, `n` `default`, or `def`), `expand`
 /// (or `exp`, or 'e'), `forward` (or `fwd` or `f`), `contract` (or `cont` or
 /// `c`), or `backward` (or `back`, `bck`, or `b`).
-/// @param {Time} $timing [0.9s] - The duration of the animation (s or ms).
+/// @param {Time} $duration [0.9s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -30,12 +30,12 @@
 /// @require {Function} is-alias
 ///
 /// @throw Invalid $style value
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $anim-dir value
 @mixin text-focus-in(
   $style: in,
-  $timing: 0.9s,
+  $duration: 0.9s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -80,23 +80,23 @@
     }
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '[ text-focus-in() ] mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '[ text-focus-in() ] mixin. The timing property must be in either ' +
         's or ms units.';
-  } @else if $timing % 10 == 0ms {
+  } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if string.slice($timing + '', 1, 2) == '0.' {
-      $timing: string.unquote(string.slice($timing + '', 2));
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: string.unquote(string.slice($duration + '', 2));
     }
   }
 
@@ -199,7 +199,7 @@
     transform-style: preserve-3d;
   }
 
-  animation: txt-focus-in#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: txt-focus-in#{$anim-num} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {

@@ -14,7 +14,7 @@
 ///
 /// @param {String} $direction [top] - The direction the animation appears to
 /// be fliping from. Can be either 'top', 'bottom', 'right', or 'left'.
-/// @param {Time} $timing [0.5s] - The duration of the animation (s or ms)
+/// @param {Time} $duration [0.5s] - The duration of the animation (s or ms)
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -34,14 +34,14 @@
 /// @require {Mixin} only-moz
 ///
 /// @throw Invalid $direction value
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin flip-scale-2(
   $direction: top,
   $axis: horizontal,
-  $timing: 0.5s,
+  $duration: 0.5s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -94,22 +94,22 @@
         '[ flip-scale-2() ] mixin';
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the [ flip-scale-2() ] ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the [ flip-scale-2() ] ' +
         'mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the [ flip-scale-2() ] ' +
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the [ flip-scale-2() ] ' +
         'mixin. The timing property must be in either s or ms units.';
-  } @else if $timing % 10 == 0ms {
+  } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if string.slice($timing + '', 1, 2) == '0.' {
-      $timing: string.unquote(string.slice($timing + '', 2));
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: string.unquote(string.slice($duration + '', 2));
     }
   }
 
@@ -198,7 +198,7 @@
 
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: flip-scale-2#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: flip-scale-2#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @include only-moz {

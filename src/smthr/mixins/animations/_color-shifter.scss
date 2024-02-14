@@ -8,7 +8,7 @@
 ///
 /// @param {List} $colors [()] - A list of colors that the animation will shift
 /// between, one into the next.
-/// @param {String|Number} $timing [null] - The amount of time it takes the
+/// @param {String|Number} $duration [null] - The amount of time it takes the
 /// animation to shift from one color into the next one. This value must be in
 /// either milliseconds (ms) or seconds (s). If a only a unit-less number is
 /// passed, it will be assumed that the value is in seconds. When no argument is
@@ -39,7 +39,7 @@
 /// @throw Invalid $bg-or-fg value.
 @mixin color-shifter(
   $colors: (),
-  $timing: null,
+  $duration: null,
   $delay: null,
   $infinite: false,
   $alternate: null,
@@ -79,30 +79,30 @@
     $last-interval: $current-interval;
   }
 
-  // If no argument passed to $timing, create the default timing of 2s per color
-  @if not $timing {
-    $timing: list.length($colors) * 2s;
+  // If no argument passed to $duration, create the default timing of 2s per color
+  @if not $duration {
+    $duration: list.length($colors) * 2s;
   } @else {
-    @if meta.type-of($timing) != 'number' {
-      @error 'Invalid $timing value of `#{$timing}` for the `color-shifter` ' +
+    @if meta.type-of($duration) != 'number' {
+      @error 'Invalid $duration value of `#{$duration}` for the `color-shifter` ' +
           'mixin. The timing property must be a number.';
     }
 
-    $timing: $timing * list.length($colors);
+    $duration: $duration * list.length($colors);
 
-    @if math.is-unitless($timing) {
-      // If no there is no unit for $timing, assume seconds
-      $timing: $timing * 1s;
-    } @else if not list.index('s' 'ms', math.unit($timing)) {
-      @error 'Invalid $timing value of `#{$timing}` for the `color-shifter` ' +
+    @if math.is-unitless($duration) {
+      // If no there is no unit for $duration, assume seconds
+      $duration: $duration * 1s;
+    } @else if not list.index('s' 'ms', math.unit($duration)) {
+      @error 'Invalid $duration value of `#{$duration}` for the `color-shifter` ' +
           'mixin. The timing property must be in either s or ms units.';
-    } @else if $timing % 10 == 0ms {
+    } @else if $duration % 10 == 0ms {
       // If time in ms would be shorter as seconds, convert it
-      $timing: math.div($timing, 1000ms) * 1s;
+      $duration: math.div($duration, 1000ms) * 1s;
 
       // Get rid of possible leading zero in front of decimal place
-      @if string.slice($timing + '', 1, 2) == '0.' {
-        $timing: string.unquote(string.slice($timing + '', 2));
+      @if string.slice($duration + '', 1, 2) == '0.' {
+        $duration: string.unquote(string.slice($duration + '', 2));
       }
     }
   }
@@ -215,7 +215,7 @@
         '`color-shifter` mixin.';
   }
 
-  animation: color-shifter#{$anim-num} #{$timing} #{$timing-func}#{$delay}#{$inf-alt}
+  animation: color-shifter#{$anim-num} #{$duration} #{$timing-func}#{$delay}#{$inf-alt}
     both;
 
   @at-root {

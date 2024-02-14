@@ -17,7 +17,7 @@
 /// be extracting from or contracting towards. Can be `top` (or `t`), `bottom`
 /// (or `btm`, `b`), or null (or false, `default`, `def`, `no`, `n/a`,
 /// `none`, `n`).
-/// @param {Time} $timing [0.9s] - The duration of the animation (s or ms).
+/// @param {Time} $duration [0.9s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -38,14 +38,14 @@
 /// @throw Invalid $expand-contract value
 /// @throw Invalid $direction value
 /// @throw Invalid $origin value
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $anim-dir value
 @mixin text-tracking-out(
   $expand-contract: 'contract',
   $direction: null,
   $origin: null,
-  $timing: 0.8s,
+  $duration: 0.8s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -144,23 +144,23 @@
         '`text-tracking-out` mixin.';
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '`text-tracking-out` mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '`text-tracking-out` mixin. The timing property must be in either ' +
         's (seconds) or ms (milliseconds) units.';
-  } @else if $timing % 10 == 0ms {
+  } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if string.slice($timing + '', 1, 2) == '0.' {
-      $timing: string.unquote(string.slice($timing + '', 2));
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: string.unquote(string.slice($duration + '', 2));
     }
   }
 
@@ -271,7 +271,7 @@
     transform-style: preserve-3d;
   }
 
-  animation: txt-track-out#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: txt-track-out#{$anim-num} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {

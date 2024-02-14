@@ -7,10 +7,9 @@
 /// Animates text from focused in, to blurred out, to invisible
 ///
 /// @param {String} $style [out] - The style of the blur-out effect. Can be
-/// `out` (or `o`, null, `none`, `no`, `n` `default`, or `def`), `expand`
-/// (or `exp`, or 'e'), `forward` (or `fwd` or `f`), `contract` (or `cont` or
-/// `c`), or `backward` (or `back`, `bck`, or `b`).
-/// @param {Time} $timing [1s] - The duration of the animation (s or ms).
+/// `out` (or `none` or `default`), `expand` (or `grow`),
+/// `contract`, (or `shrink`) `forwards`, or `backwards`.
+/// @param {Time} $duration [1s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -27,22 +26,24 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {Function} is-alias]
+/// @require {Function} is-alias
 ///
 /// @throw Invalid $style value
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin text-blur-out(
-  $style: in,
-  $timing: 1s,
+  $style: 'out',
+  $duration: 1s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
   $timing-func: null,
   $anim-num: null
 ) {
+  $anim-suffix: '';
+
   @if $style and meta.type-of($style) == 'string' {
     $style: string.to-lower-case($style);
   }
@@ -60,19 +61,15 @@
   }
 
   @if not $timing-func {
-    @if not $style or
+    @if not
+      $style or
       $style ==
       'expand' or
       $style ==
       'exp' or
       $style ==
       'e' or
-      $style ==
-      'forward' or
-      $style ==
-      'fwd' or
-      $style ==
-      'f'
+      is-alias('forwards', $style)
     {
       $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     } @else {
@@ -80,23 +77,23 @@
     }
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
-        '`text-blur-out` mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
-        '`text-blur-out` mixin. The timing property must be in either ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-blur-out() ] mixin. The timing property must be a number.';
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-blur-out() ] mixin. The timing property must be in either ' +
         's or ms units.';
-  } @else if $timing % 10 == 0ms {
+  } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
 
     // Get rid of possible leading zero in front of decimal place
-    @if string.slice($timing + '', 1, 2) == '0.' {
-      $timing: string.unquote(string.slice($timing + '', 2));
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: string.unquote(string.slice($duration + '', 2));
     }
   }
 
@@ -115,12 +112,12 @@
   @if $delay {
     @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`text-blur-out` mixin. The delay property must be a number.';
+          '[ text-blur-out() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`text-blur-out` mixin. The delay property must be in either ' +
+          '[ text-blur-out() ] mixin. The delay property must be in either ' +
           's or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -150,7 +147,7 @@
       $iterations: $iterations;
     } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for ' +
-          'the `text-blur-out` mixin.';
+          'the [ text-blur-out() ] mixin.';
     }
   } @else {
     $iterations: null;
@@ -170,30 +167,39 @@
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
-        ' for the `text-blur-out` mixin';
+        ' for the [ text-blur-out() ] mixin';
   }
 
-  animation: txt-blur-out#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  @if is-alias('contract', $style) {
+    $anim-suffix: '-contract';
+  } @else if is-alias('expand', $style) {
+    $anim-suffix: '-expand';
+  } @else if is-alias('forwards', $style) {
+    $anim-suffix: '-expand-forwards';
+  } @else if is-alias('backwards', $style) {
+    $anim-suffix: '-expand-backwards';
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  animation: txt-blur-out#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
-    @keyframes txt-blur-out#{$anim-num} {
+    @keyframes txt-blur-out#{$anim-suffix} {
       0% {
         filter: blur(0.01px);
         @if $style ==
-          'backward' or
-          $style ==
-          'bck' or
-          $style ==
-          'back' or
-          $style ==
-          'b' or
-          $style ==
-          'f' or
-          $style ==
-          'fwd' or
-          $style ==
-          'forward'
+          is-alias('forwards', $style) or
+          is-alias('backwards', $style)
         {
           transform: translateZ(0);
         }
@@ -201,23 +207,14 @@
 
       100% {
         filter: blur(12px) opacity(0);
-        @if $style == 'contract' or $style == 'cont' or $style == 'c' {
+        @if is-alias('contract', $style) {
           letter-spacing: -0.5em;
-        } @else if
-          $style ==
-          'backward' or
-          $style ==
-          'bck' or
-          $style ==
-          'back' or
-          $style ==
-          'b'
-        {
+        } @else if is-alias('backwards', $style) {
           letter-spacing: -0.5em;
           transform: translateZ(-500px);
         } @else if $style == 'expand' or $style == 'exp' or $style == 'e' {
           letter-spacing: 1em;
-        } @else if $style == 'forward' or $style == 'fwd' or $style == 'f' {
+        } @else if is-alias('forwards', $style) {
           letter-spacing: 1em;
           transform: translateZ(300px);
         }

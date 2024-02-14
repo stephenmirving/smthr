@@ -13,7 +13,7 @@
 /// direction or roll out towards this direction, depending on the value of
 /// $in-or-out. The value of $direction must be one of the following:
 /// 'top', 'right', 'bottom', 'left'.
-/// @param {Time} $timing [null] - The duration of the animation (s or ms)
+/// @param {Time} $duration [null] - The duration of the animation (s or ms)
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
@@ -33,14 +33,14 @@
 /// @require {Function} is-alias
 ///
 /// @throw Invalid $in-or-out value
-/// @throw Invalid $timing value
+/// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin roll(
   $in-or-out: in,
   $direction: left,
-  $timing: 0.6s,
+  $duration: 0.6s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
@@ -137,18 +137,18 @@
     $trans-val-2: $temp-val;
   }
 
-  @if meta.type-of($timing) != 'number' {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '[ roll() ] mixin. The timing property must be a number.';
-  } @else if math.is-unitless($timing) {
-    // If no there is no unit for $timing, assume seconds
-    $timing: $timing * 1s;
-  } @else if not list.index('s' 'ms', math.unit($timing)) {
-    @error 'Invalid $timing value of `#{$timing}` for the ' +
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, assume seconds
+    $duration: $duration * 1s;
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
         '[ roll() ] mixin. The timing property must be in either s or ms units.';
-  } @else if math.unit($timing) == 'ms' and $timing % 100 == 0ms {
+  } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
     // If time in ms would be shorter as seconds, convert it
-    $timing: math.div($timing, 1000ms) * 1s;
+    $duration: math.div($duration, 1000ms) * 1s;
   }
 
   @if not
@@ -240,7 +240,7 @@
     );
   }
 
-  animation: roll#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: roll#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
