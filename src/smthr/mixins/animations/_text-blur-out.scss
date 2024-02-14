@@ -4,12 +4,12 @@
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
 
-/// Animates text from focused in, to blurred out, to invisible
+/// Animates text from being in focus, to blurred out, to invisible.
 ///
 /// @param {String} $style [out] - The style of the blur-out effect. Can be
 /// `out` (or `none` or `default`), `expand` (or `grow`),
 /// `contract`, (or `shrink`) `forwards`, or `backwards`.
-/// @param {Time} $duration [1s] - The duration of the animation (s or ms).
+/// @param {Time} $duration [1s] - The duration of the animation (in s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
@@ -61,15 +61,7 @@
   }
 
   @if not $timing-func {
-    @if not
-      $style or
-      $style ==
-      'expand' or
-      $style ==
-      'exp' or
-      $style ==
-      'e' or
-      is-alias('forwards', $style)
+    @if not $style or is-alias('expand', $style) or is-alias('forwards', $style)
     {
       $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     } @else {
@@ -93,7 +85,7 @@
 
     // Get rid of possible leading zero in front of decimal place
     @if string.slice($duration + '', 1, 2) == '0.' {
-      $duration: #{string.unquote(string.slice($duration + '', 2))};
+      $duration: #{string.slice($duration + '', 2)};
     }
   }
 
@@ -135,8 +127,7 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (
+    } @else if (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -159,11 +150,11 @@
     is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
-  } @else if is-alias('reverse' $anim-dir) {
+  } @else if is-alias('reverse', $anim-dir) {
     $anim-drection: reverse;
-  } @else if is-alias('alternate' $anim-dir) {
+  } @else if is-alias('alternate', $anim-dir) {
     $anim-dir: alternate;
-  } @else if is-alias('alternate-reverse' $anim-dir) {
+  } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
@@ -171,13 +162,17 @@
   }
 
   @if is-alias('contract', $style) {
+    $style: 'contract';
     $anim-suffix: '-contract';
   } @else if is-alias('expand', $style) {
+    $style: 'expand';
     $anim-suffix: '-expand';
   } @else if is-alias('forwards', $style) {
+    $style: 'forwards';
     $anim-suffix: '-expand-forwards';
   } @else if is-alias('backwards', $style) {
-    $anim-suffix: '-expand-backwards';
+    $style: 'backwards';
+    $anim-suffix: '-contract-backwards';
   }
 
   @if not $anim-num {
@@ -190,31 +185,35 @@
     );
   }
 
-  animation: txt-blur-out#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  @if $style == 'forwards' or $style == 'backwards' {
+    transform: translate3d(0, 0, 0);
+    transform-style: preserve-3d;
+  }
+
+  animation: txt-blur-out#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
 
   @at-root {
     @keyframes txt-blur-out#{$anim-suffix} {
       0% {
         filter: blur(0.01px);
-        @if $style ==
-          is-alias('forwards', $style) or
-          is-alias('backwards', $style)
-        {
+
+        @if $style == 'forwards' or $style == 'backwards' {
           transform: translateZ(0);
         }
       }
 
       100% {
         filter: blur(12px) opacity(0);
-        @if is-alias('contract', $style) {
+
+        @if $style == 'contract' {
           letter-spacing: -0.5em;
-        } @else if is-alias('backwards', $style) {
+        } @else if $style == 'backwards' {
           letter-spacing: -0.5em;
           transform: translateZ(-500px);
-        } @else if $style == 'expand' or $style == 'exp' or $style == 'e' {
+        } @else if $style == 'expand' {
           letter-spacing: 1em;
-        } @else if is-alias('forwards', $style) {
+        } @else if $style == 'forwards' {
           letter-spacing: 1em;
           transform: translateZ(300px);
         }

@@ -7,9 +7,7 @@
 /// Animates text from a blurred to a focused state
 ///
 /// @param {String} $style [in] - The style of the focus-in effect. Can be
-/// `in` (or `i`, null, `none`, `no`, `n` `default`, or `def`), `expand`
-/// (or `exp`, or 'e'), `forward` (or `fwd` or `f`), `contract` (or `cont` or
-/// `c`), or `backward` (or `back`, `bck`, or `b`).
+/// `in` , `expand`, `contract`, `forwards`, or `backwards`.
 /// @param {Time} $duration [0.9s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
@@ -42,6 +40,8 @@
   $timing-func: null,
   $anim-num: null
 ) {
+  $anim-suffix: '';
+
   @if $style and meta.type-of($style) == 'string' {
     $style: string.to-lower-case($style);
   }
@@ -61,18 +61,9 @@
   @if not $timing-func {
     @if not
       $style or
-      $style ==
-      'in' or
-      $style ==
-      'i' or
-      $style ==
-      'default' or
-      $style ==
-      'def' or
-      $style ==
-      'no' or
-      $style ==
-      'none'
+      is-alias('in', $style) or
+      is-alias('normal', $style) or
+      is-alias('none', $style)
     {
       $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53);
     } @else {
@@ -96,7 +87,7 @@
 
     // Get rid of possible leading zero in front of decimal place
     @if string.slice($duration + '', 1, 2) == '0.' {
-      $duration: #{string.unquote(string.slice($duration + '', 2))};
+      $duration: #{string.slice($duration + '', 2)};
     }
   }
 
@@ -138,7 +129,8 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -159,100 +151,70 @@
     is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
-  } @else if is-alias('reverse' $anim-dir) {
+  } @else if is-alias('reverse', $anim-dir) {
     $anim-drection: reverse;
-  } @else if is-alias('alternate' $anim-dir) {
+  } @else if is-alias('alternate', $anim-dir) {
     $anim-dir: alternate;
-  } @else if is-alias('alternate-reverse' $anim-dir) {
+  } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
         ' for the [ text-focus-in() ] mixin';
   }
 
+  @if is-alias('contract', $style) {
+    $style: 'contract';
+    $anim-suffix: '-contract';
+  } @else if is-alias('expand', $style) {
+    $style: 'expand';
+    $anim-suffix: '-expand';
+  } @else if is-alias('forwards', $style) {
+    $style: 'forwards';
+    $anim-suffix: '-expand-forwards';
+  } @else if is-alias('backwards', $style) {
+    $style: 'backwards';
+    $anim-suffix: '-contract-backwards';
+  }
+
   @if not $anim-num {
     $anim-num: null;
   } @else {
-    $anim-num: '-#{$anim-num}';
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
 
-  @if $style ==
-    'forwards' or
-    $style ==
-    'forward' or
-    $style ==
-    'fwd' or
-    $style ==
-    'f' or
-    $style ==
-    'backwards' or
-    $style ==
-    'backward' or
-    $style ==
-    'bck' or
-    $style ==
-    'back' or
-    $style ==
-    'b'
-  {
+  @if is-alias('forwards', $style) or is-alias('backwards', $style) {
     transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
   }
 
-  animation: txt-focus-in#{$anim-num} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  animation: txt-focus-in#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes txt-focus-in#{$anim-num} {
+    @keyframes txt-focus-in#{$anim-suffix} {
       0% {
         opacity: 0;
         filter: blur(12px);
-        @if $style == 'expand' or $style == 'exp' or $style == 'e' {
+
+        @if $style == 'expand' {
           letter-spacing: -0.5em;
-        } @else if
-          $style ==
-          'forwards' or
-          $style ==
-          'forward' or
-          $style ==
-          'fwd' or
-          $style ==
-          'f'
-        {
+        } @else if $style == 'forwards' {
           letter-spacing: -0.5em;
           transform: translateZ(-800px);
-        } @else if $style == 'contract' or $style == 'cont' or $style == 'c' {
+        } @else if $style == 'contract' {
           letter-spacing: 1em;
-        } @else if
-          $style ==
-          'backwards' or
-          $style ==
-          'backward' or
-          $style ==
-          'bck' or
-          $style ==
-          'back' or
-          $style ==
-          'b'
-        {
+        } @else if $style == 'backwards' {
           letter-spacing: 1em;
           transform: translateZ(300px);
         } @else if
-          $style and
-          $style !=
-          'none' and
-          $style !=
-          'no' and
-          $style !=
-          'n' and
-          $style !=
-          'default' and
-          $style !=
-          'def' and
-          $style !=
-          'in' and
-          $style !=
-          'i'
+          $style and not
+          is-alias('none', $style) and not
+          is-alias('normal', $style) and not
+          is-alias('in', $style)
         {
           @error 'Invalid $style value of `#{meta.inspect($style)}` used for ' +
             'the [ text-focus-in() ] mixin';
@@ -262,28 +224,10 @@
       100% {
         opacity: 1;
         filter: blur(0);
-        @if $style ==
-          'forwards' or
-          $style ==
-          'forward' or
-          $style ==
-          'fwd' or
-          $style ==
-          'f'
-        {
+
+        @if $style == 'forwards' {
           transform: translateZ(0);
-        } @else if
-          $style ==
-          'backwards' or
-          $style ==
-          'backward' or
-          $style ==
-          'bck' or
-          $style ==
-          'back' or
-          $style ==
-          'b'
-        {
+        } @else if $style == 'backwards' {
           transform: translateZ(12px);
         }
       }

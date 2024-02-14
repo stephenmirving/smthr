@@ -209,11 +209,11 @@
     is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
-  } @else if is-alias('reverse' $anim-dir) {
+  } @else if is-alias('reverse', $anim-dir) {
     $anim-drection: reverse;
-  } @else if is-alias('alternate' $anim-dir) {
+  } @else if is-alias('alternate', $anim-dir) {
     $anim-dir: alternate;
-  } @else if is-alias('alternate-reverse' $anim-dir) {
+  } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` ' +

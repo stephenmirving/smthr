@@ -7,8 +7,7 @@
 /// Animates text by flickering it into or out of view.
 ///
 /// @param {String|Boolean} $in-or-out [in] - Determines whether the text will
-/// flicker into or out of view. Can either be `in` (or true, `i`), or `out`
-/// (or `o`, false)
+/// flicker into or out of view. Can either be `in` or `out`.
 /// @param {Time} $duration [3s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
@@ -58,7 +57,7 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $in-or-out == 'in' or $in-or-out == 'i' or $in-or-out == true {
+  @if $in-or-out == true or is-alias('in', $in-or-out){
     $in-or-out: true;
     $anim-suffix: '-in';
   } @else if not $in-or-out or is-alias('out', $in-or-out) {
@@ -83,7 +82,7 @@
 
     // Get rid of possible leading zero in front of decimal place
     @if string.slice($duration + '', 1, 2) == '0.' {
-      $duration: #{string.unquote(string.slice($duration + '', 2))};
+      $duration: #{string.slice($duration + '', 2)};
     }
   }
 
@@ -147,11 +146,11 @@
     is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
-  } @else if is-alias('reverse' $anim-dir) {
+  } @else if is-alias('reverse', $anim-dir) {
     $anim-drection: reverse;
-  } @else if is-alias('alternate' $anim-dir) {
+  } @else if is-alias('alternate', $anim-dir) {
     $anim-dir: alternate;
-  } @else if is-alias('alternate-reverse' $anim-dir) {
+  } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +

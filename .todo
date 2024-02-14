@@ -2,41 +2,14 @@ TODO:
 
   TESTING:
     ☐ Test all functions and mixins and placeholders.
-      ✔ Currently tested up to finishing the functions that start with 'g' @done(24-02-11 17:50)
-      ✔ Start testing again with 'is-absolute-length' @done(24-02-11 20:51)
-      ✔ Start testing again with 'linear-interpolation' @done(24-02-11 23:18)
     ☐ Function testing
-      ✔ All other functions completed testing. @done(24-02-12 03:38)
       ☐ Fix functions-walk() and walk() or remove them
       ☐ In the same vein as fixing functions-walk and walk, also need to fix missing-dependences or remove it
       ☐ Determine difference between linear-interpolation and trend-line functions.
     ☐ Mixin Testing
       ☐ Test all Animation mixins
-        ✔ Testing complete through animations/bounciness @done(24-02-12 17:30)
-        ✔ Testing complete through animations/pan-wipe @done(24-02-12 23:56)
-        ✔ Ceck Puff against version in Manley workspace, especially the blur filter part @started(24-02-13 15:18) @done(24-02-13 17:05) @lasted(1h47m57s)
-        ✔ Add anim-suffix to flip. @done(24-02-13 22:35)
-        ✔ Finish flip @done(24-02-13 23:32)
-        ✔ Retest Bounce @done(24-02-14 01:22)
-        ✔ Retest Bounciness @started(24-02-14 01:22) @done(24-02-14 01:50) @lasted(28m39s)
-        ✔ Update and test color-shifter @done(24-02-14 02:14)
-        ✔ Test & update flip-scale-2 @done(24-02-14 02:28)
-        ✔ Test & Update flip-scale @done(24-02-14 02:52)
-        ✔ Test pan-wipe @done(24-02-14 12:41)
-        ✔ Test and update puff @done(24-02-14 13:09)
-        ✔ Test and update roll @done(24-02-14 13:23)
-        ✔ Test and update rotate-scale @done(24-02-14 14:25)
-        ✔ Test and update rotate @done(24-02-14 14:35)
-        ✔ Test and update scale-down @done(24-02-14 14:59)
-        ✔ Test and update scale-up @done(24-02-14 15:08)
-        ✔ Test and update slide @done(24-02-14 15:10)
-        ✔ Test and update slit @done(24-02-14 15:33)
-        ✔ Test and update snappiness @done(24-02-14 16:13)
-        ✔ Test and update text-blur-out @done(24-02-14 16:45)
-        ✔ Test and update text-drop-shadow @done(24-02-14 17:04)
-        ✔ Test and update text-flicker @done(24-02-14 17:15)
-        ☐ Test and update text-focus-in
-        ☐ Test and update text-glitch
+        ✔ Test and update text-focus-in @done(24-02-14 18:00)
+        ✔ Test and update text-glitch @done(24-02-14 18:20)
         ☐ Test and update text-pop-shadow
         ☐ Test and update text-pop-up
         ☐ Test and update text-tracking-in
@@ -44,12 +17,10 @@ TODO:
         ☐ Test and update wobbliness
         ☐ Test and update zoom-in
         ☐ Check values against animations on https://animista.net/
-        ✔ Rotate animation thuroughly tested @done(24-02-13 20:36)
     ☐ Test all Shape mixins
     ☐ Test all Utilities mixins
 
   General Changes:
-    ✔ Color convert's cmyk conversion's backup rgb color is giving wrong output @done(24-02-11 01:17)
     ☐ Parse down all the direction decision trees in the Mixins using the alias resolution map
     ☐ Examine responsive font mixin
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
@@ -58,8 +29,6 @@ TODO:
 
   Animations Mixins:
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
-    ✔ Add custom timing functions from https://animista.net/ to a timing functions map variable. @done(24-02-13 20:43)
-      ✔ Create a function to call these timing functions easily. @done(24-02-13 22:12)
     ☐ Add all animations from
         ☐ https://animista.net/
         ☐ https://animate.style/
@@ -121,6 +90,37 @@ TODO:
 ================================================================================
 
 Archive:
+  ✔ Currently tested up to finishing the functions that start with 'g' @done(24-02-11 17:50) @project(TODO.TESTING)
+  ✔ Start testing again with 'is-absolute-length' @done(24-02-11 20:51) @project(TODO.TESTING)
+  ✔ Start testing again with 'linear-interpolation' @done(24-02-11 23:18) @project(TODO.TESTING)
+  ✔ All other functions completed testing. @done(24-02-12 03:38) @project(TODO.TESTING)
+  ✔ Testing complete through animations/bounciness @done(24-02-12 17:30) @project(TODO.TESTING)
+  ✔ Testing complete through animations/pan-wipe @done(24-02-12 23:56) @project(TODO.TESTING)
+  ✔ Ceck Puff against version in Manley workspace, especially the blur filter part @started(24-02-13 15:18) @done(24-02-13 17:05) @lasted(1h47m57s) @project(TODO.TESTING)
+  ✔ Add anim-suffix to flip. @done(24-02-13 22:35) @project(TODO.TESTING)
+  ✔ Finish flip @done(24-02-13 23:32) @project(TODO.TESTING)
+  ✔ Retest Bounce @done(24-02-14 01:22) @project(TODO.TESTING)
+  ✔ Retest Bounciness @started(24-02-14 01:22) @done(24-02-14 01:50) @lasted(28m39s) @project(TODO.TESTING)
+  ✔ Update and test color-shifter @done(24-02-14 02:14) @project(TODO.TESTING)
+  ✔ Test & update flip-scale-2 @done(24-02-14 02:28) @project(TODO.TESTING)
+  ✔ Test & Update flip-scale @done(24-02-14 02:52) @project(TODO.TESTING)
+  ✔ Test pan-wipe @done(24-02-14 12:41) @project(TODO.TESTING)
+  ✔ Test and update puff @done(24-02-14 13:09) @project(TODO.TESTING)
+  ✔ Test and update roll @done(24-02-14 13:23) @project(TODO.TESTING)
+  ✔ Test and update rotate-scale @done(24-02-14 14:25) @project(TODO.TESTING)
+  ✔ Test and update rotate @done(24-02-14 14:35) @project(TODO.TESTING)
+  ✔ Test and update scale-down @done(24-02-14 14:59) @project(TODO.TESTING)
+  ✔ Test and update scale-up @done(24-02-14 15:08) @project(TODO.TESTING)
+  ✔ Test and update slide @done(24-02-14 15:10) @project(TODO.TESTING)
+  ✔ Test and update slit @done(24-02-14 15:33) @project(TODO.TESTING)
+  ✔ Test and update snappiness @done(24-02-14 16:13) @project(TODO.TESTING)
+  ✔ Test and update text-blur-out @done(24-02-14 16:45) @project(TODO.TESTING)
+  ✔ Test and update text-drop-shadow @done(24-02-14 17:04) @project(TODO.TESTING)
+  ✔ Test and update text-flicker @done(24-02-14 17:15) @project(TODO.TESTING)
+  ✔ Rotate animation thuroughly tested @done(24-02-13 20:36) @project(TODO.TESTING)
+  ✔ Color convert's cmyk conversion's backup rgb color is giving wrong output @done(24-02-11 01:17) @project(TODO.General Changes)
+  ✔ Add custom timing functions from https://animista.net/ to a timing functions map variable. @done(24-02-13 20:43) @project(TODO.Animations Mixins)
+  ✔ Create a function to call these timing functions easily. @done(24-02-13 22:12) @project(TODO.Animations Mixins)
   ✔ Modernize betterize.scss @done(24-02-10 14:55) @project(TODO.General Changes)
   ✔ Fix color mixins by using the built in color.scale sass module @done(24-02-10 14:54) @project(TODO.Color Mixins)
   ✔ Fix _family fork - first-child/last-child mixin, adding of-type functionality to first/last @done(24-02-10 14:53) @project(TODO.Utility Mixins)

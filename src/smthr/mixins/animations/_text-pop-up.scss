@@ -112,7 +112,7 @@
 
     // Get rid of possible leading zero in front of decimal place
     @if string.slice($duration + '', 1, 2) == '0.' {
-      $duration: #{string.unquote(string.slice($duration + '', 2))};
+      $duration: #{string.slice($duration + '', 2)};
     }
   }
 

@@ -37,7 +37,7 @@
 }
 
 .active-anim {
-  @include text-flicker(out);
+  @include text-glitch(4s, 50ms, infinite, alternate-reverse);
 }
 
 .front {

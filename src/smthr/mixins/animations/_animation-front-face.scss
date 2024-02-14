@@ -1,9 +1,8 @@
 @use 'sass:meta';
 @use 'sass:math';
 
-/// Applied to the child element of the element with the `animation` mixin
-/// to represent the front-face of the card that the animation flips to the
-/// back of
+/// Apply to the child element of an element with a 3d transform effect
+/// to represent the front-face of the card that the animation flips over.
 ///
 /// @param {Number} $z-index [20] - The z-index value.
 ///
