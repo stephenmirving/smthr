@@ -75,12 +75,19 @@
       $trans-val-1: translateY(50px);
       $trans-val-2: translateY(0);
       $direction: 'bottom';
-    } @else if $direction == 'forwards' or
-      $direction == 'forward' or
-      $direction == 'front' or
-      $direction == 'fwd' or
-      $direction == 'fw' or
-      $direction == 'f'
+    } @else if
+      $direction ==
+      'forwards' or
+      $direction ==
+      'forward' or
+      $direction ==
+      'front' or
+      $direction ==
+      'fwd' or
+      $direction ==
+      'fw' or
+      $direction ==
+      'f'
     {
       $is-fwd-or-bck: true;
       $trans-val-1: translateZ(80px);
@@ -349,7 +356,16 @@
     'nor'
   {
     $anim-dir: null;
-  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'rvs' or $anim-dir == 'r' {
+  } @else if
+    $anim-dir ==
+    'reverse' or
+    $anim-dir ==
+    'rev' or
+    $anim-dir ==
+    'rvs' or
+    $anim-dir ==
+    'r'
+  {
     $anim-drection: reverse;
   } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
   {
@@ -417,7 +433,7 @@
   } @else {
     $anim-suffix: string.insert(
       $anim-suffix,
-      '-#{$anim-num}',
+      '--#{$anim-num}',
       string.length($anim-suffix) + 1
     );
   }

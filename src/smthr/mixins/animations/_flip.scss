@@ -3,7 +3,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use '../utilities/only-moz' as *;
-@use '../../functions/resolve-alias' as *;
+@use '../../functions/is-alias' as *;
 
 /// Generates an animation that flips an element over. The element this mixin is
 /// applied to must have a front-face and a back-face child element. It is
@@ -70,211 +70,60 @@
   @if $direction {
     $direction: string.to-lower-case($direction);
 
-    @if $direction == 'bottom' or $direction == 'btm' or $direction == 'b' {
+    @if is-alias('bottom', $direction) {
       $direction: 'down';
-    } @else if
-      $direction ==
-      'forwards' or
-      $direction ==
-      'forward' or
-      $direction ==
-      'front' or
-      $direction ==
-      'fwd' or
-      $direction ==
-      'fw' or
-      $direction ==
-      'f'
-    {
+    } @else if is-alias('forwards', $direction) {
       $direction: 'forwards';
-    } @else if
-      $direction ==
-      'backwards' or
-      $direction ==
-      'backward' or
-      $direction ==
-      'bckwrd' or
-      $direction ==
-      'back' or
-      $direction ==
-      'bck' or
-      $direction ==
-      'bw' or
-      $direction ==
-      'b'
-    {
+    } @else if is-alias('backwards', $direction) {
       $direction: 'backwards';
-    } @else if
-      $direction ==
-      'top' or
-      $direction ==
-      't' or
-      $direction ==
-      'up' or
-      $direction ==
-      'u'
-    {
+    } @else if is-alias('top', $direction) {
       $direction: 'up';
-    } @else if $direction == 'left' or $direction == 'l' {
+    } @else if is-alias('left' $direction) {
       $direction: 'left';
-    } @else if $direction == 'right' or $direction == 'r' {
+    } @else if is-alias('right' $direction) {
       $direction: 'right';
-    } @else if
-      $direction ==
-      'top-left' or
-      $direction ==
-      'topleft' or
-      $direction ==
-      't-l' or
-      $direction ==
-      'tl' or
-      $direction ==
-      'left-top' or
-      $direction ==
-      'lefttop' or
-      $direction ==
-      'l-t' or
-      $direction ==
-      'lt'
-    {
+    } @else if is-alias('top-left' $direction) {
       $direction: 'top-left';
-    } @else if
-      $direction ==
-      'top-right' or
-      $direction ==
-      'topright' or
-      $direction ==
-      't-r' or
-      $direction ==
-      'tr' or
-      $direction ==
-      'right-top' or
-      $direction ==
-      'righttop' or
-      $direction ==
-      'r-t' or
-      $direction ==
-      'rt'
-    {
+    } @else if is-alias('top-right' $direction) {
       $direction: 'top-right';
-    } @else if
-      $direction ==
-      'bottom-right' or
-      $direction ==
-      'bottomright' or
-      $direction ==
-      'b-r' or
-      $direction ==
-      'br' or
-      $direction ==
-      'right-bottom' or
-      $direction ==
-      'rightbottom' or
-      $direction ==
-      'r-b' or
-      $direction ==
-      'rb'
-    {
+    } @else if is-alias('bottom-right' $direction) {
       $direction: 'bottom-right';
-    } @else if
-      $direction ==
-      'bottom-left' or
-      $direction ==
-      'bottomleft' or
-      $direction ==
-      'b-l' or
-      $direction ==
-      'bl' or
-      $direction ==
-      'left-bottom' or
-      $direction ==
-      'leftbottom' or
-      $direction ==
-      'l-b' or
-      $direction ==
-      'lb'
-    {
+    } @else if is-alias('bottom-left' $direction) {
       $direction: 'bottom-left';
     } @else {
-      @error 'Invalid direction of `#{meta.inspect($direction)}` chosen for the [ flip ] mixin.';
+      @error 'Invalid direction of `#{meta.inspect($direction)}` chosen for ' +
+          'the [ flip() ] mixin.';
     }
   } @else {
-    @error 'You must choose a direction for the `flip` mixin.';
+    @error 'You must choose a direction for the [ flip() ] mixin.';
   }
 
   @if $axis {
     $axis: string.to-lower-case($axis);
 
-    @if $axis ==
-      'horizontal' or
-      $axis ==
-      'horiz' or
-      $axis ==
-      'horz' or
-      $axis ==
-      'h'
-    {
+    @if is-alias('left-to-right', $axis) {
       $axis: 'horizontal';
       $anim-suffix: string.insert(
         $anim-suffix,
         '-horizontally',
         string.length($anim-suffix) + 1
       );
-    } @else if
-      $axis ==
-      'vertical' or
-      $axis ==
-      'vert' or
-      $axis ==
-      'ver' or
-      $axis ==
-      'v'
-    {
+    } @else if is-alias('top-to-bottom', $axis) {
       $axis: 'vertical';
       $anim-suffix: string.insert(
         $anim-suffix,
         '-vertically',
         string.length($anim-suffix) + 1
       );
-    } @else if
-      $axis ==
-      'diagonal-1' or
-      $axis ==
-      'diagonal1' or
-      $axis ==
-      'diagonal' or
-      $axis ==
-      'diag-1' or
-      $axis ==
-      'diag1' or
-      $axis ==
-      'diag' or
-      $axis ==
-      'd' or
-      $axis ==
-      'd1'
-    {
+    } @else if is-alias('bottom-left-to-top-right', $axis) {
       $axis: 'diagonal1';
-    } @else if
-      $axis ==
-      'diagonal2' or
-      $axis ==
-      'diagonal-2' or
-      $axis ==
-      'diag2' or
-      $axis==
-      'diag-2' or
-      $axis ==
-      'd-2' or
-      $axis ==
-      'd2'
-    {
+    } @else if is-alias('bottom-right-to-top-left', $axis) {
       $axis: 'diagonal2';
     } @else {
       @error 'Invalid axis of [ #{meta.inspect($axis)} ] chosen for the [ flip() ] mixin.';
     }
   } @else {
-    @error 'You must choose an axis for the `flip` mixin.';
+    @error 'You must choose an axis for the [ flip() ] mixin.';
   }
 
   @if $axis == 'diagonal1' or $axis == 'diagonal2' {
@@ -295,9 +144,9 @@
       $trans-val-1: translateZ(0) rotateX(0);
       $trans-val-2: translateZ(-260px) rotateX(180deg);
     } @else if $direction != 'up' {
-      @error 'Invalid direction value of `#{meta.inspect($direction)}` with an $axis of ' +
+      @error 'Invalid $direction value of `#{meta.inspect($direction)}` with an $axis of ' +
           '`horizontal`. For a horizontal axis, you must choose a direction ' +
-          'of either `top`, `bottom`, `backward`, or `forward`.';
+          'of either `top`, `down`, `backwards`, or `forwards`.';
     }
   } @else if $axis == 'vertical' {
     $trans-val-1: rotateY(0);
@@ -312,9 +161,9 @@
       $trans-val-1: translateZ(0) rotateY(0);
       $trans-val-2: translateZ(160px) rotateY(180deg);
     } @else if $direction != 'right' {
-      @error 'Invalid direction value of `#{meta.inspect($direction)}` with an $axis of ' +
+      @error 'Invalid $direction value of `#{meta.inspect($direction)}` with an $axis of ' +
       '`vertical`. For a vertical axis, you must choose a direction ' +
-      'of either `left`, `right`, `backward`, or `forward`.';
+      'of either `left`, `right`, `backwards`, or `forwards`.';
     }
   } @else if $axis == 'diagonal1' {
     $trans-val-1: rotate3d(1, 1, 0, 0);
@@ -329,9 +178,9 @@
       $trans-val-1: translateZ(0) rotate3d(1, 1, 0, 0);
       $trans-val-2: translateZ(-260px) rotate3d(1, 1, 0, -180deg);
     } @else if $direction != 'top-right' {
-      @error 'Invalid direction value of `#{meta.inspect($direction)}` with ' +
+      @error 'Invalid $direction value of `#{meta.inspect($direction)}` with ' +
       'an $axis of `diagonal1`. For the diagonal1 axis, you must choose a direction ' +
-      'of either `top-right`, `bottom-left`, `backward`, or `forward`.';
+      'of either `top-right`, `bottom-left`, `backwards`, or `forwards`.';
     }
   } @else if $axis == 'diagonal2' {
     $trans-val-1: rotate3d(-1, 1, 0, 0);
@@ -347,20 +196,20 @@
       $trans-val-2: translateZ(-260px) rotate3d(-1, 1, 0, -180deg);
     } @else if $direction != 'top-left' {
       @error 'Invalid direction value of `#{meta.inspect($direction)}` with ' +
-          'an $axis of [ diagonal2 ]. For the diagonal1 axis, you must choose ' +
-          'a direction of either `top-left`, `bottom-right`, `backward`, or `forward`.';
+          'an $axis of [ diagonal2 ]. For the diagonal2 axis, you must choose ' +
+          'a direction of either `top-left`, `bottom-right`, `backwards`, or `forwards`.';
     }
   }
 
   @if meta.type-of($timing) != 'number' {
     @error 'Invalid $timing value of `#{$timing}` for the ' +
-        '[ flip ] mixin. The timing property must be a number.';
+        '[ flip() ] mixin. The timing property must be a number.';
   } @else if math.is-unitless($timing) {
     // If no there is no unit for $timing, assume seconds
     $timing: $timing * 1s;
   } @else if not list.index('s' 'ms', math.unit($timing)) {
     @error 'Invalid $timing value of `#{$timing}` for the ' +
-        '[ flip ] mixin. The timing property must be in either s or ms units.';
+        '[ flip() ] mixin. The timing property must be in either s or ms units.';
   } @else if $timing % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $timing: math.div($timing, 1000ms) * 1s;
@@ -389,13 +238,13 @@
   @if $delay {
     @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '[ flip ] mixin. The delay property must be a number.';
+          '[ flip() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '[ flip ] mixin. The delay property must be in either s or ms units.';
+          '[ flip() ] mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       // If time in ms would be shorter as seconds, convert it
       $delay: math.div($delay, 1000ms) * 1s;
@@ -407,11 +256,9 @@
       $iterations: string.to-lower-case($iterations);
     }
 
-    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    {
+    @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (
+    } @else if (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -422,91 +269,26 @@
       $iterations: $iterations;
     } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
-          'for the [ flip ] mixin.';
+          'for the [ flip() ] mixin.';
     }
   } @else {
     $iterations: null;
   }
 
-  @if not
-    $anim-dir or
-    $anim-dir ==
-    'none' or
-    $anim-dir ==
-    'no' or
-    $anim-dir ==
-    'n/a' or
-    $anim-dir ==
-    'n' or
-    $anim-dir ==
-    'default' or
-    $anim-dir ==
-    'def' or
-    $anim-dir ==
-    'normal' or
-    $anim-dir ==
-    'nor'
-  {
+  @if not $anim-dir or is-alias('none', $anim-dir) or is-alias('normal', $anim-dir) {
     $anim-dir: null;
-  } @else if
-    $anim-dir ==
-    'reverse' or
-    $anim-dir ==
-    'rev' or
-    $anim-dir ==
-    'rvs' or
-    $anim-dir ==
-    'r'
-  {
+  } @else if is-alias('reverse' $anim-dir) {
     $anim-drection: reverse;
-  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  {
+  } @else if is-alias('alternate' $anim-dir) {
     $anim-dir: alternate;
-  } @else if
-    $anim-dir ==
-    'alternate-reverse' or
-    $anim-dir ==
-    'alternate reverse' or
-    $anim-dir ==
-    'alternatereverse' or
-    $anim-dir ==
-    'alt-rev' or
-    $anim-dir ==
-    'alt rev' or
-    $anim-dir ==
-    'altrev' or
-    $anim-dir ==
-    'alt-rvs' or
-    $anim-dir ==
-    'alt rvs' or
-    $anim-dir ==
-    'altrvs' or
-    $anim-dir ==
-    'a-r' or
-    $anim-dir ==
-    'ar'
-  {
+  } @else if is-alias('alternate-reverse' $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` ' +
-        'for the [ flip ] mixin';
+        'for the [ flip() ] mixin';
   }
 
-  @if not
-    $timing-func or
-    $timing-func ==
-    'none' or
-    $timing-func ==
-    'no' or
-    $timing-func ==
-    'n' or
-    $timing-func ==
-    'def' or
-    $timing-func ==
-    'default' or
-    $timing-func ==
-    'd'
-  {
+  @if not $timing-func or is-alias('none', $timing-func) or is-alias('normal', $timing-func) {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: cubic-bezier(0.455, 0.03, 0.515, 0.955);
@@ -523,7 +305,7 @@
   } @else {
     $anim-suffix: string.insert(
       $anim-suffix,
-      '-#{$anim-num}',
+      '--#{$anim-num}',
       string.length($anim-suffix) + 1
     );
   }

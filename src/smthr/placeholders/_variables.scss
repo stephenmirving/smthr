@@ -367,8 +367,10 @@ $map-alias-resolutions: (
     '<v'
   ),
   'left-to-right': (
+    'horizontally',
     'horizontal',
     'horiz',
+    'horz'
     'h',
     'left-to-right',
     'left to right',
@@ -446,6 +448,7 @@ $map-alias-resolutions: (
     '-.25t'
   ),
   'top-to-bottom': (
+    'vertically',
     'vertical',
     'vert',
     'top-to-bottom',
@@ -860,7 +863,14 @@ $map-alias-resolutions: (
     'default',
     'normal',
     'norm',
+    'nor',
     'def'
+  ),
+  'none': (
+    'none',
+    'nothing',
+    'n/a',
+    'no'
   ),
   'background': (
     'background',
@@ -906,6 +916,7 @@ $map-alias-resolutions: (
   ),
   'infinite': (
     'infinite',
-    'inf'
+    'inf',
+    'i'
   )
 ) !default;

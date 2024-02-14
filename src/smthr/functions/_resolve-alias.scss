@@ -40,8 +40,5 @@
     }
   }
 
-  @warn 'Alias could not be resolved to a keyword in the given $alias-map.' +
-      ' Returning null instead.';
-
   @return null;
 }

@@ -409,7 +409,7 @@
   } @else {
     $anim-suffix: string.insert(
       $anim-suffix,
-      '-#{$anim-num}',
+      '--#{$anim-num}',
       string.length($anim-suffix) + 1
     );
   }

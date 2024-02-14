@@ -38,19 +38,19 @@
 .active-anim {
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: flip-diagonally-forwards 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+  animation: flip-horizontally-down 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
 }
 @-moz-document url-prefix() {
   .active-anim {
     backface-visibility: hidden;
   }
 }
-@keyframes flip-diagonally-forwards {
+@keyframes flip-horizontally-down {
   0% {
-    transform: translateZ(0) rotate3d(1, 1, 0, 0);
+    transform: rotateX(0);
   }
   100% {
-    transform: translateZ(160px) rotate3d(1, 1, 0, 180deg);
+    transform: rotateX(-180deg);
   }
 }
 
@@ -94,5 +94,5 @@
 }
 
 .test {
-  content: "bottom-left";
+  content: true;
 }

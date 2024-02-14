@@ -16,8 +16,36 @@ TODO:
         ✔ Testing complete through animations/pan-wipe @done(24-02-12 23:56)
         ✔ Ceck Puff against version in Manley workspace, especially the blur filter part @started(24-02-13 15:18) @done(24-02-13 17:05) @lasted(1h47m57s)
         ✔ Add anim-suffix to flip. @done(24-02-13 22:35)
+        ✔ Finish flip @done(24-02-13 23:32)
         ☐ Copy it and update values for flip-2
-        ☐ Continue testing from flip-2 to snappiness
+          ☐ Copied
+          ☐ Change values
+        ☐ Retest 2 at start
+          ☐ Bounce
+          ☐ Bounciness
+        ☐ Test and update be flip-scale-2
+        ☐ Test & Update flip-scale
+        ☐ Test & Update pan-wipe
+        ☐ Test and update puff
+        ☐ Test and update roll
+        ☐ Test and update rotate-scale
+        ☐ Test and update rotate
+        ☐ Test and update scale-down
+        ☐ Test and update scale-up
+        ☐ Test and update slide
+        ☐ Test and update slit
+        ☐ Test and update snappiness
+        ☐ Test and update text-blur-out
+        ☐ Test and update text-drop-shadow
+        ☐ Test and update text-flicker
+        ☐ Test and update text-focus-in
+        ☐ Test and update text-glitch
+        ☐ Test and update text-pop-shadow
+        ☐ Test and update text-pop-up
+        ☐ Test and update text-tracking-in
+        ☐ Test and update text-tracking-out
+        ☐ Test and update wobbliness
+        ☐ Test and update zoom-in
         ☐ Check values against animations on https://animista.net/
         ✔ Rotate animation thuroughly tested @done(24-02-13 20:36)
     ☐ Test all Shape mixins

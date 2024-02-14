@@ -37,7 +37,7 @@
 }
 
 .active-anim {
-  @include flip(front, diagonal);
+  @include flip('bottom', horizontal);
 }
 
 .front {
@@ -73,5 +73,5 @@
 .test {
   $test: 'btmleft';
 
-  content: resolve-alias($test);
+  content: is-alias('bottom-left', $test);
 }
