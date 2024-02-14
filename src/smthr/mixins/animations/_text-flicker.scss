@@ -40,6 +40,8 @@
   $timing-func: linear,
   $anim-num: null
 ) {
+  $anim-suffix: '';
+
   @if $in-or-out and meta.type-of($in-or-out) == 'string' {
     $in-or-out: string.to-lower-case($in-or-out);
   }
@@ -58,20 +60,22 @@
 
   @if $in-or-out == 'in' or $in-or-out == 'i' or $in-or-out == true {
     $in-or-out: true;
+    $anim-suffix: '-in';
   } @else if not $in-or-out or is-alias('out', $in-or-out) {
     $in-or-out: false;
+    $anim-suffix: '-out';
   } @else {
     @error 'Invalid in-out value of `#{meta.inspect($in-or-out)}` for the `text-flicer` mixin';
   }
 
   @if meta.type-of($duration) != 'number' {
-    @error 'Invalid $duration value of `#{$duration}` for the `text-flicker` ' +
+    @error 'Invalid $duration value of `#{$duration}` for the [ text-flicker() ] ' +
         'mixin. The timing property must be a number.';
   } @else if math.is-unitless($duration) {
     // If no there is no unit for $duration, assume seconds
     $duration: $duration * 1s;
   } @else if not list.index('s' 'ms', math.unit($duration)) {
-    @error 'Invalid $duration value of `#{$duration}` for the `text-flicker` ' +
+    @error 'Invalid $duration value of `#{$duration}` for the [ text-flicker() ] ' +
         'mixin. The timing property must be in either s or ms units.';
   } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -79,7 +83,7 @@
 
     // Get rid of possible leading zero in front of decimal place
     @if string.slice($duration + '', 1, 2) == '0.' {
-      $duration: string.unquote(string.slice($duration + '', 2));
+      $duration: #{string.unquote(string.slice($duration + '', 2))};
     }
   }
 
@@ -98,12 +102,12 @@
   @if $delay {
     @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`text-flicker` mixin. The delay property must be a number.';
+          '[ text-flicker() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`text-flicker` mixin. The delay property must be in either ' +
+          '[ text-flicker() ] mixin. The delay property must be in either ' +
           's or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -121,7 +125,8 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -132,11 +137,15 @@
       $iterations: $iterations;
     } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for ' +
-          'the `text-flicker` mixin.';
+          'the [ text-flicker() ] mixin.';
     }
   }
 
-  @if not $anim-dir or is-alias('none', $anim-dir) or is-alias('normal', $anim-dir) {
+  @if not
+    $anim-dir or
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
+  {
     $anim-dir: null;
   } @else if is-alias('reverse' $anim-dir) {
     $anim-drection: reverse;
@@ -146,25 +155,13 @@
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
-        '`text-flicker` mixin';
+        '[ text-flicker() ] mixin';
   }
 
   @if not
     $timing-func or
-    $timing-func ==
-    'none' or
-    $timing-func ==
-    'no' or
-    $timing-func ==
-    'n' or
-    $timing-func ==
-    'def' or
-    $timing-func ==
-    'default' or
-    $timing-func ==
-    'd' or
-    $timing-func ==
-    0
+    is-alias('none', $timing-func) or
+    is-alias('default', $timing-func)
   {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
@@ -174,14 +171,18 @@
   @if not $anim-num {
     $anim-num: null;
   } @else {
-    $anim-num: '-#{$anim-num}';
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
 
-  animation: txt-flicker#{$anim-num} #{$duration} #{$timing-func} #{$delay} #{$iterations}
+  animation: txt-flicker#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
-    @keyframes txt-flicker#{$anim-num} {
+    @keyframes txt-flicker#{$anim-suffix} {
       @if $in-or-out {
         0% {
           opacity: 0;

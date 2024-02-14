@@ -33,8 +33,8 @@ TODO:
         ✔ Test and update slit @done(24-02-14 15:33)
         ✔ Test and update snappiness @done(24-02-14 16:13)
         ✔ Test and update text-blur-out @done(24-02-14 16:45)
-        ☐ Test and update text-drop-shadow
-        ☐ Test and update text-flicker
+        ✔ Test and update text-drop-shadow @done(24-02-14 17:04)
+        ✔ Test and update text-flicker @done(24-02-14 17:15)
         ☐ Test and update text-focus-in
         ☐ Test and update text-glitch
         ☐ Test and update text-pop-shadow

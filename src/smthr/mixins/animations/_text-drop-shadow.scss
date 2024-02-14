@@ -9,6 +9,8 @@
 /// @param {String} $direction [center] - The direction the shadow will fall.
 /// @param {Time} $duration [0.7s] The duration of the animation (s or ms).
 /// @param {Time} $delay [null] The duration of the optional animation delay.
+/// @param {Color} $shadow-color [#000] The color for the shadow. Must be in
+/// 3 or 6 digit hexadecimal notation.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -24,9 +26,11 @@
   $direction: center,
   $duration: 0.7s,
   $delay: null,
+  $shadow-color: #000,
   $anim-num: null
 ) {
   $dir-vals: 0 0 18px; // Default of center
+  $anim-suffix: '';
 
   @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
@@ -36,51 +40,60 @@
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if not
+    $shadow-color or
+    ($shadow-color and meta.type-of($shadow-color) != 'color')
+  {
+    $shadow-color: #000;
+
+    @warn 'Invalid $shadow-color value passed to the [ text-drop-shadow() ] ' +
+        'mixin. You must pass the color in 3 or 6 digit hexadecimal notation.' +
+        ' The $shadow-color has been reset to the default of black (#000).';
   }
 
   @if is-alias('bottom', $direction) {
     $dir-vals: 0 6px 18px;
-  } @else if $direction == 'bottom-right' or $direction == 'br' {
+    $anim-suffix: '-bottom';
+  } @else if is-alias('bottom-right', $direction) {
     $dir-vals: 6px 6px 18px;
+    $anim-suffix: '-bottom-right';
   } @else if is-alias('right', $direction) {
     $dir-vals: 6px 0 18px;
-  } @else if $direction == 'top-left' or $direction == 'tl' {
+    $anim-suffix: '-right';
+  } @else if is-alias('top-left', $direction) {
     $dir-vals: -6px -6px 18px;
-  } @else if $direction == 'top-right' or $direction == 'tr' {
+    $anim-suffix: '-top-left';
+  } @else if is-alias('top-right', $direction) {
     $dir-vals: 6px -6px 18px;
+    $anim-suffix: '-top-right';
   } @else if is-alias('left', $direction) {
     $dir-vals: -6px 0 18px;
-  } @else if $direction == 'top' or $direction == 't' {
+    $anim-suffix: '-left';
+  } @else if is-alias('top', $direction) {
     $dir-vals: 0 -6px 18px;
-  } @else if $direction == 'bottom-left' or $direction == 'bl' {
+    $anim-suffix: '-top';
+  } @else if is-alias('bottom-left', $direction) {
     $dir-vals: -6px 6px 18px;
-  } @else if
-    $direction !=
-    'center' and
-    $direction !=
-    'centre' and
-    $direction !=
-    'cent' and
-    $direction !=
-    'cen' and
-    $direction !=
-    'c'
-  {
-    @error '`#{meta.inspect($direction)}` is not a valid direction for the ' +
-        '`drop-text-shadow` mixin.';
+    $anim-suffix: '-bottom-left';
+  } @else if is-alias('center', $direction) {
+    $anim-suffix: '-center';
+  } @else {
+    @error 'Invalid $direction value of `#{meta.inspect($direction)}` ' +
+        'for the [ text-drop-shadow() ] mixin. The value of $direction ' +
+        'must be one of the following: `center`, `top`, `top-right`, ' +
+        '`right`, `bottom-right`, `bottom`, `bottom-left`, `left`, or ' +
+        '`top-left`.';
   }
 
   @if meta.type-of($duration) != 'number' {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '`text-drop-shadow` mixin. The timing property must be a number.';
+        '[ text-drop-shadow() ] mixin. The timing property must be a number.';
   } @else if math.is-unitless($duration) {
     // If no there is no unit for $duration, assume seconds
     $duration: $duration * 1s;
   } @else if not list.index('s' 'ms', math.unit($duration)) {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '`text-drop-shadow` mixin. The timing property must be in either ' +
+        '[ text-drop-shadow() ] mixin. The timing property must be in either ' +
         's (seconds) or ms (milliseconds) units.';
   } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -88,7 +101,7 @@
 
     // Get rid of possible leading zero in front of decimal place
     @if string.slice($duration + '', 1, 2) == '0.' {
-      $duration: string.unquote(string.slice($duration + '', 2));
+      $duration: #{string.unquote(string.slice($duration + '', 2))};
     }
   }
 
@@ -106,14 +119,15 @@
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `text-drop-shadow` ' +
-          'mixin. The delay property must be a number.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-drop-shadow() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, assume seconds
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `text-drop-shadow` ' +
-          'mixin. The delay property must be in either s or ms units.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-drop-shadow() ] mixin. The delay property must be in ' +
+          'either s or ms units.';
     } @else if $delay % 10 == 0ms {
       // If time in ms would be shorter as seconds, convert it
       $delay: math.div($delay, 1000ms) * 1s;
@@ -124,17 +138,27 @@
     }
   }
 
+  @if not $anim-num {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
   text-transform: none;
-  animation: txt-shadow-drop#{$anim-num} #{$duration} #{$delay} both;
+  animation: txt-shadow-drop#{$anim-suffix} #{$duration} #{$delay} both;
 
   @at-root {
-    @keyframes txt-shadow-drop#{$anim-num} {
+    @keyframes txt-shadow-drop#{$anim-suffix} {
       0% {
-        text-shadow: 0 0 0 hsl(0 0% 0% / 0);
+        text-shadow: 0 0 0 rgba($shadow-color, 1);
       }
 
       100% {
-        text-shadow: #{$dir-vals} hsl(0 0% 0% / 0.3);
+        text-shadow: #{$dir-vals} rgba($shadow-color, 0.3);
       }
     }
   }

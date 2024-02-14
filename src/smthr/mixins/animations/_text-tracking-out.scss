@@ -160,7 +160,7 @@
 
     // Get rid of possible leading zero in front of decimal place
     @if string.slice($duration + '', 1, 2) == '0.' {
-      $duration: string.unquote(string.slice($duration + '', 2));
+      $duration: #{string.unquote(string.slice($duration + '', 2))};
     }
   }
 
@@ -240,20 +240,8 @@
 
   @if not
     $timing-func or
-    $timing-func ==
-    'none' or
-    $timing-func ==
-    'no' or
-    $timing-func ==
-    'n' or
-    $timing-func ==
-    'def' or
-    $timing-func ==
-    'default' or
-    $timing-func ==
-    'd' or
-    $timing-func ==
-    0
+    is-alias('none', $timing-func) or
+    is-alias('default', $timing-func)
   {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default

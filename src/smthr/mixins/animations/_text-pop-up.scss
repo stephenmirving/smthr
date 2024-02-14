@@ -84,13 +84,13 @@
     'right-side'
   {
     $dir-val: translateX(50px);
-  } @else if $direction == 'top-right' or $direction == 'tr' {
+  } @else if is-alias('top-right', $direction) {
     $dir-val: translateY(-50px) translateX(50px);
-  } @else if $direction == 'top-left' or $direction == 'tl' {
+  } @else if is-alias('top-left', $direction) {
     $dir-val: translateY(-50px) translateX(-50px);
-  } @else if $direction == 'bottom-right' or $direction == 'br' {
+  } @else if is-alias('bottom-right', $direction) {
     $dir-val: translateY(50px) translateX(50px);
-  } @else if $direction == 'bottom-left' or $direction == 'bl' {
+  } @else if is-alias('bottom-left', $direction) {
     $dir-val: translateY(50px) translateX(-50px);
   } @else if $direction != 'top' and $direction != 't' and $direction != 'up' {
     @error '`#{meta.inspect($direction)}` is not a valid direction for the ' +
@@ -112,7 +112,7 @@
 
     // Get rid of possible leading zero in front of decimal place
     @if string.slice($duration + '', 1, 2) == '0.' {
-      $duration: string.unquote(string.slice($duration + '', 2));
+      $duration: #{string.unquote(string.slice($duration + '', 2))};
     }
   }
 

@@ -37,7 +37,7 @@
 }
 
 .active-anim {
-  @include text-blur-out('backwards');
+  @include text-flicker(out);
 }
 
 .front {

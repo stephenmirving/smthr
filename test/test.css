@@ -36,17 +36,43 @@
 }
 
 .active-anim {
-  animation: txt-blur-out-expand-backwards 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+  animation: txt-flicker-in 3s linear both;
 }
-@keyframes txt-blur-out-expand-backwards {
-  0% {
-    filter: blur(0.01px);
-    transform: translateZ(0);
+@keyframes txt-flicker-in {
+  0%, 13.9% {
+    text-shadow: 0 0 30px hsla(0, 0%, 100%, 0.6), 0 0 60px hsla(0, 0%, 100%, 0.45), 0 0 110px hsla(0, 0%, 100%, 0.25), 0 0 100px hsla(0, 0%, 100%, 0.1);
+    opacity: 1;
+  }
+  14%, 14.9%, 23%, 24.9%, 35%, 39.9%, 43%, 44.9%, 55%, 69.4%, 70%, 79.4%, 80%, 89.8%, 90% {
+    text-shadow: none;
+    opacity: 0;
+  }
+  15%, 22.9% {
+    text-shadow: 0 0 30px hsla(0, 0%, 100%, 0.55), 0 0 60px hsla(0, 0%, 100%, 0.4), 0 0 110px hsla(0, 0%, 100%, 0.2), 0 0 100px hsla(0, 0%, 100%, 0.1);
+    opacity: 1;
+  }
+  25%, 34.9% {
+    text-shadow: 0 0 30px hsla(0, 0%, 100%, 0.55), 0 0 60px hsla(0, 0%, 100%, 0.35), 0 0 100px hsla(0, 0%, 100%, 0.1);
+    opacity: 1;
+  }
+  40%, 42.9% {
+    text-shadow: 0 0 30px hsla(0, 0%, 100%, 0.55), 0 0 60px hsla(0, 0%, 100%, 0.35);
+    opacity: 1;
+  }
+  45%, 50%, 54.9%, 69.5%, 69.9% {
+    text-shadow: 0 0 30px hsla(0, 0%, 100%, 0.45), 0 0 60px hsla(0, 0%, 100%, 0.25);
+    opacity: 1;
+  }
+  79.9% {
+    text-shadow: 0 0 30px hsla(0, 0%, 100%, 0.25);
+    opacity: 1;
+  }
+  89.9% {
+    text-shadow: none;
+    opacity: 1;
   }
   100% {
-    filter: blur(12px) opacity(0);
-    letter-spacing: -0.5em;
-    transform: translateZ(-500px);
+    opacity: 0;
   }
 }
 
