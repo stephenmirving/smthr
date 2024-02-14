@@ -2,6 +2,7 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:math';
+@use '../../functions/is-alias' as *;
 
 /// Animates text by making it appear to be glitching out.
 ///
@@ -22,6 +23,8 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Function} is-alias
+///
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value
 /// @throw Invalid $anim-dir value
@@ -70,23 +73,15 @@
     }
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }
@@ -113,8 +108,7 @@
       $iterations: string.to-lower-case($iterations);
     }
 
-    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    {
+    @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
@@ -152,35 +146,11 @@
       'nor'
   {
     $anim-dir: null;
-  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'rvs' or $anim-dir == 'r' {
+  } @else if is-alias('reverse' $anim-dir) {
     $anim-drection: reverse;
-  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  {
+  } @else if is-alias('alternate' $anim-dir) {
     $anim-dir: alternate;
-  } @else if
-    $anim-dir ==
-    'alternate-reverse' or
-    $anim-dir ==
-    'alternate reverse' or
-    $anim-dir ==
-    'alternatereverse' or
-    $anim-dir ==
-    'alt-rev' or
-    $anim-dir ==
-    'alt rev' or
-    $anim-dir ==
-    'altrev' or
-    $anim-dir ==
-    'alt-rvs' or
-    $anim-dir ==
-    'alt rvs' or
-    $anim-dir ==
-    'altrvs' or
-    $anim-dir ==
-    'a-r' or
-    $anim-dir ==
-    'ar'
-  {
+  } @else if is-alias('alternate-reverse' $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` ' +

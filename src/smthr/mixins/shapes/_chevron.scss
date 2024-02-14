@@ -24,9 +24,9 @@
     $direction: string.to-lower-case($direction);
   }
 
-  @if $direction == 'right' or $direction == 'r' {
+  @if is-alias('right', $direction) {
     clip-path: polygon(75% 0, 100% 50%, 75% 100%, 0 100%, 25% 50%, 0 0);
-  } @else if $direction == 'left' or $direction == 'l' {
+  } @else if is-alias('left', $direction) {
     clip-path: polygon(100% 0, 75% 50%, 100% 100%, 25% 100%, 0 50%, 25% 0);
   } @else if
     $direction ==

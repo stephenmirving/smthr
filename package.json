@@ -5,7 +5,7 @@
   "main": "index.js",
   "directories": {},
   "scripts": {
-    "test": "sass --watch --update --trace --no-quiet --no-source-map --style=expanded test/test.scss:test/test.css"
+    "test": "sass --watch --update --no-trace --no-quiet --style=expanded test/test.scss:test/test.css"
   },
   "repository": {
     "type": "git",

@@ -3,6 +3,7 @@
 @use 'sass:math';
 @use 'sass:string';
 @use '../utilities/only-moz' as *;
+@use '../../functions/is-alias' as *;
 
 /// Animates an element by rotating it along a point and/or an axis. For the the
 /// best effect on a diagonal rotation, use the `animation-stage` mixin on the
@@ -38,6 +39,8 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Function} is-alias
+///
 /// @throw Invalid $point value
 /// @throw Invalid $axis value
 /// @throw Invalid $timing value
@@ -389,23 +392,15 @@
     }
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }
@@ -432,8 +427,7 @@
       $iterations: string.to-lower-case($iterations);
     }
 
-    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    {
+    @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if
       (
@@ -455,22 +449,8 @@
 
   @if not
     $anim-dir or
-    $anim-dir ==
-    'none' or
-    $anim-dir ==
-    'no' or
-    $anim-dir ==
-    'n/a' or
-    $anim-dir ==
-    'n' or
-    $anim-dir ==
-    'default' or
-    $anim-dir ==
-    'def' or
-    $anim-dir ==
-    'normal' or
-    $anim-dir ==
-    'nor'
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if
@@ -484,8 +464,7 @@
     'r'
   {
     $anim-drection: reverse;
-  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  {
+  } @else if is-alias('alternate' $anim-dir) {
     $anim-dir: alternate;
   } @else if
     $anim-dir ==
@@ -513,18 +492,8 @@
 
   @if not
     $timing-func or
-    $timing-func ==
-    'none' or
-    $timing-func ==
-    'no' or
-    $timing-func ==
-    'n' or
-    $timing-func ==
-    'def' or
-    $timing-func ==
-    'default' or
-    $timing-func ==
-    'd'
+    is-alias('none', $timing-func) or
+    is-alias('normal', $timing-func)
   {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default

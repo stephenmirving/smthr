@@ -2,6 +2,7 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:math';
+@use '../../functions/is-alias' as *;
 
 /// Does a slow, artistic, Ken Burns style zoom in on the background image
 /// of an element
@@ -18,6 +19,8 @@
 /// @param {Time} $delay [null] - An optional delay before starting the effect.
 ///
 /// @group Animations
+/// @alias {Function} is-alias
+///
 /// @throw Invalid keyword for $direction
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value
@@ -49,12 +52,12 @@
     $dir-val2: 50% 84%;
     $dir-val3: scale(1.25) translateY(-15px);
     $dir-val4: top;
-  } @else if $direction == 'left' or $direction == 'l' {
+  } @else if is-alias('left', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 16% 50%;
     $dir-val3: scale(1.25) translate(-20px, 15px);
     $dir-val4: left;
-  } @else if $direction == 'right' or $direction == 'r' {
+  } @else if is-alias('right', $direction) {
     $dir-val1: scale(1) translateX(0);
     $dir-val2: 84% 50%;
     $dir-val3: scale(1.25) translateX(20px);
@@ -149,23 +152,15 @@
     }
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }

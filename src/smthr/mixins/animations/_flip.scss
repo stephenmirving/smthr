@@ -11,7 +11,7 @@
 /// `animation-front-face` and 'animation-back-face' mixins for element 'face'
 /// child elements and the 'animation-stage` mixin for the parent element.
 ///
-/// @param {String} $direction [top] - The direction the scale effect causes
+/// @param {String} $direction [up] - The direction the scale effect causes
 /// the element to seem to be moving towards
 /// @param {String} $axis [horizontal] - The axis the element will flip over
 /// @param {Time} $timing [0.5s] - The duration of the animation (s or ms)
@@ -31,7 +31,7 @@
 ///
 /// @group Animations
 /// @require {Mixin} only-moz
-/// @require {Function} resolve-alias
+/// @require {Function} is-alias
 /// @require {Map} $map-alias-resolutions
 ///
 /// @throw Invalid $direction value
@@ -95,7 +95,7 @@
           'the [ flip() ] mixin.';
     }
   } @else {
-    @error 'You must choose a direction for the [ flip() ] mixin.';
+    @error 'You must provide a direction for the [ flip() ] mixin.';
   }
 
   @if $axis {
@@ -215,23 +215,15 @@
     $timing: math.div($timing, 1000ms) * 1s;
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }
@@ -258,7 +250,8 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -275,7 +268,11 @@
     $iterations: null;
   }
 
-  @if not $anim-dir or is-alias('none', $anim-dir) or is-alias('normal', $anim-dir) {
+  @if not
+    $anim-dir or
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
+  {
     $anim-dir: null;
   } @else if is-alias('reverse' $anim-dir) {
     $anim-drection: reverse;
@@ -288,7 +285,11 @@
         'for the [ flip() ] mixin';
   }
 
-  @if not $timing-func or is-alias('none', $timing-func) or is-alias('normal', $timing-func) {
+  @if not
+    $timing-func or
+    is-alias('none', $timing-func) or
+    is-alias('normal', $timing-func)
+  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: cubic-bezier(0.455, 0.03, 0.515, 0.955);

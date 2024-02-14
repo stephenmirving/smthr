@@ -71,9 +71,9 @@
       )
     {
       $angle: 225deg;
-    } @else if $direction == 'right' or $direction == 'r' {
+    } @else if is-alias('right', $direction) {
       $angle: -45deg;
-    } @else if $direction == 'left' or $direction == 'l' {
+    } @else if is-alias('left', $direction) {
       $angle: 135deg;
     } @else if (
         $direction ==

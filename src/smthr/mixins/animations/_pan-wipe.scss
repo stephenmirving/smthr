@@ -3,6 +3,7 @@
 @use 'sass:math';
 @use 'sass:string';
 @use '../../functions/is-length' as *;
+@use '../../functions/is-alias' as *;
 
 /// Animates a panning wipe style effect on the background-image property
 /// of an element. Works best with a gradient or an image.
@@ -32,6 +33,9 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Function} is-alias
+/// @require {Function} is-length
+///
 /// @throw Invalid $direction type
 /// @throw Invalid $direction value
 /// @throw Invalid $timing value
@@ -57,7 +61,12 @@
   $height: $size,
   $anim-num: null
 ) {
-  @if meta.type-of($direction) == 'string' {
+    // $direction default of `right` values
+  $pos-val1: 0% 50%;
+  $pos-val2: 100% 50%;
+  $anim-suffix: '-right';
+
+  @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
   } @else {
     @error 'Invalid $direction unit type for the [ pan-wipe() ] mixin. Value must' +
@@ -77,102 +86,35 @@
         'mixin. You must pass length units for these parameters.';
   }
 
-  // $direction default of `right` values
-  $pos-val1: 0% 50%;
-  $pos-val2: 100% 50%;
-
-  @if $direction == 'left' or $direction == 'l' {
+  @if is-alias('left', $direction) {
     $pos-val1: 100% 50%;
     $pos-val2: 0% 50%;
-  } @else if
-    $direction ==
-    'top' or
-    $direction ==
-    't' or
-    $direction ==
-    'down' or
-    $direction ==
-    'd'
-  {
+    $anim-suffix: '-left';
+   } @else if is-alias('top') {
     $pos-val1: 50% 100%;
     $pos-val2: 50% 0%;
-  } @else if
-    $direction ==
-    'bottom' or
-    $direction ==
-    'b' or
-    $direction ==
-    'up' or
-    $direction ==
-    'u'
-  {
+    $anim-suffix: '-top';
+  } @else if is-alias('bottom') {
     $pos-val1: 50% 0%;
     $pos-val2: 50% 100%;
-  } @else if
-    $direction ==
-    'top-left' or
-    $direction ==
-    'topleft' or
-    $direction ==
-    'tl' or
-    $direction ==
-    'left-top' or
-    $direction ==
-    'lefttop' or
-    $direction ==
-    'lt'
-  {
+    $anim-suffix: '-bottom';
+  } @else if is-alias('top-left', $direction) {
     $pos-val1: 100% 100%;
     $pos-val2: 0% 0%;
-  } @else if
-    $direction ==
-    'top-right' or
-    $direction ==
-    'topright' or
-    $direction ==
-    'tr' or
-    $direction ==
-    'right-top' or
-    $direction ==
-    'righttop' or
-    $direction ==
-    'rt'
-  {
+    $anim-suffix: '-top-left';
+  } @else if is-alias('top-right', $direction) {
     $pos-val1: 0% 100%;
     $pos-val2: 100% 0%;
-  } @else if
-    $direction ==
-    'bottom-left' or
-    $direction ==
-    'bottomleft' or
-    $direction ==
-    'bl' or
-    $direction ==
-    'left-bottom' or
-    $direction ==
-    'leftbottom' or
-    $direction ==
-    'lb'
-  {
+    $anim-suffix: '-top-right';
+  } @else if is-alias('bottom-left', $direction) {
     $pos-val1: 100% 0%;
     $pos-val2: 0% 100%;
-  } @else if
-    $direction ==
-    'bottom-right' or
-    $direction ==
-    'bottomright' or
-    $direction ==
-    'br' or
-    $direction ==
-    'right-bottom' or
-    $direction ==
-    'rightbottom' or
-    $direction ==
-    'rb'
-  {
+    $anim-suffix: '-bottom-left';
+  } @else if is-alias('bottom-right', $direction) {
     $pos-val1: 0% 0%;
     $pos-val2: 100% 100%;
-  } @else if $direction != 'right' and $direction != 'r' {
+    $anim-suffix: '-bottom-right';
+  } @else if not is-alias('right', $direction) {
     @error 'Invalid direction of `#{meta.inspect($direction)}` for the [ pan-wipe() ] mixin.';
   }
 
@@ -195,23 +137,15 @@
     }
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }
@@ -237,8 +171,7 @@
     @if meta.type-of($iterations) == 'string' {
       $iterations: string.to-lower-case($iterations);
     }
-    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    {
+    @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if
       (
@@ -260,68 +193,40 @@
 
   @if not
     $anim-dir or
-    $anim-dir ==
-    'none' or
-    $anim-dir ==
-    'no' or
-    $anim-dir ==
-    'n/a' or
-    $anim-dir ==
-    'n' or
-    $anim-dir ==
-    'default' or
-    $anim-dir ==
-    'def' or
-    $anim-dir ==
-    'normal' or
-    $anim-dir ==
-    'nor'
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
-  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'rvs' or $anim-dir == 'r' {
+  } @else if is-alias('reverse' $anim-dir) {
     $anim-drection: reverse;
-  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  {
+  } @else if is-alias('alternate' $anim-dir) {
     $anim-dir: alternate;
-  } @else if
-    $anim-dir ==
-    'alternate-reverse' or
-    $anim-dir ==
-    'alternate reverse' or
-    $anim-dir ==
-    'alternatereverse' or
-    $anim-dir ==
-    'alt-rev' or
-    $anim-dir ==
-    'alt rev' or
-    $anim-dir ==
-    'altrev' or
-    $anim-dir ==
-    'alt-rvs' or
-    $anim-dir ==
-    'alt rvs' or
-    $anim-dir ==
-    'altrvs' or
-    $anim-dir ==
-    'a-r' or
-    $anim-dir ==
-    'ar'
-  {
+  } @else if is-alias('alternate-reverse' $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
         '[ pan-wipe() ] mixin';
   }
 
+  @if not $anim-num {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
   overflow: hidden;
   width: $size;
   height: $height;
   background: $bg;
-  animation: pan-wipe#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: pan-wipe#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
   @at-root {
-    @keyframes pan-wipe#{$anim-num} {
+    @keyframes pan-wipe#{$anim-suffix} {
       0% {
         background-position: $pos-val1;
       }

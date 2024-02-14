@@ -11,6 +11,8 @@
 /// @param {Number} $z-val [10] - The z-index value.
 ///
 /// @group Animations
+/// @alias {Function} is-alias
+///
 /// @throw Value of $flip-axis not of type "string"
 /// @throw Invalid $z-val z-index value
 @mixin animation-back-face($flip-axis: horizontal, $z-val: 10) {

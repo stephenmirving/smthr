@@ -27,7 +27,7 @@
     $direction: string.to-lower-case($direction);
   }
 
-  @if $direction == 'right' or $direction == 'r' {
+  @if is-alias('right', $direction) {
     clip-path: polygon(
       95% 0,
       95% 35%,
@@ -38,7 +38,7 @@
       0 0
     );
     border-radius: 4px 0 0 4px;
-  } @else if $direction == 'left' or $direction == 'l' {
+  } @else if is-alias('left', $direction) {
     clip-path: polygon(5% 0, 5% 35%, 0 50%, 5% 65%, 5% 100%, 100% 100%, 100% 0);
     border-radius: 0 4px 4px 0;
   } @else if

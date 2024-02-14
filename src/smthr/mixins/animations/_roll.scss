@@ -2,6 +2,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/is-alias' as *;
 
 /// Generates an animation that rolls an element in or out, from or towards a
 /// given direction.
@@ -27,6 +28,8 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Function} is-alias
+///
 /// @throw Invalid $in-or-out value
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value
@@ -112,7 +115,7 @@
         'bottom',
         string.length($anim-suffix) + 1
       );
-    } @else if $direction == 'right' or $direction == 'r' {
+    } @else if is-alias('right', $direction) {
       $trans-val-1: translateX(800px) rotate(540deg);
       $trans-val-2: translateX(0) rotate(0);
       $anim-suffix: string.insert(
@@ -120,7 +123,7 @@
         'right',
         string.length($anim-suffix) + 1
       );
-    } @else if $direction == 'left' or $direction == 'l' {
+    } @else if is-alias('left', $direction) {
       $trans-val-1: translateX(-800px) rotate(-540deg);
       $trans-val-2: translateX(0) rotate(0);
       $anim-suffix: string.insert(
@@ -160,23 +163,15 @@
     $timing: math.div($timing, 1000ms) * 1s;
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }
@@ -201,8 +196,7 @@
       $iterations: string.to-lower-case($iterations);
     }
 
-    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    {
+    @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
@@ -223,53 +217,15 @@
 
   @if not
     $anim-dir or
-    $anim-dir ==
-    'none' or
-    $anim-dir ==
-    'no' or
-    $anim-dir ==
-    'n/a' or
-    $anim-dir ==
-    'n' or
-    $anim-dir ==
-    'default' or
-    $anim-dir ==
-    'def' or
-    $anim-dir ==
-    'normal' or
-    $anim-dir ==
-    'nor'
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
-  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'rvs' or $anim-dir == 'r' {
+  } @else if is-alias('reverse' $anim-dir) {
     $anim-drection: reverse;
-  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  {
+  } @else if is-alias('alternate' $anim-dir) {
     $anim-dir: alternate;
-  } @else if
-    $anim-dir ==
-    'alternate-reverse' or
-    $anim-dir ==
-    'alternate reverse' or
-    $anim-dir ==
-    'alternatereverse' or
-    $anim-dir ==
-    'alt-rev' or
-    $anim-dir ==
-    'alt rev' or
-    $anim-dir ==
-    'altrev' or
-    $anim-dir ==
-    'alt-rvs' or
-    $anim-dir ==
-    'alt rvs' or
-    $anim-dir ==
-    'altrvs' or
-    $anim-dir ==
-    'a-r' or
-    $anim-dir ==
-    'ar'
-  {
+  } @else if is-alias('alternate-reverse' $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` ' +
@@ -278,18 +234,8 @@
 
   @if not
     $timing-func or
-    $timing-func ==
-    'none' or
-    $timing-func ==
-    'no' or
-    $timing-func ==
-    'n' or
-    $timing-func ==
-    'def' or
-    $timing-func ==
-    'default' or
-    $timing-func ==
-    'd'
+    is-alias('none', $timing-func) or
+    is-alias('normal', $timing-func)
   {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default

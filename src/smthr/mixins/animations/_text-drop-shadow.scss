@@ -2,6 +2,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/is-alias' as *;
 
 /// Adds a shadow dropping animation to a given element's text
 ///
@@ -14,6 +15,8 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Function} is-alias
+///
 /// @throw Invalid $direction value
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value
@@ -37,17 +40,17 @@
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $direction == 'bottom' or $direction == 'b' {
+  @if is-alias('bottom', $direction) {
     $dir-vals: 0 6px 18px;
   } @else if $direction == 'bottom-right' or $direction == 'br' {
     $dir-vals: 6px 6px 18px;
-  } @else if $direction == 'right' or $direction == 'r' {
+  } @else if is-alias('right', $direction) {
     $dir-vals: 6px 0 18px;
   } @else if $direction == 'top-left' or $direction == 'tl' {
     $dir-vals: -6px -6px 18px;
   } @else if $direction == 'top-right' or $direction == 'tr' {
     $dir-vals: 6px -6px 18px;
-  } @else if $direction == 'left' or $direction == 'l' {
+  } @else if is-alias('left', $direction) {
     $dir-vals: -6px 0 18px;
   } @else if $direction == 'top' or $direction == 't' {
     $dir-vals: 0 -6px 18px;
@@ -89,23 +92,15 @@
     }
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }

@@ -451,6 +451,7 @@ $map-alias-resolutions: (
     'vertically',
     'vertical',
     'vert',
+    'v',
     'top-to-bottom',
     'top to bottom',
     'top-bottom',
@@ -805,6 +806,8 @@ $map-alias-resolutions: (
     'forward',
     'fwards',
     'fward',
+    'front',
+    'frnt',
     'fwd',
     'fw',
     'f'
@@ -869,8 +872,10 @@ $map-alias-resolutions: (
   'none': (
     'none',
     'nothing',
+    nil,
     'n/a',
-    'no'
+    'no',
+    'n'
   ),
   'background': (
     'background',

@@ -17,15 +17,12 @@ TODO:
         ✔ Ceck Puff against version in Manley workspace, especially the blur filter part @started(24-02-13 15:18) @done(24-02-13 17:05) @lasted(1h47m57s)
         ✔ Add anim-suffix to flip. @done(24-02-13 22:35)
         ✔ Finish flip @done(24-02-13 23:32)
-        ☐ Copy it and update values for flip-2
-          ☐ Copied
-          ☐ Change values
-        ☐ Retest 2 at start
-          ☐ Bounce
-          ☐ Bounciness
-        ☐ Test and update be flip-scale-2
-        ☐ Test & Update flip-scale
-        ☐ Test & Update pan-wipe
+        ✔ Retest Bounce @done(24-02-14 01:22)
+        ✔ Retest Bounciness @started(24-02-14 01:22) @done(24-02-14 01:50) @lasted(28m39s)
+        ✔ Update and test color-shifter @done(24-02-14 02:14)
+        ✔ Test & update flip-scale-2 @done(24-02-14 02:28)
+        ✔ Test & Update flip-scale @done(24-02-14 02:52)
+        ☐ Test pan-wipe
         ☐ Test and update puff
         ☐ Test and update roll
         ☐ Test and update rotate-scale

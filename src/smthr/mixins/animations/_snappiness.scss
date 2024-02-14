@@ -2,6 +2,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/is-alias' as *;
 
 /// Animates an element like it is a rubber band being pulled and snapped.
 ///
@@ -27,6 +28,8 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Function} is-alias
+///
 /// @throw Invalid $direction value
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value
@@ -163,8 +166,7 @@
       $iterations: string.to-lower-case($iterations);
     }
 
-    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i'
-    {
+    @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
@@ -202,10 +204,9 @@
       'nor'
   {
     $anim-dir: null;
-  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'rvs' or $anim-dir == 'r' {
+  } @else if is-alias('reverse' $anim-dir) {
     $anim-drection: reverse;
-  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  {
+  } @else if is-alias('alternate' $anim-dir) {
     $anim-dir: alternate;
   } @else if (
       $anim-dir ==
@@ -303,6 +304,8 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @alias {Function} is-alias
+///
 /// @throw Invalid $direction value
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value

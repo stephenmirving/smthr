@@ -2,11 +2,12 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/is-alias' as *;
 
 /// Adds bounciness to a given element, bouncing it in place.
 ///
 /// @param {String} $direction [top] - The direction the animation will appear
-/// to be bouncing towards.
+/// to be bouncing towards. Acceptable values are 'up', 'down', 'left', 'right'.
 /// @param {Time} $timing [0.9s] The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {Number|String} $iterations [null] - The number of iterations
@@ -22,6 +23,8 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Function} is-alias
+///
 /// @throw Invalid $direction value
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value
@@ -43,6 +46,7 @@
   $dir-val4: translateY(-6px);
   $dir-val5: translateY(-4px);
   $dir-val6: translateY(0);
+  $anim-suffix: '-from-top';
 
   @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
@@ -60,29 +64,33 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $direction == 'bottom' or $direction == 'b' {
+  @if is-alias('bottom', $direction) {
     $dir-val1: translateY(45px);
     $dir-val2: translateY(24px);
     $dir-val3: translateY(12px);
     $dir-val4: translateY(6px);
     $dir-val5: translateY(4px);
     $dir-val6: translateY(0);
-  } @else if $direction == 'left' or $direction == 'l' {
+    $anim-suffix: '-from-bottom';
+  } @else if is-alias('left', $direction) {
     $dir-val1: translateX(-48px);
     $dir-val2: translateX(-26px);
     $dir-val3: translateX(-13px);
     $dir-val4: translateX(-6.5px);
     $dir-val5: translateY(-4px);
     $dir-val6: translateY(0);
-  } @else if $direction == 'right' or $direction == 'r' {
+    $anim-suffix: '-from-left';
+  } @else if is-alias('right', $direction) {
     $dir-val1: translateX(48px);
     $dir-val2: translateX(26px);
     $dir-val3: translateX(13px);
     $dir-val4: translateX(6.5px);
     $dir-val5: translateY(4px);
     $dir-val6: translateY(0);
-  } @else if $direction != 'top' and $direction != 't' {
-    @error 'Invalid direction of `#{meta.inspect($direction)}` for the [ bounciness() ] mixin.';
+    $anim-suffix: '-from-right';
+  } @else if not is-alias('top', $direction) {
+    @error 'Invalid direction of `#{meta.inspect($direction)}` for the ' +
+        '[ bounciness() ] mixin.';
   }
 
   @if meta.type-of($timing) != 'number' {
@@ -104,35 +112,29 @@
     }
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }
+
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ bounciness() ] ' +
-          'mixin. The delay property must be a number.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ bounciness() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       $delay: $delay * 1s;
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ bounciness() ] ' +
-          'mixin. The delay property must be in either s or ms units.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ bounciness() ] mixin. The delay property must be ' +
+          'in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
 
@@ -147,9 +149,10 @@
       $iterations: string.to-lower-case($iterations);
     }
 
-    @if $iterations == 'infinite' or $iterations == 'inf' or $iterations == 'i' {
+    @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -159,8 +162,8 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
-          '[ bounciness() ] mixin.';
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ bounciness() ] mixin.';
     }
   } @else {
     $iteratons: null;
@@ -168,53 +171,15 @@
 
   @if not
     $anim-dir or
-    $anim-dir ==
-    'none' or
-    $anim-dir ==
-    'no' or
-    $anim-dir ==
-    'n/a' or
-    $anim-dir ==
-    'n' or
-    $anim-dir ==
-    'default' or
-    $anim-dir ==
-    'def' or
-    $anim-dir ==
-    'normal' or
-    $anim-dir ==
-    'nor'
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
-  } @else if $anim-dir == 'reverse' or $anim-dir == 'rev' or $anim-dir == 'rvs' or $anim-dir == 'r' {
+  } @else if is-alias('reverse' $anim-dir) {
     $anim-drection: reverse;
-  } @else if $anim-dir == 'alternate' or $anim-dir == 'alt' or $anim-dir == 'a'
-  {
+  } @else if is-alias('alternate' $anim-dir) {
     $anim-dir: alternate;
-  } @else if
-    $anim-dir ==
-    'alternate-reverse' or
-    $anim-dir ==
-    'alternate reverse' or
-    $anim-dir ==
-    'alternatereverse' or
-    $anim-dir ==
-    'alt-rev' or
-    $anim-dir ==
-    'alt rev' or
-    $anim-dir ==
-    'altrev' or
-    $anim-dir ==
-    'alt-rvs' or
-    $anim-dir ==
-    'alt rvs' or
-    $anim-dir ==
-    'altrvs' or
-    $anim-dir ==
-    'a-r' or
-    $anim-dir ==
-    'ar'
-  {
+  } @else if is-alias('alternate-reverse' $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for' +
@@ -224,17 +189,9 @@
   @if not
     $timing-func or
     $timing-func ==
-    'none' or
-    $timing-func ==
-    'no' or
-    $timing-func ==
-    'n' or
-    $timing-func ==
-    'def' or
-    $timing-func ==
-    'default' or
-    $timing-func ==
-    'd'
+    'ease' or
+    is-alias('none', $timing-func) or
+    is-alias('normal', $timing-func)
   {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
@@ -244,14 +201,18 @@
   @if not $anim-num {
     $anim-num: null;
   } @else {
-    $anim-num: '-#{$anim-num}';
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
 
-  animation: bounciness#{$anim-num} #{$timing} #{$timing-func} #{$delay} #{$iterations}
+  animation: bounciness#{$anim-suffix} #{$timing} #{$timing-func} #{$delay} #{$iterations}
     both;
 
   @at-root {
-    @keyframes bounciness#{$anim-num} {
+    @keyframes bounciness#{$anim-suffix} {
       0% {
         opacity: 1;
         transform: #{$dir-val1};

@@ -2,6 +2,7 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/is-alias' as *;
 
 /// Animates the shift between any quantity of given colors.
 ///
@@ -32,6 +33,8 @@
 /// animation name so that the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Function} is-alias
+///
 /// @throw Not enough colors listed in $colors.
 /// @throw Invalid $bg-or-fg value.
 @mixin color-shifter(
@@ -104,23 +107,15 @@
     }
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }
@@ -152,10 +147,7 @@
     'yes' or
     $infinite ==
     'y' or
-    $infinite ==
-    'inf' or
-    $infinite ==
-    'i'
+    is-alias('infinite', $infinite)
   {
     $inf-alt: #{' ' + infinite};
 
@@ -223,11 +215,11 @@
         '`color-shifter` mixin.';
   }
 
-  animation: color-change#{$anim-num} #{$timing} #{$timing-func}#{$delay}#{$inf-alt}
+  animation: color-shifter#{$anim-num} #{$timing} #{$timing-func}#{$delay}#{$inf-alt}
     both;
 
   @at-root {
-    @keyframes color-change#{$anim-num} {
+    @keyframes color-shifter#{$anim-num} {
       $index: 1;
 
       @each $interval in $interval-values {

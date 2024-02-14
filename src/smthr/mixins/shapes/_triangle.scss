@@ -32,11 +32,11 @@
     border-color: transparent transparent $color;
     border-top-width: 0;
     border-bottom-style: solid;
-  } @else if $direction == 'right' or $direction == 'r' {
+  } @else if is-alias('right', $direction) {
     border-color: transparent transparent transparent $color;
     border-right-width: 0;
     border-left-style: solid;
-  } @else if $direction == 'left' or $direction == 'l' {
+  } @else if is-alias('left', $direction) {
     border-color: transparent $color transparent transparent;
     border-right-style: solid;
     border-left-width: 0;

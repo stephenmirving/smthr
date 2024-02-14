@@ -2,6 +2,7 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:math';
+@use '../../functions/is-alias' as *;
 
 /// Adds a text pop-up animation to a given element.
 ///
@@ -24,6 +25,8 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {Function} is-alias
+///
 /// @throw Invalid $direction value
 /// @throw Invalid $timing value
 /// @throw Invalid $delay value
@@ -61,7 +64,7 @@
     $infinite: infinite alternate;
   }
 
-  @if $direction == 'bottom' or $direction == 'b' or $direction == 'down' {
+  @if is-alias('bottom', $direction) {
     $dir-val: translateY(50px);
   } @else if
     $direction ==
@@ -113,23 +116,15 @@
     }
   }
 
-  @if $delay ==
+  @if not
+    $delay or
+    $delay ==
     0 or
     $delay ==
     0s or
     $delay ==
     0ms or
-    $delay ==
-    'none' or
-    $delay ==
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil or not
-    $delay
+    is-alias('none', $delay)
   {
     $delay: null;
   }
