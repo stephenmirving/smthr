@@ -96,7 +96,7 @@ If you want to use the normalization file _betterize.scss or the print style
 file _print.scss, simply keep them in the same directory as the _smth.scss file
 and import them into your project's stylesheet using the @forward directive.
 You could also use the @import directive but that is in the process of being
-deprecated and will be removed in future versions of Sass.
+deprecated and will be removed in future versions of Sass (see (here)[https://sass-lang.com/documentation/at-rules/import/]).
 
 **Like this:**
 
