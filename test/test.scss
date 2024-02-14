@@ -37,7 +37,7 @@
 }
 
 .active-anim {
-  @include flip-scale('down', 'diagonal2');
+  @include rotate('top', $axis: 'horizontal');
 }
 
 .front {
@@ -53,7 +53,7 @@
 }
 
 .back {
-  @include animation-back-face('vertical');
+  @include animation-back-face(diagonal);
 
   display: flex;
   align-items: center;

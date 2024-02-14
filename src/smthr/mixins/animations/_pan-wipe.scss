@@ -90,11 +90,11 @@
     $pos-val1: 100% 50%;
     $pos-val2: 0% 50%;
     $anim-suffix: '-left';
-   } @else if is-alias('top') {
+   } @else if is-alias('top', $direction) {
     $pos-val1: 50% 100%;
     $pos-val2: 50% 0%;
     $anim-suffix: '-top';
-  } @else if is-alias('bottom') {
+  } @else if is-alias('bottom', $direction) {
     $pos-val1: 50% 0%;
     $pos-val2: 50% 100%;
     $anim-suffix: '-bottom';

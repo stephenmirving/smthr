@@ -12,7 +12,8 @@
 /// child elements and the 'animation-stage` mixin for the parent element.
 ///
 /// @param {String} $direction [right] - The direction the scale effect causes
-/// the element to seem to be moving towards
+/// the element to seem to be moving towards. Can be one of the following
+/// values: 'top' or 'up' and 'down' or 'bottom'.
 /// @param {String} $axis [horizontal] - The axis the element will flip over
 /// @param {Time} $timing [0.5s] - The duration of the animation (s or ms)
 /// @param {Time} $delay [null] - The optional delay time for the animation.
@@ -130,7 +131,8 @@
     }
   } @else {
     @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
-        '[ flip-scale() ] mixin.';
+        '[ flip-scale() ] mixin. The value of $direction must be one of the ' +
+        'following values: `up` or `down` and `top` or `bottom`';
   }
 
   @if meta.type-of($timing) != 'number' {

@@ -12,8 +12,7 @@
 /// applied, respectively.
 ///
 /// @param {String|Boolean} $up-or-down [up] - Whether the elelment is
-/// scaling up or down. This value can be `up` (or true, `u`, `t`) or `down` (or
-/// false, `down`, `d`, `f`).
+/// scaling up or down.
 /// @param {Time} $timing [0.4s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally rotate along an
@@ -81,39 +80,22 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $up-or-down ==
-    true or
-    $up-or-down ==
-    'up' or
-    $up-or-down ==
-    'u' or
-    $up-or-down ==
-    't'
-  {
+  @if $up-or-down == true or is-alias('top', $up-or-down) {
     $up-or-down: true;
     $anim-suffix: '-up';
-  } @else if not
-    $up-or-down or
-    $up-or-down ==
-    'down' or
-    $up-or-down ==
-    'd' or
-    $up-or-down ==
-    'f'
-  {
+  } @else if not $up-or-down or is-alias('bottom', $up-or-down) {
     $up-or-down: false;
     $trans-val-2: scale(0.5) rotateZ(180deg);
     $anim-suffix: '-down';
   } @else {
-    @error 'Invalid direction value of [#{meta.inspect($up-or-down)}] for the ' +
-        '`rotate-scale` mixin.';
+    @error 'Invalid $up-or-down value of [#{meta.inspect($up-or-down)}] for ' +
+        'the `rotate-scale` mixin.';
   }
 
-  @if $axis and $axis != 'none' and $axis != 'no' and $axis != 'n' {
+  @if $axis and not is-alias('none', $axis) {
     $is-on-axis: true;
 
-    @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
-    {
+    @if is-alias('top-to-bottom', $axis) {
       $trans-val-1: if($up-or-down, scale(1) rotateY(0), scale(1) rotateY(0));
       $trans-val-2: if(
         $up-or-down,
@@ -125,16 +107,12 @@
         scale(1) rotateY(360deg),
         scale(1) rotateY(360deg)
       );
-    } @else if
-      $axis ==
-      'horizontal' or
-      $axis ==
-      'horz' or
-      $axis ==
-      'hor' or
-      $axis ==
-      'h'
-    {
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        '-vertically',
+        string.length($anim-suffix) + 1
+      );
+    } @else if is-alias('left-to-right', $axis) {
       $trans-val-1: if($up-or-down, scale(1) rotateX(0), scale(1) rotateX(0));
       $trans-val-2: if(
         $up-or-down,
@@ -146,39 +124,21 @@
         scale(1) rotateX(-360deg),
         scale(1) rotateX(-360deg)
       );
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        '-horizontally',
+        string.length($anim-suffix) + 1
+      );
     } @else if
-      $axis ==
-      'diagonal' or
-      $axis ==
-      'diagonal-1' or
-      $axis ==
-      'diagonal1' or
-      $axis ==
-      'diag' or
-      $axis ==
-      'diag-1' or
-      $axis ==
-      'diag1' or
-      $axis ==
-      'd' or
-      $axis ==
-      'd-1' or
-      $axis ==
-      'd1' or
-      $axis ==
-      'diagonal-2' or
-      $axis ==
-      'diagonal2' or
-      $axis ==
-      'diag-2' or
-      $axis ==
-      'diag2' or
-      $axis ==
-      'd-2'
-      $axis ==
-      'd2'
+      is-alias('bottom-left-to-top-right', $axis) or
+      is-alias('bottom-right-to-top-left', $axis)
     {
       $is-diagonal: true;
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        '-diagonally',
+        string.length($anim-suffix) + 1
+      );
 
       @if $axis ==
         'diagonal-2' or
@@ -228,7 +188,8 @@
       }
     } @else {
       @error 'Invalid $axis value of `#{meta.inspect($axis)}` for the ' +
-          '`rotate-scale` mixin.';
+          '`rotate-scale` mixin. Value of $axis must be one of the following: ' +
+          '`horizontal`, `vertical`, `diagonal1`, or `diagonal2`';
     }
   }
 
@@ -289,8 +250,7 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (
+    } @else if (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -313,16 +273,7 @@
     is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
-  } @else if
-    $anim-dir ==
-    'reverse' or
-    $anim-dir ==
-    'rev' or
-    $anim-dir ==
-    'rvs' or
-    $anim-dir ==
-    'r'
-  {
+  } @else if is-alias('reverse', $anim-dir) {
     $anim-drection: reverse;
   } @else if is-alias('alternate' $anim-dir) {
     $anim-dir: alternate;

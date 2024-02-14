@@ -84,120 +84,37 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $point == 'top' or $point == 't' {
+  @if is-alias('top', $point) {
     $trans-origin-val: 50% 0%;
     $point: 'top';
-  } @else if
-    $point ==
-    'top-right' or
-    $point ==
-    'topright' or
-    $point ==
-    'right-top' or
-    $point ==
-    'righttop' or
-    $point ==
-    't-r' or
-    $point ==
-    'tr' or
-    $point ==
-    'r-t' or
-    $point ==
-    'rt'
-  {
+  } @else if is-alias('top-right', $point) {
     $trans-origin-val: 100% 0%;
     $point: 'top-right';
-  } @else if $point == 'right' or $point == 'r' {
+  } @else if is-alias('right', $point) {
     $trans-origin-val: 100% 50%;
     $point: 'right';
-  } @else if
-    $point ==
-    'bottom-right' or
-    $point ==
-    'bottomright' or
-    $point ==
-    'right-bottom' or
-    $point ==
-    'rightbottom' or
-    $point ==
-    'b-r' or
-    $point ==
-    'br' or
-    $point ==
-    'r-b'
-  {
+  } @else if is-alias('bottom-right', $point) {
     $trans-origin-val: 100% 100%;
     $point: 'bottom-right';
-  } @else if $point == 'bottom' or $point == 'btm' or $point == 'b' {
+  } @else if is-alias('bottom', $point) {
     $trans-origin-val: 50% 100%;
     $point: 'bottom';
-  } @else if
-    $point ==
-    'bottom-left' or
-    $point ==
-    'bottomleft' or
-    $point ==
-    'left-bottom' or
-    $point ==
-    'leftbottom' or
-    $point ==
-    'left-btm' or
-    $point ==
-    'btm-left' or
-    $point ==
-    'leftbtm' or
-    $point ==
-    'btmleft' or
-    $point ==
-    'b-l' or
-    $point ==
-    'bl' or
-    $point ==
-    'l-b' or
-    $point ==
-    'lb'
-  {
+  } @else if is-alias('bottom-left', $point) {
     $trans-origin-val: 0% 100%;
     $point: 'bottom-left';
-  } @else if $point == 'left' or $point == 'l' {
+  } @else if is-alias('left', $point) {
     $trans-origin-val: 0%;
     $point: 'left';
-  } @else if
-    $point ==
-    'top-left' or
-    $point ==
-    'topleft' or
-    $point ==
-    'left-top' or
-    $point ==
-    'lefttop' or
-    $point ==
-    't-l' or
-    $point ==
-    'tl' or
-    $point ==
-    'l-t' or
-    $point ==
-    'lt'
-  {
+  } @else if is-alias('top-left', $point) {
     $trans-origin-val: 0% 0%;
     $point: 'top-left';
-  } @else if
-    $point ==
-    'center' or
-    $point ==
-    'centre' or
-    $point ==
-    'cent' or
-    $point ==
-    'cen' or
-    $point ==
-    'c'
-  {
+  } @else if is-alias('center', $point) {
     $point: 'center';
   } @else {
     @error 'Invalid $point value of `#{meta.inspect($point)}` for the ' +
-        '[ rotate() ] mixin.';
+        '[ rotate() ] mixin. The value of $point must be one of the following: ' +
+        '`top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, ' +
+        '`left`, `top-left`, or `center`.';
   }
 
   $anim-suffix: string.insert(
@@ -206,23 +123,12 @@
     string.length($anim-suffix) + 1
   );
 
-  @if not
-    $axis or
-    $axis ==
-    'none' or
-    $axis ==
-    'no' or
-    $axis ==
-    'n/a' or
-    $axis ==
-    'n'
-  {
+  @if not $axis or is-alias('none', $axis) {
     $axis: null;
   }
 
   @if $axis {
-    @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
-    {
+    @if is-alias('top-to-bottom', $axis) {
       $trans-val-1: rotateY(0);
       $trans-val-2: rotateY(360deg);
       $anim-suffix: string.insert(
@@ -241,16 +147,7 @@
       } @else if $point == 'right' {
         $trans-origin-val: 100% 50%;
       }
-    } @else if
-      $axis ==
-      'horizontal' or
-      $axis ==
-      'horz' or
-      $axis ==
-      'hor' or
-      $axis ==
-      'h'
-    {
+    } @else if is-alias('left-to-right', $axis) {
       $trans-val-1: rotateX(0);
       $trans-val-2: rotateX(-360deg);
       $anim-suffix: string.insert(
@@ -262,7 +159,7 @@
       @if $point != 'top' and $point != 'bottom' and $point != 'center' {
         @error 'You have chosen an axis value of `horizontal` that cannot be ' +
             'used with the $point value of `#{meta.inspect($point)}` for the ' +
-            '`rotate` mixin. A horizontal axis must have $point value of ' +
+            '[ rotate() ] mixin. A horizontal axis must have $point value of ' +
             'either `top`, `bottom`, or `center`.';
       } @else if $point == 'top' {
         $trans-origin-val: 50% 0%;
@@ -270,36 +167,8 @@
         $trans-origin-val: 50% 100%;
       }
     } @else if
-      $axis ==
-      'diagonal' or
-      $axis ==
-      'diagonal-1' or
-      $axis ==
-      'diagonal1' or
-      $axis ==
-      'diag' or
-      $axis ==
-      'diag-1' or
-      $axis ==
-      'diag1' or
-      $axis ==
-      'd' or
-      $axis ==
-      'd-1' or
-      $axis ==
-      'd1' or
-      $axis ==
-      'diagonal-2' or
-      $axis ==
-      'diagonal2' or
-      $axis ==
-      'diag-2' or
-      $axis ==
-      'diag2' or
-      $axis ==
-      'd-2'
-      $axis ==
-      'd2'
+      is-alias('bottom-left-to-top-right', $axis) or
+      is-alias('bottom-right-to-top-left', $axis)
     {
       $is-diagonal: true;
       $anim-suffix: string.insert(
@@ -325,23 +194,12 @@
             'either `top-left`, `top-right`, `bottom-right`, `bottom-left`, ' +
             'or `center`.';
       } @else if $point == 'center' {
-        @if $axis ==
-          'diagonal-2' or
-          $axis ==
-          'diagonal2' or
-          $axis ==
-          'diag-2' or
-          $axis ==
-          'diag2' or
-          $axis ==
-          'd2' or
-          $axis ==
-          'd2'
-        {
+        @if is-alias('bottom-right-to-top-left', $axis) {
           $trans-val-1: rotate3d(-1, 1, 0, 0);
           $trans-val-diag: rotate3d(-1, 1, 0, 180deg);
           $trans-val-2: rotate3d(-1, 1, 0, 360deg);
         } @else {
+          // Settings for 'diagonal2'/'bottom-right-to-top-left' axis
           $trans-val-1: rotate3d(1, 1, 0, 0);
           $trans-val-diag: rotate3d(1, 1, 0, -180deg);
           $trans-val-2: rotate3d(1, 1, 0, -360deg);
@@ -369,7 +227,9 @@
       }
     } @else {
       @error 'Invalid $axis value of [ #{meta.inspect($axis)} ] for the ' +
-          '[ rotate() ] mixin.';
+          '[ rotate() ] mixin. The value of $axis must either be `null` or one ' +
+          'of the following: `horizontal`, `vertical`, `diagonal1`, or ' +
+          '`diagonal2`.';
     }
   }
 
@@ -453,41 +313,15 @@
     is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
-  } @else if
-    $anim-dir ==
-    'reverse' or
-    $anim-dir ==
-    'rev' or
-    $anim-dir ==
-    'rvs' or
-    $anim-dir ==
-    'r'
-  {
+  } @else if is-alias('reverse', $anim-dir) {
     $anim-drection: reverse;
   } @else if is-alias('alternate' $anim-dir) {
     $anim-dir: alternate;
-  } @else if
-    $anim-dir ==
-    'alternate-reverse' or
-    $anim-dir ==
-    'alternatereverse' or
-    $anim-dir ==
-    'alt-rev' or
-    $anim-dir ==
-    'altrev' or
-    $anim-dir ==
-    'alt-rvs' or
-    $anim-dir ==
-    'altrvs' or
-    $anim-dir ==
-    'a-r' or
-    $anim-dir ==
-    'ar'
-  {
+  } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
-        '`rotate` mixin';
+        '[ rotate() ] mixin.';
   }
 
   @if not

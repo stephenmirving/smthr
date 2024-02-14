@@ -185,9 +185,8 @@
         '`scale-down` mixin.';
   }
 
-  @if $axis and $axis != 'none' and $axis != 'no' and $axis != 'n' {
-    @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
-    {
+  @if $axis and not is-alias('none', $axis) {
+    @if is-alias('top-to-bottom', $axis) {
       $trans-val-1: scaleY(1);
       $trans-val-2: scaleY(0.3);
       $anim-suffix: '-vertically-to';

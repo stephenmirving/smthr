@@ -186,9 +186,8 @@
     '`scale-up` mixin.';
   }
 
-  @if $axis and $axis != 'none' and $axis != 'no' and $axis != 'n' {
-    @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
-    {
+  @if $axis and not is-alias('none', $axis) {
+    @if is-alias('top-to-bottom', $axis) {
       $trans-val-1: scaleY(0.4);
       $trans-val-2: scaleY(1);
       $anim-suffix: '-vertically-from';
@@ -209,16 +208,7 @@
       } @else if $direction == 'bottom' {
         $trans-origin-val: 0% 100%;
       }
-    } @else if
-      $axis ==
-      'horizontal' or
-      $axis ==
-      'horz' or
-      $axis ==
-      'hor' or
-      $axis ==
-      'h'
-    {
+    } @else if is-alias('left-to-right', $axis) {
       $trans-val-1: scaleX(0.4);
       $trans-val-2: scaleX(1);
       $anim-suffix: '-horizontally-from';

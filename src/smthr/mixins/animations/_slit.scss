@@ -72,9 +72,9 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $in-or-out == true or $in-or-out == 'in' or $in-or-out == 'i' {
+  @if $in-or-out == true or is-alias('in', $in-or-out) {
     $in-or-out: true;
-  } @else if not $in-or-out or $in-or-out == 'out' or $in-or-out == 'o' {
+  } @else if not $in-or-out or is-alias('out', $in-or-out) {
     $in-or-out: false;
   } @else {
     @error 'Invalid $in-or-out value of `#{meta.inspect($in-or-out)}` for the ' +
@@ -86,8 +86,7 @@
       $axis: string.to-lower-case($axis);
     }
 
-    @if $axis == 'vertical' or $axis == 'vert' or $axis == 'ver' or $axis == 'v'
-    {
+    @if is-alias('top-to-bottom', $axis) {
       $trans-val-1: translateZ(-800px) rotateY(90deg);
       $trans-val-2: translateZ(-160px) rotateY(87deg);
       $trans-val-3: translateZ(0) rotateY(0);

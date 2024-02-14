@@ -22,11 +22,11 @@ TODO:
         ✔ Update and test color-shifter @done(24-02-14 02:14)
         ✔ Test & update flip-scale-2 @done(24-02-14 02:28)
         ✔ Test & Update flip-scale @done(24-02-14 02:52)
-        ☐ Test pan-wipe
-        ☐ Test and update puff
-        ☐ Test and update roll
-        ☐ Test and update rotate-scale
-        ☐ Test and update rotate
+        ✔ Test pan-wipe @done(24-02-14 12:41)
+        ✔ Test and update puff @done(24-02-14 13:09)
+        ✔ Test and update roll @done(24-02-14 13:23)
+        ✔ Test and update rotate-scale @done(24-02-14 14:25)
+        ✔ Test and update rotate @done(24-02-14 14:35)
         ☐ Test and update scale-down
         ☐ Test and update scale-up
         ☐ Test and update slide

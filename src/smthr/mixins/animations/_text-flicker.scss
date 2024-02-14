@@ -58,7 +58,7 @@
 
   @if $in-or-out == 'in' or $in-or-out == 'i' or $in-or-out == true {
     $in-or-out: true;
-  } @else if not $in-or-out or $in-or-out == 'out' or $in-or-out == 'o' {
+  } @else if not $in-or-out or is-alias('out', $in-or-out) {
     $in-or-out: false;
   } @else {
     @error 'Invalid in-out value of `#{meta.inspect($in-or-out)}` for the `text-flicer` mixin';
