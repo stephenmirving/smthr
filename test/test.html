@@ -5,15 +5,61 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>TEST</title>
 	<link rel="stylesheet" href="test.css">
+
+	<style>
+		*,
+		::before,
+		::after {
+			box-sizing: inherit;
+			background-repeat: no-repeat;
+		}
+
+		::before,
+		::after {
+			vertical-align: inherit;
+			text-decoration: inherit;
+		}
+
+		html {
+			overflow: hidden;
+			box-sizing: border-box;
+			font-family:
+				system-ui,
+				sans-serif,
+				'Apple Color Emoji',
+				'Segoe UI Emoji',
+				'Segoe UI Symbol';
+			line-height: 1.4;
+			overflow-wrap: break-word;
+			cursor: default;
+		}
+
+		body {
+			min-height: 100dvh;
+			margin: 0;
+			color: #333;
+		}
+	</style>
 </head>
+
 <body>
-	<div class="stage">
-		<div class="card">
-			<div class="front">
-				<div class="txt">FRONT</div>
-			</div>
-			<div class="back">
-				<div class="txt">BACK</div>
+	<div class="container">
+		<div class="controls-wrapper">
+			<button
+				type="button"
+				class="btn"
+				id="btn-primary"
+				onclick="document.getElementById('anim-card').classList.toggle('active-anim')"
+			>ACTIVATE ANIMATION</button>
+		</div>
+		<div class="stage">
+			<div class="card" id="anim-card">
+				<div class="front">
+					<div class="txt">FRONT</div>
+				</div>
+				<div class="back">
+					<div class="txt">BACK</div>
+				</div>
 			</div>
 		</div>
 	</div>

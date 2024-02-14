@@ -1,14 +1,19 @@
-body {
+.container {
   display: grid;
   place-items: center;
+  width: 100%;
   height: 100dvh;
-  margin: 0;
+}
+
+.controls-wrapper {
+  position: absolute;
+  top: 5%;
 }
 
 .stage {
   width: 80%;
   height: 80vh;
-  z-index: 999;
+  z-index: 900;
   -webkit-user-select: none;
   user-select: none;
   perspective: 500px;
@@ -18,33 +23,29 @@ body {
   align-items: center;
   justify-content: center;
   border: 4px solid #000;
-  margin: 3rem auto;
+  margin: 0 auto;
   background: lightblue;
 }
 
 .card {
   width: 200px;
   height: 200px;
-  transform: translate3d(0, 0, 0);
-  transform-style: preserve-3d;
-  animation: rotate-around-center-diagonally 1.2s linear both;
-  font: 700 2.25rem system-ui, sans-serif;
+  font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
+  position: relative;
 }
-@-moz-document url-prefix() {
-  .card {
-    backface-visibility: hidden;
-  }
+
+.active-anim {
+  animation: rotate-around-top 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
-@keyframes rotate-around-center-diagonally {
+@keyframes rotate-around-top {
   0% {
-    transform: rotate3d(1, 1, 0, 0);
-  }
-  50% {
-    transform: rotate3d(1, 1, 0, -180deg);
+    transform: rotate(0);
+    transform-origin: 50% 0%;
   }
   100% {
-    transform: rotate3d(1, 1, 0, -360deg);
+    transform: rotate(360deg);
+    transform-origin: 50% 0%;
   }
 }
 
@@ -68,7 +69,7 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  transform: rotate3d(1, 1, 0, 180deg);
+  transform: rotateX(180deg);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   z-index: 10;
@@ -78,11 +79,5 @@ body {
   border: 2px solid red;
   border-radius: 10px;
   background: #53a3dc padding-box;
-  text-align: center;
-}
-
-.txt {
-  display: inline;
-  font-size: 3em;
   text-align: center;
 }
