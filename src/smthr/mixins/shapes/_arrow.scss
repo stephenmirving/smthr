@@ -1,50 +1,96 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-angle' as *;
 
 /// Uses clip path to change an element to the shape of an arrow.
 ///
-/// @param {String} $direction [right] The direction the arrow is pointing
-/// @param {Color|Mixed} $bg [#fb8c00] The color or background value.
-/// @param {Length-Percentage} $size [15rem] - The size of the arrow. If
+/// @param {String|Angle} $direction [right] - The direction the arrow is
+/// pointing.
+/// @param {Length-Percentage} $size [null] - The size of the arrow. If
 /// the $height property is not set explicitly, it is both height and width, if
 /// $height is set explicitly, then this value sets only the width.
-/// @param {Color} $fg-color [null] The color of any text in the arrow.
-/// @param {Length-Percentage} $height [$size] The height of the arrow.
+/// @param {Color|Mixed} $bg [null] - The color or background value.
+/// @param {Color} $fg-color [null] - The color of any text in the arrow.
+/// @param {Length-Percentage} $height [$size] - The height of the arrow.
 ///
 /// @group Shapes
 @mixin arrow(
   $direction: 'right',
-  $bg: #fb8c00,
-  $size: 15rem,
+  $size: null,
+  $bg: null,
   $fg-color: null,
   $height: $size
 ) {
   @if meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
-  }
 
-  @if is-alias('right', $direction) {
-    clip-path: polygon(
-      0 20%,
-      60% 20%,
-      60% 0,
-      100% 50%,
-      60% 100%,
-      60% 80%,
-      0 80%
-    );
-  } @else if is-alias('left', $direction) {
-    clip-path: polygon(
-      40% 0,
-      40% 20%,
-      100% 20%,
-      100% 80%,
-      40% 80%,
-      40% 100%,
-      0 50%
-    );
-  } @else if is-alias('top', $direction) {
+    @if is-alias('right', $direction) or is-alias('bottom-right', $direction) {
+      clip-path: polygon(
+        0 20%,
+        60% 20%,
+        60% 0,
+        100% 50%,
+        60% 100%,
+        60% 80%,
+        0 80%
+      );
+
+      @if is-alias('bottom-right', $direction) {
+        transform: rotate(45deg);
+      }
+    } @else if is-alias('left', $direction) or is-alias('top-left', $direction)
+    {
+      clip-path: polygon(
+        40% 0,
+        40% 20%,
+        100% 20%,
+        100% 80%,
+        40% 80%,
+        40% 100%,
+        0 50%
+      );
+
+      @if is-alias('top-left', $direction) {
+        transform: rotate(45deg);
+      }
+    } @else if is-alias('top', $direction) or is-alias('top-right', $direction)
+    {
+      clip-path: polygon(
+        100% 50%,
+        75% 50%,
+        75% 100%,
+        25% 100%,
+        25% 50%,
+        0 50%,
+        50% 0
+      );
+
+      @if is-alias('top-right', $direction) {
+        transform: rotate(45deg);
+      }
+    } @else if
+      is-alias('bottom', $direction) or
+      is-alias('bottom-left', $direction)
+    {
+      clip-path: polygon(
+        75% 0,
+        75% 50%,
+        100% 50%,
+        50% 100%,
+        0 50%,
+        25% 50%,
+        25% 0
+      );
+
+      @if is-alias('bottom-left', $direction) {
+        transform: rotate(45deg);
+      }
+    } @else {
+      @error 'Invalid $direction of `#{meta.inspect($direction)}` for the ' +
+          '[ arrow() ] mixin';
+    }
+  } @else if is-angle($direction) {
     clip-path: polygon(
       100% 50%,
       75% 50%,
@@ -54,24 +100,20 @@
       0 50%,
       50% 0
     );
-  } @else if is-alias('bottom', $direction) {
-    clip-path: polygon(
-      75% 0,
-      75% 50%,
-      100% 50%,
-      50% 100%,
-      0 50%,
-      25% 50%,
-      25% 0
-    );
+    transform: rotate($direction);
   } @else {
-    @error 'Invalid direction of `#{meta.inspect($direction)}` for the ' +
-        '[ arrow() ] mixin';
+    @error 'Invalid $direction of `#{meta.inspect($direction)}` for the ' +
+          '[ arrow() ] mixin';
   }
 
-  width: $size;
-  height: $height;
-  background: $bg;
+  @if $size {
+    width: $size;
+    height: $height;
+  }
+
+  @if $bg {
+    background: $bg;
+  }
 
   @if $fg-color {
     color: $fg-color;

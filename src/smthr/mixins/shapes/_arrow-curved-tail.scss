@@ -11,17 +11,17 @@
 /// @param {String|Angle} $direction ['bottom-right'] The direction that the
 /// arrow is pointing. Can either be a direction or an angle in degrees, turns,
 /// radians, or gradians.
-/// @param {Color|Mixed} $bg-color [#f00] The color of the arrow.
 /// @param {Length} $size [2rem] - The size of the arrow is calculated based on
 /// this value.
+/// @param {Color|Mixed} $bg-color [#f00] The color of the arrow.
 ///
 /// @group Shapes
 /// @throw Invalid unit type for $direction
 /// @throw Invalid $direction value
 @mixin arrow-curved-tail(
   $direction: 'bottom-right',
-  $bg-color: #f00,
-  $size: 2rem
+  $size: 2rem,
+  $bg-color: #f00
 ) {
   // Default angle for the 'bottom-right' direction
   $angle: 10deg;
@@ -101,7 +101,7 @@
     height: $size;
     border: 0 solid transparent;
     border-top: math.div($size, 4) solid $bg-color;
-    border-radius: ($size * 1.6666666667) 0 0;
+    border-radius: ($size * 1.6666667) 0 0;
     transform: rotate(45deg);
   }
 }

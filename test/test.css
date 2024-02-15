@@ -29,26 +29,19 @@
 
 .card {
   position: relative;
-  width: 0;
-  height: 0;
-  border-top: 3rem solid transparent;
-  border-right: 3rem solid #80f;
-  transform: rotate(45deg);
-  position: relative;
+  background: rgba(136, 0, 255, 0.85);
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
+  width: 14rem;
+  height: 14rem;
+  transition: all 1s;
 }
-.card::after {
-  content: "";
-  position: absolute;
-  top: -4rem;
-  left: -3rem;
-  width: 4rem;
-  height: 4rem;
-  border: 0 solid transparent;
-  border-top: 1rem solid #80f;
-  border-radius: 6.6666666668rem 0 0;
-  transform: rotate(45deg);
+
+.active-anim {
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  width: 15rem;
+  height: 15rem;
+  background: #fb8c00;
 }
 
 .front {
@@ -88,6 +81,10 @@
   display: inline;
   font-size: 3em;
   text-align: center;
+}
+
+.front .txt {
+  content: color;
 }
 
 /*# sourceMappingURL=test.css.map */

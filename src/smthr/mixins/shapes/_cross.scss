@@ -1,17 +1,34 @@
 /// Uses clip path to change an element to a Christian cross shape.
 ///
-/// @param {Color|Mixed} $bg [#fb8c00] The color or background value
 /// @param {Length-Percentage} $size [15rem] - The height and width.
+/// @param {Color|Mixed} $bg [#fb8c00] The color or background value
 /// @param {Color} $fg-color [null] The color of any text in the shape.
 ///
 /// @group Shapes
-@mixin cross($bg: #fb8c00, $size: 15rem, $fg-color: null) {
-  clip-path: polygon( 10% 25%, 35% 25%, 35% 0, 65% 0,
-                      65% 25%, 90% 25%, 90% 50%, 65% 50%,
-                      65% 100%, 35% 100%, 35% 50%, 10% 50% );
-  width: $size;
-  height: $size;
-  background: $bg;
+@mixin cross($size: 15rem, $bg: #fb8c00, $fg-color: null) {
+  clip-path: polygon(
+    10% 25%,
+    35% 25%,
+    35% 0,
+    65% 0,
+    65% 25%,
+    90% 25%,
+    90% 50%,
+    65% 50%,
+    65% 100%,
+    35% 100%,
+    35% 50%,
+    10% 50%
+  );
+
+  @if $size {
+    width: $size;
+    height: $size;
+  }
+
+  @if $bg {
+    background: $bg;
+  }
 
   @if $fg-color {
     color: $fg-color;

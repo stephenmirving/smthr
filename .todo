@@ -18,11 +18,11 @@ TODO:
           ✔ Test and update zoom-in @done(24-02-15 00:57)
       ☐ Test all Shape mixins
         ✔ arrow-curved-tail @done(24-02-15 03:06)
-        ☐ arrow
-        ☐ bevel
-        ☐ chevron
-        ☐ circle
-        ☐ cross
+        ✔ arrow @done(24-02-15 12:30)
+        ✔ bevel @done(24-02-15 15:14)
+        ✔ chevron @done(24-02-15 15:14)
+        ✔ circle @done(24-02-15 15:14)
+        ✔ cross @done(24-02-15 15:14)
         ☐ diamond
         ☐ frame
         ☐ hamburger
@@ -112,7 +112,8 @@ TODO:
 
   Shapes Mixins:
     ☐ Go to shapes page with psuedo elements and add those (Figure out what shapes page is?)
-    ☐ Propogate the updated version of arrow-curved-tail
+    ✔ Propogate the updated version of arrow-curved-tail @done(24-02-15 12:08)
+    ☐ Make a mixin for animating between clip-path shapes. https://css-tricks.com/animating-with-clip-path/
 
   Utility Mixins:
     ☐ Finish and propogate line-clamp mixin

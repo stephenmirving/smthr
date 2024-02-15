@@ -29,17 +29,19 @@
 }
 
 .card {
-  @include arrow-curved-tail($direction: 200grad, $size: 4rem, $bg-color: #80f);
-
   position: relative;
-  // background: rgba(#80f, 85%);
+  background: rgba(#80f, 85%);
   font:
     700 1.125rem system-ui,
     sans-serif;
   text-align: center;
+  width: 14rem;
+  height: 14rem;
+  transition: all 1s;
 }
 
 .active-anim {
+  @include diamond();
 }
 
 .front {
@@ -73,4 +75,5 @@
 }
 
 .front .txt {
+  content: meta.type-of(blue);
 }
