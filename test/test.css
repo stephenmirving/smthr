@@ -38,12 +38,12 @@
 .active-anim {
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: txt-track-out-expand-backwards-from-top 0.8s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+  animation: txt-track-out-expand-backwards 0.8s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
-@keyframes txt-track-out-expand-backwards-from-top {
+@keyframes txt-track-out-expand-backwards {
   0% {
     opacity: 1;
-    transform: translateZ(0) translateY(0);
+    transform: translateZ(0);
   }
   60% {
     opacity: 0.8;
@@ -51,7 +51,7 @@
   100% {
     opacity: 0;
     letter-spacing: 1em;
-    transform: translateZ(300px) translateY(-200px);
+    transform: translateZ(300px);
   }
 }
 

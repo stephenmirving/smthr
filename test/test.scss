@@ -37,7 +37,7 @@
 }
 
 .active-anim {
-  @include text-tracking-out('expand', false, top);
+  @include text-tracking-out('expand', false);
 }
 
 .front {
