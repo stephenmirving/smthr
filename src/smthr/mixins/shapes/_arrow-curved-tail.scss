@@ -1,6 +1,7 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/conv-angle' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-angle' as *;
 
@@ -50,6 +51,9 @@
       @if math.is-unitless($angle) {
         $angle: $angle * 1deg;
       }
+
+      // Convert angle into degrees for easier math
+      $angle: conv-angle($angle, deg);
 
       // Correct the angle so the arrow points to the top at 0deg
       $angle: $angle - 135deg;

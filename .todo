@@ -54,7 +54,8 @@ TODO:
     ☐ Finish propogating pseudo mixin to the dist folder
 
   Functions:
-    ☐ Add conversion function for angle that takes an angle of any unit type and converts to a given unit type
+    ✔ Add conversion function for angle that takes an angle of any unit type and converts to a given unit type @done(24-02-15 02:45)
+    ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.
     ☐ Finish and propogate trend-line() function:
       ☐ Function finished
       ☐ Function added to main build file

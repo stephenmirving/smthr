@@ -425,8 +425,7 @@ $map-alias-resolutions: (
     'horizontally',
     'horizontal',
     'horiz',
-    'horz'
-    'h',
+    'horz' 'h',
     'left-to-right',
     'left to right',
     'lefttoright',
@@ -1038,5 +1037,27 @@ $map-alias-resolutions: (
     'infinite',
     'inf',
     'i'
+  ),
+  'deg': (
+    'degrees',
+    'degree',
+    'degs',
+    'deg'
+  ),
+  'rad': (
+    'radians',
+    'radian',
+    'rads',
+    'rad'
+  ),
+  'turn': (
+    'turns',
+    'turn'
+  ),
+  'grad': (
+    'gradians',
+    'gradian',
+    'grads',
+    'grad'
   )
 ) !default;

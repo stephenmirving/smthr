@@ -29,7 +29,7 @@
 }
 
 .card {
-  @include arrow-curved-tail($direction: 270deg, $size: 4rem, $bg-color: #80f);
+  @include arrow-curved-tail($direction: 200grad, $size: 4rem, $bg-color: #80f);
 
   position: relative;
   // background: rgba(#80f, 85%);

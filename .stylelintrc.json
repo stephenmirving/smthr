@@ -593,7 +593,7 @@
     ],
     "scss/dollar-variable-first-in-block": null,
     "scss/dollar-variable-no-missing-interpolation": true,
-    "scss/dollar-variable-pattern": "^[a-z0-9]+(?:-{1,2}(?!-)[a-z0-9]+)*(?:(?:-{1,2})[1-9]\\d*)?(?:-{1,2}(?!-)[a-z0-9]+)*(?:(?:-{1,2})[1-9]\\d*)?_?$",
+    "scss/dollar-variable-pattern": "^_?[a-z0-9]+(?:-{1,2}(?!-)[a-z0-9]+)*(?:(?:-{1,2})[1-9]\\d*)?(?:-{1,2}(?!-)[a-z0-9]+)*(?:(?:-{1,2})[1-9]\\d*)?$",
     "scss/percent-placeholder-pattern": "^_?[a-z]+(?:-{1,2}[a-z]+)*(?:-[1-9]\\d*)?(?:-{1,2}[a-z]+)*(?:-[1-9]\\d*)?$",
     "scss/double-slash-comment-whitespace-inside": "always",
     "scss/block-no-redundant-nesting": [

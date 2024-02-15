@@ -1,5 +1,8 @@
 @use 'sass:math';
 @use 'sass:meta';
+@use 'sass:string';
+@use 'sass:map';
+@use './is-alias' as *;
 @use './is-angle' as *;
 @use './strip-unit' as *;
 @use './pi' as *;
@@ -7,141 +10,132 @@
 
 /// Takes a given $angle in either turns (turn), degrees (deg), gradians (grad),
 /// or radian (rad) units, and converts that angle into an alternate unit type
-/// defined by $conversion-unit,
+/// defined by $convert-to,
 ///
-/// @param {Angle} $angle - An angle value. Can be in turn, deg, grad, or rad
-/// units.
-/// @param {String} $conversion-unit
+/// @param {Angle|String} $angle - An angle value. Can be in turn, deg, grad,
+/// or rad units. Can also be a keyword string with one of the following values:
+/// `top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`,
+/// `left`, or `top-left`.
+/// @param {String} $convert-to [deg] - The type of angle notation the given
+/// $angle should be converted to.
+///
 /// @return {Angle} The converted angle.
 ///
+/// @require {function} missing-dependencies
+/// @require {function} is-alias
 /// @require {function} is-angle
 /// @require {function} strip-unit
 /// @require {function} pi
-/// @require {function} missing-dependencies
-@function conv-angle($angle, $conv-unit) {
-  $missing: missing-dependencies('is-angle', 'strip-unit', 'pi');
-  $start-unit: math.unit($angle);
+///
+/// @throw Invalid $angle unit type error.
+/// @throw Invalid $angle keyword string error.
+/// @throw Invalid $angle data type error.
+/// @throw Invalid $convert-to angle unit keyword string error.
+@function conv-angle($angle, $convert-to: deg) {
+  // $_missing: missing-dependencies('is-angle', 'strip-unit', 'pi');
+  $start-unit: '';
+  $directions-to-degrees: (
+    'top': 0deg,
+    'top-right': 45deg,
+    'right': 90deg,
+    'bottom-right': 135deg,
+    'bottom': 180deg,
+    'bottom-left': 225deg,
+    'left': 270deg,
+    'top-left': 315deg
+  );
+  $keyword-found: false;
 
-  @if not is-angle($angle) {
-    @error 'Value of $angle in conv-angle() must be a valid angle.';
+  @if meta.type-of($angle) == 'number' {
+    @if math.is-unitless($angle) {
+      @if $angle > 1 or $angle < -1 {
+        $angle: $angle * 1deg;
+      } @else {
+        $angle: $angle * 1turn;
+      }
+    }
+
+    @if is-angle($angle) {
+      $start-unit: math.unit($angle);
+    } @else {
+      @error 'Invalid $angle unit type passed to the [ conv-angle() ] function.' +
+        'Valid angle units are `deg`, `turn`, `rad`, or `grad`.';
+    }
+  } @else if meta.type-of($angle) == 'string' {
+    $angle: string.to-lower-case($angle);
+
+    @each $direction, $value in $directions-to-degrees {
+      @if not $keyword-found {
+        @if is-alias($direction, $angle) {
+          $keyword-found: true;
+          $angle: $value;
+          $start-unit: math.unit($angle);
+        }
+      }
+    }
+
+    @if not $keyword-found {
+      @error 'Invalid $angle keyword passed to the [ conv-angle() ] function. ' +
+          'Please either pass a valid angle, or use one of the following ' +
+          'keyword options: `top`, `top-right`, `right`, `bottom-right`, ' +
+          '`bottom`, `bottom-left`, `left`, or `top-left`.';
+    }
+  } @else {
+    @error 'Invalid $angle data type of `#{meta.type-of($angle)}` passed to ' +
+        'the [ conv-angle() ] function. You must pass either a number or ' +
+        'a string.';
   }
 
-  @if $conv-unit == 'turn' or $conv-unit == 'turns' or $conv-unit == 't' {
-    $conv-unit: turn;
-  } @else if
-    $conv-unit ==
-    'degrees' or
-    $conv-unit ==
-    'degree' or
-    $conv-unit ==
-    'deg' or
-    $conv-unit ==
-    'degs' or
-    $conv-unit ==
-    'd'
-  {
-    $conv-unit: deg;
-  } @else if
-    $conv-unit ==
-    'radians' or
-    $conv-unit ==
-    'radian' or
-    $conv-unit ==
-    'rads' or
-    $conv-unit ==
-    'rad' or
-    $conv-unit ==
-    'r'
-  {
-    $conv-unit: rad;
-  } @else if
-    $conv-unit ==
-    'gradians' or
-    $conv-unit ==
-    'gradian' or
-    $conv-unit ==
-    'grads' or
-    $conv-unit ==
-    'grad' or
-    $conv-unit ==
-    'g'
-  {
-    $conv-unit: grad;
+  @if is-alias('turn', $convert-to) {
+    $convert-to: turn;
+  } @else if is-alias('deg', $convert-to) {
+    $convert-to: deg;
+  } @else if is-alias('rad', $convert-to) {
+    $convert-to: rad;
+  } @else if is-alias('grad', $convert-to) {
+    $convert-to: grad;
+  } @else {
+    @error 'Invalid $convert-to unit name passed to the [ conv-angle() ] ' +
+        'function. Valid angle units are `deg`, `turn`, `rad`, or `grad`.';
   }
 
-  @if math.unit($angle) == $conv-unit {
+  @if math.unit($angle) == $convert-to {
     @return $angle;
   }
 
   $angle: strip-unit($angle);
 
   @if $start-unit == 'turn' {
-    @if $conv-unit == 'deg' {
+    @if $convert-to == 'deg' {
       $angle: 360deg * $angle;
-    } @else if $conv-unit == 'rad' {
+    } @else if $convert-to == 'rad' {
       $angle: pi(2rad) * $angle;
-    } @else if $conv-unit == 'grad' {
+    } @else if $convert-to == 'grad' {
       $angle: 400grad * $angle;
     }
   } @else if $start-unit == 'deg' {
-    @if $conv-unit == 'turn' {
-      $angle: if(
-        $divide-supported,
-        math.div($angle, 360) * 1turn,
-        math.div($angle, 360) * 1turn
-      );
-    } @else if $conv-unit == 'rad' {
-      $angle: if(
-        $divide-supported,
-        $angle * math.div(pi(), 180) * 1rad,
-        $angle * math.div(pi(), 180) * 1rad
-      );
-    } @else if $conv-unit == 'grad' {
-      $angle: if(
-        $divide-supported,
-        $angle * math.div(200, 180) * 1grad,
-        $angle * math.div(200, 180) * 1grad
-      );
+    @if $convert-to == 'turn' {
+      $angle: math.div($angle, 360) * 1turn;
+    } @else if $convert-to == 'rad' {
+      $angle: $angle * math.div(pi(), 180) * 1rad;
+    } @else if $convert-to == 'grad' {
+      $angle: $angle * math.div(200, 180) * 1grad;
     }
   } @else if $start-unit == 'rad' {
-    @if $conv-unit == 'turn' {
-      $angle: if(
-        $divide-supported,
-        math.div($angle, pi(2)) * 1turn,
-        math.div($angle, pi(2)) * 1turn
-      );
-    } @else if $conv-unit == 'deg' {
-      $angle: if(
-        $divide-supported,
-        $angle * math.div(180, pi()) * 1deg,
-        $angle * math.div(180, pi()) * 1deg
-      );
-    } @else if $conv-unit == 'grad' {
-      $angle: if(
-        $divide-supported,
-        $angle * math.div(200, pi()) * 1grad,
-        $angle * math.div(200, pi()) * 1grad
-      );
+    @if $convert-to == 'turn' {
+      $angle: math.div($angle, pi(2)) * 1turn;
+    } @else if $convert-to == 'deg' {
+      $angle: $angle * math.div(180, pi()) * 1deg;
+    } @else if $convert-to == 'grad' {
+      $angle: $angle * math.div(200, pi()) * 1grad;
     }
   } @else if $start-unit == 'grad' {
-    @if $conv-unit == 'turn' {
-      $angle: if(
-        $divide-supported,
-        math.div($angle, 400) * 1turn,
-        math.div($angle, 400) * 1turn
-      );
-    } @else if $conv-unit == 'deg' {
-      $angle: if(
-        $divide-supported,
-        $angle * math.div(180, 200) * 1deg,
-        $angle * math.div(180, 200) * 1deg
-      );
-    } @else if $conv-unit == 'rad' {
-      $angle: if(
-        $divide-supported,
-        $angle * math.div(pi(), 200) * 1rad,
-        $angle * math.div(pi(), 200) * 1rad
-      );
+    @if $convert-to == 'turn' {
+      $angle: math.div($angle, 400) * 1turn;
+    } @else if $convert-to == 'deg' {
+      $angle: $angle * math.div(180, 200) * 1deg;
+    } @else if $convert-to == 'rad' {
+      $angle: $angle * math.div(pi(), 200) * 1rad;
     }
   }
 

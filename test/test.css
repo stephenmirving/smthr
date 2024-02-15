@@ -33,7 +33,7 @@
   height: 0;
   border-top: 3rem solid transparent;
   border-right: 3rem solid #80f;
-  transform: rotate(135deg);
+  transform: rotate(45deg);
   position: relative;
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
