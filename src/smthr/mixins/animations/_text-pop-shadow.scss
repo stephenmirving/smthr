@@ -35,33 +35,34 @@
 @mixin text-pop-shadow(
   $direction: 'bottom-left',
   $duration: 0.7s,
-  $color: #555,
+  $shadow-color: #555,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
   $timing-func: null,
   $anim-num: null
 ) {
+  @if not $shadow-color {
+    $shadow-color: #555;
+  }
+
   // Default value for the 'top' direction
   $trans-val-1: translateY(0);
   $shadow-val:
-    0 -1px $color,
-    0 -2px $color,
-    0 -3px $color,
-    0 -4px $color,
-    0 -5px $color,
-    0 -6px $color,
-    0 -7px $color,
-    0 -8px $color;
+    0 -1px $shadow-color,
+    0 -2px $shadow-color,
+    0 -3px $shadow-color,
+    0 -4px $shadow-color,
+    0 -5px $shadow-color,
+    0 -6px $shadow-color,
+    0 -7px $shadow-color,
+    0 -8px $shadow-color;
   $trans-val-2: translateY(8px);
+  $anim-suffix: '-top';
 
-  @if $color and meta.type-of($color) != 'color' {
-    @error 'Invalid $color value of [ #{meta.inspect($color)} ] for the '
+  @if $shadow-color and meta.type-of($shadow-color) != 'color' {
+    @error 'Invalid $shadow-color value of [ #{meta.inspect($shadow-color)} ] for the '
         '[ text-pop-shadow ] mixin.';
-  }
-
-  @if not $color {
-    $color: #555;
   }
 
   @if meta.type-of($direction) == 'string' {
@@ -80,119 +81,111 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $direction ==
-    'top-right' or
-    $direction ==
-    'topright' or
-    $direction ==
-    'right-top' or
-    $direction ==
-    'righttop' or
-    $direction ==
-    't-r' or
-    $direction ==
-    'tr' or
-    $direction ==
-    'r-t' or
-    $direction ==
-    'rt'
-  {
+  @if is-alias('top-right', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(-8px) translateY(8px);
     $shadow-val:
-      1px -1px $color,
-      2px -2px $color,
-      3px -3px $color,
-      4px -4px $color,
-      5px -5px $color,
-      6px -6px $color,
-      7px -7px $color,
-      8px -8px $color;
+      1px -1px $shadow-color,
+      2px -2px $shadow-color,
+      3px -3px $shadow-color,
+      4px -4px $shadow-color,
+      5px -5px $shadow-color,
+      6px -6px $shadow-color,
+      7px -7px $shadow-color,
+      8px -8px $shadow-color;
+    $anim-suffix: '-top-right';
   } @else if is-alias('right', $direction) {
     $trans-val-1: translateX(0);
     $trans-val-2: translateX(-8px);
     $shadow-val:
-      1px 0 $color,
-      2px 0 $color,
-      3px 0 $color,
-      4px 0 $color,
-      5px 0 $color,
-      6px 0 $color,
-      7px 0 $color,
-      8px 0 $color;
+      1px 0 $shadow-color,
+      2px 0 $shadow-color,
+      3px 0 $shadow-color,
+      4px 0 $shadow-color,
+      5px 0 $shadow-color,
+      6px 0 $shadow-color,
+      7px 0 $shadow-color,
+      8px 0 $shadow-color;
+    $anim-suffix: '-right';
   } @else if is-alias('bottom-right', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(-8px) translateY(-8px);
     $shadow-val:
-      1px 1px $color,
-      2px 2px $color,
-      3px 3px $color,
-      4px 4px $color,
-      5px 5px $color,
-      6px 6px $color,
-      7px 7px $color,
-      8px 8px $color;
+      1px 1px $shadow-color,
+      2px 2px $shadow-color,
+      3px 3px $shadow-color,
+      4px 4px $shadow-color,
+      5px 5px $shadow-color,
+      6px 6px $shadow-color,
+      7px 7px $shadow-color,
+      8px 8px $shadow-color;
+    $anim-suffix: '-bottom-right';
   } @else if is-alias('bottom', $direction) {
     $trans-val-2: translateY(-8px);
     $shadow-val:
-      0 1px $color,
-      0 2px $color,
-      0 3px $color,
-      0 4px $color,
-      0 5px $color,
-      0 6px $color,
-      0 7px $color,
-      0 8px $color;
+      0 1px $shadow-color,
+      0 2px $shadow-color,
+      0 3px $shadow-color,
+      0 4px $shadow-color,
+      0 5px $shadow-color,
+      0 6px $shadow-color,
+      0 7px $shadow-color,
+      0 8px $shadow-color;
+    $anim-suffix: '-bottom';
   } @else if is-alias('bottom-left', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(8px) translateY(-8px);
     $shadow-val:
-      -1px 1px $color,
-      -2px 2px $color,
-      -3px 3px $color,
-      -4px 4px $color,
-      -5px 5px $color,
-      -6px 6px $color,
-      -7px 7px $color,
-      -8px 8px $color;
+      -1px 1px $shadow-color,
+      -2px 2px $shadow-color,
+      -3px 3px $shadow-color,
+      -4px 4px $shadow-color,
+      -5px 5px $shadow-color,
+      -6px 6px $shadow-color,
+      -7px 7px $shadow-color,
+      -8px 8px $shadow-color;
+    $anim-suffix: '-bottom-left';
   } @else if is-alias('left', $direction) {
     $trans-val-1: translateX(0);
     $trans-val-2: translateX(8px);
     $shadow-val:
-      -1px 0 $color,
-      -2px 0 $color,
-      -3px 0 $color,
-      -4px 0 $color,
-      -5px 0 $color,
-      -6px 0 $color,
-      -7px 0 $color,
-      -8px 0 $color;
+      -1px 0 $shadow-color,
+      -2px 0 $shadow-color,
+      -3px 0 $shadow-color,
+      -4px 0 $shadow-color,
+      -5px 0 $shadow-color,
+      -6px 0 $shadow-color,
+      -7px 0 $shadow-color,
+      -8px 0 $shadow-color;
+    $anim-suffix: '-left';
   } @else if is-alias('top-left', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(8px) translateY(8px);
     $shadow-val:
-      -1px -1px $color,
-      -2px -2px $color,
-      -3px -3px $color,
-      -4px -4px $color,
-      -5px -5px $color,
-      -6px -6px $color,
-      -7px -7px $color,
-      -8px -8px $color;
-  } @else if is-alias('top', $direction) {
+      -1px -1px $shadow-color,
+      -2px -2px $shadow-color,
+      -3px -3px $shadow-color,
+      -4px -4px $shadow-color,
+      -5px -5px $shadow-color,
+      -6px -6px $shadow-color,
+      -7px -7px $shadow-color,
+      -8px -8px $shadow-color;
+    $anim-suffix: '-top-left';
+  } @else if not is-alias('top', $direction) {
     @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
-        '`text-pop-shadow` mixin.';
+        '[ text-pop-shadow() ] mixin.';
   }
 
   @if meta.type-of($duration) != 'number' {
-    @error 'Invalid $duration value of `#{$duration}` for the `text-pop-shadow` ' +
-        'mixin. The timing property must be a number.';
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-pop-shadow() ] mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
-    // If no there is no unit for $duration, assume seconds
-    $duration: $duration * 1s;
+    // If no there is no unit for $duration, unless $duration > 60, assume seconds
+    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
   } @else if not list.index('s' 'ms', math.unit($duration)) {
-    @error 'Invalid $duration value of `#{$duration}` for the `text-pop-shadow` ' +
-        'mixin. The timing property must be in either s or ms units.';
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-pop-shadow() ] mixin. The duration property must be in ' +
+        'either s or ms units.';
   } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $duration: math.div($duration, 1000ms) * 1s;
@@ -203,35 +196,20 @@
     }
   }
 
-  @if $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    $delay ==
-    'none' or
-    $delay
-    'no' or
-    $delay ==
-    'n' or
-    $delay ==
-    'n/a' or
-    $delay ==
-    nil
-  {
+  @if $delay == 0 or $delay == 0s or $delay == 0ms or is-alias('none', $delay) {
     $delay: null;
   }
   @if $delay {
     @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `text-pop-shadow` ' +
-          'mixin. The delay property must be a number.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-pop-shadow() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
-      // If no there is no unit for $delay, assume seconds
-      $delay: $delay * 1s;
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `text-pop-shadow` ' +
-          'mixin. The delay property must be in either s or ms units.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-pop-shadow() ] mixin. The delay property must be in ' +
+          'either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
 
@@ -248,7 +226,8 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
+    } @else if
+      (
         math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
       ) or
       $iterations ==
@@ -258,8 +237,8 @@
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
-          '`text-pop-shadow` mixin.';
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ text-pop-shadow() ] mixin.';
     }
   } @else {
     $iterations: null;
@@ -279,10 +258,16 @@
     $anim-dir: alternate-reverse;
   } @else {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
-        '`text-pop-shadow` mixin';
+        '[ text-pop-shadow() ] mixin';
   }
 
-  @if not $timing-func or $timing-func == 'ease' or is-alias('none', $timing-func) or is-alias('normal', $timing-func)  {
+  @if not
+    $timing-func or
+    $timing-func ==
+    'ease' or
+    is-alias('none', $timing-func) or
+    is-alias('normal', $timing-func)
+  {
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: null;
@@ -291,24 +276,28 @@
   @if not $anim-num {
     $anim-num: null;
   } @else {
-    $anim-num: '-#{$anim-num}';
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
 
-  animation: txt-pop-shadow#{$anim-num} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  animation: txt-pop-shadow#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes txt-pop-shadow#{$anim-num} {
+    @keyframes txt-pop-shadow#{$anim-suffix} {
       0% {
         text-shadow:
-          0 0 $color,
-          0 0 $color,
-          0 0 $color,
-          0 0 $color,
-          0 0 $color,
-          0 0 $color,
-          0 0 $color,
-          0 0 $color;
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color;
         transform: #{$trans-val-1};
       }
 

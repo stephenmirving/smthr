@@ -10,8 +10,8 @@ TODO:
       ☐ Test all Animation mixins
         ✔ Test and update text-focus-in @done(24-02-14 18:00)
         ✔ Test and update text-glitch @done(24-02-14 18:20)
-        ☐ Test and update text-pop-shadow
-        ☐ Test and update text-pop-up
+        ✔ Test and update text-pop-shadow @done(24-02-14 18:31)
+        ✔ Test and update text-pop-up @done(24-02-14 19:12)
         ☐ Test and update text-tracking-in
         ☐ Test and update text-tracking-out
         ☐ Test and update wobbliness

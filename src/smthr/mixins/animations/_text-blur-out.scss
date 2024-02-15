@@ -71,13 +71,13 @@
 
   @if meta.type-of($duration) != 'number' {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '[ text-blur-out() ] mixin. The timing property must be a number.';
+        '[ text-blur-out() ] mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
-    // If no there is no unit for $duration, assume seconds
-    $duration: $duration * 1s;
+    // If no there is no unit for $duration, unless $duration > 60, assume seconds
+    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
   } @else if not list.index('s' 'ms', math.unit($duration)) {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '[ text-blur-out() ] mixin. The timing property must be in either ' +
+        '[ text-blur-out() ] mixin. The duration property must be in either ' +
         's or ms units.';
   } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -106,7 +106,8 @@
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
           '[ text-blur-out() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
-      $delay: $delay * 1s;
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
           '[ text-blur-out() ] mixin. The delay property must be in either ' +

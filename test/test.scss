@@ -37,7 +37,7 @@
 }
 
 .active-anim {
-  @include text-glitch(4s, 50ms, infinite, alternate-reverse);
+  @include text-pop-up('top-right', 1s)
 }
 
 .front {
