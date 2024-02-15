@@ -37,7 +37,7 @@
 }
 
 .active-anim {
-  @include text-pop-up('top-right', 1s)
+  @include text-tracking-out('expand', false, top);
 }
 
 .front {

@@ -36,18 +36,22 @@
 }
 
 .active-anim {
-  animation: txt-pop-up-to-top-right 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  animation: txt-track-out-expand-backwards-from-top 0.8s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 }
-@keyframes txt-pop-up-to-top-right {
+@keyframes txt-track-out-expand-backwards-from-top {
   0% {
-    text-shadow: none;
-    transform: translateY(0);
-    transform-origin: 50% 50%;
+    opacity: 1;
+    transform: translateZ(0) translateY(0);
+  }
+  60% {
+    opacity: 0.8;
   }
   100% {
-    text-shadow: 0 1px 0 hsl(0, 0%, 80%), 0 2px 0 hsl(0, 0%, 80%), 0 3px 0 hsl(0, 0%, 80%), 0 4px 0 hsl(0, 0%, 80%), 0 5px 0 hsl(0, 0%, 80%), 0 6px 0 hsl(0, 0%, 80%), 0 7px 0 hsl(0, 0%, 80%), 0 8px 0 hsl(0, 0%, 80%), 0 9px 0 hsl(0, 0%, 80%), 0 50px 30px hsla(0, 0%, 0%, 0.3);
-    transform: translateY(-50px) translateX(50px);
-    transform-origin: 50% 50%;
+    opacity: 0;
+    letter-spacing: 1em;
+    transform: translateZ(300px) translateY(-200px);
   }
 }
 
