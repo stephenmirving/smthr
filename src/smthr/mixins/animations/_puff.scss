@@ -9,7 +9,7 @@
 /// the `animation-stage` mixin be used on the parent element.
 ///
 /// @param {String|Boolean} $in-or-out [in] - Determines if the element will
-/// puff `in` (or true, `i`) our `out` (or false, `o`).
+/// puff `in` (or true) or `out` (or false).
 /// @param {String} $direction [null] - Will, depending on $in-or-out, either
 /// puff in from this direction or puff out towards this direction. Acceptable
 /// values include the following: 'center', 'top', 'bottom', 'left', 'right',
@@ -24,7 +24,9 @@
 /// null assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
-/// function for this animation of `cubic-bezier(0.39, 0.575, 0.565, 1)`.
+/// function for this animation of `cubic-bezier(0.47, 0, 0.745, 0.715)` if
+/// the animation is puffing in, and `cubic-bezier(0.165, 0.84, 0.44, 1)` if
+/// the animation is puffing out.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -166,7 +168,7 @@
     $opacity-val-1: 1;
     $opacity-val-2: 0;
     $blur-val-1: blur(0);
-    $blur-val-2: blur(2px);
+    $blur-val-2: blur(4px);
 
     $temp-val: $trans-val-1;
     $trans-val-1: $trans-val-2;
@@ -259,13 +261,7 @@
         '$anim-dir to the [ puff() ] mixin';
   }
 
-  @if not
-    $timing-func or
-    is-alias('none', $timing-func) or
-    is-alias('normal', $timing-func)
-  {
-    // Take all potential values the user might pass to keep the default setting
-    // and ensure that the timing function remains at that default
+  @if not $timing-func or is-alias('normal', $timing-func) {
     $timing-func: if(
       $in-or-out,
       cubic-bezier(0.47, 0, 0.745, 0.715),

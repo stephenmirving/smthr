@@ -22,8 +22,8 @@
 /// null assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for
 /// the animation. A null value passed here will default to the recommended
-/// timing function for this animation of `ease-out` on a roll-in animation, and
-/// a timing function of `ease-in` on a roll-out animation.
+/// timing function for this animation of `ease-out` on a roll-in animation,
+/// and `ease-in` on a roll-out animation.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -220,13 +220,7 @@
         'for the [ roll() ] mixin';
   }
 
-  @if not
-    $timing-func or
-    is-alias('none', $timing-func) or
-    is-alias('normal', $timing-func)
-  {
-    // Take all potential values the user might pass to keep the default setting
-    // and ensure that the timing function remains at that default
+  @if not $timing-func or is-alias('normal', $timing-func) {
     $timing-func: if(($in-or-out), ease-out, ease-in);
   }
 

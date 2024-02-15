@@ -1,31 +1,30 @@
 TODO:
 
   TESTING:
-    ☐ Test all functions and mixins and placeholders.
-    ☐ Function testing
-      ☐ Fix functions-walk() and walk() or remove them
-      ☐ In the same vein as fixing functions-walk and walk, also need to fix missing-dependences or remove it
-      ☐ Determine difference between linear-interpolation and trend-line functions.
-    ☐ Mixin Testing
-      ☐ Test all Animation mixins
-        ✔ Test and update text-focus-in @done(24-02-14 18:00)
-        ✔ Test and update text-glitch @done(24-02-14 18:20)
-        ✔ Test and update text-pop-shadow @done(24-02-14 18:31)
-        ✔ Test and update text-pop-up @done(24-02-14 19:12)
-        ✔ Test and update text-tracking-in @done(24-02-14 19:59)
-        ✔ Test and update text-tracking-out @done(24-02-14 21:26)
-        ☐ Test and update wobbliness
-        ☐ Test and update zoom-in
-        ☐ Check values against animations on https://animista.net/
-    ☐ Test all Shape mixins
-    ☐ Test all Utilities mixins
+    ☐ Test and fix functions and mixins and placeholders.
+      ☐ Function testing
+        ☐ Fix functions-walk() and walk() or remove them
+        ☐ In the same vein as fixing functions-walk and walk, also need to fix missing-dependences or remove it
+        ☐ Determine difference between linear-interpolation and trend-line functions.
+      ☐ Mixin Testing
+        ✔ Test all Animation mixins @done(24-02-15 00:57)
+          ✔ Test and update text-focus-in @done(24-02-14 18:00)
+          ✔ Test and update text-glitch @done(24-02-14 18:20)
+          ✔ Test and update text-pop-shadow @done(24-02-14 18:31)
+          ✔ Test and update text-pop-up @done(24-02-14 19:12)
+          ✔ Test and update text-tracking-in @done(24-02-14 19:59)
+          ✔ Test and update text-tracking-out @done(24-02-14 21:26)
+          ✔ Test and update wobbliness @done(24-02-15 00:21)
+          ✔ Test and update zoom-in @done(24-02-15 00:57)
+      ☐ Test all Shape mixins
+      ☐ Test all Utilities mixins
 
   General Changes:
-    ☐ Parse down all the direction decision trees in the Mixins using the alias resolution map
+    ✔ Parse down all the direction decision trees in the Mixins using the alias resolution map @done(24-02-15 00:58)
     ☐ Examine responsive font mixin
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Take a look at the line-clamp mixin
-    ☐ Add .sass version back in (once scss version is fully released)
+    ☐ Determine if a .sass version can be automated in a build process
 
   Animations Mixins:
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
@@ -38,7 +37,7 @@ TODO:
     ☐ Create and add a bunch of button mixins for different style buttons
 
   Shapes Mixins:
-    ☐ Go to shapes page with psuedo elements and add those
+    ☐ Go to shapes page with psuedo elements and add those (Figure out what shapes page is?)
     ☐ Propogate the updated version of arrow-curved-tail
 
   Utility Mixins:

@@ -21,8 +21,9 @@
 /// @param {Keyword} $anim-dir [null] - Sets the animation-direction
 /// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
 /// Default of null assumes the default of `normal`.
-/// @param {Timing-Function} $timing-func [cubic-bezier(0.55, 0.085, 0.68, 0.53)] -
-/// The timing function for the animation. Using the default is recommended.
+/// @param {Timing-Function|String} $timing-func
+/// [cubic-bezier(0.55, 0.085, 0.68, 0.53)] - The timing function for the
+/// animation. Using the default is recommended.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -31,12 +32,14 @@
 /// @group Animations
 /// @alias {Function} is-alias
 ///
-/// @throw Invalid $expand-contract value
-/// @throw Invalid $animate-in-place value
-/// @throw Invalid $destination value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-/// @throw Invalid $anim-dir value
+/// @throw Invalid $expand-contract value error.
+/// @throw Invalid data type for $animate-in-place error.
+/// @throw Invalid $destination value error.
+/// @throw Invalid data type for $duration error.
+/// @throw Invalid data type for $delay error.
+/// @throw Invalid data type for $iterations error.
+/// @throw Invalid keyword value for $anim-dir error.
+/// @throw Conflict between value for $animate-in-place and $destination warning.
 @mixin text-tracking-out(
   $expand-contract: 'contract',
   $animate-in-place: true,
@@ -211,13 +214,7 @@
         '[ text-tracking-out() ] mixin';
   }
 
-  @if not
-    $timing-func or
-    is-alias('none', $timing-func) or
-    is-alias('default', $timing-func)
-  {
-    // Take all potential values the user might pass to keep the default setting
-    // and ensure that the timing function remains at that default
+  @if not $timing-func or is-alias('default', $timing-func) {
     $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53);
   }
 

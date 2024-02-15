@@ -238,14 +238,8 @@
         ' for the `scale-up` mixin';
   }
 
-  @if not
-    $timing-func or
-    is-alias('none', $timing-func) or
-    is-alias('normal', $timing-func)
-  {
-    // Take all potential values the user might pass to keep the default setting
-    // and ensure that the timing function remains at that default
-    $timing-func: cubic-bezier(0.39, 0.575, 0.565, 1);
+  @if not $timing-func or is-alias('normal', $timing-func) {
+    $timing-func: cubic-bezier(0.39, 0.575, 0.565, 1); // ease-out-sine
   }
 
   $anim-suffix: string.insert(

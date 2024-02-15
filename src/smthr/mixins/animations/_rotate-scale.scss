@@ -285,13 +285,7 @@
         '`rotate-scale` mixin';
   }
 
-  @if not
-    $timing-func or
-    is-alias('none', $timing-func) or
-    is-alias('normal', $timing-func)
-  {
-    // Take all potential values the user might pass to keep the default setting
-    // and ensure that the timing function remains at that default
+  @if not $timing-func or is-alias('normal', $timing-func) {
     $timing-func: linear;
   }
 

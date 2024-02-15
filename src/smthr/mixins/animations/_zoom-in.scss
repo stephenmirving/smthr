@@ -4,32 +4,38 @@
 @use 'sass:math';
 @use '../../functions/is-alias' as *;
 
-/// Does a slow, artistic, Ken Burns style zoom in on the background image
-/// of an element
+/// Does a slow and artistic Ken Burns style zoom-in on the background image
+/// of an element.
 ///
 /// @param {String} $direction [bottom] - The direction of the angle the
-/// zoom-in will have. Accepts `top`, `t`, `up`, or `u` for the top,
-/// `left` or `l` for `left`, `right` or `r` for right, and either `bottom`,
-/// `b`, `down`, or `d` for the bottom. It also accepts `bottom-right` or
-/// `right-bottom` or rb` or `br` for the bottom-right, `top-right`,
-/// `right-top`, `rt`, or `tr` for the top-right, `bottom-left`, `left-bottom`,
-/// `lb`, or `bl` for the bottom-left and `top-left`, `left-top`, `lt`, or `tl`
-/// for the top-left.
+/// zoom-in will have. Accepts `top`, `left`, `right`, `bottom`,
+/// `bottom-right`, `top-right`, `bottom-left`, or `top-left`.
 /// @param {Time} $duration [5s] - The duration of the animation's effect.
 /// @param {Time} $delay [null] - An optional delay before starting the effect.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
 ///
 /// @group Animations
 /// @alias {Function} is-alias
 ///
-/// @throw Invalid keyword for $direction
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-@mixin zoom-in($direction: bottom, $duration: 5s, $delay: null) {
+/// @throw Invalid keyword for $direction error.
+/// @throw Invalid data type for $duration error.
+/// @throw Invalid data type for $delay error.
+/// @alias ken-burns
+@mixin zoom-in(
+  $direction: bottom,
+  $duration: 5s,
+  $delay: null,
+  $anim-num: null
+) {
   // Default values for bottom $direction
   $dir-val1: scale(1) translateY(0);
   $dir-val2: 50% 16%;
   $dir-val3: scale(1.25) translateY(15px);
-  $dir-val4: bottom;
+  $dir-val4: 50% 100%;
+  $anim-suffix: '-to-bottom';
 
   @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
@@ -39,108 +45,64 @@
     $delay: string.to-lower-case($delay);
   }
 
-  @if $direction ==
-    'top' or
-    $direction ==
-    'up' or
-    $direction ==
-    't' or
-    $direction ==
-    'u'
-  {
+  @if is-alias('top', $direction) {
     $dir-val1: scale(1) translateY(0);
     $dir-val2: 50% 84%;
     $dir-val3: scale(1.25) translateY(-15px);
     $dir-val4: top;
+    $anim-suffix: '-to-top';
   } @else if is-alias('left', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 16% 50%;
     $dir-val3: scale(1.25) translate(-20px, 15px);
     $dir-val4: left;
+    $anim-suffix: '-to-left';
   } @else if is-alias('right', $direction) {
     $dir-val1: scale(1) translateX(0);
     $dir-val2: 84% 50%;
     $dir-val3: scale(1.25) translateX(20px);
     $dir-val4: right;
-  } @else if
-    $direction ==
-    'bottom-right' or
-    $direction ==
-    'right-bottom' or
-    $direction ==
-    'br' or
-    $direction ==
-    'rb'
-  {
+    $anim-suffix: '-to-right';
+  } @else if is-alias('bottom-right', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 84% 84%;
     $dir-val3: scale(1.25) translate(20px, 15px);
-    $dir-val4: right bottom;
-  } @else if
-    $direction ==
-    'top-right' or
-    $direction ==
-    'right-top' or
-    $direction ==
-    'rt' or
-    $direction ==
-    'tr'
-  {
+    $dir-val4: 100% 100%;
+    $anim-suffix: '-to-bottom-right';
+  } @else if is-alias('top-right', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 84% 16%;
     $dir-val3: scale(1.25) translate(20px, -15px);
-    $dir-val4: right top;
-  } @else if
-    $direction ==
-    'bottom-left' or
-    $direction ==
-    'left-bottom' or
-    $direction ==
-    'lb' or
-    $direction ==
-    'bl'
-  {
+    $dir-val4: 100% 0%;
+    $anim-suffix: '-to-top-right';
+  } @else if is-alias('bottom-left', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 16% 84%;
     $dir-val3: scale(1.25) translate(-20px, 15px);
-    $dir-val4: left bottom;
-  } @else if
-    $direction ==
-    'top-left' or
-    $direction ==
-    'left-top' or
-    $direction ==
-    'lt' or
-    $direction ==
-    'tl'
-  {
+    $dir-val4: 0% 100%;
+    $anim-suffix: '-to-bottom-left';
+  } @else if is-alias('top-left', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 16% 16%;
     $dir-val3: scale(1.25) translate(-20px, -15px);
-    $dir-val4: left top;
-  } @else if
-    $direction !=
-    'bottom' or
-    $direction !=
-    'b' or
-    $direction !=
-    'down' or
-    $direction !=
-    'd'
-  {
-    @error '`#{meta.inspect($direction)}` is not a valid direction for the ' +
-        '`zoom-in` mixin';
+    $dir-val4: 0% 0%;
+    $anim-suffix: '-to-top-left';
+  } @else if not is-alias('bottom', $direction) {
+    @error 'Invalid $direction of `#{meta.inspect($direction)}` for the ' +
+        '[ zoom-in() ] mixin. Accepted direction values include: ' +
+        '`top`, `left`, `right`, `bottom`, `bottom-right`, `top-right`, ' +
+        '`bottom-left`, or `top-left`.';
   }
 
   @if meta.type-of($duration) != 'number' {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '`zoom-in` mixin. The duration property must be a number.';
+        '[ zoom-in() ] mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
     // If no there is no unit for $duration, unless $duration > 60, assume seconds
     $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
   } @else if not list.index('s' 'ms', math.unit($duration)) {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '`zoom-in` mixin. The duration property must be in either ' +
+        '[ zoom-in() ] mixin. The duration property must be in either ' +
         's (seconds) or ms (milliseconds) units.';
   } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -167,13 +129,13 @@
   @if $delay {
     @if meta.type-of($delay) != 'number' {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`zoom-in` mixin. The delay property must be a number.';
+          '[ zoom-in() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, unless $delay > 60, assume seconds
       $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`zoom-in` mixin. The delay property must be in either ' +
+          '[ zoom-in() ] mixin. The delay property must be in either ' +
           's (seconds) or ms (milliseconds) units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -187,13 +149,17 @@
   @if not $anim-num {
     $anim-num: null;
   } @else {
-    $anim-num: '-#{$anim-num}';
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
   }
 
-  animation: zoom-in#{$anim-num} #{$duration} ease-out #{$delay} both;
+  animation: zoom-in#{$anim-suffix} #{$duration} ease-out #{$delay} both;
 
   @at-root {
-    @keyframes zoom-in#{$anim-num} {
+    @keyframes zoom-in#{$anim-suffix} {
       0% {
         transform: #{$dir-val1};
         transform-origin: #{$dir-val2};
@@ -205,4 +171,33 @@
       }
     }
   }
+}
+
+/// Does a slow and artistic Ken Burns style zoom-in on the background image
+/// of an element.
+///
+/// @param {String} $direction [bottom] - The direction of the angle the
+/// zoom-in will have. Accepts `top`, `left`, `right`, `bottom`,
+/// `bottom-right`, `top-right`, `bottom-left`, or `top-left`.
+/// @param {Time} $duration [5s] - The duration of the animation's effect.
+/// @param {Time} $delay [null] - An optional delay before starting the effect.
+/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @alias {Function} is-alias
+///
+/// @throw Invalid keyword for $direction error.
+/// @throw Invalid data type for $duration error.
+/// @throw Invalid data type for $delay error.
+/// @alias ken-burns
+@mixin ken-burns(
+  $direction: bottom,
+  $duration: 5s,
+  $delay: null,
+  $anim-num: null
+) {
+  @include zoom-in($direction, $duration, $delay, $anim-num);
 }

@@ -31,12 +31,14 @@
 /// @group Animations
 /// @alias {Function} is-alias
 ///
-/// @throw Invalid $expand-contract value
-/// @throw Invalid $animate-in-place value
-/// @throw Invalid $origin value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-/// @throw Invalid $anim-dir value
+/// @throw Invalid $expand-contract value error.
+/// @throw Invalid data type for $animate-in-place error.
+/// @throw Invalid $origin value error.
+/// @throw Invalid data type for $duration error.
+/// @throw Invalid data type for $delay error.
+/// @throw Invalid data type for $iterations error.
+/// @throw Invalid keyword value for $anim-dir error.
+/// @throw Conflict between value for $animate-in-place and $origin warning.
 @mixin text-tracking-in(
   $expand-contract: 'expand',
   $animate-in-place: true,
@@ -208,14 +210,8 @@
         'for the [ text-tracking-in() ] mixin';
   }
 
-  @if not
-    $timing-func or
-    is-alias('none', $timing-func) or
-    is-alias('normal', $timing-func)
-  {
-    // Take all potential values the user might pass to keep the default setting
-    // and ensure that the timing function remains at that default
-    $timing-func: cubic-bezier(0.215, 0.61, 0.355, 1);
+  @if not $timing-func or is-alias('normal', $timing-func) {
+    $timing-func: cubic-bezier(0.215, 0.61, 0.355, 1); // ease-out-cubic
   }
 
   @if $origin == 'top' {

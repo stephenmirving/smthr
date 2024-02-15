@@ -21,8 +21,7 @@
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
 /// function for this animation of `cubic-bezier(0.25, 0.46, 0.45, 0.94)` on a
-/// slide in and a timing function of `cubic-bezier(0.55, 0.085, 0.68, 0.53)`
-/// on a slide out.
+/// slide in and `cubic-bezier(0.55, 0.085, 0.68, 0.53)` on a slide out.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -265,13 +264,7 @@
         '[ slide() ] mixin';
   }
 
-  @if not
-    $timing-func or
-    is-alias('none', $timing-func) or
-    is-alias('normal', $timing-func)
-  {
-    // Take all potential values the user might pass to keep the default setting
-    // and ensure that the timing function remains at that default
+  @if not $timing-func or is-alias('normal', $timing-func) {
     $timing-func: if(
       ($in-or-out),
       cubic-bezier(0.25, 0.46, 0.45, 0.94),
