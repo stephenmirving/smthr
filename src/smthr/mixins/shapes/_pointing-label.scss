@@ -1,6 +1,7 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use 'sass:math';
+@use '../../functions/is-alias' as *;
 
 /// Creates a little pointing label from an element using clip-path.
 ///
@@ -41,16 +42,7 @@
   } @else if is-alias('left', $direction) {
     clip-path: polygon(5% 0, 5% 35%, 0 50%, 5% 65%, 5% 100%, 100% 100%, 100% 0);
     border-radius: 0 4px 4px 0;
-  } @else if
-    $direction ==
-    'up' or
-    $direction ==
-    'u' or
-    $direction ==
-    'top' or
-    $direction ==
-    't'
-  {
+  } @else if is-alias('top', $direction) {
     clip-path: polygon(
       55% 15%,
       50% 0,
@@ -61,16 +53,7 @@
       100% 15%
     );
     border-radius: 0 0 4px 4px;
-  } @else if
-    $direction ==
-    'down' or
-    $direction ==
-    'd' or
-    $direction ==
-    'b' or
-    $direction ==
-    'bottom'
-  {
+  } @else if is-alias('bottom', $direction) {
     clip-path: polygon(
       55% 85%,
       50% 100%,
@@ -82,8 +65,9 @@
     );
     border-radius: 4px 4px 0 0;
   } @else {
-    @error 'Invalid $direction value of `#{meta.inspect($direction)}` passed to the ' +
-        '`pointing-label` mixin.';
+    @error 'Invalid $direction value of `#{meta.inspect($direction)}` ' +
+        'passed to the [ pointing-label() ] mixin. The value for $direction ' +
+        'must be one of the following: `top`, `right`, `bottom`, or `left`.';
   }
 
   width: $width;

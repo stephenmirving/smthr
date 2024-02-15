@@ -1,5 +1,6 @@
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/is-alias' as *;
 
 /// Creates a CSS triangle, which can be used for dropdown arrows, dropdown
 /// pips, and more. Use this mixin inside a `&::before` or `&::after` selector,
@@ -24,11 +25,11 @@
 
   border: inset $size;
 
-  @if $direction == 'down' or $direction == 'd' {
+  @if is-alias('bottom', $direction) {
     border-color: $color transparent transparent;
     border-top-style: solid;
     border-bottom-width: 0;
-  } @else if $direction == 'up' or $direction == 'u' {
+  } @else if is-alias('top', $direction) {
     border-color: transparent transparent $color;
     border-top-width: 0;
     border-bottom-style: solid;
@@ -41,6 +42,8 @@
     border-right-style: solid;
     border-left-width: 0;
   } @else {
-    @error 'Invalid direction of `#{meta.inspect($direction)}` for the `triangle` mixin.';
+    @error 'Invalid direction of `#{meta.inspect($direction)}` for the ' +
+        '[ triangle() ] mixin. The value for $direction must be ' +
+        'one of the following: `top`, `right`, `bottom`, or `left`.';
   }
 }

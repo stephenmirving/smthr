@@ -1,5 +1,6 @@
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/is-alias' as *;
 
 /// Uses clip path to change an element to the shape of an arrow.
 ///
@@ -43,16 +44,7 @@
       40% 100%,
       0 50%
     );
-  } @else if
-    $direction ==
-    'up' or
-    $direction ==
-    'u' or
-    $direction ==
-    'top' or
-    $direction ==
-    't'
-  {
+  } @else if is-alias('top', $direction) {
     clip-path: polygon(
       100% 50%,
       75% 50%,
@@ -62,16 +54,7 @@
       0 50%,
       50% 0
     );
-  } @else if
-    $direction ==
-    'down' or
-    $direction ==
-    'd' or
-    $direction ==
-    'bottom' or
-    $direction ==
-    'b'
-  {
+  } @else if is-alias('bottom', $direction) {
     clip-path: polygon(
       75% 0,
       75% 50%,
@@ -82,7 +65,8 @@
       25% 0
     );
   } @else {
-    @error 'Invalid direction of `#{meta.inspect($direction)}` for the [ arrow ] mixin';
+    @error 'Invalid direction of `#{meta.inspect($direction)}` for the ' +
+        '[ arrow() ] mixin';
   }
 
   width: $size;
