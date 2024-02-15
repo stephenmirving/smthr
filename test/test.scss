@@ -17,6 +17,7 @@
 .controls-wrapper {
   position: absolute;
   top: 5%;
+  z-index: 9999;
 }
 
 .stage {
@@ -37,7 +38,7 @@
 }
 
 .active-anim {
-  @include text-tracking-out('expand', false);
+  @include text-tracking-out($expand-contract: 'contract', $animate-in-place: false, $destination: 'bottom');
 }
 
 .front {

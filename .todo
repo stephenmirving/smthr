@@ -13,7 +13,7 @@ TODO:
         ✔ Test and update text-pop-shadow @done(24-02-14 18:31)
         ✔ Test and update text-pop-up @done(24-02-14 19:12)
         ✔ Test and update text-tracking-in @done(24-02-14 19:59)
-        ☐ Test and update text-tracking-out
+        ✔ Test and update text-tracking-out @done(24-02-14 21:26)
         ☐ Test and update wobbliness
         ☐ Test and update zoom-in
         ☐ Check values against animations on https://animista.net/

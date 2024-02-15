@@ -4,21 +4,20 @@
 @use 'sass:math';
 @use '../../functions/is-alias' as *;
 
-/// Animates text by tracking it into view
+/// Animates text by tracking it out of view
 ///
 /// @param {String|Boolean} $expand-contract [contract] - Determines whether
-/// the text will expand or contract as it animates.
-/// @param {Boolean|String} $animate-in-place [true] - If true, animation will
-/// track in from a direction, appearing to move in from the front on an `expand`
-/// animation, and to come in from the back on a `contract` animation.
-/// If false the animation will animate in its location.
-/// @param {String} $destination [null] - The orientation the animation appears to
-/// be expanding or contracting towards. Can be `null`, `top`, or `bottom`.
+/// the text will, `expand` (`true`) or `contract` (`false`) as it animates.
+/// @param {Boolean} $animate-in-place [true] - If true, the animation will
+/// animate in its location on a 2-dimaensional plane. If false, it will allow
+/// the animation to track towards the $destination, appearing to move forwards
+/// on an `expand` animation, and to move backwards on `contract` animations.
+/// @param {String} $destination [null] - The destination the animation appears
+/// to be expanding or contracting towards. Can be `null`, `top`, or `bottom`.
 /// @param {Time} $duration [0.9s] - The duration of the animation (s or ms).
 /// @param {Time} $delay [null] - The optional delay time for the animation.
-/// @param {Number|String} $iterations [null] - The number of iterations
-/// for the animation to complete. If the value passed is not a number, it will
-/// be set to infinite.
+/// @param {Number|String} $iterations [null] - The animation-iteration-count
+/// value for the animation.
 /// @param {Keyword} $anim-dir [null] - Sets the animation-direction
 /// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
 /// Default of null assumes the default of `normal`.
@@ -40,7 +39,7 @@
 /// @throw Invalid $anim-dir value
 @mixin text-tracking-out(
   $expand-contract: 'contract',
-  $animate-in-place: null,
+  $animate-in-place: true,
   $destination: null,
   $duration: 0.8s,
   $delay: null,
@@ -81,33 +80,10 @@
     $expand-contract: false;
   }
 
-  @if not $animate-in-place  {
-    $animate-in-place: false;
-
-    @if $expand-contract {
-      $anim-suffix: '-expand-backwards';
-    } @else {
-      $anim-suffix: '-contract-forwards';
-    }
-  } @else if $animate-in-place != true {
-    @error 'Invalid $animate-in-place value of `#{meta.inspect($animate-in-place)}` for the ' +
-        '[ text-tracking-out() ] mixin.';
-  }
-
   @if is-alias('top', $destination) {
     $destination: 'top';
-    $anim-suffix: string.insert(
-      $anim-suffix,
-      '-to-top',
-      string.length($anim-suffix) + 1
-    );
   } @else if is-alias('bottom', $destination) {
     $destination: 'bottom';
-    $anim-suffix: string.insert(
-      $anim-suffix,
-      '-to-bottom',
-      string.length($anim-suffix) + 1
-    );
   } @else if not
     $destination or
     is-alias('normal', $destination) or
@@ -115,8 +91,29 @@
   {
     $destination: null;
   } @else {
-    @error 'Invalid origin value of `#{meta.inspect($destination)}` for the ' +
-        '[ text-tracking-out() ] mixin.';
+    @error 'Invalid destination value of `#{meta.inspect($destination)}` for ' +
+        'the [ text-tracking-out() ] mixin. The value for $destination must ' +
+        'be one of the following: `null`, `top`, or `bottom`';
+  }
+
+  @if $animate-in-place == true {
+    @if $destination {
+      @warn 'The [ text-tracking-out() ] mixin cannot create an animation ' +
+          'that moves towards the the `#{meta.inspect($destination)}` while ' +
+          'the $animate-in-place parameter is set to `true`.';
+    }
+  } @else if not $animate-in-place {
+    $animate-in-place: false;
+
+    @if $expand-contract {
+      $anim-suffix: '-expand-forwards';
+    } @else {
+      $anim-suffix: '-contract-backwards';
+    }
+  } @else {
+    @error 'Invalid $animate-in-place value of `#{meta.inspect($animate-in-place)}`' +
+        ' used for the [ text-tracking-out() ] mixin. This value should be ' +
+        'true or false.';
   }
 
   @if meta.type-of($duration) != 'number' {
@@ -222,6 +219,20 @@
     // Take all potential values the user might pass to keep the default setting
     // and ensure that the timing function remains at that default
     $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  }
+
+  @if $destination == 'top' {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-to-top',
+      string.length($anim-suffix) + 1
+    );
+  } @else if $destination == 'bottom' {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-to-bottom',
+      string.length($anim-suffix) + 1
+    );
   }
 
   @if not $anim-num {
