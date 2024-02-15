@@ -17,7 +17,81 @@ TODO:
           ✔ Test and update wobbliness @done(24-02-15 00:21)
           ✔ Test and update zoom-in @done(24-02-15 00:57)
       ☐ Test all Shape mixins
+        ✔ arrow-curved-tail @done(24-02-15 03:06)
+        ☐ arrow
+        ☐ bevel
+        ☐ chevron
+        ☐ circle
+        ☐ cross
+        ☐ diamond
+        ☐ frame
+        ☐ hamburger
+        ☐ heart
+        ☐ hexagon
+        ☐ infinity-symbol
+        ☐ octagon
+        ☐ point
+        ☐ pointing-label
+        ☐ price-tag
+        ☐ ribbon
+        ☐ shape-shadow
+        ☐ speech-bubble
+        ☐ star-six-pointed
+        ☐ star
+        ☐ triangle
+        ☐ x-shape
       ☐ Test all Utilities mixins
+        ✔ BEM @done(24-02-15 03:08)
+        ☐ bg-image-svg
+        ☐ bg-image
+        ☐ border-radius
+        ☐ button-base
+        ☐ clearfix
+        ☐ cover
+        ☐ depth-level
+        ☐ disable-outline
+        ☐ family
+        ☐ flex-center
+        ☐ font
+        ☐ ghost-button
+        ☐ gradient
+        ☐ hide-text
+        ☐ hide-visually
+        ☐ hide
+        ☐ inner-side-shadow
+        ☐ line-clamp
+        ☐ long-shadow
+        ☐ max-width
+        ☐ min-to-max-width
+        ☐ min-width
+        ☐ on-event
+        ☐ only-chromium
+        ☐ only-hidpi
+        ☐ only-ie
+        ☐ only-legacy-edge
+        ☐ only-moz
+        ☐ only-phones
+        ☐ only-safari
+        ☐ only-webkit
+        ☐ opacity
+        ☐ placeholder
+        ☐ position-center
+        ☐ position-horizontally
+        ☐ position-vertically
+        ☐ position
+        ☐ reset-list
+        ☐ reset
+        ☐ responsive-font
+        ☐ responsive-ratio
+        ☐ responsive-square
+        ☐ scrollbar
+        ☐ size
+        ☐ smooth-retina-fonts
+        ☐ sticky
+        ☐ text-emboss
+        ☐ text-outline
+        ☐ text-shadow
+        ☐ truncate
 
   General Changes:
     ✔ Parse down all the direction decision trees in the Mixins using the alias resolution map @done(24-02-15 00:58)
@@ -79,14 +153,14 @@ TODO:
     ☐ Use SassDoc to generate web documentation from files
 
   Test Site:
-    ☐ Mobile first
     ☐ Front page layout
     ☐ Animation page
     ☐ Shapes page
     ☐ Utilities page
     ☐ Functions page
     ☐ Placeholders page
-    ☐ Documentation
+    ☐ Each page code example and live demo for each function, mixin, or important variable.
+    ☐ Documentation using SassDoc
 
 ================================================================================
 
