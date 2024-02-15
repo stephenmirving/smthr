@@ -1,12 +1,15 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-angle' as *;
 
 /// Uses psuedo-elements and transform to turn an element into the shape of an
 /// arrow with a curved tail.
 ///
 /// @param {String|Angle} $direction ['bottom-right'] The direction that the
-/// arrow is pointing. Can either be a direction or an angle in degrees.
+/// arrow is pointing. Can either be a direction or an angle in degrees, turns,
+/// radians, or gradians.
 /// @param {Color|Mixed} $bg-color [#f00] The color of the arrow.
 /// @param {Length} $size [2rem] - The size of the arrow is calculated based on
 /// this value.
@@ -25,13 +28,12 @@
   // Mixin will only accept direction keywords and degree units
   @if $direction and
     meta.type-of($direction) ==
-    'number' and
-    math.unit($direction) !=
-    'deg' and not
-    math.is-unitless($direction)
+    'number' and not
+    math.is-unitless($direction) and not
+    is-angle($direction)
   {
     @error 'Invalid unit type for the $direction parameter of the ' +
-      '`arrow-curved-tail` mixin. Numbers must be entered in degrees.';
+      '[ arrow-curved-tail() ] mixin. Numbers must be entered in angle units.';
   }
 
   @if $direction {
@@ -39,10 +41,9 @@
       $direction: string.to-lower-case($direction);
     }
 
-    @if
-      meta.type-of($direction) ==
-        'number' and
-        (math.is-unitless($direction) or math.unit($direction) == 'deg')
+    @if meta.type-of($direction) ==
+      'number' and
+      (math.is-unitless($direction) or is-angle($direction))
     {
       $angle: $direction;
 
@@ -50,8 +51,8 @@
         $angle: $angle * 1deg;
       }
 
-      // Correct the angle so the arrow points to the right at 0deg
-      $angle: (-1 * $angle) - 45deg;
+      // Correct the angle so the arrow points to the top at 0deg
+      $angle: $angle - 135deg;
 
       // Simplify the angle if it is more than 360deg or less than -360deg
       @if $angle > 360deg {
@@ -59,150 +60,24 @@
       } @else if $angle < -360deg {
         $angle: -1 * ($angle % -360);
       }
-    } @else if (
-        $direction ==
-          'top' or
-          $direction ==
-          'up' or
-          $direction ==
-          't' or
-          $direction ==
-          'u'
-      )
-    {
+    } @else if is-alias('top', $direction) {
       $angle: 225deg;
     } @else if is-alias('right', $direction) {
       $angle: -45deg;
     } @else if is-alias('left', $direction) {
       $angle: 135deg;
-    } @else if (
-        $direction ==
-          'down' or
-          $direction ==
-          'bottom' or
-          $direction ==
-          'd' or
-          $direction ==
-          'b' or
-          $direction ==
-          'btm' or
-          $direction ==
-          'dwn'
-      )
-    {
+    } @else if is-alias('bottom', $direction) {
       $angle: 45deg;
-    } @else if (
-        $direction ==
-          'down-left' or
-          $direction ==
-          'left-down' or
-          $direction ==
-          'd-l' or
-          $direction ==
-          'l-d' or
-          $direction ==
-          'dl' or
-          $direction ==
-          'ld' or
-          $direction ==
-          'bottom-left' or
-          $direction ==
-          'left-bottom' or
-          $direction ==
-          'bl' or
-          $direction ==
-          'lb' or
-          $direction ==
-          'b-l' or
-          $direction ==
-          'l-b'
-      )
-    {
+    } @else if is-alias('bottom-left', $direction) {
       $angle: 100deg;
-    } @else if (
-        $direction ==
-          'top-left' or
-          $direction ==
-          'left-top' or
-          $direction ==
-          't-l' or
-          $direction ==
-          'l-t' or
-          $direction ==
-          'tl' or
-          $direction ==
-          'lt' or
-          $direction ==
-          'up-left' or
-          $direction ==
-          'u-l' or
-          $direction ==
-          'ul' or
-          $direction ==
-          'left-up' or
-          $direction ==
-          'l-u' or
-          $direction ==
-          'lu'
-      )
-    {
+    } @else if is-alias('top-left', $direction) {
       $angle: 190deg;
-    } @else if (
-        $direction ==
-          'top-right' or
-          $direction ==
-          'right-top' or
-          $direction ==
-          't-r' or
-          $direction ==
-          'r-t' or
-          $direction ==
-          'tr' or
-          $direction ==
-          'rt' or
-          $direction ==
-          'up-right' or
-          $direction ==
-          'u-r' or
-          $direction ==
-          'ur' or
-          $direction ==
-          'right-up' or
-          $direction ==
-          'r-u' or
-          $direction ==
-          'ru'
-      )
-    {
+    } @else if is-alias('top-right', $direction) {
       $angle: -80deg;
-    } @else if (
-        $direction !=
-          'down-right' and
-          $direction !=
-          'right-down' and
-          $direction !=
-          'dr' and
-          $direction !=
-          'rd' and
-          $direction !=
-          'd-r' and
-          $direction !=
-          'r-d' and
-          $direction !=
-          'bottom-right' and
-          $direction !=
-          'right-bottom' and
-          $direction !=
-          'b-r' and
-          $direction !=
-          'r-b' and
-          $direction !=
-          'br' and
-          $direction !=
-          'rb'
-      )
-    {
-      @error 'Invalid direction value for the `arrow-curved-tail` mixin.';
+    } @else if not is-alias('bottom-right', $direction) {
+      @error 'Invalid $direction value for the [ arrow-curved-tail() ] mixin.' +
+          ' Acceptable values include: `top`,`top-right`, `right`, ' +
+          '`bottom-right`, `bottom`, `bottom-left`, `left`, or `top-left`.';
     }
   }
 
@@ -210,7 +85,6 @@
   width: 0;
   height: 0;
   border-top: ($size * 0.75) solid transparent;
-
   border-right: ($size * 0.75) solid $bg-color;
   transform: rotate($angle);
 
@@ -222,7 +96,7 @@
     width: $size;
     height: $size;
     border: 0 solid transparent;
-    border-top: ($size / 4) solid $bg-color;
+    border-top: math.div($size, 4) solid $bg-color;
     border-radius: ($size * 1.6666666667) 0 0;
     transform: rotate(45deg);
   }

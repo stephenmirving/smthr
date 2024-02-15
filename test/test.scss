@@ -24,21 +24,22 @@
   @include animation-stage(500px, 50% 55%, 80%, 900, 80vh);
   @include flex-center;
 
-
   border: 4px solid #000;
   margin: 0 auto;
 }
 
 .card {
-  @include size(100%);
-  background: url(image('neon-car.jpg')) center / cover;
-  font: 700 1.125rem system-ui, sans-serif;
-  text-align: center;
+  @include arrow-curved-tail($direction: 270deg, $size: 4rem, $bg-color: #80f);
+
   position: relative;
+  // background: rgba(#80f, 85%);
+  font:
+    700 1.125rem system-ui,
+    sans-serif;
+  text-align: center;
 }
 
 .active-anim {
-  @include ken-burns('left-top');
 }
 
 .front {

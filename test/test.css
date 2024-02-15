@@ -28,26 +28,27 @@
 }
 
 .card {
-  width: 100%;
-  height: 100%;
-  background: url(assets/img/neon-car.jpg) center/cover;
+  position: relative;
+  width: 0;
+  height: 0;
+  border-top: 3rem solid transparent;
+  border-right: 3rem solid #80f;
+  transform: rotate(135deg);
+  position: relative;
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
-  position: relative;
 }
-
-.active-anim {
-  animation: zoom-in-to-top-left 5s ease-out both;
-}
-@keyframes zoom-in-to-top-left {
-  0% {
-    transform: scale(1) translate(0, 0);
-    transform-origin: 16% 16%;
-  }
-  100% {
-    transform: scale(1.25) translate(-20px, -15px);
-    transform-origin: 0% 0%;
-  }
+.card::after {
+  content: "";
+  position: absolute;
+  top: -4rem;
+  left: -3rem;
+  width: 4rem;
+  height: 4rem;
+  border: 0 solid transparent;
+  border-top: 1rem solid #80f;
+  border-radius: 6.6666666668rem 0 0;
+  transform: rotate(45deg);
 }
 
 .front {
