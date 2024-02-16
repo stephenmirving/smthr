@@ -83,7 +83,7 @@ TODO:
         ✔ reset @done(24-02-16 03:12)
         ☐ responsive-font
         ☐ responsive-ratio
-        ☐ responsive-square
+        ✔ responsive-square @done(24-02-16 03:23)
         ☐ scrollbar
         ✔ size @done(24-02-16 03:15)
         ☐ smooth-retina-fonts
