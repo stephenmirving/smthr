@@ -23,10 +23,11 @@ TODO:
         ✔ chevron @done(24-02-15 15:14)
         ✔ circle @done(24-02-15 15:14)
         ✔ cross @done(24-02-15 15:14)
-        ☐ diamond
-        ☐ frame
-        ☐ hamburger
+        ✔ diamond @done(24-02-15 16:01)
+        ✔ frame @done(24-02-15 18:43)
+        ☐ hamburger @started(24-02-15 18:43)
         ☐ heart
+
         ☐ hexagon
         ☐ infinity-symbol
         ☐ octagon

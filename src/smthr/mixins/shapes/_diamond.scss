@@ -8,12 +8,7 @@
 /// @param {Length-Percentage} $height [$size] The height of the shape.
 ///
 /// @group Shapes
-@mixin diamond(
-  $size: 15rem,
-  $bg: #fb8c00,
-  $fg-color: null,
-  $height: $size
-) {
+@mixin diamond($size: 15rem, $bg: #fb8c00, $fg-color: null, $height: $size) {
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 
   @if $size {

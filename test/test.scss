@@ -41,7 +41,13 @@
 }
 
 .active-anim {
-  @include diamond();
+  @include frame();
+}
+
+.hamburger {
+  @include reset;
+  @include hamburger();
+  margin-left: 2rem;
 }
 
 .front {
