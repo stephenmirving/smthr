@@ -25,12 +25,11 @@ TODO:
         ✔ cross @done(24-02-15 15:14)
         ✔ diamond @done(24-02-15 16:01)
         ✔ frame @done(24-02-15 18:43)
-        ☐ hamburger @started(24-02-15 18:43)
-        ☐ heart
-
-        ☐ hexagon
-        ☐ infinity-symbol
-        ☐ octagon
+        ✔ hamburger @started(24-02-15 18:43) @done(24-02-15 19:29) @lasted(46m4s)
+        ✔ heart @started(24-02-15 19:29) @done(24-02-15 19:33) @lasted(4m28s)
+        ✔ hexagon @done(24-02-15 19:33)
+        ✔ infinity-symbol @done(24-02-15 19:55)
+        ✔ octagon @done(24-02-15 19:55)
         ☐ point
         ☐ pointing-label
         ☐ price-tag

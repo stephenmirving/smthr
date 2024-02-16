@@ -29,25 +29,20 @@
 }
 
 .card {
-  position: relative;
-  background: rgba(#80f, 85%);
+  @include infinity-symbol();
+  // position: relative;
+  // background: rgba(#80f, 85%);
   font:
     700 1.125rem system-ui,
     sans-serif;
   text-align: center;
-  width: 14rem;
-  height: 14rem;
-  transition: all 1s;
+  // width: 14rem;
+  // height: 14rem;
+  // transition: all 1s;
 }
 
 .active-anim {
-  @include frame();
-}
 
-.hamburger {
-  @include reset;
-  @include hamburger();
-  margin-left: 2rem;
 }
 
 .front {
