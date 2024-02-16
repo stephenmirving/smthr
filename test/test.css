@@ -29,14 +29,10 @@
 }
 
 .card {
-  content: "";
-  display: block;
-  width: 0;
-  height: 0;
-  border: inset 9px;
-  border-color: #80f transparent transparent;
-  border-top-style: solid;
-  border-bottom-width: 0;
+  clip-path: polygon(20% 0, 0 20%, 30% 50%, 0 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0, 50% 30%);
+  width: 10rem;
+  height: 10rem;
+  background: #fb8c00;
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
 }

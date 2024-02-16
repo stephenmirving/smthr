@@ -1,8 +1,8 @@
 @use 'sass:meta';
 @use 'sass:string';
-@use '../../functions/is-alias';
-@use '../../functions/is-length';
-@use '../../functions/is-string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-string' as *;
 
 /// Uses clip path to change an element to the shape of a pentagonal arrow point.
 ///
@@ -45,14 +45,6 @@
     @error 'You must choose a $direction for the [ point() ] mixin.';
   }
 
-  @if is-alias('top right', $direction) or
-    is-alias('bottom right', $direction) or
-    is-alias('bottom left', $direction) or
-    is-alias('top left', $direction)
-  {
-    transform: rotate(45deg);
-  }
-
   @if $size {
     width: $size;
   }
@@ -63,5 +55,13 @@
 
   @if $bg {
     background: $bg;
+  }
+
+  @if is-alias('top right', $direction) or
+    is-alias('bottom right', $direction) or
+    is-alias('bottom left', $direction) or
+    is-alias('top left', $direction)
+  {
+    transform: rotate(45deg);
   }
 }

@@ -1,7 +1,8 @@
 @use 'sass:list';
 @use 'sass:math';
-@use '../../placeholders/variables' as *;
 @use '../../functions/tint' as *;
+@use '../../functions/to-fixed' as *;
+@use '../../placeholders/variables' as *;
 
 /// Creates a menu icon 'hamburger' with a set width, height, number of bars,
 /// and colors. The mixin uses the height of the icon and the weight of the bars
@@ -12,9 +13,9 @@
 /// is hovered over.
 /// @param {Length} $width [20px] - Width of the icon.
 /// @param {Length} $height [$width * 0.8] - Total height of the icon.
-/// @param {Length} $weight [math.div($width, 10)] - Height of individual bars
-/// in the icon.
 /// @param {Number} $bars [3] - Number of bars in the icon.
+/// @param {Length} $thickness [to-fixed(math.div($width, 6 + $bars), 3)] -
+/// Height of individual bars or 'patties' in the hamburger.
 /// @param {List} $transition: - The transition property you want to apply to
 /// the hover and active states of the hamburger button.
 ///
@@ -23,11 +24,14 @@
   $color: #112,
   $color-hover: tint($color, 20%),
   $color-active: tint($color, 12%),
-  $width: 2rem,
+  $width: 3rem,
   $height: $width * 0.8,
-  $weight: math.div($width, 10),
-  $bars: 5,
-  $transition: (backgound-color 0.3s ease-in, box-shadow 0.3s ease-in)
+  $bars: 3,
+  $thickness: to-fixed(math.div($width, 6 + $bars), 3),
+  $transition: (
+    backgound-color 0.25s ease-in,
+    box-shadow 0.25s ease-in
+  )
 ) {
   // box-shadow CSS output
   $shadow: ();
@@ -36,14 +40,14 @@
 
   // Spacing between bars is calculated based on the total height of the icon
   // and the weight of each bar
-  $spacing: math.div(($height - ($weight * $bars)), ($bars - 1));
+  $spacing: math.div(($height - ($thickness * $bars)), ($bars - 1));
 
   @if math.unit($spacing) == 'px' {
     $spacing: math.floor($spacing);
   }
 
   @for $i from 2 through $bars {
-    $offset: ($weight + $spacing) * ($i - 1);
+    $offset: ($thickness + $spacing) * ($i - 1);
     $shadow: list.append($shadow, 0 $offset 0 $color, comma);
   }
 
@@ -62,7 +66,7 @@
     left: 0;
     display: block;
     width: 100%;
-    height: $weight;
+    height: $thickness;
     background: $color;
     box-shadow: $shadow;
 
@@ -74,7 +78,7 @@
   // Hover & focus state
   @if $color-hover {
     @for $i from 2 through $bars {
-      $offset: ($weight + $spacing) * ($i - 1);
+      $offset: ($thickness + $spacing) * ($i - 1);
       $hover-shadow: list.append(
         $hover-shadow,
         0 $offset 0 $color-hover,
@@ -96,7 +100,7 @@
   // Active state
   @if $color-active {
     @for $i from 2 through $bars {
-      $offset: ($weight + $spacing) * ($i - 1);
+      $offset: ($thickness + $spacing) * ($i - 1);
       $active-shadow: list.append(
         $active-shadow,
         0 $offset 0 $color-active,

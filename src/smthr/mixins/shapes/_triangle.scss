@@ -21,11 +21,8 @@
 
   content: '';
   display: block;
-
-  @if $size {
-    width: 0;
-    height: 0;
-  }
+  width: 0;
+  height: 0;
 
   border: inset $size;
 

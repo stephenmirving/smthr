@@ -30,15 +30,15 @@ TODO:
         ✔ hexagon @done(24-02-15 19:33)
         ✔ infinity-symbol @done(24-02-15 19:55)
         ✔ octagon @done(24-02-15 19:55)
-        ☐ point
-        ☐ pointing-label
+        ✔ point @done(24-02-16 02:45)
+        ✔ pointing-label @done(24-02-16 02:56)
         ✔ price-tag @done(24-02-16 01:54)
-        ☐ ribbon
+        ✔ ribbon @done(24-02-16 02:58)
         ✔ shape-shadow @done(24-02-16 01:55)
-        ☐ speech-bubble
-        ☐ star-six-pointed
-        ☐ star
-        ☐ triangle
+        ✔ speech-bubble @done(24-02-16 02:58)
+        ✔ star-six-pointed @done(24-02-16 02:59)
+        ✔ star @done(24-02-16 03:00)
+        ✔ triangle @done(24-02-16 03:01)
         ✔ x-shape @done(24-02-16 01:56)
       ☐ Test all Utilities mixins
         ✔ BEM @done(24-02-15 03:08)
@@ -113,6 +113,8 @@ TODO:
   Shapes Mixins:
     ☐ Go to shapes page with psuedo elements and add those (Figure out what shapes page is?)
     ✔ Propogate the updated version of arrow-curved-tail @done(24-02-15 12:08)
+    ☐ Add diagnonal keyword directions and allow for angle units passed to $direction like in `chevron` in...
+      ☐ triangle
     ☐ Make a mixin for animating between clip-path shapes. https://css-tricks.com/animating-with-clip-path/
 
   Utility Mixins:

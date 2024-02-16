@@ -30,8 +30,7 @@
 }
 
 .card {
-  @include triangle(bottom);
-
+  @include x-shape(10rem);
 
   font:
     700 1.125rem system-ui,
