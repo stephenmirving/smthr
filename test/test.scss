@@ -30,7 +30,7 @@
 }
 
 .card {
-  @include chevron(220grad);
+  @include triangle(bottom);
 
 
   font:
@@ -74,9 +74,7 @@
 }
 
 .front .txt {
-  content: meta.type-of(blue);
 }
 
 .test {
-   content: meta.type-of(null) == 'string';
 }

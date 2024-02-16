@@ -2,6 +2,7 @@
 @use 'sass:string';
 @use '../../functions/is-alias';
 @use '../../functions/is-length';
+@use '../../functions/is-string';
 
 /// Uses clip path to change an element to the shape of a pentagonal arrow point.
 ///
@@ -13,17 +14,12 @@
 /// @param {Length-Percentage} $height [$size] The height of the arrow.
 ///
 /// @group Shapes
+///
 /// @throw Invalid $direction data type error.
 /// @throw Invalid $direction keyword value error.
-/// @throw Invalid $size data type error.
-@mixin point(
-  $direction: right,
-  $size: 15rem,
-  $bg: #fb8c00,
-  $height: $size
-) {
+@mixin point($direction: right, $size: 15rem, $bg: #fb8c00, $height: $size) {
   @if $direction {
-    @if meta.type-of($direction) == 'string' {
+    @if is-string($direction) {
       $direction: string.to-lower-case($direction);
     } @else {
       @error 'Invalid data type for $direction in the [ point() ] mixin. ' +
@@ -32,11 +28,9 @@
 
     @if is-alias('right', $direction) or is-alias('bottom right', $direction) {
       clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
-    } @else if is-alias('left', $direction) or is-alias('top left', $direction)
-    {
+    } @else if is-alias('left', $direction) or is-alias('top left', $direction) {
       clip-path: polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0 50%);
-    } @else if is-alias('top', $direction) or is-alias('top right', $direction)
-    {
+    } @else if is-alias('top', $direction) or is-alias('top right', $direction) {
       clip-path: polygon(100% 25%, 100% 100%, 0 100%, 0 25%, 50% 0);
     } @else if
       is-alias('bottom', $direction) or
@@ -59,13 +53,11 @@
     transform: rotate(45deg);
   }
 
-  @if not is-length($size) or not is-length($height) {
-    @error 'Invalid data type for $size or $height in the [ point() ] mixin.' +
-        ' You must choose a length value for these parameters.';
-  }
-
   @if $size {
     width: $size;
+  }
+
+  @if $height {
     height: $height;
   }
 

@@ -8,19 +8,18 @@
 /// @param {String} $direction [right] - Indicates the direction the label
 /// will be pointing towards.
 /// @param {Length-Percentage} $width [5rem] - A length value setting the width.
-/// @param {Color|Mixed} $bg [#999} Any value that is valid for the background
+/// @param {Color|Mixed} $bg [#80f} Any value that is valid for the background
 /// shorthand property.
-/// @param {Color} $fg-color [null] - Optional color value that, if passed,
-/// sets the color property for the text in the label.
 /// @param {Length-Percentage} $height [$width / 4] Length value that sets
 /// the height of the label.
 ///
 /// @group Shapes
+///
 /// @throw Invalid $direction value
 @mixin pointing-label(
   $direction: right,
   $width: 5rem,
-  $bg: #999,
+  $bg: #80f,
   $height: math.div($width, 4)
 ) {
   @if meta.type-of($direction) == 'string' {

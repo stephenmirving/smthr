@@ -11,7 +11,6 @@
 /// the $height property is not set explicitly, it is both height and width, if
 /// $height is set explicitly, then this value sets only the width.
 /// @param {Color|Mixed} $bg [null] - The color or background value.
-/// @param {Color} $fg-color [null] - The color of any text in the arrow.
 /// @param {Length-Percentage} $height [$size] - The height of the arrow.
 ///
 /// @group Shapes

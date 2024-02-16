@@ -29,11 +29,14 @@
 }
 
 .card {
-  clip-path: polygon(100% 75%, 50% 100%, 0 75%, 0 0, 50% 25%, 100% 0);
-  width: 15rem;
-  height: 15rem;
-  background: #fb8c00;
-  transform: rotate(18deg);
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border: inset 9px;
+  border-color: #80f transparent transparent;
+  border-top-style: solid;
+  border-bottom-width: 0;
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
 }
@@ -75,14 +78,6 @@
   display: inline;
   font-size: 3em;
   text-align: center;
-}
-
-.front .txt {
-  content: color;
-}
-
-.test {
-  content: false;
 }
 
 /*# sourceMappingURL=test.css.map */

@@ -32,14 +32,14 @@ TODO:
         ✔ octagon @done(24-02-15 19:55)
         ☐ point
         ☐ pointing-label
-        ☐ price-tag
+        ✔ price-tag @done(24-02-16 01:54)
         ☐ ribbon
-        ☐ shape-shadow
+        ✔ shape-shadow @done(24-02-16 01:55)
         ☐ speech-bubble
         ☐ star-six-pointed
         ☐ star
         ☐ triangle
-        ☐ x-shape
+        ✔ x-shape @done(24-02-16 01:56)
       ☐ Test all Utilities mixins
         ✔ BEM @done(24-02-15 03:08)
         ☐ bg-image-svg

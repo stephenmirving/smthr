@@ -2,15 +2,16 @@
 @use 'sass:meta';
 @use 'sass:math';
 
-/// Creates a 3D ribbon shape for headers. Apply the ribbon to a header element
-/// and include an inner inline element for the header's content.
+/// Creates a seemingly 3D ribbon shape for headers. Apply the ribbon to a
+/// header element and include an inner inline element for the header's content
+/// that has a class name matching the outer element but with the suffix passed
+/// to this function with $content-suffix.
 ///
-/// @param {Number} $ribbon-size [1] - A number value used to calculate the
-/// overall size of the ribbon.
+/// @param {Number} $ribbon-size [1] - A unitless number value used to
+/// calculate the overall size of the ribbon.
 /// @param {Length-Percentage} $font-size [1em] - The font-size of the ribbon
 /// text.
 /// @param {Color} $bg-color [purple] - The background color for the ribbon.
-/// @param {Color} $fg-color [purple] - The color of the ribbon's text.
 /// @param {String} $content-suffix ['-content'] - The suffix that is added
 /// to the class name that this mixin is applied to, representing the internal
 /// inline class that contains the ribbon's text content.
@@ -19,13 +20,14 @@
 /// @link https://css-tricks.com/snippets/css/ribbon/
 ///
 /// @group Shapes
-/// @alias banner
+///
 /// @throw Invalid $ribbon-size value
+///
+/// @alias banner
 @mixin ribbon(
   $ribbon-size: 1,
   $font-size: 1em,
   $bg-color: #ba89b6,
-  $fg-color: #fff,
   $content-suffix: '-content'
 ) {
   @if meta.type-of($ribbon-size) !=
@@ -43,10 +45,6 @@
   font-size: $font-size !important;
   line-height: 1;
   text-align: center;
-
-  @if $fg-color {
-    color: $fg-color;
-  }
 
   &::before,
   &::after {
@@ -91,37 +89,33 @@
   }
 }
 
-/// Creates a 3D ribbon shape for headers. Apply the ribbon to a header element
-/// and include an inner inline element for the header's content.
+/// Creates a seemingly 3D ribbon shape for headers. Apply the ribbon to a
+/// header element and include an inner inline element for the header's content
+/// that has a class name matching the outer element but with the suffix passed
+/// to this function with $content-suffix.
 ///
-/// @example <h1 class="ribbon"><strong class="ribbon-content">HEADER</strong></h1>
-/// @link https://css-tricks.com/snippets/css/ribbon/
-///
-/// @param {Number} $ribbon-size [1] - A number value used to calculate the
+/// @param {Number} $ribbon-size [1] - A unitless number value used to
+/// calculate the overall size of the ribbon.
 /// @param {Length-Percentage} $font-size [1em] - The font-size of the ribbon
 /// text.
-/// overall size of the ribbon.
 /// @param {Color} $bg-color [purple] - The background color for the ribbon.
-/// @param {Color} $fg-color [purple] - The color of the ribbon's text.
 /// @param {String} $content-suffix ['-content'] - The suffix that is added
 /// to the class name that this mixin is applied to, representing the internal
 /// inline class that contains the ribbon's text content.
 ///
+/// @example <h1 class="ribbon"><strong class="ribbon-content">HEADER</strong></h1>
+/// @link https://css-tricks.com/snippets/css/ribbon/
+///
 /// @group Shapes
-/// @alias ribbon
+///
 /// @throw Invalid $ribbon-size value
+///
+/// @alias ribbon
 @mixin banner(
   $ribbon-size: 1,
   $font-size: 1em,
   $bg-color: #ba89b6,
-  $fg-color: #fff,
   $content-suffix: '-content'
 ) {
-  @include ribbon(
-    $font-size,
-    $ribbon-size,
-    $bg-color,
-    $fg-color,
-    $content-suffix
-  );
+  @include ribbon($ribbon-size, $font-size, $bg-color, $content-suffix);
 }

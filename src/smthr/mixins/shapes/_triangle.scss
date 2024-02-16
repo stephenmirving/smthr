@@ -1,27 +1,31 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-string' as *;
 
 /// Creates a CSS triangle, which can be used for dropdown arrows, dropdown
 /// pips, and more. Use this mixin inside a `&::before` or `&::after` selector,
 /// to attach the triangle to an existing element.
 ///
 /// @param {String} $direction [down] - Direction that the triangle points.
-/// Can be `up` (or `u`), `right` (or `r`), `down` (or `d`), or `left` (or `l`).
-/// @param {Number} $size [9px] - Width of the triangle.
-/// @param {Color} $color [#3e3e3e] - Color of the triangle.
+/// Can be `up`, `right`, `down`, or `left`.
+/// @param {Number} $size [9px] - The width of the triangle.
+/// @param {Color} $color [#80f] - The color of the triangle.
 ///
 /// @group Shapes
 /// @throw Invalid $direction value
-@mixin triangle($direction: down, $size: 9px, $color: #3e3e3e) {
-  @if meta.type-of($direction) == 'string' {
+@mixin triangle($direction: bottom, $size: 9px, $color: #80f) {
+  @if is-string($direction) {
     $direction: string.to-lower-case($direction);
   }
 
   content: '';
   display: block;
-  width: 0;
-  height: 0;
+
+  @if $size {
+    width: 0;
+    height: 0;
+  }
 
   border: inset $size;
 

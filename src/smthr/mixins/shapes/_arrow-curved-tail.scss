@@ -1,9 +1,10 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
-@use '../../functions/conv-angle' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-angle' as *;
+@use '../../functions/is-color' as *;
+@use '../../functions/conv-angle' as *;
 
 /// Uses psuedo-elements and transform to turn an element into the shape of an
 /// arrow with a curved tail.
@@ -13,7 +14,7 @@
 /// radians, or gradians.
 /// @param {Length} $size [2rem] - The size of the arrow is calculated based on
 /// this value.
-/// @param {Color|Mixed} $bg-color [#f00] The color of the arrow.
+/// @param {Color} $color [#f00] The color of the arrow.
 ///
 /// @group Shapes
 ///
@@ -23,10 +24,11 @@
 ///
 /// @throw Invalid unit type for $direction
 /// @throw Invalid $direction keyword value
+/// @throw Invalid data type for $color.
 @mixin arrow-curved-tail(
   $direction: 'bottom-right',
   $size: 2rem,
-  $bg-color: #f00
+  $color: #f00
 ) {
   // Default angle for the 'bottom-right' direction
   $angle: 10deg;
@@ -90,11 +92,16 @@
     }
   }
 
+  @if not is-color($color) {
+    @error 'Invalid $color value of `#{meta.type-of($color)}` for the ' +
+        '[ arrow-curved-tail() ] mixin.';
+  }
+
   position: relative;
   width: 0;
   height: 0;
   border-top: ($size * 0.75) solid transparent;
-  border-right: ($size * 0.75) solid $bg-color;
+  border-right: ($size * 0.75) solid $color;
   transform: rotate($angle);
 
   &::after {
@@ -105,7 +112,7 @@
     width: $size;
     height: $size;
     border: 0 solid transparent;
-    border-top: math.div($size, 4) solid $bg-color;
+    border-top: math.div($size, 4) solid $color;
     border-radius: ($size * 1.6666667) 0 0;
     transform: rotate(45deg);
   }

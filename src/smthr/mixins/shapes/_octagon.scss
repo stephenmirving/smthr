@@ -4,11 +4,11 @@
 /// the element.
 /// @param {Color|Mixed} $bg [#8b0000] - Can be any value that is valid for the
 /// background shorthand property.
-/// @param {Color} $fg-color [null] - Optional argument that sets the color
-/// property for the elment.
 ///
 /// @group Shapes
-@mixin octagon($size: 15rem, $bg: #8b0000, $fg-color: null) {
+///
+/// @alias stop-sign
+@mixin octagon($size: 15rem, $bg: #8b0000) {
   clip-path: polygon(
     30% 0,
     70% 0,
@@ -28,10 +28,6 @@
   @if $bg {
     background: $bg;
   }
-
-  @if $fg-color {
-    color: $fg-color;
-  }
 }
 
 /// References the octagon clip-path mixin to create a stop sign shape with a
@@ -45,7 +41,8 @@
 /// property for the elment.
 ///
 /// @group Shapes
-/// @require {mixin} octagon
-@mixin stop-sign($bg: #8b0000, $size: 15rem, $fg-color: #fff) {
-  @include octagon($bg, $size, $fg);
+///
+/// @alias octagon
+@mixin stop-sign($bg: #8b0000, $size: 15rem) {
+  @include octagon($bg, $size);
 }

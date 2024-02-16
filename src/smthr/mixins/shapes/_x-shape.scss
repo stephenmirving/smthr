@@ -1,11 +1,10 @@
-/// Uses clip path to change an element to the shape of an X
+/// Uses clip path to change an element to the shape of a thick X.
 ///
 /// @param {Color|Mixed} $bg [#fb8c00] The color or background value.
-/// @param {Length-Percentage} $size [15rem] - The height and width.
-/// @param {Color} $fg-color [null] The color of any text in the shape
+/// @param {Length-Percentage} $size [15rem] - The height and width of the shape.
 ///
 /// @group Shapes
-@mixin x-shape($bg: #fb8c00, $size: 15rem, $fg-color: null) {
+@mixin x-shape($bg: #fb8c00, $size: 15rem) {
   clip-path: polygon(
     20% 0,
     0 20%,
@@ -20,11 +19,13 @@
     80% 0,
     50% 30%
   );
-  width: $size;
-  height: $size;
-  background: $bg;
 
-  @if $fg-color {
-    color: $fg-color;
+  @if $size {
+    width: $size;
+    height: $size;
+  }
+
+  @if $bg {
+    background: $bg;
   }
 }
