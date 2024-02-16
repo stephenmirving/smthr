@@ -15,16 +15,19 @@
 /// @param {Length} $weight [math.div($width, 10)] - Height of individual bars
 /// in the icon.
 /// @param {Number} $bars [3] - Number of bars in the icon.
+/// @param {List} $transition: - The transition property you want to apply to
+/// the hover and active states of the hamburger button.
 ///
 /// @group Shapes
 @mixin hamburger(
   $color: #112,
-  $color-hover: tint($color, 25%),
-  $color-active: tint($color, 10%),
+  $color-hover: tint($color, 20%),
+  $color-active: tint($color, 12%),
   $width: 2rem,
   $height: $width * 0.8,
   $weight: math.div($width, 10),
-  $bars: 5
+  $bars: 5,
+  $transition: (backgound-color 0.3s ease-in, box-shadow 0.3s ease-in)
 ) {
   // box-shadow CSS output
   $shadow: ();
@@ -62,9 +65,10 @@
     height: $weight;
     background: $color;
     box-shadow: $shadow;
-    transition:
-      backgound-color 0.4s ease-out,
-      box-shadow 0.4s ease-out;
+
+    @if $transition {
+      transition: $transition;
+    }
   }
 
   // Hover & focus state
@@ -101,8 +105,8 @@
     }
 
     &:active::after {
-      background: $color-hover;
-      box-shadow: $hover-shadow;
+      background: $color-active;
+      box-shadow: $active-shadow;
     }
   }
 }

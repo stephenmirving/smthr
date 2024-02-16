@@ -73,19 +73,19 @@
   height: 0.2rem;
   background: #112;
   box-shadow: 0 0.35rem 0 #112, 0 0.7rem 0 #112, 0 1.05rem 0 #112, 0 1.4rem 0 #112;
-  transition: backgound-color 0.4s ease-out, box-shadow 0.4s ease-out;
+  transition: backgound-color 0.3s ease-in, box-shadow 0.3s ease-in;
 }
 .hamburger:hover::after {
-  background: #37376f;
-  box-shadow: 0 0.35rem 0 #37376f, 0 0.7rem 0 #37376f, 0 1.05rem 0 #37376f, 0 1.4rem 0 #37376f;
+  background: #30305f;
+  box-shadow: 0 0.35rem 0 #30305f, 0 0.7rem 0 #30305f, 0 1.05rem 0 #30305f, 0 1.4rem 0 #30305f;
 }
 .hamburger:focus-visible::after {
-  background: #37376f;
-  box-shadow: 0 0.35rem 0 #37376f, 0 0.7rem 0 #37376f, 0 1.05rem 0 #37376f, 0 1.4rem 0 #37376f;
+  background: #30305f;
+  box-shadow: 0 0.35rem 0 #30305f, 0 0.7rem 0 #30305f, 0 1.05rem 0 #30305f, 0 1.4rem 0 #30305f;
 }
 .hamburger:active::after {
-  background: #37376f;
-  box-shadow: 0 0.35rem 0 #37376f, 0 0.7rem 0 #37376f, 0 1.05rem 0 #37376f, 0 1.4rem 0 #37376f;
+  background: #232347;
+  box-shadow: 0 0.35rem 0 #232347, 0 0.7rem 0 #232347, 0 1.05rem 0 #232347, 0 1.4rem 0 #232347;
 }
 
 .front {
