@@ -13,8 +13,8 @@
 ///
 /// @return {List} The converted list.
 ///
-/// @throw Invalid $string type error.
-/// @throw Invalid $separator type error.
+/// @throw {Error} Invalid $string type.
+/// @throw {Error} Invalid $separator type.
 /// @alias string-to-list
 @function str-to-list($string, $separator: ' ') {
   @if meta.type-of($string) == 'list' {

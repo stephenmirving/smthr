@@ -15,8 +15,9 @@
 ///
 /// @return {Map} The merged map
 ///
-/// @throw Invalid $objects type error.
-/// @throw Invalid $deep type error.
+/// @throw {Error} Invalid $objects type.
+/// @throw {Error} Invalid $deep type.
+///
 /// @alias extend
 @function extend-map($object, $objects... /*, $deep */) {
   @if meta.type-of($object) != 'map' {
@@ -86,8 +87,8 @@
 ///
 /// @return {Map} The merged map
 ///
-/// @throw Invalid $objects type error.
-/// @throw Invalid $deep type error.
+/// @throw {Error} Invalid $objects type.
+/// @throw {Error} Invalid $deep type.
 /// @alias extend
 @function extend($object, $objects... /*, $deep */) {
   @if meta.type-of($object) != 'map' {

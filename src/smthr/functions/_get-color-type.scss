@@ -11,7 +11,7 @@
 ///
 /// @return {String} The type of notation used for the $color value.
 ///
-/// @throw Invalid $color value error.
+/// @throw {Error} Invalid $color value.
 @function get-color-type($color) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to [ get-color-type() ] function. You ' +

@@ -8,9 +8,9 @@
 /// or 0% and 100%, inclusive.
 /// @return {Color} The black color at the given opacity level.
 ///
-/// @throw Invalid data type for $opacity
-/// @throw Invalid unit type for $opacity
-/// @throw $opacity value out of range
+/// @throw {Error} Invalid data type for $opacity
+/// @throw {Error} Invalid unit type for $opacity
+/// @throw {Error} $opacity value out of range
 @function black($opacity: 1) {
   @if meta.type-of($opacity) != 'number' {
     @error 'Invalid data type passed to black(). Opacity must be a number.';

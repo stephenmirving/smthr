@@ -11,8 +11,8 @@
 /// the color.
 /// @return {Color} - The darkened color.
 ///
-/// @throw Invalid $color type error.
-/// @throw Invalid $percentage type error.
+/// @throw {Error} Invalid $color type.
+/// @throw {Error} Invalid $percentage type.
 /// @alias darker
 @function shade($color, $percentage) {
   @if meta.type-of($color) != 'color' {

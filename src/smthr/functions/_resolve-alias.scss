@@ -16,8 +16,8 @@
 ///
 /// @require {Map} $map-alias-resolutions
 ///
-/// @throw Invalid $alias data type error.
-/// @throw Invalid $alias-map data type error.
+/// @throw {Error} Invalid $alias data type.
+/// @throw {Error} Invalid $alias-map data type.
 @function resolve-alias($alias, $alias-map: $map-alias-resolutions) {
   @if meta.type-of($alias) != 'string' {
     @error 'Invalid data type of [ #{meta.type-of($alias)} ] for $alias ' +

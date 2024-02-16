@@ -27,10 +27,10 @@
 /// @require {Function} strip-unit
 /// @require {Function} pi
 ///
-/// @throw Invalid $angle unit type error.
-/// @throw Invalid $angle keyword string error.
-/// @throw Invalid $angle data type error.
-/// @throw Invalid $convert-to angle unit keyword string error.
+/// @throw {Error} Invalid $angle unit type.
+/// @throw {Error} Invalid $angle keyword string.
+/// @throw {Error} Invalid $angle data type.
+/// @throw {Error} Invalid $convert-to angle unit keyword string.
 @function conv-angle($angle, $convert-to: deg) {
   // $_missing: missing-dependencies('is-angle', 'strip-unit', 'pi');
   $start-unit: '';

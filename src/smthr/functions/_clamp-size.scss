@@ -18,7 +18,7 @@
 /// is below the limit, it will return the $min, if it is above the $max, it
 /// will return the $max.
 ///
-/// @throw Minimum greater than maximum error.
+/// @throw {Error} Minimum greater than maximum.
 /// @alias clamp-val
 @function clamp-size($min, $value, $max) {
   @if meta.type-of($min) == 'number' and meta.type-of($max) == 'number' and

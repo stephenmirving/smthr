@@ -14,9 +14,10 @@
 /// @example animation: fade-in 2s timing(ease-in-quad) 50ms both
 ///
 /// @require $map-timing-functions
-/// @throw Invalid $func-name type error.
-/// @throw Invalid $alias-map type error.
-/// @throw Function name not found in alias map error.
+///
+/// @throw {Error} Invalid $func-name type.
+/// @throw {Error} Invalid $alias-map type.
+/// @throw {Error} Function name not found in alias map.
 @function timing($func-name, $alias-map: $map-timing-functions) {
   @if meta.type-of($func-name) != 'string' {
     @error 'Invalid data type of [ #{meta.type-of($func-name)} ] for $func-name ' +

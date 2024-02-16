@@ -13,8 +13,9 @@
 ///
 /// @return {Number} - The numerical representation of the input string.
 ///
-/// @throw $string is not a string warning.
-/// @throw $string is not a valid numberic error.
+/// @throw {Error} $string is not a string.
+/// @throw {Error} $string is not a valid numberic.
+///
 /// @alias string-to-number
 /// @alias string-to-numeric
 @function str-to-num($string) {
@@ -77,45 +78,58 @@
   }
 }
 
-/// Converts a string representation of a number into an actual number.
-/// Note: This function assumes the input string is a valid numerical value.
+/// Safely converts a string representation of a number into an actual number
+/// that will always work when things like string.unquote() or interpolation
+/// give errors.This function assumes the input string is a valid numerical
+/// value.
+/// @access public
 ///
-/// @param {String} $string - The string to convert.
+/// @param {String|Number} $string - Value to be parsed.
 ///
 /// @return {Number} - The numerical representation of the input string.
 ///
-/// @throw $string is not a string warning.
-/// @throw $string is not a valid numberic error.
-/// @alias str-to-num
+/// @throw {Error} $string is not a string.
+/// @throw {Error} $string is not a valid numberic.
+///
+/// @alias string-to-number
 /// @alias string-to-numeric
 @function string-to-number($string) {
   @return str-to-num($string);
 }
 
-/// Converts a string representation of a number into an actual number.
-/// Note: This function assumes the input string is a valid numerical value.
+/// Safely converts a string representation of a number into an actual number
+/// that will always work when things like string.unquote() or interpolation
+/// give errors.This function assumes the input string is a valid numerical
+/// value.
+/// @access public
 ///
-/// @param {String} $string - The string to convert.
+/// @param {String|Number} $string - Value to be parsed.
 ///
 /// @return {Number} - The numerical representation of the input string.
 ///
-/// @throw $string is not a string warning.
-/// @throw $string is not a valid numberic error.
-/// @alias str-to-num
+/// @throw {Error} $string is not a string.
+/// @throw {Error} $string is not a valid numberic.
+///
 /// @alias string-to-number
+/// @alias string-to-numeric
 @function string-to-numeric($string) {
   @return str-to-num($string);
 }
-
-/// Add `$unit` to `$value`
-/// @access private
+/// Safely converts a string representation of a number into an actual number
+/// that will always work when things like string.unquote() or interpolation
+/// give errors.This function assumes the input string is a valid numerical
+/// value.
+/// @access public
 ///
-/// @param {Number} $value - Value to add unit to
-/// @param {String} $unit - String representation of the unit
+/// @param {String|Number} $string - Value to be parsed.
 ///
-/// @return {Number} - `$value` expressed in `$unit`
+/// @return {Number} - The numerical representation of the input string.
 ///
-/// @throw Invalid $unit value error.
+/// @throw {Error} $string is not a string.
+/// @throw {Error} $string is not a valid numberic.
+///
+/// @alias string-to-number
+/// @alias string-to-numeric
 @function _to-length($value, $unit) {
   $units: (
     'px': 1px,

@@ -15,9 +15,9 @@
 ///
 /// @return {Color} - The inverted color in the given syntax.
 ///
-/// @throw Invalid $color syntax error.
-/// @throw Invalid $weight value error.
-/// @throw Invalid $syntax error.
+/// @throw {Error} Invalid $color syntax.
+/// @throw {Error} Invalid $weight value.
+/// @throw {Error} Invalid $syntax.
 /// @alias invert-color
 @function color-invert($color, $weight: 100%, $syntax: get-color-type($color)) {
   @if meta.type-of($color) != 'color' {
@@ -49,8 +49,8 @@
 ///
 /// @return {Color} - The inverted color in the given syntax.
 ///
-/// @throw Invalid $color syntax error.
-/// @throw Invalid $syntax error.
+/// @throw {Error} Invalid $color notation.
+/// @throw {Error} Invalid $synax value.
 /// @alias color-invert
 @function invert-color($color, $weight: 100%, $syntax: get-color-type($color)) {
   @return color-invert($color, $weight, $syntax);

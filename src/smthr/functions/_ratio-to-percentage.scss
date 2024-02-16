@@ -14,7 +14,7 @@
 ///
 /// @return {Length-Percentage} A percentage value equal to the given ratio
 ///
-/// @throw Invalid ratio format error.
+/// @throw {Error} Invalid ratio format.
 @function ratio-to-percentage($ratio) {
   $separators: (' : ', ':', ' / ', '/', ', ', ',', ' ');
   $found-separators: 0;
@@ -87,7 +87,8 @@
 ///
 /// @return {Length-Percentage} A percentage value equal to the given ratio
 ///
-/// @throw Invalid ratio format error.
+/// @throw {Error} Invalid ratio format.
+///
 /// @alias ratio-to-percentage
 @function ratio-to-percent($ratio) {
   @return ratio-to-percentage($ratio);

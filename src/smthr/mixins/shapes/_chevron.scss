@@ -25,8 +25,8 @@
 /// @require {Function} is-number
 /// @require {Function} is-string
 ///
-/// @throw Invalid $direciton unit type error.
-/// @throw Invalid $direction keyword value error.
+/// @throw {Error} Invalid $direciton unit type.
+/// @throw {Error} Invalid $direction keyword type.
 @mixin chevron($direction: right, $size: 15rem, $bg: #fb8c00, $height: $size) {
   $closest-position-list: null;
   $closest-position: null;

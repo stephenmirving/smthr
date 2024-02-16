@@ -9,8 +9,9 @@
 /// @param {Integer} $digits [2] - Number of digits to leave after the decimal.
 /// @return {Number} The fixed digit number.
 ///
-/// @throw Invalid $float type error.
-/// @throw $digits precision not in range error.
+/// @throw {Error} Invalid $float type.
+/// @throw {Error} $digits precision not in range.
+///
 /// @alias fix-to-place
 /// @alias fix-to-decimal
 @function to-fixed($float, $digits: 2) {
@@ -56,8 +57,9 @@
 /// @param {Integer} $digits [2] - Number of digits to leave after the decimal.
 /// @return {Number} The fixed digit number.
 ///
-/// @throw Invalid $float type error.
-/// @throw $digits precision not in range error.
+/// @throw {Error} Invalid $float type.
+/// @throw {Error} $digits precision not in range.
+///
 /// @alias to-fixed
 /// @alias fix-to-decimal
 @function fix-to-place($float, $digits: 2) {
@@ -71,8 +73,9 @@
 /// @param {Integer} $digits [2] - Number of digits to leave after the decimal.
 /// @return {Number} The fixed digit number.
 ///
-/// @throw Invalid $float type error.
-/// @throw $digits precision not in range error.
+/// @throw {Error} Invalid $float type.
+/// @throw {Error} $digits precision not in range.
+///
 /// @alias to-fixed
 /// @alias fix-to-place
 @function fix-to-decimal($float, $digits: 2) {

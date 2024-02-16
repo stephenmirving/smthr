@@ -13,8 +13,8 @@
 /// @group Animations
 /// @require {Function} is-alias
 ///
-/// @throw Invalid type of $flip-axis error.
-/// @throw Invalid $z-val z-index value.
+/// @throw {Error} Invalid type of $flip-axis.
+/// @throw {Error} Invalid $z-val z-index value.
 ///
 /// @alias $back-side
 @mixin animation-back-face($flip-axis: horizontal, $z-val: 10) {
@@ -78,8 +78,8 @@
 /// @group Animations
 /// @require {Function} is-alias
 ///
-/// @throw Invalid type of $flip-axis error.
-/// @throw Invalid $z-val z-index value.
+/// @throw {Error} Invalid type of $flip-axis.
+/// @throw {Error} Invalid $z-val z-index value.
 @mixin back-side($flip-axis: horizontal, $z-val: 10) {
   @include animation-back-face($flip-axis, $-val);
 }
