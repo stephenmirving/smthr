@@ -1,6 +1,12 @@
+@use 'sass:list';
+@use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/closest-position' as *;
+@use '../../functions/conv-angle' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Uses clip path to change an element to the shape of a chevron arrow
 ///
@@ -12,31 +18,72 @@
 /// @param {Length-Percentage} $height [$size] The height of the chevron.
 ///
 /// @group Shapes
-/// @throw Invalid $direciton value
-@mixin chevron(
-  $direction: right,
-  $size: 15rem,
-  $bg: #fb8c00,
-  $height: $size
-) {
-  @if meta.type-of($direction) == 'string' {
+///
+/// @require {function} closest-position
+/// @require {function} conv-angle
+/// @require {function} is-alias
+/// @require {function} is-number
+/// @require {function} is-string
+///
+/// @throw Invalid $direciton unit type error.
+/// @throw Invalid $direction keyword value error.
+@mixin chevron($direction: right, $size: 15rem, $bg: #fb8c00, $height: $size) {
+  $closest-position-list: null;
+  $closest-position: null;
+  $angle-difference: null;
+
+  @if is-number($direction) {
+    // If $direction is a unitless number, assume it is meant to be in degrees
+    @if math.is-unitless($direction) {
+      $direction: $direction * 1deg;
+    }
+
+    // Check if number is an angle and convert it into degrees
+    @if is-angle($direction) {
+      $direction: conv-angle($direction, deg);
+    } @else {
+      @error 'Invalid $direction unit type of `#{math.unit($direction)}` ' +
+          'used in the [ chevron() ] mixin. This value must be either an ' +
+          'angle, a unitless number, or a position keyword.';
+    }
+
+    $closest-position-list: closest-position($direction, true);
+    $closest-position: list.nth($closest-position-list, 1);
+    $angle-difference: list.nth($closest-position-list, 2);
+
+    $direction: $closest-position;
+  }
+
+  @if is-string($direction) {
     $direction: string.to-lower-case($direction);
+
+    @if is-alias('right', $direction) {
+      clip-path: polygon(75% 0, 100% 50%, 75% 100%, 0 100%, 25% 50%, 0 0);
+    } @else if is-alias('left', $direction) {
+      clip-path: polygon(100% 0, 75% 50%, 100% 100%, 25% 100%, 0 50%, 25% 0);
+    } @else if is-alias('top', $direction) {
+      clip-path: polygon(100% 100%, 50% 75%, 0 100%, 0 25%, 50% 0, 100% 25%);
+    } @else if is-alias('bottom', $direction) {
+      clip-path: polygon(100% 75%, 50% 100%, 0 75%, 0 0, 50% 25%, 100% 0);
+    } @else {
+      @error 'Invalid direction value of `#{meta.inspect($direction)}` for ' +
+        'the [ chevron() ] mixin';
+    }
   }
 
-  @if is-alias('right', $direction) {
-    clip-path: polygon(75% 0, 100% 50%, 75% 100%, 0 100%, 25% 50%, 0 0);
-  } @else if is-alias('left', $direction) {
-    clip-path: polygon(100% 0, 75% 50%, 100% 100%, 25% 100%, 0 50%, 25% 0);
-  } @else if is-alias('top', $direction) {
-    clip-path: polygon(100% 100%, 50% 75%, 0 100%, 0 25%, 50% 0, 100% 25%);
-  } @else if is-alias('bottom', $direction) {
-    clip-path: polygon(100% 75%, 50% 100%, 0 75%, 0 0, 50% 25%, 100% 0);
-  } @else {
-    @error 'Invalid direction value of `#{meta.inspect($direction)}` for ' +
-      'the [ chevron() ] mixin';
+  @if $size {
+    width: $size;
   }
 
-  width: $size;
-  height: $height;
-  background: $bg;
+  @if $height {
+    height: $height;
+  }
+
+  @if $bg {
+    background: $bg;
+  }
+
+  @if $angle-difference {
+    transform: rotate($angle-difference);
+  }
 }

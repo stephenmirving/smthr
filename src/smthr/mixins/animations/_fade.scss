@@ -100,19 +100,19 @@
       $trans-val-1: translateX(50px);
       $trans-val-2: translateX(0);
       $direction: 'right';
-    } @else if is-alias('top-left', $direction) {
+    } @else if is-alias('top left', $direction) {
       $trans-val-1: translateX(-50px) translateY(-50px);
       $trans-val-2: translateX(0) translateY(0);
       $direction: 'top-left';
-    } @else if is-alias('top-right', $direction) {
+    } @else if is-alias('top right', $direction) {
       $trans-val-1: translateX(50px) translateY(-50px);
       $trans-val-2: translateX(0) translateY(0);
       $direction: 'top-right';
-    } @else if is-alias('bottom-right', $direction) {
+    } @else if is-alias('bottom right', $direction) {
       $trans-val-1: translateX(50px) translateY(50px);
       $trans-val-2: translateX(0) translateY(0);
       $direction: 'bottom-right';
-    } @else if is-alias('bottom-left', $direction) {
+    } @else if is-alias('bottom left', $direction) {
       $trans-val-1: translateX(-50px) translateY(50px);
       $trans-val-2: translateX(0) translateY(0);
       $direction: 'bottom-left';

@@ -23,7 +23,7 @@
 /// null assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
-/// function for this animation.`;
+/// function for this animation.`
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -82,13 +82,13 @@
       $direction: 'left';
     } @else if is-alias('right' $direction) {
       $direction: 'right';
-    } @else if is-alias('top-left' $direction) {
+    } @else if is-alias('top left' $direction) {
       $direction: 'top-left';
-    } @else if is-alias('top-right' $direction) {
+    } @else if is-alias('top right' $direction) {
       $direction: 'top-right';
-    } @else if is-alias('bottom-right' $direction) {
+    } @else if is-alias('bottom right' $direction) {
       $direction: 'bottom-right';
-    } @else if is-alias('bottom-left' $direction) {
+    } @else if is-alias('bottom left' $direction) {
       $direction: 'bottom-left';
     } @else {
       @error 'Invalid direction of `#{meta.inspect($direction)}` chosen for ' +

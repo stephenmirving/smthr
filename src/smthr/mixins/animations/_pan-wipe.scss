@@ -98,19 +98,19 @@
     $pos-val1: 50% 0%;
     $pos-val2: 50% 100%;
     $anim-suffix: '-bottom';
-  } @else if is-alias('top-left', $direction) {
+  } @else if is-alias('top left', $direction) {
     $pos-val1: 100% 100%;
     $pos-val2: 0% 0%;
     $anim-suffix: '-top-left';
-  } @else if is-alias('top-right', $direction) {
+  } @else if is-alias('top right', $direction) {
     $pos-val1: 0% 100%;
     $pos-val2: 100% 0%;
     $anim-suffix: '-top-right';
-  } @else if is-alias('bottom-left', $direction) {
+  } @else if is-alias('bottom left', $direction) {
     $pos-val1: 100% 0%;
     $pos-val2: 0% 100%;
     $anim-suffix: '-bottom-left';
-  } @else if is-alias('bottom-right', $direction) {
+  } @else if is-alias('bottom right', $direction) {
     $pos-val1: 0% 0%;
     $pos-val2: 100% 100%;
     $anim-suffix: '-bottom-right';

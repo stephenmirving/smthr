@@ -81,7 +81,7 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if is-alias('top-right', $direction) {
+  @if is-alias('top right', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(-8px) translateY(8px);
     $shadow-val:
@@ -107,7 +107,7 @@
       7px 0 $shadow-color,
       8px 0 $shadow-color;
     $anim-suffix: '-right';
-  } @else if is-alias('bottom-right', $direction) {
+  } @else if is-alias('bottom right', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(-8px) translateY(-8px);
     $shadow-val:
@@ -132,7 +132,7 @@
       0 7px $shadow-color,
       0 8px $shadow-color;
     $anim-suffix: '-bottom';
-  } @else if is-alias('bottom-left', $direction) {
+  } @else if is-alias('bottom left', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(8px) translateY(-8px);
     $shadow-val:
@@ -158,7 +158,7 @@
       -7px 0 $shadow-color,
       -8px 0 $shadow-color;
     $anim-suffix: '-left';
-  } @else if is-alias('top-left', $direction) {
+  } @else if is-alias('top left', $direction) {
     $trans-val-1: translateX(0) translateY(0);
     $trans-val-2: translateX(8px) translateY(8px);
     $shadow-val:

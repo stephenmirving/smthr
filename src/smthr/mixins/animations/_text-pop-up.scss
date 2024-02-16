@@ -82,16 +82,16 @@
   } @else if is-alias('right', $direction) {
     $dir-val: translateX(50px);
     $anim-suffix: '-to-right';
-  } @else if is-alias('top-right', $direction) {
+  } @else if is-alias('top right', $direction) {
     $dir-val: translateY(-50px) translateX(50px);
     $anim-suffix: '-to-top-right';
-  } @else if is-alias('top-left', $direction) {
+  } @else if is-alias('top left', $direction) {
     $dir-val: translateY(-50px) translateX(-50px);
     $anim-suffix: '-to-top-left';
-  } @else if is-alias('bottom-right', $direction) {
+  } @else if is-alias('bottom right', $direction) {
     $dir-val: translateY(50px) translateX(50px);
     $anim-suffix: '-to-bottom-right';
-  } @else if is-alias('bottom-left', $direction) {
+  } @else if is-alias('bottom left', $direction) {
     $dir-val: translateY(50px) translateX(-50px);
     $anim-suffix: '-to-bottom-left';
   } @else if not is-alias('top', $direction) {

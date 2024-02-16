@@ -5,7 +5,7 @@
 
 /// Uses clip path to change an element to the shape of an arrow.
 ///
-/// @param {String|Angle} $direction [right] - The direction the arrow is
+/// @param {String} $direction [right] - The direction the arrow is
 /// pointing.
 /// @param {Length-Percentage} $size [null] - The size of the arrow. If
 /// the $height property is not set explicitly, it is both height and width, if
@@ -15,16 +15,13 @@
 /// @param {Length-Percentage} $height [$size] - The height of the arrow.
 ///
 /// @group Shapes
-@mixin arrow(
-  $direction: 'right',
-  $size: null,
-  $bg: null,
-  $height: $size
-) {
+///
+/// @throw Invalid $direction value error.
+@mixin arrow($direction: 'right', $size: null, $bg: null, $height: $size) {
   @if meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
 
-    @if is-alias('right', $direction) or is-alias('bottom-right', $direction) {
+    @if is-alias('right', $direction) or is-alias('bottom right', $direction) {
       clip-path: polygon(
         0 20%,
         60% 20%,
@@ -35,11 +32,10 @@
         0 80%
       );
 
-      @if is-alias('bottom-right', $direction) {
+      @if is-alias('bottom right', $direction) {
         transform: rotate(45deg);
       }
-    } @else if is-alias('left', $direction) or is-alias('top-left', $direction)
-    {
+    } @else if is-alias('left', $direction) or is-alias('top left', $direction) {
       clip-path: polygon(
         40% 0,
         40% 20%,
@@ -50,10 +46,10 @@
         0 50%
       );
 
-      @if is-alias('top-left', $direction) {
+      @if is-alias('top left', $direction) {
         transform: rotate(45deg);
       }
-    } @else if is-alias('top', $direction) or is-alias('top-right', $direction)
+    } @else if is-alias('top', $direction) or is-alias('top right', $direction)
     {
       clip-path: polygon(
         100% 50%,
@@ -65,12 +61,12 @@
         50% 0
       );
 
-      @if is-alias('top-right', $direction) {
+      @if is-alias('top right', $direction) {
         transform: rotate(45deg);
       }
     } @else if
       is-alias('bottom', $direction) or
-      is-alias('bottom-left', $direction)
+      is-alias('bottom left', $direction)
     {
       clip-path: polygon(
         75% 0,
@@ -82,7 +78,7 @@
         25% 0
       );
 
-      @if is-alias('bottom-left', $direction) {
+      @if is-alias('bottom left', $direction) {
         transform: rotate(45deg);
       }
     } @else {
@@ -107,6 +103,9 @@
 
   @if $size {
     width: $size;
+  }
+
+  @if $height {
     height: $height;
   }
 

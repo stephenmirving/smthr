@@ -87,25 +87,25 @@
   @if is-alias('top', $point) {
     $trans-origin-val: 50% 0%;
     $point: 'top';
-  } @else if is-alias('top-right', $point) {
+  } @else if is-alias('top right', $point) {
     $trans-origin-val: 100% 0%;
     $point: 'top-right';
   } @else if is-alias('right', $point) {
     $trans-origin-val: 100% 50%;
     $point: 'right';
-  } @else if is-alias('bottom-right', $point) {
+  } @else if is-alias('bottom right', $point) {
     $trans-origin-val: 100% 100%;
     $point: 'bottom-right';
   } @else if is-alias('bottom', $point) {
     $trans-origin-val: 50% 100%;
     $point: 'bottom';
-  } @else if is-alias('bottom-left', $point) {
+  } @else if is-alias('bottom left', $point) {
     $trans-origin-val: 0% 100%;
     $point: 'bottom-left';
   } @else if is-alias('left', $point) {
     $trans-origin-val: 0%;
     $point: 'left';
-  } @else if is-alias('top-left', $point) {
+  } @else if is-alias('top left', $point) {
     $trans-origin-val: 0% 0%;
     $point: 'top-left';
   } @else if is-alias('center', $point) {

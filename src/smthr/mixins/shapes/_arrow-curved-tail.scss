@@ -16,8 +16,13 @@
 /// @param {Color|Mixed} $bg-color [#f00] The color of the arrow.
 ///
 /// @group Shapes
+///
+/// @require {function} conv-angle
+/// @require {function} is-alias
+/// @require {function} is-angle
+///
 /// @throw Invalid unit type for $direction
-/// @throw Invalid $direction value
+/// @throw Invalid $direction keyword value
 @mixin arrow-curved-tail(
   $direction: 'bottom-right',
   $size: 2rem,
@@ -72,13 +77,13 @@
       $angle: 135deg;
     } @else if is-alias('bottom', $direction) {
       $angle: 45deg;
-    } @else if is-alias('bottom-left', $direction) {
+    } @else if is-alias('bottom left', $direction) {
       $angle: 100deg;
-    } @else if is-alias('top-left', $direction) {
+    } @else if is-alias('top left', $direction) {
       $angle: 190deg;
-    } @else if is-alias('top-right', $direction) {
+    } @else if is-alias('top right', $direction) {
       $angle: -80deg;
-    } @else if not is-alias('bottom-right', $direction) {
+    } @else if not is-alias('bottom right', $direction) {
       @error 'Invalid $direction value for the [ arrow-curved-tail() ] mixin.' +
           ' Acceptable values include: `top`,`top-right`, `right`, ' +
           '`bottom-right`, `bottom`, `bottom-left`, `left`, or `top-left`.';

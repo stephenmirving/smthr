@@ -25,33 +25,17 @@
   justify-content: center;
   border: 4px solid #000;
   margin: 0 auto;
+  background: lightblue;
 }
 
 .card {
-  position: relative;
-  width: 130px;
-  height: 100px;
+  clip-path: polygon(100% 75%, 50% 100%, 0 75%, 0 0, 50% 25%, 100% 0);
+  width: 15rem;
+  height: 15rem;
+  background: #fb8c00;
+  transform: rotate(18deg);
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
-}
-.card::before, .card::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  width: 60px;
-  height: 60px;
-  border: 10px solid #000;
-}
-.card::before {
-  left: 0;
-  border-radius: 50px 50px 0;
-  transform: rotate(-45deg);
-}
-.card::after {
-  right: 0;
-  left: auto;
-  border-radius: 50px 50px 50px 0;
-  transform: rotate(45deg);
 }
 
 .front {
@@ -95,6 +79,10 @@
 
 .front .txt {
   content: color;
+}
+
+.test {
+  content: false;
 }
 
 /*# sourceMappingURL=test.css.map */

@@ -3,8 +3,10 @@
 @use 'sass:meta';
 @use 'sass:string';
 
-/// Converts a string representation of a number into an actual number.
-/// Note: This function assumes the input string is a valid numerical value.
+/// Safely converts a string representation of a number into an actual number
+/// that will always work when things like string.unquote() or interpolation
+/// give errors.This function assumes the input string is a valid numerical
+/// value.
 /// @access public
 ///
 /// @param {String|Number} $string - Value to be parsed.

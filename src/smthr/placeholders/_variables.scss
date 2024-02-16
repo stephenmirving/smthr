@@ -209,6 +209,72 @@ $map-timing-functions: (
   'ease-in-out-back': cubic-bezier(0.68, -0.55, 0.265, 1.55)
 ) !default;
 
+/// Map of all the direction keywords and their associated angles in degrees.
+/// @type Map
+$map-directions: (
+  0: (
+    'name': 'top',
+    'deg': 0
+  ),
+  45: (
+    'name': 'top right',
+    'deg': 45
+  ),
+  90: (
+    'name': 'right',
+    'deg': 90
+  ),
+  135: (
+    'name': 'bottom right',
+    'deg': 135
+  ),
+  180: (
+    'name': 'bottom',
+    'deg': 180
+  ),
+  225: (
+    'name': 'bottom left',
+    'deg': 225
+  ),
+  270: (
+    'name': 'left',
+    'deg': 270
+  ),
+  315: (
+    'name': 'top left',
+    'deg': 315
+  ),
+  360: (
+    'name': 'top',
+    'deg': 0
+  )
+) !default;
+
+/// Map of only the positions and associated angles in degrees.
+/// @type Map
+$map-positions: (
+  0: (
+    'name': 'top',
+    'deg': 0
+  ),
+  90: (
+    'name': 'right',
+    'deg': 90
+  ),
+  180: (
+    'name': 'bottom',
+    'deg': 180
+  ),
+  270: (
+    'name': 'left',
+    'deg': 270
+  ),
+  360: (
+    'name': 'top',
+    'deg': 0
+  )
+) !default;
+
 /// Map of keywords, each with their own list of potential aliases.
 /// @type Map
 $map-alias-resolutions: (
@@ -251,7 +317,7 @@ $map-alias-resolutions: (
     '>',
     'r'
   ),
-  'top-left': (
+  'top left': (
     'top-left',
     'top left',
     'topleft',
@@ -279,7 +345,7 @@ $map-alias-resolutions: (
     '^<',
     '<^'
   ),
-  'top-right': (
+  'top right': (
     'top-right',
     'top right',
     'topright',
@@ -305,7 +371,7 @@ $map-alias-resolutions: (
     '^>',
     '>^'
   ),
-  'bottom-right': (
+  'bottom right': (
     'bottom-right',
     'bottom right',
     'bottomright',
@@ -363,7 +429,7 @@ $map-alias-resolutions: (
     'v>',
     '>v'
   ),
-  'bottom-left': (
+  'bottom left': (
     'bottom-left',
     'bottom left',
     'bottomleft',

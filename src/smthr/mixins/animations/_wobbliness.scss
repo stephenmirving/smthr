@@ -24,7 +24,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @alias {Function} is-alias
+/// @require {Function} is-alias
 ///
 /// @throw Incorrect keyword value for $direction error.
 /// @throw Invalid data type for $duration error.
@@ -265,13 +265,14 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @alias {Function} is-alias
+/// @require {Function} is-alias
 ///
 /// @throw Incorrect keyword value for $direction error.
 /// @throw Invalid data type for $duration error.
 /// @throw Invalid data type for $delay error.
 /// @throw Invalid data type for $iterations error.
 /// @throw Invalid keyword value for $anim-dir error.
+///
 /// @alias wobble
 @mixin wobble(
   $direction: bottom,

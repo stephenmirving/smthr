@@ -18,11 +18,12 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @alias {Function} is-alias
+/// @require {function} is-alias
 ///
 /// @throw Invalid keyword for $direction error.
 /// @throw Invalid data type for $duration error.
 /// @throw Invalid data type for $delay error.
+///
 /// @alias ken-burns
 @mixin zoom-in(
   $direction: bottom,
@@ -63,25 +64,25 @@
     $dir-val3: scale(1.25) translateX(20px);
     $dir-val4: right;
     $anim-suffix: '-to-right';
-  } @else if is-alias('bottom-right', $direction) {
+  } @else if is-alias('bottom right', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 84% 84%;
     $dir-val3: scale(1.25) translate(20px, 15px);
     $dir-val4: 100% 100%;
     $anim-suffix: '-to-bottom-right';
-  } @else if is-alias('top-right', $direction) {
+  } @else if is-alias('top right', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 84% 16%;
     $dir-val3: scale(1.25) translate(20px, -15px);
     $dir-val4: 100% 0%;
     $anim-suffix: '-to-top-right';
-  } @else if is-alias('bottom-left', $direction) {
+  } @else if is-alias('bottom left', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 16% 84%;
     $dir-val3: scale(1.25) translate(-20px, 15px);
     $dir-val4: 0% 100%;
     $anim-suffix: '-to-bottom-left';
-  } @else if is-alias('top-left', $direction) {
+  } @else if is-alias('top left', $direction) {
     $dir-val1: scale(1) translate(0, 0);
     $dir-val2: 16% 16%;
     $dir-val3: scale(1.25) translate(-20px, -15px);
@@ -187,7 +188,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @alias {Function} is-alias
+/// @require {Function} is-alias
 ///
 /// @throw Invalid keyword for $direction error.
 /// @throw Invalid data type for $duration error.

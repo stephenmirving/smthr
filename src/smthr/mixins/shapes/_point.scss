@@ -20,7 +20,6 @@
   $direction: right,
   $size: 15rem,
   $bg: #fb8c00,
-  $fg-color: null,
   $height: $size
 ) {
   @if $direction {
@@ -31,13 +30,18 @@
           'The value for $direction must be a string.';
     }
 
-    @if is-alias('right', $direction) {
+    @if is-alias('right', $direction) or is-alias('bottom right', $direction) {
       clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
-    } @else if is-alias('left', $direction) {
+    } @else if is-alias('left', $direction) or is-alias('top left', $direction)
+    {
       clip-path: polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0 50%);
-    } @else if is-alias('top', $direction) {
+    } @else if is-alias('top', $direction) or is-alias('top right', $direction)
+    {
       clip-path: polygon(100% 25%, 100% 100%, 0 100%, 0 25%, 50% 0);
-    } @else if is-alias('bottom', $direction) {
+    } @else if
+      is-alias('bottom', $direction) or
+      is-alias('bottom left', $direction)
+    {
       clip-path: polygon(100% 0, 100% 75%, 50% 100%, 0 75%, 0 0);
     } @else {
       @error 'Invalid direction of `#{meta.inspect($direction)}` for the ' +
@@ -47,7 +51,15 @@
     @error 'You must choose a $direction for the [ point() ] mixin.';
   }
 
-  @if not is-length($size) or not is-length($height)  {
+  @if is-alias('top right', $direction) or
+    is-alias('bottom right', $direction) or
+    is-alias('bottom left', $direction) or
+    is-alias('top left', $direction)
+  {
+    transform: rotate(45deg);
+  }
+
+  @if not is-length($size) or not is-length($height) {
     @error 'Invalid data type for $size or $height in the [ point() ] mixin.' +
         ' You must choose a length value for these parameters.';
   }

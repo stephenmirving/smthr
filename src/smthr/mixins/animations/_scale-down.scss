@@ -77,25 +77,25 @@
   @if is-alias('top', $direction) {
     $trans-origin-val: 50% 0%;
     $direction: 'top';
-  } @else if is-alias('top-right', $direction) {
+  } @else if is-alias('top right', $direction) {
     $trans-origin-val: 100% 0;
     $direction: 'top-right';
   } @else if is-alias('right', $direction) {
     $trans-origin-val: 100% 50%;
     $direction: 'right';
-  } @else if is-alias('bottom-right', $direction) {
+  } @else if is-alias('bottom right', $direction) {
     $trans-origin-val: 100% 100%;
     $direction: 'bottom-right';
   } @else if is-alias('bottom', $direction) {
     $trans-origin-val: 50% 100%;
     $direction: 'bottom';
-  } @else if is-alias('bottom-left', $direction) {
+  } @else if is-alias('bottom left', $direction) {
     $trans-origin-val: 0% 100%;
     $direction: 'bottom-left';
   } @else if is-alias('left', $direction) {
     $trans-origin-val: 0% 50%;
     $direction: 'left';
-  } @else if is-alias('top-left', $direction) {
+  } @else if is-alias('top left', $direction) {
     $trans-origin-val: 0% 0%;
     $direction: 'top-left';
   } @else if is-alias('center', $direction) {

@@ -11,10 +11,12 @@
 /// @param {Number} $z-val [10] - The z-index value.
 ///
 /// @group Animations
-/// @alias {Function} is-alias
+/// @require {Function} is-alias
 ///
 /// @throw Invalid type of $flip-axis error.
 /// @throw Invalid $z-val z-index value.
+///
+/// @alias $back-side
 @mixin animation-back-face($flip-axis: horizontal, $z-val: 10) {
   // Default rotation for the flip-axis value of horizontal
   $trans-val: rotateX(180deg);
@@ -63,4 +65,21 @@
     @error 'Invalid $z-val z-index value of `#{meta.inspect($z-val)}` for the ' +
         '[ animation-back-face() ] mixin';
   }
+}
+
+/// Apply to the child element of the element with the a 3-d transform effect
+/// to represent the back-face of the card that the animation flips to or past.
+///
+/// @param {String} $flip-axis [horizontal] - Set this value equal to the axis
+/// the element will flip over in order to ensure that the content of the
+/// back-face of the element is oriented correctly.
+/// @param {Number} $z-val [10] - The z-index value.
+///
+/// @group Animations
+/// @require {Function} is-alias
+///
+/// @throw Invalid type of $flip-axis error.
+/// @throw Invalid $z-val z-index value.
+@mixin back-side($flip-axis: horizontal, $z-val: 10) {
+  @include animation-back-face($flip-axis, $-val);
 }

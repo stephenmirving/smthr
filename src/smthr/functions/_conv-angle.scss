@@ -48,11 +48,7 @@
 
   @if meta.type-of($angle) == 'number' {
     @if math.is-unitless($angle) {
-      @if $angle > 1 or $angle < -1 {
-        $angle: $angle * 1deg;
-      } @else {
-        $angle: $angle * 1turn;
-      }
+      $angle: $angle * 1deg;
     }
 
     @if is-angle($angle) {
@@ -99,6 +95,7 @@
         'function. Valid angle units are `deg`, `turn`, `rad`, or `grad`.';
   }
 
+  // If the angle is the same type as $convert-to, simply return it as-is.
   @if math.unit($angle) == $convert-to {
     @return $angle;
   }

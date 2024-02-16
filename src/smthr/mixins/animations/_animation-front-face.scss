@@ -8,7 +8,10 @@
 ///
 /// @group Animations
 /// @group Utilities
+///
 /// @throw Invalid $z-index z-index value
+///
+/// @alias front-side
 @mixin animation-front-face($z-index: 20) {
   position: absolute;
   width: 100%;
@@ -26,4 +29,19 @@
     @error 'Invalid $z-val z-index value of `#{meta.inspect($z-val)}` for the ' +
         '[ animation-front-face() ] mixin';
   }
+}
+
+/// Apply to the child element of an element with a 3d transform effect
+/// to represent the front-face of the card that the animation flips over.
+///
+/// @param {Number} $z-index [20] - The z-index value.
+///
+/// @group Animations
+/// @group Utilities
+///
+/// @throw Invalid $z-index z-index value
+///
+/// @alias animation-front-face
+@mixin front-side($z-index: 20) {
+  @include animation-front-face($z-index);
 }

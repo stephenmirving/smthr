@@ -26,19 +26,17 @@
 
   border: 4px solid #000;
   margin: 0 auto;
+  background: lightblue;
 }
 
 .card {
-  @include infinity-symbol();
-  // position: relative;
-  // background: rgba(#80f, 85%);
+  @include chevron(220grad);
+
+
   font:
     700 1.125rem system-ui,
     sans-serif;
   text-align: center;
-  // width: 14rem;
-  // height: 14rem;
-  // transition: all 1s;
 }
 
 .active-anim {
@@ -77,4 +75,8 @@
 
 .front .txt {
   content: meta.type-of(blue);
+}
+
+.test {
+   content: meta.type-of(null) == 'string';
 }

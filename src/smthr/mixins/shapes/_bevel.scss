@@ -21,6 +21,9 @@
 
   @if $size {
     width: $size;
+  }
+
+  @if $height {
     height: $height;
   }
 

@@ -14,7 +14,8 @@
 /// @return {Bool} Returns true if the given alias is found in the map's list
 /// for the given keyword, otherwise returns false.
 ///
-/// @throw Invalid $keyword data type error.
+/// @require {Map} $map-alias-resolutions
+///
 /// @throw Invalid $alias data type error.
 /// @throw Invalid $alias-map data type error.
 @function resolve-alias($alias, $alias-map: $map-alias-resolutions) {
