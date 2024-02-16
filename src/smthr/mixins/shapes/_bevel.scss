@@ -4,11 +4,10 @@
 /// the $height property is not set explicitly, it is both height and width, if
 /// @param {Color|Mixed} $bg [null] The color or background value.
 /// $height is set explicitly, then this value sets only the width.
-/// @param {Color} $fg-color [null] The color of any text in the shape
 /// @param {Length-Percentage} $height [$size] The height of the shape.
 ///
 /// @group Shapes
-@mixin bevel($size: null, $bg: null, $fg-color: null, $height: $size) {
+@mixin bevel($size: null, $bg: null, $height: $size) {
   clip-path: polygon(
     20% 0,
     80% 0,
@@ -27,9 +26,5 @@
 
   @if $bg {
     background: $bg;
-  }
-
-  @if $fg-color {
-    color: $fg-color;
   }
 }

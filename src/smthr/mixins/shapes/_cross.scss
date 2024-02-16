@@ -2,10 +2,9 @@
 ///
 /// @param {Length-Percentage} $size [15rem] - The height and width.
 /// @param {Color|Mixed} $bg [#fb8c00] The color or background value
-/// @param {Color} $fg-color [null] The color of any text in the shape.
 ///
 /// @group Shapes
-@mixin cross($size: 15rem, $bg: #fb8c00, $fg-color: null) {
+@mixin cross($size: 15rem, $bg: #fb8c00) {
   clip-path: polygon(
     10% 25%,
     35% 25%,
@@ -28,9 +27,5 @@
 
   @if $bg {
     background: $bg;
-  }
-
-  @if $fg-color {
-    color: $fg-color;
   }
 }

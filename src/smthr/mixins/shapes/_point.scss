@@ -6,11 +6,10 @@
 /// Uses clip path to change an element to the shape of a pentagonal arrow point.
 ///
 /// @param {String} $direction [right] The direction the arrow is pointing
-/// @param {Color|Mixed} $bg [#fb8c00] The color or background value.
 /// @param {Length-Percentage} $size [15rem] - The size of the arrow. If
 /// the $height property is not set explicitly, it is both height and width, if
+/// @param {Color|Mixed} $bg [#fb8c00] The color or background value.
 /// $height is set explicitly, then this value sets only the width.
-/// @param {Color} $fg-color [null] The color of any text in the arrow.
 /// @param {Length-Percentage} $height [$size] The height of the arrow.
 ///
 /// @group Shapes
@@ -19,8 +18,8 @@
 /// @throw Invalid $size data type error.
 @mixin point(
   $direction: right,
-  $bg: #fb8c00,
   $size: 15rem,
+  $bg: #fb8c00,
   $fg-color: null,
   $height: $size
 ) {
@@ -53,11 +52,12 @@
         ' You must choose a length value for these parameters.';
   }
 
-  width: $size;
-  height: $height;
-  background: $bg;
+  @if $size {
+    width: $size;
+    height: $height;
+  }
 
-  @if $fg-color {
-    color: $fg-color;
+  @if $bg {
+    background: $bg;
   }
 }

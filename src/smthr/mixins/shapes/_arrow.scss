@@ -19,7 +19,6 @@
   $direction: 'right',
   $size: null,
   $bg: null,
-  $fg-color: null,
   $height: $size
 ) {
   @if meta.type-of($direction) == 'string' {
@@ -113,9 +112,5 @@
 
   @if $bg {
     background: $bg;
-  }
-
-  @if $fg-color {
-    color: $fg-color;
   }
 }

@@ -5,25 +5,25 @@
 /// Creates a 3D ribbon shape for headers. Apply the ribbon to a header element
 /// and include an inner inline element for the header's content.
 ///
-/// @example <h1 class="ribbon"><strong class="ribbon-content">HEADER</strong></h1>
-/// @link https://css-tricks.com/snippets/css/ribbon/
-///
-/// @param {Length-Percentage} $font-size [1em] - The font-size of the ribbon
-/// text.
 /// @param {Number} $ribbon-size [1] - A number value used to calculate the
 /// overall size of the ribbon.
+/// @param {Length-Percentage} $font-size [1em] - The font-size of the ribbon
+/// text.
 /// @param {Color} $bg-color [purple] - The background color for the ribbon.
 /// @param {Color} $fg-color [purple] - The color of the ribbon's text.
 /// @param {String} $content-suffix ['-content'] - The suffix that is added
 /// to the class name that this mixin is applied to, representing the internal
 /// inline class that contains the ribbon's text content.
 ///
+/// @example <h1 class="ribbon"><strong class="ribbon-content">HEADER</strong></h1>
+/// @link https://css-tricks.com/snippets/css/ribbon/
+///
 /// @group Shapes
 /// @alias banner
 /// @throw Invalid $ribbon-size value
 @mixin ribbon(
-  $font-size: 1em,
   $ribbon-size: 1,
+  $font-size: 1em,
   $bg-color: #ba89b6,
   $fg-color: #fff,
   $content-suffix: '-content'
@@ -43,6 +43,7 @@
   font-size: $font-size !important;
   line-height: 1;
   text-align: center;
+
   @if $fg-color {
     color: $fg-color;
   }
@@ -96,9 +97,9 @@
 /// @example <h1 class="ribbon"><strong class="ribbon-content">HEADER</strong></h1>
 /// @link https://css-tricks.com/snippets/css/ribbon/
 ///
+/// @param {Number} $ribbon-size [1] - A number value used to calculate the
 /// @param {Length-Percentage} $font-size [1em] - The font-size of the ribbon
 /// text.
-/// @param {Number} $ribbon-size [1] - A number value used to calculate the
 /// overall size of the ribbon.
 /// @param {Color} $bg-color [purple] - The background color for the ribbon.
 /// @param {Color} $fg-color [purple] - The color of the ribbon's text.
@@ -110,8 +111,8 @@
 /// @alias ribbon
 /// @throw Invalid $ribbon-size value
 @mixin banner(
-  $font-size: 1em,
   $ribbon-size: 1,
+  $font-size: 1em,
   $bg-color: #ba89b6,
   $fg-color: #fff,
   $content-suffix: '-content'

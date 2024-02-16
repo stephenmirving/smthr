@@ -3,11 +3,9 @@
 /// @param {Length-Percentage} $size [15rem] - The height and width of the element
 /// @param {Color|Mixed} $bg [#fb8c00] - Can be any value that is valid for the
 /// background shorthand property.
-/// @param {Color} $fg-color [null] - Optional argument that sets the color
-/// property for the elment.
 ///
 /// @group Shapes
-@mixin hexagon($size: 15rem, $bg: #fb8c00, $fg-color: null) {
+@mixin hexagon($size: 15rem, $bg: #fb8c00) {
   clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
 
   @if $size {
@@ -17,9 +15,5 @@
 
   @if $bg {
     background: $bg;
-  }
-
-  @if $fg-color {
-    color: $fg-color;
   }
 }

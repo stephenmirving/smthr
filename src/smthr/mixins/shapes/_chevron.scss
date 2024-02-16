@@ -9,7 +9,6 @@
 /// If the $height property is not set explicitly, it is both height and width,
 /// @param {Color|Mixed} $bg [#fb8c00] The color or background value.
 /// if $height is set explicitly, then this value sets only the width.
-/// @param {Color} $fg-color [null] The color of any text in the arrow.
 /// @param {Length-Percentage} $height [$size] The height of the chevron.
 ///
 /// @group Shapes
@@ -18,7 +17,6 @@
   $direction: right,
   $size: 15rem,
   $bg: #fb8c00,
-  $fg-color: null,
   $height: $size
 ) {
   @if meta.type-of($direction) == 'string' {
@@ -41,8 +39,4 @@
   width: $size;
   height: $height;
   background: $bg;
-
-  @if $fg-color {
-    color: $fg-color;
-  }
 }

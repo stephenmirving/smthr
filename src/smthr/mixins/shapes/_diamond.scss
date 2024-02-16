@@ -4,11 +4,10 @@
 /// the $height property is not set explicitly, it is both height and width, if
 /// $height is set explicitly, then this value sets only the width.
 /// @param {Color|Mixed} $bg [#fb8c00] The color or background value.
-/// @param {Color} $fg-color [null] The color of any text in the shape
 /// @param {Length-Percentage} $height [$size] The height of the shape.
 ///
 /// @group Shapes
-@mixin diamond($size: 15rem, $bg: #fb8c00, $fg-color: null, $height: $size) {
+@mixin diamond($size: 15rem, $bg: #fb8c00, $height: $size) {
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 
   @if $size {
@@ -21,9 +20,5 @@
 
   @if $bg {
     background: $bg;
-  }
-
-  @if $fg-color {
-    color: $fg-color;
   }
 }
