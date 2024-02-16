@@ -26,6 +26,8 @@
   border: 4px solid #000;
   margin: 0 auto;
   background: lightblue;
+  background: purple;
+  background-image: linear-gradient(135deg, purple, blue);
 }
 
 .card {

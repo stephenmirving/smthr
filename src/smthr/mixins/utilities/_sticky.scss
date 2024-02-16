@@ -1,14 +1,15 @@
 /// Helper mixin to for the associated styles with position: sticky;
 ///
-/// @param {Number} $z-index - The z-index property value
-/// @param {Length-Percentage} $top - The top property value
-/// @param {Length-Percentage} $left - The left property value
+/// @param {Number} $z-index - The z-index property value.
+/// @param {Length-Percentage} $top - The top property value.
+/// @param {Length-Percentage} $left - The left property value.
 ///
 /// @group Utilities
 @mixin sticky($z-index: 999, $top: 0, $left: null) {
   position: sticky;
   top: $top;
-  @if $left or $left == 0 {
+
+  @if $left {
     left: $left;
   }
 

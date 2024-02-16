@@ -11,7 +11,9 @@
 /// between 1 exclusive and 100 inclusive.
 ///
 /// @group Utilities
-/// @throw $opacity out of range
+///
+/// @throw Invalid $opacity data type error.
+/// @throw $opacity out of range warning.
 @mixin opacity($opacity) {
   @if not math.is-unitless($opacity) and math.unit($opacity) != '%' {
     @error 'Invalid opacity value of `#{meta.inspect($opacity)}` passed to' +
@@ -21,9 +23,8 @@
 
   @if $opacity > 1 or math.unit($opacity) == '%' {
     @if $opacity > 100 {
-      @warn 'The $opacity was set to `#{meta.inspect($opacity)}` on an ' +
-          'element by the [ opacity ] mixin. The value has been changed ' +
-          'to the max of 1.';
+      @warn 'The $opacity was set to `#{meta.inspect($opacity)}` with the ' +
+          '[ opacity() ] mixin. The value has been changed to the max of 1.';
 
       $opacity: 100;
     }

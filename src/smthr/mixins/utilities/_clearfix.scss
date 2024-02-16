@@ -12,9 +12,9 @@
   $accepted-values: 'both', 'left', 'right';
 
   @if not list.index($accepted-values, $clear-value) {
-    @error 'Invalid parameter of [ #{meta.inspect($clear-value)} ] was passed to ' +
-        'the [ clearfix ] mixin. Value must be either [ left ], [ right ] ' +
-        'or [ both ].';
+    @error 'Invalid $clear-value parameter of `#{meta.inspect($clear-value)}` ' +
+        'was passed to the [ clearfix() ] mixin. Value must be either `left`, ' +
+        '`right` or `both`.';
   }
 
   &::before,

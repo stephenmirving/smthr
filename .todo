@@ -44,19 +44,19 @@ TODO:
         ✔ BEM @done(24-02-15 03:08)
         ☐ bg-image-svg
         ☐ bg-image
-        ☐ border-radius
+        ✔ border-radius @done(24-02-16 03:20)
         ☐ button-base
-        ☐ clearfix
+        ✔ clearfix @done(24-02-16 03:08)
         ☐ cover
         ☐ depth-level
-        ☐ disable-outline
-        ☐ family
-        ☐ flex-center
+        ✔ disable-outline @done(24-02-16 03:09)
+        ✔ family @done(24-02-16 03:08)
+        ✔ flex-center @done(24-02-16 03:09)
         ☐ font
         ☐ ghost-button
-        ☐ gradient
-        ☐ hide-text
-        ☐ hide-visually
+        ✔ gradient @done(24-02-16 03:12)
+        ✔ hide-text @done(24-02-16 03:19)
+        ✔ hide-visually @done(24-02-16 03:19)
         ☐ hide
         ☐ inner-side-shadow
         ☐ line-clamp
@@ -73,21 +73,21 @@ TODO:
         ☐ only-phones
         ☐ only-safari
         ☐ only-webkit
-        ☐ opacity
-        ☐ placeholder
+        ✔ opacity @done(24-02-16 03:19)
+        ✔ placeholder @done(24-02-16 03:19)
         ☐ position-center
         ☐ position-horizontally
         ☐ position-vertically
         ☐ position
-        ☐ reset-list
-        ☐ reset
+        ✔ reset-list @done(24-02-16 03:13)
+        ✔ reset @done(24-02-16 03:12)
         ☐ responsive-font
         ☐ responsive-ratio
         ☐ responsive-square
         ☐ scrollbar
-        ☐ size
+        ✔ size @done(24-02-16 03:15)
         ☐ smooth-retina-fonts
-        ☐ sticky
+        ✔ sticky @done(24-02-16 03:15)
         ☐ text-emboss
         ☐ text-outline
         ☐ text-shadow
