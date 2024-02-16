@@ -8,7 +8,7 @@
 /// @group Utilities
 @mixin line-clamp($lines) {
   @if not is-integer($lines) {
-    @error 'The $lines parameter of the [ line-clamp ] mixin must be an integer.';
+    @error 'The $lines parameter of the [ line-clamp() ] mixin must be an integer.';
   }
 
   display: -webkit-box;

@@ -77,7 +77,5 @@
 }
 
 .test {
-  @if not 0 {
-    content: blue;
-  }
+  content: color.alpha(rgb(255, 255, 255));
 }

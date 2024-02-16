@@ -1,6 +1,6 @@
 /// Targets only HiDPI/Retina displays using a media query.
 ///
-/// @param {Number} $ratio [1.3] - A minimum pixel ratio resolution value used
+/// @param {Number} $ratio [1.25] - A minimum pixel ratio resolution value used
 /// to calculate the media query.
 ///
 /// @content Styles that target HiDPI/Retina displays only.
@@ -18,7 +18,7 @@
 
 /// Targets only HiDPI/Retina displays using a media query.
 ///
-/// @param {Number} $ratio [1.3] - A minimum pixel ratio resolution value used
+/// @param {Number} $ratio [1.25] - A minimum pixel ratio resolution value used
 /// to calculate the media query.
 ///
 /// @content Styles that target HiDPI/Retina displays only.
@@ -34,7 +34,7 @@
 
 /// Targets only HiDPI/Retina displays using a media query.
 ///
-/// @param {Number} $ratio [1.3] - A minimum pixel ratio resolution value used
+/// @param {Number} $ratio [1.25] - A minimum pixel ratio resolution value used
 /// to calculate the media query.
 ///
 /// @content Styles that target HiDPI/Retina displays only.
@@ -50,7 +50,7 @@
 
 /// Targets only HiDPI/Retina displays using a media query.
 ///
-/// @param {Number} $ratio [1.3] - A minimum pixel ratio resolution value used
+/// @param {Number} $ratio [2] - A minimum pixel ratio resolution value used
 /// to calculate the media query.
 ///
 /// @content Styles that target HiDPI/Retina displays only.
@@ -66,7 +66,7 @@
 
 /// Targets only HiDPI/Retina displays using a media query.
 ///
-/// @param {Number} $ratio [1.3] - A minimum pixel ratio resolution value used
+/// @param {Number} $ratio [2] - A minimum pixel ratio resolution value used
 /// to calculate the media query.
 ///
 /// @content Styles that target HiDPI/Retina displays only.
@@ -75,6 +75,22 @@
 /// @alias only-retina
 /// @alias target-retina
 @mixin retina-only($ratio: 2) {
+  @include only-hidpi($ratio) {
+    @content;
+  }
+}
+
+/// Targets only HiDPI/Retina displays using a media query.
+///
+/// @param {Number} $ratio [2] - A minimum pixel ratio resolution value used
+/// to calculate the media query.
+///
+/// @content Styles that target HiDPI/Retina displays only.
+///
+/// @group Utilities
+/// @alias only-retina
+/// @alias retina-only
+@mixin target-retina($ratio: 2) {
   @include only-hidpi($ratio) {
     @content;
   }

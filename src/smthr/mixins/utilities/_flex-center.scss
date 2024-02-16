@@ -1,12 +1,14 @@
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-string' as *;
 
 /// Uses flexbox to vertically and/or horizontally center an element, as well as
 /// set its flex-direction property.
 ///
-/// @param {Boolean|String} $horizontal [true] - Pass true to center the
+/// @param {Bool|String} $horizontal [true] - Pass true to center the
 /// contents horizontally.
-/// @param {Boolean|String} $vertical [true] - Pass true to center the
+/// @param {Bool|String} $vertical [true] - Pass true to center the
 /// contents vertically.
 /// @param {Keyword|String} $flex-dir ['row'] - The flex-direction value.
 ///
@@ -16,18 +18,18 @@
 /// @throw Invalid $flex-dir value
 @mixin flex-center($horizontal: true, $vertical: true, $flex-dir: 'row') {
   $swap: $horizontal;
-  $f-dir: row;
+  $flex-dir: row;
   $orientation: horizontal;
 
-  @if meta.type-of($horizontal) == 'string' {
+  @if is-string($horizontal) {
     $horizontal: string.to-lower-case($horizontal);
   }
 
-  @if meta.type-of($vertical) == 'string' {
+  @if is-string($vertical) {
     $vertical: string.to-lower-case($vertical);
   }
 
-  @if meta.type-of($flex-dir) == 'string' {
+  @if is-string($flex-dir) {
     $flex-dir: string.to-lower-case($flex-dir);
   }
 
@@ -41,14 +43,15 @@
     'y'
   {
     $horizontal: true;
-  } @else if not $horizontal or
-    $horizontal == 'f' or
-    $horizontal =='no' or
-    $horizontal == 'n'
+  } @else if not
+    $horizontal or
+    $horizontal ==
+    'f' or
+    is-alias('none', $horizontal)
   {
     $horizontal: false;
   } @else {
-    @error 'Invalid $horizontal value for the `flex-center` mixin. ' +
+    @error 'Invalid $horizontal value for the [ flex-center() ] mixin. ' +
         'You must pass either true or false.';
   }
 
@@ -62,39 +65,18 @@
     'y'
   {
     $vertical: true;
-  } @else if not
-    $vertical or
-    $vertical ==
-    'f' or
-    $vertical ==
-    'no' or
-    $vertical ==
-    'n'
-  {
+  } @else if not $vertical or $vertical == 'f' or is-alias('none', $vertical) {
     $vertical: false;
   } @else {
-    @error 'Invalid $vertical value for the `flex-center` mixin. ' +
+    @error 'Invalid $vertical value for the [ flex-center() ] mixin. ' +
         'You must pass either true or false.';
   }
 
   @if $flex-dir {
-    @if $flex-dir ==
-      'row-reverse' or
-      $flex-dir ==
-      'r-r' or
-      $flex-dir ==
-      'rr' or
-      $flex-dir ==
-      'row-rev' or
-      $flex-dir ==
-      'rowrev'
-    {
+    @if is-alias('row-reverse', $flex-dir) {
       $f-dir: row-reverse;
     } @else if
-      $flex-dir ==
-      'column' or
-      $flex-dir ==
-      'col' or
+      is-alias('column', $flex-dir) or
       $flex-dir ==
       'c' or
       string.slice($flex-dir + '', 1, 4) ==
@@ -104,37 +86,22 @@
     {
       $f-dir: column;
       $orientation: vertical;
-    } @else if
-      $flex-dir ==
-      'column-reverse' or
-      $flex-dir ==
-      'col-reverse' or
-      $flex-dir ==
-      'col-rev' or
-      $flex-dir ==
-      'colrev' or
-      $flex-dir ==
-      'c-r' or
-      $flex-dir ==
-      'c-rev' or
-      $flex-dir ==
-      'cr'
-    {
+    } @else if is-alias('column-reverse', $flex-dir) {
       $f-dir: column-reverse;
       $orientation: vertical;
     } @else if
       $flex-dir !=
       'row' and
       $flex-dir !=
-      'r' and
-      $flex-dir !=
-      'normal' and
+      'r' and not
+      is-alias('normal', $flex-dir) and
       string.slice($flex-dir + '', 1, 5) !=
       'horiz' and
       $flex-dir !=
       'h'
     {
-      @error 'Invalid `$flex-dir` value passed to the `flex-center` mixin.';
+      @error 'Invalid `$flex-dir` value of #{meta.inspect($flex-dir)} passed ' +
+          'to the [ flex-center() ] mixin.';
     }
 
     @if $orientation == 'vertical' {
@@ -143,8 +110,9 @@
     }
 
     display: flex;
-    flex-direction: $f-dir;
+    flex-direction: $flex-dir;
   }
+
   @if $vertical {
     align-items: center;
   }

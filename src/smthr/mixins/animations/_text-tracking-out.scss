@@ -6,9 +6,9 @@
 
 /// Animates text by tracking it out of view
 ///
-/// @param {String|Boolean} $expand-contract [contract] - Determines whether
+/// @param {String|Bool} $expand-contract [contract] - Determines whether
 /// the text will, `expand` (`true`) or `contract` (`false`) as it animates.
-/// @param {Boolean} $animate-in-place [true] - If true, the animation will
+/// @param {Bool} $animate-in-place [true] - If true, the animation will
 /// animate in its location on a 2-dimaensional plane. If false, it will allow
 /// the animation to track towards the $destination, appearing to move forwards
 /// on an `expand` animation, and to move backwards on `contract` animations.

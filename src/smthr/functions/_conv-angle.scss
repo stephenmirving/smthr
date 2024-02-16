@@ -21,11 +21,11 @@
 ///
 /// @return {Angle} The converted angle.
 ///
-/// @require {function} missing-dependencies
-/// @require {function} is-alias
-/// @require {function} is-angle
-/// @require {function} strip-unit
-/// @require {function} pi
+/// @require {Function} missing-dependencies
+/// @require {Function} is-alias
+/// @require {Function} is-angle
+/// @require {Function} strip-unit
+/// @require {Function} pi
 ///
 /// @throw Invalid $angle unit type error.
 /// @throw Invalid $angle keyword string error.

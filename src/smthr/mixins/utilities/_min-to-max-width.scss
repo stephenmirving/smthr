@@ -10,7 +10,7 @@
 ///
 /// @group Utilities
 @mixin min-to-max-width($min-threshold, $max-threshold) {
-  @media screen and (max-width: $max-threshold) and (min-width: $min-threshold) {
+  @media screen and (min-width: $min-threshold) and (max-width: $max-threshold) {
     @content;
   }
 }

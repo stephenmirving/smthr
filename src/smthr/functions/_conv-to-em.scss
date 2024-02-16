@@ -9,7 +9,7 @@
 /// @param {Number} $base-context [null] - The contextual base font-size.
 /// @return {Length} The values in em.
 ///
-/// @require {function} strip-unit
+/// @require {Function} strip-unit
 /// @throw Invalid data type or units for $pixels
 @function conv-to-em($pixels, $base-context: null) {
   @if meta.type-of($pixels) !=

@@ -4,10 +4,12 @@
 /// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
 /// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
 ///
-/// @param {Boolean|String} $only-legacy [null] - Pass nothing or null to target
-/// all version of Gecko based Mozilla browsers. To target Quantam Mozilla
-/// browsers, pass false, `quantam`, `new`, `stylo`, or `q`. To target Legacy
-/// (pre-Stylo) Mozilla browsers, pass true, `legacy`, `old`, or `pre-stylo`.
+/// @param {Bool|String} $only-legacy [null] - Pass nothing or null to target
+/// all version of Gecko based Mozilla browsers. To target newer Quantam Mozilla
+/// browsers, pass false, null, `quantam`, `new`, `stylo`, or `q`.
+/// To target Legacy (pre-Stylo) Mozilla browsers, pass true, `legacy`, `old`,
+/// or `pre-stylo`. TO target all Gecko-based Mozilla browsers,
+/// pass 'both' or 'all'.
 ///
 /// @content Styles to apply to Gecko-based Mozilla browsers.
 ///
@@ -18,8 +20,7 @@
     $only-legacy: string.to-lower-case($only-legacy);
   }
 
-  @if $only-legacy ==
-    false or
+  @if not $only-legacy or
     $only-legacy ==
     'f' or
     $only-legacy ==
@@ -57,10 +58,11 @@
     @-moz-document url-prefix() {
       @content;
     }
-    @if $only-legacy {
+
+    @if $only-legacy != 'both' and $only-legacy != 'all' {
       @warn 'You have passed and incorrect argument to the `only-moz` mixin. ' +
-          'Ignoring the argument and targeting all Gecko-based Mozilla ' +
-          'browsers instead.';
+      'Ignoring the argument and targeting all Gecko-based Mozilla ' +
+      'browsers instead.';
     }
   }
 }
@@ -69,7 +71,7 @@
 /// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
 /// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
 ///
-/// @param {Boolean|String} $only-legacy [null] - Pass nothing or null to target
+/// @param {Bool|String} $only-legacy [null] - Pass nothing or null to target
 /// all version of Gecko based Mozilla browsers. To target Quantam Mozilla
 /// browsers, pass false, `quantam`, `new`, `stylo`, or `q`. To target Legacy
 /// (pre-Stylo) Mozilla browsers, pass true, `legacy`, `old`, or `pre-stylo`.

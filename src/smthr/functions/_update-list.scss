@@ -14,9 +14,9 @@
 /// @param {*} $new-value - The new value that is replacing the `$old-value`.
 /// @return {List} The new, updated list.
 ///
-/// @require {function} is-true
-/// @require {function} purge-list
-/// @require {function} to-list
+/// @require {Function} is-true
+/// @require {Function} purge-list
+/// @require {Function} to-list
 @function update-list($list, $old-value, $new-value) {
   // $missing: missing-dependencies('is-true', 'purge-list', 'to-list');
 

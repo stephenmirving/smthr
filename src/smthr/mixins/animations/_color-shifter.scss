@@ -17,9 +17,9 @@
 /// shifting animation first starts. No delay is the default. This value must be
 /// in either milliseconds (ms) or seconds (s). If a only a unit-less number is
 /// passed, it will be assumed that the value is in seconds.
-/// @param {Boolean|String} $infinite [false] - Determines whether or not the
+/// @param {Bool|String} $infinite [false] - Determines whether or not the
 /// color shifting animation will go on infinitely.
-/// @param {Boolean|String} $alternate [null] - When true, this will reverse the
+/// @param {Bool|String} $alternate [null] - When true, this will reverse the
 /// order of the color shift when it refgaches the end of the animation,
 /// otherwise the animation will restart at the first color. $infinite must be
 /// true for $alternate to take effect.

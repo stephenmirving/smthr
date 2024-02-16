@@ -13,7 +13,7 @@
   } @else if $maintain-layout {
     visibility: hidden;
   } @else {
-    @error 'Incorrect value of `#{meta.inspect($maintain-laout)}` for the `hide` ' +
-        'mixin. Value must be either true or false (or null).';
+    @error 'Incorrect value of `#{meta.inspect($maintain-laout)}` for the ' +
+        '[ hide() ] mixin. Value must be either true, false, or null.';
   }
 }

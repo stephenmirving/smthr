@@ -1,10 +1,30 @@
+@use 'sass:color';
+@use '../../functions/is-color' as *;
+
 /// Apply a subtle embossing text shadow effect.
 /// @param {Float} $opacity - The opacity value.
-/// @param {Color} $color [#fff} - The embossing shadow's color value. Must
-/// either be a 3 or 6 digit hex-code or just the comma-separated red, green,
-/// and blue values.
+/// @param {Color} $color [#fff} - The embossing shadow's color value. Can be
+/// and color type, but if the color has an alpha/opacity value other than 1 it
+/// will be disregarded in favor of the $opacity parameter.
 ///
 /// @group Utilities
 @mixin text-emboss($opacity, $color: #fff, $blur: 0) {
+  $red-component: null;
+  $green-component: null;
+  $blue-component: null;
+
+  // @if color.alpha($color) != 1
+
+  @if is-color($color) {
+    $red-component: color.red($color);
+    $green-component: color.green($color);
+    $blue-component: color.blue($color);
+  } @else {
+    @error 'Invalid $color value of #{meta.inspect($color)} passed to the ' +
+        '[ text-emboss() ] mixin.';
+  }
+
+
+
   text-shadow: 0 1px $blur rgba($color, $opacity);
 }

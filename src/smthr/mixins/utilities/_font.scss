@@ -54,10 +54,10 @@
   }
   @if $kern and $kern != auto and $kern != normal and $kern != none {
     @warn 'You have tried giving an incorrect value of `#{meta.inspect($kern)}` ' +
-      'for the font-kerning property in the `font` mixin. The value was' +
-      ' reset to null and no font-kerning will be applied. Please check' +
-      ' your stylesheet. The value of $kern must be one of the following:' +
-      ' [auto, normal, none].';
+      'for the font-kerning property in the [ font() ] mixin. The value was ' +
+      'reset to null and no font-kerning will be applied. Please check ' +
+      'your stylesheet. The value of $kern must be one of the following: ' +
+      '[auto, normal, none].';
 
     $kern: null;
   }

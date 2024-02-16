@@ -8,7 +8,7 @@
 /// backward $direction is chosen to augment the puff, it is recommended that
 /// the `animation-stage` mixin be used on the parent element.
 ///
-/// @param {String|Boolean} $in-or-out [in] - Determines if the element will
+/// @param {String|Bool} $in-or-out [in] - Determines if the element will
 /// puff `in` (or true) or `out` (or false).
 /// @param {String} $direction [null] - Will, depending on $in-or-out, either
 /// puff in from this direction or puff out towards this direction. Acceptable

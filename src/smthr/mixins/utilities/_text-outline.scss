@@ -3,12 +3,12 @@
 
 /// Adds a colored text outline to a font.
 ///
-/// @param {Color} $color [hsl(0 0% 0.392)} - The outline color for the font.
-/// @param {Boolean|String} $is-important - Mark the effect as important. This
+/// @param {Color} $color [hsl(0 0% 39.2%)} - The outline color for the font.
+/// @param {Bool|String} $is-important - Mark the effect as important. This
 /// should almost always be avoided.
 ///
 /// @group Utilities
-@mixin text-outline($color: hsl(0 0% 0.392), $is-important: false) {
+@mixin text-outline($color: hsl(0 0% 39.2%), $is-important: false) {
   @if meta.type-of($is-important) == 'string' {
     $is-important: string.to-lower-case($is-important);
   }

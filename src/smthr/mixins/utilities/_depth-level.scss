@@ -16,9 +16,9 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {function} top-shadow
-/// @require {function} bottom-shadow
-/// @require {function} is-integer
+/// @require {Function} top-shadow
+/// @require {Function} bottom-shadow
+/// @require {Function} is-integer
 /// @throw Invalid $level value.
 /// @alias card-depth
 /// @alias shadow-depth
@@ -51,8 +51,8 @@
 /// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
 ///
 /// @group Utilities
-/// @require {function} top-shadow
-/// @require {function} bottom-shadow
+/// @require {Function} top-shadow
+/// @require {Function} bottom-shadow
 /// @throw Invalid $level value.
 /// @alias depth-level
 /// @alias shadow-depth
@@ -71,8 +71,8 @@
 /// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
 ///
 /// @group Utilities
-/// @require {function} top-shadow
-/// @require {function} bottom-shadow
+/// @require {Function} top-shadow
+/// @require {Function} bottom-shadow
 /// @throw Invalid $level value.
 /// @alias depth-level
 /// @alias card-depth
@@ -91,8 +91,8 @@
 /// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
 ///
 /// @group Utilities
-/// @require {function} top-shadow
-/// @require {function} bottom-shadow
+/// @require {Function} top-shadow
+/// @require {Function} bottom-shadow
 /// @throw Invalid $level value.
 /// @alias depth-level
 /// @alias card-depth
@@ -111,8 +111,8 @@
 /// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
 ///
 /// @group Utilities
-/// @require {function} top-shadow
-/// @require {function} bottom-shadow
+/// @require {Function} top-shadow
+/// @require {Function} bottom-shadow
 /// @throw Invalid $level value.
 /// @alias depth-level
 /// @alias card-depth

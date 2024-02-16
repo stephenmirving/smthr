@@ -1,6 +1,7 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use '../../functions/strip-unit' as *;
+@use '../../functions/is-number' as *;
 
 /// Fully cover an area with an element.
 ///
@@ -9,7 +10,7 @@
 /// @param {Number} $opacity [null] - A decimal value between 0 and 1
 ///
 /// @group Utilities
-/// @require {function} strip-unit
+/// @require {Function} strip-unit
 @mixin cover($z-val: 999, $bg-val: null, $opacity: null) {
   position: absolute;
   top: 0;
@@ -35,10 +36,10 @@
     opacity: $opacity;
   } @else if $opacity {
     @error 'Invalid opacity value of `#{meta.inspect($opacity)}` for the ' +
-        '`cover` mixin.';
+        '[ cover() ] mixin.';
   }
 
-  @if $z-val and meta.type-of($z-val) == 'number' and math.is-unitless($z-val) {
+  @if $z-val and is-number($z-val) and math.is-unitless($z-val) {
     z-index: $z-val;
   }
 }

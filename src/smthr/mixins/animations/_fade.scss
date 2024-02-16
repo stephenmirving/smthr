@@ -8,7 +8,7 @@
 /// backward direction is chosen to augment the fade, it is recommended that
 /// the `animation-stage` mixin be used on the parent element.
 ///
-/// @param {String|Boolean} $in-or-out [in] - Determines if the element will
+/// @param {String|Bool} $in-or-out [in] - Determines if the element will
 /// fade `in` (or true, `i`) our `out` (or false, `o`).
 /// @param {String} $direction [null] - Will optionally either fade in from
 /// this direction or fade out towards this direction, depending on $in-or-out.

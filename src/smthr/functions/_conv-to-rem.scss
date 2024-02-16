@@ -11,7 +11,7 @@
 /// @param {Number} $base [null] - The base font-size.
 /// @return {Length} The values in REMs.
 ///
-/// @require {function} strip-unit
+/// @require {Function} strip-unit
 @function conv-to-rem($values, $base: null) {
   $rem-values: ();
   $count: list.length($values);
@@ -73,7 +73,7 @@
 /// @return {Number} A number in rems, calculated based on the given value and
 /// the base pixel value. rem values are passed through as is.
 ///
-/// @require {function} strip-unit
+/// @require {Function} strip-unit
 @function _px-to-rem($value, $base: null) {
   @if meta.type-of($value) != 'number' {
     @error 'Invalid $value of [ #{meta.inspect($value)} ], was passed ' +

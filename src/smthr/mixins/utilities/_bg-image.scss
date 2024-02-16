@@ -2,6 +2,9 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use '../../placeholders/variables' as *;
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Apply a background image with a version that is scaled to 2x for Retina and
 /// other HiDPI displays.
@@ -42,23 +45,13 @@
 ) {
   $hidpi-img: $img-name;
 
-  @if $extra-hidpi-properties and
-    meta.type-of($extra-hidpi-properties) ==
-    'string'
-  {
+  @if $extra-hidpi-properties and is-string($extra-hidpi-properties) {
     $extra-hidpi-properties: string.to-lower-case($extra-hidpi-properties);
   }
 
   @if not
     $extra-hidpi-properties or
-    $extra-hidpi-properties ==
-    'none' or
-    $extra-hidpi-properties ==
-    'no' or
-    $extra-hidpi-properties ==
-    nil or
-    $extra-hidpi-properties ==
-    'n/a' or
+    is-alias('none', $extra-hidpi-properties) or
     $extra-hidpi-properties ==
     ' ' or
     $extra-hidpi-properties ==
@@ -71,32 +64,20 @@
 
   @if not $bg-width {
     @error 'You must enter an image width for the $bg-width parameter of the ' +
-        '`bg-image` mixin.';
-  } @else if
-    (
-      meta.type-of($bg-width) !=
-        'number' or
-        (
-          $bg-height and
-            $bg-height !=
-            auto and
-            meta.type-of($bg-height) !=
-            'number'
-        )
-    )
+        '[ bg-image() ] mixin.';
+  } @else if not
+    is-number($bg-width) or
+    ($bg-height and $bg-height != auto and not is-number($bg-height))
   {
-    @error 'Invalid type for the dimensions used in the `bg-image` mixin.';
+    @error 'Invalid type for the dimensions used in the [ bg-image() ] mixin.';
   } @else {
-    $bg-width: if(
-      meta.type-of($bg-width) == 'number' and math.is-unitless($bg-width),
-      $bg-width * 1px,
-      $bg-width
-    );
-    $bg-height: if(
-      (meta.type-of($bg-height) == 'number' and math.is-unitless($bg-height)),
-      $bg-height * 1px,
-      $bg-height
-    );
+    @if is-number($bg-width) and math.is-unitless($bg-width) {
+      $bg-width: $bg-width * 1px;
+    }
+
+    @if is-number($bg-height) and math.is-unitless($bg-height) {
+      $bg-height: $bg-height * 1px;
+    }
   }
 
   $size: if(
@@ -159,7 +140,7 @@
     @warn 'You are using an unknown file type on the image you referenced in ' +
         'the [ bg-image() ] mixin. Please ensure you are using a valid image file' +
         ' type. If you use an unknown file type with multiple `.` characters ' +
-        'the `bg-image` mixin may not work correctly.';
+        'the [ bg-image() ] mixin may not work correctly.';
   } @else {
     @error 'The image you referenced in the [ bg-image() ] mixin does not have a ' +
         'file extension. Please use the full image name including the ' +

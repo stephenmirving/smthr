@@ -29,9 +29,9 @@
 /// Compiles to:
 /// left: 20%;
 ///
-/// @require {function} is-angle
-/// @require {function} is-number
-/// @require {function} conv-angle
+/// @require {Function} is-angle
+/// @require {Function} is-number
+/// @require {Function} conv-angle
 /// @require {Map} $map-positions
 ///
 /// @throw Invalid data type error for $angle.

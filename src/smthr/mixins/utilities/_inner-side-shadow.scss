@@ -1,6 +1,8 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/is-alias';
+@use '../../functions/is-string';
 
 /// Creates an inner box-shadow for only one side of an element.
 ///
@@ -13,39 +15,28 @@
 @mixin inner-side-shadow(
   $side: 'bottom',
   $size: 20px,
-  $color: hsl(0 0% 0 / 0.3)
+  $color: hsla(0, 0%, 0%, 0.3)
 ) {
   @if math.is-unitless($size) {
     $size: $size * 1px;
   }
 
-  @if $side and meta.type-of($side) == 'string' {
+  @if is-string($side) {
     $side: string.to-lower-case($side);
   }
 
   $helper: math.round($size * 0.65);
 
-  @if $side == 'top' or $side == 't' or $side == 'up' or $side == 'u' {
+  @if is-alias('top', $side) {
     box-shadow: inset 0 $helper $size (-1) * $helper $color;
-  } @else if $side == 'left' or $side == 'l' {
+  } @else if is-alias('left', $side) {
     box-shadow: inset $helper 0 $size (-1) * $helper $color;
-  } @else if $side == 'right' or $side == 'r' {
+  } @else if is-alias('right', $side) {
     box-shadow: inset (-1) * $helper 0 $size (-1) * $helper $color;
-  } @else if
-    $side ==
-    'bottom' or
-    $side ==
-    'b' or
-    $side ==
-    'btm' or
-    $side ==
-    'down' or
-    $side ==
-    'd'
-  {
+  } @else if is-alias('bottom', $side) {
     box-shadow: inset 0 (-1) * $helper $size (-1) * $helper $color;
   } @else {
-    @error 'Invalid side value of `#{meta.inspect($side)}` for the '
-        + '`inner-side-shadow` mixin.';
+    @error 'Invalid side value of `#{meta.inspect($side)}` for the ' +
+        '[ inner-side-shadow() ] mixin.';
   }
 }

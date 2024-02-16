@@ -19,11 +19,11 @@
 ///
 /// @group Shapes
 ///
-/// @require {function} closest-position
-/// @require {function} conv-angle
-/// @require {function} is-alias
-/// @require {function} is-number
-/// @require {function} is-string
+/// @require {Function} closest-position
+/// @require {Function} conv-angle
+/// @require {Function} is-alias
+/// @require {Function} is-number
+/// @require {Function} is-string
 ///
 /// @throw Invalid $direciton unit type error.
 /// @throw Invalid $direction keyword value error.

@@ -15,7 +15,7 @@
 /// @alias color-to-hex
 /// @alias conv-to-hex
 /// @alias convert-to-hex
-/// @require {function} _component-to-hex
+/// @require {Function} _component-to-hex
 @function to-hex($color) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to `conv-color()` function. You passed ' +
@@ -71,7 +71,7 @@
 /// @alias to-hex
 /// @alias conv-to-hex
 /// @alias convert-to-hex
-/// @require {function} component-to-hex
+/// @require {Function} component-to-hex
 @function color-to-hex($color) {
   @return to-hex($color);
 }
@@ -88,7 +88,7 @@
 /// @alias to-hex
 /// @alias color-to-hex
 /// @alias convert-to-hex
-/// @require {function} component-to-hex
+/// @require {Function} component-to-hex
 @function conv-to-hex($color) {
   @return to-hex($color);
 }
@@ -105,7 +105,7 @@
 /// @alias to-hex
 /// @alias color-to-hex
 /// @alias conv-to-hex
-/// @require {function} component-to-hex
+/// @require {Function} component-to-hex
 @function convert-to-hex($color) {
   @return to-hex($color);
 }

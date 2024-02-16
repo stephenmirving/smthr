@@ -250,7 +250,7 @@ $map-directions: (
   )
 ) !default;
 
-/// Map of only the positions and associated angles in degrees.
+/// Map of only the position keywords and their associated angles in degrees.
 /// @type Map
 $map-positions: (
   0: (
@@ -276,6 +276,8 @@ $map-positions: (
 ) !default;
 
 /// Map of keywords, each with their own list of potential aliases.
+/// Used by the is-alias and resolve-alias functions to allow a greater set
+/// of possible inputs when using functions and mixins.
 /// @type Map
 $map-alias-resolutions: (
   'bottom': (
@@ -1133,5 +1135,47 @@ $map-alias-resolutions: (
     'clear',
     'tran',
     'tp'
-  )
+  ),
+  'row-reverse': (
+    'row-reverse',
+    'row reverse',
+    'row-rvs',
+    'row rvs',
+    'row r',
+    'row-r',
+    'rowr',
+    'r-rvs',
+    'r rvs',
+    'rrvs',
+    'r-r',
+    'r r',
+    'rr'
+  ),
+  'column': (
+    'columns',
+    'column',
+    'col'
+  ),
+  'column-reverse': (
+    'column-reverse',
+    'column reverse',
+    'column-rvs',
+    'column rvs',
+    'column r',
+    'column-r',
+    'columnr',
+    'col-reverse',
+    'col reverse',
+    'col-rvs',
+    'col rvs',
+    'col r',
+    'col-r',
+    'colr',
+    'c-rvs',
+    'c rvs',
+    'crvs',
+    'c-r',
+    'c r',
+    'cr'
+  ),
 ) !default;
