@@ -2,8 +2,9 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use './is-length' as *;
+@use './is-number' as *;
 
-/// Clamp `$number` between `$min` and `$max`. Because the CSS version of
+/// Clamps `$value` between `$min` and `$max`. Because the CSS version of
 /// `clamp()` still does not have full support for all Safari versions in use,
 /// this version will provide the same effect with the more supported `min()`
 /// and `max()` methods but with the more simplified clamp() syntax that is the
@@ -19,14 +20,18 @@
 /// will return the $max.
 ///
 /// @throw {Error} Minimum greater than maximum.
-/// @alias clamp-val
-@function clamp-size($min, $value, $max) {
-  @if meta.type-of($min) == 'number' and meta.type-of($max) == 'number' and
-      math.unit($min) == math.unit($max) and $min > $max {
-     @error 'Invalid $min and $max value of [ $min: #{$min}, $max: #{$max} ] ' +
+///
+/// @alias clamp-value
+@function clamp-val($min, $value, $max) {
+  @if is-number($min) and
+    is-number($max) and
+    math.compatible($min, $max) and
+    $min > $max
+  {
+    @error 'Invalid $min and $max value of [ $min: #{$min}, $max: #{$max} ] ' +
          'for the [ clamp-size() ] function. The minimum value must be less ' +
          'than the maximum value.';
-    }
+  }
 
   @return min(max(#{'#{$min}'}, #{'#{$value}'}), #{'#{$max}'});
 }
@@ -44,7 +49,7 @@
 /// @return {Length} If $value is within the limits, returns the $value, if it
 /// is below the limit, it will return the $min, if it is above the $max, it
 /// will return the $max.
-/// @alias clamp-size
-@function clamp-val($min, $value, $max) {
-  @return clamp-size($min, $value, $max)
+/// @alias clamp-val
+@function clamp-value($min, $value, $max) {
+  @return clamp-val($min, $value, $max);
 }
