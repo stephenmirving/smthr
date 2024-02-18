@@ -145,5 +145,5 @@
 
   $word: string.to-lower-case($word);
 
-  @return if(list.index($reserved-words, $word), true, false);
+  @return not not list.index($reserved-words, $word);
 }

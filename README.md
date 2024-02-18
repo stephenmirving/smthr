@@ -14,7 +14,7 @@ with messy clip-path coordinates or complicated animation keyframe creation.
 
 ## smthr is in active development
 
-**This is *smthr* version 0.2.1 - Last update: 02/16/24*
+**This is *smthr* version 0.2.2 - Last update: 02/18/24*
 
 **_smthr_ currently contains:**
 

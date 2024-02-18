@@ -41,14 +41,16 @@ TODO:
         ✔ triangle @done(24-02-16 03:01)
         ✔ x-shape @done(24-02-16 01:56)
       ☐ Test all Utilities mixins
+        ☐ Change names of min-width, max-width, min-to-max-width mixins to only-over-width, only-under-width, only-between-width
+        ☐ Add aliases to avove for target-over-width, target-under-width, target-between-width
         ✔ BEM @done(24-02-15 03:08)
-        ☐ bg-image-svg
-        ☐ bg-image
+        ✔ bg-image-svg @done(24-02-18 16:18)
+        ✔ bg-image @done(24-02-18 15:11)
         ✔ border-radius @done(24-02-16 03:20)
         ☐ button-base
         ✔ clearfix @done(24-02-16 03:08)
-        ☐ cover
-        ☐ depth-level
+        ✔ cover @done(24-02-17 00:12)
+        ✔ depth-level @done(24-02-18 16:27)
         ✔ disable-outline @done(24-02-16 03:09)
         ✔ family @done(24-02-16 03:08)
         ✔ flex-center @done(24-02-16 03:09)
@@ -64,15 +66,15 @@ TODO:
         ☐ max-width
         ☐ min-to-max-width
         ☐ min-width
-        ☐ on-event
-        ☐ only-chromium
+        ✔ on-event @done(24-02-18 14:01)
+        ✔ only-chromium @done(24-02-18 14:01)
         ☐ only-hidpi
-        ☐ only-ie
-        ☐ only-legacy-edge
-        ☐ only-moz
+        ✔ only-ie @done(24-02-18 14:00)
+        ✔ only-legacy-edge @done(24-02-18 14:00)
+        ✔ only-moz @done(24-02-18 14:00)
         ☐ only-phones
-        ☐ only-safari
-        ☐ only-webkit
+        ✔ only-safari @done(24-02-18 14:01)
+        ✔ only-webkit @done(24-02-18 14:01)
         ✔ opacity @done(24-02-16 03:19)
         ✔ placeholder @done(24-02-16 03:19)
         ☐ position-center

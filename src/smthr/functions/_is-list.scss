@@ -1,0 +1,10 @@
+@use 'sass:meta';
+
+/// Checks if a value is a list.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Bool} True if $value is a list, false if it is not.
+@function is-list($value) {
+  @return meta.type-of($value) == 'list';
+}

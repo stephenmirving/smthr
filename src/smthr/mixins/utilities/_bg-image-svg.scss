@@ -1,110 +1,96 @@
-@use 'sass:string';
 @use 'sass:map';
+@use 'sass:math';
 @use 'sass:meta';
+@use 'sass:string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-map' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 @use '../../placeholders/variables' as *;
 
-/// Apply an SVG background image with a fall-back PNG version and a PNG version
-/// that is scaled to 2x for Retina and other HiDPI displays.
+/// Apply an SVG background image with a fall-back version and a version
+/// that is scaled to 2x for Retina and other HiDPI displays. This mixin will
+/// apply the background-image and background-size properties. You can set other background properties
+/// manually. For the 2x version of the image in the media query this mixin will
+/// generate, you can pass additional background properties to the mixin inside
+/// a map via the $hidpi-bg-props parameter.
 ///
 /// @param {URL} $svg-img-name - File path for the image. The '.svg' file
 /// extension is not required, but if it is included the string must either be
 /// in quotes or inside a function to be read correctly.
-/// @param {Length-Percentage} $bg-width - Width component of the
-/// background-size property that sizes the image.
-/// @param {Length-Percentage} $bg-height [null] - Height component of the
-/// background-size property value for the image. If no height, or a height
-/// of auto is entered, the background-size property will use one value syntax.
-/// @param {Number} $ratio [1.3] - A minimum pixel ratio resolution value used
+/// @param {Length|Keyword} $bg-size - Value for the background-size property.
+/// @param {Number} $min-ratio [1.5] - A minimum pixel ratio resolution value used
 /// to calculate the media query targeting Retina and other HiDPI screens.
 /// Common targeting ratios are 1.25, 1.3, 1.5, and 2.
 /// @param {String} $img-2x-suffix [$image-suffix-2x|'@2x']- The suffix that is
 /// appended to the end of image name to designate that it is the 2x version for
-/// HiDPI displays. Must be a quoted string to be read correctly.
-/// @param {Map} $extra-hidpi-properties [null] - You can pass this argument
+/// HiDPI displays.
+/// @param {String} $fallback-format ['png'] - The format of the fallback image
+/// being used. Pass values like 'png', 'jpg', etc.
+/// @param {Map} $hidpi-bg-props [null] - You can pass this argument
 /// a map of property: value pairs that will be added to the HiDPI/Retina
 /// media query since the mixin will be the only way to access it.
 ///
 /// @group Utilities
-/// @throw Value of $bg-width must not be null
-/// @throw Invalid $bg-width or $bg-height data type
+/// @require {Function} is-alias
+/// @require {Function} is-map
+/// @require {Function} is-number
+/// @require {Function} is-string
+///
+/// @throw {Error} Invalid $img-2x-suffix data type.
+/// @throw {Error} Invalid $min-ratio data type.
+/// @throw {Error} Invalid $hidpi-bg-props data type.
 @mixin bg-image-svg(
   $svg-img-name,
-  $bg-width,
-  $bg-height: null,
-  $ratio: 1.3,
-  $img-2x-suffix: if(
-    meta.variable-exists('image-suffix-2x') or
-    meta.global-variable-exists('image-suffix-2x'),
-    $image-suffix-2x,
-    '@2x'
-  ),
-  $extra-hidpi-properties: null
+  $bg-size,
+  $min-ratio: 1.5,
+  $img-2x-suffix:
+    if(
+      meta.variable-exists('image-suffix-2x') or
+        meta.global-variable-exists('image-suffix-2x', smth),
+      $image-suffix-2x,
+      '@2x'
+    ),
+  $fallback-format: 'png',
+  $hidpi-bg-props: null
 ) {
   $ret-png-img: null;
 
-  @if not
-    $extra-hidpi-properties or
-    $extra-hidpi-properties ==
-    'none' or
-    $extra-hidpi-properties ==
-    'no' or
-    $extra-hidpi-properties ==
-    nil or
-    $extra-hidpi-properties ==
-    'n/a' or
-    $extra-hidpi-properties ==
-    ' ' or
-    $extra-hidpi-properties ==
-    () or
-    $extra-hidpi-properties ==
-    ( )
-  {
-    $extra-hidpi-properties: null;
-  }
-
-  @if not $bg-width {
-    @error 'You must enter an image width for the $bg-width parameter of the ' +
-        '`bg-image-svg` mixin.';
-  } @else if
-    meta.type-of($bg-width) !=
-    'number' or
-    ($bg-height and $bg-height != auto and meta.type-of($bg-height) != 'number')
-  {
-    @error 'Invalid type for the dimensions used in the `bg-image-svg` mixin.';
+  @if is-string($img-2x-suffix) or is-number($img-2x) {
+    $img-2x-suffix: string.quote('#{$img-2x-suffix}');
   } @else {
-    $bg-width: if(
-      meta.type-of($bg-width) == 'number' and math.is-unitless($bg-width),
-      $bg-width * 1px,
-      $bg-width
-    );
-    $bg-height: if(
-      meta.type-of($bg-height) == 'number' and math.is-unitless($bg-height),
-      $bg-height * 1px,
-      $bg-height
-    );
+    @error 'Invalid data type for $img-2x-suffix of ' +
+        '`#{meta.type-of($img-2x-suffix)}` passed to the [ bg-image-svg() ] ' +
+        'mixin. This value must be a string or a number.';
   }
 
-  @if not $img-2x-suffix {
-    $img-2x-suffix: if(
-      meta.variable-exists('image-suffix-2x') or
-      meta.global-variable-exists('image-suffix-2x'),
-      $image-suffix-2x,
-      '@2x'
-    );
+  @if not is-number($min-ratio) or not math.is-unitless($min-ratio) {
+    @error 'Invalid data type for $min-ratio passed to [ bg-image() ] mixin. ' +
+        'This value must be a number.';
+  }
+
+  @if not
+    $hidpi-bg-props or
+    is-alias('none', $hidpi-bg-props) or
+    $hidpi-bg-props ==
+    ' ' or
+    $hidpi-bg-props ==
+    ()
+  {
+    $hidpi-bg-props: null;
+  } @else if not is-map($hidpi-bg-props) {
+    @error 'Invalid data type for $hidpi-bg-props passed to the [ bg-image() ]' +
+        ' mixin. If this value is not null, you must pass a map containig the ' +
+        'property: value pairs to be added to the HiDPI/Retina media query.';
   }
 
   @if not string.index(string.to-lower-case($svg-img-name), '.svg') {
     $svg-img-name: $svg-img-name + '.svg';
-    $ret-png-img: $svg-img-name + $img-2x-suffix + '.png';
+    $ret-png-img: $svg-img-name + $img-2x-suffix + '.#{$fallback-format}';
   }
 
-  $size: if(
-    not $bg-height or $bg-height == auto,
-    $bg-width,
-    $bg-width $bg-height
-  );
   $png-img: string.slice($svg-img-name, 1, string.length($svg-img-name) - 4) +
-    '.png';
+    '.#{$fallback-format}';
   $ret-png-img: string.insert(
     $png-img,
     $img-2x-suffix,
@@ -112,24 +98,25 @@
   );
 
   // Normal sized PNG fallback image
-  background: url(#{string.unquote($png-img)});
+  background: url(#{$png-img});
 
   // SVG image with properties to ensure it overwrites PNG if SVG is supported
   background: url(#{$svg-img-name}), linear-gradient(transparent, transparent);
+  background-size: $bg-size;
 
   // Scaled up version of the image for HiDPI displays
-  @media screen and (-webkit-min-device-pixel-ratio: $ratio),
-    only screen and (min-resolution: $ratio * 96dpi),
-    only screen and (min-resolution: $ratio * 1dppx) {
+  @media screen and (-webkit-min-device-pixel-ratio: $min-ratio),
+    screen and (min-resolution: $min-ratio * 96dpi),
+    screen and (min-resolution: $min-ratio * 1dppx) {
     background: url(#{$ret-png-img}); // 2x PNG fallback image
     background: url(#{$svg-img-name}), linear-gradient(transparent, transparent);
-    background-size: $size;
+    background-size: $bg-size;
 
-    @if $extra-hidpi-properties {
-      $key-list: map.keys($extra-hidpi-properties);
+    @if $hidpi-bg-props {
+      $key-list: map.keys($hidpi-bg-props);
 
       @each $key in $key-list {
-        #{$key}: map.get($extra-hidpi-properties, $key);
+        #{$key}: map.get($hidpi-bg-props, $key);
       }
     }
   }

@@ -10,16 +10,12 @@
 ///
 /// @param {Length} $min - The minimum height. Should be an absolute length value
 /// or a function that resolves to one.
-/// @param {Length} $val - The relative length height of the element. Use units
-/// like vw, %, em, etc. or a function using relative units.
+/// @param {Length} $rel - The relative length height of the element. Use units
+/// like vh, %, em, etc. or a function using relative units.
 /// @param {Length} $max - The maximum height. Should be an absolute length value
 /// or a function that resolves to one.
-///
-/// @return {Length} If $value is within the limits, returns the $value, if it
-/// is below the limit, it will return the $min, if it is above the $max, it
-/// will return the $max.
-@function clamp-height($min, $val, $max) {
-  height: $val;
+@mixin clamp-height($min, $rel, $max) {
+  height: $rel;
   min-height: $min;
   max-height: $max;
 }

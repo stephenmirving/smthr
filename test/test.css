@@ -1,18 +1,30 @@
 .container {
+  display: grid;
+  place-items: center;
   width: 100%;
   height: 100dvh;
 }
 
+.controls-wrapper {
+  position: absolute;
+  top: 5%;
+  z-index: 9999;
+}
+
 .stage {
+  width: 80%;
+  height: 80vh;
+  z-index: 900;
+  -webkit-user-select: none;
+  user-select: none;
+  perspective: 500px;
+  perspective-origin: 50% 55%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   border: 4px solid #000;
   margin: 0 auto;
-  background: lightblue;
-  background: purple;
-  background-image: linear-gradient(135deg, purple, blue);
 }
 
 .card {
@@ -20,28 +32,11 @@
   height: 200px;
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
+  background: #904;
+  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
 }
-
-.cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 99999;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  width: 100lvw;
-  max-width: 100vw;
-  max-width: 100lvw;
-  height: 100vw;
-  height: 100lvw;
-  max-height: 100vw;
-  max-height: 100lvw;
-  background: #90f;
-}
-
-.test {
-  content: false;
+.card:hover {
+  box-shadow: 0 15px 24px rgba(0, 0, 0, 0.22), 0 19px 76px rgba(0, 0, 0, 0.3);
 }
 
 /*# sourceMappingURL=test.css.map */

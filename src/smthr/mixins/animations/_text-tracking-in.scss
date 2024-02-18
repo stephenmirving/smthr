@@ -38,7 +38,7 @@
 /// @throw {Error} Invalid data type for $delay.
 /// @throw {Error} Invalid data type for $iterations.
 /// @throw {Error} Invalid keyword value for $anim-dir.
-/// @throw {Warning} Conflict between value for $animate-in-place and $origin.
+/// @throw {Warn} Conflict between value for $animate-in-place and $origin.
 @mixin text-tracking-in(
   $expand-contract: 'expand',
   $animate-in-place: true,

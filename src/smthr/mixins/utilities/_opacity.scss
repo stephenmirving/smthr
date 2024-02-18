@@ -13,7 +13,7 @@
 /// @group Utilities
 ///
 /// @throw {Error} Invalid $opacity data type.
-/// @throw {Warning} $opacity out of range.
+/// @throw {Warn} $opacity out of range.
 @mixin opacity($opacity) {
   @if not math.is-unitless($opacity) and math.unit($opacity) != '%' {
     @error 'Invalid opacity value of `#{meta.inspect($opacity)}` passed to' +
