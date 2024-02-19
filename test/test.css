@@ -32,11 +32,16 @@
   height: 200px;
   font: 700 1.125rem system-ui, sans-serif;
   text-align: center;
-  background: #904;
+  background: hwb(0 0% 0%);
   box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
 }
 .card:hover {
-  box-shadow: 0 15px 24px rgba(0, 0, 0, 0.22), 0 19px 76px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 15px 24px rgba(188, 234, 62, 0.22), 0 19px 76px rgba(188, 234, 62, 0.3);
+}
+
+.test {
+  content: black;
+  content: color;
 }
 
 /*# sourceMappingURL=test.css.map */

@@ -3,7 +3,6 @@
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-angle' as *;
-@use '../../functions/is-color' as *;
 @use '../../functions/conv-angle' as *;
 
 /// Uses psuedo-elements and transform to turn an element into the shape of an
@@ -24,7 +23,6 @@
 ///
 /// @throw Invalid unit type for $direction
 /// @throw Invalid $direction keyword value
-/// @throw Invalid data type for $color.
 @mixin arrow-curved-tail(
   $direction: 'bottom-right',
   $size: 2rem,
@@ -90,11 +88,6 @@
           ' Acceptable values include: `top`,`top-right`, `right`, ' +
           '`bottom-right`, `bottom`, `bottom-left`, `left`, or `top-left`.';
     }
-  }
-
-  @if not is-color($color) {
-    @error 'Invalid $color value of `#{meta.type-of($color)}` for the ' +
-        '[ arrow-curved-tail() ] mixin.';
   }
 
   position: relative;

@@ -1,18 +1,31 @@
-@use 'sass:meta';
-@use 'sass:math';
 @use 'sass:color';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
 @use 'sass:string';
 @use './to-cmyk' as *;
 @use './to-hex' as *;
 @use './to-fixed' as *;
 @use './strip-unit' as *;
+@use './str-to-num' as *;
 
 /// Takes a given color in virtually any notation and converts it into the given
-/// color syntax types.
+/// color syntax types. Available notations are hex, rgb, rgba, hsl, hsla, hwb,
+/// name, or cmyk. Passing 'name' will only return a CSS color name if the given
+/// $color can can be converted into one, otherwise it returns a hex. Alpha is
+/// disregarded for this syntax selection.
+///
+/// Most of the colors this function returns (except for $syntx values of
+/// rgb and hsl when there is no alpha value or an alpha value of 1) cannot be
+/// used in Sass functions that make use of the color module or type checking
+/// as Sass currently currently recognizes them as strings. This will hopefully
+/// be fixed in future versions of Sass.
+///
 /// @access public
 ///
 /// @param {Color} $color - The color to convert.
-/// @param {String} $syntax [hsl] - The color syntax to convert into.
+/// @param {String} $syntax [hsl] - The color syntax to convert into. Can be
+/// hex, rgb, rbga, hsl, hsla, hwb, name, or cmyk.
 ///
 /// @return {Color} The converted color in the given syntax.
 ///
@@ -20,6 +33,7 @@
 /// @require to-hex
 /// @require to-fixed
 /// @require to-cmyk
+///
 /// @throw Invalid data type for $color
 /// @throw Invalid color syntax type for $syntax
 /// @alias convert-color
@@ -28,8 +42,8 @@
 @function conv-color($color, $syntax: 'hsl') {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to [ conv-color() ] function. You passed ' +
-      '[ #{$color} ] for the $color argument, which is not a ' +
-      'a color that can be converted by this function.';
+      '`#{$color}` for the $color argument, which is not a color that can ' +
+      'be converted by this function.';
   }
 
   $color-alpha: color.alpha($color);
@@ -41,6 +55,7 @@
   $color-saturation: to-fixed(color.saturation($color));
   $color-whiteness: math.round(color.whiteness($color));
   $color-blackness: math.round(color.blackness($color));
+  $color-list: null;
 
   @if meta.type-of($syntax) == 'string' {
     $syntax: string.to-lower-case($syntax);
@@ -53,34 +68,63 @@
     @return to-hex($color);
   } @else if $syntax == 'rgb' {
     @if $color-alpha == 1 {
-      @return #{'rgb(' + $color-red + ' ' + $color-green + ' ' + $color-blue + ')'};
+      @return rgb($color-red $color-green $color-blue); // Returns color type
     } @else {
-      @return #{'rgb(' + $color-red + ' ' + $color-green + ' ' + $color-blue +
-        ' / ' + $color-alpha + ')'};
+      // Works as a color in CSS but cannot be used in Sass functions
+      // that have type checking as it is recognized as a string
+      @return rgb(
+        $color-red $color-green #{list.slash($color-blue, $color-alpha)}
+      );
     }
   } @else if $syntax == 'rgba' {
     @return #{'rgba(' + $color-red + ', ' + $color-green + ', ' + $color-blue +
       ', ' + $color-alpha + ')'};
   } @else if $syntax == 'hsl' {
     @if $color-alpha == 1 {
-      @return #{'hsl(' + $color-hue + ' ' + $color-saturation + ' ' +
-        $color-lightness + ')'};
+      // Returns color type
+      @return hsl($color-hue $color-saturation $color-lightness);
     } @else {
-      @return #{'hsl(' + $color-hue + ' ' + $color-saturation + ' ' +
-        $color-lightness + ' / ' + $color-alpha + ')'};
+      // Works as a color in CSS but cannot be used in Sass functions
+      // that have type checking as it is recognized as a string
+      @return hsl(
+        $color-hue $color-saturation #{list.slash(
+            $color-lightness,
+            $color-alpha
+          )}
+      );
     }
   } @else if $syntax == 'hsla' {
+    // Works as a color in CSS but cannot be used in Sass functions that have
+    // type checking as it is recognized as a string
     @return #{'hsla(' + $color-hue + ', ' + $color-saturation + ', ' +
       $color-lightness + ', ' + $color-alpha + ')'};
   } @else if $syntax == 'hwb' {
     @if $color-alpha == 1 {
-      @return #{'hwb(' + $color-hue + ' ' + $color-whiteness + ' ' +
-        $color-blackness + ')'};
+      // Works as a color in CSS but cannot be used in Sass functions that have
+      // type checking as Sass currently recognizeds it as a string
+      @return hwb($color-hue $color-whiteness $color-blackness);
     } @else {
+      // Works as a color in CSS but cannot be used in Sass functions
+      // that have type checking as it is recognized as a string
       @return #{'hwb(' + $color-hue + ' ' + $color-whiteness + ' ' +
         $color-blackness + ' / ' + $color-alpha + ')'};
     }
+  } @else if
+    $syntax ==
+    'keyword' or
+    $syntax ==
+    'key' or
+    $syntax ==
+    'name' or
+    $syntax ==
+    'word'
+  {
+    $color-list: $color-red $color-green $color-blue;
+
+    @return color.change(rgb($color-list), $alpha: 1);
   } @else if $syntax == 'cmyk' {
+    // This will return a device-cmyk() function that is in CSS Color Module 5
+    // and is not yet supported by any browser.
     @return to-cmyk($color);
   } @else {
     @error 'Invalid $syntax value of [ #{$syntax} ] passed to ' +

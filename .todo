@@ -4,99 +4,40 @@ TODO:
     ☐ Test and fix functions and mixins and placeholders.
       ☐ Function testing
         ☐ Fix functions-walk() and walk() or remove them
-        ☐ In the same vein as fixing functions-walk and walk, also need to fix missing-dependences or remove it
+        ☐ Figure out how to fix missing-dependencies or remove it from the project.
         ☐ Determine difference between linear-interpolation and trend-line functions.
+        ☐ COntinue working on conv-color. Maybe the hex conversion should be combined with the name syntax so that it returns type of color.
       ☐ Mixin Testing
-        ✔ Test all Animation mixins @done(24-02-15 00:57)
-          ✔ Test and update text-focus-in @done(24-02-14 18:00)
-          ✔ Test and update text-glitch @done(24-02-14 18:20)
-          ✔ Test and update text-pop-shadow @done(24-02-14 18:31)
-          ✔ Test and update text-pop-up @done(24-02-14 19:12)
-          ✔ Test and update text-tracking-in @done(24-02-14 19:59)
-          ✔ Test and update text-tracking-out @done(24-02-14 21:26)
-          ✔ Test and update wobbliness @done(24-02-15 00:21)
-          ✔ Test and update zoom-in @done(24-02-15 00:57)
-      ☐ Test all Shape mixins
-        ✔ arrow-curved-tail @done(24-02-15 03:06)
-        ✔ arrow @done(24-02-15 12:30)
-        ✔ bevel @done(24-02-15 15:14)
-        ✔ chevron @done(24-02-15 15:14)
-        ✔ circle @done(24-02-15 15:14)
-        ✔ cross @done(24-02-15 15:14)
-        ✔ diamond @done(24-02-15 16:01)
-        ✔ frame @done(24-02-15 18:43)
-        ✔ hamburger @started(24-02-15 18:43) @done(24-02-15 19:29) @lasted(46m4s)
-        ✔ heart @started(24-02-15 19:29) @done(24-02-15 19:33) @lasted(4m28s)
-        ✔ hexagon @done(24-02-15 19:33)
-        ✔ infinity-symbol @done(24-02-15 19:55)
-        ✔ octagon @done(24-02-15 19:55)
-        ✔ point @done(24-02-16 02:45)
-        ✔ pointing-label @done(24-02-16 02:56)
-        ✔ price-tag @done(24-02-16 01:54)
-        ✔ ribbon @done(24-02-16 02:58)
-        ✔ shape-shadow @done(24-02-16 01:55)
-        ✔ speech-bubble @done(24-02-16 02:58)
-        ✔ star-six-pointed @done(24-02-16 02:59)
-        ✔ star @done(24-02-16 03:00)
-        ✔ triangle @done(24-02-16 03:01)
-        ✔ x-shape @done(24-02-16 01:56)
-      ☐ Test all Utilities mixins
-        ☐ Change names of min-width, max-width, min-to-max-width mixins to only-over-width, only-under-width, only-between-width
-        ☐ Add aliases to avove for target-over-width, target-under-width, target-between-width
-        ✔ BEM @done(24-02-15 03:08)
-        ✔ bg-image-svg @done(24-02-18 16:18)
-        ✔ bg-image @done(24-02-18 15:11)
-        ✔ border-radius @done(24-02-16 03:20)
-        ☐ button-base
-        ✔ clearfix @done(24-02-16 03:08)
-        ✔ cover @done(24-02-17 00:12)
-        ✔ depth-level @done(24-02-18 16:27)
-        ✔ disable-outline @done(24-02-16 03:09)
-        ✔ family @done(24-02-16 03:08)
-        ✔ flex-center @done(24-02-16 03:09)
-        ☐ font
-        ☐ ghost-button
-        ✔ gradient @done(24-02-16 03:12)
-        ✔ hide-text @done(24-02-16 03:19)
-        ✔ hide-visually @done(24-02-16 03:19)
-        ☐ hide
-        ☐ inner-side-shadow
-        ☐ line-clamp
-        ☐ long-shadow
-        ☐ max-width
-        ☐ min-to-max-width
-        ☐ min-width
-        ✔ on-event @done(24-02-18 14:01)
-        ✔ only-chromium @done(24-02-18 14:01)
-        ☐ only-hidpi
-        ✔ only-ie @done(24-02-18 14:00)
-        ✔ only-legacy-edge @done(24-02-18 14:00)
-        ✔ only-moz @done(24-02-18 14:00)
-        ☐ only-phones
-        ✔ only-safari @done(24-02-18 14:01)
-        ✔ only-webkit @done(24-02-18 14:01)
-        ✔ opacity @done(24-02-16 03:19)
-        ✔ placeholder @done(24-02-16 03:19)
-        ☐ position-center
-        ☐ position-horizontally
-        ☐ position-vertically
-        ☐ position
-        ✔ reset-list @done(24-02-16 03:13)
-        ✔ reset @done(24-02-16 03:12)
-        ☐ responsive-font
-        ☐ responsive-ratio
-        ✔ responsive-square @done(24-02-16 03:23)
-        ☐ scrollbar
-        ✔ size @done(24-02-16 03:15)
-        ☐ smooth-retina-fonts
-        ✔ sticky @done(24-02-16 03:15)
-        ☐ text-emboss
-        ☐ text-outline
-        ☐ text-shadow
-        ☐ truncate
+        ✔ Test all Shape mixins @done(24-02-18 16:33)
+        ☐ Test all Utilities mixins
+          ☐ Change names of min-width, max-width, min-to-max-width mixins to only-over-width, only-under-width, only-between-width
+          ☐ Add aliases to avove for target-over-width, target-under-width, target-between-width
+          ☐ button-base
+          ☐ font
+          ☐ ghost-button
+          ☐ hide
+          ☐ inner-side-shadow
+          ☐ line-clamp
+          ☐ long-shadow
+          ☐ max-width
+          ☐ min-to-max-width
+          ☐ min-width
+          ☐ only-hidpi
+          ☐ only-phones
+          ☐ position-center
+          ☐ position-horizontally
+          ☐ position-vertically
+          ☐ position
+          ☐ responsive-font
+          ☐ responsive-ratio
+          ☐ scrollbar
+          ☐ smooth-retina-fonts
+          ☐ text-emboss
+          ☐ text-outline
+          ☐ text-shadow
+          ☐ truncate
 
   General Changes:
-    ✔ Parse down all the direction decision trees in the Mixins using the alias resolution map @done(24-02-15 00:58)
     ☐ Examine responsive font mixin
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Take a look at the line-clamp mixin
@@ -114,7 +55,6 @@ TODO:
 
   Shapes Mixins:
     ☐ Go to shapes page with psuedo elements and add those (Figure out what shapes page is?)
-    ✔ Propogate the updated version of arrow-curved-tail @done(24-02-15 12:08)
     ☐ Add diagnonal keyword directions and allow for angle units passed to $direction like in `chevron` in...
       ☐ triangle
     ☐ Make a mixin for animating between clip-path shapes. https://css-tricks.com/animating-with-clip-path/
@@ -133,7 +73,6 @@ TODO:
     ☐ Finish propogating pseudo mixin to the dist folder
 
   Functions:
-    ✔ Add conversion function for angle that takes an angle of any unit type and converts to a given unit type @done(24-02-15 02:45)
     ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.
     ☐ Finish and propogate trend-line() function:
       ☐ Function finished
@@ -170,6 +109,68 @@ TODO:
 ================================================================================
 
 Archive:
+  ✔ Test all Animation mixins @done(24-02-15 00:57) @project(TODO.TESTING)
+  ✔ Test and update text-focus-in @done(24-02-14 18:00) @project(TODO.TESTING)
+  ✔ Test and update text-glitch @done(24-02-14 18:20) @project(TODO.TESTING)
+  ✔ Test and update text-pop-shadow @done(24-02-14 18:31) @project(TODO.TESTING)
+  ✔ Test and update text-pop-up @done(24-02-14 19:12) @project(TODO.TESTING)
+  ✔ Test and update text-tracking-in @done(24-02-14 19:59) @project(TODO.TESTING)
+  ✔ Test and update text-tracking-out @done(24-02-14 21:26) @project(TODO.TESTING)
+  ✔ Test and update wobbliness @done(24-02-15 00:21) @project(TODO.TESTING)
+  ✔ Test and update zoom-in @done(24-02-15 00:57) @project(TODO.TESTING)
+  ✔ arrow-curved-tail @done(24-02-15 03:06) @project(TODO.TESTING)
+  ✔ arrow @done(24-02-15 12:30) @project(TODO.TESTING)
+  ✔ bevel @done(24-02-15 15:14) @project(TODO.TESTING)
+  ✔ chevron @done(24-02-15 15:14) @project(TODO.TESTING)
+  ✔ circle @done(24-02-15 15:14) @project(TODO.TESTING)
+  ✔ cross @done(24-02-15 15:14) @project(TODO.TESTING)
+  ✔ diamond @done(24-02-15 16:01) @project(TODO.TESTING)
+  ✔ frame @done(24-02-15 18:43) @project(TODO.TESTING)
+  ✔ hamburger @started(24-02-15 18:43) @done(24-02-15 19:29) @lasted(46m4s) @project(TODO.TESTING)
+  ✔ heart @started(24-02-15 19:29) @done(24-02-15 19:33) @lasted(4m28s) @project(TODO.TESTING)
+  ✔ hexagon @done(24-02-15 19:33) @project(TODO.TESTING)
+  ✔ infinity-symbol @done(24-02-15 19:55) @project(TODO.TESTING)
+  ✔ octagon @done(24-02-15 19:55) @project(TODO.TESTING)
+  ✔ point @done(24-02-16 02:45) @project(TODO.TESTING)
+  ✔ pointing-label @done(24-02-16 02:56) @project(TODO.TESTING)
+  ✔ price-tag @done(24-02-16 01:54) @project(TODO.TESTING)
+  ✔ ribbon @done(24-02-16 02:58) @project(TODO.TESTING)
+  ✔ shape-shadow @done(24-02-16 01:55) @project(TODO.TESTING)
+  ✔ speech-bubble @done(24-02-16 02:58) @project(TODO.TESTING)
+  ✔ star-six-pointed @done(24-02-16 02:59) @project(TODO.TESTING)
+  ✔ star @done(24-02-16 03:00) @project(TODO.TESTING)
+  ✔ triangle @done(24-02-16 03:01) @project(TODO.TESTING)
+  ✔ x-shape @done(24-02-16 01:56) @project(TODO.TESTING)
+  ✔ BEM @done(24-02-15 03:08) @project(TODO.TESTING)
+  ✔ bg-image-svg @done(24-02-18 16:18) @project(TODO.TESTING)
+  ✔ bg-image @done(24-02-18 15:11) @project(TODO.TESTING)
+  ✔ border-radius @done(24-02-16 03:20) @project(TODO.TESTING)
+  ✔ clearfix @done(24-02-16 03:08) @project(TODO.TESTING)
+  ✔ cover @done(24-02-17 00:12) @project(TODO.TESTING)
+  ✔ depth-level @done(24-02-18 16:27) @project(TODO.TESTING)
+  ✔ disable-outline @done(24-02-16 03:09) @project(TODO.TESTING)
+  ✔ family @done(24-02-16 03:08) @project(TODO.TESTING)
+  ✔ flex-center @done(24-02-16 03:09) @project(TODO.TESTING)
+  ✔ gradient @done(24-02-16 03:12) @project(TODO.TESTING)
+  ✔ hide-text @done(24-02-16 03:19) @project(TODO.TESTING)
+  ✔ hide-visually @done(24-02-16 03:19) @project(TODO.TESTING)
+  ✔ on-event @done(24-02-18 14:01) @project(TODO.TESTING)
+  ✔ only-chromium @done(24-02-18 14:01) @project(TODO.TESTING)
+  ✔ only-ie @done(24-02-18 14:00) @project(TODO.TESTING)
+  ✔ only-legacy-edge @done(24-02-18 14:00) @project(TODO.TESTING)
+  ✔ only-moz @done(24-02-18 14:00) @project(TODO.TESTING)
+  ✔ only-safari @done(24-02-18 14:01) @project(TODO.TESTING)
+  ✔ only-webkit @done(24-02-18 14:01) @project(TODO.TESTING)
+  ✔ opacity @done(24-02-16 03:19) @project(TODO.TESTING)
+  ✔ placeholder @done(24-02-16 03:19) @project(TODO.TESTING)
+  ✔ reset-list @done(24-02-16 03:13) @project(TODO.TESTING)
+  ✔ reset @done(24-02-16 03:12) @project(TODO.TESTING)
+  ✔ responsive-square @done(24-02-16 03:23) @project(TODO.TESTING)
+  ✔ size @done(24-02-16 03:15) @project(TODO.TESTING)
+  ✔ sticky @done(24-02-16 03:15) @project(TODO.TESTING)
+  ✔ Parse down all the direction decision trees in the Mixins using the alias resolution map @done(24-02-15 00:58) @project(TODO.General Changes)
+  ✔ Propogate the updated version of arrow-curved-tail @done(24-02-15 12:08) @project(TODO.Shapes Mixins)
+  ✔ Add conversion function for angle that takes an angle of any unit type and converts to a given unit type @done(24-02-15 02:45) @project(TODO.Functions)
   ✔ Currently tested up to finishing the functions that start with 'g' @done(24-02-11 17:50) @project(TODO.TESTING)
   ✔ Start testing again with 'is-absolute-length' @done(24-02-11 20:51) @project(TODO.TESTING)
   ✔ Start testing again with 'linear-interpolation' @done(24-02-11 23:18) @project(TODO.TESTING)

@@ -1,6 +1,5 @@
 @use 'sass:color';
 @use '../../functions/conv-color' as *;
-@use '../../functions/is-color' as *;
 
 /// Apply a subtle embossing text shadow effect.
 /// @param {Float} $opacity - The opacity value.
@@ -17,27 +16,22 @@
   $green-component: null;
   $blue-component: null;
 
-  @if is-color($color) {
-    @if color.alpha($color) != 1 {
-      @warn 'Ignoring alpha value of #{meta.inspect($color)} passed to the' +
-          '[ text-emboss() ] mixin in favor of the $opacity parameter for the ' +
-          'function.';
-    }
-
-    // Remove any potential alpha value from the $color parameter
-    $red-component: color.red($color);
-    $green-component: color.green($color);
-    $blue-component: color.blue($color);
-
-    // Convert color to hex with any potential alpha value in the color removed.
-    $color: conv-color(
-      rgb($red-component, $green-component, $blue-component),
-      'hex'
-    );
-  } @else {
-    @error 'Invalid $color value of #{meta.inspect($color)} passed to the ' +
-        '[ text-emboss() ] mixin.';
+  @if color.alpha($color) != 1 {
+    @warn 'Ignoring alpha value of #{meta.inspect($color)} passed to the' +
+        '[ text-emboss() ] mixin in favor of the $opacity parameter for the ' +
+        'function.';
   }
+
+  // Remove any potential alpha value from the $color parameter
+  $red-component: color.red($color);
+  $green-component: color.green($color);
+  $blue-component: color.blue($color);
+
+  // Convert color to hex with any potential alpha value in the color removed.
+  $color: conv-color(
+    rgb($red-component, $green-component, $blue-component),
+    'hex'
+  );
 
   text-shadow: 0 1px $blur rgba($color, $opacity);
 }

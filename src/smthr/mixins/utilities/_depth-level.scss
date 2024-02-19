@@ -1,5 +1,7 @@
+@use 'sass:color';
 @use 'sass:meta';
 @use '../../functions/bottom-shadow' as *;
+@use '../../functions/conv-color' as *;
 @use '../../functions/top-shadow' as *;
 @use '../../functions/is-integer' as *;
 
@@ -36,6 +38,20 @@
     @error 'Invalid $color of [ #{meta.inspect($color)} ] used in the ' +
      '[ depth-level ] mixin. Value must be a color.';
   }
+
+  @if color.alpha($color) != 1 {
+    $red: color.red($color);
+    $green: color.green($color);
+    $blue: color.blue($color);
+
+    $color: rgb($red, $green, $blue);
+
+    @warn 'Color passed to the [ depth-level() ] mixin has an alpha value. ' +
+        'This value was disregarded as the alpha value of the color is set ' +
+        'by the mixin.';
+  }
+
+  $color: conv-color($color, 'name');
 
   @if $level == 0 {
     box-shadow: none;
