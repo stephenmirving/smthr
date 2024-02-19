@@ -39,7 +39,7 @@
   @include card-depth(1);
 
   &:hover {
-    @include depth-level(5, rgb(188, 234, 62));
+    @include depth-level(5, hsl(188, 66%, 62%));
   }
 }
 
@@ -86,7 +86,7 @@
 
 
 .test {
-  $color: conv-color(rgb(255, 123, 12), 'hex');
-  content: rgba(black, 1);
-  content: meta.type-of(rgba(black, 0.3));
+  $color: to-hex(rgb(08, 02, 12));
+  content: $color;
+  content: meta.type-of($color);
 }

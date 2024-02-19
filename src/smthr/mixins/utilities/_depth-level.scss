@@ -22,7 +22,9 @@
 /// @require {Function} bottom-shadow
 /// @require {Function} is-integer
 ///
-/// @throw Invalid $level value.
+/// @throw {Error} Invalid $level value.
+/// @throw {Error} Unaccepted $color type.
+/// @throw {Warn} Passed $color value had it's alpha value disregarded.
 ///
 /// @alias card-depth
 /// @alias shadow-depth
@@ -36,16 +38,10 @@
 
   @if meta.type-of($color) != 'color' {
     @error 'Invalid $color of [ #{meta.inspect($color)} ] used in the ' +
-     '[ depth-level ] mixin. Value must be a color.';
+     '[ depth-level ] mixin. Value must be an accepted color type.';
   }
 
   @if color.alpha($color) != 1 {
-    $red: color.red($color);
-    $green: color.green($color);
-    $blue: color.blue($color);
-
-    $color: rgb($red, $green, $blue);
-
     @warn 'Color passed to the [ depth-level() ] mixin has an alpha value. ' +
         'This value was disregarded as the alpha value of the color is set ' +
         'by the mixin.';
@@ -67,11 +63,20 @@
 /// @link https://material.io/design/environment/elevation.html
 ///
 /// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+/// This value will change the strength of the shadow effect, with 0 being off,
+/// 1 being the lowest effective level, and 5 being the strongest. The higher
+/// the value, the deeper the shadow, the more the effect makes the element
+/// look like it is lifted off the screen.
 ///
 /// @group Utilities
 /// @require {Function} top-shadow
 /// @require {Function} bottom-shadow
-/// @throw Invalid $level value.
+/// @require {Function} is-integer
+///
+/// @throw {Error} Invalid $level value.
+/// @throw {Error} Unaccepted $color type.
+/// @throw {Warn} Passed $color value had it's alpha value disregarded.
+///
 /// @alias depth-level
 /// @alias shadow-depth
 /// @alias shadow-level
@@ -87,11 +92,20 @@
 /// @link https://material.io/design/environment/elevation.html
 ///
 /// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+/// This value will change the strength of the shadow effect, with 0 being off,
+/// 1 being the lowest effective level, and 5 being the strongest. The higher
+/// the value, the deeper the shadow, the more the effect makes the element
+/// look like it is lifted off the screen.
 ///
 /// @group Utilities
 /// @require {Function} top-shadow
 /// @require {Function} bottom-shadow
-/// @throw Invalid $level value.
+/// @require {Function} is-integer
+///
+/// @throw {Error} Invalid $level value.
+/// @throw {Error} Unaccepted $color type.
+/// @throw {Warn} Passed $color value had it's alpha value disregarded.
+///
 /// @alias depth-level
 /// @alias card-depth
 /// @alias shadow-level
@@ -107,11 +121,20 @@
 /// @link https://material.io/design/environment/elevation.html
 ///
 /// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+/// This value will change the strength of the shadow effect, with 0 being off,
+/// 1 being the lowest effective level, and 5 being the strongest. The higher
+/// the value, the deeper the shadow, the more the effect makes the element
+/// look like it is lifted off the screen.
 ///
 /// @group Utilities
 /// @require {Function} top-shadow
 /// @require {Function} bottom-shadow
-/// @throw Invalid $level value.
+/// @require {Function} is-integer
+///
+/// @throw {Error} Invalid $level value.
+/// @throw {Error} Unaccepted $color type.
+/// @throw {Warn} Passed $color value had it's alpha value disregarded.
+///
 /// @alias depth-level
 /// @alias card-depth
 /// @alias shadow-depth
@@ -127,11 +150,20 @@
 /// @link https://material.io/design/environment/elevation.html
 ///
 /// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+/// This value will change the strength of the shadow effect, with 0 being off,
+/// 1 being the lowest effective level, and 5 being the strongest. The higher
+/// the value, the deeper the shadow, the more the effect makes the element
+/// look like it is lifted off the screen.
 ///
 /// @group Utilities
 /// @require {Function} top-shadow
 /// @require {Function} bottom-shadow
-/// @throw Invalid $level value.
+/// @require {Function} is-integer
+///
+/// @throw {Error} Invalid $level value.
+/// @throw {Error} Unaccepted $color type.
+/// @throw {Warn} Passed $color value had it's alpha value disregarded.
+///
 /// @alias depth-level
 /// @alias card-depth
 /// @alias shadow-depth

@@ -7,6 +7,7 @@ TODO:
         ☐ Figure out how to fix missing-dependencies or remove it from the project.
         ☐ Determine difference between linear-interpolation and trend-line functions.
         ☐ COntinue working on conv-color. Maybe the hex conversion should be combined with the name syntax so that it returns type of color.
+        ☐ If the hex conversion is not combined with the color name syntax, it must be fixed as it is slightly off on some values
       ☐ Mixin Testing
         ✔ Test all Shape mixins @done(24-02-18 16:33)
         ☐ Test all Utilities mixins
