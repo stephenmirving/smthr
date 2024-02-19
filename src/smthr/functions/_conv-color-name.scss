@@ -6,6 +6,12 @@
 /// If the given $color value is a valid CSS color name, returns the associated
 /// 3 or 6 digit hex value. Otherwise, returns the same color.
 ///
+/// Some duplicate color names are not allowed and will not be able to be
+/// converted. Those include all color names with the British spelling of
+/// `grey` (in favor of `gray`), `cyan` (in favor of `aqua`), and `magenta`
+/// (in favor of `fuchsia`). Colors that were chosen over their aliases were
+/// chosen due to what Sass outputs from color module methods.
+///
 /// @access public
 ///
 /// @param {Color} $color - The CSS color name to be converted.
@@ -20,6 +26,8 @@
 /// @require {Map} $map-color-names
 ///
 /// @throw {Error} Invalid $color-name data type.
+///
+/// @alias conv-if-color-name
 @function conv-color-name($color, $color-map: $map-color-names) {
   @if not is-color($color) {
     @error 'Invalid $color provided to the [ conv-color-name() ] function ' +
@@ -33,4 +41,34 @@
   }
 
   @return $color;
+}
+
+
+/// If the given $color value is a valid CSS color name, returns the associated
+/// 3 or 6 digit hex value. Otherwise, returns the same color.
+///
+/// Some duplicate color names are not allowed and will not be able to be
+/// converted. Those include all color names with the British spelling of
+/// `grey` (in favor of `gray`), `cyan` (in favor of `aqua`), and `magenta`
+/// (in favor of `fuchsia`). Colors that were chosen over their aliases were
+/// chosen due to what Sass outputs from color module methods.
+///
+/// @access public
+///
+/// @param {Color} $color - The CSS color name to be converted.
+/// @param {Map} $color-map [$map-color-names] - The map containing all the CSS
+/// colors and their hex values.
+///
+/// @return {Color} - If the $color-name provided is a valid CSS color, returns
+/// the corresponding 3 or 6 digit hex color value. Otherwise, returns the
+/// same color.
+///
+/// @require {Fucntion} is-color
+/// @require {Map} $map-color-names
+///
+/// @throw {Error} Invalid $color-name data type.
+///
+/// @alias conv-color-name
+@function conv-if-color-name($color, $color-map: $map-color-names) {
+  @return conv-color-name($color, $color-map);
 }

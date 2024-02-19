@@ -5,7 +5,12 @@
 
 /// Converts a given color to hex notation in either 3, 6, or 8 digit
 /// notation based on the input. The hex color is returned as an unquoted
-/// string.
+/// string. You cannot currently use the output of this function with any
+/// Sass color module methods or other functions that implement type checking
+/// as Sass will consider the output of to-hex to be a string, not a color.
+/// If this is not acceptable, try the conv-color() function instead, with a
+/// $syntax parameter of 'function'.
+///
 /// @access public
 ///
 /// @param {Color} $color - The color to convert.
