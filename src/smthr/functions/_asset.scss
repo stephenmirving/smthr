@@ -1,6 +1,6 @@
 @use 'sass:meta';
 @use 'sass:string';
-@use '../placeholders/variables' as *;
+@use '../variables' as *;
 
 /// A simply asset file location builder.
 /// @access private

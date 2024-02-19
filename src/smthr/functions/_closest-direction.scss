@@ -5,7 +5,7 @@
 @use './is-angle' as *;
 @use './is-number' as *;
 @use './conv-angle' as *;
-@use '../placeholders/variables' as *;
+@use '../variables' as *;
 
 /// Takes an angle and returns the closest direction keyword as an
 /// unquoted string. If $return-difference is set to true, it will return a

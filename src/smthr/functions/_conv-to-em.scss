@@ -1,6 +1,6 @@
 @use 'sass:meta';
 @use 'sass:math';
-@use '../placeholders/variables' as *;
+@use '../variables' as *;
 
 /// Converts a pixel value into em units.
 /// @access public

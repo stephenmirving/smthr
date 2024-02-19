@@ -14,7 +14,7 @@ with messy clip-path coordinates or complicated animation keyframe creation.
 
 ## smthr is in active development
 
-**This is *smthr* version 0.2.2 - Last update: 02/18/24*
+**This is *smthr* version 0.2.2 - Last update: 02/19/24*
 
 **_smthr_ currently contains:**
 
@@ -22,7 +22,7 @@ with messy clip-path coordinates or complicated animation keyframe creation.
 * 65+ functions
 * A modern, opinionated normalize file written in Sass called _betterize.scss
 * A modern, opinionated print style file written in Sass called _print.scss
-* A small collection of @extend placeholders and !default variables
+* A collection of helpful !default variables
 
 Because _smth.scss is a library entirely of Sass functions, mixins and variables,
 importing it into your project won't add any overhead or increased filesize to

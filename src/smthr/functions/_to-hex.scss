@@ -26,8 +26,8 @@
 @function to-hex($color) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to `conv-color()` function. You passed ' +
-      '#{meta.inspect($color)} for the $color argument, which is not a ' +
-      'valid color.';
+      '#{meta.inspect($color)} for the $color argument, which is not an ' +
+      'accepted color as it is of type #{meta.type-of($color)}.';
   }
 
   // Extract RGB components and alpha channel
@@ -41,6 +41,16 @@
   $green-hex: string.to-lower-case(_component-to-hex($green-component));
   $blue-hex: string.to-lower-case(_component-to-hex($blue-component));
 
+  // Handle alpha for 8-digit hex, if necessary
+  @if $alpha-component < 1 {
+    $alpha: math.round($alpha-component * 255);
+    $alpha-hex: _component-to-hex($alpha);
+
+    @return #{string.unquote(
+        '##{$red-hex}#{$green-hex}#{$blue-hex}#{$alpha-hex}'
+      )};
+  }
+
   // Check if color can be expressed in shorter 3-digit hex notation
   @if $red-component % 17 == 0 and
       $green-component % 17 == 0 and
@@ -50,20 +60,10 @@
     $red-hex: string.slice($red-hex, 1, 1);
     $green-hex: string.slice($green-hex, 1, 1);
     $blue-hex: string.slice($blue-hex, 1, 1);
-
-    @return #{'#' + $red-hex + $green-hex + $blue-hex};
   }
 
-  // Handle alpha for 8-digit hex, if necessary
-  @if $alpha-component < 1 {
-    $alpha: math.round($alpha-component * 255);
-    $alpha-hex: _component-to-hex($alpha);
-
-    @return #{'#' + $red-hex + $green-hex + $blue-hex + $alpha-hex};
-  }
-
-  // Return 6-digit hex code
-  @return #{'#' + $red-hex + $green-hex + $blue-hex};
+  // Return 3-digit or 6-digit hex code
+  @return #{string.unquote('##{$red-hex}#{$green-hex}#{$blue-hex}')};
 }
 
 /// Converts a given color to hex notation in either 3, 6, or 8 digit

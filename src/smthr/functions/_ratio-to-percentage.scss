@@ -47,7 +47,8 @@
       $width: str-to-num(list.nth($parts, 1));
       $height: str-to-num(list.nth($parts, 2));
 
-      @if meta.type-of($width) != 'number' or meta.type-of($height) != 'number' {
+      @if meta.type-of($width) != 'number' or meta.type-of($height) != 'number'
+      {
         @error 'Invalid $ratio value of [ #{meta.inspect($ratio)} ] for ' +
             'the [ ratio-to-percentage() ] function. Value must be a ratio ' +
             'represented by either a single number or a two value list ' +
@@ -67,7 +68,9 @@
   $width: list.nth($ratio, 1) + 0;
 
   @if meta.type-of($ratio) == 'list' and list.length($ratio) == 2 {
-    $percentage: math.div(list.nth($ratio, 2), list.nth($ratio, 1)) * 100%;
+    $percentage: math.percentage(
+      math.div(list.nth($ratio, 2), list.nth($ratio, 1))
+    );
   } @else {
     @error 'Invalid $ratio value of [ #{meta.inspect($ratio)} ] for the ' +
         '[ ratio-to-percentage() ] function. Value must be a ratio ' +

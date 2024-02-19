@@ -47,6 +47,7 @@
         'by the mixin.';
   }
 
+  // Convert the color into a hex string or CSS color name value.
   $color: conv-color($color, 'name');
 
   @if $level == 0 {

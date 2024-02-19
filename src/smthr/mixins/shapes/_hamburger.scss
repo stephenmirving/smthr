@@ -2,7 +2,7 @@
 @use 'sass:math';
 @use '../../functions/tint' as *;
 @use '../../functions/to-fixed' as *;
-@use '../../placeholders/variables' as *;
+@use '../../variables' as *;
 
 /// Creates a menu icon 'hamburger' with a set width, height, number of bars,
 /// and colors. The mixin uses the height of the icon and the weight of the bars

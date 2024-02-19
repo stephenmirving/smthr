@@ -1,0 +1,42 @@
+@use 'sass:list';
+
+/// Base font size for unit conversion. Default is 16 for 16px at 100%
+/// Common alternate is 10 for 10px at 62.5% for easier conversion with rem and
+/// em units.
+/// @type Number
+/// @todo Change this to match your root font-size
+$base-font-size: 16 !default;
+
+/// Base path for assets (fonts, images, etc.), do not use a trailing slash.
+/// @access public
+/// @type String
+$asset-base-path: 'assets' !default;
+
+/// Suffix appended to the end of an image name to indicate that it is for HiDPI.
+/// Retina displays
+/// @access public
+/// @type String
+$image-suffix-2x: '@2x' !default;
+
+/// Button transition properties
+/// @type List
+$btn-transition-properties: background-color, border-color, box-shadow, color,
+  top !default;
+
+/// @type Number
+$btn-transition-duration: 0.3s !default;
+
+/// @type String
+$btn-transition-timing-function: ease-out !default;
+
+/// Transitions for buttons.
+/// @type List
+$btn-transition: () !default;
+
+@each $property in $btn-transition-properties {
+  $btn-transition: list.append(
+    $btn-transition,
+    $property $btn-transition-duration $btn-transition-timing-function,
+    comma
+  );
+}

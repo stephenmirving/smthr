@@ -2,7 +2,7 @@
 @use 'sass:math';
 @use 'sass:list';
 @use './strip-unit' as *;
-@use '../placeholders/variables' as *;
+@use '../variables' as *;
 
 /// Converts values into rem units.
 /// @access public

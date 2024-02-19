@@ -1,0 +1,59 @@
+/// Colors used for buttons, callouts, links, etc.
+/// @type Map of Colors
+/// @todo Fill out with the colors you choose for your theme.
+$color-palette: (
+  'primary': #1779ba,
+  'secondary': #767676,
+  'accent': #0d004b,
+  'success': #3adb76,
+  'warning': #fb0,
+  'alert': red
+) !default;
+
+/// Color used for black UI items.
+/// @type Color
+$black: hsl(0 0% 0%) !default;
+
+/// Color used for off-black UI elements.
+/// @type Color
+$off-black: hsl(0 0% 12.55%) !default;
+
+/// Color used for dark gray UI elements.
+/// @type Color
+$dark-gray: hsl(0 0% 54.12%) !default;
+
+/// Color used for medium gray UI elements.
+/// @type Color
+$medium-gray: hsl(0 0% 79.22%) !default;
+
+/// Color used for light gray UI elements.
+/// @type Color
+$light-gray: hsl(0 0% 90.2%) !default;
+
+/// Color used for off-white UI elements.
+/// @type Color
+$off-white: hsl(0 0% 94.9%) !default;
+
+/// Color used for white UI elements.
+/// @type Color
+$white: hsl(0 0% 100%) !default;
+
+/// Default text color for the page
+/// @type Color
+$color-body: hsl(0 0% 20%) !default;
+
+/// Default background color for the page
+/// @type Color
+$color-body-bg: hsl(0 0% 94.9%) !default;
+
+/// Highlight background color when text is selected.
+/// @type Color
+$color-selection-highlight: hsl(211.48 36.97% 32.35%) !default;
+
+/// Text color when it is selected.
+/// @type Color
+$color-selection-text: hsl(0 0% 100%) !default;
+
+/// The color of the ring around elements when they are keyboard focused.
+/// @type Color
+$color-focus-ring: hsl(0 0% 0%) !default;

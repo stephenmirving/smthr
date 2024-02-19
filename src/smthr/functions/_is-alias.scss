@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:list';
-@use '../placeholders/variables' as smth;
+@use '../variables' as smth;
 
 //// Returns true if the given alias is found in the map's list for
 //// the given keyword, otherwise returns false.

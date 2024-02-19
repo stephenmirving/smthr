@@ -83,10 +83,3 @@
 
 .front .txt {
 }
-
-
-.test {
-  $color: to-hex(rgb(08, 02, 12));
-  content: $color;
-  content: meta.type-of($color);
-}

@@ -74,6 +74,8 @@
 @forward 'color-invert';
 @forward 'color-complement';
 @forward 'color-to-string';
+@forward 'conv-color';
+@forward 'conv-color-name';
 @forward 'get-color-type';
 @forward 'black';
 @forward 'white';
@@ -81,7 +83,6 @@
 @forward 'tint';
 @forward 'to-cmyk';
 @forward 'to-hex';
-@forward 'conv-color';
 @forward 'bottom-shadow';
 @forward 'top-shadow';
 @forward 'make-long-shadow';

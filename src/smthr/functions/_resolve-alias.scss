@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:list';
-@use '../placeholders/variables' as *;
+@use '../variables' as *;
 
 /// Takes a given alias and returns the corresponding keyword based on an
 /// alias resolution map.

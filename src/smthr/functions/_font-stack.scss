@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '../placeholders/variables' as *;
+@use '../variables' as *;
 
 /// Returns the font stack chosen from a font-stack map.
 /// @access public

@@ -3,6 +3,8 @@ TODO:
   TESTING:
     ☐ Test and fix functions and mixins and placeholders.
       ☐ Function testing
+        ☐ Retest ratio-to-percentage
+        ☐ Retest decimal-to-ratio
         ☐ Fix functions-walk() and walk() or remove them
         ☐ Figure out how to fix missing-dependencies or remove it from the project.
         ☐ Determine difference between linear-interpolation and trend-line functions.
@@ -18,7 +20,7 @@ TODO:
           ☐ ghost-button
           ☐ hide
           ☐ inner-side-shadow
-          ☐ line-clamp
+          ✔ line-clamp @done(24-02-19 03:14)
           ☐ long-shadow
           ☐ max-width
           ☐ min-to-max-width

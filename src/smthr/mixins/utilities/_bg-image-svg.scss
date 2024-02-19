@@ -6,7 +6,7 @@
 @use '../../functions/is-map' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
-@use '../../placeholders/variables' as *;
+@use '../../variables' as *;
 
 /// Apply an SVG background image with a fall-back version and a version
 /// that is scaled to 2x for Retina and other HiDPI displays. This mixin will

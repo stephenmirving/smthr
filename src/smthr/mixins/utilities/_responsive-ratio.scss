@@ -17,10 +17,10 @@
     content: '';
     display: block;
     width: 100%;
-    padding-top: math.div($y, $x) * 100%;
+    padding-top: math.percentage(math.div($y, $x));
   }
 
-> .#{$child-content-class-name} {
+  > .#{$child-content-class-name} {
     position: absolute;
     top: 0;
     right: 0;
