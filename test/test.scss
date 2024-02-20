@@ -29,12 +29,12 @@
 }
 
 .card {
+  @include font(2rem, 900, null, small-caps, 1.5, system-ui, semi-expanded, 1.5px);
   @include size(200px);
-  font:
-    700 1.125rem system-ui,
-    sans-serif;
+  position: relative;
   text-align: center;
   background: conv-color(#f00, 'hwb');
+  border-radius: 10px;
 
   @include card-depth(1);
 
@@ -51,29 +51,29 @@
 
 }
 
-// .front {
-//   @include animation-front-face;
+.front {
+  @include animation-front-face;
 
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   border: 2px solid red;
-//   border-radius: 10px;
-//   background: #2dccb8 padding-box;
-//   text-align: center;
-// }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 5px solid red;
+  border-radius: 10px;
+  background: #2dccb8 padding-box;
+  text-align: center;
+}
 
-// .back {
-//   @include animation-back-face(diagonal);
+.back {
+  @include animation-back-face(diagonal);
 
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   border: 2px solid red;
-//   border-radius: 10px;
-//   background: #53a3dc padding-box;
-//   text-align: center;
-// }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid red;
+  border-radius: 10px;
+  background: #53a3dc padding-box;
+  text-align: center;
+}
 
 // .txt {
 //   display: inline;

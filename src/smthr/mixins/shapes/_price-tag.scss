@@ -1,12 +1,12 @@
 /// Uses clip path to change an element to the shape of a price tag.
 ///
-/// @param {Color|Mixed} $bg [#fb8c00] - Can be any value that is valid for the
+/// @param {Color|Mixed} $bg [#80f] - Can be any value that is valid for the
 /// background shorthand property.
 /// @param {Length|List} $padding [2rem 3rem 2rem 4rem] - Sets the size of the
 /// price tag by setting its padding shorthand property.
 ///
 /// @group Shapes
-@mixin price-tag($bg: #fb8c00, $padding: 2rem 3rem 2rem 4rem) {
+@mixin price-tag($bg: #80f, $padding: 2rem 3rem 2rem 4rem) {
   clip-path: polygon(30px 0, 100% 0, 100% 100%, 30px 100%, 0 50%);
   padding: $padding;
   background: $bg;

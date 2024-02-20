@@ -10,13 +10,13 @@
 /// @param {Length-Percentage} $size [null] - The size of the arrow. If
 /// the $height property is not set explicitly, it is both height and width, if
 /// $height is set explicitly, then this value sets only the width.
-/// @param {Color|Mixed} $bg [null] - The color or background value.
+/// @param {Color|Mixed} $bg [#80f] - The color or background value.
 /// @param {Length-Percentage} $height [$size] - The height of the arrow.
 ///
 /// @group Shapes
 ///
 /// @throw {Error} Invalid $direction value.
-@mixin arrow($direction: 'right', $size: null, $bg: null, $height: $size) {
+@mixin arrow($direction: 'right', $size: null, $bg: #80f, $height: $size) {
   @if meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);
 

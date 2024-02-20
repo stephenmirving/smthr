@@ -9,7 +9,7 @@
 /// @param {String} $direction [right] The direction the arrow is pointing
 /// @param {Length-Percentage} $size [15rem] - The size of the arrow. If
 /// the $height property is not set explicitly, it is both height and width, if
-/// @param {Color|Mixed} $bg [#fb8c00] The color or background value.
+/// @param {Color|Mixed} $bg [#80f] The color or background value.
 /// $height is set explicitly, then this value sets only the width.
 /// @param {Length-Percentage} $height [$size] The height of the arrow.
 ///
@@ -17,7 +17,7 @@
 ///
 /// @throw {Error} Invalid $direction data type.
 /// @throw {Error} Invalid $direction keyword value.
-@mixin point($direction: right, $size: 15rem, $bg: #fb8c00, $height: $size) {
+@mixin point($direction: right, $size: 15rem, $bg: #80f, $height: $size) {
   @if $direction {
     @if is-string($direction) {
       $direction: string.to-lower-case($direction);

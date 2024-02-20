@@ -135,7 +135,12 @@
     'text-combine-upright', 'text-edge', 'text-grid', 'text-group-align',
     'text-spacing', 'transform-box', 'transition-composition', 'user-zoom',
     'vector-effect', 'will-change', 'word-boundary-detection',
-    'word-boundary-expansion', 'wrap-flow', 'wrap-through', 'writing-mode'
+    'word-boundary-expansion', 'wrap-flow', 'wrap-through', 'writing-mode',
+    'ultra-condensed', 'extra-condensed', 'condensed', 'semi-condensed'
+    'normal', 'semi-expanded', 'expanded', 'extra-expanded', 'ultra-expanded',
+    'small-caps', 'all-small-caps', 'italic', 'oblique', 'bold', 'inherit',
+    'initial', 'revert', 'revert-layer', 'unset', 'none', 'always', 'never',
+    'auto', 'first', 'last', 'force-end', 'allow-end'
   );
 
   @if meta.type-of($word) != 'string' {

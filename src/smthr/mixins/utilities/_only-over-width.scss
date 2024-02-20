@@ -1,0 +1,86 @@
+@use 'sass:math';
+@use '../../functions/conv-to-em' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/strip-unit' as *;
+
+/// Nest a simple min-width media query within a selector or on its own.
+/// If $convert is set to true, will convert $threshold values in `rem` or `px`
+/// units into `em` unit widths.
+///
+/// @content Styles for screen widths equal to or greater than $threshold.
+///
+/// @param {Length|Number} $threshold - The minimum screen dimension for the
+/// style. If a unitless number is passed, is is assumed to be in pixels.
+/// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
+/// units if the length passed is in `px` or `rem` units.
+///
+/// @group Utilities
+///
+/// @alias target-over-width
+/// @alias min-width
+@mixin only-over-width($threshold, $convert: true) {
+  @if is-number($threshold) and math.is-unitless($threshold) {
+    $threshold: $threshold * 1px;
+  }
+
+  @if not is-length($threshold) {
+    @error 'Invalid breakpoint $threshold of `#{meta.inspect($threshold)}` ' +
+        'passed to the [ only-over-width() ] mixin. The $threshold must be ' +
+        'a length value.';
+  }
+
+  @if $convert {
+    @if math.unit($threshold) == 'rem' {
+      $threshold: strip-unit($threshold) * 1em;
+    } @else if math.unit($threshold) == 'px' {
+      $threshold: conv-to-em($threshold);
+    }
+  }
+
+  @media screen and (min-width: $threshold) {
+    @content;
+  }
+}
+
+/// Nest a simple min-width media query within a selector or on its own.
+/// If $convert is set to true, will convert $threshold values in `rem` or `px`
+/// units into `em` unit widths.
+///
+/// @content Styles for screen widths equal to or larger than $threshold.
+///
+/// @param {Length|Number} $threshold - The minimum screen dimension for the
+/// style. If a unitless number is passed, is is assumed to be in pixels.
+/// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
+/// units if the length passed is in `px` or `rem` units.
+///
+/// @group Utilities
+///
+/// @alias only-over-width
+/// @alias min-width
+@mixin target-over-width($threshold, $convert: true) {
+  @include only-over-width($threshold, $convert) {
+    @content;
+  }
+}
+
+/// Nest a simple min-width media query within a selector or on its own.
+/// If $convert is set to true, will convert $threshold values in `rem` or `px`
+/// units into `em` unit widths.
+///
+/// @content Styles for screen widths equal to or larger than $threshold.
+///
+/// @param {Length|Number} $threshold - The minimum screen dimension for the
+/// style. If a unitless number is passed, is is assumed to be in pixels.
+/// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
+/// units if the length passed is in `px` or `rem` units.
+///
+/// @group Utilities
+///
+/// @alias only-over-width
+/// @alias target-over-width
+@mixin min-width($threshold, $convert: true) {
+  @include only-over-width($threshold, $convert) {
+    @content;
+  }
+}

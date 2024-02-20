@@ -4,7 +4,7 @@
 /// following the W3C specifications.
 /// @link https://developer.mozilla.org/en-US/docs/Web/CSS/font
 ///
-/// @param {Length-Percentage} $size - The font-size value.
+/// @param {Length-Percentage} $size [null] - The font-size value.
 /// @param {Number|Keyword} $weight [null] - The font-weight value.
 /// @param {Keyword} $style [null] - The font-style value.
 /// @param {Keyword} $variant [null] - The font-variant value.
@@ -17,7 +17,7 @@
 /// @group Utilities
 /// @throw Invalid $kern keyword value for font-kerning property.
 @mixin font(
-  $size,
+  $size: null,
   $weight: null,
   $style: null,
   $variant: null,

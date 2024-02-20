@@ -5,12 +5,12 @@
 /// into a six-pointed star.
 ///
 /// @param {Length} $size [15rem] - The size of the star.
-/// @param {Color} $color [#fb8c00] The color of the star.
+/// @param {Color} $color [#80f] The color of the star.
 ///
 /// @group Shapes
 ///
 /// @throw {Error} Invalid $color value.
-@mixin star-six-pointed($size: 5rem, $color: #fb8c00) {
+@mixin star-six-pointed($size: 5rem, $color: #80f) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid $color value passed to the [ star-six-pointed() ] mixin.';
   }

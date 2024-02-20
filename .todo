@@ -13,10 +13,10 @@ TODO:
       ☐ Mixin Testing
         ✔ Test all Shape mixins @done(24-02-18 16:33)
         ☐ Test all Utilities mixins
-          ☐ Change names of min-width, max-width, min-to-max-width mixins to only-over-width, only-under-width, only-between-width
-          ☐ Add aliases to avove for target-over-width, target-under-width, target-between-width
+          ✔ Change names of min-width, max-width, min-to-max-width mixins to only-over-width, only-under-width, only-between-width @started(24-02-19 20:23) @done(24-02-19 21:20) @lasted(57m14s)
+          ✔ Add aliases to avove for target-over-width, target-under-width, target-between-width @done(24-02-19 21:20)
           ☐ button-base
-          ☐ font
+          ✔ font @done(24-02-19 20:20)
           ☐ ghost-button
           ☐ hide
           ☐ inner-side-shadow

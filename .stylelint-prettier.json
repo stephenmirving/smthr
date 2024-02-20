@@ -1,0 +1,15 @@
+{
+  "prettier/prettier": [
+    true,
+    {
+      "printWidth": 80,
+      "endOfLine": "lf",
+      "singleQuote": true,
+      "tabWidth": 2,
+      "useTabs": false,
+      "semi": true,
+      "trailingComma": "none",
+      "parser": "scss"
+    }
+  ]
+}

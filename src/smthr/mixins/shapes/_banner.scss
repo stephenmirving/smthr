@@ -1,0 +1,88 @@
+@use 'sass:color';
+@use 'sass:meta';
+@use 'sass:math';
+
+/// Creates an old-timey banner shape for headers. Apply the banner to a
+/// header element and include an inner inline element for the header's content
+/// that has a class name matching the outer element but with the suffix passed
+/// to this function with $content-suffix.
+///
+/// @param {Number} $banner-size [1] - A unitless number value used to
+/// calculate the overall size of the banner.
+/// @param {Length-Percentage} $font-size [1em] - The font-size of the banner
+/// text.
+/// @param {Color} $bg-color [#80f] - The background color for the banner.
+/// @param {String} $content-suffix ['-content'] - The suffix that is added
+/// to the class name that this mixin is applied to, representing the internal
+/// inline class that contains the banner's text content.
+///
+/// @example <h1 class="banner"><strong class="banner-content">HEADER</strong></h1>
+/// @link https://css-tricks.com/snippets/css/banner/
+///
+/// @group Shapes
+///
+/// @throw Invalid $banner-size value
+@mixin banner(
+  $banner-size: 1,
+  $font-size: 1em,
+  $bg-color: #80f,
+  $content-suffix: '-content'
+) {
+  @if meta.type-of($banner-size) !=
+    'number' or not
+    math.is-unitless($banner-size)
+  {
+    @error 'Invalid $banner-size value for the `banner` mixin.';
+  }
+
+  position: relative;
+  width: 50%;
+  padding: ($banner-size * 1rem) ($banner-size * 2rem);
+  margin: ($banner-size * 2rem) auto ($banner-size * 3rem);
+  background: $bg-color;
+  font-size: $font-size !important;
+  line-height: 1;
+  text-align: center;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1 * ($banner-size * 1rem);
+    z-index: -1;
+    display: block;
+    border: ($banner-size * 1.5rem) solid color.mix(#000, $bg-color, 18.5%);
+  }
+
+  &::before {
+    left: -1 * ($banner-size * 2rem);
+    border-right-width: $banner-size * 1.5rem;
+    border-left-color: transparent;
+  }
+
+  &::after {
+    right: -1 * ($banner-size * 2rem);
+    border-right-color: transparent;
+    border-left-width: $banner-size * 1.5rem;
+  }
+
+  &#{$content-suffix}::before,
+  &#{$content-suffix}::after {
+    content: '';
+    position: absolute;
+    bottom: -($banner-size * 1rem);
+    display: block;
+    border-style: solid;
+    border-color: color.mix(#000, $bg-color, 31%) transparent transparent;
+  }
+
+  &#{$content-suffix}::before {
+    left: 0;
+    border-width: ($banner-size * 1rem) 0 0 ($banner-size * 1rem);
+  }
+
+  &#{$content-suffix}::after {
+    right: 0;
+    border-width: ($banner-size * 1rem) ($banner-size * 1rem) 0 0;
+  }
+}

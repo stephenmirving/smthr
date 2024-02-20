@@ -8,8 +8,7 @@
     "stylelint-scss",
     "stylelint-group-selectors",
     "stylelint-order",
-    "stylelint-high-performance-animation",
-    "stylelint-prettier"
+    "stylelint-high-performance-animation"
   ],
   "extends": [
     "stylelint-config-standard-scss"
@@ -419,19 +418,6 @@
     ],
     "plugin/stylelint-group-selectors": true,
     "plugin/no-low-performance-animation-properties": true,
-    "prettier/prettier": [
-      true,
-      {
-        "printWidth": 80,
-        "endOfLine": "lf",
-        "singleQuote": true,
-        "tabWidth": 2,
-        "useTabs": false,
-        "semi": true,
-        "trailingComma": "none",
-        "parser": "scss"
-      }
-    ],
     "property-disallowed-list": [
       "-moz-border-radius",
       "-ms-border-radius",

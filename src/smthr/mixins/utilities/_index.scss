@@ -6,6 +6,7 @@
 @forward 'clamp-height';
 @forward 'clamp-width';
 @forward 'clearfix';
+@forward 'corner-ribbon';
 @forward 'cover';
 @forward 'depth-level';
 @forward 'disable-outline';
@@ -20,9 +21,6 @@
 @forward 'inner-side-shadow';
 @forward 'line-clamp';
 @forward 'long-shadow';
-@forward 'max-width';
-@forward 'min-to-max-width';
-@forward 'min-width';
 @forward 'on-event';
 @forward 'only-chromium';
 @forward 'only-legacy-edge';
@@ -32,6 +30,9 @@
 @forward 'only-phones';
 @forward 'only-safari';
 @forward 'only-webkit';
+@forward 'only-between-widths';
+@forward 'only-over-width';
+@forward 'only-under-width';
 @forward 'opacity';
 @forward 'placeholder';
 @forward 'position-center';
