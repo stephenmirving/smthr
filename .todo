@@ -18,7 +18,7 @@ TODO:
           ✔ button-base @done(24-02-20 16:03)
           ✔ font @done(24-02-19 20:20)
           ☐ ghost-button
-          ☐ hide
+          ✔ hide @done(24-02-20 17:25)
           ☐ inner-side-shadow
           ✔ line-clamp @done(24-02-19 03:14)
           ☐ long-shadow

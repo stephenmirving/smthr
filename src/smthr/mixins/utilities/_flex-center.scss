@@ -40,7 +40,12 @@
     $horizontal ==
     'yes' or
     $horizontal ==
-    'y'
+    'y' or
+    $horizontal == 'horizontal' or
+    $horizontal == 'horiz' or
+    $horizontal == 'horiz' or
+    $horizontal == 'horz' or
+    $horizontal == 'h'
   {
     $horizontal: true;
   } @else if not
@@ -62,7 +67,7 @@
     $vertical ==
     'yes' or
     $vertical ==
-    'y'
+    'y' or $vertical == 'vertical' or $vertical == 'vert' or $vertical == 'v'
   {
     $vertical: true;
   } @else if not $vertical or $vertical == 'f' or is-alias('none', $vertical) {
@@ -74,7 +79,7 @@
 
   @if $flex-dir {
     @if is-alias('row-reverse', $flex-dir) {
-      $f-dir: row-reverse;
+      $flex-dir: row-reverse;
     } @else if
       is-alias('column', $flex-dir) or
       $flex-dir ==
@@ -84,10 +89,10 @@
       $flex-dir ==
       'v'
     {
-      $f-dir: column;
+      $flex-dir: column;
       $orientation: vertical;
     } @else if is-alias('column-reverse', $flex-dir) {
-      $f-dir: column-reverse;
+      $flex-dir: column-reverse;
       $orientation: vertical;
     } @else if
       $flex-dir !=
