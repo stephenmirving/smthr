@@ -21,6 +21,12 @@
   z-index: 9999;
 }
 
+.stage-title {
+  position: absolute;
+  top: 10%;
+  @include text-tracking-in('expand', true, null, 1.7s);
+}
+
 .stage {
   @include animation-stage(500px, 50% 55%, 80%, 900, 80vh);
   @include gradient(conv-color(rgba(#80f, 0.3), hsl), rgba(blue, 0.5), 135deg);

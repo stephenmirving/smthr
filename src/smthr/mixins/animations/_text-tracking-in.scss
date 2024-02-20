@@ -10,7 +10,7 @@
 /// the text will, `expand` (`true`) or `contract` (`false`) as it animates.
 /// @param {Bool} $animate-in-place [true] - If true, the animation will
 /// animate in its location on a 2-dimaensional plane. If false, it will allow
-/// the animation to track towards the $destination, appearing to move forwards
+/// the animation to track in from the origin, appearing to move forwards
 /// on an `expand` animation, and to move backwards on `contract` animations.
 /// @param {String} $origin [null] - The origin the animation appears to
 /// be animating in from. Can be `null`, `top`, or `bottom`.
@@ -99,9 +99,9 @@
   }
 
   @if $animate-in-place == true {
-    @if $destination {
+    @if $origin {
       @warn 'The [ text-tracking-out() ] mixin cannot create an animation ' +
-          'that moves towards the the `#{meta.inspect($destination)}` while ' +
+          'that moves towards the the `#{meta.inspect($origin)}` while ' +
           'the $animate-in-place parameter is set to `true`.';
     }
   } @else if not $animate-in-place {
