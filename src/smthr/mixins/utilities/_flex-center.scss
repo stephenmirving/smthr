@@ -16,20 +16,19 @@
 /// @throw Invalid $horizontal value
 /// @throw Invalid $vertical value
 /// @throw Invalid $flex-dir value
-@mixin flex-center($horizontal: true, $vertical: true, $flex-dir: 'row') {
+@mixin flex-center($horizontal: true, $vertical: true, $flex-dir: null) {
   $swap: $horizontal;
-  $flex-dir: row;
-  $orientation: horizontal;
+  $orientation: 'horizontal';
 
-  @if is-string($horizontal) {
+  @if $horizontal and is-string($horizontal) {
     $horizontal: string.to-lower-case($horizontal);
   }
 
-  @if is-string($vertical) {
+  @if $vertical and is-string($vertical) {
     $vertical: string.to-lower-case($vertical);
   }
 
-  @if is-string($flex-dir) {
+  @if $flex-dir and is-string($flex-dir) {
     $flex-dir: string.to-lower-case($flex-dir);
   }
 
@@ -77,6 +76,8 @@
         'You must pass either true or false.';
   }
 
+  display: flex;
+
   @if $flex-dir {
     @if is-alias('row-reverse', $flex-dir) {
       $flex-dir: row-reverse;
@@ -84,28 +85,30 @@
       is-alias('column', $flex-dir) or
       $flex-dir ==
       'c' or
-      string.slice($flex-dir + '', 1, 4) ==
+      string.slice('#{$flex-dir}', 1, 4) ==
       'vert' or
       $flex-dir ==
       'v'
     {
       $flex-dir: column;
-      $orientation: vertical;
+      $orientation: 'vertical';
     } @else if is-alias('column-reverse', $flex-dir) {
       $flex-dir: column-reverse;
-      $orientation: vertical;
+      $orientation: 'vertical';
     } @else if
-      $flex-dir !=
-      'row' and
-      $flex-dir !=
-      'r' and not
-      is-alias('normal', $flex-dir) and
-      string.slice($flex-dir + '', 1, 5) !=
-      'horiz' and
-      $flex-dir !=
+      $flex-dir ==
+      'row' or
+      $flex-dir ==
+      'r' or not
+      is-alias('normal', $flex-dir) or
+      string.slice('#{$flex-dir}', 1, 5) ==
+      'horiz' or
+      $flex-dir ==
       'h'
     {
-      @error 'Invalid `$flex-dir` value of #{meta.inspect($flex-dir)} passed ' +
+      $flex-dir: row;
+    } @else {
+      @error 'Invalid $flex-dir/ value of #{meta.inspect($flex-dir)} passed ' +
           'to the [ flex-center() ] mixin.';
     }
 
@@ -114,7 +117,6 @@
       $vertical: $swap;
     }
 
-    display: flex;
     flex-direction: $flex-dir;
   }
 
