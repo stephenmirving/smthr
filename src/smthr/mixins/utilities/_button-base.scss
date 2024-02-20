@@ -10,7 +10,7 @@
 /// @param {Length} $btn-margin - The button's margin value.
 /// @param {Length} $btn-padding - The button's padding value.
 /// @param {List} $btn-font-family - The button's font-family stack.
-/// @param {Length} $btn-font-size [1rem] - The button's font-size.
+/// @param {Length} $btn-font-size [1.25rem] - The button's font-size.
 /// @param {Number|Keyword} $btn-font-weight [400] - The button's font-weight.
 /// @param {String} $btn-transition [null] - The button's transition value.
 /// By default, a null value here will have the mixin search for a global
@@ -29,14 +29,14 @@
   $btn-margin,
   $btn-padding,
   $btn-font-family,
-  $btn-font-size: 1rem,
+  $btn-font-size: 1.25rem,
   $btn-font-weight: 700,
   $btn-transition: null
 ) {
   @if not $btn-transition {
     $btn-transition: if(
       meta.variable-exists('button-transition') or
-      meta.global-variable-exists('button-transition', smth),
+      meta.global-variable-exists('button-transition'),
       $button-transition,
       (background-color 0.2s ease-out, color 0.2s ease-out)
     );
@@ -54,6 +54,7 @@
   color: $btn-color;
   text-align: center;
   cursor: pointer;
+
   @if $btn-font-family and $btn-font-size {
     @if $btn-font-weight {
       font: $btn-font-weight $btn-font-size $btn-font-family;

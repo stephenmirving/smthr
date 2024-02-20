@@ -17,6 +17,12 @@
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null timing function will cause the CSS default timing-function
 /// of `ease`.
+/// @param {Bool} $has-shifts [true] - If true, the animation will have
+/// side-to-side position shifts.
+/// @param {Bool} $use-margin [false] If true, the animation keyframes will use
+/// the `margin-left` property instead of the `left` property to create the
+/// glitch animation sideways shifts, If $no-shifts is true, $use-margin has
+/// no effect.
 /// @param {Number|String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -34,6 +40,8 @@
   $iterations: null,
   $anim-dir: null,
   $timing-func: null,
+  $has-shifts: true,
+  $use-margin: false,
   $anim-num: null
 ) {
   $red: hsl(323.72 81.13% 41.57%);
@@ -164,6 +172,12 @@
     $anim-num: '--#{$anim-num}';
   }
 
+  @if $use-margin {
+    $use-margin: 'margin-'
+  } @else {
+    $use-margin: null;
+  }
+
   animation: txt-glitch#{$anim-num} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
@@ -175,7 +189,10 @@
         #{$percent} {
           $color: list.nth($colors, math.random(list.length($colors)));
 
-          left: (math.random(12) * 1px) - 6px;
+          @if $has-shifts {
+            #{#{$use-margin}left}: (math.random(12) * 1px) - 6px;
+          }
+
           text-shadow: ((math.random(70) * 1px) - 35px) 0 0 $color;
         }
       }

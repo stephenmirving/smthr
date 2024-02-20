@@ -1,6 +1,6 @@
 @use 'sass:meta';
 @use 'sass:map';
-@use '../variables' as *;
+@use '../variables/maps' as *;
 
 /// Takes a name for a custom timing function and return the associated
 /// cubic-bezier curve.

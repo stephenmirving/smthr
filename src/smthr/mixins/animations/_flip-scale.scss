@@ -132,7 +132,7 @@
   } @else {
     @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
         '[ flip-scale() ] mixin. The value of $direction must be one of the ' +
-        'following values: `up` or `down` and `top` or `bottom`';
+        'following values: `top` or `up` and `bottom` or `down`.';
   }
 
   @if meta.type-of($duration) != 'number' {

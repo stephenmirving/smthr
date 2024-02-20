@@ -48,11 +48,14 @@
 			<button
 				type="button"
 				class="btn"
-				id="btn-primary"
+				id="btn-activate"
 				onclick="document.getElementById('anim-card').classList.toggle('active-anim')"
-			>ACTIVATE ANIMATION</button>
+			>ACTIVATE</button>
+			<button type="button" class="btn" id="btn-flip"
+							onclick="document.getElementById('anim-card').classList.toggle('active-anim-rev')">ANIMATE</button>
 		</div>
 		<div class="stage">
+			<span class="ribbon">@metric_dev</span>
 			<div class="card" id="anim-card">
 				<div class="front">
 					<div class="txt">front</div>

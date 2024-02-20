@@ -7,7 +7,7 @@
 
 .controls-wrapper {
   position: absolute;
-  top: 5%;
+  top: 2%;
   z-index: 9999;
 }
 
@@ -19,6 +19,8 @@
   user-select: none;
   perspective: 500px;
   perspective-origin: 50% 55%;
+  background: hsl(272 100% 50% / 0.3);
+  background-image: linear-gradient(135deg, hsl(272 100% 50% / 0.3), rgba(0, 0, 255, 0.5));
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -28,18 +30,109 @@
 }
 
 .card {
-  font: small-caps 900 semi-expanded 2rem/1.5 system-ui;
+  animation: roll-in-from-left 0.6s ease-out 1 both;
+  width: 35%;
+  min-width: 11rem;
+  max-width: 22rem;
+  height: 40%;
+  min-height: 5.5rem;
+  max-height: 22rem;
+  box-shadow: 0 3px 12px rgba(255, 255, 255, 0.23), 0 3px 12px rgba(255, 255, 255, 0.16);
+  font: normal small-caps 900 semi-expanded 4rem/1.5 system-ui;
   letter-spacing: 1.5px;
-  width: 200px;
-  height: 200px;
   position: relative;
-  text-align: center;
-  background: hwb(0 0% 0%);
+  border: 8px solid hsl(208, 100%, 50%);
   border-radius: 10px;
-  box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+  background-color: hsl(208, 100%, 50%);
+  text-align: center;
+  transition-property: transform, box-shadow, border-color, background-color;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+}
+@keyframes roll-in-from-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-800px) rotate(-540deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0);
+  }
 }
 .card:hover {
-  box-shadow: 0 15px 24px rgba(94, 205, 222, 0.22), 0 19px 76px rgba(94, 205, 222, 0.3);
+  box-shadow: 0 15px 24px rgba(255, 255, 255, 0.22), 0 19px 76px rgba(255, 255, 255, 0.3);
+  animation: roll-out-to-bottom 0.6s ease-in both;
+  border-color: rgba(26, 148, 255, 0.8);
+  transform: translateY(-1.06%) scale(1.021212);
+}
+@keyframes roll-out-to-bottom {
+  0% {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(800px) rotate(540deg);
+  }
+}
+.card:active {
+  box-shadow: none;
+  border-color: rgba(0, 122, 230, 0.8);
+  transform: none;
+}
+
+.active-anim {
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  animation: flip-scale-2-towards-bottom 0.5s linear alternate both;
+}
+@-moz-document url-prefix() {
+  @supports (animation: calc(0s)) {
+    .active-anim {
+      backface-visibility: hidden;
+    }
+  }
+}
+@keyframes flip-scale-2-towards-bottom {
+  0% {
+    transform: translateY(0) rotateX(0) scale(1);
+    transform-origin: 50% 100%;
+  }
+  50% {
+    transform: translateY(50%) rotateX(90deg) scale(2);
+    transform-origin: 50% 50%;
+  }
+  100% {
+    transform: translateY(100%) rotateX(180deg) scale(1);
+    transform-origin: 50% 0%;
+  }
+}
+
+.active-anim-rev {
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
+  animation: flip-scale-2-towards-bottom--2 0.5s linear alternate-reverse both;
+}
+@-moz-document url-prefix() {
+  @supports (animation: calc(0s)) {
+    .active-anim-rev {
+      backface-visibility: hidden;
+    }
+  }
+}
+@keyframes flip-scale-2-towards-bottom--2 {
+  0% {
+    transform: translateY(0) rotateX(0) scale(1);
+    transform-origin: 50% 100%;
+  }
+  50% {
+    transform: translateY(50%) rotateX(90deg) scale(2);
+    transform-origin: 50% 50%;
+  }
+  100% {
+    transform: translateY(100%) rotateX(180deg) scale(1);
+    transform-origin: 50% 0%;
+  }
 }
 
 .front {
@@ -50,11 +143,11 @@
   backface-visibility: hidden;
   z-index: 20;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  border: 5px solid red;
   border-radius: 10px;
-  background: #2dccb8 padding-box;
+  background: hwb(172.45 18% 20%) padding-box;
   text-align: center;
 }
 
@@ -62,17 +155,480 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  transform: rotate3d(1, 1, 0, 180deg);
+  transform: rotateX(180deg);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   z-index: 10;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  border: 2px solid red;
   border-radius: 10px;
-  background: #53a3dc padding-box;
+  background: hsl(0, 0%, 6.67%) padding-box;
+  color: #fff;
   text-align: center;
+}
+
+.btn {
+  -webkit-appearance: none;
+  appearance: none;
+  display: initial;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: padding-box border-box;
+  box-shadow: none;
+  font: inherit;
+  text-shadow: none;
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0.875rem 1.75rem;
+  border: 6px ridge rgba(136, 0, 255, 0.8);
+  border-radius: 16px;
+  margin: 0 1rem;
+  background: #0088ff;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  font: 700 1.5rem system-ui;
+  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.23), 0 3px 12px rgba(0, 0, 0, 0.16);
+  transition-property: transform, box-shadow, border-color, background-color;
+  transition-duration: 150ms;
+  transition-timing-function: ease-out;
+}
+.btn:hover {
+  box-shadow: 0 15px 24px rgba(0, 0, 0, 0.22), 0 19px 76px rgba(0, 0, 0, 0.3);
+  border-color: rgba(148, 26, 255, 0.8);
+  background-color: #1a94ff;
+  transform: translateY(-2px) scale(1.005);
+}
+.btn:active {
+  box-shadow: none;
+  border-color: rgba(122, 0, 230, 0.8);
+  background-color: #007ae6;
+  transform: none;
+}
+
+.ribbon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 2em;
+  text-align: center;
+  transform: translateY(-100%) rotate(90deg) translateX(70.7106781187%) rotate(-45deg);
+  transform-origin: 100% 100%;
+  font: normal 700 1.5rem/1 system-ui, sans-serif;
+  color: #fff;
+}
+.ribbon:hover {
+  animation: txt-glitch 3s infinite alternate-reverse both;
+}
+@keyframes txt-glitch {
+  0% {
+    margin-left: 0px;
+    text-shadow: -4px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  1% {
+    margin-left: 0px;
+    text-shadow: 14px 0 0 hsl(56, 100%, 50%);
+  }
+  2% {
+    margin-left: -2px;
+    text-shadow: -11px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  3% {
+    margin-left: -5px;
+    text-shadow: 21px 0 0 hsl(150.12, 100%, 50%);
+  }
+  4% {
+    margin-left: -3px;
+    text-shadow: -30px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  5% {
+    margin-left: -3px;
+    text-shadow: -1px 0 0 hsl(56, 100%, 50%);
+  }
+  6% {
+    margin-left: 5px;
+    text-shadow: -5px 0 0 hsl(200, 100%, 50%);
+  }
+  7% {
+    margin-left: 2px;
+    text-shadow: -17px 0 0 hsl(200, 100%, 50%);
+  }
+  8% {
+    margin-left: 6px;
+    text-shadow: 14px 0 0 hsl(200, 100%, 50%);
+  }
+  9% {
+    margin-left: -3px;
+    text-shadow: 2px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  10% {
+    margin-left: -4px;
+    text-shadow: 31px 0 0 hsl(150.12, 100%, 50%);
+  }
+  11% {
+    margin-left: -1px;
+    text-shadow: -32px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  12% {
+    margin-left: 0px;
+    text-shadow: -26px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  13% {
+    margin-left: 3px;
+    text-shadow: 0px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  14% {
+    margin-left: -2px;
+    text-shadow: 34px 0 0 hsl(200, 100%, 50%);
+  }
+  15% {
+    margin-left: -2px;
+    text-shadow: -21px 0 0 hsl(150.12, 100%, 50%);
+  }
+  16% {
+    margin-left: 5px;
+    text-shadow: -29px 0 0 hsl(200, 100%, 50%);
+  }
+  17% {
+    margin-left: 4px;
+    text-shadow: 25px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  18% {
+    margin-left: 1px;
+    text-shadow: -5px 0 0 hsl(150.12, 100%, 50%);
+  }
+  19% {
+    margin-left: 6px;
+    text-shadow: -16px 0 0 hsl(56, 100%, 50%);
+  }
+  20% {
+    margin-left: -4px;
+    text-shadow: 19px 0 0 hsl(200, 100%, 50%);
+  }
+  21% {
+    margin-left: -1px;
+    text-shadow: -17px 0 0 hsl(200, 100%, 50%);
+  }
+  22% {
+    margin-left: -3px;
+    text-shadow: -5px 0 0 hsl(200, 100%, 50%);
+  }
+  23% {
+    margin-left: -3px;
+    text-shadow: -23px 0 0 hsl(150.12, 100%, 50%);
+  }
+  24% {
+    margin-left: 3px;
+    text-shadow: 22px 0 0 hsl(150.12, 100%, 50%);
+  }
+  25% {
+    margin-left: 1px;
+    text-shadow: 14px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  26% {
+    margin-left: -1px;
+    text-shadow: 11px 0 0 hsl(150.12, 100%, 50%);
+  }
+  27% {
+    margin-left: -2px;
+    text-shadow: 35px 0 0 hsl(200, 100%, 50%);
+  }
+  28% {
+    margin-left: -4px;
+    text-shadow: 27px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  29% {
+    margin-left: 5px;
+    text-shadow: -27px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  30% {
+    margin-left: -3px;
+    text-shadow: -20px 0 0 hsl(56, 100%, 50%);
+  }
+  31% {
+    margin-left: 2px;
+    text-shadow: -7px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  32% {
+    margin-left: -2px;
+    text-shadow: 15px 0 0 hsl(150.12, 100%, 50%);
+  }
+  33% {
+    margin-left: -3px;
+    text-shadow: 10px 0 0 hsl(56, 100%, 50%);
+  }
+  34% {
+    margin-left: -3px;
+    text-shadow: -29px 0 0 hsl(56, 100%, 50%);
+  }
+  35% {
+    margin-left: -1px;
+    text-shadow: 29px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  36% {
+    margin-left: 0px;
+    text-shadow: -8px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  37% {
+    margin-left: -4px;
+    text-shadow: 10px 0 0 hsl(200, 100%, 50%);
+  }
+  38% {
+    margin-left: 2px;
+    text-shadow: -32px 0 0 hsl(200, 100%, 50%);
+  }
+  39% {
+    margin-left: 4px;
+    text-shadow: 27px 0 0 hsl(200, 100%, 50%);
+  }
+  40% {
+    margin-left: 0px;
+    text-shadow: 8px 0 0 hsl(150.12, 100%, 50%);
+  }
+  41% {
+    margin-left: 6px;
+    text-shadow: 30px 0 0 hsl(200, 100%, 50%);
+  }
+  42% {
+    margin-left: 5px;
+    text-shadow: -6px 0 0 hsl(56, 100%, 50%);
+  }
+  43% {
+    margin-left: 1px;
+    text-shadow: 25px 0 0 hsl(56, 100%, 50%);
+  }
+  44% {
+    margin-left: 4px;
+    text-shadow: -6px 0 0 hsl(56, 100%, 50%);
+  }
+  45% {
+    margin-left: 4px;
+    text-shadow: 33px 0 0 hsl(56, 100%, 50%);
+  }
+  46% {
+    margin-left: -4px;
+    text-shadow: 20px 0 0 hsl(150.12, 100%, 50%);
+  }
+  47% {
+    margin-left: 6px;
+    text-shadow: 24px 0 0 hsl(200, 100%, 50%);
+  }
+  48% {
+    margin-left: 4px;
+    text-shadow: 6px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  49% {
+    margin-left: -5px;
+    text-shadow: -20px 0 0 hsl(150.12, 100%, 50%);
+  }
+  50% {
+    margin-left: 4px;
+    text-shadow: 14px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  51% {
+    margin-left: -2px;
+    text-shadow: -24px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  52% {
+    margin-left: 4px;
+    text-shadow: -15px 0 0 hsl(200, 100%, 50%);
+  }
+  53% {
+    margin-left: 1px;
+    text-shadow: -19px 0 0 hsl(150.12, 100%, 50%);
+  }
+  54% {
+    margin-left: 3px;
+    text-shadow: -6px 0 0 hsl(200, 100%, 50%);
+  }
+  55% {
+    margin-left: -4px;
+    text-shadow: 14px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  56% {
+    margin-left: -4px;
+    text-shadow: -31px 0 0 hsl(56, 100%, 50%);
+  }
+  57% {
+    margin-left: 4px;
+    text-shadow: 4px 0 0 hsl(56, 100%, 50%);
+  }
+  58% {
+    margin-left: -2px;
+    text-shadow: -5px 0 0 hsl(200, 100%, 50%);
+  }
+  59% {
+    margin-left: 1px;
+    text-shadow: 14px 0 0 hsl(150.12, 100%, 50%);
+  }
+  60% {
+    margin-left: -3px;
+    text-shadow: 9px 0 0 hsl(200, 100%, 50%);
+  }
+  61% {
+    margin-left: 4px;
+    text-shadow: 22px 0 0 hsl(56, 100%, 50%);
+  }
+  62% {
+    margin-left: -3px;
+    text-shadow: 12px 0 0 hsl(150.12, 100%, 50%);
+  }
+  63% {
+    margin-left: -3px;
+    text-shadow: 7px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  64% {
+    margin-left: 4px;
+    text-shadow: -19px 0 0 hsl(150.12, 100%, 50%);
+  }
+  65% {
+    margin-left: 3px;
+    text-shadow: -9px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  66% {
+    margin-left: -1px;
+    text-shadow: 20px 0 0 hsl(150.12, 100%, 50%);
+  }
+  67% {
+    margin-left: 3px;
+    text-shadow: 26px 0 0 hsl(150.12, 100%, 50%);
+  }
+  68% {
+    margin-left: -3px;
+    text-shadow: -29px 0 0 hsl(56, 100%, 50%);
+  }
+  69% {
+    margin-left: 6px;
+    text-shadow: -25px 0 0 hsl(200, 100%, 50%);
+  }
+  70% {
+    margin-left: 5px;
+    text-shadow: 5px 0 0 hsl(56, 100%, 50%);
+  }
+  71% {
+    margin-left: 1px;
+    text-shadow: 28px 0 0 hsl(150.12, 100%, 50%);
+  }
+  72% {
+    margin-left: -3px;
+    text-shadow: 1px 0 0 hsl(56, 100%, 50%);
+  }
+  73% {
+    margin-left: 1px;
+    text-shadow: 2px 0 0 hsl(56, 100%, 50%);
+  }
+  74% {
+    margin-left: 3px;
+    text-shadow: 12px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  75% {
+    margin-left: 5px;
+    text-shadow: 12px 0 0 hsl(200, 100%, 50%);
+  }
+  76% {
+    margin-left: 2px;
+    text-shadow: -1px 0 0 hsl(200, 100%, 50%);
+  }
+  77% {
+    margin-left: 1px;
+    text-shadow: 1px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  78% {
+    margin-left: -3px;
+    text-shadow: -4px 0 0 hsl(150.12, 100%, 50%);
+  }
+  79% {
+    margin-left: 3px;
+    text-shadow: -2px 0 0 hsl(200, 100%, 50%);
+  }
+  80% {
+    margin-left: 4px;
+    text-shadow: 20px 0 0 hsl(56, 100%, 50%);
+  }
+  81% {
+    margin-left: 6px;
+    text-shadow: -25px 0 0 hsl(56, 100%, 50%);
+  }
+  82% {
+    margin-left: 0px;
+    text-shadow: -1px 0 0 hsl(56, 100%, 50%);
+  }
+  83% {
+    margin-left: 0px;
+    text-shadow: -3px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  84% {
+    margin-left: -3px;
+    text-shadow: -26px 0 0 hsl(56, 100%, 50%);
+  }
+  85% {
+    margin-left: 0px;
+    text-shadow: 34px 0 0 hsl(56, 100%, 50%);
+  }
+  86% {
+    margin-left: -2px;
+    text-shadow: -12px 0 0 hsl(200, 100%, 50%);
+  }
+  87% {
+    margin-left: 3px;
+    text-shadow: -15px 0 0 hsl(56, 100%, 50%);
+  }
+  88% {
+    margin-left: 3px;
+    text-shadow: -16px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  89% {
+    margin-left: -3px;
+    text-shadow: 24px 0 0 hsl(200, 100%, 50%);
+  }
+  90% {
+    margin-left: -3px;
+    text-shadow: 7px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  91% {
+    margin-left: -2px;
+    text-shadow: -21px 0 0 hsl(56, 100%, 50%);
+  }
+  92% {
+    margin-left: 0px;
+    text-shadow: 4px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  93% {
+    margin-left: 3px;
+    text-shadow: 6px 0 0 hsl(150.12, 100%, 50%);
+  }
+  94% {
+    margin-left: 3px;
+    text-shadow: 22px 0 0 hsl(200, 100%, 50%);
+  }
+  95% {
+    margin-left: 0px;
+    text-shadow: 28px 0 0 hsl(200, 100%, 50%);
+  }
+  96% {
+    margin-left: 2px;
+    text-shadow: -3px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  97% {
+    margin-left: -5px;
+    text-shadow: 0px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  98% {
+    margin-left: -2px;
+    text-shadow: -17px 0 0 hsl(56, 100%, 50%);
+  }
+  99% {
+    margin-left: 2px;
+    text-shadow: 22px 0 0 hsl(323.72, 81.13%, 41.57%);
+  }
+  100% {
+    margin-left: 6px;
+    text-shadow: -17px 0 0 hsl(150.12, 100%, 50%);
+  }
 }
 
 /*# sourceMappingURL=test.css.map */

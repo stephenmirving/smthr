@@ -78,17 +78,17 @@
       $direction: 'backwards';
     } @else if is-alias('top', $direction) {
       $direction: 'up';
-    } @else if is-alias('left' $direction) {
+    } @else if is-alias('left', $direction) {
       $direction: 'left';
-    } @else if is-alias('right' $direction) {
+    } @else if is-alias('right', $direction) {
       $direction: 'right';
-    } @else if is-alias('top left' $direction) {
+    } @else if is-alias('top left', $direction) {
       $direction: 'top-left';
-    } @else if is-alias('top right' $direction) {
+    } @else if is-alias('top right', $direction) {
       $direction: 'top-right';
-    } @else if is-alias('bottom right' $direction) {
+    } @else if is-alias('bottom right', $direction) {
       $direction: 'bottom-right';
-    } @else if is-alias('bottom left' $direction) {
+    } @else if is-alias('bottom left', $direction) {
       $direction: 'bottom-left';
     } @else {
       @error 'Invalid direction of `#{meta.inspect($direction)}` chosen for ' +
