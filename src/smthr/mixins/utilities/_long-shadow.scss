@@ -6,7 +6,7 @@
 /// @param {Number} $longness - The integer length of the shadow.
 ///
 /// @group Utilities
-/// @require {Function} make-long-shadow
+/// @require {function} make-long-shadow
 @mixin long-shadow($color: #191919, $longness: 180) {
   text-shadow: make-long-shadow($color, $longness);
 }

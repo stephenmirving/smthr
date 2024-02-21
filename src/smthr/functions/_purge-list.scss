@@ -9,10 +9,8 @@
 /// @param {List} $list - The list to purge.
 /// @return {List} The purged list.
 ///
-/// @require {Function} is-true
-/// @require {Function} to-list
-/// @alias clean-list
-/// @alias list-purge
+/// @require {function} is-true
+/// @require {function} to-list
 @function purge-list($list) {
   // $_: missing-dependencies('is-true', 'to-list');
 
@@ -33,10 +31,9 @@
 /// @param {List} $list - The list to purge.
 /// @return {List} The purged list.
 ///
-/// @require {Function} is-true
-/// @require {Function} to-list
+/// @require {function} is-true
+/// @require {function} to-list
 /// @alias purge-list
-/// @alias list-purge
 @function clean-list($list) {
   @return purge-list($list);
 }
@@ -47,8 +44,8 @@
 /// @param {List} $list - The list to purge.
 /// @return {List} The purged list.
 ///
-/// @require {Function} is-true
-/// @require {Function} to-list
+/// @require {function} is-true
+/// @require {function} to-list
 /// @alias purge-list
 @function list-purge($list) {
   @return purge-list($list);

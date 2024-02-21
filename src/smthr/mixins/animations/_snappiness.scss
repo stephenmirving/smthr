@@ -26,15 +26,13 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {Function} is-alias
+/// @require {function} is-alias
 ///
 /// @throw Invalid $direction value
 /// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
-/// @alias snap
-/// @alias jello
 @mixin snappiness(
   $direction: horizontal,
   $duration: 0.9s,
@@ -268,15 +266,15 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {Function} is-alias
+/// @require {function} is-alias
 ///
 /// @throw Invalid $direction value
 /// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
+///
 /// @alias snappiness
-/// @alias jello
 @mixin snap(
   $direction: horizontal,
   $duration: 0.9s,
@@ -319,15 +317,15 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {Function} is-alias
+/// @require {function} is-alias
 ///
 /// @throw Invalid $direction value
 /// @throw Invalid $duration value
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
+///
 /// @alias snappiness
-/// @alias snap
 @mixin jello(
   $direction: horizontal,
   $duration: 0.9s,

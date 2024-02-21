@@ -19,8 +19,8 @@
 ///
 /// @group Utilities
 /// @alias target-phones
-/// @require {Function} conv-to-em
-/// @require {Function} strip-unit
+/// @require {function} conv-to-em
+/// @require {function} strip-unit
 @mixin only-phones(
   $max-phone-width: 436px,
   $target-all-devices: false,
@@ -74,8 +74,8 @@
 ///
 /// @group Utilities
 /// @alias only-phones
-/// @require {Function} conv-to-em
-/// @require {Function} strip-unit
+/// @require {function} conv-to-em
+/// @require {function} strip-unit
 @mixin target-phones(
   $max-phone-width: 436px,
   $target-all-devices: false,

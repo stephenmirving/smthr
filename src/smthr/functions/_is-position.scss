@@ -8,8 +8,8 @@
 /// @param {*} $value - A value to be checked.
 /// @return {Bool} True if $value is a position, false if it is not.
 ///
-/// @require {Function} is-length
-/// @require {Function} is-percentage
+/// @require {function} is-length
+/// @require {function} is-percentage
 @function is-position($value) {
   @return (
     is-length($value) or is-percentage($value) or

@@ -6,7 +6,6 @@
 ///
 ///
 /// @group Utilities
-/// @alias abs-center
 @mixin position-center($position: relative) {
   position: $position;
   top: 50%;
@@ -18,7 +17,7 @@
 /// combining positioning and translation.
 ///
 /// @group Utilities
-/// @alias absolute-center
-@mixin abs-center($position: relative) {
+/// @alias position-center
+@mixin pos-center($position: relative) {
   @include position-center($position);
 }

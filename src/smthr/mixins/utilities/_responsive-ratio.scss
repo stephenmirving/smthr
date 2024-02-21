@@ -2,12 +2,12 @@
 
 /// Creates a scalable element that maintains a given ratio.
 ///
-/// @example - @include responsive-ratio(16, 9);
+/// @example scss = @include responsive-ratio(16, 9);
 ///
 /// @param {Number} $x - The width portion of the ratio.
 /// @param {Number} $y - The height portion of the ratio.
-/// @parap {String} $content-class-name - The class name of the content that we
-/// want to keep at the given ratio.
+/// @param {String} $content-class-name - The class name of the content that we
+/// want to keep at the given ratio. Pass it as a string without the leading '.'
 ///
 /// @group Utilities
 @mixin responsive-ratio($x, $y, $child-content-class-name) {

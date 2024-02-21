@@ -3,6 +3,7 @@
 @use '../variables' as *;
 
 /// A simply asset file location builder.
+///
 /// @access private
 ///
 /// @param {String} $type - Asset type, matching folder name
@@ -20,24 +21,26 @@
   @return string.unquote($asset-path + '/' + $type + '/' + $file);
 }
 
-/// Image asset helper
+/// Image asset helper.
+///
 /// @access public
 ///
 /// @param {String} $file - Asset file name, including extension
 /// @return {String} A file location leading to the asset.
 ///
-/// @require {Function} asset
+/// @require {function} asset
 @function image($file) {
   @return _asset('img', $file);
 }
 
-/// Font asset helper
+/// Font asset helper.
+///
 /// @access public
 ///
 /// @param {String} $file - Asset file name, including extension
 /// @return {String} A file location leading to the asset.
 ///
-/// @require {Function} asset
+/// @require {function} asset
 @function font($file) {
   @return _asset('fonts', $file);
 }

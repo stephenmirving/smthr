@@ -19,8 +19,6 @@
 /// default: `background-color 0.2s ease-out, color 0.2s ease-out`.
 ///
 /// @group Utilities
-/// @require {Mixin} disable-outline
-/// @alias btn-base
 @mixin button-base(
   $btn-background,
   $btn-color,
@@ -110,6 +108,8 @@
 
 /// Generates the base visual styles for a button element.
 ///
+/// @access public
+///
 /// @param {Color} $btn-background - The background color of the button.
 /// @param {Color} $btn-color - The button text color.
 /// @param {String} $btn-border - The border value for the buttton.
@@ -126,7 +126,7 @@
 /// default: `background-color 0.2s ease-out, color 0.2s ease-out`.
 ///
 /// @group Utilities
-/// @require {Mixin} disable-outline
+///
 /// @alias button-base
 @mixin btn-base(
   $btn-background,

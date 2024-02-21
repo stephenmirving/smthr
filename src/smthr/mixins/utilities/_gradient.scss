@@ -25,7 +25,7 @@
 /// @throw Invalid $end-percent unit type
 /// @throw Value of $start-percent out of range
 /// @throw Value of $end-percent out of range
-/// @require {Function} list-to-string
+/// @require {function} list-to-string
 @mixin gradient(
   $start-color,
   $end-color,

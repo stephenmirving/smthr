@@ -8,7 +8,7 @@
 /// @param {Map} $map - Map to retrieve a font-stack value from.
 /// @return {List} Found font-stack value.
 ///
-/// @require {Function} map-get-val
+/// @require {function} map-get-val
 @function font-stack($stack, $map: $font-stacks) {
   @return map.get($map, $stack);
 }

@@ -1,6 +1,7 @@
 @use 'sass:list';
 
 /// Computes a bottom-shadow for a card effect (Used by `card` mixin).
+///
 /// @access public
 ///
 /// @param {Number} $depth - depth level

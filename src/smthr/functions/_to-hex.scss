@@ -20,14 +20,10 @@
 /// but will not currently work in Sass color module methods or other Sass
 /// functions that require type checking.
 ///
-/// @require {Function} _component-to-hex
+/// @require {function} _component-to-hex
 ///
 /// @throw Invalid data type for $color
 /// @throw Invalid color syntax type for $syntax
-///
-/// @alias color-to-hex
-/// @alias conv-to-hex
-/// @alias convert-to-hex
 @function to-hex($color) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to `conv-color()` function. You passed ' +
@@ -83,14 +79,12 @@
 /// but will not currently work in Sass color module methods or other Sass
 /// functions that require type checking.
 ///
-/// @require {Function} _component-to-hex
+/// @require {function} _component-to-hex
 ///
 /// @throw Invalid data type for $color
 /// @throw Invalid color syntax type for $syntax
 ///
-/// @alias color-to-hex
-/// @alias conv-to-hex
-/// @alias convert-to-hex
+/// @alias to-hex
 @function color-to-hex($color) {
   @return to-hex($color);
 }
@@ -107,14 +101,12 @@
 /// but will not currently work in Sass color module methods or other Sass
 /// functions that require type checking.
 ///
-/// @require {Function} _component-to-hex
+/// @require {function} _component-to-hex
 ///
 /// @throw Invalid data type for $color
 /// @throw Invalid color syntax type for $syntax
 ///
-/// @alias color-to-hex
-/// @alias conv-to-hex
-/// @alias convert-to-hex
+/// @alias to-hex
 @function conv-to-hex($color) {
   @return to-hex($color);
 }
@@ -131,14 +123,12 @@
 /// but will not currently work in Sass color module methods or other Sass
 /// functions that require type checking.
 ///
-/// @require {Function} _component-to-hex
+/// @require {function} _component-to-hex
 ///
 /// @throw Invalid data type for $color
 /// @throw Invalid color syntax type for $syntax
 ///
-/// @alias color-to-hex
-/// @alias conv-to-hex
-/// @alias convert-to-hex
+/// @alias to-hex
 @function convert-to-hex($color) {
   @return to-hex($color);
 }

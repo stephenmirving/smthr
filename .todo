@@ -47,8 +47,12 @@ TODO:
     ☐ Determine if a .sass version can be automated in a build process
 
   Animations Mixins:
+    ☐ Fix text-tracking in relative to the older version found here: https://codepen.io/stephenirving/pen/PvRYwB
+      - Difference probably just the perspective property on stage
+    ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
     ☐ Add typewrtiter animation effect. https://codepen.io/stephenirving/pen/QWoPVVW/e5eb204f9c2b209d5ca65c6d5ea4801c?editors=1100
+    ☐ Add MetaFizzy animation effect https://codepen.io/stephenirving/pen/KYYZjm?editors=1100
     ☐ Add all animations from
         ☐ https://animista.net/
         ☐ https://animate.style/

@@ -30,8 +30,8 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {Mixin} only-moz
-/// @require {Function} is-alias
+/// @require {mixin} only-moz
+/// @require {function} is-alias
 /// @require {Map} $map-alias-resolutions
 ///
 /// @throw Invalid $direction value

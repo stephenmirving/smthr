@@ -24,14 +24,13 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {Function} is-alias
+/// @require {function} is-alias
 ///
 /// @throw {Error} Incorrect keyword value for $direction.
 /// @throw {Error} Invalid data type for $duration.
 /// @throw {Error} Invalid data type for $delay.
 /// @throw {Error} Invalid data type for $iterations.
 /// @throw {Error} Invalid keyword value for $anim-dir.
-/// @alias wobble
 @mixin wobbliness(
   $direction: bottom,
   $duration: 0.8s,
@@ -265,7 +264,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {Function} is-alias
+/// @require {function} is-alias
 ///
 /// @throw {Error} Incorrect keyword value for $direction.
 /// @throw {Error} Invalid data type for $duration.
@@ -273,7 +272,7 @@
 /// @throw {Error} Invalid data type for $iterations.
 /// @throw {Error} Invalid keyword value for $anim-dir.
 ///
-/// @alias wobble
+/// @alias wobbliness
 @mixin wobble(
   $direction: bottom,
   $duration: 0.8s,

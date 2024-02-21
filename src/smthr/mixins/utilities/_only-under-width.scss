@@ -16,11 +16,6 @@
 /// units if the length passed is in `px` or `rem` units.
 ///
 /// @group Utilities
-///
-/// @alias target-under-width
-/// @alias only-up-to-width
-/// @alias target-up-to-width
-/// @alias max-width
 @mixin only-under-width($threshold, $convert: true) {
   @if is-number($threshold) and math.is-unitless($threshold) {
     $threshold: $threshold * 1px;
@@ -58,9 +53,6 @@
 /// @group Utilities
 ///
 /// @alias only-under-width
-/// @alias only-up-to-width
-/// @alias target-up-to-width
-/// @alias max-width
 @mixin target-under-width($threshold) {
   @include only-under-width($threshold, $convert) {
     @content;
@@ -80,8 +72,6 @@
 /// @group Utilities
 ///
 /// @alias only-under-width
-/// @alias target-under-width
-/// @alias max-width
 @mixin only-up-to-width($threshold, $convert: true) {
   @include only-under-width($threshold, $convert) {
     @content;
@@ -101,9 +91,6 @@
 /// @group Utilities
 ///
 /// @alias only-under-width
-/// @alias target-under-width
-/// @alias only-up-to-width
-/// @alias max-width
 @mixin target-up-to-width($threshold, $convert: true) {
   @include only-under-width($threshold, $convert) {
     @content;
@@ -123,7 +110,6 @@
 /// @group Utilities
 ///
 /// @alias only-under-width
-/// @alias target-under-width
 @mixin max-width($threshold, $convert: true) {
   @include only-under-width($threshold, $convert) {
     @content;

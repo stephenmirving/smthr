@@ -7,8 +7,8 @@
 /// @param {*} $value - A value to be checked.
 /// @return {Bool} True if $value is a length, false if it is not.
 ///
-/// @require {Function} is-relative-length
-/// @require {Function} is-absolute-length
+/// @require {function} is-relative-length
+/// @require {function} is-absolute-length
 @function is-length($value) {
   @return is-relative-length($value) or is-absolute-length($value);
 }

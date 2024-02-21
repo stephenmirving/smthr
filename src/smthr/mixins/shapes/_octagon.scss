@@ -6,8 +6,6 @@
 /// background shorthand property.
 ///
 /// @group Shapes
-///
-/// @alias stop-sign
 @mixin octagon($size: 15rem, $bg: #8b0000) {
   clip-path: polygon(
     30% 0,

@@ -7,6 +7,9 @@
 
 /// Inverts a given color and inverts it then convert it to a specified color
 /// syntax.
+///
+/// @access public
+///
 /// @param {Color} $color - The color to invert.
 /// @param {Percentage} $weight [100%] - How much to invert the color. Must be
 /// a percentage between 0% and 100%.
@@ -18,7 +21,6 @@
 /// @throw {Error} Invalid $color syntax.
 /// @throw {Error} Invalid $weight value.
 /// @throw {Error} Invalid $syntax.
-/// @alias invert-color
 @function color-invert($color, $weight: 100%, $syntax: get-color-type($color)) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid $color value of [ #{meta.inspect($color)} ] passed to the ' +
@@ -43,6 +45,9 @@
 }
 
 /// Inverts a given color and converts it to a specified color syntax.
+///
+/// @access public
+///
 /// @param {Color} $color - The color to invert.
 /// @param {String} $syntax [get-color-type($color)] - The color syntax to
 /// convert into. Defaults to the color notation used by $color.

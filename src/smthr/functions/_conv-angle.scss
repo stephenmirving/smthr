@@ -10,7 +10,9 @@
 
 /// Takes a given $angle in either turns (turn), degrees (deg), gradians (grad),
 /// or radian (rad) units, and converts that angle into an alternate unit type
-/// defined by $convert-to,
+/// defined by $convert-to.
+///
+/// @access public
 ///
 /// @param {Angle|String} $angle - An angle value. Can be in turn, deg, grad,
 /// or rad units. Can also be a keyword string with one of the following values:
@@ -21,11 +23,11 @@
 ///
 /// @return {Angle} The converted angle.
 ///
-/// @require {Function} missing-dependencies
-/// @require {Function} is-alias
-/// @require {Function} is-angle
-/// @require {Function} strip-unit
-/// @require {Function} pi
+/// @require missing-dependencies
+/// @require is-alias
+/// @require is-angle
+/// @require strip-unit
+/// @require pi
 ///
 /// @throw {Error} Invalid $angle unit type.
 /// @throw {Error} Invalid $angle keyword string.

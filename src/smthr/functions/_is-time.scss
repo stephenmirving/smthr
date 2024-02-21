@@ -7,8 +7,6 @@
 ///
 /// @param {*} $value - A value to be checked.
 /// @return {Bool} True if $value is a time, false if it is not.
-///
-/// @alias is-duration
 @function is-time($value) {
   @return meta.type-of($value) == 'number' and
     list.index('ms' 's', math.unit($value)) != null;

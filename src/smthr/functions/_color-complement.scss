@@ -6,6 +6,9 @@
 
 /// Takes a given color and gives its complement in the specified color syntax.
 /// This is the equivalent of doing color.adjust($color, $hue: 180deg).
+///
+/// @access public
+///
 /// @param {Color} $color - The color to find the complement.
 /// @param {String} $syntax [get-color-type($color)] - The color syntax to
 /// convert into. Defaults to the color notation used by $color.
@@ -14,8 +17,6 @@
 ///
 /// @throw {Error} Invalid $color value.
 /// @throw {Error} Invalid $syntax.
-///
-/// @alias complement-color
 @function color-complement($color, $syntax: get-color-type($color)) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid $color value of [ #{meta.inspect($color)} ] passed to the ' +
@@ -35,6 +36,9 @@
 
 /// Takes a given color and gives its complement in the specified color syntax.
 /// This is the equivalent of doing color.adjust($color, $hue: 180deg).
+///
+/// @access public
+///
 /// @param {Color} $color - The color to find the complement.
 /// @param {String} $syntax [get-color-type($color)] - The color syntax to
 /// convert into. Defaults to the color notation used by $color.

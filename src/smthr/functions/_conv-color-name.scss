@@ -26,8 +26,6 @@
 /// @require {Map} $map-color-names
 ///
 /// @throw {Error} Invalid $color-name data type.
-///
-/// @alias conv-if-color-name
 @function conv-color-name($color, $color-map: $map-color-names) {
   @if not is-color($color) {
     @error 'Invalid $color provided to the [ conv-color-name() ] function ' +

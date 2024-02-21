@@ -6,8 +6,6 @@
 /// @content Styles that target HiDPI/Retina displays only.
 ///
 /// @group Utilities
-/// @alias hidpi-only
-/// @alias target-hidpi
 @mixin only-hidpi($ratio: 1.25) {
   @media screen and (-webkit-min-device-pixel-ratio: $ratio),
          screen and (min-resolution: ($ratio * 96dpi)),
@@ -25,7 +23,6 @@
 ///
 /// @group Utilities
 /// @alias only-hidpi
-/// @alias target-hidpi
 @mixin hidpi-only($ratio: 1.25) {
   @include only-hidpi($ratio) {
     @content;
@@ -40,8 +37,8 @@
 /// @content Styles that target HiDPI/Retina displays only.
 ///
 /// @group Utilities
+///
 /// @alias only-hidpi
-/// @alias hidpi-only
 @mixin target-hidpi($ratio: 1.25) {
   @include only-hidpi($ratio) {
     @content;
@@ -56,8 +53,6 @@
 /// @content Styles that target HiDPI/Retina displays only.
 ///
 /// @group Utilities
-/// @alias retina-only
-/// @alias target-retina
 @mixin only-retina($ratio: 2) {
   @include only-hidpi($ratio) {
     @content;
@@ -72,8 +67,8 @@
 /// @content Styles that target HiDPI/Retina displays only.
 ///
 /// @group Utilities
+///
 /// @alias only-retina
-/// @alias target-retina
 @mixin retina-only($ratio: 2) {
   @include only-hidpi($ratio) {
     @content;
@@ -88,8 +83,8 @@
 /// @content Styles that target HiDPI/Retina displays only.
 ///
 /// @group Utilities
+///
 /// @alias only-retina
-/// @alias retina-only
 @mixin target-retina($ratio: 2) {
   @include only-hidpi($ratio) {
     @content;

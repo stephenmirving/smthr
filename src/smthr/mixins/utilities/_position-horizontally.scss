@@ -12,6 +12,7 @@
 /// must use either relative or absolute positioning.
 ///
 /// @group Utilities
+///
 /// @throw $left-pos value out of range
 @mixin position-horizontally($left-pos: 50%, $position: relative) {
   @if $left-pos == 'middle' or
@@ -49,7 +50,6 @@
 /// must use either relative or absolute positioning.
 ///
 /// @group Utilities
-/// @alias horizontal-center
 @mixin center-horizontally($position: relative) {
   @if $position != relative and $position != absolute {
     @error 'The $position value of `#{meta.inspect($position)}` used in the ' +

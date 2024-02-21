@@ -4,6 +4,7 @@
 @use 'sass:string';
 
 /// Converts a decimal number into a ratio expressed as a space-separated list.
+///
 /// @access public
 ///
 /// @param {Number} $number - The decimal number to convert.
@@ -12,8 +13,6 @@
 /// @return {List} - The number converted into a ratio.
 ///
 /// @throw {Error} Invalid number value.
-///
-/// @alias num-to-ratio
 @function decimal-to-ratio($number, $accuracy: 50000) {
   $closest-numerator: 1;
   $closest-denominator: 1;

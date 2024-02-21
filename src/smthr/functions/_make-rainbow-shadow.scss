@@ -1,0 +1,28 @@
+/// Attempt at programmatically generating the values to create a MetaFizzy
+/// logo style effect.
+///
+/// !!!! ATTN: CURRENTLY BEING DEVELOPED. NOT TESTED. !!!!
+///
+/// @access public
+///
+/// @param {Number} $longness - The integer length of the shadow.
+/// @param {Color} $color - The color of the long shadow.
+/// @param {Bool} $rainbow - The integer length of the shadow.
+///
+/// @return {Mixed} The value string for the long shadow effect.
+@function make-meta-fizzy($longness, $color: #ffd300, $has-gradient: true) {
+  $val: 0 0 $color;
+
+  @if $has-gradient {
+    @for $i from 1 through $longness {
+      $color-#{$i}: color.adjust($color, $hue: $i * -1deg)
+    }
+  }
+
+  @for $i from 1 through $longness {
+    $val:
+      #{$val},
+      1px * #{$i} 1px * #{$i} #{$color};
+  }
+  @return $val;
+}

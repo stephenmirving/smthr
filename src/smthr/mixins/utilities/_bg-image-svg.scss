@@ -32,10 +32,10 @@
 /// media query since the mixin will be the only way to access it.
 ///
 /// @group Utilities
-/// @require {Function} is-alias
-/// @require {Function} is-map
-/// @require {Function} is-number
-/// @require {Function} is-string
+/// @require {function} is-alias
+/// @require {function} is-map
+/// @require {function} is-number
+/// @require {function} is-string
 ///
 /// @throw {Error} Invalid $img-2x-suffix data type.
 /// @throw {Error} Invalid $min-ratio data type.

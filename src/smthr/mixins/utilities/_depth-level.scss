@@ -18,18 +18,13 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {Function} top-shadow
-/// @require {Function} bottom-shadow
-/// @require {Function} is-integer
+/// @require {function} top-shadow
+/// @require {function} bottom-shadow
+/// @require {function} is-integer
 ///
 /// @throw {Error} Invalid $level value.
 /// @throw {Error} Unaccepted $color type.
 /// @throw {Warn} Passed $color value had it's alpha value disregarded.
-///
-/// @alias card-depth
-/// @alias shadow-depth
-/// @alias shadow-level
-/// @alias add-shadow
 @mixin depth-level($level, $color: #000) {
   @if not is-integer($level) or $level < 0 or $level > 5 {
     @error 'Invalid $level of [ #{meta.inspect($level)} ] used in the ' +
@@ -70,18 +65,15 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {Function} top-shadow
-/// @require {Function} bottom-shadow
-/// @require {Function} is-integer
+/// @require {function} top-shadow
+/// @require {function} bottom-shadow
+/// @require {function} is-integer
 ///
 /// @throw {Error} Invalid $level value.
 /// @throw {Error} Unaccepted $color type.
 /// @throw {Warn} Passed $color value had it's alpha value disregarded.
 ///
 /// @alias depth-level
-/// @alias shadow-depth
-/// @alias shadow-level
-/// @alias add-shadow
 @mixin card-depth($level, $color: #000) {
   @include depth-level($level, $color);
 }
@@ -99,18 +91,15 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {Function} top-shadow
-/// @require {Function} bottom-shadow
-/// @require {Function} is-integer
+/// @require {function} top-shadow
+/// @require {function} bottom-shadow
+/// @require {function} is-integer
 ///
 /// @throw {Error} Invalid $level value.
 /// @throw {Error} Unaccepted $color type.
 /// @throw {Warn} Passed $color value had it's alpha value disregarded.
 ///
 /// @alias depth-level
-/// @alias card-depth
-/// @alias shadow-level
-/// @alias add-shadow
 @mixin shadow-depth($level, $color: #000) {
   @include depth-level($level, $color);
 }
@@ -128,18 +117,15 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {Function} top-shadow
-/// @require {Function} bottom-shadow
-/// @require {Function} is-integer
+/// @require {function} top-shadow
+/// @require {function} bottom-shadow
+/// @require {function} is-integer
 ///
 /// @throw {Error} Invalid $level value.
 /// @throw {Error} Unaccepted $color type.
 /// @throw {Warn} Passed $color value had it's alpha value disregarded.
 ///
 /// @alias depth-level
-/// @alias card-depth
-/// @alias shadow-depth
-/// @alias add-shadow
 @mixin shadow-level($level, $color: #000) {
   @include depth-level($level, $color);
 }
@@ -157,18 +143,15 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {Function} top-shadow
-/// @require {Function} bottom-shadow
-/// @require {Function} is-integer
+/// @require {function} top-shadow
+/// @require {function} bottom-shadow
+/// @require {function} is-integer
 ///
 /// @throw {Error} Invalid $level value.
 /// @throw {Error} Unaccepted $color type.
 /// @throw {Warn} Passed $color value had it's alpha value disregarded.
 ///
 /// @alias depth-level
-/// @alias card-depth
-/// @alias shadow-depth
-/// @alias shadow-level
 @mixin add-shadow($level, $color: #000) {
   @include depth-level($level, $color);
 }

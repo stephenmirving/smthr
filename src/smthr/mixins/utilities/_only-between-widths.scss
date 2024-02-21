@@ -21,11 +21,6 @@
 ///
 /// @group Utilities
 ///
-/// @alias only-between-width
-/// @alias target-between-widths
-/// @alias target-between-width
-/// @alias min-to-max-widths
-/// @alias min-to-max-width
 @mixin only-between-widths($min-threshold, $max-threshold, $convert: true) {
   @if is-number($min-threshold) and math.is-unitless($min-threshold) {
     $min-threshold: $min-threshold * 1px;
@@ -78,10 +73,6 @@
 /// @group Utilities
 ///
 /// @alias only-between-widths
-/// @alias target-between-widths
-/// @alias target-between-width
-/// @alias min-to-max-widths
-/// @alias min-to-max-width
 @mixin only-between-width($min-threshold, $max-threshold, $convert: true) {
   @include only-between-widths($min-threshold, $max-threshold, $convert) {
     @content;
@@ -106,10 +97,6 @@
 /// @group Utilities
 ///
 /// @alias only-between-widths
-/// @alias only-between-width
-/// @alias target-between-width
-/// @alias min-to-max-widths
-/// @alias min-to-max-width
 @mixin target-between-widths($min-threshold, $max-threshold, $convert: true) {
   @include only-between-widths($min-threshold, $max-threshold, $convert) {
     @content;
@@ -134,10 +121,6 @@
 /// @group Utilities
 ///
 /// @alias only-between-widths
-/// @alias only-between-width
-/// @alias target-between-widths
-/// @alias min-to-max-widths
-/// @alias min-to-max-width
 @mixin target-between-width($min-threshold, $max-threshold, $convert: true) {
   @include only-between-widths($min-threshold, $max-threshold, $convert) {
     @content;
@@ -162,10 +145,6 @@
 /// @group Utilities
 ///
 /// @alias only-between-widths
-/// @alias only-between-width
-/// @alias target-between-widths
-/// @alias target-between-width
-/// @alias min-to-max-width
 @mixin min-to-max-widths($min-threshold, $max-threshold, $convert: true) {
   @include only-between-widths($min-threshold, $max-threshold, $convert) {
     @content;
@@ -190,10 +169,6 @@
 /// @group Utilities
 ///
 /// @alias only-between-widths
-/// @alias only-between-width
-/// @alias target-between-widths
-/// @alias target-between-width
-/// @alias min-to-max-widths
 @mixin min-to-max-width($min-threshold, $max-threshold, $convert: true) {
   @include only-between-widths($min-threshold, $max-threshold, $convert) {
     @content;

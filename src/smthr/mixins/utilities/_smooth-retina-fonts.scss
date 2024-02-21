@@ -5,7 +5,6 @@
 /// HiDPI screens.
 ///
 /// @group Utilities
-/// @alias smooth-hidpi-fonts
 @mixin smooth-retina-fonts($ratio: 2) {
   @media screen and (-webkit-min-device-pixel-ratio: $ratio),
          screen and (min-resolution: $ratio * 96dpi),

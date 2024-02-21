@@ -14,7 +14,6 @@
 ///
 /// @throw Invalid $list type error
 /// @throw Invalid $separator type error
-/// @alias list-to-str
 @function list-to-string(
   $list,
   $extra-space: false,

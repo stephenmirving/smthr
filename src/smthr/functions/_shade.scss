@@ -13,7 +13,6 @@
 ///
 /// @throw {Error} Invalid $color type.
 /// @throw {Error} Invalid $percentage type.
-/// @alias darker
 @function shade($color, $percentage) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to [ shade() ] function. You passed ' +
@@ -40,6 +39,18 @@
   @return color.scale($color, $lightness: $percentage);
 }
 
+/// Darken a color by a given percentage using the built-in color.scale() method.
+/// @access public
+///
+/// @param {Color} $color - The color being darkened.
+/// @param {Number} $percentage - The percentage of lightness to remove from
+/// the color.
+/// @return {Color} - The darkened color.
+///
+/// @throw {Error} Invalid $color type.
+/// @throw {Error} Invalid $percentage type.
+///
+/// @alias shade
 @function darker($color, $percentage) {
   @return shade($color, $percentage);
 }

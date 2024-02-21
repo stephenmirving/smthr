@@ -1,7 +1,6 @@
 /// Thoroughly hide the text of an element.
 ///
 /// @group Utilities
-/// @alias text-hide
 @mixin hide-text {
   overflow: hidden;
   color: transparent;

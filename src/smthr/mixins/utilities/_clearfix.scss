@@ -3,11 +3,12 @@
 
 /// Applies the float clearing 'clearfix' hack. This modern incarnation of the
 /// clearfix will work as far back as Internet Explorer 8.
+///
 /// @param {Keyword} $clear-val - The clear property's value. Can either be
 /// left, right, or both.
 ///
 /// @group Utilities
-/// @throw Invalid $clear-value parameter value
+/// @throw {Error} Invalid $clear-value parameter value
 @mixin clearfix($clear-value: both) {
   $accepted-values: 'both', 'left', 'right';
 

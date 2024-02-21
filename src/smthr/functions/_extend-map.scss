@@ -17,8 +17,6 @@
 ///
 /// @throw {Error} Invalid $objects type.
 /// @throw {Error} Invalid $deep type.
-///
-/// @alias extend
 @function extend-map($object, $objects... /*, $deep */) {
   @if meta.type-of($object) != 'map' {
     @error 'Invalid $object type passed to the [ extend-map() ] function. ' +
@@ -89,7 +87,7 @@
 ///
 /// @throw {Error} Invalid $objects type.
 /// @throw {Error} Invalid $deep type.
-/// @alias extend
+/// @alias extend-map
 @function extend($object, $objects... /*, $deep */) {
   @if meta.type-of($object) != 'map' {
     @error 'Invalid $object type passed to the [ extend() ] function. ' +

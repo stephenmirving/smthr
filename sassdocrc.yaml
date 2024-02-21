@@ -1,0 +1,36 @@
+# .sassdocrc.yml
+options:
+  dest: './doc'
+  theme: 'default'
+  basePath: './src/smthr'
+  verbose: false
+  strict: false
+  sort: 'file'
+  display:
+    - 'alias'
+    - 'name'
+    - 'description'
+    - 'type'
+    - 'syntax'
+    - 'example'
+    - 'since'
+    - 'deprecated'
+  groups:
+    'undefined': 'General'
+    'color': 'Colors'
+    'variable': 'Variables'
+    'function': 'Functions'
+    'mixin': 'Mixins'
+    'placeholder': 'Placeholders'
+    'Animations': 'Animations'
+    'Shapes': 'Shapes'
+    'Utilities': 'Utilities'
+  package:
+    title: 'Smoother'
+    name: 'smthr'
+    version: '0.2.2'
+    homepage: 'https://github.com/stephenmirving/smthr'
+    repository: https://github.com/stephenmirving/smthr.git'
+    license: 'MIT'
+    bugs: 'https://github.com/stephenmirving/smthr/issues'
+    private: false

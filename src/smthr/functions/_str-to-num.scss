@@ -2,6 +2,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
+@use './../variables/maps' as *;
 
 /// Safely converts a string representation of a number into an actual number
 /// that will always work when things like string.unquote() or interpolation
@@ -15,9 +16,6 @@
 ///
 /// @throw {Error} $string is not a string.
 /// @throw {Error} $string is not a valid numberic.
-///
-/// @alias string-to-number
-/// @alias string-to-numeric
 @function str-to-num($string) {
   @if meta.type-of($string) == 'number' {
     @warn 'Value of [ #{meta.inspect($string)} ] passed to the [ str-to-num() ] ' +
@@ -51,7 +49,7 @@
     $char: string.slice($string, $i, $i);
 
     @if not(list.index(map.keys($numbers), $char) or $char == '.') {
-      @return _to-length(
+      @return _to-unit(
         if($minus, $result * -1, $result),
         string.slice($string, $i)
       );
@@ -91,8 +89,7 @@
 /// @throw {Error} $string is not a string.
 /// @throw {Error} $string is not a valid numberic.
 ///
-/// @alias string-to-number
-/// @alias string-to-numeric
+/// @alias str-to-num
 @function string-to-number($string) {
   @return str-to-num($string);
 }
@@ -110,94 +107,23 @@
 /// @throw {Error} $string is not a string.
 /// @throw {Error} $string is not a valid numberic.
 ///
-/// @alias string-to-number
-/// @alias string-to-numeric
+/// @alias str-to-num
 @function string-to-numeric($string) {
   @return str-to-num($string);
 }
-/// Safely converts a string representation of a number into an actual number
-/// that will always work when things like string.unquote() or interpolation
-/// give errors.This function assumes the input string is a valid numerical
-/// value.
-/// @access public
-///
-/// @param {String|Number} $string - Value to be parsed.
-///
-/// @return {Number} - The numerical representation of the input string.
-///
-/// @throw {Error} $string is not a string.
-/// @throw {Error} $string is not a valid numberic.
-///
-/// @alias string-to-number
-/// @alias string-to-numeric
-@function _to-length($value, $unit) {
-  $units: (
-    'px': 1px,
-    'cm': 1cm,
-    'mm': 1mm,
-    '%': 1%,
-    'ch': 1ch,
-    'pc': 1pc,
-    'in': 1in,
-    'em': 1em,
-    'rem': 1rem,
-    'pt': 1pt,
-    'ex': 1ex,
-    'vw': 1vw,
-    'vh': 1vh,
-    'vmin': 1vmin,
-    'vmax': 1vmax,
-    'svw': 1svw,
-    'svh': 1svh,
-    'svmin': 1svmin,
-    'svmax': 1svmax,
-    'lvw': 1lvw,
-    'lvh': 1lvh,
-    'lvmin': 1lvmin,
-    'lvmax': 1lvmax,
-    'dvw': 1dvw,
-    'dvh': 1dvh,
-    'dvmin': 1dvmin,
-    'dvmax': 1dvmax,
-    'lh': 1lh,
-    'rlh': 1rlh,
-    'vb': 1vb,
-    'vi': 1vi,
-    'svb': 1svb,
-    'svi': 1svi,
-    'lvb': 1lvb,
-    'lvi': 1lvi,
-    'dvb': 1dvb,
-    'dvi': 1dvi,
-    'cap': 1cap,
-    'rcap': 1rcap,
-    'fr': 1fr,
-    'ic': 1ic,
-    'ric': 1ric,
-    'cqw': 1cqw,
-    'cqh': 1cqh,
-    'cqi': 1cqi,
-    'cqb': 1cqb,
-    'cqmin': 1cqmin,
-    'cqmax': 1cqmax,
-    'gd': 1gd,
-    'dppx': 1dppx,
-    'dpcm': 1dpcm,
-    'dpi': 1dpi,
-    'q': 1Q,
-    'x': 1x,
-    'deg': 1deg,
-    'rad': 1rad,
-    'grad': 1grad,
-    'turn': 1turn,
-    'Hz': 1Hz,
-    'kHz': 1kHz
-  );
 
-  @if not list.index(map.keys($units), $unit) {
-    @error 'Invalid $unit value of [ #{$unit} ] passed to the [ str-to-num() ' +
-        'function.';
+/// Used by the str-to-num function as a helper for converting numbers with units.
+/// @access private
+///
+/// @param {String} $value - The number part of the conversion.
+/// @param {String} $unit - The unit in the value being coerced.
+///
+/// @return {Number} - A number with the given unit.
+@function _to-unit($value, $unit) {
+  @if not list.index(map.keys($map-units), $unit) {
+    @error 'Invalid $unit value of `#{meta.inspect($unit)}` passed to the ' +
+        '[ str-to-num() ] function.';
   }
 
-  @return $value * map.get($units, $unit);
+  @return $value * map.get($map-units, $unit);
 }

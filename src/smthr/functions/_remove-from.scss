@@ -8,8 +8,7 @@
 /// @param {*} $value - The value to remove from `$list`.
 /// @return {List} The updated list.
 ///
-/// @require {Function} update-list
-/// @alias trim-list
+/// @require {function} update-list
 @function remove-from($list, $value) {
   // $missing: missing-dependencies('update-list');
 
@@ -23,8 +22,8 @@
 /// @param {*} $value - The value to remove from `$list`.
 /// @return {List} The updated list.
 ///
-/// @require {Function} update-list
-/// @alias remove-from-list
+/// @require {function} update-list
+/// @alias remove-from
 @function trim-list($list, $value) {
-  @return remove-from-list($list, $value);
+  @return remove-from($list, $value);
 }

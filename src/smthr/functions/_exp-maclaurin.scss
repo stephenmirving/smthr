@@ -8,8 +8,8 @@
 /// @param {Number} $n
 /// @return {Number} The result of the operation.
 ///
-/// @require {Function} pow
-/// @require {Function} factorial
+/// @require {function} pow
+/// @require {function} factorial
 @function exp-maclaurin($x, $n) {
   @return math.div(math.pow($x, $n), factorial($n));
 }

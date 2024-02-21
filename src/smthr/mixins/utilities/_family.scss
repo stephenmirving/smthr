@@ -1,9 +1,10 @@
-///
+////
 /// This file is an updated fork of _family.scss for Sass versions 1.6+.
 /// @author Lucas Bonomi < @lukyvj -- lucasbonomi.com >
-/// @ Taken from the family.scss library - http://lukyvj.github.io/family.scss/
+/// Taken from the family.scss library
+/// @link http://lukyvj.github.io/family.scss/
 /// Copyright 2016 - MIT Licence
-///
+////
 
 @use 'sass:meta';
 @use 'sass:math';
@@ -219,7 +220,6 @@
 /// @param {Integer} $num - Every $num child elements, a child is selected.
 ///
 /// @group Utilities
-/// @alias every
 @mixin each($num) {
   &:nth-child(#{$num}n) {
     @content;
@@ -477,7 +477,6 @@
 /// added within the @content directive]
 ///
 /// @group Utilities
-/// @alias only
 @mixin unique {
   &:only-child {
     @content;
@@ -505,7 +504,6 @@
 /// added within the @content directive]
 ///
 /// @group Utilities
-/// @alias not-only-child
 @mixin not-unique {
   &:not(:only-child) {
     @content;
@@ -539,8 +537,9 @@
 /// @param {Integer} $index [0] - Base indexing number for the sort.
 ///
 /// @group Utilities
+///
 /// @throw Invalid $direction value
-/// @require {Function} order-index
+/// @require {function} order-index
 @mixin child-index($num, $direction: 'forward', $index: 0) {
   @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);

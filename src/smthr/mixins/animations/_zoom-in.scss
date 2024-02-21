@@ -18,13 +18,11 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {Function} is-alias
+/// @require {function} is-alias
 ///
 /// @throw {Error} Invalid keyword for $direction.
 /// @throw {Error} Invalid data type for $duration.
 /// @throw {Error} Invalid data type for $delay.
-///
-/// @alias ken-burns
 @mixin zoom-in(
   $direction: bottom,
   $duration: 5s,
@@ -188,7 +186,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {Function} is-alias
+/// @require {function} is-alias
 ///
 /// @throw {Error} Invalid keyword for $direction.
 /// @throw {Error} Invalid data type for $duration.

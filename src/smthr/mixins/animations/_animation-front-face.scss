@@ -10,8 +10,6 @@
 /// @group Utilities
 ///
 /// @throw Invalid $z-index z-index value
-///
-/// @alias front-side
 @mixin animation-front-face($z-index: 20) {
   position: absolute;
   width: 100%;
@@ -42,6 +40,6 @@
 /// @throw Invalid $z-index z-index value
 ///
 /// @alias animation-front-face
-@mixin front-side($z-index: 20) {
+@mixin animation-front-side($z-index: 20) {
   @include animation-front-face($z-index);
 }

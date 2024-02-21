@@ -4,7 +4,6 @@
 /// @content Styles that target Chrome and Safari browsers.
 ///
 /// @group Utilities
-/// @alias webkit-only
 @mixin only-webkit {
   @media screen and (-webkit-min-device-pixel-ratio: 0) {
     @content;
