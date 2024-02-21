@@ -24,11 +24,12 @@
 .stage-title {
   position: absolute;
   top: 10%;
-  @include text-tracking-in('expand', true, null, 1.7s);
+  font-size: 3rem;
+  @include text-tracking-in('expand', true, null, 1.2s, 0.9s);
 }
 
 .stage {
-  @include animation-stage(500px, 50% 55%, 80%, 900, 80vh);
+  @include animation-stage(500px, 50% 45%, 80%, 900, 80vh);
   @include gradient(conv-color(rgba(#80f, 0.3), hsl), rgba(blue, 0.5), 135deg);
   @include flex-center($flex-dir: 'column');
 
@@ -37,7 +38,7 @@
 }
 
 .card {
-  @include roll(in, $iterations: 1);
+  // @include roll(in, left, 0.7s, $iterations: 1);
   @include clamp-width(11rem, 35%, 22rem);
   @include clamp-height(5.5rem, 40%, 22rem);
   @include depth-level(2, #fff);
@@ -79,17 +80,17 @@
   }
 }
 
-$flip-axis: 'horiz';
+$flip-axis: 'vertical';
 
 .active-anim {
   // @include flip(forwards, $flip-axis, 0.6s, $anim-dir: alternate);
-  // @include flip-scale(top, $flip-axis, 0.6s, $anim-dir: alternate);
-  @include flip-scale-2(
-    bottom,
-    0.6s,
-    $anim-dir: alternate,
-    $timing-func: linear
-  );
+  @include flip-scale(top, $flip-axis, 0.6s, $anim-dir: alternate);
+  // @include flip-scale-2(
+  //   bottom,
+  //   0.6s,
+  //   $anim-dir: alternate,
+  //   $timing-func: linear
+  // );
 }
 
 .active-anim-rev {
@@ -100,20 +101,20 @@ $flip-axis: 'horiz';
   //   $anim-dir: alternate-reverse,
   //   $anim-num: 2
   // );
-  // @include flip-scale(
-  //   top,
-  //   $flip-axis,
-  //   0.6s,
-  //   $anim-dir: alternate-reverse,
-  //   $anim-num: 2
-  // );
-  @include flip-scale-2(
-    bottom,
+  @include flip-scale(
+    top,
+    $flip-axis,
     0.6s,
     $anim-dir: alternate-reverse,
-    $timing-func: linear,
     $anim-num: 2
   );
+  // @include flip-scale-2(
+  //   bottom,
+  //   0.6s,
+  //   $anim-dir: alternate-reverse,
+  //   $timing-func: linear,
+  //   $anim-num: 2
+  // );
 }
 
 .front {

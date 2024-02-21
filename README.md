@@ -21,14 +21,18 @@ with messy clip-path coordinates or complicated animation keyframe creation.
 * 130+ mixins
 * 65+ functions
 * A modern, opinionated normalize file written in Sass called _betterize.scss
-* A modern, opinionated print style file written in Sass called _print.scss
+* A print style file written in Sass called _print.scss
 * A collection of helpful !default variables
 
 Because _smth.scss is a library entirely of Sass functions, mixins and variables,
 importing it into your project won't add any overhead or increased filesize to
-your project's stylesheet except for the parts that you actually use.
+your project's stylesheet except for the parts that you actually use by calling
+a function or using a mixin with `@includes`.
 
 ## Deployment
+
+Once it is finished it will be available more easily in NPM, but for now you
+will need to download the repo manually from here.
 
 Copy the smthr folder into your project's directory with the rest of the scss
 files, probably within the 'sass' or 'scss' folder, or within one of the
@@ -76,7 +80,6 @@ want that is not used by another module, for example:
 
 ```
 
-
 If you aren't worried about potential namespace collisions between Smoother,
 other third-party libraries, and your own code, then you can import it into the
 global namespace by using `as *` and not have to worry about using a namespace
@@ -92,10 +95,10 @@ That looks like this:
 
 ```
 
-If you want to use the normalization file _betterize.scss or the print style
-file _print.scss, simply keep them in the same directory as the _smth.scss file
-and import them into your project's stylesheet using the @forward directive.
-You could also use the @import directive but that is in the process of being
+If you want to use the normalization file `_betterize.scss` or the print style
+file `_print.scss`, simply keep them in the same directory as the `_smth.scss` file
+and import them into your project's stylesheet using the `@forward` directive.
+You could also use the `@import` directive but that is in the process of being
 deprecated and will be removed in future versions of Sass
 (see (here)[https://sass-lang.com/documentation/at-rules/import/]).
 
