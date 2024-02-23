@@ -9,12 +9,13 @@ Along with the many utility functions that extend and improve on the
 functionality of the built-in Sass modules, and mixins that allow for intuitive
 and fast style development, this library focuses heavily on aiding in the
 creation of CSS animations and clip-path shapes. Smoother allows you to create
-a wide range of effects with a single @include reference, without having to deal
-with messy clip-path coordinates or complicated animation keyframe creation.
+a wide range of effects without having to deal with messy clip-path coordinates,
+complicated animation keyframe creation, or other verbose code blocks, simply by
+loading the `smth` module with a single `@use` reference.
 
-## smthr is in active development
+## Smoother is in active development
 
-**This is *smthr* version 0.2.4 - Last update: 02/22/24*
+*This is **smthr** version 0.2.4 - Last update: 02/23/24*
 
 **_smthr_ currently contains:**
 
@@ -24,10 +25,10 @@ with messy clip-path coordinates or complicated animation keyframe creation.
 * A print style file written in Sass called _print.scss
 * A collection of helpful !default variables
 
-Because _smth.scss is a library entirely of Sass functions, mixins and variables,
-importing it into your project won't add any overhead or increased filesize to
-your project's stylesheet except for the parts that you actually use by calling
-a function or using a mixin with `@includes`.
+Because _smth.scss is a Sass library comprised entirely of functions, mixins and
+variables, importing it into your project won't add any overhead or increased
+filesize to your project's stylesheet except for the parts that you actually use
+by calling a function or by using a mixin with `@includes`.
 
 ## Deployment
 
@@ -38,10 +39,9 @@ will need to download the repo manually from here and copy the contents of the
 Copy the `smthr` folder into your project's directory in the folder where you
 keep the rest of your `.scss` files. This is probably in a `sass` or
 `scss` folder, or within one of the subdirectories of that folder (most
-commonly the `vendor` subdirectory). From there, just employ either the `@use`
-or the `@forward` directive (depending on your project's structure) at the top of
-your project's primary stylefile (such as `style.scss` or `main.scss`). These
-should directives load the `_smth.scss` file that is within the `smthr` folder
+commonly the `vendor` subdirectory). From there, just employ the `@use` near the
+top of your project's primary stylefile (such as `style.scss` or `main.scss`).
+Load the `_smth.scss` module file that is within the `smthr` folder.
 
 **Like this:**
 
@@ -56,7 +56,7 @@ directory, the @use would look like this:
 @use './vendor/smthr/smth' as smth;
 ```
 
-Doing this namespaces the library to smth and you can call the functions,
+Doing this namespaces the library to `smth` and you can call the functions,
 mixins, and variables in the library using that as a prefix, like this:
 
 ```scss
@@ -136,16 +136,18 @@ Created by Stephen M Irving
 This library also contains work inspired by others, as well as some forked code.
 This includes work by:
 
-* [Harry Roberts](https://csswizardry.com/)
+* [Lucas Bonomi](http://lucasbonomi.com/)
 * [Eduardo Boucas](https://eduardoboucas.com/)
 * [Chris Coyier](https://chriscoyier.net/)
-* [Lucas Bonomi](http://lucasbonomi.com/)
+* [Harry Roberts](https://csswizardry.com/)
 
 ## Thanks
 
-Thank you to my father, Michael Graham Irving.
+Thank you to the contributors and maintainers of [Sass](https://sass-lang.com/).
 
 Thank you to the creators and writers at [css-tricks.com](https://css-tricks.com/),
 [Smashing Magazine](https://www.smashingmagazine.com/) and the
 [Mozilla Developer's Network](https://developer.mozilla.org/), from whom I have
 learned so much from.
+
+Thank you to my father, Michael Graham Irving.

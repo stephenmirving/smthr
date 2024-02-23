@@ -3,7 +3,11 @@
   "version": "0.2.4",
   "description": "Smoother is a Sass (SCSS) library of simple-to-use functions & mixins that aid your front-end development experience by serving up workflow enhancing utilities along with production ready element styles and animations.",
   "main": "index.js",
-  "directories": {},
+  "directories": {
+    "src": "src",
+    "docs": "docs",
+    "test": "test"
+  },
   "scripts": {
     "test": "sass --watch --update --no-trace --no-quiet --style=expanded test/test.scss:test/test.css"
   },
@@ -21,7 +25,8 @@
     "animations",
     "clip-path",
     "mixins",
-    "functions"
+    "functions",
+    "utilities"
   ],
   "author": "Stephen M Irving",
   "license": "MIT",
