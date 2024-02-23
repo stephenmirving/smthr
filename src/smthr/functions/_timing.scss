@@ -15,9 +15,9 @@
 ///
 /// @require {variable} $map-timing-functions
 ///
-/// @throw  Invalid $func-name type.
-/// @throw  Invalid $alias-map type.
-/// @throw  Function name not found in alias map.
+/// @throw Invalid $func-name type.
+/// @throw Invalid $alias-map type.
+/// @throw Function name not found in alias map.
 @function timing($func-name, $alias-map: $map-timing-functions) {
   @if meta.type-of($func-name) != 'string' {
     @error 'Invalid data type of [ #{meta.type-of($func-name)} ] for $func-name ' +

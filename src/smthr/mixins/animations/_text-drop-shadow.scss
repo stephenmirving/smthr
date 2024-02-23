@@ -6,7 +6,7 @@
 
 /// Adds a shadow dropping animation to a given element's text
 ///
-/// @param {String} $direction [center] - The direction the shadow will fall.
+/// @param {String} $direction ['center'] - The direction the shadow will fall.
 /// @param {Number} $duration [0.7s] The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] The duration of the optional animation delay.
 /// @param {Color} $shadow-color [#000] The color for the shadow. Must be in
@@ -23,7 +23,7 @@
 /// @throw Invalid $duration value
 /// @throw Invalid $delay value
 @mixin text-drop-shadow(
-  $direction: center,
+  $direction: 'center',
   $duration: 0.7s,
   $delay: null,
   $shadow-color: #000,

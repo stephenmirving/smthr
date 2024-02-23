@@ -7,13 +7,13 @@
 
 /// Generates an animation that flips an element over while scaling it. The
 /// effect is slightly different than in `flip-scale`. The element this mixin is
-/// applied to must have a front-face and a back-face child element. It is
+/// applied to must have a front-side and a back-side child element. It is
 /// recommended that you use this mixin in conjunction with the
-/// `animation-front-face` and 'animation-back-face' mixins for card `face`
+/// `animation-front-face` and 'animation-back-face' mixins for card 'face'
 /// child elements and the 'animation-stage` mixin for the parent element.
 ///
 /// @param {String} $direction [top] - The direction the animation appears to
-/// be fliping from. Can be either 'top', 'bottom', 'right', or 'left'.
+/// be fliping from. Can be either `top`, `bottom`, `right`, or `left`.
 /// @param {Number} $duration [0.5s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations

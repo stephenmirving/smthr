@@ -6,7 +6,7 @@
 
 /// Animates text from being in focus, to blurred out, to invisible.
 ///
-/// @param {String} $style [out] - The style of the blur-out effect. Can be
+/// @param {String} $style ['out'] - The style of the blur-out effect. Can be
 /// `out` (or `none` or `default`), `expand` (or `grow`),
 /// `contract`, (or `shrink`) `forwards`, or `backwards`.
 /// @param {Number} $duration [1s] - The duration of the animation (in s or ms).

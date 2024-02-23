@@ -12,8 +12,8 @@
 ///
 /// @return {Number} The fixed digit number.
 ///
-/// @throw  Invalid $float type.
-/// @throw  $digits precision not in range
+/// @throw Invalid $float type.
+/// @throw $digits precision not in range
 @function to-fixed($float, $digits: 2) {
   $max-precision: 10;
 
@@ -59,8 +59,8 @@
 ///
 /// @return {Number} The fixed digit number.
 ///
-/// @throw  Invalid $float type.
-/// @throw  $digits precision not in range.
+/// @throw Invalid $float type.
+/// @throw $digits precision not in range.
 ///
 /// @alias to-fixed
 @function fix-to-place($float, $digits: 2) {
@@ -77,8 +77,8 @@
 ///
 /// @return {Number} The fixed digit number.
 ///
-/// @throw  Invalid $float type.
-/// @throw  $digits precision not in range.
+/// @throw Invalid $float type.
+/// @throw $digits precision not in range.
 ///
 /// @alias to-fixed
 @function fix-to-decimal($float, $digits: 2) {

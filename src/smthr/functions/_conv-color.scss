@@ -44,9 +44,9 @@
 /// @require {function} to-fixed
 /// @require {function} to-cmyk
 ///
-/// @throw  Invalid data type for $color.
-/// @throw  Invalid data type for $syntax.
-/// @throw  Invalid keyword for $syntax.
+/// @throw Invalid data type for $color.
+/// @throw Invalid data type for $syntax.
+/// @throw Invalid keyword for $syntax.
 @function conv-color($color, $syntax: 'rgba') {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to [ conv-color() ] function. You passed ' +
@@ -218,9 +218,9 @@
 /// @require {function} to-fixed
 /// @require {function} to-cmyk
 ///
-/// @throw  Invalid data type for $color.
-/// @throw  Invalid data type for $syntax.
-/// @throw  Invalid keyword for $syntax.
+/// @throw Invalid data type for $color.
+/// @throw Invalid data type for $syntax.
+/// @throw Invalid keyword for $syntax.
 ///
 /// @alias conv-color
 @function convert-color($color, $syntax: 'hsl') {
@@ -259,9 +259,9 @@
 /// @require {function} to-fixed
 /// @require {function} to-cmyk
 ///
-/// @throw  Invalid data type for $color.
-/// @throw  Invalid data type for $syntax.
-/// @throw  Invalid keyword for $syntax.
+/// @throw Invalid data type for $color.
+/// @throw Invalid data type for $syntax.
+/// @throw Invalid keyword for $syntax.
 ///
 /// @alias conv-color
 @function convert-color-to($color, $syntax: 'hsl') {
@@ -300,9 +300,9 @@
 /// @require {function} to-fixed
 /// @require {function} to-cmyk
 ///
-/// @throw  Invalid data type for $color.
-/// @throw  Invalid data type for $syntax.
-/// @throw  Invalid keyword for $syntax.
+/// @throw Invalid data type for $color.
+/// @throw Invalid data type for $syntax.
+/// @throw Invalid keyword for $syntax.
 ///
 /// @alias conv-color
 @function color-convert($color, $syntax: 'hsl') {

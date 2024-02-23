@@ -11,8 +11,8 @@
 /// the color.
 /// @return {Color} - The darkened color.
 ///
-/// @throw  Invalid $color type.
-/// @throw  Invalid $percentage type.
+/// @throw Invalid $color type.
+/// @throw Invalid $percentage type.
 @function shade($color, $percentage) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to [ shade() ] function. You passed ' +
@@ -47,8 +47,8 @@
 /// the color.
 /// @return {Color} - The darkened color.
 ///
-/// @throw  Invalid $color type.
-/// @throw  Invalid $percentage type.
+/// @throw Invalid $color type.
+/// @throw Invalid $percentage type.
 ///
 /// @alias shade
 @function darker($color, $percentage) {

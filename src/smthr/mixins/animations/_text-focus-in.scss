@@ -6,7 +6,7 @@
 
 /// Animates text from a blurred to a focused state
 ///
-/// @param {String} $style [in] - The style of the focus-in effect. Can be
+/// @param {String} $style ['in'] - The style of the focus-in effect. Can be
 /// `in` , `expand`, `contract`, `forwards`, or `backwards`.
 /// @param {Number} $duration [0.9s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
@@ -32,7 +32,7 @@
 /// @throw Invalid $delay value
 /// @throw Invalid $anim-dir value
 @mixin text-focus-in(
-  $style: in,
+  $style: 'in',
   $duration: 0.9s,
   $delay: null,
   $iterations: null,

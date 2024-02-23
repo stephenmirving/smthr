@@ -7,7 +7,7 @@
 /// Does a slow and artistic Ken Burns style zoom-in on the background image
 /// of an element.
 ///
-/// @param {String} $direction [bottom] - The direction of the angle the
+/// @param {String} $direction ['bottom'] - The direction of the angle the
 /// zoom-in will have. Accepts `top`, `left`, `right`, `bottom`,
 /// `bottom-right`, `top-right`, `bottom-left`, or `top-left`.
 /// @param {Number} $duration [5s] - The duration of the animation's effect.
@@ -20,11 +20,11 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw  Invalid keyword for $direction.
-/// @throw  Invalid data type for $duration.
-/// @throw  Invalid data type for $delay.
+/// @throw Invalid keyword for $direction.
+/// @throw Invalid data type for $duration.
+/// @throw Invalid data type for $delay.
 @mixin zoom-in(
-  $direction: bottom,
+  $direction: 'bottom',
   $duration: 5s,
   $delay: null,
   $anim-num: null
@@ -188,9 +188,9 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw  Invalid keyword for $direction.
-/// @throw  Invalid data type for $duration.
-/// @throw  Invalid data type for $delay.
+/// @throw Invalid keyword for $direction.
+/// @throw Invalid data type for $duration.
+/// @throw Invalid data type for $delay.
 ///
 /// @alias zoom-in
 @mixin ken-burns(

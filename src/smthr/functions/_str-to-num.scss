@@ -14,8 +14,8 @@
 ///
 /// @return {Number} - The numerical representation of the input string.
 ///
-/// @throw  $string is not a string.
-/// @throw  $string is not a valid numberic.
+/// @throw $string is not a string.
+/// @throw $string is not a valid numberic.
 @function str-to-num($string) {
   @if meta.type-of($string) == 'number' {
     @warn 'Value of [ #{meta.inspect($string)} ] passed to the [ str-to-num() ] ' +
@@ -86,8 +86,8 @@
 ///
 /// @return {Number} - The numerical representation of the input string.
 ///
-/// @throw  $string is not a string.
-/// @throw  $string is not a valid numberic.
+/// @throw $string is not a string.
+/// @throw $string is not a valid numberic.
 ///
 /// @alias str-to-num
 @function string-to-number($string) {
@@ -104,8 +104,8 @@
 ///
 /// @return {Number} - The numerical representation of the input string.
 ///
-/// @throw  $string is not a string.
-/// @throw  $string is not a valid numberic.
+/// @throw $string is not a string.
+/// @throw $string is not a valid numberic.
 ///
 /// @alias str-to-num
 @function string-to-numeric($string) {

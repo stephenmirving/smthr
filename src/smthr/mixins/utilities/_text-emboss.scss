@@ -9,8 +9,8 @@
 ///
 /// @group Utilities
 ///
-/// @throw  Invalid color value.
-/// @throw  Color value stripped of alpha value in favor of $opacity.
+/// @throw Invalid color value.
+/// @throw Color value stripped of alpha value in favor of $opacity.
 @mixin text-emboss($opacity, $color: #fff, $blur: 0) {
   $red-component: null;
   $green-component: null;

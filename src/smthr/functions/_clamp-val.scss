@@ -20,7 +20,7 @@
 /// is below the limit, it will return the $min, if it is above the $max, it
 /// will return the $max.
 ///
-/// @throw  Minimum greater than maximum.
+/// @throw Minimum greater than maximum.
 @function clamp-val($min, $value, $max) {
   @if is-number($min) and
     is-number($max) and

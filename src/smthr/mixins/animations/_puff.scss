@@ -9,12 +9,12 @@
 /// the `animation-stage` mixin be used on the parent element.
 ///
 /// @param {Bool | String} $in-or-out [in] - Determines if the element will
-/// puff `in` (or true) or `out` (or false).
-/// @param {String} $direction [null] - Will, depending on $in-or-out, either
+/// puff `in` (or `true`) or `out` (or `false`).
+/// @param {String} $direction [null] - Will, depending on `$in-or-out`, either
 /// puff in from this direction or puff out towards this direction. Acceptable
-/// values include the following: 'center', 'top', 'bottom', 'left', 'right',
-/// 'top-left', 'top-right', 'bottom-left', 'bottom-right', 'horizontal, and
-/// 'vertical'.
+/// values include the following: `center`, '`top`, `ottom`, `left`, `right`,
+/// `top-left`, `top-right`, `bottom-left`, `bottom-right`, `horizontal`, and
+/// `vertical`.
 /// @param {Number} $duration [0.7s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations

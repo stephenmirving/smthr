@@ -14,8 +14,8 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw  Invalid type of $flip-axis.
-/// @throw  Invalid $z-val z-index value.
+/// @throw Invalid type of $flip-axis.
+/// @throw Invalid $z-val z-index value.
 @mixin animation-back-face($flip-axis: horizontal, $z-val: 10) {
   // Default rotation for the flip-axis value of horizontal
   $trans-val: rotateX(180deg);
@@ -65,8 +65,8 @@
 ///
 /// @require {function} is-alias
 ///
-/// @throw  Invalid type of $flip-axis.
-/// @throw  Invalid $z-val z-index value.
+/// @throw Invalid type of $flip-axis.
+/// @throw Invalid $z-val z-index value.
 ///
 /// @alias animation-back-face
 @mixin animation-back-side($flip-axis: horizontal, $z-val: 10) {

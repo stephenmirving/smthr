@@ -8,7 +8,7 @@
 ///
 /// @return {String} A color value wrapped inside a string.
 ///
-/// @throw  Invalid $color value.
+/// @throw Invalid $color value.
 @function color-to-string($color) {
   @if meta.type-of($color) != 'color' {
     @warn 'Incorrect data type passed to [ color-to-string() ] function. You ' +

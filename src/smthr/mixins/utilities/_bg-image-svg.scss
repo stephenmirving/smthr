@@ -37,9 +37,9 @@
 /// @require {function} is-number
 /// @require {function} is-string
 ///
-/// @throw  Invalid $img-2x-suffix data type.
-/// @throw  Invalid $min-ratio data type.
-/// @throw  Invalid $hidpi-bg-props data type.
+/// @throw Invalid $img-2x-suffix data type.
+/// @throw Invalid $min-ratio data type.
+/// @throw Invalid $hidpi-bg-props data type.
 @mixin bg-image-svg(
   $svg-img-name,
   $bg-size,

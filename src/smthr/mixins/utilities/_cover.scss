@@ -22,11 +22,11 @@
 /// @require {function} strip-unit
 /// @require {function} is-number
 ///
-/// @throw  Invalid data type for $is-fullscreen.
-/// @throw  Invalid data type for $z-val.
-/// @throw  Invalid $opacity range.
-/// @throw  Invalid $opacity data type.
-/// @throw  Invalid $opacity unit type.
+/// @throw Invalid data type for $is-fullscreen.
+/// @throw Invalid data type for $z-val.
+/// @throw Invalid $opacity range.
+/// @throw Invalid $opacity data type.
+/// @throw Invalid $opacity unit type.
 @mixin cover(
   $z-val: 999,
   $is-fullscreen: false,

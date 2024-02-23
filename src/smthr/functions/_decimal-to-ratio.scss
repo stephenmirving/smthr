@@ -12,7 +12,7 @@
 ///
 /// @return {List} - The number converted into a ratio.
 ///
-/// @throw  Invalid number value.
+/// @throw Invalid number value.
 @function decimal-to-ratio($number, $accuracy: 50000) {
   $closest-numerator: 1;
   $closest-denominator: 1;
@@ -44,7 +44,7 @@
 ///
 /// @return {List} - The number converted into a ratio.
 ///
-/// @throw  Invalid number value.
+/// @throw Invalid number value.
 ///
 /// @alias decimal-to-ratio
 @function num-to-ratio($number, $accuracy: 10000) {

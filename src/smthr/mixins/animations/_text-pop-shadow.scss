@@ -6,7 +6,7 @@
 
 /// Animates text by popping forward out from a shadow.
 ///
-/// @param {String} $direction [top] - The direction the shadow will be
+/// @param {String} $direction ['bottom-left'] - The direction the shadow will be
 /// facing. Recommended to use this mixin with the animation-stage mixin or just
 /// the perspective property on the parent element.
 /// @param {Number} $duration [0.6s] - The duration of the animation (`s` or `ms`).

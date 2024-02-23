@@ -7,9 +7,10 @@
 /// An animation that bounces an element in to view
 ///
 /// @param {String | Bool} $in-or-out [in] - Determines if the element will
-/// bounce `in` (or true, `i`) our `out` (or false, `o`).
-/// @param {String} $direction [top] - The direction the animation will appear
-/// to be bouncing `in` from or bouncing `out` towards (based on $in-or-out).
+/// bounce 'in' (pass `in`, `true`, or `i`) or 'out' (pass `out`, `false`, or `o`).
+/// @param {String} $direction ['top'] - The direction the animation will appear
+/// to be bouncing 'in' from or bouncing 'out' towards (based on $in-or-out).
+/// Accepts the values of `bottom`, `top`, `left`, `right`, `backwards` or `forwards`.
 /// @param {Number} $duration [null] The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -34,8 +35,8 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin bounce(
-  $in-or-out: in,
-  $direction: top,
+  $in-or-out: 'in',
+  $direction: 'top',
   $duration: null,
   $delay: null,
   $iterations: null,

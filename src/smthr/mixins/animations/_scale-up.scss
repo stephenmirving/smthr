@@ -6,8 +6,10 @@
 
 /// Animates an element by scaling it up.
 ///
-/// @param {String} $direction [center] - The direction the element will appear
-/// to be scaling up from.
+/// @param {String} $direction ['center'] - The direction the element will appear
+/// to be scaling up from. Can be `center`, `top`, `top-right,` `right`,
+/// `bottom-right`, `bottom`, `bottom-left`, `left, or `top-left`. Several
+/// aliases aliases also exist for these values.
 /// @param {Number} $duration [0.4s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally start along an

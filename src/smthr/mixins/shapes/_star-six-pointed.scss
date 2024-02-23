@@ -9,7 +9,7 @@
 ///
 /// @group Shapes
 ///
-/// @throw  Invalid $color value.
+/// @throw Invalid $color value.
 @mixin star-six-pointed($size: 5rem, $color: #80f) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid $color value passed to the [ star-six-pointed() ] mixin.';

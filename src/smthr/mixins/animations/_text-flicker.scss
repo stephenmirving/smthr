@@ -6,7 +6,7 @@
 
 /// Animates text by flickering it into or out of view.
 ///
-/// @param {Bool | String} $in-or-out [in] - Determines whether the text will
+/// @param {Bool | String} $in-or-out ['in'] - Determines whether the text will
 /// flicker into or out of view. Can either be `in` or `out`.
 /// @param {Number} $duration [3s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.

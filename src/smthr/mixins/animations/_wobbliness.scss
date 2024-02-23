@@ -26,11 +26,11 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw  Incorrect keyword value for $direction.
-/// @throw  Invalid data type for $duration.
-/// @throw  Invalid data type for $delay.
-/// @throw  Invalid data type for $iterations.
-/// @throw  Invalid keyword value for $anim-dir.
+/// @throw Incorrect keyword value for $direction.
+/// @throw Invalid data type for $duration.
+/// @throw Invalid data type for $delay.
+/// @throw Invalid data type for $iterations.
+/// @throw Invalid keyword value for $anim-dir.
 @mixin wobbliness(
   $direction: bottom,
   $duration: 0.8s,
@@ -246,7 +246,7 @@
 
 /// Adds a wobble animation to a given element
 ///
-/// @param {String} $direction [bottom] - The base from which the wobble is
+/// @param {String} $direction ['bottom'] - The base from which the wobble is
 /// generated. Takes 'top`, `left`, `right`, or `bottom`.
 /// @param {Number} $duration [0.8s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
@@ -266,15 +266,15 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw  Incorrect keyword value for $direction.
-/// @throw  Invalid data type for $duration.
-/// @throw  Invalid data type for $delay.
-/// @throw  Invalid data type for $iterations.
-/// @throw  Invalid keyword value for $anim-dir.
+/// @throw Incorrect keyword value for $direction.
+/// @throw Invalid data type for $duration.
+/// @throw Invalid data type for $delay.
+/// @throw Invalid data type for $iterations.
+/// @throw Invalid keyword value for $anim-dir.
 ///
 /// @alias wobbliness
 @mixin wobble(
-  $direction: bottom,
+  $direction: 'bottom',
   $duration: 0.8s,
   $delay: null,
   $iterations: null,

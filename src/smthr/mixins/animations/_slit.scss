@@ -12,7 +12,7 @@
 /// appear to slit `in` or `out`.
 /// @param {String} $axis [horizontal] - The axis on which the animation turns
 /// the element. Must be one of the following values: `horizontal`, `vertical`,
-/// `diagonal1` or `diagonal2`.
+/// `diagonal` or `diagonal2`.
 /// @param {Number} $duration [0.5s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations

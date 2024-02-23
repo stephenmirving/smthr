@@ -6,7 +6,7 @@
 
 /// Applies a text pop-up animation with a shadow effect to a given element.
 ///
-/// @param {String} $direction [top] - The direction the animation will appear
+/// @param {String} $direction ['top'] - The direction the animation will appear
 /// to be going in. Valid $direction values include the following: `top`,
 /// `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, `left`, or
 /// `top-left`.
@@ -33,7 +33,7 @@
 /// @throw Invalid $delay value
 /// @throw Invalid $iterations value
 @mixin text-pop-up(
-  $direction: top,
+  $direction: 'top',
   $duration: 0.5s,
   $delay: null,
   $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94),

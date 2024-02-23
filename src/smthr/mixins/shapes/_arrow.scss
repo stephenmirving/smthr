@@ -15,7 +15,7 @@
 ///
 /// @group Shapes
 ///
-/// @throw  Invalid $direction value.
+/// @throw Invalid $direction value.
 @mixin arrow($direction: 'right', $size: null, $bg: #80f, $height: $size) {
   @if meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);

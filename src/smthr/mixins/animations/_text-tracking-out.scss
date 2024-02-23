@@ -31,14 +31,14 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw  Invalid $expand-contract value.
-/// @throw  Invalid data type for $animate-in-place.
-/// @throw  Invalid $destination value.
-/// @throw  Invalid data type for $duration.
-/// @throw  Invalid data type for $delay.
-/// @throw  Invalid data type for $iterations.
-/// @throw  Invalid keyword value for $anim-dir.
-/// @throw  Conflict between value for $animate-in-place and $destination.
+/// @throw Invalid $expand-contract value.
+/// @throw Invalid data type for $animate-in-place.
+/// @throw Invalid $destination value.
+/// @throw Invalid data type for $duration.
+/// @throw Invalid data type for $delay.
+/// @throw Invalid data type for $iterations.
+/// @throw Invalid keyword value for $anim-dir.
+/// @throw Conflict between value for $animate-in-place and $destination.
 @mixin text-tracking-out(
   $expand-contract: 'contract',
   $animate-in-place: true,

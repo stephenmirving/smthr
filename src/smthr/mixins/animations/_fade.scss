@@ -9,8 +9,8 @@
 /// the `animation-stage` mixin be used on the parent element.
 ///
 /// @param {String | Bool} $in-or-out [in] - Determines if the element will
-/// fade 'in' (pass `'in'`, `true`, or `'i'`) or 'out' (pass `'out'` `false`,
-/// or `'o'`).
+/// fade 'in' (pass `in`, `true`, or `i`) or 'out' (pass `out` `false`,
+/// or `o`).
 /// @param {String} $direction [null] - Will optionally either fade in from
 /// this direction or fade out towards this direction, depending on $in-or-out.
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`).

@@ -10,8 +10,8 @@
 /// @param {Number} $percentage - The percentage of lightness to add to the color.
 /// @return {Color} - The lightened color.
 ///
-/// @throw  Invalid $color type.
-/// @throw  Invalid $percentage type.
+/// @throw Invalid $color type.
+/// @throw Invalid $percentage type.
 @function tint($color, $percentage) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to [ tint() ] function. You passed ' +
@@ -45,8 +45,8 @@
 /// @param {Number} $percentage - The percentage of lightness to add to the color.
 /// @return {Color} - The lightened color.
 ///
-/// @throw  Invalid $color type.
-/// @throw  Invalid $percentage type.
+/// @throw Invalid $color type.
+/// @throw Invalid $percentage type.
 ///
 /// @alias tint
 @function lighter($color, $percentage) {

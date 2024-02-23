@@ -15,8 +15,8 @@
 ///
 /// @return {Color} - The color's complement in the given syntax.
 ///
-/// @throw  Invalid $color value.
-/// @throw  Invalid $syntax.
+/// @throw Invalid $color value.
+/// @throw Invalid $syntax.
 @function color-complement($color, $syntax: get-color-type($color)) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid $color value of [ #{meta.inspect($color)} ] passed to the ' +
@@ -45,8 +45,8 @@
 ///
 /// @return {Color} - The color's complement in the given syntax.
 ///
-/// @throw  Invalid $color value.
-/// @throw  Invalid $syntax.
+/// @throw Invalid $color value.
+/// @throw Invalid $syntax.
 ///
 /// @alias complement-color
 @function complement-color($color, $syntax: get-color-type($color)) {

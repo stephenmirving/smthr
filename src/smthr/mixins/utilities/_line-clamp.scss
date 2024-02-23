@@ -7,7 +7,7 @@
 ///
 /// @group Utilities
 ///
-/// @throw  Invalid data type for $lines. Value must be an integer.
+/// @throw Invalid data type for $lines. Value must be an integer.
 ///
 /// @alias clamp-lines
 @mixin line-clamp($lines) {
@@ -27,7 +27,7 @@
 ///
 /// @group Utilities
 ///
-/// @throw  Invalid data type for $lines. Value must be an integer.
+/// @throw Invalid data type for $lines. Value must be an integer.
 ///
 /// @alias line-clamp
 @mixin clamp-lines($lines) {

@@ -10,21 +10,21 @@
 /// between, one into the next.
 /// @param {String | Number} $duration [null] - The amount of time it takes the
 /// animation to shift from one color into the next one. This value must be in
-/// either milliseconds (ms) or seconds (s). If a only a unit-less number is
+/// either milliseconds (`ms`) or seconds (`s`). If a only a unit-less number is
 /// passed, it will be assumed that the value is in seconds. When no argument is
 /// passed, the default timing is 2s per color shift.
 /// @param {String | Number} $delay [null] - The amount of time before the color
 /// shifting animation first starts. No delay is the default. This value must be
-/// in either milliseconds (ms) or seconds (s). If a only a unit-less number is
+/// in either milliseconds (`ms`) or seconds (`s`). If only a unit-less number is
 /// passed, it will be assumed that the value is in seconds.
 /// @param {Bool | String} $infinite [false] - Determines whether or not the
 /// color shifting animation will go on infinitely.
 /// @param {Bool | String} $alternate [null] - When true, this will reverse the
-/// order of the color shift when it refgaches the end of the animation,
+/// order of the color shift when it reaches the end of the animation,
 /// otherwise the animation will restart at the first color. $infinite must be
 /// true for $alternate to take effect.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
-/// animation's shifting affect.
+/// animation's shifting effect.
 /// @param {String} $bg-or-fg [null] - Determines if animation will shift the
 /// background-color or the font color. Null value defaults to the background.
 /// @param {Number | String} $anim-num [null] - If the color-shifter mixin is
@@ -216,7 +216,7 @@
     $bg-or-fg: 'background-color';
   } @else {
     @error 'Invalid $bg-or-fg value or `#{meta.inspect($bg-or-fg)}` for the ' +
-        '`color-shifter` mixin.';
+        '[ color-shifter() ] mixin.';
   }
 
   animation: color-shifter#{$anim-num} #{$duration} #{$timing-func}#{$delay}#{$inf-alt}

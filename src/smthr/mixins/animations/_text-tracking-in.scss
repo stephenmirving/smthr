@@ -6,7 +6,7 @@
 
 /// Animates text by tracking it into view
 ///
-/// @param {Bool | String} $expand-contract [contract] - Determines whether
+/// @param {Bool | String} $expand-contract ['contract'] - Determines whether
 /// the text will, `expand` (`true`) or `contract` (`false`) as it animates.
 /// @param {Bool} $animate-in-place [true] - If true, the animation will
 /// animate in its location on a 2-dimaensional plane. If false, it will allow
@@ -31,14 +31,14 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw  Invalid $expand-contract value.
-/// @throw  Invalid data type for $animate-in-place.
-/// @throw  Invalid $origin value.
-/// @throw  Invalid data type for $duration.
-/// @throw  Invalid data type for $delay.
-/// @throw  Invalid data type for $iterations.
-/// @throw  Invalid keyword value for $anim-dir.
-/// @throw  Conflict between value for $animate-in-place and $origin.
+/// @throw Invalid $expand-contract value.
+/// @throw Invalid data type for $animate-in-place.
+/// @throw Invalid $origin value.
+/// @throw Invalid data type for $duration.
+/// @throw Invalid data type for $delay.
+/// @throw Invalid data type for $iterations.
+/// @throw Invalid keyword value for $anim-dir.
+/// @throw Conflict between value for $animate-in-place and $origin.
 @mixin text-tracking-in(
   $expand-contract: 'expand',
   $animate-in-place: true,

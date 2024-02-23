@@ -7,9 +7,9 @@
 /// Generates an animation that slides an element in or out from or towards a
 /// given direction.
 ///
-/// @param {Bool | String} $in-or-out [in] - Determines if the element will
-/// slide `in` (or true, `i`) our `out` (or false, `o`).
-/// @param {String} $direction [top] - Will either slide in from this
+/// @param {Bool | String} $in-or-out ['in'] - Determines if the element will
+/// slide 'in' (`in`, `true`, or `i`) our 'out' (`out`, `false`, or `o`).
+/// @param {String} $direction ['top'] - Will either slide in from this
 /// direction or slide out towards this direction.
 /// @param {Number} $duration [0.6s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
@@ -36,8 +36,8 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin slide(
-  $in-or-out: in,
-  $direction: top,
+  $in-or-out: 'in',
+  $direction: 'top',
   $duration: 0.6s,
   $delay: null,
   $iterations: null,

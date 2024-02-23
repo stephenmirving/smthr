@@ -7,12 +7,12 @@
 /// Generates an animation that rolls an element in or out, from or towards a
 /// given direction.
 ///
-/// @param {Bool | String} $in-or-out [in] - Determines if the element will
-/// roll `in` (or true, `i`) our `out` (or false, `o`).
-/// @param {String} $direction [top] - Will either roll in from this
+/// @param {Bool | String} $in-or-out ['in'] - Determines if the element will
+/// roll 'in' (`in`, `true`, or `i`) or 'out' (`out`, `false`, or `o`).
+/// @param {String} $direction ['left'] - Will either roll in from this
 /// direction or roll out towards this direction, depending on the value of
 /// $in-or-out. The value of $direction must be one of the following:
-/// 'top', 'right', 'bottom', 'left'.
+/// `top`, `right`, `bottom`, `left`.
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -38,8 +38,8 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin roll(
-  $in-or-out: in,
-  $direction: left,
+  $in-or-out: 'in',
+  $direction: 'left',
   $duration: 0.6s,
   $delay: null,
   $iterations: null,
