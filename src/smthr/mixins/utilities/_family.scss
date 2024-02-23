@@ -409,30 +409,6 @@
   }
 }
 
-/// Select the first child element of the type.
-///
-/// @content [Write the style you want to apply to the children, and it will be
-/// added within the @content directive]
-///
-/// @group Utilities
-@mixin first-of-type {
-  &:first-of-type {
-    @content;
-  }
-}
-
-/// Select the last child element of the type.
-///
-/// @content [Write the style you want to apply to the children, and it will be
-/// added within the @content directive]
-///
-/// @group Utilities
-@mixin last-of-type {
-  &:last-of-type {
-    @content;
-  }
-}
-
 /// Select all evenly numbered child elements.
 ///
 /// @content [Write the style you want to apply to the children, and it will be
@@ -537,9 +513,9 @@
 /// @param {Number} $index [0] - Base indexing number for the sort.
 ///
 /// @group Utilities
+/// @require {function} order-index
 ///
 /// @throw Invalid $direction value
-/// @require {function} order-index
 @mixin child-index($num, $direction: 'forward', $index: 0) {
   @if $direction and meta.type-of($direction) == 'string' {
     $direction: string.to-lower-case($direction);

@@ -18,8 +18,8 @@ with messy clip-path coordinates or complicated animation keyframe creation.
 
 **_smthr_ currently contains:**
 
-* 130+ mixins
-* 65+ functions
+* 140+ mixins
+* 75+ functions
 * A modern, opinionated normalize file written in Sass called _betterize.scss
 * A print style file written in Sass called _print.scss
 * A collection of helpful !default variables
@@ -31,17 +31,17 @@ a function or using a mixin with `@includes`.
 
 ## Deployment
 
-Once it is finished it will be available more easily in NPM, but for now you
-will need to download the repo manually from here.
+Soon Smoother library will be available more easily with NPM. For now you
+will need to download the repo manually from here and copy the contents of the
+`./src` folder, the folders `smthr` and `betterize`.
 
-Copy the smthr folder into your project's directory with the rest of the scss
-files, probably within the 'sass' or 'scss' folder, or within one of the
-subdirectories of that folder (most commonly the 'vendor' subdirectory). From
-there, just use either the @use or @forward directive,
-depending on your project structure, for the '_smth.scss' file that is within
-the 'smth' folder at the top of your 'style.scss' file (or 'main.scss', or
-whatever you have named your main stylesheet) where the rest of your imports
-are.
+Copy the `smthr` folder into your project's directory in the folder where you
+keep the rest of your `.scss` files. This is probably in a `sass` or
+`scss` folder, or within one of the subdirectories of that folder (most
+commonly the `vendor` subdirectory). From there, just employ either the `@use`
+or the `@forward` directive (depending on your project's structure) at the top of
+your project's primary stylefile (such as `style.scss` or `main.scss`). These
+should directives load the `_smth.scss` file that is within the `smthr` folder
 
 **Like this:**
 
