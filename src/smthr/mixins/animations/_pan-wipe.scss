@@ -9,7 +9,7 @@
 /// of an element. Works best with a gradient or an image.
 ///
 /// @param {String} $direction [right] - The direction the pan is heading
-/// @param {Number} $duration [6s] - The duration of the animation (s or ms)
+/// @param {Number} $duration [6s] - The duration of the animation (`s` or `ms`)
 /// @param {Mixed} $bg
 /// [linear-gradient(270deg, #CC6AA5, #3E91CC, #2dCCA7) center / 600% 100%] -
 /// The shorthand background property for the element. For this effect it is
@@ -22,7 +22,7 @@
 /// to complete. If the value passed is not a number, it will be set to infinite
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// `null` assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. The default of null will set it to the default timing function
 /// of ease.

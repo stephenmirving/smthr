@@ -25,7 +25,7 @@
 /// @require {function} is-color
 /// @require {variable} $map-color-names
 ///
-/// @throw {Error} Invalid $color-name data type.
+/// @throw  Invalid $color-name data type.
 @function conv-color-name($color, $color-map: $map-color-names) {
   @if not is-color($color) {
     @error 'Invalid $color provided to the [ conv-color-name() ] function ' +
@@ -64,7 +64,7 @@
 /// @require {function} is-color
 /// @require {variable} $map-color-names
 ///
-/// @throw {Error} Invalid $color-name data type.
+/// @throw  Invalid $color-name data type.
 ///
 /// @alias conv-color-name
 @function conv-if-color-name($color, $color-map: $map-color-names) {

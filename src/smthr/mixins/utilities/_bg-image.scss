@@ -34,12 +34,12 @@
 /// @require {function} is-number
 /// @require {function} is-string
 ///
-/// @throw {Error} Invalid $img-name file name, no file extension used.
-/// @throw {Error} SVG file used for $img-name.
-/// @throw {Error} Invalid $min-ratio data type.
-/// @throw {Error} Invalid $img-2x-suffix data type.
-/// @throw {Error} Invalid $hidpi-bg-props data type.
-/// @throw {Warn} Unknown file type for $img-name.
+/// @throw  Invalid $img-name file name, no file extension used.
+/// @throw  SVG file used for $img-name.
+/// @throw  Invalid $min-ratio data type.
+/// @throw  Invalid $img-2x-suffix data type.
+/// @throw  Invalid $hidpi-bg-props data type.
+/// @throw  Unknown file type for $img-name.
 @mixin bg-image(
   $img-name,
   $bg-size,

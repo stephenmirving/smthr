@@ -7,7 +7,7 @@
 /// Adds a shadow dropping animation to a given element's text
 ///
 /// @param {String} $direction [center] - The direction the shadow will fall.
-/// @param {Number} $duration [0.7s] The duration of the animation (s or ms).
+/// @param {Number} $duration [0.7s] The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] The duration of the optional animation delay.
 /// @param {Color} $shadow-color [#000] The color for the shadow. Must be in
 /// 3 or 6 digit hexadecimal notation.

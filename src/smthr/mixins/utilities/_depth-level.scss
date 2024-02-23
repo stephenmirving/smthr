@@ -22,9 +22,9 @@
 /// @require {function} bottom-shadow
 /// @require {function} is-integer
 ///
-/// @throw {Error} Invalid $level value.
-/// @throw {Error} Unaccepted $color type.
-/// @throw {Warn} Passed $color value had it's alpha value disregarded.
+/// @throw  Invalid $level value.
+/// @throw  Unaccepted $color type.
+/// @throw  Passed $color value had it's alpha value disregarded.
 @mixin depth-level($level, $color: #000) {
   @if not is-integer($level) or $level < 0 or $level > 5 {
     @error 'Invalid $level of [ #{meta.inspect($level)} ] used in the ' +
@@ -69,9 +69,9 @@
 /// @require {function} bottom-shadow
 /// @require {function} is-integer
 ///
-/// @throw {Error} Invalid $level value.
-/// @throw {Error} Unaccepted $color type.
-/// @throw {Warn} Passed $color value had it's alpha value disregarded.
+/// @throw  Invalid $level value.
+/// @throw  Unaccepted $color type.
+/// @throw  Passed $color value had it's alpha value disregarded.
 ///
 /// @alias depth-level
 @mixin card-depth($level, $color: #000) {
@@ -95,9 +95,9 @@
 /// @require {function} bottom-shadow
 /// @require {function} is-integer
 ///
-/// @throw {Error} Invalid $level value.
-/// @throw {Error} Unaccepted $color type.
-/// @throw {Warn} Passed $color value had it's alpha value disregarded.
+/// @throw  Invalid $level value.
+/// @throw  Unaccepted $color type.
+/// @throw  Passed $color value had it's alpha value disregarded.
 ///
 /// @alias depth-level
 @mixin shadow-depth($level, $color: #000) {
@@ -121,9 +121,9 @@
 /// @require {function} bottom-shadow
 /// @require {function} is-integer
 ///
-/// @throw {Error} Invalid $level value.
-/// @throw {Error} Unaccepted $color type.
-/// @throw {Warn} Passed $color value had it's alpha value disregarded.
+/// @throw  Invalid $level value.
+/// @throw  Unaccepted $color type.
+/// @throw  Passed $color value had it's alpha value disregarded.
 ///
 /// @alias depth-level
 @mixin shadow-level($level, $color: #000) {
@@ -147,9 +147,9 @@
 /// @require {function} bottom-shadow
 /// @require {function} is-integer
 ///
-/// @throw {Error} Invalid $level value.
-/// @throw {Error} Unaccepted $color type.
-/// @throw {Warn} Passed $color value had it's alpha value disregarded.
+/// @throw  Invalid $level value.
+/// @throw  Unaccepted $color type.
+/// @throw  Passed $color value had it's alpha value disregarded.
 ///
 /// @alias depth-level
 @mixin add-shadow($level, $color: #000) {

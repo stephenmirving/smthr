@@ -10,9 +10,9 @@
 /// to be going in. Valid $direction values include the following: `top`,
 /// `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, `left`, or
 /// `top-left`.
-/// @param {Number} $duration [0.5s] - The duration of the animation (s or ms).
+/// @param {Number} $duration [0.5s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The duration of the optional delay of the
-/// animation (s or ms).
+/// animation (`s` or `ms`).
 /// @param {Timing-Function} $timing-func [cubic-bezier(0.25, 0.46, 0.45, 0.94)] -
 /// The timing function for the animation.
 /// @param {Color} $shadow-color [hsl(0 0% 80%)] - The color of the shadow used

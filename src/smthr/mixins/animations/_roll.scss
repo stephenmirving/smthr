@@ -13,13 +13,13 @@
 /// direction or roll out towards this direction, depending on the value of
 /// $in-or-out. The value of $direction must be one of the following:
 /// 'top', 'right', 'bottom', 'left'.
-/// @param {Number} $duration [null] - The duration of the animation (s or ms)
+/// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// `null` assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for
 /// the animation. A null value passed here will default to the recommended
 /// timing function for this animation of `ease-out` on a roll-in animation,

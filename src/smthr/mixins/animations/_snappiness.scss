@@ -9,14 +9,14 @@
 /// @param {String} $direction [horizontal] - The direction of the animation
 /// occurs in. Can be `horizontal`, `vertical`, `diagonal1`, or `diagonal2`.
 /// or `d2`).
-/// @param {Number} $duration [0.9s] - The duration of the animation (s or ms).
+/// @param {Number} $duration [0.9s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay of the animation (ms or s)
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// for the animation to complete. If the value passed is not a number, it will
-/// be set to infinite.
+/// for the animation to complete. Can be `infinite`, `inherit`, `initial`, or
+/// any unitless number.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// `null` assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null $timing-func will create an animation with the CSS default
 /// timiing-function of ease.
@@ -249,14 +249,14 @@
 /// @param {String} $direction [horizontal] - The direction of the animation
 /// occurs in. Can be `horizontal`, `vertical`, `diagonal1`, or `diagonal2`.
 /// or `d2`).
-/// @param {Number} $duration [0.9s] - The duration of the animation (s or ms).
+/// @param {Number} $duration [0.9s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay of the animation (ms or s)
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// for the animation to complete. If the value passed is not a number, it will
-/// be set to infinite.
+/// for the animation to complete. Can be `infinite`, `inherit`, `initial`, or
+/// any unitless number.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// `null` assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null $timing-func will create an animation with the CSS default
 /// timiing-function of ease.
@@ -300,14 +300,14 @@
 /// @param {String} $direction [horizontal] - The direction of the animation
 /// occurs in. Can be `horizontal`, `vertical`, `diagonal1`, or `diagonal2`.
 /// or `d2`).
-/// @param {Number} $duration [0.9s] - The duration of the animation (s or ms).
+/// @param {Number} $duration [0.9s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay of the animation (ms or s)
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// for the animation to complete. If the value passed is not a number, it will
-/// be set to infinite.
+/// for the animation to complete. Can be `infinite`, `inherit`, `initial`, or
+/// any unitless number.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// `null` assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null $timing-func will create an animation with the CSS default
 /// timiing-function of ease.

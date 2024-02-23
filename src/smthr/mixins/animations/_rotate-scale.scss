@@ -13,7 +13,7 @@
 ///
 /// @param {Bool | String} $up-or-down [up] - Whether the elelment is
 /// scaling up or down.
-/// @param {Number} $duration [0.4s] - The duration of the animation (s or ms).
+/// @param {Number} $duration [0.4s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally rotate along an
 /// axis line. This value can be null (or false, `no`, `n`), `horizontal` (or
@@ -21,11 +21,11 @@
 /// also be either `diagonal` (or `diag` `diagonal1`, `diag1`, `d`, `d1`), or
 /// `diagonal2` (or `diag2`, `d2`).
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// for the animation to complete. If the value passed is not a number, it will
-/// be set to infinite.
+/// for the animation to complete. Can be `infinite`, `inherit`, `initial`, or
+/// any unitless number.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// null assumes the CSS property default of `normal`.
+/// `null` assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
 /// animation.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than

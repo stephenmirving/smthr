@@ -8,7 +8,7 @@
 /// left, right, or both.
 ///
 /// @group Utilities
-/// @throw {Error} Invalid $clear-value parameter value
+/// @throw  Invalid $clear-value parameter value
 @mixin clearfix($clear-value: both) {
   $accepted-values: 'both', 'left', 'right';
 

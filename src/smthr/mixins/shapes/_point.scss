@@ -15,8 +15,8 @@
 ///
 /// @group Shapes
 ///
-/// @throw {Error} Invalid $direction data type.
-/// @throw {Error} Invalid $direction keyword value.
+/// @throw  Invalid $direction data type.
+/// @throw  Invalid $direction keyword value.
 @mixin point($direction: right, $size: 15rem, $bg: #80f, $height: $size) {
   @if $direction {
     @if is-string($direction) {

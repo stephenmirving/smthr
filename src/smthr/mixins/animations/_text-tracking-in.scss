@@ -14,13 +14,13 @@
 /// on an `expand` animation, and to move backwards on `contract` animations.
 /// @param {String} $origin [null] - The origin the animation appears to
 /// be animating in from. Can be `null`, `top`, or `bottom`.
-/// @param {Number} $duration [0.9s] - The duration of the animation (s or ms).
+/// @param {Number} $duration [0.9s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The animation-iteration-count
 /// value for the animation.
 /// @param {String} $anim-dir [null] - Sets the animation-direction
 /// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
-/// Default of null assumes the CSS animation-direction default of `normal`.
+/// Default of `null` assumes the CSS animation-direction default of `normal`.
 /// @param {Timing-Function} $timing-func [cubic-bezier(0.215, 0.61, 0.355, 1)] -
 /// The timing function for the animation. Using the default is recommended.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
@@ -31,14 +31,14 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw {Error} Invalid $expand-contract value.
-/// @throw {Error} Invalid data type for $animate-in-place.
-/// @throw {Error} Invalid $origin value.
-/// @throw {Error} Invalid data type for $duration.
-/// @throw {Error} Invalid data type for $delay.
-/// @throw {Error} Invalid data type for $iterations.
-/// @throw {Error} Invalid keyword value for $anim-dir.
-/// @throw {Warn} Conflict between value for $animate-in-place and $origin.
+/// @throw  Invalid $expand-contract value.
+/// @throw  Invalid data type for $animate-in-place.
+/// @throw  Invalid $origin value.
+/// @throw  Invalid data type for $duration.
+/// @throw  Invalid data type for $delay.
+/// @throw  Invalid data type for $iterations.
+/// @throw  Invalid keyword value for $anim-dir.
+/// @throw  Conflict between value for $animate-in-place and $origin.
 @mixin text-tracking-in(
   $expand-contract: 'expand',
   $animate-in-place: true,

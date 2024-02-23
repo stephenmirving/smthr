@@ -14,15 +14,15 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw {Error} Invalid type of $flip-axis.
-/// @throw {Error} Invalid $z-val z-index value.
+/// @throw  Invalid type of $flip-axis.
+/// @throw  Invalid $z-val z-index value.
 @mixin animation-back-face($flip-axis: horizontal, $z-val: 10) {
   // Default rotation for the flip-axis value of horizontal
   $trans-val: rotateX(180deg);
 
   @if meta.type-of($flip-axis) != 'string' {
-    @error 'Value of $flip-axis passed to the `animation-back-face` mixin ' +
-        'must be of type "string".';
+    @error 'Value of $flip-axis passed to the [ animation-back-face() ] mixin ' +
+        'must be of type \'string\'.';
   }
 
   $flip-axis: string.to-lower-case($flip-axis);
@@ -65,8 +65,8 @@
 ///
 /// @require {function} is-alias
 ///
-/// @throw {Error} Invalid type of $flip-axis.
-/// @throw {Error} Invalid $z-val z-index value.
+/// @throw  Invalid type of $flip-axis.
+/// @throw  Invalid $z-val z-index value.
 ///
 /// @alias animation-back-face
 @mixin animation-back-side($flip-axis: horizontal, $z-val: 10) {

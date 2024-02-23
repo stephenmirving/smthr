@@ -12,11 +12,11 @@
 /// @param {Number} $duration [1s] - The duration of the animation (in s or ms).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// for the animation to complete. If the value passed is not a number, it will
-/// be set to infinite.
+/// for the animation to complete. Can be `infinite`, `inherit`, `initial`, or
+/// any unitless number.
 /// @param {String} $anim-dir [null] - Sets the animation-direction
 /// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
-/// Default of null assumes the default of `normal`.
+/// Default of `null` assumes the default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. If no specific function is passed, the mixin will choose the
 /// best custom timing function for the given style.

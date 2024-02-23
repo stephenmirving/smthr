@@ -20,9 +20,9 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw {Error} Invalid keyword for $direction.
-/// @throw {Error} Invalid data type for $duration.
-/// @throw {Error} Invalid data type for $delay.
+/// @throw  Invalid keyword for $direction.
+/// @throw  Invalid data type for $duration.
+/// @throw  Invalid data type for $delay.
 @mixin zoom-in(
   $direction: bottom,
   $duration: 5s,
@@ -188,9 +188,9 @@
 /// @group Animations
 /// @require {function} is-alias
 ///
-/// @throw {Error} Invalid keyword for $direction.
-/// @throw {Error} Invalid data type for $duration.
-/// @throw {Error} Invalid data type for $delay.
+/// @throw  Invalid keyword for $direction.
+/// @throw  Invalid data type for $duration.
+/// @throw  Invalid data type for $delay.
 ///
 /// @alias zoom-in
 @mixin ken-burns(
