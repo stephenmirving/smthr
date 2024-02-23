@@ -2,11 +2,16 @@
 @use 'sass:list';
 
 /// Checks whether `$functions` exist in global scope.
-/// @access public
+///
+/// --- THIS FUNCTION IS CURRENTLY REMOVED FROM THE PROJECT AS I SEE IF IT ---
+/// --- IS POSIBLE TO STILL BE USED WITH THE NEW @use AND @forward SYNTAX. ---
+///
+/// @access private
+/// @deprecated
 ///
 /// @param {ArgList} $functions - list of functions to check for
 /// @return {Bool} Whether or not there are missing dependencies
-@function missing-dependencies($functions...) {
+@function _missing-dependencies($functions...) {
   $missing-dependencies: ();
 
   @each $function in $functions {

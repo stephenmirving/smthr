@@ -8,7 +8,7 @@
 
 @use 'sass:meta';
 @use 'sass:map';
-@use './smth' as smth;
+@use '../smthr/smth' as smth;
 
 ////////////////////////////////////////
 // BASE STYLES: opinionated defaults ///

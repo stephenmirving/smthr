@@ -14,7 +14,6 @@
 /// @access public
 ///
 /// @param {Color} $color - The color to convert.
-/// @param {String} $syntax [hsl] - The color syntax to convert into.
 ///
 /// @return {String} The hex color as an unquoted string. Works as a CSS color
 /// but will not currently work in Sass color module methods or other Sass
@@ -22,8 +21,7 @@
 ///
 /// @require {function} _component-to-hex
 ///
-/// @throw Invalid data type for $color
-/// @throw Invalid color syntax type for $syntax
+/// @throw {Error} Invalid data type for $color
 @function to-hex($color) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to `conv-color()` function. You passed ' +
@@ -82,7 +80,6 @@
 /// @require {function} _component-to-hex
 ///
 /// @throw Invalid data type for $color
-/// @throw Invalid color syntax type for $syntax
 ///
 /// @alias to-hex
 @function color-to-hex($color) {
@@ -92,6 +89,7 @@
 /// Converts a given color to hex notation in either 3, 6, or 8 digit
 /// notation based on the input. The hex color is returned as an unquoted
 /// string.
+///
 /// @access public
 ///
 /// @param {Color} $color - The color to convert.
@@ -104,7 +102,6 @@
 /// @require {function} _component-to-hex
 ///
 /// @throw Invalid data type for $color
-/// @throw Invalid color syntax type for $syntax
 ///
 /// @alias to-hex
 @function conv-to-hex($color) {
@@ -126,7 +123,6 @@
 /// @require {function} _component-to-hex
 ///
 /// @throw Invalid data type for $color
-/// @throw Invalid color syntax type for $syntax
 ///
 /// @alias to-hex
 @function convert-to-hex($color) {

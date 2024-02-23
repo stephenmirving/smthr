@@ -8,9 +8,9 @@
 /// Converts a REM value into pixel units.
 /// @access public
 ///
-/// @param {Length} $rems - Values in rem's.
+/// @param {Number} $rems - Values in rem's.
 /// @param {Number} $base - The base font-size.
-/// @return {Length} The values in pixels (px).
+/// @return {Number} The values in pixels (px).
 @function conv-to-px($rems, $base: null) {
   $px-vals: ();
 

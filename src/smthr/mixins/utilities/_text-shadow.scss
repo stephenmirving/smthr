@@ -3,9 +3,9 @@
 
 /// Apply a text shadow effect.
 ///
-/// @param {Length} $x [2px] - The x-axis offset of the shadow.
-/// @param {Length} $y [2px] - The x-axis offset of the shadow.
-/// @param {Length} $blur [5px] - The blur range of the shadow.
+/// @param {Number} $x [2px] - The x-axis offset of the shadow.
+/// @param {Number} $y [2px] - The x-axis offset of the shadow.
+/// @param {Number} $blur [5px] - The blur range of the shadow.
 /// @param {Color} $color [hsl(0 0% 0 / 0.4)] - The color of the shadow.
 ///
 /// @group Utilities

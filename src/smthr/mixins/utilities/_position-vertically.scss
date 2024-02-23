@@ -6,9 +6,9 @@
 /// the vertical alignment. If you want to center the element both horizontally
 /// and vertically, use the `position-center()` mixin instead.
 ///
-/// @param {Length} $top-pos [50%] - The top property value. 50% will put the
+/// @param {Number} $top-pos [50%] - The top property value. 50% will put the
 /// element in the vertical center.
-/// @param {Keyword} $position [relative] - The position value desired,
+/// @param {String} $position [relative] - The position value desired,
 /// must use either relative or absolute positioning.
 ///
 /// @group Utilities
@@ -45,7 +45,7 @@
 /// combining positioning and translation. If you want to center the element
 /// both horizontally and vertically, use the `position-center()` mixin instead.
 ///
-/// @param {Keyword} $position [relative] - The position value desired,
+/// @param {String} $position [relative] - The position value desired,
 /// must use either relative or absolute positioning.
 ///
 /// @group Utilities

@@ -1,25 +1,26 @@
-@use './missing-dependencies' as *;
 @use './update-list' as *;
 
 /// Removes `$value` from `$list`.
+///
 /// @access public
 ///
 /// @param {List} $list - The list to update.
 /// @param {*} $value - The value to remove from `$list`.
+///
 /// @return {List} The updated list.
 ///
 /// @require {function} update-list
 @function remove-from($list, $value) {
-  // $missing: missing-dependencies('update-list');
-
   @return update-list($list, $value, null);
 }
 
 /// Removes `$value` from `$list`.
+///
 /// @access public
 ///
 /// @param {List} $list - The list to update.
 /// @param {*} $value - The value to remove from `$list`.
+///
 /// @return {List} The updated list.
 ///
 /// @require {function} update-list

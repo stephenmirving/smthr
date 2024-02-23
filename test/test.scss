@@ -8,6 +8,8 @@
 @use 'sass:string';
 @use '../src/smthr/smth' as *;
 
+@forward '../src/betterize/betterize';
+
 .container {
   display: grid;
   place-items: center;
@@ -186,4 +188,8 @@ $flip-axis: 'vertical';
       $use-margin: true
     );
   }
+}
+
+.test {
+  content: functions-walk(('is-number', 'is-float', 'is-length', 'is-absolute-length', 'pi'), 19rem);
 }

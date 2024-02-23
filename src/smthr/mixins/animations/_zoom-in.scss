@@ -10,9 +10,9 @@
 /// @param {String} $direction [bottom] - The direction of the angle the
 /// zoom-in will have. Accepts `top`, `left`, `right`, `bottom`,
 /// `bottom-right`, `top-right`, `bottom-left`, or `top-left`.
-/// @param {Time} $duration [5s] - The duration of the animation's effect.
-/// @param {Time} $delay [null] - An optional delay before starting the effect.
-/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// @param {Number} $duration [5s] - The duration of the animation's effect.
+/// @param {Number} $delay [null] - An optional delay before starting the effect.
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
 /// the animations do not overwrite each other.
@@ -178,9 +178,9 @@
 /// @param {String} $direction [bottom] - The direction of the angle the
 /// zoom-in will have. Accepts `top`, `left`, `right`, `bottom`,
 /// `bottom-right`, `top-right`, `bottom-left`, or `top-left`.
-/// @param {Time} $duration [5s] - The duration of the animation's effect.
-/// @param {Time} $delay [null] - An optional delay before starting the effect.
-/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// @param {Number} $duration [5s] - The duration of the animation's effect.
+/// @param {Number} $delay [null] - An optional delay before starting the effect.
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
 /// the animations do not overwrite each other.

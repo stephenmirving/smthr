@@ -1,59 +1,81 @@
-/// Colors used for buttons, callouts, links, etc.
-/// @type Map of Colors
+////
+///
+/// All the public variables that are used in the Smoother library that are of
+/// the `Color` type.
+///
+/// @access public
+/// @type Color
+///
+////
+
+
+/// Colors used for various UI elements in your theme. This is a map that has
+/// strings for keys that are associated with a corresponding color.
+///
+/// This map serves as a centralized repository for color values used throughout
+/// the project, ensuring consistency across buttons, links, and other
+/// UI elements. Each key in the map represents a semantic name for a color,
+/// such as 'primary', 'secondary', 'accent', 'success', 'warning', or 'alert',
+/// and the value is the corresponding color. This approach allows for easy
+/// updates and maintains a clear visual language across the
+/// project.
+///
+/// @type Map
 /// @todo Fill out with the colors you choose for your theme.
+///
+/// @prop {string} 'primary' - The primary color, typically used for the majority
+/// of the colors in your theme.
+/// @prop {string} 'secondary' - The secondary color, used for secondary actions
+/// or to complement the primary color.
+/// @prop {string} 'accent' - The accent color, used for accents or to draw
+/// attention.
+/// @prop {string} 'success' - The success color, used to indicate successful
+/// actions or positive outcomes.
+/// @prop {string} 'warning' - The warning color, used to indicate caution or
+/// potential issues.
+/// @prop {string} 'alert' - The alert color, used to indicate errors or
+/// critical issues.
 $color-palette: (
   'primary': #1779ba,
   'secondary': #767676,
   'accent': #0d004b,
   'success': #3adb76,
   'warning': #fb0,
-  'alert': red
+  'alert': #f00,
 ) !default;
 
 /// Color used for black UI items.
-/// @type Color
 $black: hsl(0 0% 0%) !default;
 
 /// Color used for off-black UI elements.
-/// @type Color
 $off-black: hsl(0 0% 12.55%) !default;
 
 /// Color used for dark gray UI elements.
-/// @type Color
 $dark-gray: hsl(0 0% 54.12%) !default;
 
 /// Color used for medium gray UI elements.
-/// @type Color
 $medium-gray: hsl(0 0% 79.22%) !default;
 
 /// Color used for light gray UI elements.
-/// @type Color
 $light-gray: hsl(0 0% 90.2%) !default;
 
 /// Color used for off-white UI elements.
-/// @type Color
 $off-white: hsl(0 0% 94.9%) !default;
 
 /// Color used for white UI elements.
-/// @type Color
 $white: hsl(0 0% 100%) !default;
 
 /// Default text color for the page
-/// @type Color
 $color-body: hsl(0 0% 20%) !default;
 
 /// Default background color for the page
-/// @type Color
 $color-body-bg: hsl(0 0% 94.9%) !default;
 
 /// Highlight background color when text is selected.
-/// @type Color
 $color-selection-highlight: hsl(211.48 36.97% 32.35%) !default;
 
 /// Text color when it is selected.
-/// @type Color
 $color-selection-text: hsl(0 0% 100%) !default;
 
 /// The color of the ring around elements when they are keyboard focused.
-/// @type Color
 $color-focus-ring: hsl(0 0% 0%) !default;

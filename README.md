@@ -14,7 +14,7 @@ with messy clip-path coordinates or complicated animation keyframe creation.
 
 ## smthr is in active development
 
-**This is *smthr* version 0.2.3 - Last update: 02/19/24*
+**This is *smthr* version 0.2.4 - Last update: 02/22/24*
 
 **_smthr_ currently contains:**
 
@@ -53,7 +53,7 @@ Of if you were to place the folder within your vendor sub-folder in your sass
 directory, the @use would look like this:
 
 ```scss
-@use 'vendor/smthr/smth' as smth;
+@use './vendor/smthr/smth' as smth;
 ```
 
 Doing this namespaces the library to smth and you can call the functions,
@@ -72,7 +72,7 @@ If you prefer to namespace it to something shorter, you can choose anything you
 want that is not used by another module, for example:
 
 ```scss
-@use 'vendor/smthr/smth' as _;
+@use './vendor/smthr/smth' as _;
 
 .element {
   color: _.invert-color($color-brand)
@@ -87,7 +87,7 @@ prefix when calling the functions, mixins, or variables in the library.
 That looks like this:
 
 ```scss
-@use 'vendor/smthr/smth' as *;
+@use './vendor/smthr/smth' as *;
 
 .element {
   color: invert-color($color-brand)
@@ -96,21 +96,25 @@ That looks like this:
 ```
 
 If you want to use the normalization file `_betterize.scss` or the print style
-file `_print.scss`, simply keep them in the same directory as the `_smth.scss` file
-and import them into your project's stylesheet using the `@forward` directive.
+file `_print.scss`, simply copy the `betterize` folder into the same folder that the
+smthr folder is copied into in your project, and then import them into your
+project's stylesheet using the `@forward` directive.
 You could also use the `@import` directive but that is in the process of being
-deprecated and will be removed in future versions of Sass
-(see (here)[https://sass-lang.com/documentation/at-rules/import/]).
+deprecated and will be
+[removed in future versions of Sass](https://sass-lang.com/documentation/at-rules/import/).
 
 **Like this:**
 
 ```scss
-@forward 'vendor/smthr/betterize';
-@forward 'vendor/smthr/print;
+@forward './vendor/betterize/betterize';
+@forward './vendor/betterize/print;
 ```
 
 If you choose to use _betterize.scss, you can remove any other CSS normalization
-or reset files such as normalize.css or reset.css.
+or reset files such as normalize.css or reset.css. You can check out the
+[Betterize repo](https://github.com/stephenmirving/betterize) for more information
+or for versions of  Betterize written in .css, .sass, .less, and .scss formats
+that are free from Smthr dependencies.
 
 For more information about how to structure your project with 3rd party
 libraries, please refer to the official

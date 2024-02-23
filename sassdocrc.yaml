@@ -11,10 +11,7 @@ options:
     - 'name'
     - 'description'
     - 'type'
-    - 'syntax'
     - 'example'
-    - 'since'
-    - 'deprecated'
   groups:
     'undefined': 'General'
     'color': 'Colors'

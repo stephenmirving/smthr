@@ -4,7 +4,7 @@
 /// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
 /// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
 ///
-/// @param {Bool|String} $only-legacy [null] - Pass nothing or null to target
+/// @param {Bool | String} $only-legacy [null] - Pass nothing or null to target
 /// all version of Gecko based Mozilla browsers. To target newer Quantam Mozilla
 /// browsers, pass false, null, `quantam`, `new`, `stylo`, or `q`.
 /// To target Legacy (pre-Stylo) Mozilla browsers, pass true, `legacy`, `old`,
@@ -71,7 +71,7 @@
 /// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
 /// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
 ///
-/// @param {Bool|String} $only-legacy [null] - Pass nothing or null to target
+/// @param {Bool | String} $only-legacy [null] - Pass nothing or null to target
 /// all version of Gecko based Mozilla browsers. To target Quantam Mozilla
 /// browsers, pass false, `quantam`, `new`, `stylo`, or `q`. To target Legacy
 /// (pre-Stylo) Mozilla browsers, pass true, `legacy`, `old`, or `pre-stylo`.

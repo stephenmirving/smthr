@@ -10,7 +10,7 @@
 ///
 /// @content Styles for screen widths equal to or less than $threshold.
 ///
-/// @param {Length|Number} $threshold - The maximum screen dimension for the
+/// @param {Number} $threshold - The maximum screen dimension for the
 /// style. If a unitless number is passed, is is assumed to be in pixels.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the length passed is in `px` or `rem` units.
@@ -45,7 +45,7 @@
 /// into `em` unit widths.
 /// @content Styles for screen widths  than $threshold.
 ///
-/// @param {Length|Number} $threshold - The maximum screen dimension for the
+/// @param {Number} $threshold - The maximum screen dimension for the
 /// style. If a unitless number is passed, is is assumed to be in pixels.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the length passed is in `px` or `rem` units.
@@ -64,7 +64,7 @@
 /// into `em` unit widths.
 /// @content Styles for screen widths  than $threshold.
 ///
-/// @param {Length|Number} $threshold - The maximum screen dimension for the
+/// @param {Number} $threshold - The maximum screen dimension for the
 /// style. If a unitless number is passed, is is assumed to be in pixels.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the length passed is in `px` or `rem` units.
@@ -83,7 +83,7 @@
 /// into `em` unit widths.
 /// @content Styles for screen widths  than $threshold.
 ///
-/// @param {Length|Number} $threshold - The maximum screen dimension for the
+/// @param {Number} $threshold - The maximum screen dimension for the
 /// style. If a unitless number is passed, is is assumed to be in pixels.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the length passed is in `px` or `rem` units.
@@ -102,7 +102,7 @@
 /// into `em` unit widths.
 /// @content Styles for screen widths  than $threshold.
 ///
-/// @param {Length|Number} $threshold - The maximum screen dimension for the
+/// @param {Number} $threshold - The maximum screen dimension for the
 /// style. If a unitless number is passed, is is assumed to be in pixels.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the length passed is in `px` or `rem` units.

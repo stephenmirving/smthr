@@ -4,11 +4,14 @@
 
 /// Calculate the least square fit linear regression, or "trend-line", of a
 /// mapped set of provided values.
+///
 /// @access public
 ///
 /// @param {Map} $map - A map where the keys are viewport widths and each value
 /// associated is the desired pixel size at that given view width.
-/// @return A linear equation expressed as a calc() function.
+///
+/// @return {Calculation} A linear equation expressed as a calc() function.
+///
 /// @example font-size: trend-line((576px: 24px, 768px: 24px, 992px: 34px))
 @function trend-line($map) {
   // Get the number of provided breakpoints

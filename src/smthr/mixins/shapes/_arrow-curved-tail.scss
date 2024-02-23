@@ -8,10 +8,10 @@
 /// Uses psuedo-elements and transform to turn an element into the shape of an
 /// arrow with a curved tail.
 ///
-/// @param {String|Angle} $direction ['bottom-right'] The direction that the
+/// @param {String | Number} $direction ['bottom-right'] The direction that the
 /// arrow is pointing. Can either be a direction or an angle in degrees, turns,
 /// radians, or gradians.
-/// @param {Length} $size [2rem] - The size of the arrow is calculated based on
+/// @param {Number} $size [2rem] - The size of the arrow is calculated based on
 /// this value.
 /// @param {Color} $color [#f00] The color of the arrow.
 ///

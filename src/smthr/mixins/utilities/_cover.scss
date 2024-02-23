@@ -14,7 +14,7 @@
 /// element will attempt to cover the entire viewport rather than just
 /// covering the nearest stacking context. This is not 100% reliable depending
 /// on the stacking context properties of the elements in the parent chain.
-/// @param {Color|Mixed} $bg-val [null] - A shorthand background value
+/// @param {Color | Mixed} $bg [null] - A shorthand background value
 /// @param {Number} $opacity [null] - A decimal value between 0 and 1
 ///
 /// @group Utilities
@@ -30,7 +30,7 @@
 @mixin cover(
   $z-val: 999,
   $is-fullscreen: false,
-  $bg-val: null,
+  $bg: null,
   $opacity: null
 ) {
   @if is-string($is-fullscreen) {
@@ -91,8 +91,8 @@
     max-height: 100%;
   }
 
-  @if $bg-val {
-    background: $bg-val;
+  @if $bg {
+    background: $bg;
   }
 
   @if is-number($opacity) {

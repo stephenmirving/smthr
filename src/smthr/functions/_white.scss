@@ -6,6 +6,7 @@
 ///
 /// @param {Number} $opacity [1] - An opacity level between either 0 and 1
 /// or 0% and 100%, inclusive.
+///
 /// @return {Color} The white color at the given opacity level.
 ///
 /// @throw Invalid data type for $opacity
@@ -38,6 +39,6 @@
   } @else if $opacity == 0 {
     @return transparent;
   } @else {
-    @return #{hsla(0, 0%, 100%, $opacity)};
+    @return hsla(0, 0%, 100%, $opacity);
   }
 }

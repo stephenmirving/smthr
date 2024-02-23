@@ -1,6 +1,7 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use 'sass:math';
+@use '../../functions/is-alias' as *;
 
 /// Apply to the child element of the element with the a 3-d transform effect
 /// to represent the back-face of the card that the animation flips to or past.
@@ -26,26 +27,13 @@
 
   $flip-axis: string.to-lower-case($flip-axis);
 
-  @if $flip-axis == 'vertical' or $flip-axis == 'vert' or $flip-axis == 'v' {
+  @if is-alias('top-to-bottom', $flip-axis) {
     $trans-val: rotateY(180deg);
-  } @else if $flip-axis == 'diagonal' or
-             $flip-axis == 'diagonal1' or
-             $flip-axis == 'diag' or
-             $flip-axis == 'diag1' or
-             $flip-axis == 'd' or
-             $flip-axis == 'd1'
-  {
+  } @else if is-alias('bottom-left-to-top-right', $flip-axis) {
     $trans-val: rotate3d(1, 1, 0, 180deg);
-  } @else if $flip-axis == 'diagonal2' or
-             $flip-axis == 'diag2' or
-             $flip-axis == 'd2'
-  {
+  } @else if is-alias('bottom-right-to-top-left', $flip-axis) {
     $trans-val: rotate3d(-1, 1, 0, -180deg);
-  } @else if $flip-axis != 'horizontal' and
-             $flip-axis != 'horiz' and
-             $flip-axis != 'horz' and
-             $flip-axis != 'h'
-  {
+  } @else if not is-alias('left-to-right', $flip-axis) {
     @error 'Invalid flip-axis value of `#{meta.inspect($flip-axis)}` for the ' +
         '[ animation-back-face() ] mixin';
   }
@@ -74,6 +62,7 @@
 /// @param {Number} $z-val [10] - The z-index value.
 ///
 /// @group Animations
+///
 /// @require {function} is-alias
 ///
 /// @throw {Error} Invalid type of $flip-axis.

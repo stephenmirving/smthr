@@ -8,11 +8,11 @@
 ///
 /// @access public
 ///
-/// @param {Length} $min - The minimum width. Should be an absolute length value
+/// @param {Number} $min - The minimum width. Should be an absolute length value
 /// or a function that resolves to one.
-/// @param {Length} $rel - The relative length width of the element. Use units
+/// @param {Number} $rel - The relative length width of the element. Use units
 /// like vw, %, em, etc. or a function using relative units.
-/// @param {Length} $max - The maximum width. Should be an absolute length value
+/// @param {Number} $max - The maximum width. Should be an absolute length value
 /// or a function that resolves to one.
 @mixin clamp-width($min, $rel, $max) {
   width: $rel;

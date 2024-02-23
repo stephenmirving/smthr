@@ -7,9 +7,9 @@
 /// Converts values into rem units.
 /// @access public
 ///
-/// @param {Length-Percentage} $values - Values to convert to REM units.
+/// @param {Number} $values - Values to convert to REM units.
 /// @param {Number} $base [null] - The base font-size.
-/// @return {Length} The values in REMs.
+/// @return {Number} The values in REMs.
 ///
 /// @require {function} strip-unit
 @function conv-to-rem($values, $base: null) {

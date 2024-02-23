@@ -1,8 +1,8 @@
 /// Uses clip path to change an element to the shape of an octagon.
 ///
-/// @param {Length-Percentage} $size [15rem] - The height and width of
+/// @param {Number} $size [15rem] - The height and width of
 /// the element.
-/// @param {Color|Mixed} $bg [#8b0000] - Can be any value that is valid for the
+/// @param {Color | Mixed} $bg [#8b0000] - Can be any value that is valid for the
 /// background shorthand property.
 ///
 /// @group Shapes
@@ -31,9 +31,9 @@
 /// References the octagon clip-path mixin to create a stop sign shape with a
 /// background color of red and white text as the defaults.
 ///
-/// @param {Color|Mixed} $bg [#8b0000] - Can be any value that is valid for the
+/// @param {Color | Mixed} $bg [#8b0000] - Can be any value that is valid for the
 /// background shorthand property.
-/// @param {Length-Percentage} $size [15rem] - The height and width of
+/// @param {Number} $size [15rem] - The height and width of
 /// the element.
 /// @param {Color} $fg-color [#fff] - Optional argument that sets the color
 /// property for the elment.

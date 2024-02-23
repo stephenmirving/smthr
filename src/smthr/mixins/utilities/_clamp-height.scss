@@ -8,11 +8,11 @@
 ///
 /// @access public
 ///
-/// @param {Length} $min - The minimum height. Should be an absolute length value
+/// @param {Number} $min - The minimum height. Should be an absolute length value
 /// or a function that resolves to one.
-/// @param {Length} $rel - The relative length height of the element. Use units
+/// @param {Number} $rel - The relative length height of the element. Use units
 /// like vh, %, em, etc. or a function using relative units.
-/// @param {Length} $max - The maximum height. Should be an absolute length value
+/// @param {Number} $max - The maximum height. Should be an absolute length value
 /// or a function that resolves to one.
 @mixin clamp-height($min, $rel, $max) {
   height: $rel;

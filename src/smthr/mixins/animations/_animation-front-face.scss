@@ -7,7 +7,6 @@
 /// @param {Number} $z-index [20] - The z-index value.
 ///
 /// @group Animations
-/// @group Utilities
 ///
 /// @throw Invalid $z-index z-index value
 @mixin animation-front-face($z-index: 20) {
@@ -35,7 +34,6 @@
 /// @param {Number} $z-index [20] - The z-index value.
 ///
 /// @group Animations
-/// @group Utilities
 ///
 /// @throw Invalid $z-index z-index value
 ///

@@ -1,9 +1,10 @@
 /// Apply the given styles to Legacy MS Edge (pre-webkit) only by using a
-/// @supports query.
+/// `@supports` query.
 ///
 /// @content Styles that target MS Edge.
 ///
 /// @group Utilities
+///
 /// @alias edge-only
 @mixin only-legacy-edge {
   @supports (position: -ms-page) {
@@ -12,9 +13,10 @@
 }
 
 /// Apply the given styles to Legacy MS Edge (pre-webkit) only by using a
-/// @supports query.
+/// `@supports` query.
 ///
 /// @group Utilities
+///
 /// @alias only-edge
 @mixin legacy-edge-only {
   @include only-legacy-edge {

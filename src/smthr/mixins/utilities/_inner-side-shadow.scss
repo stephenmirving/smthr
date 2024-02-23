@@ -6,9 +6,9 @@
 
 /// Creates an inner box-shadow for only one side of an element.
 ///
-/// @param {Keyword} $side [bottom] - Side the shadow is supposed to appear.
+/// @param {String} $side [bottom] - Side the shadow is supposed to appear.
 /// Can be `top`, `left`, `right` or `bottom`.
-/// @param {Length} $size [20px] - The width of the shadow on the target side.
+/// @param {Number} $size [20px] - The width of the shadow on the target side.
 /// @param {Color} $color [hsl(0 0% 0 / 0.3] - The color of the shadow.
 ///
 /// @group Utilities

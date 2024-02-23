@@ -4,7 +4,7 @@
 /// Adds the border radius property along with the background-clip: padding box
 /// property, value pair.
 ///
-/// @param {Length-Percentage} $radius [10px] - The border-radius value.
+/// @param {Number} $radius [10px] - The border-radius value.
 ///
 /// @group Utlities
 @mixin border-radius($radius: 10px) {

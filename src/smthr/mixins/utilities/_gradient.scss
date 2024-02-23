@@ -12,10 +12,10 @@
 ///
 /// @param {Color} $start-color - The starting color in the gradient.
 /// @param {Color} $end-color - The ending color in the gradient.
-/// @param {String|Angle|Keyword} $orientation ['horizontal'] - The direction
+/// @param {String | Number} $orientation ['horizontal'] - The direction
 /// of the grandient.
-/// @param {Percentage} $start-percent [0%] - Starting percentage of the gradient.
-/// @param {Percentage} $end-percent [100%] - Ending percentage of the gradient.
+/// @param {Number} $start-percent [0%] - Starting percentage of the gradient.
+/// @param {Number} $end-percent [100%] - Ending percentage of the gradient.
 ///
 /// @group Utilities
 /// @throw Invalid $orientation value

@@ -5,11 +5,12 @@ TODO:
       ☐ Function testing
         ☐ Retest ratio-to-percentage
         ☐ Retest decimal-to-ratio
-        ☐ Fix functions-walk() and walk() or remove them
+        ✔ Fix functions-walk() and walk() or remove them @done(24-02-22 19:15)
         ☐ Figure out how to fix missing-dependencies or remove it from the project.
         ☐ Determine difference between linear-interpolation and trend-line functions.
         ☐ COntinue working on conv-color. Maybe the hex conversion should be combined with the name syntax so that it returns type of color.
         ☐ If the hex conversion is not combined with the color name syntax, it must be fixed as it is slightly off on some values
+          ☐ Need to find values where this is true???
       ☐ Mixin Testing
         ✔ Test all Shape mixins @done(24-02-18 16:33)
         ☐ Test all Utilities mixins
@@ -100,6 +101,7 @@ TODO:
     ☐ Special character detecting function, finish and propogate
 
   Publishing:
+    ☐ Get the SassDoc API compiled and ran
     ☐ Create website and API guide using Github Pages
     ☐ Publish as an npm package
     ☐ Use SassDoc to generate web documentation from files

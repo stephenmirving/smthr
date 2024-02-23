@@ -11,10 +11,10 @@
 /// @param {Color} $color [#112] - Color to use for the icon.
 /// @param {Color} $color-hover [hsl(0 0% 54.12%)] - Color to use when the icon
 /// is hovered over.
-/// @param {Length} $width [20px] - Width of the icon.
-/// @param {Length} $height [$width * 0.8] - Total height of the icon.
+/// @param {Number} $width [20px] - Width of the icon.
+/// @param {Number} $height [$width * 0.8] - Total height of the icon.
 /// @param {Number} $bars [3] - Number of bars in the icon.
-/// @param {Length} $thickness [to-fixed(math.div($width, 6 + $bars), 3)] -
+/// @param {Number} $thickness [to-fixed(math.div($width, 6 + $bars), 3)] -
 /// Height of individual bars or 'patties' in the hamburger.
 /// @param {List} $transition: - The transition property you want to apply to
 /// the hover and active states of the hamburger button.

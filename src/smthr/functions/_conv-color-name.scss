@@ -22,8 +22,8 @@
 /// the corresponding 3 or 6 digit hex color value. Otherwise, returns the
 /// same color.
 ///
-/// @require {Fucntion} is-color
-/// @require {Map} $map-color-names
+/// @require {function} is-color
+/// @require {variable} $map-color-names
 ///
 /// @throw {Error} Invalid $color-name data type.
 @function conv-color-name($color, $color-map: $map-color-names) {
@@ -61,8 +61,8 @@
 /// the corresponding 3 or 6 digit hex color value. Otherwise, returns the
 /// same color.
 ///
-/// @require {Fucntion} is-color
-/// @require {Map} $map-color-names
+/// @require {function} is-color
+/// @require {variable} $map-color-names
 ///
 /// @throw {Error} Invalid $color-name data type.
 ///

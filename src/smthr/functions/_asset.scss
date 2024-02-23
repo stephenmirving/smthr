@@ -28,7 +28,7 @@
 /// @param {String} $file - Asset file name, including extension
 /// @return {String} A file location leading to the asset.
 ///
-/// @require {function} asset
+/// @require {function} _asset
 @function image($file) {
   @return _asset('img', $file);
 }
@@ -40,7 +40,7 @@
 /// @param {String} $file - Asset file name, including extension
 /// @return {String} A file location leading to the asset.
 ///
-/// @require {function} asset
+/// @require {function} _asset
 @function font($file) {
   @return _asset('fonts', $file);
 }

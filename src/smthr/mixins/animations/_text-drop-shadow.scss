@@ -7,11 +7,11 @@
 /// Adds a shadow dropping animation to a given element's text
 ///
 /// @param {String} $direction [center] - The direction the shadow will fall.
-/// @param {Time} $duration [0.7s] The duration of the animation (s or ms).
-/// @param {Time} $delay [null] The duration of the optional animation delay.
+/// @param {Number} $duration [0.7s] The duration of the animation (s or ms).
+/// @param {Number} $delay [null] The duration of the optional animation delay.
 /// @param {Color} $shadow-color [#000] The color for the shadow. Must be in
 /// 3 or 6 digit hexadecimal notation.
-/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
 /// the animations do not overwrite each other.

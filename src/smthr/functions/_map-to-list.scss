@@ -5,7 +5,7 @@
 /// @access public
 ///
 /// @param {Map} $map - Map to pull a value from.
-/// @param {String} ['both'] - Whether to keep just the 'keys', just the 'values'
+/// @param {String} $keep ['both'] - Whether to keep just the 'keys', just the 'values'
 /// or 'both' from the $map.
 ///
 /// @return {List} Depending on the flag, returns either keys, values or both

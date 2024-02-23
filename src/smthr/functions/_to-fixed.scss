@@ -3,10 +3,13 @@
 @use './is-integer' as *;
 
 /// Fixes a float to a given number of decimal places.
+///
 /// @access public
 ///
 /// @param {Number} $float - The number to format.
-/// @param {Integer} $digits [2] - Number of digits to leave after the decimal.
+/// @param {Number} $digits [2] - A integer representing the number of digits
+/// to leave after the decimal.
+///
 /// @return {Number} The fixed digit number.
 ///
 /// @throw {Error} Invalid $float type.
@@ -51,7 +54,9 @@
 /// @access public
 ///
 /// @param {Number} $float - The number to format.
-/// @param {Integer} $digits [2] - Number of digits to leave after the decimal.
+/// @param {Number} $digits [2] - A integer representing the number of digits
+/// to leave after the decimal.
+///
 /// @return {Number} The fixed digit number.
 ///
 /// @throw {Error} Invalid $float type.
@@ -63,10 +68,13 @@
 }
 
 /// Fixes a float to a given number of decimal places.
+///
 /// @access public
 ///
 /// @param {Number} $float - The number to format.
-/// @param {Integer} $digits [2] - Number of digits to leave after the decimal.
+/// @param {Number} $digits [2] - A integer representing the number of digits
+/// to leave after the decimal.
+///
 /// @return {Number} The fixed digit number.
 ///
 /// @throw {Error} Invalid $float type.

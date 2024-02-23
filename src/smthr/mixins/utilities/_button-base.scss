@@ -6,12 +6,12 @@
 /// @param {Color} $btn-background - The background color of the button.
 /// @param {Color} $btn-color - The button text color.
 /// @param {String} $btn-border - The border value for the buttton.
-/// @param {Length} $btn-radius - The border radius value.
-/// @param {Length} $btn-margin - The button's margin value.
-/// @param {Length} $btn-padding - The button's padding value.
+/// @param {Number} $btn-radius - The border radius value.
+/// @param {Number} $btn-margin - The button's margin value.
+/// @param {Number} $btn-padding - The button's padding value.
 /// @param {List} $btn-font-family - The button's font-family stack.
-/// @param {Length} $btn-font-size [1.25rem] - The button's font-size.
-/// @param {Number|Keyword} $btn-font-weight [400] - The button's font-weight.
+/// @param {Number} $btn-font-size [1.25rem] - The button's font-size.
+/// @param {Number | String} $btn-font-weight [400] - The button's font-weight.
 /// @param {String} $btn-transition [null] - The button's transition value.
 /// By default, a null value here will have the mixin search for a global
 /// $button-transition variable as is found in the variables file in this
@@ -113,12 +113,12 @@
 /// @param {Color} $btn-background - The background color of the button.
 /// @param {Color} $btn-color - The button text color.
 /// @param {String} $btn-border - The border value for the buttton.
-/// @param {Length} $btn-radius - The border radius value.
-/// @param {Length} $btn-margin - The button's margin value.
-/// @param {Length} $btn-padding - The button's padding value.
+/// @param {Number} $btn-radius - The border radius value.
+/// @param {Number} $btn-margin - The button's margin value.
+/// @param {Number} $btn-padding - The button's padding value.
 /// @param {List} $btn-font-family - The button's font-family stack.
-/// @param {Length} $btn-font-size [1rem] - The button's font-size.
-/// @param {Number|Keyword} $btn-font-weight [400] - The button's font-weight.
+/// @param {Number} $btn-font-size [1rem] - The button's font-size.
+/// @param {Number | String} $btn-font-weight [400] - The button's font-weight.
 /// @param {String} $btn-transition [null] - The button's transition value.
 /// By default, a null value here will have the mixin search for a global
 /// $button-transition variable as is found in the variables file in this

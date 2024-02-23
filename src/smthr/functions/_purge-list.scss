@@ -1,5 +1,4 @@
 @use 'sass:list';
-@use './missing-dependencies' as *;
 @use './is-true' as *;
 @use './to-list' as *;
 
@@ -12,8 +11,6 @@
 /// @require {function} is-true
 /// @require {function} to-list
 @function purge-list($list) {
-  // $_: missing-dependencies('is-true', 'to-list');
-
   $result: ();
 
   @each $item in $list {

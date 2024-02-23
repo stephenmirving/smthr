@@ -5,9 +5,9 @@
 /// Apply the animation stage to the parent element of any element that has
 /// a 3-D animation.
 ///
-/// @param {Length|Keyword} $perspective [500px] - The perspective value that
+/// @param {Number | String} $perspective [500px] - The perspective value that
 /// will effect the child element's 3-d animation.
-/// @param {Keyword|Length Percentage|List} $p-origin [55% 50%] - The
+/// @param {String | Number | List} $p-origin [55% 50%] - The
 /// perspecitve-origin value that will effect the child element's 3-d animation
 /// The syntax for this property can be just an x-position which can be the
 /// keyword, `left` (equal to a 0 value), `center` (equal to 50%), or `right`
@@ -17,12 +17,12 @@
 /// 100%), or can it can be a length-percentage. (Ex: `left bottom` or
 /// `100% 50%` or `left 30%). This property also accepts the global values of
 /// inherit, initial, and unset as valid.
-/// @param {Length-Percentage} $width [null] - The width of the element.
+/// @param {Number} $width [null] - The width of the element.
 /// @param {Number} $z-index [null] - Sets the z-index value, if passed
-/// @param {Length-Percentage} $height [$width] - The height of the element.
+/// @param {Number} $height [$width] - The height of the element.
 ///
 /// @group Animations
-/// @group Utilities
+///
 /// @throw Invalid $perspective value
 /// @throw Invalid $z-index value
 @mixin animation-stage(

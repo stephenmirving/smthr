@@ -6,12 +6,12 @@
 /// color to the scrollbar in IE 6+, and in Firefox 64+ it will apply the
 /// background and foreground colors and can reduce the size of the bar.
 ///
-/// @param {Length} $size - The height and width of the custom scrollbar.
-/// @param {Color|Gradient} $fg-color - The color of the foreground or 'handle'
+/// @param {Number} $size - The height and width of the custom scrollbar.
+/// @param {Color} $fg-color - The color of the foreground or 'handle'
 /// of the scrollbar.
-/// @param {Color|Gradient} $bg-color [mix($fg-color, #000, 50%)] - The color
+/// @param {Color} $bg-color [mix($fg-color, #000, 50%)] - The color
 /// of the background of the scrollbar.
-/// @param {Lenth-Percentage} $radius [null] - The optional border radius
+/// @param {Number} $radius [null] - The optional border radius
 /// value of the scrollbar.
 /// @param {Bool} $is-internal [false] - Pass a true value if the scrollbar
 /// is inside of an element rather than being applied outside of any selector,

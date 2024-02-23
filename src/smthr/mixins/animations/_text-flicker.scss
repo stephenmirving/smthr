@@ -6,19 +6,19 @@
 
 /// Animates text by flickering it into or out of view.
 ///
-/// @param {String|Bool} $in-or-out [in] - Determines whether the text will
+/// @param {Bool | String} $in-or-out [in] - Determines whether the text will
 /// flicker into or out of view. Can either be `in` or `out`.
-/// @param {Time} $duration [3s] - The duration of the animation (s or ms).
-/// @param {Time} $delay [null] - The optional delay time for the animation.
-/// @param {Number|String} $iterations [null] - The number of iterations
+/// @param {Number} $duration [3s] - The duration of the animation (s or ms).
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
 /// null assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
 /// animation.
-/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
 /// the animations do not overwrite each other.

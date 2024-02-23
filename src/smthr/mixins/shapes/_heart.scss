@@ -3,10 +3,10 @@
 /// Uses psuedo-elements and transform to change an element to the shape of a
 /// heart.
 ///
-/// @param {Length} $size [15rem] - Calcule the size of the element based off of
+/// @param {Number} $size [15rem] - Calcule the size of the element based off of
 /// this number. The element will be this amount in width and 90% of this amount
 /// in height.
-/// @param {Color|Mixed} $bg [#f00] - The color or background value.
+/// @param {Color | Mixed} $bg [#f00] - The color or background value.
 ///
 /// @group Shapes
 @mixin heart($size: 15rem, $bg-color: #f00) {

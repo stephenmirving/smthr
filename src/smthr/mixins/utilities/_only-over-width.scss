@@ -10,15 +10,12 @@
 ///
 /// @content Styles for screen widths equal to or greater than $threshold.
 ///
-/// @param {Length|Number} $threshold - The minimum screen dimension for the
+/// @param {Number} $threshold - The minimum screen dimension for the
 /// style. If a unitless number is passed, is is assumed to be in pixels.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the length passed is in `px` or `rem` units.
 ///
 /// @group Utilities
-///
-/// @alias target-over-width
-/// @alias min-width
 @mixin only-over-width($threshold, $convert: true) {
   @if is-number($threshold) and math.is-unitless($threshold) {
     $threshold: $threshold * 1px;
@@ -49,7 +46,7 @@
 ///
 /// @content Styles for screen widths equal to or larger than $threshold.
 ///
-/// @param {Length|Number} $threshold - The minimum screen dimension for the
+/// @param {Number} $threshold - The minimum screen dimension for the
 /// style. If a unitless number is passed, is is assumed to be in pixels.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the length passed is in `px` or `rem` units.
@@ -57,7 +54,6 @@
 /// @group Utilities
 ///
 /// @alias only-over-width
-/// @alias min-width
 @mixin target-over-width($threshold, $convert: true) {
   @include only-over-width($threshold, $convert) {
     @content;
@@ -70,7 +66,7 @@
 ///
 /// @content Styles for screen widths equal to or larger than $threshold.
 ///
-/// @param {Length|Number} $threshold - The minimum screen dimension for the
+/// @param {Number} $threshold - The minimum screen dimension for the
 /// style. If a unitless number is passed, is is assumed to be in pixels.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the length passed is in `px` or `rem` units.
@@ -78,7 +74,6 @@
 /// @group Utilities
 ///
 /// @alias only-over-width
-/// @alias target-over-width
 @mixin min-width($threshold, $convert: true) {
   @include only-over-width($threshold, $convert) {
     @content;

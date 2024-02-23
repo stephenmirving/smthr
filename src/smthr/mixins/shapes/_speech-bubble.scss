@@ -1,10 +1,10 @@
 /// Uses clip path to change an element to the shape of a square speech bubble.
 ///
-/// @param {Color|Mixed} $bg [#80f] The color or background value.
-/// @param {Length-Percentage} $size [15rem] - The size of the shape. If
+/// @param {Color | Mixed} $bg [#80f] The color or background value.
+/// @param {Number} $size [15rem] - The size of the shape. If
 /// the $height property is not set explicitly, it is both height and width, if
 /// $height is set explicitly, then this value sets only the width.
-/// @param {Length-Percentage} $height [$size] The height of the shape.
+/// @param {Number} $height [$size] The height of the shape.
 ///
 /// @group Utilities
 @mixin speech-bubble($size: 15rem, $bg: #80f, $height: $size) {

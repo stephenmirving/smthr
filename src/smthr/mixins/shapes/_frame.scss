@@ -2,11 +2,11 @@
 /// Among other things, you can use this mixin as the child element to an image
 /// element or an element with an image background to frame the parent element.
 ///
-/// @param {Color|Mixed} $bg [#61300D] The color or background value.
-/// @param {Length-Percentage} $size [15rem] - The size of the frame.
+/// @param {Color | Mixed} $bg [#61300D] The color or background value.
+/// @param {Number} $size [15rem] - The size of the frame.
 /// If the $height property is not set explicitly, it is both height and width,
 /// if $height is set explicitly, then this value sets only the width.
-/// @param {Length-Percentage} $height [$size] The height of the frame.
+/// @param {Number} $height [$size] The height of the frame.
 ///
 /// @group Shapes
 /// @throw Invalid $direction value

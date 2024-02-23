@@ -2,10 +2,10 @@
 /// sorted numbers depending on the `$index` value.
 /// @access public
 ///
-/// @param {number} $num - The number of children.
-/// @param {number} $index - The index of the sorting.
+/// @param {Number} $num - The number of children.
+/// @param {Number} $index - The index of the sorting.
 ///
-/// @return {number} The order index
+/// @return {Number} The order index
 @function order-index($i, $index) {
   @return ($index + $i);
 }

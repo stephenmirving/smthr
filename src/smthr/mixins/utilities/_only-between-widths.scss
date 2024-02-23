@@ -12,9 +12,9 @@
 /// @content Styles for screen widths equal to or larger than $min-threshold and
 /// equal to or smaller than $max-threshold.
 ///
-/// @param {Length|Number} $min-threshold - The minimum screen dimension for
+/// @param {Number} $min-threshold - The minimum screen dimension for
 /// the style.
-/// @param {Length|Number} $max-threshold - The maximum screen dimension for
+/// @param {Number} $max-threshold - The maximum screen dimension for
 /// the style.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the lengths passed are in `px` or `rem` units.
@@ -63,9 +63,9 @@
 /// @content Styles for screen widths equal to or larger than $min-threshold and
 /// equal to or smaller than $max-threshold.
 ///
-/// @param {Length|Number} $min-threshold - The minimum screen dimension for
+/// @param {Number} $min-threshold - The minimum screen dimension for
 /// the style.
-/// @param {Length|Number} $max-threshold - The maximum screen dimension for
+/// @param {Number} $max-threshold - The maximum screen dimension for
 /// the style.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the lengths passed are in `px` or `rem` units.
@@ -87,9 +87,9 @@
 /// @content Styles for screen widths equal to or larger than $min-threshold and
 /// equal to or smaller than $max-threshold.
 ///
-/// @param {Length|Number} $min-threshold - The minimum screen dimension for
+/// @param {Number} $min-threshold - The minimum screen dimension for
 /// the style.
-/// @param {Length|Number} $max-threshold - The maximum screen dimension for
+/// @param {Number} $max-threshold - The maximum screen dimension for
 /// the style.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the lengths passed are in `px` or `rem` units.
@@ -111,9 +111,9 @@
 /// @content Styles for screen widths equal to or larger than $min-threshold and
 /// equal to or smaller than $max-threshold.
 ///
-/// @param {Length|Number} $min-threshold - The minimum screen dimension for
+/// @param {Number} $min-threshold - The minimum screen dimension for
 /// the style.
-/// @param {Length|Number} $max-threshold - The maximum screen dimension for
+/// @param {Number} $max-threshold - The maximum screen dimension for
 /// the style.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the lengths passed are in `px` or `rem` units.
@@ -135,9 +135,9 @@
 /// @content Styles for screen widths equal to or larger than $min-threshold and
 /// equal to or smaller than $max-threshold.
 ///
-/// @param {Length|Number} $min-threshold - The minimum screen dimension for
+/// @param {Number} $min-threshold - The minimum screen dimension for
 /// the style.
-/// @param {Length|Number} $max-threshold - The maximum screen dimension for
+/// @param {Number} $max-threshold - The maximum screen dimension for
 /// the style.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the lengths passed are in `px` or `rem` units.
@@ -159,9 +159,9 @@
 /// @content Styles for screen widths equal to or larger than $min-threshold and
 /// equal to or smaller than $max-threshold.
 ///
-/// @param {Length|Number} $min-threshold - The minimum screen dimension for
+/// @param {Number} $min-threshold - The minimum screen dimension for
 /// the style.
-/// @param {Length|Number} $max-threshold - The maximum screen dimension for
+/// @param {Number} $max-threshold - The maximum screen dimension for
 /// the style.
 /// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
 /// units if the lengths passed are in `px` or `rem` units.

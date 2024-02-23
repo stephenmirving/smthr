@@ -8,18 +8,18 @@
 ///
 /// @param {List} $colors [()] - A list of colors that the animation will shift
 /// between, one into the next.
-/// @param {String|Number} $duration [null] - The amount of time it takes the
+/// @param {String | Number} $duration [null] - The amount of time it takes the
 /// animation to shift from one color into the next one. This value must be in
 /// either milliseconds (ms) or seconds (s). If a only a unit-less number is
 /// passed, it will be assumed that the value is in seconds. When no argument is
 /// passed, the default timing is 2s per color shift.
-/// @param {String|Number} $delay [null] - The amount of time before the color
+/// @param {String | Number} $delay [null] - The amount of time before the color
 /// shifting animation first starts. No delay is the default. This value must be
 /// in either milliseconds (ms) or seconds (s). If a only a unit-less number is
 /// passed, it will be assumed that the value is in seconds.
-/// @param {Bool|String} $infinite [false] - Determines whether or not the
+/// @param {Bool | String} $infinite [false] - Determines whether or not the
 /// color shifting animation will go on infinitely.
-/// @param {Bool|String} $alternate [null] - When true, this will reverse the
+/// @param {Bool | String} $alternate [null] - When true, this will reverse the
 /// order of the color shift when it refgaches the end of the animation,
 /// otherwise the animation will restart at the first color. $infinite must be
 /// true for $alternate to take effect.
@@ -27,7 +27,7 @@
 /// animation's shifting affect.
 /// @param {String} $bg-or-fg [null] - Determines if animation will shift the
 /// background-color or the font color. Null value defaults to the background.
-/// @param {Number|String} $anim-num [null] - If the color-shifter mixin is used
+/// @param {Number | String} $anim-num [null] - If the color-shifter mixin is
 /// used more than once in a stylesheet with different values, you can pass a
 /// number or string to the mixin here that gets appeneded to end of the
 /// animation name so that the animations do not overwrite each other.

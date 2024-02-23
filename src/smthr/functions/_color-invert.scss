@@ -11,7 +11,7 @@
 /// @access public
 ///
 /// @param {Color} $color - The color to invert.
-/// @param {Percentage} $weight [100%] - How much to invert the color. Must be
+/// @param {Number} $weight [100%] - How much to invert the color. Must be
 /// a percentage between 0% and 100%.
 /// @param {String} $syntax [get-color-type($color)] - The color syntax to
 /// convert into. Defaults to the color notation used by $color.

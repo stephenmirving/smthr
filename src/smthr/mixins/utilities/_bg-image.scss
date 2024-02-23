@@ -15,9 +15,9 @@
 /// generate, you can pass additional background properties to the mixin inside
 /// a map via the $hidpi-bg-props parameter.
 ///
-/// @param {URL} $img-name - File path for the image. Must either be a
+/// @param {String} $img-name - File path for the image. Must either be a
 /// quoted string or inside a function to be read correctly.
-/// @param {Length|Keyword} $bg-size - Value for the background-size property.
+/// @param {String | Number} $bg-size - Value for the background-size property.
 /// @param {Number} $min-ratio [1.25] - A minimum pixel ratio resolution value
 /// used to calculate the media query targeting Retina and other HiDPI screens.
 /// Common targeting ratios are 1.25, 1.3, 1.5, and 2.

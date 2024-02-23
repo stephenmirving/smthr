@@ -10,8 +10,8 @@
 /// to be going in. Valid $direction values include the following: `top`,
 /// `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, `left`, or
 /// `top-left`.
-/// @param {Time} $duration [0.5s] - The duration of the animation (s or ms).
-/// @param {Time} $delay [null] - The duration of the optional delay of the
+/// @param {Number} $duration [0.5s] - The duration of the animation (s or ms).
+/// @param {Number} $delay [null] - The duration of the optional delay of the
 /// animation (s or ms).
 /// @param {Timing-Function} $timing-func [cubic-bezier(0.25, 0.46, 0.45, 0.94)] -
 /// The timing function for the animation.
@@ -20,7 +20,7 @@
 /// want something less subtle.
 /// @param {*} $infinite [null] If any value other than null, or false is
 /// passed, the `infinite alternate` values will be applied to the animation.
-/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
 /// the animations do not overwrite each other.

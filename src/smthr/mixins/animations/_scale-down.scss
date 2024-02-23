@@ -8,24 +8,24 @@
 ///
 /// @param {String} $direction [top] - The direction the element will appear
 /// to be scaling down from.
-/// @param {Time} $duration [0.4s] - The duration of the animation (s or ms).
-/// @param {Time} $delay [null] - The optional delay time for the animation.
+/// @param {Number} $duration [0.4s] - The duration of the animation (s or ms).
+/// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally start along an
 /// axis line. This value can be null (or false, `no`, `n`), `horizontal` (or
 /// `horiz`, `horz`, `hor`, `h`) or `vertical` (or `vert`, `ver`, `v`). Along
 /// the horizontal axis, only `left`, `right`, or `center` $direction values are
 /// valid. Along the vertical axis, only `top`, `bottom`, and `center`
 /// $direction values are valid.
-/// @param {Number|String} $iterations [null] - The number of iterations
+/// @param {Number | String} $iterations [null] - The number of iterations
 /// for the animation to complete. If the value passed is not a number, it will
 /// be set to infinite.
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
 /// null assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. Default value of null will apply the recommended function for
 /// this animation of `cubic-bezier(0.25, 0.46, 0.45, 0.94)`.
-/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
 /// the animations do not overwrite each other.

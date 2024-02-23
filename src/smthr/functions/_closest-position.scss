@@ -14,14 +14,14 @@
 ///
 /// @access public
 ///
-/// @param {Angle|Number} $angle - An angle in any format or a unitless number
+/// @param {Number} $angle - An angle in any format or a unitless number
 /// which the function will assume to be in degrees.
 /// @param {Bool} $return-difference [false] - Pass true to have the function
 /// return a list with the keyword and the difference in degrees between that
 /// direction and the given angle. Pass false to have the function return an
 /// unquoted string with just the closest position keyword.
 ///
-/// @return {String|List} Returns an unquoted string with the closest
+/// @return {String | List} Returns an unquoted string with the closest
 /// position keyword. If $return-difference is set to true, it will
 /// instead return a list with the keyword first and then the difference in deg
 /// between that position and the given angle.
@@ -30,10 +30,10 @@
 /// Compiles to:
 /// left: 20%;
 ///
-/// @require is-angle
-/// @require is-number
-/// @require conv-angle
-/// @require {Map} $map-positions
+/// @require {function} is-angle
+/// @require {function} is-number
+/// @require {function} conv-angle
+/// @require {variable} $map-positions
 ///
 /// @throw Invalid data type error for $angle.
 @function closest-position($angle, $return-difference: false) {

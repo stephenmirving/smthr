@@ -1,14 +1,14 @@
-// General Utilitiy Functions
-@forward 'functions-walk';
+// General Utilitiy Functions;
 @forward 'asset';
 @forward 'closest-direction';
 @forward 'closest-position';
 @forward 'entity';
-@forward 'missing-dependencies';
 @forward 'order-index';
 @forward 'strip-unit';
 @forward 'resolve-alias';
 @forward 'timing';
+@forward 'functions-walk';
+@forward 'walk';
 
 // Is-Type Functions
 @forward 'is-alias';
@@ -62,7 +62,6 @@
 @forward 'remove-where';
 @forward 'to-list';
 @forward 'update-list';
-@forward 'walk';
 
 // Map Functions
 @forward 'extend-map';

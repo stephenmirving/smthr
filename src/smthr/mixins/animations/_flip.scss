@@ -14,17 +14,17 @@
 /// @param {String} $direction [up] - The direction the scale effect causes
 /// the element to seem to be moving towards
 /// @param {String} $axis [horizontal] - The axis the element will flip over
-/// @param {Time} $duration [0.5s] - The duration of the animation (s or ms)
-/// @param {Time} $delay [null] - The optional delay time for the animation.
-/// @param {Number|String} $iterations [null] - The number of iterations
+/// @param {Number} $duration [0.5s] - The duration of the animation (s or ms)
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The number of iterations
 /// to complete. If the value passed is not a number, it will be set to infinite
-/// @param {Keyword} $anim-dir [null] - Sets the animation-direction property.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
 /// null assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
 /// function for this animation.`
-/// @param {Number|String} $anim-num [null] - If the mixin is used more than
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
 /// the animations do not overwrite each other.
@@ -32,7 +32,7 @@
 /// @group Animations
 /// @require {mixin} only-moz
 /// @require {function} is-alias
-/// @require {Map} $map-alias-resolutions
+/// @require {variable} $map-alias-resolutions
 ///
 /// @throw Invalid $direction value
 /// @throw Invalid $axis value

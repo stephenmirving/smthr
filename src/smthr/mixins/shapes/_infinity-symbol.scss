@@ -4,10 +4,10 @@
 /// Creates an infinity symbol out of an element, better browser support than
 /// clip-path.
 ///
-/// @param {Length-Percentage} $size [60px] - A single value used to generate
+/// @param {Number} $size [60px] - A single value used to generate
 /// the height and width of the symbol.
-/// @param {Color|Mixed} $symbol-color [#000] The color of the symbol.
-/// @param {Length-Percentage} $rad-val [50px] - The border-radius value
+/// @param {Color | Mixed} $symbol-color [#000] The color of the symbol.
+/// @param {Number} $rad-val [50px] - The border-radius value
 /// that creates the infinity shape. Can be altered to mutate the shape.
 ///
 /// @group Shapes

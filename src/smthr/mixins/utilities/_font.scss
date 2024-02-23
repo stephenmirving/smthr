@@ -4,15 +4,15 @@
 /// following the W3C specifications.
 /// @link https://developer.mozilla.org/en-US/docs/Web/CSS/font
 ///
-/// @param {Length-Percentage} $size [null] - The font-size value.
-/// @param {Number|Keyword} $weight [null] - The font-weight value.
-/// @param {Keyword} $style [null] - The font-style value.
-/// @param {Keyword} $variant [null] - The font-variant value.
+/// @param {Number} $size [null] - The font-size value.
+/// @param {Number | String} $weight [null] - The font-weight value.
+/// @param {String} $style [null] - The font-style value.
+/// @param {String} $variant [null] - The font-variant value.
 /// @param {Number} $height [null] - The line-height value.
-/// @param {String|List} $family [null] - The font-family value.
-/// @param {Length} $spacing [null] - The letter-spacing value.
-/// @param {Keyword} $stretch [null] - The font-stretch value.
-/// @param {Keyword} $kern [null] - The font-kerning value.
+/// @param {String | List} $family [null] - The font-family value.
+/// @param {Number} $spacing [null] - The letter-spacing value.
+/// @param {String} $stretch [null] - The font-stretch value.
+/// @param {String} $kern [null] - The font-kerning value.
 ///
 /// @group Utilities
 /// @throw Invalid $kern keyword value for font-kerning property.

@@ -8,12 +8,12 @@
 ///
 /// @param {String} $direction [right] - Indicates the direction the label
 /// will be pointing towards.
-/// @param {Length-Percentage} $width [5rem] - A length value setting the width.
-/// @param {Color|Mixed} $bg [#80f} Any value that is valid for the background
+/// @param {Number} $width [5rem] - A length value setting the width.
+/// @param {Color | Mixed} $bg [#80f} Any value that is valid for the background
 /// shorthand property.
-/// @param {Length} $b-radius: [4px] A single value border radius for the
+/// @param {Number} $b-radius: [4px] A single value border radius for the
 /// corners on the opposite side of the label from the direction it is pointing.
-/// @param {Length-Percentage} $height [$width / 4] Length value that sets
+/// @param {Number} $height [$width / 4] Length value that sets
 /// the height of the label.
 ///
 /// @group Shapes

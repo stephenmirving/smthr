@@ -12,11 +12,11 @@
 ///
 /// @access public
 ///
-/// @param {Length} $min - The minimum value.
-/// @param {Length} $value - The number to clamp between $min and $max.
-/// @param {Length} $max - The maximum value.
+/// @param {Number} $min - The minimum value.
+/// @param {Number} $value - The number to clamp between $min and $max.
+/// @param {Number} $max - The maximum value.
 ///
-/// @return {Length} If $value is within the limits, returns the $value, if it
+/// @return {Number} If $value is within the limits, returns the $value, if it
 /// is below the limit, it will return the $min, if it is above the $max, it
 /// will return the $max.
 ///
@@ -42,10 +42,10 @@
 /// same as in the CSS version.
 /// @access public
 ///
-/// @param {Length} $min - The minimum value.
-/// @param {Length} $value - The number to clamp between $min and $max.
-/// @param {Length} $max - The maximum value.
-/// @return {Length} If $value is within the limits, returns the $value, if it
+/// @param {Number} $min - The minimum value.
+/// @param {Number} $value - The number to clamp between $min and $max.
+/// @param {Number} $max - The maximum value.
+/// @return {Number} If $value is within the limits, returns the $value, if it
 /// is below the limit, it will return the $min, if it is above the $max, it
 /// will return the $max.
 ///

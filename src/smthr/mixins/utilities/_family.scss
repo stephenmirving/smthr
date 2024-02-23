@@ -17,7 +17,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - All child elements counted from the first to this
+/// @param {Number} $num - All child elements counted from the first to this
 /// number will be selected.
 ///
 /// @group Utilities
@@ -38,7 +38,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - All child elements counted from the first to this
+/// @param {Number} $num - All child elements counted from the first to this
 /// number will be selected.
 ///
 /// @group Utilities
@@ -59,7 +59,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - All child elements counted from the last to this
+/// @param {Number} $num - All child elements counted from the last to this
 /// number will be selected.
 ///
 /// @group Utilities
@@ -80,7 +80,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - All child elements counted from the last to this
+/// @param {Number} $num - All child elements counted from the last to this
 /// number will be selected.
 ///
 /// @group Utilities
@@ -101,7 +101,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - After the first child elements of this quantity, all
+/// @param {Number} $num - After the first child elements of this quantity, all
 /// children are selected.
 ///
 /// @group Utilities
@@ -116,7 +116,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - This number back from the last child element will
+/// @param {Number} $num - This number back from the last child element will
 /// be selected.
 ///
 /// @group Utilities
@@ -131,10 +131,10 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $first - The first child element that will be selected,
+/// @param {Number} $first - The first child element that will be selected,
 /// counted from the start. This child element and all others up to and
 /// including $last are selected.
-/// @param {Integer} $last - The last child element that will be selected,
+/// @param {Number} $last - The last child element that will be selected,
 /// counted from the start. This child element and all before it up to and
 /// including $first are selected.
 ///
@@ -150,9 +150,9 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $first - The first child element of the selection range,
+/// @param {Number} $first - The first child element of the selection range,
 /// counted from the start. Will only be selected if it is evenly numbered.
-/// @param {Integer} $last - The last child element of the selection range,
+/// @param {Number} $last - The last child element of the selection range,
 /// counted from the start. WIll only be selected if it is evenly numbered.
 ///
 /// @group Utilities
@@ -167,9 +167,9 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $first - The first child element of the selection range,
+/// @param {Number} $first - The first child element of the selection range,
 /// counted from the start. Will only be selected if it is an odd number.
-/// @param {Integer} $last - The last child element of the selection range,
+/// @param {Number} $last - The last child element of the selection range,
 /// counted from the start. WIll only be selected if it is an odd number.
 ///
 /// @group Utilities
@@ -184,11 +184,11 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - Select every $num items for the range set by $first
+/// @param {Number} $num - Select every $num items for the range set by $first
 /// and $last parameters.
-/// @param {Integer} $first - The starting number for the selection range,
+/// @param {Number} $first - The starting number for the selection range,
 /// counted from the start.
-/// @param {Integer} $last - The ending number for the selection range, counted
+/// @param {Number} $last - The ending number for the selection range, counted
 /// from the start.
 ///
 /// @group Utilities
@@ -203,7 +203,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - All child elements are selected except for $num.
+/// @param {Number} $num - All child elements are selected except for $num.
 ///
 /// @group Utilities
 @mixin all-but($num) {
@@ -217,7 +217,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - Every $num child elements, a child is selected.
+/// @param {Number} $num - Every $num child elements, a child is selected.
 ///
 /// @group Utilities
 @mixin each($num) {
@@ -231,7 +231,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - Every $num child elements, a child is selected.
+/// @param {Number} $num - Every $num child elements, a child is selected.
 ///
 /// @group Utilities
 /// @alias each
@@ -246,7 +246,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - The child element that is $num from the start, as
+/// @param {Number} $num - The child element that is $num from the start, as
 /// well as the child element that is $num from the end, will be selected.
 ///
 /// @group Utilities
@@ -263,7 +263,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - Count $num child elements from the start and the
+/// @param {Number} $num - Count $num child elements from the start and the
 /// middle element of that selection range will be selected.
 ///
 /// @group Utilities
@@ -278,7 +278,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - Count $num children from the start and from the end
+/// @param {Number} $num - Count $num children from the start and from the end
 /// and all other child elements except for those will be selected.
 ///
 /// @group Utilities
@@ -294,7 +294,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $limit - If the quantity of child elements is equal to or
+/// @param {Number} $limit - If the quantity of child elements is equal to or
 /// greater than `$limit`, the first of those elements is selected.
 ///
 /// @group Utilities
@@ -311,7 +311,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $limit - If the quantity of child elements of the same type
+/// @param {Number} $limit - If the quantity of child elements of the same type
 /// is greater than or equal to `$limit`, the last of those elements, determined
 /// by `$limit`, is selected.
 ///
@@ -328,7 +328,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - If the number of child elements is equal to or
+/// @param {Number} $num - If the number of child elements is equal to or
 /// greater than this number, then all will be selected. If the number of child
 /// elements is less than this number, then none are selected.
 ///
@@ -349,7 +349,7 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - If the number of child elements is equal to or
+/// @param {Number} $num - If the number of child elements is equal to or
 /// less than this number, then all will be selected.
 ///
 /// @group Utilities
@@ -371,8 +371,8 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $min - The minimum number of children
-/// @param {Integer} $max - The maximum number of children
+/// @param {Number} $min - The minimum number of children
+/// @param {Number} $max - The maximum number of children
 ///
 /// @group Utilities
 @mixin in-between($min, $max) {
@@ -531,10 +531,10 @@
 /// @content [Write the style you want to apply to the children, and it will be
 /// added within the @content directive]
 ///
-/// @param {Integer} $num - Number of children to index.
+/// @param {Number} $num - Number of children to index.
 /// @param {String} $direction ['forward'] - Direction of the sort. Can be
 /// `forward` or `backward`.
-/// @param {Integer} $index [0] - Base indexing number for the sort.
+/// @param {Number} $index [0] - Base indexing number for the sort.
 ///
 /// @group Utilities
 ///

@@ -3,8 +3,8 @@
 @use 'sass:list';
 @use '../variables' as smth;
 
-//// Returns true if the given alias is found in the map's list for
-//// the given keyword, otherwise returns false.
+/// Returns true if the given alias is found in the map's list for
+/// the given keyword, otherwise returns false.
 ///
 /// @param {String} $keyword - The name of the keyword.
 /// @param {String} $alias - The shortcut or alias used for the keyword.
@@ -32,8 +32,8 @@
   @return not not list.index(map.get($alias-map, $keyword), $alias);
 }
 
-//// Returns true if the given alias is found in the map's list for
-//// the given keyword, otherwise returns false.
+/// Returns true if the given alias is found in the map's list for
+/// the given keyword, otherwise returns false.
 ///
 /// @param {String} $keyword - The name of the keyword.
 /// @param {String} $alias - The shortcut or alias used for the keyword.

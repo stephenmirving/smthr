@@ -9,7 +9,9 @@
 ///
 /// @param {Color} $color - A color value
 ///
-/// @return {String} The type of notation used for the $color value.
+/// @return {String} The type of notation used for the $color value. Can be
+/// 'hex', 'rgb', 'rgba', 'hsl', 'hsla', and any other color currently
+/// recognized as being of the 'color' type by Sass.
 ///
 /// @throw {Error} Invalid $color value.
 @function get-color-type($color) {

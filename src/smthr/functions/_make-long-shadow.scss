@@ -4,14 +4,13 @@
 /// @param {Color} $color - The color of the long shadow.
 /// @param {Number} $longness - The integer length of the shadow.
 ///
-/// @return {Mixed} The value string for the long shadow effect.
+/// @return {List} The list of values for the text-shadow property used by the
+/// long-shadow() mixin.
 @function make-long-shadow($color, $longness) {
   $val: 0 0 $color;
 
   @for $i from 1 through $longness {
-    $val:
-      #{$val},
-      1px * #{$i} 1px * #{$i} #{$color};
+    $val: $val, $i * 1px $i * 1px $color;
   }
   @return $val;
 }

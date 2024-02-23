@@ -16,7 +16,8 @@
 /// @content Styles that target Chromium browsers version 29 and up.
 ///
 /// @group Utilities
-/// @alias only-chrome
+///
+/// @alias only-chromium
 @mixin chromium-only {
   @include only-chromium {
     @content;

@@ -5,7 +5,7 @@
 
 /// Targets phones and phone-sized devices
 ///
-/// @param {Length|Number} $max-phone-width [436px] - The maximum viewport width
+/// @param {Number} $max-phone-width [436px] - The maximum viewport width
 /// of the devices being targeted.
 /// @param {Bool} $target-all-devices [false] - If true, query will target
 /// all devices that fall within the specified maximum viewport width.
@@ -60,7 +60,7 @@
 
 /// Targets phones and phone-sized devices
 ///
-/// @param {Length|Number} $max-phone-width [436px] - The maximum viewport width
+/// @param {Number} $max-phone-width [436px] - The maximum viewport width
 /// of the devices being targeted.
 /// @param {Bool} $target-all-devices [false] - If true, query will target
 /// all devices that fall within the specified maximum viewport width.

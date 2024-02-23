@@ -6,11 +6,11 @@
 /// Uses flexbox to vertically and/or horizontally center an element, as well as
 /// set its flex-direction property.
 ///
-/// @param {Bool|String} $horizontal [true] - Pass true to center the
+/// @param {Bool | String} $horizontal [true] - Pass true to center the
 /// contents horizontally.
-/// @param {Bool|String} $vertical [true] - Pass true to center the
+/// @param {Bool | String} $vertical [true] - Pass true to center the
 /// contents vertically.
-/// @param {Keyword|String} $flex-dir ['row'] - The flex-direction value.
+/// @param {String} $flex-dir ['row'] - The flex-direction value.
 ///
 /// @group Utilities
 /// @throw Invalid $horizontal value

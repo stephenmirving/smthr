@@ -6,7 +6,6 @@
 @use './is-angle' as *;
 @use './strip-unit' as *;
 @use './pi' as *;
-@use './missing-dependencies' as *;
 
 /// Takes a given $angle in either turns (turn), degrees (deg), gradians (grad),
 /// or radian (rad) units, and converts that angle into an alternate unit type
@@ -14,27 +13,25 @@
 ///
 /// @access public
 ///
-/// @param {Angle|String} $angle - An angle value. Can be in turn, deg, grad,
+/// @param {Number | String} $angle - An angle value. Can be in turn, deg, grad,
 /// or rad units. Can also be a keyword string with one of the following values:
 /// `top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`,
 /// `left`, or `top-left`.
 /// @param {String} $convert-to [deg] - The type of angle notation the given
 /// $angle should be converted to.
 ///
-/// @return {Angle} The converted angle.
+/// @return {Number} The converted angle.
 ///
-/// @require missing-dependencies
-/// @require is-alias
-/// @require is-angle
-/// @require strip-unit
-/// @require pi
+/// @require {function} is-alias
+/// @require {function} is-angle
+/// @require {function} strip-unit
+/// @require {function} pi
 ///
 /// @throw {Error} Invalid $angle unit type.
 /// @throw {Error} Invalid $angle keyword string.
 /// @throw {Error} Invalid $angle data type.
 /// @throw {Error} Invalid $convert-to angle unit keyword string.
 @function conv-angle($angle, $convert-to: deg) {
-  // $_missing: missing-dependencies('is-angle', 'strip-unit', 'pi');
   $start-unit: '';
   $directions-to-degrees: (
     'top': 0deg,

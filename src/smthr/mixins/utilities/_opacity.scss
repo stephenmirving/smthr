@@ -6,7 +6,7 @@
 /// Takes a given value in either 0-1 decimal or 2-100 integer scale and applies
 /// that level of opacity.
 ///
-/// @param {Number-Percentage} $opacity - The opacity level. Can take a decimal
+/// @param {Number} $opacity - The opacity level. Can take a decimal
 /// beteen 0 and 1 inclusive, or either a unitless integer or a percentage
 /// between 1 exclusive and 100 inclusive.
 ///
