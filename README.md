@@ -92,8 +92,15 @@ That looks like this:
 .element {
   color: invert-color($color-brand)
 }
-
 ```
+
+## Documentation
+
+In the future, there will be a more comprehensive documentation with example
+code and its output, but for now you can get started with the SassDoc
+[documentation page](https://stephenmirving.github.io/smthr/) for the library.
+
+## Betterize
 
 If you want to use the normalization file `_betterize.scss` or the print style
 file `_print.scss`, simply copy the `betterize` folder into the same folder that the
@@ -113,19 +120,14 @@ deprecated and will be
 If you choose to use _betterize.scss, you can remove any other CSS normalization
 or reset files such as normalize.css or reset.css. You can check out the
 [Betterize repo](https://github.com/stephenmirving/betterize) for more information
-or for versions of  Betterize written in .css, .sass, .less, and .scss formats
+or for versions of Betterize written in .css, .sass, .less, and .scss formats
 that are free from Smthr dependencies.
+
+## More Info
 
 For more information about how to structure your project with 3rd party
 libraries, please refer to the official
 [Sass Documentation](https://sass-lang.com/documentation/)
-
-## Testing and Documentation
-
-Because this project is currently in development, there is not a comprehensive
-wiki, and the testing/example page has not yet been completed either. However,
-there are detailed [SassDoc](http://sassdoc.com/) comments in the individual
-files that should give you an idea of how to use the library.
 
 ## Authors
 
