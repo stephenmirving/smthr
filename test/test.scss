@@ -189,7 +189,3 @@ $flip-axis: 'vertical';
     );
   }
 }
-
-.test {
-  content: functions-walk(('is-number', 'is-float', 'is-length', 'is-absolute-length', 'pi'), 19rem);
-}

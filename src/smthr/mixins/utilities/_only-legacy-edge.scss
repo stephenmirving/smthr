@@ -4,8 +4,6 @@
 /// @content Styles that target MS Edge.
 ///
 /// @group Utilities
-///
-/// @alias edge-only
 @mixin only-legacy-edge {
   @supports (position: -ms-page) {
     @content;
@@ -17,7 +15,7 @@
 ///
 /// @group Utilities
 ///
-/// @alias only-edge
+/// @alias only-legacy-edge
 @mixin legacy-edge-only {
   @include only-legacy-edge {
     @content;
