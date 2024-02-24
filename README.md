@@ -19,10 +19,19 @@ animation keyframe creation, or other verbose and complex code blocks.
 
 *This is **smthr** version 0.2.5 - Last update: 02/24/24*
 
-**_smthr_ currently contains:**
+## Content
 
-* **140+** Mixins
-* **75+** Functions
+**_Smoother_ currently contains:**
+
+* **140+** Mixins, including...
+  * More than 30 easily configurable animations
+  * More than 20 element shapes
+  * More than 80 utility mixins for things like creating responsive ratios,
+    Material Design box-shadow effects, or clamping text to a given number of lines.
+* **75+** Functions, including functions that...
+  * Convert and manipulate colors
+  * Check and convert data types
+  * Check data types
 * A modern, opinionated normalize file written in Sass called _betterize.scss
 * A print style file written in Sass called _print.scss
 * A collection of helpful and configurable `!default` variables.
@@ -146,10 +155,12 @@ this:
 
 If you prefer to namespace it to something shorter, you can choose almost
 anything you want that is not used by another module. I recommend not choosing
-`$` or `#` or `_` or `-` as your namespace as this could potentially cause
+`$`, `#`, `@`, `_` or `-` as your namespace as this could potentially cause
 conflicts due to `$` being used for variables, `#` being used for interpolation,
-and `_` or `-` being used at the start of names to
-(make those members private)[https://sass-lang.com/documentation/at-rules/use/#private-members] outside of that file.
+`@` being used for at-rules, and `_` or `-` being used at the start of member
+names to
+(make those members private)[https://sass-lang.com/documentation/at-rules/use/#private-members]
+outside of that file.
 
 ```scss
 @use 'vendors/smthr/smth' as ~;

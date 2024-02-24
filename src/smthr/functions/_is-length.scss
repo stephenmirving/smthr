@@ -1,5 +1,5 @@
-@use './is-relative-length' as *;
-@use './is-absolute-length' as *;
+@use 'is-relative-length' as *;
+@use 'is-absolute-length' as *;
 
 /// Checks if a value is a length.
 /// @access public

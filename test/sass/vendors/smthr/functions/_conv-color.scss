@@ -4,12 +4,12 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
-@use './conv-color-name' as *;
-@use './to-cmyk' as *;
-@use './to-hex' as *;
-@use './to-fixed' as *;
-@use './strip-unit' as *;
-@use './str-to-num' as *;
+@use 'conv-color-name' as *;
+@use 'to-cmyk' as *;
+@use 'to-hex' as *;
+@use 'to-fixed' as *;
+@use 'strip-unit' as *;
+@use 'str-to-num' as *;
 @use '../variables/maps' as *;
 
 /// Takes a given color in virtually any notation and converts it into the given

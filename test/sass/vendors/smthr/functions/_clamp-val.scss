@@ -1,8 +1,7 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
-@use './is-length' as *;
-@use './is-number' as *;
+@use 'is-number' as *;
 
 /// Clamps `$value` between `$min` and `$max`. Because the CSS version of
 /// `clamp()` still does not have full support for all Safari versions in use,
@@ -16,11 +15,11 @@
 /// @param {Number} $value - The number to clamp between $min and $max.
 /// @param {Number} $max - The maximum value.
 ///
-/// @return {Number} If $value is within the limits, returns the $value, if it
-/// is below the limit, it will return the $min, if it is above the $max, it
-/// will return the $max.
+/// @return {Calculation} If $value is within the limits, returns the `$value`,
+/// if it is below the limit of `$min`, it will return `$min`, if it is above
+/// the limit of `$max`, it will return `$max`.
 ///
-/// @throw Minimum greater than maximum.
+/// @throw $min value greater than $max value.
 @function clamp-val($min, $value, $max) {
   @if is-number($min) and
     is-number($max) and

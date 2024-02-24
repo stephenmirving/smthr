@@ -1,6 +1,6 @@
 @use 'sass:map';
 @use 'sass:meta';
-@use './is-color' as *;
+@use 'is-color' as *;
 @use '../variables/maps' as *;
 
 /// If the given $color value is a valid CSS color name, returns the associated

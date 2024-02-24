@@ -1,7 +1,7 @@
 @use 'sass:color';
 @use 'sass:math';
 @use 'sass:meta';
-@use './is-percentage' as *;
+@use 'is-percentage' as *;
 
 /// Lighten a color by a given percentage using the built-in color.scale() method.
 /// @access public

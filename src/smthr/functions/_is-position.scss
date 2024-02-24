@@ -1,6 +1,6 @@
 @use 'sass:list';
-@use './is-length' as *;
-@use './is-percentage' as *;
+@use 'is-length' as *;
+@use 'is-percentage' as *;
 
 /// Checks if a value is a position.
 /// @access public

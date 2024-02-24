@@ -1,7 +1,7 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:list';
-@use './strip-unit' as *;
+@use 'strip-unit' as *;
 @use '../variables' as *;
 
 /// Converts values into rem units.

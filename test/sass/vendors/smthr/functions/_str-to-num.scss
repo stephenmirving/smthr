@@ -2,7 +2,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:string';
-@use './../variables/maps' as *;
+@use '../variables/maps' as *;
 
 /// Safely converts a string representation of a number into an actual number
 /// that will always work when things like string.unquote() or interpolation

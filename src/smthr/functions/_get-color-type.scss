@@ -1,6 +1,6 @@
 @use 'sass:meta';
 @use 'sass:string';
-@use './color-to-string' as *;
+@use 'color-to-string' as *;
 
 /// Takes a color value and returns a string representing what type of notation
 /// is used for the color. Valid types are:

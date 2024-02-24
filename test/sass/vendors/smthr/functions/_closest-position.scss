@@ -2,9 +2,9 @@
 @use 'sass:map';
 @use 'sass:list';
 @use 'sass:math';
-@use './is-angle' as *;
-@use './is-number' as *;
-@use './conv-angle' as *;
+@use 'is-angle' as *;
+@use 'is-number' as *;
+@use 'conv-angle' as *;
 @use '../variables' as *;
 
 /// Takes an angle and returns the closest position keyword as an

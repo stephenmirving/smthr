@@ -1,6 +1,6 @@
 @use 'sass:list';
-@use './is-true' as *;
-@use './to-list' as *;
+@use 'is-truthy' as *;
+@use 'to-list' as *;
 
 /// Removes all false and null values from $list.
 /// @access public
@@ -8,13 +8,13 @@
 /// @param {List} $list - The list to purge.
 /// @return {List} The purged list.
 ///
-/// @require {function} is-true
+/// @require {function} is-truthy
 /// @require {function} to-list
 @function purge-list($list) {
   $result: ();
 
   @each $item in $list {
-    @if is-true($item) {
+    @if is-truthy($item) {
       $result: list.append($result, $item, list.separator($list));
     }
   }
@@ -28,7 +28,7 @@
 /// @param {List} $list - The list to purge.
 /// @return {List} The purged list.
 ///
-/// @require {function} is-true
+/// @require {function} is-truthy
 /// @require {function} to-list
 /// @alias purge-list
 @function clean-list($list) {
@@ -41,7 +41,7 @@
 /// @param {List} $list - The list to purge.
 /// @return {List} The purged list.
 ///
-/// @require {function} is-true
+/// @require {function} is-truthy
 /// @require {function} to-list
 /// @alias purge-list
 @function list-purge($list) {

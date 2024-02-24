@@ -2,8 +2,8 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
-@use './decimal-to-ratio' as *;
-@use './str-to-num' as *;
+@use 'decimal-to-ratio' as *;
+@use 'str-to-num' as *;
 
 /// Converts a ratio into a percentage.
 /// @access public

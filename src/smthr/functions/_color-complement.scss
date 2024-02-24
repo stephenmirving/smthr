@@ -1,8 +1,8 @@
 @use 'sass:color';
 @use 'sass:list';
 @use 'sass:meta';
-@use './conv-color' as *;
-@use './get-color-type' as *;
+@use 'conv-color' as *;
+@use 'get-color-type' as *;
 
 /// Takes a given color and gives its complement in the specified color syntax.
 /// This is the equivalent of doing color.adjust($color, $hue: 180deg).

@@ -181,5 +181,5 @@ $flip-axis: 'vertical';
 }
 
 .test {
-
+  width: clamp-val(5rem, 10vw, 13rem);
 }

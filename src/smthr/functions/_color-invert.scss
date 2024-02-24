@@ -1,9 +1,9 @@
 @use 'sass:color';
 @use 'sass:list';
 @use 'sass:meta';
-@use './conv-color' as *;
-@use './get-color-type' as *;
-@use './is-percentage' as *;
+@use 'conv-color' as *;
+@use 'get-color-type' as *;
+@use 'is-percentage' as *;
 
 /// Inverts a given color and inverts it then convert it to a specified color
 /// syntax.

@@ -2,10 +2,10 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use 'sass:map';
-@use './is-alias' as *;
-@use './is-angle' as *;
-@use './strip-unit' as *;
-@use './pi' as *;
+@use 'is-alias' as *;
+@use 'is-angle' as *;
+@use 'strip-unit' as *;
+@use 'pi' as *;
 
 /// Takes a given $angle in either turns (turn), degrees (deg), gradians (grad),
 /// or radian (rad) units, and converts that angle into an alternate unit type
