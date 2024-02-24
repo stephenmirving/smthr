@@ -106,7 +106,7 @@ that folder called `_index.scss` and that file should look like this:
 @forward 'navigation';
 @forward 'header';
 @forward 'footer';
-// any other partials in the layout folder should have an @forward here
+// all other partials in the sass/layout/ folder should have an @forward here
 ```
 
 Then in your `main.scss` file where you used to use `@import` to load all your
