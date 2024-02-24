@@ -25,12 +25,12 @@ animation keyframe creation, or other verbose and complex code blocks.
 * 75+ functions
 * A modern, opinionated normalize file written in Sass called _betterize.scss
 * A print style file written in Sass called _print.scss
-* A collection of helpful and configurable !default variables.
+* A collection of helpful and configurable `!default` variables.
 
-Because _smth.scss is a Sass library comprised entirely of functions, mixins and
-variables, importing it into your project won't add any overhead or increased
+Because `_smth.scss` is a Sass library comprised entirely of functions, mixins
+and variables, importing it into your project won't add any overhead or increased
 filesize to your project's stylesheet except for the parts that you actually use
-by calling a function or by using a mixin with `@includes`.
+by calling a function or variable, or by using a mixin with `@includes`.
 
 ## Deployment
 
@@ -41,10 +41,10 @@ the `./src` folder, the folders `/smthr` and `/betterize`, into your project.
 Download a zipped copy of the code by going to the top of this README page and
 looking for the green colored "<> Code" button. Click that and choose
 "Download ZIP". After unzipping the project folder, go into the `src` folder
-inside and copy the `smthr` and `betterize` _(optional)_ folders into your own
-project's directory, in the folder where you keep the rest of your `.scss`
-files. This is probably in a `sass` or `scss` folder, or within one of the
-subdirectories of that folder.
+inside and copy the `smthr` and `betterize` _(betterize is optional)_ folders
+into your own project's directory, in the folder where you keep the rest of your
+`.scss` files. This is probably in a `sass` or `scss` folder, or within one of
+the subdirectories of that folder.
 
 If you are breaking your Sass code down into partials with the 7-1 pattern or
 something similar for organizing your `.scss` files, you would likely put the
