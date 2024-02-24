@@ -9,7 +9,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "sass --watch --update --no-trace --no-quiet --style=expanded test/sass/main.scss:test/css/main.css",
+    "test": "cp -r src/{betterize,smthr} test/sass/vendors/ && sass --watch --update --no-trace --no-quiet --style=expanded test/sass/main.scss:test/css/main.css",
     "copy-to-test": "cp -r src/{betterize,smthr} test/sass/vendors/",
     "make-sassdoc": "sassdoc src/smthr --dest=docs",
     "sassdoc-gh": "sassdocify src/smthr",

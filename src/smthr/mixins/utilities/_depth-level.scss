@@ -43,6 +43,8 @@
   }
 
   // Convert the color into a hex string or CSS color name value.
+  // This value will be converted into an rgba color by the
+  // bottom-shadow and top-shadow functions called below.
   $color: conv-color($color, 'name');
 
   @if $level == 0 {

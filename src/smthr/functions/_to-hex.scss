@@ -2,22 +2,23 @@
 @use 'sass:math';
 @use 'sass:color';
 @use 'sass:string';
+@use 'conv-color-name' as *;
 
 /// Converts a given color to hex notation in either 3, 6, or 8 digit
-/// notation based on the input. The hex color is returned as an unquoted
-/// string. You cannot currently use the output of this function with any
-/// Sass color module methods or other functions that implement type checking
-/// as Sass will consider the output of to-hex to be a string, not a color.
-/// If this is not acceptable, try the conv-color() function instead, with a
-/// $syntax parameter of 'function'.
+/// notation based on the input. If the given `$color` has alpha-transparency,
+/// the 8 digit hex color is returned as an unquoted string that cannot be used
+/// with any Sass color module methods or other functions that implement type
+/// shecking as Sass will consider the output to be an unquoted string, not a
+/// color. If the $color value has no alpha-transparency, or an alpha value
+/// of `1`, the function will return either a 3 or 6 digit hex color, and this
+/// color will be correctly recognized by Sass type-checking as type `'color'`.
 ///
 /// @access public
 ///
 /// @param {Color} $color - The color to convert.
 ///
-/// @return {String} The hex color as an unquoted string. Works as a CSS color
-/// but will not currently work in Sass color module methods or other Sass
-/// functions that require type checking.
+/// @return {Color | String} A 3 or 6 digit hex color, or an 8 digit hex color
+/// as an unquoted string.
 ///
 /// @require {function} _component-to-hex
 ///
@@ -35,47 +36,47 @@
   $blue-component: color.blue($color);
   $alpha-component: color.alpha($color);
 
-  // Convert each RGB component to hex
-  $red-hex: string.to-lower-case(_component-to-hex($red-component));
-  $green-hex: string.to-lower-case(_component-to-hex($green-component));
-  $blue-hex: string.to-lower-case(_component-to-hex($blue-component));
-
   // Handle alpha for 8-digit hex, if necessary
-  @if $alpha-component < 1 {
+  @if $alpha-component != 1 {
+    // Convert each RGB component to hex
+    $red-hex: string.to-lower-case(_component-to-hex($red-component));
+    $green-hex: string.to-lower-case(_component-to-hex($green-component));
+    $blue-hex: string.to-lower-case(_component-to-hex($blue-component));
     $alpha: math.round($alpha-component * 255);
     $alpha-hex: _component-to-hex($alpha);
 
     @return #{string.unquote(
-        '##{$red-hex}#{$green-hex}#{$blue-hex}#{$alpha-hex}'
-      )};
+      '##{$red-hex}#{$green-hex}#{$blue-hex}#{$alpha-hex}'
+    )};
   }
 
-  // Check if color can be expressed in shorter 3-digit hex notation
-  @if $red-component % 17 == 0 and
-      $green-component % 17 == 0 and
-      $blue-component % 17 == 0 and
-      $alpha-component == 1
-  {
-    $red-hex: string.slice($red-hex, 1, 1);
-    $green-hex: string.slice($green-hex, 1, 1);
-    $blue-hex: string.slice($blue-hex, 1, 1);
-  }
+  // If the color has an alpha of 1 or no alpha value (not trapsarent), convert
+  // it into either a 3 or 6 digit hex color.
+  $color: color.change(
+    rgb($red-component $green-component $blue-component),
+    $alpha: $alpha-component
+  );
 
-  // Return 3-digit or 6-digit hex code
-  @return #{string.unquote('##{$red-hex}#{$green-hex}#{$blue-hex}')};
+  // Uses conv-color-name because the above color.change() method will convert
+  // into a CSS color name if possible, and we do not want that to be the output
+  @return conv-color-name($color);
 }
 
 /// Converts a given color to hex notation in either 3, 6, or 8 digit
-/// notation based on the input. The hex color is returned as an unquoted
-/// string.
+/// notation based on the input. If the given `$color` has alpha-transparency,
+/// the 8 digit hex color is returned as an unquoted string that cannot be used
+/// with any Sass color module methods or other functions that implement type
+/// shecking as Sass will consider the output to be an unquoted string, not a
+/// color. If the $color value has no alpha-transparency, or an alpha value
+/// of `1`, the function will return either a 3 or 6 digit hex color, and this
+/// color will be correctly recognized by Sass type-checking as type `'color'`.
+///
 /// @access public
 ///
 /// @param {Color} $color - The color to convert.
-/// @param {String} $syntax [hsl] - The color syntax to convert into.
 ///
-/// @return {String} The hex color as an unquoted string. Works as a CSS color
-/// but will not currently work in Sass color module methods or other Sass
-/// functions that require type checking.
+/// @return {Color | String} A 3 or 6 digit hex color, or an 8 digit hex color
+/// as an unquoted string.
 ///
 /// @require {function} _component-to-hex
 ///
@@ -87,17 +88,20 @@
 }
 
 /// Converts a given color to hex notation in either 3, 6, or 8 digit
-/// notation based on the input. The hex color is returned as an unquoted
-/// string.
+/// notation based on the input. If the given `$color` has alpha-transparency,
+/// the 8 digit hex color is returned as an unquoted string that cannot be used
+/// with any Sass color module methods or other functions that implement type
+/// shecking as Sass will consider the output to be an unquoted string, not a
+/// color. If the $color value has no alpha-transparency, or an alpha value
+/// of `1`, the function will return either a 3 or 6 digit hex color, and this
+/// color will be correctly recognized by Sass type-checking as type `'color'`.
 ///
 /// @access public
 ///
 /// @param {Color} $color - The color to convert.
-/// @param {String} $syntax [hsl] - The color syntax to convert into.
 ///
-/// @return {String} The hex color as an unquoted string. Works as a CSS color
-/// but will not currently work in Sass color module methods or other Sass
-/// functions that require type checking.
+/// @return {Color | String} A 3 or 6 digit hex color, or an 8 digit hex color
+/// as an unquoted string.
 ///
 /// @require {function} _component-to-hex
 ///

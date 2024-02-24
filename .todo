@@ -82,6 +82,9 @@ TODO:
     ☐ Finish propogating pseudo mixin to the dist folder
 
   Functions:
+    ☐ Continue to improve conv-color
+      ☐ Test the modified values for being of 'color' type
+      ☐ Try to get the to-hex subfunction to return a color hex when no alpha is found.
     ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.
     ☐ Finish and propogate trend-line() function:
       ☐ Function finished
