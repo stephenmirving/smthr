@@ -6,7 +6,7 @@
 ///
 /// @param {Number} $radius [10px] - The border-radius value.
 ///
-/// @group Utlities
+/// @group Utilities
 @mixin border-radius($radius: 10px) {
   @if meta.type-of($radius) == 'string' {
     $radius: string.to-lower-case($radius);
