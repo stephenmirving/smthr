@@ -63,11 +63,14 @@ you can simply `@import` the library at the top of the other partials you
 ```scss
 @import 'vendors/smthr/smth';
 @import 'vendors/betterize/betterize';
+
 @import 'base/typography';
+
 @import 'layout/grid';
 @import 'layout/navigation';
 @import 'layout/header';
 @import 'layout/footer';
+
 @import 'components/buttons';
 // ... The rest of your @import directives for all your partials...
 ```
