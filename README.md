@@ -104,7 +104,7 @@ that folder called `_index.scss` and that file should look like this:
 @forward 'navigation';
 @forward 'header';
 @forward 'footer';
-// ... any other partials in the layout folder should be forwarded from here
+// any other partials in the layout folder should have an @forward here
 ```
 
 Then in your `main.scss` file where you used to use `@import` to load all your
@@ -122,7 +122,7 @@ partials, now you would instead write something like this:
 ```
 
 Then, inside each of your partial files, if you want to use something from the
-smthr libary, you would need to write an `@use` directive at the top of that
+_Smoother_ library, you would need to write an `@use` directive at the top of that
 partial file.
 
 You can do this while namespacing the library to `smth` and then you can call the
@@ -146,8 +146,7 @@ anything you want that is not used by another module. I recommend not choosing
 `$` or `#` or `_` or `-` as your namespace as this could potentially cause
 conflicts due to `$` being used for variables, `#` being used for interpolation,
 and `_` or `-` being used at the start of names to
-(make them private)[https://sass-lang.com/documentation/at-rules/use/#private-members]
-those members private outside of that file.
+(make those members private)[https://sass-lang.com/documentation/at-rules/use/#private-members] outside of that file.
 
 ```scss
 @use 'vendors/smthr/smth' as ~;
@@ -159,9 +158,9 @@ those members private outside of that file.
 
 If you aren't worried about potential namespace collisions between _Smoother_,
 other third-party libraries, and your own code, then you can import it without
-a namespace by using `as *` and not have to worry about using a namespace
-prefix when calling the functions, mixins, or variables in the library.
-That might look like this:
+a namespace by using `as *` after the file URL, and not have to worry about
+using a namespace prefix when calling the functions, mixins, or variables in the
+library. That might look like this:
 
 **FILE:** `components/_buttons.scss'
 ```scss
@@ -173,7 +172,8 @@ That might look like this:
 ```
 
 You can see a small-scale example of this newer structure for loading Sass
-modules by looking through the `test` folder in this repository.
+modules by looking through the `test` folder in
+[this repository](https://github.com/stephenmirving/smthr/tree/master/test).
 
 For more information about migrating away from the soon-to-be-deprecated
 `@import` and using the newer `@forward` and `@use` directives, see the offical
