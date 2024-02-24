@@ -15,31 +15,37 @@ _Smoother_ allows you to create a wide range of smooth and customizable visual
 effects, without having to deal with messy clip-path coordinates, complicated
 animation keyframe creation, or other verbose and complex code blocks.
 
-### Smoother is in active development
+## Version
 
-*This is **smthr** version 0.2.5 - Last update: 02/24/24*
+_Smoother_ is **currently in active development**. Almost every day there are
+updates to the functionality or documentation of this library. If you download
+_Smoother_ for use in a project, I recommend checking back here regurally for
+new updates, at least until it launches on NPM and updating it becomes more
+seamless.
+
+This is **smthr** version 0.2.5 - _Last update:_ 02/24/24
 
 ## Content
 
 **_Smoother_ currently contains:**
 
-* **140+** Mixins, including...
+* **140+** Mixins, _including..._
   * More than 30 easily configurable animations
   * More than 20 element shapes
   * More than 80 utility mixins for things like creating responsive ratios,
     Material Design box-shadow effects, or clamping text to a given number of lines.
-* **75+** Functions, including functions that...
+* **75+** Functions, _including functions that..._
   * Convert and manipulate colors
-  * Check and convert data types
-  * Check data types
-* A modern, opinionated normalize file written in Sass called _betterize.scss
+  * Check and convert other data types
+  * Provide useful functionality for mixin creation
+* A modern, opinionated CSS normalization file written in Sass called _betterize.scss
 * A print style file written in Sass called _print.scss
 * A collection of helpful and configurable `!default` variables.
 
 Because `_smth.scss` is a Sass library comprised entirely of functions, mixins
 and variables, importing it into your project won't add any overhead or increased
 filesize to your project's stylesheet except for the parts that you actually use
-by calling a function or variable, or by using a mixin with `@includes`.
+by calling a function, variable, or by using a mixin with `@includes`.
 
 ## Deployment
 
