@@ -15,7 +15,7 @@ _Smoother_ allows you to create a wide range of smooth and customizable visual
 effects, without having to deal with messy clip-path coordinates, complicated
 animation keyframe creation, or other verbose and complex code blocks.
 
-## Smoother is in active development
+### Smoother is in active development
 
 *This is **smthr** version 0.2.5 - Last update: 02/24/24*
 
