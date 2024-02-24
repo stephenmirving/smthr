@@ -21,8 +21,8 @@ animation keyframe creation, or other verbose and complex code blocks.
 
 **_smthr_ currently contains:**
 
-* 140+ mixins
-* 75+ functions
+* **140+** Mixins
+* **75+** Functions
 * A modern, opinionated normalize file written in Sass called _betterize.scss
 * A print style file written in Sass called _print.scss
 * A collection of helpful and configurable `!default` variables.
@@ -59,8 +59,9 @@ Sass syntax of `@import` directives in your project's main `.scss` file, then
 you can simply `@import` the library at the top of the other partials you
 `@import`.
 
-**FILE:** `sass/main.scss`
 ```scss
+// sass/main.scss
+
 @import 'vendors/smthr/smth';
 @import 'vendors/betterize/betterize';
 
@@ -98,8 +99,9 @@ should have `@forward` directives for every other partial in the folder. So you
 may have a `layout` folder containing your layout partials, create a file in
 that folder called `_index.scss` and that file should look like this:
 
-**FILE:** `sass/layout/_index.scss`
 ```scss
+// sass/layout/_index.scss
+
 @forward 'grid';
 @forward 'navigation';
 @forward 'header';
@@ -129,8 +131,9 @@ You can do this while namespacing the library to `smth` and then you can call th
 functions, mixins, and variables in the library using that as a prefix, like
 this:
 
-**FILE:** `sass/pages/_home.scss`
 ```scss
+// sass/pages/_home.scss
+
 @use 'vendors/smthr/smth' as smth;
 
 .element {
@@ -162,8 +165,9 @@ a namespace by using `as *` after the file URL, and not have to worry about
 using a namespace prefix when calling the functions, mixins, or variables in the
 library. That might look like this:
 
-**FILE:** `components/_buttons.scss'
 ```scss
+// components/_buttons.scss
+
 @use 'vendors/smthr/smth' as *;
 
 .button {
