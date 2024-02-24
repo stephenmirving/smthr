@@ -244,8 +244,8 @@ libraries, please refer to the official
 
 Created by Stephen M Irving
 
-This library also contains work inspired by others, as well as some forked code.
-This includes work by:
+This library contains work inspired by others, as well as some forked code.
+This includes code by:
 
 * [Lucas Bonomi](http://lucasbonomi.com/)
 * [Eduardo Boucas](https://eduardoboucas.com/)
