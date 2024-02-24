@@ -120,7 +120,7 @@ partials, now you would instead write something like this:
 @use 'components';
 @use 'pages';
 @use 'themes';
-@use 'vendors/betterize/print'; // If you want to use the _print styles
+@use 'vendors/betterize/print'; // If you want to use the print styles
 ```
 
 Then, inside each of your partial files, if you want to use something from the
