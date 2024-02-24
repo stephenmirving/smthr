@@ -1,0 +1,30 @@
+@use 'sass:meta';
+@use 'sass:list';
+
+/// Applies the float clearing 'clearfix' hack. This modern incarnation of the
+/// clearfix will work as far back as Internet Explorer 8.
+///
+/// @param {String} $clear-val - The clear property's value. Can either be
+/// left, right, or both.
+///
+/// @group Utilities
+/// @throw Invalid $clear-value parameter value
+@mixin clearfix($clear-value: both) {
+  $accepted-values: 'both', 'left', 'right';
+
+  @if not list.index($accepted-values, $clear-value) {
+    @error 'Invalid $clear-value parameter of `#{meta.inspect($clear-value)}` ' +
+        'was passed to the [ clearfix() ] mixin. Value must be either `left`, ' +
+        '`right` or `both`.';
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    display: table;
+  }
+
+  &::after {
+    clear: $clear-value;
+  }
+}

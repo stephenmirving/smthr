@@ -1,0 +1,351 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
+@use '../../functions/is-alias' as *;
+
+/// Animates text by flickering it into or out of view.
+///
+/// @param {Bool | String} $in-or-out ['in'] - Determines whether the text will
+/// flicker into or out of view. Can either be `in` or `out`.
+/// @param {Number} $duration [3s] - The duration of the animation (`s` or `ms`).
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The number of iterations
+/// for the animation to complete. Can be `infinite`, `inherit`, `initial`, or
+/// any unitless number.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// `null` assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [linear] - The timing function for the
+/// animation.
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @require {function} is-alias
+///
+/// @throw Invalid $in-or-out value
+/// @throw Invalid $duration value
+/// @throw Invalid $delay value
+/// @throw Invalid $anim-dir value
+@mixin text-flicker(
+  $in-or-out: 'in',
+  $duration: 3s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: linear,
+  $anim-num: null
+) {
+  $anim-suffix: '';
+
+  @if $in-or-out and meta.type-of($in-or-out) == 'string' {
+    $in-or-out: string.to-lower-case($in-or-out);
+  }
+
+  @if $delay and meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if $in-or-out == true or is-alias('in', $in-or-out){
+    $in-or-out: true;
+    $anim-suffix: '-in';
+  } @else if not $in-or-out or is-alias('out', $in-or-out) {
+    $in-or-out: false;
+    $anim-suffix: '-out';
+  } @else {
+    @error 'Invalid in-out value of `#{meta.inspect($in-or-out)}` for the `text-flicer` mixin';
+  }
+
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the [ text-flicker() ] ' +
+        'mixin. The duration property must be a number.';
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, unless $duration > 60, assume seconds
+    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the [ text-flicker() ] ' +
+        'mixin. The duration property must be in either s or ms units.';
+  } @else if $duration % 10 == 0ms {
+    // If time in ms would be shorter as seconds, convert it
+    $duration: math.div($duration, 1000ms) * 1s;
+
+    // Get rid of possible leading zero in front of decimal place
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: #{string.slice($duration + '', 2)};
+    }
+  }
+
+  @if not
+    $delay or
+    $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    is-alias('none', $delay)
+  {
+    $delay: null;
+  }
+  @if $delay {
+    @if meta.type-of($delay) != 'number' {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-flicker() ] mixin. The delay property must be a number.';
+    } @else if math.is-unitless($delay) {
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-flicker() ] mixin. The delay property must be in either ' +
+          's or ms units.';
+    } @else if $delay % 10 == 0ms {
+      $delay: math.div($delay, 1000ms) * 1s;
+
+      @if string.slice($delay + '', 1, 2) == '0.' {
+        $delay: #{string.slice($delay + '', 2)};
+      }
+    }
+  }
+
+  @if $iterations {
+    @if meta.type-of($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if is-alias('infinite', $iterations) {
+      $iterations: infinite;
+    } @else if
+      (
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for ' +
+          'the [ text-flicker() ] mixin.';
+    }
+  }
+
+  @if not
+    $anim-dir or
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
+  {
+    $anim-dir: null;
+  } @else if is-alias('reverse', $anim-dir) {
+    $anim-drection: reverse;
+  } @else if is-alias('alternate', $anim-dir) {
+    $anim-dir: alternate;
+  } @else if is-alias('alternate-reverse', $anim-dir) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
+        '[ text-flicker() ] mixin';
+  }
+
+  @if not
+    $timing-func or
+    is-alias('none', $timing-func) or
+    is-alias('default', $timing-func)
+  {
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    $timing-func: linear;
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  animation: txt-flicker#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
+
+  @at-root {
+    @keyframes txt-flicker#{$anim-suffix} {
+      @if $in-or-out {
+        0% {
+          opacity: 0;
+        }
+
+        10%,
+        10.2%,
+        20%,
+        20.6%,
+        30%,
+        30.6%,
+        45%,
+        55.1%,
+        57%,
+        60.1%,
+        65%,
+        75.1%,
+        77%,
+        85.1%,
+        86% {
+          text-shadow: none;
+          opacity: 0;
+        }
+
+        10.1% {
+          text-shadow: none;
+          opacity: 1;
+        }
+
+        20.1% {
+          text-shadow: 0 0 30px hsl(0 0% 100% / 0.25);
+          opacity: 1;
+        }
+
+        30.1%,
+        30.5%,
+        45.1%,
+        50%,
+        55% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.45),
+            0 0 60px hsl(0 0% 100% / 0.25);
+          opacity: 1;
+        }
+
+        57.1%,
+        60% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.55),
+            0 0 60px hsl(0 0% 100% / 0.35);
+          opacity: 1;
+        }
+
+        65.1%,
+        75% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.55),
+            0 0 60px hsl(0 0% 100% / 0.35),
+            0 0 100px hsl(0 0% 100% / 0.1);
+          opacity: 1;
+        }
+
+        77.1%,
+        85% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.25),
+            0 0 60px hsl(0 0% 100% / 0.4),
+            0 0 110px hsl(0 0% 100% / 0.2),
+            0 0 100px hsl(0 0% 100% / 0.1);
+          opacity: 1;
+        }
+
+        86.1%,
+        100% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.6),
+            0 0 60px hsl(0 0% 100% / 0.45),
+            0 0 110px hsl(0 0% 100% / 0.25),
+            0 0 100px hsl(0 0% 100% / 0.1);
+          opacity: 1;
+        }
+      } @else {
+        0%,
+        13.9% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.6),
+            0 0 60px hsl(0 0% 100% / 0.45),
+            0 0 110px hsl(0 0% 100% / 0.25),
+            0 0 100px hsl(0 0% 100% / 0.1);
+          opacity: 1;
+        }
+
+        14%,
+        14.9%,
+        23%,
+        24.9%,
+        35%,
+        39.9%,
+        43%,
+        44.9%,
+        55%,
+        69.4%,
+        70%,
+        79.4%,
+        80%,
+        89.8%,
+        90% {
+          text-shadow: none;
+          opacity: 0;
+        }
+
+        15%,
+        22.9% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.55),
+            0 0 60px hsl(0 0% 100% / 0.4),
+            0 0 110px hsl(0 0% 100% / 0.2),
+            0 0 100px hsl(0 0% 100% / 0.1);
+          opacity: 1;
+        }
+
+        25%,
+        34.9% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.55),
+            0 0 60px hsl(0 0% 100% / 0.35),
+            0 0 100px hsl(0 0% 100% / 0.1);
+          opacity: 1;
+        }
+
+        40%,
+        42.9% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.55),
+            0 0 60px hsl(0 0% 100% / 0.35);
+          opacity: 1;
+        }
+
+        45%,
+        50%,
+        54.9%,
+        69.5%,
+        69.9% {
+          text-shadow:
+            0 0 30px hsl(0 0% 100% / 0.45),
+            0 0 60px hsl(0 0% 100% / 0.25);
+          opacity: 1;
+        }
+
+        79.9% {
+          text-shadow: 0 0 30px hsl(0 0% 100% / 0.25);
+          opacity: 1;
+        }
+
+        89.9% {
+          text-shadow: none;
+          opacity: 1;
+        }
+
+        100% {
+          opacity: 0;
+        }
+      }
+    }
+  }
+}

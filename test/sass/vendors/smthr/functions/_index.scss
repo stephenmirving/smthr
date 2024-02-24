@@ -1,0 +1,87 @@
+// General Utilitiy Functions;
+@forward 'asset';
+@forward 'closest-direction';
+@forward 'closest-position';
+@forward 'entity';
+@forward 'order-index';
+@forward 'strip-unit';
+@forward 'resolve-alias';
+@forward 'timing';
+@forward 'functions-walk';
+@forward 'walk';
+
+// Is-Type Functions
+@forward 'is-alias';
+@forward 'is-color';
+@forward 'is-number';
+@forward 'is-integer';
+@forward 'is-float';
+@forward 'is-percentage';
+@forward 'is-absolute-length';
+@forward 'is-relative-length';
+@forward 'is-length';
+@forward 'is-list';
+@forward 'is-map';
+@forward 'is-angle';
+@forward 'is-frequency';
+@forward 'is-position';
+@forward 'is-reserved';
+@forward 'is-resolution';
+@forward 'is-string';
+@forward 'is-time';
+@forward 'is-conventional';
+@forward 'is-true';
+
+// Math Functions
+@forward 'clamp-val';
+@forward 'decimal-to-ratio';
+@forward 'exp-maclaurin';
+@forward 'factorial';
+@forward 'linear-interpolation';
+@forward 'pi';
+@forward 'ratio-to-percentage';
+@forward 'to-fixed';
+
+// Conversion Functions
+@forward 'conv-angle';
+@forward 'conv-to-px';
+@forward 'conv-to-em';
+@forward 'conv-to-rem';
+
+// String Functions
+
+@forward 'str-replace';
+@forward 'str-to-list';
+@forward 'str-to-num';
+
+// List Functions
+@forward 'in-list';
+@forward 'list-to-string';
+@forward 'purge-list';
+@forward 'remove-from';
+@forward 'remove-where';
+@forward 'to-list';
+@forward 'update-list';
+
+// Map Functions
+@forward 'extend-map';
+@forward 'font-stack';
+@forward 'map-to-string';
+@forward 'map-to-list';
+
+// Color Functions
+@forward 'color-invert';
+@forward 'color-complement';
+@forward 'color-to-string';
+@forward 'conv-color';
+@forward 'conv-color-name';
+@forward 'get-color-type';
+@forward 'black';
+@forward 'white';
+@forward 'shade';
+@forward 'tint';
+@forward 'to-cmyk';
+@forward 'to-hex';
+@forward 'bottom-shadow';
+@forward 'top-shadow';
+@forward 'make-long-shadow';

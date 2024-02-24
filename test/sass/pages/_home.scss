@@ -1,14 +1,4 @@
-// stylelint-disable scss/dollar-variable-default
-@use 'sass:color';
-@use 'sass:list';
-@use 'sass:map';
-@use 'sass:math';
-@use 'sass:meta';
-@use 'sass:selector';
-@use 'sass:string';
-@use '../src/smthr/smth' as *;
-
-@forward '../src/betterize/betterize';
+@use '../vendors/smthr/smth' as *;
 
 .container {
   display: grid;
@@ -188,4 +178,8 @@ $flip-axis: 'vertical';
       $use-margin: true
     );
   }
+}
+
+.test {
+
 }

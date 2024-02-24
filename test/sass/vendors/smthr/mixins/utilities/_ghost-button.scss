@@ -1,0 +1,60 @@
+/// Generates a ghost button.
+///
+/// @link https://www.developerdrive.com/2014/10/how-to-make-a-ghost-button-in-css3/
+/// @link https://realcombiz.blogspot.com/2014/12/css-ghost-buttons.html
+///
+/// @param {Number} $font-size - The font-size value.
+/// @param {Color} $font-color - The font's color.
+/// @param {String | List} $font-fam - The font family used in the button.
+/// @param {Number} $border-size - The border-width for the button.
+/// @param {Color} $border-color - The border-color for the button.
+/// @param {Number} $padding - The button's padding.
+/// @param {Number} $transition-speed - The speed the button will transition.
+/// @param {Color} $hover-color - The color of the button's hover state.
+///
+/// @group Utilities
+@mixin ghost-button(
+  $font-size,
+  $font-color,
+  $font-weight,
+  $font-fam,
+  $border-size,
+  $border-color,
+  $padding,
+  $transition-speed,
+  $hover-color
+) {
+  display: inline-block;
+  padding: $padding;
+  border: $border-size solid $border-color;
+  color: $font-color;
+
+  @if $font-fam and $font-size {
+    @if $font-weight and $font-weight != 400 {
+      font: $font-weight $font-size $font-fam;
+    } @else {
+      font: $font-size $font-fam;
+    }
+  } @else {
+    @if $font-fam {
+      font-family: $font-fam;
+    }
+    @if $font-size {
+      font-size: $font-size;
+    }
+    @if $font-weight and $font-weight != 400 {
+      font-weight: $font-weight;
+    }
+  }
+
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    color $transition-speed,
+    background $transition-speed;
+
+  &:hover {
+    background: $border-color;
+    color: $hover-color;
+  }
+}

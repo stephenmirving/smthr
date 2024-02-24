@@ -1,0 +1,27 @@
+@use 'sass:list';
+@use 'sass:meta';
+
+/// Return a copy of $list with all elements for which $condition returns `true`
+/// removed.
+/// @access public
+///
+/// @param {List} $list - A list containing values to be checked and possibly
+/// removed.
+/// @param {*} $condition - A conditional statement used to check every value in
+/// $list.
+///
+/// @return {List} The updated list.
+///
+/// @example smth.remove-where(80deg 30% 80% 0.5, meta.get-function('is-angle', $module: 'smth'));
+@function remove-where($list, $condition) {
+  $new-list: ();
+  $separator: list.separator($list);
+
+  @each $element in $list {
+    @if not meta.call($condition, $element) {
+      $new-list: list.append($new-list, $element, $separator: $separator);
+    }
+  }
+
+  @return $new-list;
+}

@@ -1,0 +1,27 @@
+/// Force grayscale and anti-aliased font-smoothing on Retina and other
+/// HiDPI screens.
+///
+/// @param {Number} $ratio [2] - The pixel ratio used to target Retina and other
+/// HiDPI screens.
+///
+/// @group Utilities
+@mixin smooth-retina-fonts($ratio: 2) {
+  @media screen and (-webkit-min-device-pixel-ratio: $ratio),
+         screen and (min-resolution: $ratio * 96dpi),
+         screen and (min-resolution: $ratio * 1dppx) {
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/// Force grayscale and anti-aliased font-smoothing on Retina and other
+/// HiDPI screens.
+///
+/// @param {Number} $ratio [2] - The pixel ratio used to target Retina and other
+/// HiDPI screens.
+///
+/// @group Utilities
+/// @alias smooth-retina-fonts
+@mixin smooth-hidpi-fonts($ratio: 2) {
+  @include smooth-retina-fonts($ratio);
+}

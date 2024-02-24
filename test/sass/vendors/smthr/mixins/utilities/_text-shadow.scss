@@ -1,0 +1,22 @@
+@use 'sass:math';
+@use '../../functions/is-alias' as *;
+
+/// Apply a text shadow effect.
+///
+/// @param {Number} $x [2px] - The x-axis offset of the shadow.
+/// @param {Number} $y [2px] - The x-axis offset of the shadow.
+/// @param {Number} $blur [5px] - The blur range of the shadow.
+/// @param {Color} $color [hsl(0 0% 0 / 0.4)] - The color of the shadow.
+///
+/// @group Utilities
+@mixin text-shadow($x: 2px, $y: 2px, $blur: 5px, $color: hsla(0, 0%, 0%, 0.4)) {
+  $x: if((math.is-unitless($x)), $x * 1px, $x);
+  $y: if((math.is-unitless($y)), $y * 1px, $y);
+  $blur: if((math.is-unitless($blur)), $blur * 1px, $blur);
+
+  @if not $blur or $blur == 0px or $blur == 0 or is-alias('none', $blur) {
+    text-shadow: $x $y $color;
+  } @else {
+    text-shadow: $x $y $blur $color;
+  }
+}

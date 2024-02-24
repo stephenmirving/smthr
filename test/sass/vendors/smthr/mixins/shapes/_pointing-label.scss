@@ -1,0 +1,87 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:math';
+@use '../../functions/is-alias' as *;
+@use '../../functions/to-fixed' as *;
+
+/// Creates a little pointing label from an element using clip-path.
+///
+/// @param {String} $direction [right] - Indicates the direction the label
+/// will be pointing towards.
+/// @param {Number} $width [5rem] - A length value setting the width.
+/// @param {Color | Mixed} $bg [#80f} Any value that is valid for the background
+/// shorthand property.
+/// @param {Number} $b-radius: [4px] A single value border radius for the
+/// corners on the opposite side of the label from the direction it is pointing.
+/// @param {Number} $height [$width / 4] Length value that sets
+/// the height of the label.
+///
+/// @group Shapes
+///
+/// @throw Invalid $direction value
+@mixin pointing-label(
+  $direction: top,
+  $width: 8rem,
+  $bg: #80f,
+  $b-radius: 8px,
+  $height: to-fixed(math.div($width, 4))
+) {
+  @if meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if is-alias('right', $direction) {
+    clip-path: polygon(
+      95% 0,
+      95% 35%,
+      100% 50%,
+      95% 65%,
+      95% 100%,
+      0 100%,
+      0 0
+    );
+    border-radius: $b-radius 0 0 $b-radius;
+  } @else if is-alias('left', $direction) {
+    clip-path: polygon(5% 0, 5% 35%, 0 50%, 5% 65%, 5% 100%, 100% 100%, 100% 0);
+    border-radius: 0 $b-radius $b-radius 0;
+  } @else if is-alias('top', $direction) {
+    clip-path: polygon(
+      55% 15%,
+      50% 0,
+      45% 15%,
+      0 15%,
+      0 100%,
+      100% 100%,
+      100% 15%
+    );
+    border-radius: 0 0 $b-radius $b-radius;
+  } @else if is-alias('bottom', $direction) {
+    clip-path: polygon(
+      55% 85%,
+      50% 100%,
+      45% 85%,
+      0 85%,
+      0 0,
+      100% 0,
+      100% 85%
+    );
+    border-radius: $b-radius $b-radius 0 0;
+  } @else {
+    @error 'Invalid $direction value of `#{meta.inspect($direction)}` ' +
+        'passed to the [ pointing-label() ] mixin. The value for $direction ' +
+        'must be one of the following: `top`, `right`, `bottom`, or `left`.';
+  }
+
+  @if $width {
+    width: $width;
+  }
+
+  @if $height {
+    height: $height;
+  }
+
+  @if $bg {
+    background: $bg;
+    background-clip: padding-box;
+  }
+}

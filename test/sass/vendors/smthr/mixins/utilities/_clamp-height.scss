@@ -1,0 +1,21 @@
+/// Gives an element dynamic height by taking an absolute length as a min-height
+/// value for the first parameter, a relative length to use for the height
+/// property, and then another absolute length for the max-height property.
+/// Follows the same argument syntax as the CSS clamp() method, and the
+/// clamp-height mixin and clamp-val function in this library. If you want to
+/// get even more responsive, pass clamp(), calc(), min(), and max() functions
+/// for these values.
+///
+/// @access public
+///
+/// @param {Number} $min - The minimum height. Should be an absolute length value
+/// or a function that resolves to one.
+/// @param {Number} $rel - The relative length height of the element. Use units
+/// like vh, %, em, etc. or a function using relative units.
+/// @param {Number} $max - The maximum height. Should be an absolute length value
+/// or a function that resolves to one.
+@mixin clamp-height($min, $rel, $max) {
+  height: $rel;
+  min-height: $min;
+  max-height: $max;
+}

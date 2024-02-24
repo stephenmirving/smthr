@@ -1,0 +1,112 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-angle' as *;
+@use '../../functions/conv-angle' as *;
+
+/// Uses psuedo-elements and transform to turn an element into the shape of an
+/// arrow with a curved tail.
+///
+/// @param {String | Number} $direction ['bottom-right'] The direction that the
+/// arrow is pointing. Can either be a direction or an angle in degrees, turns,
+/// radians, or gradians.
+/// @param {Number} $size [2rem] - The size of the arrow is calculated based on
+/// this value.
+/// @param {Color} $color [#f00] The color of the arrow.
+///
+/// @group Shapes
+///
+/// @require {function} conv-angle
+/// @require {function} is-alias
+/// @require {function} is-angle
+///
+/// @throw Invalid unit type for $direction
+/// @throw Invalid $direction keyword value
+@mixin arrow-curved-tail(
+  $direction: 'bottom-right',
+  $size: 2rem,
+  $color: #80f
+) {
+  // Default angle for the 'bottom-right' direction
+  $angle: 10deg;
+
+  // Mixin will only accept direction keywords and degree units
+  @if $direction and
+    meta.type-of($direction) ==
+    'number' and not
+    math.is-unitless($direction) and not
+    is-angle($direction)
+  {
+    @error 'Invalid unit type for the $direction parameter of the ' +
+      '[ arrow-curved-tail() ] mixin. Numbers must be entered in angle units.';
+  }
+
+  @if $direction {
+    @if meta.type-of($direction) == 'string' {
+      $direction: string.to-lower-case($direction);
+    }
+
+    @if meta.type-of($direction) ==
+      'number' and
+      (math.is-unitless($direction) or is-angle($direction))
+    {
+      $angle: $direction;
+
+      @if math.is-unitless($angle) {
+        $angle: $angle * 1deg;
+      }
+
+      // Convert angle into degrees for easier math
+      $angle: conv-angle($angle, deg);
+
+      // Correct the angle so the arrow points to the top at 0deg
+      $angle: $angle - 135deg;
+
+      // Simplify the angle if it is more than 360deg or less than -360deg
+      @if $angle > 360deg {
+        $angle: $angle % 360;
+      } @else if $angle < -360deg {
+        $angle: -1 * ($angle % -360);
+      }
+    } @else if is-alias('top', $direction) {
+      $angle: 225deg;
+    } @else if is-alias('right', $direction) {
+      $angle: -45deg;
+    } @else if is-alias('left', $direction) {
+      $angle: 135deg;
+    } @else if is-alias('bottom', $direction) {
+      $angle: 45deg;
+    } @else if is-alias('bottom left', $direction) {
+      $angle: 100deg;
+    } @else if is-alias('top left', $direction) {
+      $angle: 190deg;
+    } @else if is-alias('top right', $direction) {
+      $angle: -80deg;
+    } @else if not is-alias('bottom right', $direction) {
+      @error 'Invalid $direction value for the [ arrow-curved-tail() ] mixin.' +
+          ' Acceptable values include: `top`,`top-right`, `right`, ' +
+          '`bottom-right`, `bottom`, `bottom-left`, `left`, or `top-left`.';
+    }
+  }
+
+  position: relative;
+  width: 0;
+  height: 0;
+  border-top: ($size * 0.75) solid transparent;
+  border-right: ($size * 0.75) solid $color;
+  transform: rotate($angle);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -$size;
+    left: $size * -0.75;
+    width: $size;
+    height: $size;
+    border: 0 solid transparent;
+    border-top: math.div($size, 4) solid $color;
+    border-radius: ($size * 1.6666667) 0 0;
+    transform: rotate(45deg);
+  }
+}

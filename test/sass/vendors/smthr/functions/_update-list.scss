@@ -1,0 +1,36 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use './is-true' as *;
+@use './purge-list' as *;
+@use './to-list' as *;
+
+/// Replaces `$old-value` with `$new-value` in `$list`.
+/// @access public
+///
+/// @param {List} $list - The list to update.
+/// @param {*} $old-value - The old value to replace in `$list`.
+/// @param {*} $new-value - The new value that is replacing the `$old-value`.
+///
+/// @return {List} The new, updated list.
+///
+/// @require {function} is-true
+/// @require {function} purge-list
+/// @require {function} to-list
+@function update-list($list, $old-value, $new-value) {
+  $running: true;
+
+  @while $running {
+    $index: list.index($list, $old-value);
+
+    @if not $index {
+      $running: false;
+    } @else {
+      $list: list.set-nth($list, $index, $new-value);
+    }
+  }
+
+  $list: if(is-true($new-value), $list, purge-list($list));
+
+  @return to-list($list);
+}

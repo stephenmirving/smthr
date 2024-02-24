@@ -1,0 +1,17 @@
+/// Creates a square with relative, dynamically sized dimensions that are
+/// clamped by provided minimum and maximum sizes.
+///
+/// @param {Number} $size - The size of the square given in relative
+/// units.
+/// @param {Number} $min [$size] The minimum size of the square.
+/// @param {Number} $max [$size] The maximum size of the square.
+///
+/// @group Utilities
+@mixin responsive-square($size, $min: $size, $max: $size) {
+  width: $size;
+  min-width: $min;
+  max-width: $max;
+  height: $size;
+  min-height: $min;
+  max-height: $max;
+}

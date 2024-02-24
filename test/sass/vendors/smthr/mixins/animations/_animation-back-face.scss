@@ -1,0 +1,74 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:math';
+@use '../../functions/is-alias' as *;
+
+/// Apply to the child element of the element with the a 3-d transform effect
+/// to represent the back-face of the card that the animation flips to or past.
+///
+/// @param {String} $flip-axis [horizontal] - Set this value equal to the axis
+/// the element will flip over in order to ensure that the content of the
+/// back-face of the element is oriented correctly.
+/// @param {Number} $z-val [10] - The z-index value.
+///
+/// @group Animations
+/// @require {function} is-alias
+///
+/// @throw Invalid type of $flip-axis.
+/// @throw Invalid $z-val z-index value.
+@mixin animation-back-face($flip-axis: horizontal, $z-val: 10) {
+  // Default rotation for the flip-axis value of horizontal
+  $trans-val: rotateX(180deg);
+
+  @if meta.type-of($flip-axis) != 'string' {
+    @error 'Value of $flip-axis passed to the [ animation-back-face() ] mixin ' +
+        'must be of type \'string\'.';
+  }
+
+  $flip-axis: string.to-lower-case($flip-axis);
+
+  @if is-alias('top-to-bottom', $flip-axis) {
+    $trans-val: rotateY(180deg);
+  } @else if is-alias('bottom-left-to-top-right', $flip-axis) {
+    $trans-val: rotate3d(1, 1, 0, 180deg);
+  } @else if is-alias('bottom-right-to-top-left', $flip-axis) {
+    $trans-val: rotate3d(-1, 1, 0, -180deg);
+  } @else if not is-alias('left-to-right', $flip-axis) {
+    @error 'Invalid flip-axis value of `#{meta.inspect($flip-axis)}` for the ' +
+        '[ animation-back-face() ] mixin';
+  }
+
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: $trans-val;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  @if $z-val and meta.type-of($z-val) == 'number' and math.is-unitless($z-val) {
+    z-index: $z-val;
+  } @else if $z-val {
+    @error 'Invalid $z-val z-index value of `#{meta.inspect($z-val)}` for the ' +
+        '[ animation-back-face() ] mixin';
+  }
+}
+
+/// Apply to the child element of the element with the a 3-d transform effect
+/// to represent the back-face of the card that the animation flips to or past.
+///
+/// @param {String} $flip-axis [horizontal] - Set this value equal to the axis
+/// the element will flip over in order to ensure that the content of the
+/// back-face of the element is oriented correctly.
+/// @param {Number} $z-val [10] - The z-index value.
+///
+/// @group Animations
+///
+/// @require {function} is-alias
+///
+/// @throw Invalid type of $flip-axis.
+/// @throw Invalid $z-val z-index value.
+///
+/// @alias animation-back-face
+@mixin animation-back-side($flip-axis: horizontal, $z-val: 10) {
+  @include animation-back-face($flip-axis, $-val);
+}

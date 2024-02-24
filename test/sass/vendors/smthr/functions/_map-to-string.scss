@@ -1,0 +1,46 @@
+@use 'sass:meta';
+
+/// Iterates over a map and returns it as a converted string
+///
+/// @param {Map} $map - The map to convert into a string.
+/// @param {String} $separator [', '] - The separator to use between
+/// the map's each of the map's properties.
+/// @param {String} $pair-separator [', '] - The separator to use between
+/// the key and value of each pair.
+///
+/// @return {String} The converted string.
+@function map-to-string($map, $separator: ', ', $pair-separator: ': ') {
+  $str: '';
+
+  @if meta.type-of($map) != 'map' {
+    @error 'Invalid $map type passed to the `map-to-string()` function. You ' +
+        'passed `#{meta.inspect($map)}`, which is not a valid map.';
+  }
+
+  @if meta.type-of($separator) != 'string' and $separator != comma {
+    @error 'Invalid $separator type passed to the `map-to-string()` ' +
+        'function. You passed `#{meta.inspect($list)}`, which is not ' +
+        'a valid separator string. Use something like \', \' instead.';
+  }
+
+  @if meta.type-of($pair-separator) != 'string' and $pair-separator != comma {
+    @error 'Invalid $pair-separator type passed to the `map-to-string()` ' +
+        'function. You passed `#{meta.inspect($pair-separator)}`, which is not ' +
+        'a valid separator string. Use something like \': \' instead.';
+  }
+
+  @if $separator == comma {
+    $separator: ', ';
+  }
+
+  @each $key, $value in $map {
+    // Check if $str is empty to avoid adding the separator before the first pair
+    @if $str == '' {
+      $str: $key + $pairSeparator + $value;
+    } @else {
+      $str: $str + $separator + $key + $pairSeparator + $value;
+    }
+  }
+
+  @return $str;
+}

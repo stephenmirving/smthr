@@ -1,0 +1,18 @@
+/// Thoroughly hide the text of an element.
+///
+/// @group Utilities
+@mixin hide-text {
+  overflow: hidden;
+  color: transparent;
+  white-space: nowrap;
+  text-indent: 101%;
+  text-shadow: none;
+}
+
+/// Thoroughly hide the text of an element.
+///
+/// @group Utilities
+/// @alias hide-text
+@mixin text-hide {
+  @include hide-text;
+}

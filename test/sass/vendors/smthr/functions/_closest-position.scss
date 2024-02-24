@@ -1,0 +1,105 @@
+@use 'sass:meta';
+@use 'sass:map';
+@use 'sass:list';
+@use 'sass:math';
+@use './is-angle' as *;
+@use './is-number' as *;
+@use './conv-angle' as *;
+@use '../variables' as *;
+
+/// Takes an angle and returns the closest position keyword as an
+/// unquoted string. If $return-difference is set to true, it will return a
+/// comma separated list with the keyword first and then the difference
+/// in degrees between that and the given angle.
+///
+/// @access public
+///
+/// @param {Number} $angle - An angle in any format or a unitless number
+/// which the function will assume to be in degrees.
+/// @param {Bool} $return-difference [false] - Pass true to have the function
+/// return a list with the keyword and the difference in degrees between that
+/// direction and the given angle. Pass false to have the function return an
+/// unquoted string with just the closest position keyword.
+///
+/// @return {String | List} Returns an unquoted string with the closest
+/// position keyword. If $return-difference is set to true, it will
+/// instead return a list with the keyword first and then the difference in deg
+/// between that position and the given angle.
+///
+/// @example #{closest-position(288deg)}: 20%;
+/// Compiles to:
+/// left: 20%;
+///
+/// @require {function} is-angle
+/// @require {function} is-number
+/// @require {function} conv-angle
+/// @require {variable} $map-positions
+///
+/// @throw Invalid data type error for $angle.
+@function closest-position($angle, $return-difference: false) {
+  // Scrub input
+  @if not is-number($angle) {
+    @error 'Invalid data type for $angle passed to the [ closest-direction ] ' +
+        'function. You must pass a valid angle.';
+  }
+
+  @if math.is-unitless($angle) {
+    $angle: $angle * 1deg;
+  }
+
+  @if not is-angle($angle) {
+    @error 'You must provide a valid $angle for the [ closest-direction() ] ' +
+        'function. `#{meta.inspect($angle)}` is not a valid angle.';
+  }
+
+  // Convert angle to degrees if necessary
+  @if math.unit($angle) != 'deg' {
+    $angle: conv-angle($angle, 'deg');
+  }
+
+  // Normalize the angle between 0 and 360
+  $angle: $angle % 360;
+
+  @if $angle < 0 {
+    $angle: $angle + 360;
+  }
+
+  // Initialize variables to find the closest direction
+  $closest-direction: null;
+  $smallest-difference: 360; // Maximum difference
+
+  // Iterate through each direction to find the closest
+  @each $key, $value in $map-positions {
+    $current-difference: math.abs(map.get($value, 'deg') - $angle);
+
+    // Check for the actual closest direction considering circular nature
+    @if $current-difference > 180 {
+      $current-difference: 360 - $current-difference;
+    }
+
+    @if $current-difference < $smallest-difference {
+      $smallest-difference: $current-difference;
+      $closest-direction: $value;
+    }
+  }
+
+  // Calculate the final difference in degrees
+  $final-difference: map.get($closest-direction, 'deg') - $angle;
+
+  @if $final-difference > 180 {
+    $final-difference: $final-difference - 360;
+  }
+
+  @if $final-difference < -180 {
+    $final-difference: $final-difference + 360;
+  }
+
+  // Return the closest direction keyword as a string. If $return-difference
+  // is true, return both the closest direction and the difference between
+  // that and the given angle as a list.
+  @if $return-difference {
+    @return (#{map.get($closest-direction, 'name')}, $final-difference * -1);
+  } @else {
+    @return #{map.get($closest-direction, 'name')};
+  }
+}

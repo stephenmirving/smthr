@@ -1,0 +1,87 @@
+@use 'sass:meta';
+
+/// Uses @supports queries and a clever hack to apply the given styles to
+/// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
+/// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
+///
+/// @param {Bool | String} $only-legacy [null] - Pass nothing or null to target
+/// all version of Gecko based Mozilla browsers. To target newer Quantam Mozilla
+/// browsers, pass false, null, `quantam`, `new`, `stylo`, or `q`.
+/// To target Legacy (pre-Stylo) Mozilla browsers, pass true, `legacy`, `old`,
+/// or `pre-stylo`. TO target all Gecko-based Mozilla browsers,
+/// pass 'both' or 'all'.
+///
+/// @content Styles to apply to Gecko-based Mozilla browsers.
+///
+/// @group Utilities
+/// @alias moz-only
+@mixin only-moz($only-legacy: null) {
+  @if $only-legacy and meta.type-of($only-legacy) == 'string' {
+    $only-legacy: string.to-lower-case($only-legacy);
+  }
+
+  @if not $only-legacy or
+    $only-legacy ==
+    'f' or
+    $only-legacy ==
+    'quantam' or
+    $only-legacy ==
+    'new' or
+    $only-legacy ==
+    'stylo' or
+    $only-legacy ==
+    'q'
+  {
+    @-moz-document url-prefix() {
+      @supports (animation: calc(0s)) {
+        @content;
+      }
+    }
+  } @else if
+    $only-legacy ==
+    true or
+    $only-legacy ==
+    't' or
+    $only-legacy ==
+    'legacy' or
+    $only-legacy ==
+    'old' or
+    $only-legacy ==
+    'pre-stylo'
+  {
+    @-moz-document url-prefix() {
+      @supports not (animation: calc(0s)) {
+        @content;
+      }
+    }
+  } @else {
+    @-moz-document url-prefix() {
+      @content;
+    }
+
+    @if $only-legacy != 'both' and $only-legacy != 'all' {
+      @warn 'You have passed and incorrect argument to the `only-moz` mixin. ' +
+      'Ignoring the argument and targeting all Gecko-based Mozilla ' +
+      'browsers instead.';
+    }
+  }
+}
+
+/// Uses @supports queries and a clever hack to apply the given styles to
+/// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
+/// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
+///
+/// @param {Bool | String} $only-legacy [null] - Pass nothing or null to target
+/// all version of Gecko based Mozilla browsers. To target Quantam Mozilla
+/// browsers, pass false, `quantam`, `new`, `stylo`, or `q`. To target Legacy
+/// (pre-Stylo) Mozilla browsers, pass true, `legacy`, `old`, or `pre-stylo`.
+///
+/// @content Styles to apply to Gecko-based Mozilla browsers.
+///
+/// @group Utilities
+/// @alias only-moz
+@mixin moz-only($only-legacy: null) {
+  @include only-moz($only-legacy) {
+    @content;
+  }
+}

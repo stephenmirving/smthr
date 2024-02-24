@@ -1,0 +1,54 @@
+@use 'sass:color';
+@use 'sass:math';
+@use 'sass:meta';
+@use './is-percentage' as *;
+
+/// Lighten a color by a given percentage using the built-in color.scale() method.
+/// @access public
+///
+/// @param {Color} $color - The color being lightened.
+/// @param {Number} $percentage - The percentage of lightness to add to the color.
+/// @return {Color} - The lightened color.
+///
+/// @throw Invalid $color type.
+/// @throw Invalid $percentage type.
+@function tint($color, $percentage) {
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid data type passed to [ tint() ] function. You passed ' +
+      '[ #{$color} ] for the $color argument, which is not a ' +
+      'a color that can be darkened by this function.';
+  }
+
+  // If $percentage is a unitless number, convert to a percentage.
+  @if meta.type-of($percentage) == 'number' and math.is-unitless($percentage) {
+    $percentage: $percentage * 1%;
+  }
+
+  @if not is-percentage($percentage) {
+    @error 'Invalid data type passed to [ tint() ] function. You passed ' +
+      '[ #{$percentage} ] for the $percentage argument, which is not a valid ' +
+      'perecentage.';
+  }
+
+  // If $percentage is a negative value, converts it to the equivalent positive.
+  @if $percentage < 0 {
+    $percentage: -1 * $percentage;
+  }
+
+  @return color.scale($color, $lightness: $percentage);
+}
+
+/// Lighten a color by a given percentage using the built-in color.scale() method.
+/// @access public
+///
+/// @param {Color} $color - The color being lightened.
+/// @param {Number} $percentage - The percentage of lightness to add to the color.
+/// @return {Color} - The lightened color.
+///
+/// @throw Invalid $color type.
+/// @throw Invalid $percentage type.
+///
+/// @alias tint
+@function lighter($color, $percentage) {
+  @return tint($color, $percentage);
+}

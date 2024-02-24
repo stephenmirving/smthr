@@ -1,0 +1,72 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use './is-color' as *;
+@use '../variables/maps' as *;
+
+/// If the given $color value is a valid CSS color name, returns the associated
+/// 3 or 6 digit hex value. Otherwise, returns the same color.
+///
+/// Some duplicate color names are not allowed and will not be able to be
+/// converted. Those include all color names with the British spelling of
+/// `grey` (in favor of `gray`), `cyan` (in favor of `aqua`), and `magenta`
+/// (in favor of `fuchsia`). Colors that were chosen over their aliases were
+/// chosen due to what Sass outputs from color module methods.
+///
+/// @access public
+///
+/// @param {Color} $color - The CSS color name to be converted.
+/// @param {Map} $color-map [$map-color-names] - The map containing all the CSS
+/// colors and their hex values.
+///
+/// @return {Color} - If the $color-name provided is a valid CSS color, returns
+/// the corresponding 3 or 6 digit hex color value. Otherwise, returns the
+/// same color.
+///
+/// @require {function} is-color
+/// @require {variable} $map-color-names
+///
+/// @throw Invalid $color-name data type.
+@function conv-color-name($color, $color-map: $map-color-names) {
+  @if not is-color($color) {
+    @error 'Invalid $color provided to the [ conv-color-name() ] function ' +
+        'The value provided is of type: `#{meta.type-of($color-name)}`. ' +
+        'Ensure that the $color passed is a valid CSS color and that you ' +
+        'are not passing a string or other value.';
+  }
+
+  @if map.has-key($color-map, $color) {
+    $color: map.get($color-map, $color);
+  }
+
+  @return $color;
+}
+
+
+/// If the given $color value is a valid CSS color name, returns the associated
+/// 3 or 6 digit hex value. Otherwise, returns the same color.
+///
+/// Some duplicate color names are not allowed and will not be able to be
+/// converted. Those include all color names with the British spelling of
+/// `grey` (in favor of `gray`), `cyan` (in favor of `aqua`), and `magenta`
+/// (in favor of `fuchsia`). Colors that were chosen over their aliases were
+/// chosen due to what Sass outputs from color module methods.
+///
+/// @access public
+///
+/// @param {Color} $color - The CSS color name to be converted.
+/// @param {Map} $color-map [$map-color-names] - The map containing all the CSS
+/// colors and their hex values.
+///
+/// @return {Color} - If the $color-name provided is a valid CSS color, returns
+/// the corresponding 3 or 6 digit hex color value. Otherwise, returns the
+/// same color.
+///
+/// @require {function} is-color
+/// @require {variable} $map-color-names
+///
+/// @throw Invalid $color-name data type.
+///
+/// @alias conv-color-name
+@function conv-if-color-name($color, $color-map: $map-color-names) {
+  @return conv-color-name($color, $color-map);
+}

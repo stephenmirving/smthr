@@ -1,0 +1,30 @@
+@use './update-list' as *;
+
+/// Removes `$value` from `$list`.
+///
+/// @access public
+///
+/// @param {List} $list - The list to update.
+/// @param {*} $value - The value to remove from `$list`.
+///
+/// @return {List} The updated list.
+///
+/// @require {function} update-list
+@function remove-from($list, $value) {
+  @return update-list($list, $value, null);
+}
+
+/// Removes `$value` from `$list`.
+///
+/// @access public
+///
+/// @param {List} $list - The list to update.
+/// @param {*} $value - The value to remove from `$list`.
+///
+/// @return {List} The updated list.
+///
+/// @require {function} update-list
+/// @alias remove-from
+@function trim-list($list, $value) {
+  @return remove-from($list, $value);
+}

@@ -1,0 +1,23 @@
+/// Add the styles for the placeholder/watermark for an input element to all
+/// the different vendor prefixes at once with a single statement.
+///
+/// @content [The styles for the element's placeholder]
+///
+/// @group Utilities
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &::-ms-input-placeholder {
+    @content;
+  }
+
+  &::placeholder {
+    @content;
+  }
+}

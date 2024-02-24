@@ -1,0 +1,237 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
+@use '../../functions/is-alias' as *;
+
+/// Animates text from a blurred to a focused state
+///
+/// @param {String} $style ['in'] - The style of the focus-in effect. Can be
+/// `in` , `expand`, `contract`, `forwards`, or `backwards`.
+/// @param {Number} $duration [0.9s] - The duration of the animation (`s` or `ms`).
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The number of iterations
+/// for the animation to complete. Can be `infinite`, `inherit`, `initial`, or
+/// any unitless number.
+/// @param {String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of `null` assumes the default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. If no specific function is passed, the mixin will choose the
+/// best custom timing function for the given style.
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @require {function} is-alias
+///
+/// @throw Invalid $style value
+/// @throw Invalid $duration value
+/// @throw Invalid $delay value
+/// @throw Invalid $anim-dir value
+@mixin text-focus-in(
+  $style: 'in',
+  $duration: 0.9s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  $anim-suffix: '';
+
+  @if $style and meta.type-of($style) == 'string' {
+    $style: string.to-lower-case($style);
+  }
+
+  @if $delay and meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
+    $timing-func: #{string.to-lower-case($timing-func)};
+  }
+
+  @if not $timing-func {
+    @if not
+      $style or
+      is-alias('in', $style) or
+      is-alias('normal', $style) or
+      is-alias('none', $style)
+    {
+      $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    } @else {
+      $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+  }
+
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-focus-in() ] mixin. The duration property must be a number.';
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, unless $duration > 60, assume seconds
+    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-focus-in() ] mixin. The duration property must be in either ' +
+        's or ms units.';
+  } @else if $duration % 10 == 0ms {
+    // If time in ms would be shorter as seconds, convert it
+    $duration: math.div($duration, 1000ms) * 1s;
+
+    // Get rid of possible leading zero in front of decimal place
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: #{string.slice($duration + '', 2)};
+    }
+  }
+
+  @if not
+    $delay or
+    $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    is-alias('none', $delay)
+  {
+    $delay: null;
+  }
+  @if $delay {
+    @if meta.type-of($delay) != 'number' {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-focus-in() ] mixin. The delay property must be a number.';
+    } @else if math.is-unitless($delay) {
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-focus-in() ] mixin. The delay property must be in either ' +
+          's (seconds) or ms (milliseconds) units.';
+    } @else if $delay % 10 == 0ms {
+      $delay: math.div($delay, 1000ms) * 1s;
+
+      @if string.slice($delay + '', 1, 2) == '0.' {
+        $delay: #{string.slice($delay + '', 2)};
+      }
+    }
+  }
+
+  @if $iterations {
+    @if meta.type-of($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if is-alias('infinite', $iterations) {
+      $iterations: infinite;
+    } @else if
+      (
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
+          ' for the [ text-focus-in() ] mixin.';
+    }
+  }
+
+  @if not
+    $anim-dir or
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
+  {
+    $anim-dir: null;
+  } @else if is-alias('reverse', $anim-dir) {
+    $anim-drection: reverse;
+  } @else if is-alias('alternate', $anim-dir) {
+    $anim-dir: alternate;
+  } @else if is-alias('alternate-reverse', $anim-dir) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of `#{$anim-dir}`' +
+        ' for the [ text-focus-in() ] mixin';
+  }
+
+  @if is-alias('contract', $style) {
+    $style: 'contract';
+    $anim-suffix: '-contract';
+  } @else if is-alias('expand', $style) {
+    $style: 'expand';
+    $anim-suffix: '-expand';
+  } @else if is-alias('forwards', $style) {
+    $style: 'forwards';
+    $anim-suffix: '-expand-forwards';
+  } @else if is-alias('backwards', $style) {
+    $style: 'backwards';
+    $anim-suffix: '-contract-backwards';
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  @if is-alias('forwards', $style) or is-alias('backwards', $style) {
+    transform: translate3d(0, 0, 0);
+    transform-style: preserve-3d;
+  }
+
+  animation: txt-focus-in#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
+
+  @at-root {
+    @keyframes txt-focus-in#{$anim-suffix} {
+      0% {
+        opacity: 0;
+        filter: blur(12px);
+
+        @if $style == 'expand' {
+          letter-spacing: -0.5em;
+        } @else if $style == 'forwards' {
+          letter-spacing: -0.5em;
+          transform: translateZ(-800px);
+        } @else if $style == 'contract' {
+          letter-spacing: 1em;
+        } @else if $style == 'backwards' {
+          letter-spacing: 1em;
+          transform: translateZ(300px);
+        } @else if
+          $style and not
+          is-alias('none', $style) and not
+          is-alias('normal', $style) and not
+          is-alias('in', $style)
+        {
+          @error 'Invalid $style value of `#{meta.inspect($style)}` used for ' +
+            'the [ text-focus-in() ] mixin';
+        }
+      }
+
+      100% {
+        opacity: 1;
+        filter: blur(0);
+
+        @if $style == 'forwards' {
+          transform: translateZ(0);
+        } @else if $style == 'backwards' {
+          transform: translateZ(12px);
+        }
+      }
+    }
+  }
+}

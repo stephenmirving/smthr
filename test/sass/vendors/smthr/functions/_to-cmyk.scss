@@ -1,0 +1,53 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:color';
+@use 'sass:string';
+@use './to-fixed' as *;
+
+/// Takes a given color in virtually any notation and converts it into CMYK
+/// notation using the [ device-cmyk ] CSS color function.
+/// @access public
+///
+/// @param {Color} $color - The color to convert into cmyk.
+/// @return {Color} The converted color in [ device-cmyk ] function format.
+///
+/// @throw Invalid data type for $color
+@function to-cmyk($color) {
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid data type passed to [ to-cmyk() ] function. You passed ' +
+      '[ #{$color} ] for the $color argument, which is not a ' +
+      'a color that can be converted by this function.';
+  }
+
+  // Convert color to RGB, as Sass works natively with RGB values
+  $red-component: math.div(color.red($color), 255);
+  $green-component: math.div(color.green($color), 255);
+  $blue-component: math.div(color.blue($color), 255);
+  $alpha-component: color.alpha($color);
+
+  // Find the minimum of the RGB components
+  $k: 1 - max($red-component, $green-component, $blue-component);
+
+  // Avoid division by zero
+  $c: if($k < 1, math.div((1 - $red-component - $k), (1 - $k)), 0);
+  $m: if($k < 1, math.div((1 - $green-component - $k), (1 - $k)), 0);
+  $y: if($k < 1, math.div((1 - $blue-component - $k), (1 - $k)), 0);
+
+  // Convert to percentages
+  $c: math.round($c * 100) * 1%;
+  $m: math.round($m * 100) * 1%;
+  $y: math.round($y * 100) * 1%;
+  $k: math.round($k * 100) * 1%;
+
+  // backup rgb values
+  $r: color.red($color);
+  $g: color.green($color);
+  $b: color.blue($color);
+
+  @if $alpha-component < 1 {
+    @return #{'device-cmyk(#{$c} #{$m} #{$y} #{$k} / #{$alpha-component}, ' +
+      'rgb(#{$r} #{$g} #{$b} / #{$alpha-component}))'};
+  } @else {
+    @return #{'device-cmyk(#{$c} #{$m} #{$y} #{$k}, rgb(#{$r} #{$g} #{$b}))'};
+  }
+}

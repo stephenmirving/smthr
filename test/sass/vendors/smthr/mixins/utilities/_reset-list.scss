@@ -1,0 +1,21 @@
+/// Resets an ordered, unordered, or detail list to have no inherent
+/// list style, margin or padding.
+///
+/// @group Utilities
+@mixin reset-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+/// Resets an ordered, unordered, or detail list to have no inherent
+/// list style, margin or padding.
+///
+/// @group Utilities
+///
+/// @alias reset-list
+@mixin list-reset {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}

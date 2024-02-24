@@ -1,0 +1,310 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../../functions/is-alias' as *;
+
+/// Animates text by popping forward out from a shadow.
+///
+/// @param {String} $direction ['bottom-left'] - The direction the shadow will be
+/// facing. Recommended to use this mixin with the animation-stage mixin or just
+/// the perspective property on the parent element.
+/// @param {Number} $duration [0.6s] - The duration of the animation (`s` or `ms`).
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The number of iterations
+/// for the animation to complete. Can be `infinite`, `inherit`, `initial`, or
+/// any unitless number.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// `null` assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. Default value of null will be the default CSS timing-function
+/// propertiy's value of ease.
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @require {function} is-alias
+///
+/// @throw Invalid $direction value
+/// @throw Invalid $duration value
+/// @throw Invalid $delay value
+/// @throw Invalid $anim-dir value
+@mixin text-pop-shadow(
+  $direction: 'bottom-left',
+  $duration: 0.7s,
+  $shadow-color: #555,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  @if not $shadow-color {
+    $shadow-color: #555;
+  }
+
+  // Default value for the 'top' direction
+  $trans-val-1: translateY(0);
+  $shadow-val:
+    0 -1px $shadow-color,
+    0 -2px $shadow-color,
+    0 -3px $shadow-color,
+    0 -4px $shadow-color,
+    0 -5px $shadow-color,
+    0 -6px $shadow-color,
+    0 -7px $shadow-color,
+    0 -8px $shadow-color;
+  $trans-val-2: translateY(8px);
+  $anim-suffix: '-top';
+
+  @if $shadow-color and meta.type-of($shadow-color) != 'color' {
+    @error 'Invalid $shadow-color value of [ #{meta.inspect($shadow-color)} ] for the '
+        '[ text-pop-shadow ] mixin.';
+  }
+
+  @if meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if meta.type-of($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if is-alias('top right', $direction) {
+    $trans-val-1: translateX(0) translateY(0);
+    $trans-val-2: translateX(-8px) translateY(8px);
+    $shadow-val:
+      1px -1px $shadow-color,
+      2px -2px $shadow-color,
+      3px -3px $shadow-color,
+      4px -4px $shadow-color,
+      5px -5px $shadow-color,
+      6px -6px $shadow-color,
+      7px -7px $shadow-color,
+      8px -8px $shadow-color;
+    $anim-suffix: '-top-right';
+  } @else if is-alias('right', $direction) {
+    $trans-val-1: translateX(0);
+    $trans-val-2: translateX(-8px);
+    $shadow-val:
+      1px 0 $shadow-color,
+      2px 0 $shadow-color,
+      3px 0 $shadow-color,
+      4px 0 $shadow-color,
+      5px 0 $shadow-color,
+      6px 0 $shadow-color,
+      7px 0 $shadow-color,
+      8px 0 $shadow-color;
+    $anim-suffix: '-right';
+  } @else if is-alias('bottom right', $direction) {
+    $trans-val-1: translateX(0) translateY(0);
+    $trans-val-2: translateX(-8px) translateY(-8px);
+    $shadow-val:
+      1px 1px $shadow-color,
+      2px 2px $shadow-color,
+      3px 3px $shadow-color,
+      4px 4px $shadow-color,
+      5px 5px $shadow-color,
+      6px 6px $shadow-color,
+      7px 7px $shadow-color,
+      8px 8px $shadow-color;
+    $anim-suffix: '-bottom-right';
+  } @else if is-alias('bottom', $direction) {
+    $trans-val-2: translateY(-8px);
+    $shadow-val:
+      0 1px $shadow-color,
+      0 2px $shadow-color,
+      0 3px $shadow-color,
+      0 4px $shadow-color,
+      0 5px $shadow-color,
+      0 6px $shadow-color,
+      0 7px $shadow-color,
+      0 8px $shadow-color;
+    $anim-suffix: '-bottom';
+  } @else if is-alias('bottom left', $direction) {
+    $trans-val-1: translateX(0) translateY(0);
+    $trans-val-2: translateX(8px) translateY(-8px);
+    $shadow-val:
+      -1px 1px $shadow-color,
+      -2px 2px $shadow-color,
+      -3px 3px $shadow-color,
+      -4px 4px $shadow-color,
+      -5px 5px $shadow-color,
+      -6px 6px $shadow-color,
+      -7px 7px $shadow-color,
+      -8px 8px $shadow-color;
+    $anim-suffix: '-bottom-left';
+  } @else if is-alias('left', $direction) {
+    $trans-val-1: translateX(0);
+    $trans-val-2: translateX(8px);
+    $shadow-val:
+      -1px 0 $shadow-color,
+      -2px 0 $shadow-color,
+      -3px 0 $shadow-color,
+      -4px 0 $shadow-color,
+      -5px 0 $shadow-color,
+      -6px 0 $shadow-color,
+      -7px 0 $shadow-color,
+      -8px 0 $shadow-color;
+    $anim-suffix: '-left';
+  } @else if is-alias('top left', $direction) {
+    $trans-val-1: translateX(0) translateY(0);
+    $trans-val-2: translateX(8px) translateY(8px);
+    $shadow-val:
+      -1px -1px $shadow-color,
+      -2px -2px $shadow-color,
+      -3px -3px $shadow-color,
+      -4px -4px $shadow-color,
+      -5px -5px $shadow-color,
+      -6px -6px $shadow-color,
+      -7px -7px $shadow-color,
+      -8px -8px $shadow-color;
+    $anim-suffix: '-top-left';
+  } @else if not is-alias('top', $direction) {
+    @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
+        '[ text-pop-shadow() ] mixin.';
+  }
+
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-pop-shadow() ] mixin. The duration property must be a number.';
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, unless $duration > 60, assume seconds
+    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-pop-shadow() ] mixin. The duration property must be in ' +
+        'either s or ms units.';
+  } @else if $duration % 10 == 0ms {
+    // If time in ms would be shorter as seconds, convert it
+    $duration: math.div($duration, 1000ms) * 1s;
+
+    // Get rid of possible leading zero in front of decimal place
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: #{string.slice($duration + '', 2)};
+    }
+  }
+
+  @if $delay == 0 or $delay == 0s or $delay == 0ms or is-alias('none', $delay) {
+    $delay: null;
+  }
+  @if $delay {
+    @if meta.type-of($delay) != 'number' {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-pop-shadow() ] mixin. The delay property must be a number.';
+    } @else if math.is-unitless($delay) {
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-pop-shadow() ] mixin. The delay property must be in ' +
+          'either s or ms units.';
+    } @else if $delay % 10 == 0ms {
+      $delay: math.div($delay, 1000ms) * 1s;
+
+      @if string.slice($delay + '', 1, 2) == '0.' {
+        $delay: #{string.slice($delay + '', 2)};
+      }
+    }
+  }
+
+  @if $iterations {
+    @if meta.type-of($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if is-alias('infinite', $iterations) {
+      $iterations: infinite;
+    } @else if
+      (
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ text-pop-shadow() ] mixin.';
+    }
+  } @else {
+    $iterations: null;
+  }
+
+  @if not
+    $anim-dir or
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
+  {
+    $anim-dir: null;
+  } @else if is-alias('reverse', $anim-dir) {
+    $anim-drection: reverse;
+  } @else if is-alias('alternate', $anim-dir) {
+    $anim-dir: alternate;
+  } @else if is-alias('alternate-reverse', $anim-dir) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
+        '[ text-pop-shadow() ] mixin';
+  }
+
+  @if not
+    $timing-func or
+    $timing-func ==
+    'ease' or
+    is-alias('none', $timing-func) or
+    is-alias('normal', $timing-func)
+  {
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    $timing-func: null;
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  animation: txt-pop-shadow#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
+
+  @at-root {
+    @keyframes txt-pop-shadow#{$anim-suffix} {
+      0% {
+        text-shadow:
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color,
+          0 0 $shadow-color;
+        transform: #{$trans-val-1};
+      }
+
+      100% {
+        text-shadow: #{$shadow-val};
+        transform: #{$trans-val-2};
+      }
+    }
+  }
+}

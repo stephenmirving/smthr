@@ -1,21 +1,23 @@
 # _smth.scss
 
-_Smoother_ is a Sassy CSS (SCSS) library designed for a smoother Sass experience.
-Smoother is filled with simple-to-use functions &amp; mixins
-that aid your front-end development experience by serving up workflow
-enhancing utilities along with production ready element styles and animations.
+_Smoother_ is a Sassy CSS (SCSS) library designed for a smoother front-end
+development experience. Smoother is filled with simple-to-use functions &amp;
+mixins that aid in UI creation by serving up workflow enhancing utilities
+along with production ready element styles and animations.
 
-Along with the many utility functions that extend and improve on the
-functionality of the built-in Sass modules, and mixins that allow for intuitive
-and fast style development, this library focuses heavily on aiding in the
-creation of CSS animations and clip-path shapes. Smoother allows you to create
-a wide range of effects without having to deal with messy clip-path coordinates,
-complicated animation keyframe creation, or other verbose code blocks, simply by
-loading the `smth` module with a single `@use` reference.
+In addition to the many utility functions that extend and improve on the
+functionality of the built-in Sass modules, and the mixins that allow for
+intuitive and fast style development without repetition, this library focuses
+heavily on aiding in the creation of CSS animations, transition, and clip-path
+shapes.
+
+_Smoother_ allows you to create a wide range of smooth and customizable visual
+effects, without having to deal with messy clip-path coordinates, complicated
+animation keyframe creation, or other verbose and complex code blocks.
 
 ## Smoother is in active development
 
-*This is **smthr** version 0.2.4 - Last update: 02/23/24*
+*This is **smthr** version 0.2.5 - Last update: 02/24/24*
 
 **_smthr_ currently contains:**
 
@@ -23,7 +25,7 @@ loading the `smth` module with a single `@use` reference.
 * 75+ functions
 * A modern, opinionated normalize file written in Sass called _betterize.scss
 * A print style file written in Sass called _print.scss
-* A collection of helpful !default variables
+* A collection of helpful and configurable !default variables.
 
 Because _smth.scss is a Sass library comprised entirely of functions, mixins and
 variables, importing it into your project won't add any overhead or increased
@@ -32,96 +34,198 @@ by calling a function or by using a mixin with `@includes`.
 
 ## Deployment
 
-Soon Smoother library will be available more easily with NPM. For now you
-will need to download the repo manually from here and copy the contents of the
-`./src` folder, the folders `smthr` and `betterize`.
+Soon, the _Smoother_ library will be available more easily with NPM. For now you
+will need to download the repo manually from here and copy/paste the contents of
+the `./src` folder, the folders `/smthr` and `/betterize`, into your project.
 
-Copy the `smthr` folder into your project's directory in the folder where you
-keep the rest of your `.scss` files. This is probably in a `sass` or
-`scss` folder, or within one of the subdirectories of that folder (most
-commonly the `vendor` subdirectory). From there, just employ the `@use` near the
-top of your project's primary stylefile (such as `style.scss` or `main.scss`).
-Load the `_smth.scss` module file that is within the `smthr` folder.
+Download a zipped copy of the code by going to the top of this README page and
+looking for the green colored "<> Code" button. Click that and choose
+"Download ZIP". After unzipping the project folder, go into the `src` folder
+inside and copy the `smthr` and `betterize` _(optional)_ folders into your own
+project's directory, in the folder where you keep the rest of your `.scss`
+files. This is probably in a `sass` or `scss` folder, or within one of the
+subdirectories of that folder.
 
-**Like this:**
+If you are breaking your Sass code down into partials with the 7-1 pattern or
+something similar for organizing your `.scss` files, you would likely put the
+`smthr` folder inside of the `vendors` subdirectory.
 
+From there you currently have two choices with Sass for how to load the library
+into your project.
+
+If you are still using the old, and
+[soon to be deprecated](https://github.com/sass/sass/blob/main/accepted/module-system.md#timeline),
+Sass syntax of `@import` directives in your project's main `.scss` file, then
+you can simply `@import` the library at the top of the other partials you
+`@import`.
+
+**FILE:** `sass/main.scss`
 ```scss
-@use 'smthr/smth' as smth;
+@import 'vendors/smthr/smth';
+@import 'vendors/betterize/betterize';
+@import 'base/typography';
+@import 'layout/grid';
+@import 'layout/navigation';
+@import 'layout/header';
+@import 'layout/footer';
+@import 'components/buttons';
+// ... The rest of your @import directives for all your partials...
 ```
 
-Of if you were to place the folder within your vendor sub-folder in your sass
-directory, the @use would look like this:
+Inside of your partials, you would be free to call any of the functions, mixins,
+or variables that are available in the smthr library.
 
+The downsides of this method are twofold:
+
+* None of these members will be namespaced and could increase
+the potential for naming collisions between the smthr library, your own
+project's members, and any other third-party libraries or frameworks you use.
+* This method will [soon be deprecated](https://github.com/sass/sass/blob/main/accepted/module-system.md#timeline)
+by Sass, which lists many [reasons for deprecating](https://sass-lang.com/documentation/at-rules/import/)
+the feature in their documentation.
+
+The better choice would be to follow the specification for the newer versions of
+Sass (At time of writing, DartSass version 1.71.1). Doing it this way will ensure
+your project will continue to compile if you update your Sass version past the
+point that `@import` is deprecated (most likely sometime this year in 2024).
+
+To follow the new specification what you need to do is to put `_index.scss`
+files inside each of your sass folder's main subdirectories, and these files
+should have `@forward` directives for every other partial in the folder. So you
+may have a `layout` folder containing your layout partials, create a file in
+that folder called `_index.scss` and that file should look like this:
+
+**FILE:** `sass/layout/_index.scss`
 ```scss
-@use './vendor/smthr/smth' as smth;
+@forward 'grid';
+@forward 'navigation';
+@forward 'header';
+@forward 'footer';
+// ... any other partials in the layout folder should be forwarded from here
 ```
 
-Doing this namespaces the library to `smth` and you can call the functions,
-mixins, and variables in the library using that as a prefix, like this:
+Then in your `main.scss` file where you used to use `@import` to load all your
+partials, now you would instead write something like this:
 
 ```scss
+@use 'vendors/betterize/betterize'; // If you want to use betterize
+@use 'utilities';
+@use 'base';
+@use 'layout';
+@use 'components';
+@use 'pages';
+@use 'themes';
+@use 'vendors/betterize/print'; // If you want to use the _print styles
+```
+
+Then, inside each of your partial files, if you want to use something from the
+smthr libary, you would need to write an `@use` directive at the top of that
+partial file.
+
+You can do this while namespacing the library to `smth` and then you can call the
+functions, mixins, and variables in the library using that as a prefix, like
+this:
+
+**FILE:** `sass/pages/_home.scss`
+```scss
+@use 'vendors/smthr/smth' as smth;
+
 .element {
-  @include smth.bounciness();
+  @include smth.bounciness('down', 0.6s);
 
   font-family: smth.font-stack('primary', smth.$font-stacks);
   color: smth.invert-color($color-brand)
 }
 ```
 
-If you prefer to namespace it to something shorter, you can choose anything you
-want that is not used by another module, for example:
+If you prefer to namespace it to something shorter, you can choose almost
+anything you want that is not used by another module. I recommend not choosing
+`$` or `#` or `_` or `-` as your namespace as this could potentially cause
+conflicts due to `$` being used for variables, `#` being used for interpolation,
+and `_` or `-` being used at the start of names to
+(make them private)[https://sass-lang.com/documentation/at-rules/use/#private-members]
+those members private outside of that file.
 
 ```scss
-@use './vendor/smthr/smth' as _;
+@use 'vendors/smthr/smth' as ~;
 
 .element {
-  color: _.invert-color($color-brand)
+  color: ~.invert-color($color-brand);
 }
-
 ```
 
-If you aren't worried about potential namespace collisions between Smoother,
-other third-party libraries, and your own code, then you can import it into the
-global namespace by using `as *` and not have to worry about using a namespace
+If you aren't worried about potential namespace collisions between _Smoother_,
+other third-party libraries, and your own code, then you can import it without
+a namespace by using `as *` and not have to worry about using a namespace
 prefix when calling the functions, mixins, or variables in the library.
-That looks like this:
+That might look like this:
 
+**FILE:** `components/_buttons.scss'
 ```scss
-@use './vendor/smthr/smth' as *;
+@use 'vendors/smthr/smth' as *;
 
-.element {
+.button {
   color: invert-color($color-brand)
 }
 ```
 
+You can see a small-scale example of this newer structure for loading Sass
+modules by looking through the `test` folder in this repository.
+
+For more information about migrating away from the soon-to-be-deprecated
+`@import` and using the newer `@forward` and `@use` directives, see the offical
+[Sass documentation](https://sass-lang.com/documentation/) for:
+
+* [@forward](https://sass-lang.com/documentation/at-rules/forward/)
+* [@use](https://sass-lang.com/documentation/at-rules/use/)
+* [Sass Migrator Tool](https://sass-lang.com/documentation/cli/migrator/)
+
 ## Documentation
 
-In the future, there will be a more comprehensive documentation with example
-code and its output, but for now you can get started with the SassDoc
-[documentation page](https://stephenmirving.github.io/smthr/) for the library.
+In the future, there will be a more comprehensive wiki with example
+code snippets that show their CSS output and picture or video examples of the
+code's effect on the page. For now though, you can get started with the SassDoc
+[documentation page](https://stephenmirving.github.io/smthr/) generated for
+the library using the [SassDoc](http://sassdoc.com/) annotations.
+
+## Parameter Aliases
+
+Most of the SassDoc annotations will describe the potential parameters that you
+can pass to the various functions and mixins and the forms those parameters can
+take. In an attempt to make the library more easy to pick up and use, many alias
+values were created for most of the commonly used keyword strings that you could
+pass as parameters to the library members. So if an animation mixin's `$axis`
+parameter accepts a value of `'horizontal'`, to indicate that it should animate
+over the horizontal axis, you should expect that the mixin would also accept
+alias values of `'horizontally'`, `'horiz'`, `horz`, `'left-to-right'` and more
+as correct and useable alias values for the `$axis` parameter.
+
+To get an idea of the full list of aliases for these keyword values, see the
+`$map-alias-resolutions` variable inside this
+[documentation link](https://stephenmirving.github.io/smthr/#undefined-variable-map-alias-resolutions),
+or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Betterize
 
-If you want to use the normalization file `_betterize.scss` or the print style
-file `_print.scss`, simply copy the `betterize` folder into the same folder that the
-smthr folder is copied into in your project, and then import them into your
-project's stylesheet using the `@forward` directive.
-You could also use the `@import` directive but that is in the process of being
-deprecated and will be
-[removed in future versions of Sass](https://sass-lang.com/documentation/at-rules/import/).
+If you want to use the modern normalization replacement file `_betterize.scss`,
+or the print style file `_print.scss`, simply follow the same instructions
+above by copying the `betterize` folder into the `vendors` folder in your
+project, or in any folder for the way you have organized your project. Just
+make sure that the `betterize` folder exists in the same directory in your
+project as the `smthr` folder. Code snippets showing how to import it are
+above, included within the same snippets showing how to load _Smoother_.
 
-**Like this:**
+This version of _Betterize_ was refactored to be configured for use along with
+the _Smoother_ library. If you choose to use _betterize.scss, you can remove
+any other CSS normalization or reset files such as normalize.css or reset.css.
+You may also be able to avoid many styles you would have put inside a
+`_base.scss` partial.
 
-```scss
-@forward './vendor/betterize/betterize';
-@forward './vendor/betterize/print;
-```
-
-If you choose to use _betterize.scss, you can remove any other CSS normalization
-or reset files such as normalize.css or reset.css. You can check out the
-[Betterize repo](https://github.com/stephenmirving/betterize) for more information
-or for versions of Betterize written in .css, .sass, .less, and .scss formats
-that are free from Smthr dependencies.
+You can check out the
+[Betterize repo](https://github.com/stephenmirving/betterize) for more
+information, or to download versions of Betterize written in `.css`, `.sass`,
+`.less`, and `.scss` formats, all of which are free from any _Smoother_
+dependencies.
 
 ## More Info
 

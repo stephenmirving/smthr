@@ -1,0 +1,29 @@
+/// Uses clip path to change an element to a star shape
+///
+/// @param {Color | Mixed} $bg [#80f] The background property value.
+/// @param {Number} $size [15rem] - The height and width.
+///
+/// @group Shapes
+@mixin star($size: 15rem, $bg: #80f) {
+  clip-path: polygon(
+    50% 0,
+    61% 35%,
+    98% 35%,
+    68% 57%,
+    79% 91%,
+    50% 70%,
+    21% 91%,
+    32% 57%,
+    2% 35%,
+    39% 35%
+  );
+
+  @if $size {
+    width: $size;
+    height: $size;
+  }
+
+  @if $bg {
+    background: $bg;
+  }
+}

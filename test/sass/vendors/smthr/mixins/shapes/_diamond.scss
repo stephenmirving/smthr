@@ -1,0 +1,24 @@
+/// Uses clip path to change an element to a diamond rhombus shape.
+///
+/// @param {Number} $size [15rem] - The size of the shape. If
+/// the $height property is not set explicitly, it is both height and width, if
+/// $height is set explicitly, then this value sets only the width.
+/// @param {Color | Mixed} $bg [#80f] The color or background value.
+/// @param {Number} $height [$size] The height of the shape.
+///
+/// @group Shapes
+@mixin diamond($size: 15rem, $bg: #80f, $height: $size) {
+  clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+
+  @if $size {
+    width: $size;
+  }
+
+  @if $height {
+    height: $height;
+  }
+
+  @if $bg {
+    background: $bg;
+  }
+}

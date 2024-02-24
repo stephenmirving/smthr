@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use '../variables' as *;
+
+/// Returns the font stack chosen from a font-stack map.
+///
+/// @access public
+///
+/// @param {String} $stack - Name of the font-stack map key.
+/// @param {Map} $map - Map to retrieve a font-stack value from.
+///
+/// @return {List} Found font-stack value.
+@function font-stack($stack, $map: $font-stacks) {
+  @return map.get($map, $stack);
+}

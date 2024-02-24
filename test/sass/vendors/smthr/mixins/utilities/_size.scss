@@ -1,0 +1,33 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use '../../functions/is-length' as *;
+
+/// Helper utility to set both height and weight at the same time. Pass a single
+/// value to set both height and width to the same size.
+///
+/// @param {Length-Percentage|string} $width - A length dimension (ex. 20rem or
+/// 300px or 10%). Passing 'max' is equivalent to passing 100%.
+/// @param {Number} $height [$width] - A length dimension. If no
+/// value is entered $height is set equal to $width.
+///
+/// @group Utilities
+@mixin size($width, $height: $width) {
+  @if $width == 'max' {
+    $width: 100%;
+  }
+
+  @if $height == 'max' {
+    $height: 100%;
+  }
+
+  @if meta.type-of($width) == 'number' and math.is-unitless($width) {
+    $width: #{$width}rem;
+  }
+
+  @if meta.type-of($height) == 'number' and math.is-unitless($height) {
+    $height: #{$height}rem;
+  }
+
+  width: $width;
+  height: $height;
+}

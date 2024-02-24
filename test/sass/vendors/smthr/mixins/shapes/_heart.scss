@@ -1,0 +1,36 @@
+@use 'sass:math';
+
+/// Uses psuedo-elements and transform to change an element to the shape of a
+/// heart.
+///
+/// @param {Number} $size [15rem] - Calcule the size of the element based off of
+/// this number. The element will be this amount in width and 90% of this amount
+/// in height.
+/// @param {Color | Mixed} $bg [#f00] - The color or background value.
+///
+/// @group Shapes
+@mixin heart($size: 15rem, $bg-color: #f00) {
+  position: relative;
+  width: $size;
+  height: $size * 0.9;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: math.div($size, 2);
+    width: math.div($size, 2);
+    height: $size * 0.8;
+    border-radius: math.div($size, 2) math.div($size, 2) 0 0;
+    background: $bg-color;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+  }
+
+  &::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+  }
+}

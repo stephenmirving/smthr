@@ -1,0 +1,43 @@
+@use 'sass:meta';
+@use 'sass:math';
+
+/// Apply to the child element of an element with a 3d transform effect
+/// to represent the front-face of the card that the animation flips over.
+///
+/// @param {Number} $z-index [20] - The z-index value.
+///
+/// @group Animations
+///
+/// @throw Invalid $z-index z-index value
+@mixin animation-front-face($z-index: 20) {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+
+  @if $z-index and
+    meta.type-of($z-index) ==
+    'number' and
+    math.is-unitless($z-index)
+  {
+    z-index: $z-index;
+  } @else if $z-val {
+    @error 'Invalid $z-val z-index value of `#{meta.inspect($z-val)}` for the ' +
+        '[ animation-front-face() ] mixin';
+  }
+}
+
+/// Apply to the child element of an element with a 3d transform effect
+/// to represent the front-face of the card that the animation flips over.
+///
+/// @param {Number} $z-index [20] - The z-index value.
+///
+/// @group Animations
+///
+/// @throw Invalid $z-index z-index value
+///
+/// @alias animation-front-face
+@mixin animation-front-side($z-index: 20) {
+  @include animation-front-face($z-index);
+}

@@ -1,0 +1,18 @@
+/// Truncates a given field with ellipses by default.
+///
+/// @param {Number} $max-width [100%] - The max width for the element.
+/// @param {String} $display [null] - The display value.
+/// @param {String} $overflow [ellipsis] - The text-overflow value.
+///
+/// @group Utilities
+@mixin truncate($max-width: 100%, $display: null, $overflow: ellipsis) {
+  @if $display {
+    display: $display;
+  }
+
+  overflow: hidden;
+  max-width: $max-width;
+  white-space: nowrap;
+  text-overflow: $overflow;
+  overflow-wrap: normal;
+}

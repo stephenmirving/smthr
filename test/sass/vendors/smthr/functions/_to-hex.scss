@@ -1,0 +1,148 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:color';
+@use 'sass:string';
+
+/// Converts a given color to hex notation in either 3, 6, or 8 digit
+/// notation based on the input. The hex color is returned as an unquoted
+/// string. You cannot currently use the output of this function with any
+/// Sass color module methods or other functions that implement type checking
+/// as Sass will consider the output of to-hex to be a string, not a color.
+/// If this is not acceptable, try the conv-color() function instead, with a
+/// $syntax parameter of 'function'.
+///
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+///
+/// @return {String} The hex color as an unquoted string. Works as a CSS color
+/// but will not currently work in Sass color module methods or other Sass
+/// functions that require type checking.
+///
+/// @require {function} _component-to-hex
+///
+/// @throw Invalid data type for $color
+@function to-hex($color) {
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid data type passed to `conv-color()` function. You passed ' +
+      '#{meta.inspect($color)} for the $color argument, which is not an ' +
+      'accepted color as it is of type #{meta.type-of($color)}.';
+  }
+
+  // Extract RGB components and alpha channel
+  $red-component: color.red($color);
+  $green-component: color.green($color);
+  $blue-component: color.blue($color);
+  $alpha-component: color.alpha($color);
+
+  // Convert each RGB component to hex
+  $red-hex: string.to-lower-case(_component-to-hex($red-component));
+  $green-hex: string.to-lower-case(_component-to-hex($green-component));
+  $blue-hex: string.to-lower-case(_component-to-hex($blue-component));
+
+  // Handle alpha for 8-digit hex, if necessary
+  @if $alpha-component < 1 {
+    $alpha: math.round($alpha-component * 255);
+    $alpha-hex: _component-to-hex($alpha);
+
+    @return #{string.unquote(
+        '##{$red-hex}#{$green-hex}#{$blue-hex}#{$alpha-hex}'
+      )};
+  }
+
+  // Check if color can be expressed in shorter 3-digit hex notation
+  @if $red-component % 17 == 0 and
+      $green-component % 17 == 0 and
+      $blue-component % 17 == 0 and
+      $alpha-component == 1
+  {
+    $red-hex: string.slice($red-hex, 1, 1);
+    $green-hex: string.slice($green-hex, 1, 1);
+    $blue-hex: string.slice($blue-hex, 1, 1);
+  }
+
+  // Return 3-digit or 6-digit hex code
+  @return #{string.unquote('##{$red-hex}#{$green-hex}#{$blue-hex}')};
+}
+
+/// Converts a given color to hex notation in either 3, 6, or 8 digit
+/// notation based on the input. The hex color is returned as an unquoted
+/// string.
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into.
+///
+/// @return {String} The hex color as an unquoted string. Works as a CSS color
+/// but will not currently work in Sass color module methods or other Sass
+/// functions that require type checking.
+///
+/// @require {function} _component-to-hex
+///
+/// @throw Invalid data type for $color
+///
+/// @alias to-hex
+@function color-to-hex($color) {
+  @return to-hex($color);
+}
+
+/// Converts a given color to hex notation in either 3, 6, or 8 digit
+/// notation based on the input. The hex color is returned as an unquoted
+/// string.
+///
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into.
+///
+/// @return {String} The hex color as an unquoted string. Works as a CSS color
+/// but will not currently work in Sass color module methods or other Sass
+/// functions that require type checking.
+///
+/// @require {function} _component-to-hex
+///
+/// @throw Invalid data type for $color
+///
+/// @alias to-hex
+@function conv-to-hex($color) {
+  @return to-hex($color);
+}
+
+/// Converts a given color to hex notation in either 3, 6, or 8 digit
+/// notation based on the input. The hex color is returned as an unquoted
+/// string.
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into.
+///
+/// @return {String} The hex color as an unquoted string. Works as a CSS color
+/// but will not currently work in Sass color module methods or other Sass
+/// functions that require type checking.
+///
+/// @require {function} _component-to-hex
+///
+/// @throw Invalid data type for $color
+///
+/// @alias to-hex
+@function convert-to-hex($color) {
+  @return to-hex($color);
+}
+
+/// Helper function to convert a single component to a hex string.
+/// Used only by the `to-hex()` function.
+/// @access private
+///
+/// @param {Number} $component - The red, green, or blue color component number.
+@function _component-to-hex($component) {
+  $index1: math.ceil(math.div($component, 16));
+  $index2: $component % 16 + 1;
+  $hex: string.slice('0123456789ABCDEF', $index1, $index1) +
+    string.slice('0123456789ABCDEF', $index2, $index2);
+
+  @if $component < 16 and $hex == '0' {
+    $hex: '0' + $hex;
+  }
+
+  @return $hex;
+}

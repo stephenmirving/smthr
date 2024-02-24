@@ -1,0 +1,31 @@
+/// Uses clip path to change an element to the shape of a thick X.
+///
+/// @param {Number} $size [15rem] - The height and width of the shape.
+/// @param {Color | Mixed} $bg [#80f] The color or background value.
+///
+/// @group Shapes
+@mixin x-shape($size: 15rem, $bg: #80f) {
+  clip-path: polygon(
+    20% 0,
+    0 20%,
+    30% 50%,
+    0 80%,
+    20% 100%,
+    50% 70%,
+    80% 100%,
+    100% 80%,
+    70% 50%,
+    100% 20%,
+    80% 0,
+    50% 30%
+  );
+
+  @if $size {
+    width: $size;
+    height: $size;
+  }
+
+  @if $bg {
+    background: $bg;
+  }
+}

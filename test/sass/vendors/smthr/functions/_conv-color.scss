@@ -1,0 +1,310 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use './conv-color-name' as *;
+@use './to-cmyk' as *;
+@use './to-hex' as *;
+@use './to-fixed' as *;
+@use './strip-unit' as *;
+@use './str-to-num' as *;
+@use '../variables/maps' as *;
+
+/// Takes a given color in virtually any notation and converts it into the given
+/// color syntax types. Available notations are `hex`, `rgb`, `rgba`, `hsl`,
+/// `hsla`, `hwb`, `name`, `function`, or `cmyk`. Passing 'name' will only
+/// return a CSS color name if the given $color can can be converted into one,
+/// otherwise it returns a hex. Alpha is disregarded for this syntax selection.
+///
+/// Some of the colors this function returns cannot be used in Sass functions
+/// that make use of the color module or type checking as Sass currently
+/// currently recognizes them as strings. This will hopefully be fixed in
+/// future versions of Sass. The exception to this are $syntx values of `rgba`,
+/// `name` (omits any provided alpha and returns either the CSS color name or
+/// or 6 digit hex), `function` (returns a 3 or 6 digit hex, or rgba if there is
+/// an alpha value to $color), and rgb or hsl (when there is no alpha value or
+/// an alpha value of 1 in $color). If you want to use conv-color()
+/// inside a function, it is recommended to pass `function` for the $syntax
+/// value, as it is guaranteed to work in the most places. However, all the
+/// colors returned by this function will work perfectly as CSS values.
+///
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [rgba] - The color syntax to convert into. Can be
+/// `hex`, `rgb`, `rbga`, `hsl`, `hsla`, `hwb`, `function`, `name`, or `cmyk`.
+///
+/// @return {Color} The converted color in the given syntax.
+///
+/// @require {function} conv-color-name
+/// @require {function} strip-unit
+/// @require {function} to-hex
+/// @require {function} to-fixed
+/// @require {function} to-cmyk
+///
+/// @throw Invalid data type for $color.
+/// @throw Invalid data type for $syntax.
+/// @throw Invalid keyword for $syntax.
+@function conv-color($color, $syntax: 'rgba') {
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid data type passed to [ conv-color() ] function. You passed ' +
+      '`#{$color}` for the $color argument, which is not a color that can ' +
+      'be converted by this function.';
+  }
+
+  $color-alpha: color.alpha($color);
+  $color-red: color.red($color);
+  $color-green: color.green($color);
+  $color-blue: color.blue($color);
+  $color-hue: strip-unit(to-fixed(color.hue($color)));
+  $color-lightness: to-fixed(color.lightness($color));
+  $color-saturation: to-fixed(color.saturation($color));
+  $color-whiteness: math.round(color.whiteness($color));
+  $color-blackness: math.round(color.blackness($color));
+
+  @if meta.type-of($syntax) == 'string' {
+    $syntax: string.to-lower-case($syntax);
+  } @else {
+    @error 'Invalid value of [ #{meta.inspect($syntax)} ] passed to ' +
+       'the `conv-color()` function. Value of $syntax must be a string.';
+  }
+
+  @if $syntax == 'hex' or $syntax == '#' {
+    // Will return a 3, 6, 4, or 8-digit hex color as an unquoted string.
+    @return to-hex($color);
+  } @else if $syntax == 'rgb' {
+    @if $color-alpha == 1 {
+      // Returns 'color' type
+      $color: rgb($color-red $color-green $color-blue);
+    } @else {
+      // Works as a color in CSS but cannot be used in Sass functions
+      // that have type checking as it is recognized as an unquoted string
+      $color: rgb(
+        $color-red $color-green #{list.slash($color-blue, $color-alpha)}
+      );
+    }
+
+    @return $color;
+  } @else if $syntax == 'rgba' {
+    @if $color-alpha == 1 {
+      $color: rgb($color-red $color-green $color-blue);
+    } @else {
+      $color: color.change(
+        rgb($color-red $color-green $color-blue),
+        $alpha: $color-alpha
+      );
+    }
+
+    @return $color;
+  } @else if $syntax == 'hsl' {
+    @if $color-alpha == 1 {
+      // Returns color type
+      @return hsl($color-hue $color-saturation $color-lightness);
+    } @else {
+      // Works as a color in CSS but cannot be used in Sass functions
+      // that have type checking as it is recognized as a string
+      @return hsl(
+        $color-hue $color-saturation #{list.slash(
+            $color-lightness,
+            $color-alpha
+          )}
+      );
+    }
+  } @else if $syntax == 'hsla' {
+    @if $color-alpha == 1 {
+      $color: hsl($color-hue $color-saturation $color-lightness);
+    } @else {
+      // Works as a color in CSS but cannot be used in Sass functions that have
+      // type checking as it is recognized as a string
+      $color: #{'hsla(' +
+        $color-hue +
+        ', ' +
+        $color-saturation +
+        ', ' +
+        $color-lightness +
+        ', ' +
+        $color-alpha +
+        ')'};
+    }
+
+    @return $color;
+  } @else if $syntax == 'hwb' {
+    @if $color-alpha == 1 {
+      // Works as a color in CSS but cannot be used in Sass functions that have
+      // type checking as it is recognized as a string
+      @return hwb($color-hue $color-whiteness $color-blackness);
+    } @else {
+      // Works as a color in CSS but cannot be used in Sass functions
+      // that have type checking as it is recognized as a string
+      @return #{'hwb(' + $color-hue + ' ' + $color-whiteness + ' ' +
+        $color-blackness + ' / ' + $color-alpha + ')'};
+    }
+  } @else if
+    $syntax ==
+    'name' or
+    $syntax ==
+    'keyword' or
+    $syntax ==
+    'key' or
+    $syntax ==
+    'word' or
+    $syntax ==
+    'color' or
+    $syntax ==
+    'col' or
+    $syntax ==
+    'web'
+  {
+    // If the given color can be converted into a CSS color name, this will
+    // return that color name, otherwise it will return a 6 digit hex value.
+    // Any alpha value in the given color will be omitted from the result.
+    // Will test correctly as type 'color'
+    @return color.change(rgb($color-red $color-green $color-blue), $alpha: 1);
+  } @else if $syntax == 'function' or $syntax == 'funct' or $syntax == 'func' {
+    // This is the same as the above 'name' except it will *not* omit the alpha
+    // value and will return a 3 or 6 digit hex, or, if there
+    // is an alpha value, the color in rgba() format.
+    // Will test correctly as type 'color'
+    $color: color.change(
+      rgb($color-red $color-green $color-blue),
+      $alpha: $color-alpha
+    );
+
+    @return conv-color-name($color);
+  } @else if $syntax == 'cmyk' {
+    // This will return a device-cmyk() function that is in CSS Color Module 5
+    // and is not yet supported by any browser.
+    @return to-cmyk($color);
+  } @else {
+    @error 'Invalid $syntax value of [ #{$syntax} ] passed to ' +
+       'the [ conv-color() ] function. Value of $syntax must be a string ' +
+       'representing a valid CSS color function specification. This function ' +
+       'supports converting into the following $syntax values: ' +
+       '[ hex, \'#\', rgb, rgba, hsl, hsla, hwb, cmyk ].';
+  }
+}
+
+/// Takes a given color in virtually any notation and converts it into the given
+/// color syntax types. Available notations are `hex`, `rgb`, `rgba`, `hsl`,
+/// `hsla`, `hwb`, `name`, `function`, or `cmyk`. Passing 'name' will only
+/// return a CSS color name if the given $color can can be converted into one,
+/// otherwise it returns a hex. Alpha is disregarded for this syntax selection.
+///
+/// Some of the colors this function returns cannot be used in Sass functions
+/// that make use of the color module or type checking as Sass currently
+/// currently recognizes them as strings. This will hopefully be fixed in
+/// future versions of Sass. The exception to this are $syntx values of `rgba`,
+/// `name` (omits any provided alpha and returns either the CSS color name or
+/// or 6 digit hex), `function` (returns a 3 or 6 digit hex, or rgba if there is
+/// an alpha value to $color), and rgb or hsl (when there is no alpha value or
+/// an alpha value of 1 in $color). If you want to use conv-color()
+/// inside a function, it is recommended to pass `function` for the $syntax
+/// value, as it is guaranteed to work in the most places. However, all the
+/// colors returned by this function will work perfectly as CSS values.
+///
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into. Can be
+/// `hex`, `rgb`, `rbga`, `hsl`, `hsla`, `hwb`, `function`, `name`, or `cmyk`.
+///
+/// @return {Color} The converted color in the given syntax.
+///
+/// @require {function} conv-color-name
+/// @require {function} strip-unit
+/// @require {function} to-hex
+/// @require {function} to-fixed
+/// @require {function} to-cmyk
+///
+/// @throw Invalid data type for $color.
+/// @throw Invalid data type for $syntax.
+/// @throw Invalid keyword for $syntax.
+///
+/// @alias conv-color
+@function convert-color($color, $syntax: 'hsl') {
+  @return conv-color($color, $syntax);
+}
+
+/// Takes a given color in virtually any notation and converts it into the given
+/// color syntax types. Available notations are `hex`, `rgb`, `rgba`, `hsl`,
+/// `hsla`, `hwb`, `name`, `function`, or `cmyk`. Passing 'name' will only
+/// return a CSS color name if the given $color can can be converted into one,
+/// otherwise it returns a hex. Alpha is disregarded for this syntax selection.
+///
+/// Some of the colors this function returns cannot be used in Sass functions
+/// that make use of the color module or type checking as Sass currently
+/// currently recognizes them as strings. This will hopefully be fixed in
+/// future versions of Sass. The exception to this are $syntx values of `rgba`,
+/// `name` (omits any provided alpha and returns either the CSS color name or
+/// or 6 digit hex), `function` (returns a 3 or 6 digit hex, or rgba if there is
+/// an alpha value to $color), and rgb or hsl (when there is no alpha value or
+/// an alpha value of 1 in $color). If you want to use conv-color()
+/// inside a function, it is recommended to pass `function` for the $syntax
+/// value, as it is guaranteed to work in the most places. However, all the
+/// colors returned by this function will work perfectly as CSS values.
+///
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into. Can be
+/// `hex`, `rgb`, `rbga`, `hsl`, `hsla`, `hwb`, `function`, `name`, or `cmyk`.
+///
+/// @return {Color} The converted color in the given syntax.
+///
+/// @require {function} conv-color-name
+/// @require {function} strip-unit
+/// @require {function} to-hex
+/// @require {function} to-fixed
+/// @require {function} to-cmyk
+///
+/// @throw Invalid data type for $color.
+/// @throw Invalid data type for $syntax.
+/// @throw Invalid keyword for $syntax.
+///
+/// @alias conv-color
+@function convert-color-to($color, $syntax: 'hsl') {
+  @return conv-color($color, $syntax);
+}
+
+/// Takes a given color in virtually any notation and converts it into the given
+/// color syntax types. Available notations are `hex`, `rgb`, `rgba`, `hsl`,
+/// `hsla`, `hwb`, `name`, `function`, or `cmyk`. Passing 'name' will only
+/// return a CSS color name if the given $color can can be converted into one,
+/// otherwise it returns a hex. Alpha is disregarded for this syntax selection.
+///
+/// Some of the colors this function returns cannot be used in Sass functions
+/// that make use of the color module or type checking as Sass currently
+/// currently recognizes them as strings. This will hopefully be fixed in
+/// future versions of Sass. The exception to this are $syntx values of `rgba`,
+/// `name` (omits any provided alpha and returns either the CSS color name or
+/// or 6 digit hex), `function` (returns a 3 or 6 digit hex, or rgba if there is
+/// an alpha value to $color), and rgb or hsl (when there is no alpha value or
+/// an alpha value of 1 in $color). If you want to use conv-color()
+/// inside a function, it is recommended to pass `function` for the $syntax
+/// value, as it is guaranteed to work in the most places. However, all the
+/// colors returned by this function will work perfectly as CSS values.
+///
+/// @access public
+///
+/// @param {Color} $color - The color to convert.
+/// @param {String} $syntax [hsl] - The color syntax to convert into. Can be
+/// `hex`, `rgb`, `rbga`, `hsl`, `hsla`, `hwb`, `function`, `name`, or `cmyk`.
+///
+/// @return {Color} The converted color in the given syntax.
+///
+/// @require {function} conv-color-name
+/// @require {function} strip-unit
+/// @require {function} to-hex
+/// @require {function} to-fixed
+/// @require {function} to-cmyk
+///
+/// @throw Invalid data type for $color.
+/// @throw Invalid data type for $syntax.
+/// @throw Invalid keyword for $syntax.
+///
+/// @alias conv-color
+@function color-convert($color, $syntax: 'hsl') {
+  @return conv-color($color, $syntax);
+}

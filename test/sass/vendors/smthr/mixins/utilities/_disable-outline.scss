@@ -1,0 +1,11 @@
+/// Removes the focus ring around an element when a mouse input is detected.
+/// If you are using this mixin only because you get a focus ring around
+/// buttons and links when using the :focus selector, consider using
+/// :focus-visible instead of :focus.
+///
+/// @group Utilities
+@mixin disable-outline {
+  [data-whatinput='mouse'] & {
+    outline: 0;
+  }
+}

@@ -1,0 +1,321 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
+@use '../../functions/is-alias' as *;
+
+/// Animates text by tracking it out of view
+///
+/// @param {Bool | String} $expand-contract [contract] - Determines whether
+/// the text will, `expand` (`true`) or `contract` (`false`) as it animates.
+/// @param {Bool} $animate-in-place [true] - If true, the animation will
+/// animate in its location on a 2-dimaensional plane. If false, it will allow
+/// the animation to track towards the $destination, appearing to move forwards
+/// on an `expand` animation, and to move backwards on `contract` animations.
+/// @param {String} $destination [null] - The destination the animation appears
+/// to be expanding or contracting towards. Can be `null`, `top`, or `bottom`.
+/// @param {Number} $duration [0.9s] - The duration of the animation (`s` or `ms`).
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The animation-iteration-count
+/// value for the animation.
+/// @param {String} $anim-dir [null] - Sets the animation-direction
+/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
+/// Default of `null` assumes the default of `normal`.
+/// @param {Timing-Function} $timing-func [cubic-bezier(0.55, 0.085, 0.68, 0.53)] -
+/// The timing function for the animation. Using the default is recommended.
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @require {function} is-alias
+///
+/// @throw Invalid $expand-contract value.
+/// @throw Invalid data type for $animate-in-place.
+/// @throw Invalid $destination value.
+/// @throw Invalid data type for $duration.
+/// @throw Invalid data type for $delay.
+/// @throw Invalid data type for $iterations.
+/// @throw Invalid keyword value for $anim-dir.
+/// @throw Conflict between value for $animate-in-place and $destination.
+@mixin text-tracking-out(
+  $expand-contract: 'contract',
+  $animate-in-place: true,
+  $destination: null,
+  $duration: 0.8s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53),
+  $anim-num: null
+) {
+  $anim-suffix: '';
+
+  @if $expand-contract and meta.type-of($expand-contract) == 'string' {
+    $expand-contract: string.to-lower-case($expand-contract);
+  }
+
+  @if $animate-in-place and meta.type-of($animate-in-place) == 'string' {
+    $animate-in-place: string.to-lower-case($animate-in-place);
+  }
+
+  @if $destination and meta.type-of($destination) == 'string' {
+    $destination: string.to-lower-case($destination);
+  }
+
+  @if $delay and meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if $expand-contract == true or is-alias('expand', $expand-contract) {
+    $expand-contract: true;
+  } @else if not $expand-contract or is-alias('contract', $expand-contract) {
+    $expand-contract: false;
+  }
+
+  @if is-alias('top', $destination) {
+    $destination: 'top';
+  } @else if is-alias('bottom', $destination) {
+    $destination: 'bottom';
+  } @else if not
+    $destination or
+    is-alias('normal', $destination) or
+    is-alias('none', $destination)
+  {
+    $destination: null;
+  } @else {
+    @error 'Invalid destination value of `#{meta.inspect($destination)}` for ' +
+        'the [ text-tracking-out() ] mixin. The value for $destination must ' +
+        'be one of the following: `null`, `top`, or `bottom`';
+  }
+
+  @if $animate-in-place == true {
+    @if $destination {
+      @warn 'The [ text-tracking-out() ] mixin cannot create an animation ' +
+          'that moves towards the the `#{meta.inspect($destination)}` while ' +
+          'the $animate-in-place parameter is set to `true`.';
+    }
+  } @else if not $animate-in-place {
+    $animate-in-place: false;
+
+    @if $expand-contract {
+      $anim-suffix: '-expand-forwards';
+    } @else {
+      $anim-suffix: '-contract-backwards';
+    }
+  } @else {
+    @error 'Invalid $animate-in-place value of `#{meta.inspect($animate-in-place)}`' +
+        ' used for the [ text-tracking-out() ] mixin. This value should be ' +
+        'true or false.';
+  }
+
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-tracking-out() ] mixin. The duration property must be a number.';
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, unless $duration > 60, assume seconds
+    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-tracking-out() ] mixin. The duration property must be in either ' +
+        's (seconds) or ms (milliseconds) units.';
+  } @else if $duration % 10 == 0ms {
+    // If time in ms would be shorter as seconds, convert it
+    $duration: math.div($duration, 1000ms) * 1s;
+
+    // Get rid of possible leading zero in front of decimal place
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: #{string.slice($duration + '', 2)};
+    }
+  }
+
+  @if not
+    $delay or
+    $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    is-alias('none', $delay)
+  {
+    $delay: null;
+  }
+
+  @if $delay {
+    @if meta.type-of($delay) != 'number' {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-tracking-out() ] mixin. The delay property must be a number.';
+    } @else if math.is-unitless($delay) {
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-tracking-out() ] mixin. The delay property must be in either ' +
+          '`s` (seconds) or `ms` (milliseconds) units.';
+    } @else if $delay % 10 == 0ms {
+      // If time in ms would be shorter as seconds, convert it
+      $delay: math.div($delay, 1000ms) * 1s;
+
+      @if string.slice($delay + '', 1, 2) == '0.' {
+        $delay: #{string.slice($delay + '', 2)};
+      }
+    }
+  }
+
+  @if $iterations {
+    @if meta.type-of($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if is-alias('infinite', $iterations) {
+      $iterations: infinite;
+    } @else if (
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ text-tracking-out() ] mixin.';
+    }
+  } @else {
+    $iterations: null;
+  }
+
+  @if not
+    $anim-dir or
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
+  {
+    $anim-dir: null;
+  } @else if is-alias('reverse', $anim-dir) {
+    $anim-drection: reverse;
+  } @else if is-alias('alternate', $anim-dir) {
+    $anim-dir: alternate;
+  } @else if is-alias('alternate-reverse', $anim-dir) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
+        '[ text-tracking-out() ] mixin';
+  }
+
+  @if not $timing-func or is-alias('default', $timing-func) {
+    $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53);
+  }
+
+  @if $destination == 'top' {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-to-top',
+      string.length($anim-suffix) + 1
+    );
+  } @else if $destination == 'bottom' {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-to-bottom',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  @if not $animate-in-place {
+    transform: translate3d(0, 0, 0);
+    transform-style: preserve-3d;
+  }
+
+  animation: txt-track-out#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
+
+  @at-root {
+    @keyframes txt-track-out#{$anim-suffix} {
+      0% {
+        opacity: 1;
+
+        @if not $expand-contract {
+          @if not $animate-in-place {
+            @if not $destination {
+              transform: translateZ(0);
+            } @else {
+              transform: translateZ(0) translateY(0);
+            }
+          }
+        } @else {
+          @if not $animate-in-place {
+            @if not $destination {
+              transform: translateZ(0);
+            } @else {
+              transform: translateZ(0) translateY(0);
+            }
+          }
+        }
+      }
+
+      @if not $expand-contract and $animate-in-place and not $destination {
+        50% {
+          opacity: 1;
+        }
+      } @else {
+        60% {
+          @if not $expand-contract {
+            opacity: 1;
+          } @else {
+            opacity: 0.8;
+          }
+        }
+      }
+
+      100% {
+        opacity: 0;
+
+        @if not $expand-contract {
+          letter-spacing: -0.5em;
+
+          @if not $animate-in-place {
+            @if not $destination {
+              transform: translateZ(-500px);
+            } @else if $destination == 'top' {
+              transform: translateZ(-500px) translateY(-300px);
+            } @else {
+              transform: translateZ(-500px) translateY(300px);
+            }
+          }
+        } @else {
+          letter-spacing: 1em;
+
+          @if not $animate-in-place {
+            @if not $destination {
+              transform: translateZ(300px);
+            } @else if $destination == 'top' {
+              transform: translateZ(300px) translateY(-200px);
+            } @else {
+              transform: translateZ(300px) translateY(200px);
+            }
+          }
+        }
+      }
+    }
+  }
+}

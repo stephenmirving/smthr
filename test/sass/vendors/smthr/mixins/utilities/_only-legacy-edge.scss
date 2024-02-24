@@ -1,0 +1,23 @@
+/// Apply the given styles to Legacy MS Edge (pre-webkit) only by using a
+/// `@supports` query.
+///
+/// @content Styles that target MS Edge.
+///
+/// @group Utilities
+@mixin only-legacy-edge {
+  @supports (position: -ms-page) {
+    @content;
+  }
+}
+
+/// Apply the given styles to Legacy MS Edge (pre-webkit) only by using a
+/// `@supports` query.
+///
+/// @group Utilities
+///
+/// @alias only-legacy-edge
+@mixin legacy-edge-only {
+  @include only-legacy-edge {
+    @content;
+  }
+}

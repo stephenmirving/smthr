@@ -1,0 +1,20 @@
+@use 'sass:math';
+@use 'sass:meta';
+
+/// Takes a given number value and returns that value multipled by pi.
+/// @access public
+///
+/// @param {Number} $number [1] - The given number. Can take any number,
+/// unitless or with any unit.
+/// @return {Number} - The new value.
+///
+/// @throw Invalid $number unit type.
+@function pi($number: 1) {
+  @if meta.type-of($number) != 'number' {
+    @error 'Value of $number for the [ pi() ] function must be a valid ' +
+        'number. You passed a value of `#{meta.inspect($number)}` which ' +
+        'is of type `#{meta.type-of($number)}`.';
+  }
+
+  @return $number * math.$pi;
+}

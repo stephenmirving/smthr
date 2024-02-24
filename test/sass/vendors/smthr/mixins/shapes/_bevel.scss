@@ -1,0 +1,33 @@
+/// Uses clip path to change an element to an octagonal beveled shape
+///
+/// @param {Number} $size [null] - The size of the shape. If
+/// the $height property is not set explicitly, it is both height and width, if
+/// $height is set explicitly, then this value sets only the width.
+/// @param {Mixed} $bg [null] The color or background value.
+/// @param {Number} $height [$size] The height of the shape.
+///
+/// @group Shapes
+@mixin bevel($size: null, $bg: null, $height: $size) {
+  clip-path: polygon(
+    20% 0,
+    80% 0,
+    100% 20%,
+    100% 80%,
+    80% 100%,
+    20% 100%,
+    0 80%,
+    0 20%
+  );
+
+  @if $size {
+    width: $size;
+  }
+
+  @if $height {
+    height: $height;
+  }
+
+  @if $bg {
+    background: $bg;
+  }
+}

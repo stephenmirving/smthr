@@ -1,0 +1,162 @@
+// stylelint-disable prettier/prettier
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-angle' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/list-to-string' as *;
+
+/// A robust and well supported down-n-dirty gradient mixin.
+///
+/// @param {Color} $start-color - The starting color in the gradient.
+/// @param {Color} $end-color - The ending color in the gradient.
+/// @param {String | Number} $orientation ['horizontal'] - The direction
+/// of the grandient.
+/// @param {Number} $start-percent [0%] - Starting percentage of the gradient.
+/// @param {Number} $end-percent [100%] - Ending percentage of the gradient.
+///
+/// @group Utilities
+/// @throw Invalid $orientation value
+/// @throw Invalid $start-percent data type
+/// @throw Invalid $start-percent unit type
+/// @throw Invalid $end-percent data type
+/// @throw Invalid $end-percent unit type
+/// @throw Value of $start-percent out of range
+/// @throw Value of $end-percent out of range
+/// @require {function} list-to-string
+@mixin gradient(
+  $start-color,
+  $end-color,
+  $orientation: 'to right',
+  $start-percent: 0%,
+  $end-percent: 100%
+) {
+  @if not $orientation {
+    $orientation: 'to right';
+  }
+
+  @if $orientation and meta.type-of($orientation) == 'list' and
+      list.separator($orientation) == space
+  {
+    $orientation: list-to-string($orientation, ' ');
+  }
+
+  @if $orientation and meta.type-of($orientation) == 'string' {
+    $orientation: string.to-lower-case($orientation);
+  }
+
+  @if not $start-percent or $start-percent == 'start' {
+    $start-percent: 0%;
+  }
+
+  @if not $end-percent or $end-percent == 'end' {
+    $end-percent: 100%;
+  }
+
+  @if not is-number($start-percent) or not is-number($end-percent) {
+    @error 'Invalid data type entered for the values in the [ gradient() ] ' +
+      'mixin. If you pass values for the `$start-percent` or `$end-percent` ' +
+      'parameters, you must pass percentage values. You passed ' +
+      '`#{meta.inspect($start-percent)}` for `$start-percent` and ' +
+      '`#{meta.inspect($end-percent)}` for `$end-percent`.';
+  }
+
+  @if math.is-unitless($start-percent) {
+    $start-percent: $start-percent * 1%;
+  }
+
+  @if math.is-unitless($end-percent) {
+    $end-percent: $end-percent * 1%;
+  }
+
+  @if math.unit($start-percent) != '%' or math.unit($end-percent) != '%' {
+    @error 'Invalid units entered for the values in the [ gradient() ] mixin. If' +
+      ' you pass values for the `$start-percent` or `$end-percent` ' +
+      'parameters, you must pass percentage values. You passed ' +
+      '`#{meta.inspect($start-percent)}` for `$start-percent` and ' +
+      '`#{meta.inspect($end-percent)}` for `$end-percent`.';
+  }
+
+  @if $start-percent < 0% or $start-percent > 100% {
+    @error 'Invalid $start-percent value of `#{meta.inspect($start-percent)}`' +
+      ' for the [ gradient() ] mixin. The value is out of range.';
+  }
+
+  @if $end-percent < 0% or $end-percent > 100% {
+    @error 'Invalid $end-percent value of `#{meta.inspect($end-percent)}`' +
+      ' for the [ gradient() ] mixin. The value is out of range.';
+  }
+
+  @if $start-percent == 0% {
+    $start-percent: null;
+  }
+
+  @if $end-percent == 100% {
+    $end-percent: null;
+  }
+
+  background: $start-color;
+
+  @if is-alias('top-to-bottom', $orientation) {
+    background-image: linear-gradient(
+      180deg,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if is-alias('bottom-to-top', $orientation) {
+    background-image: linear-gradient(0deg, $start-color $start-percent, $end-color $end-percent);
+  } @else if is-alias('left-to-right', $orientation) {
+    background-image: linear-gradient(
+      90deg,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if is-alias('right-to-left', $orientation) {
+    background-image: linear-gradient(
+      270deg,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if is-alias('bottom-left-to-top-right', $orientation) {
+    background-image: linear-gradient(
+      45deg,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if is-alias('bottom-right-to-top-left', $orientation) {
+    background-image: linear-gradient(
+      135deg,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if is-alias('top-right-to-bottom-left', $orientation) {
+    background-image: linear-gradient(
+      225deg,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if is-alias('top-left-to-bottom-right', $orientation) {
+    background-image: linear-gradient(
+      135deg,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if is-alias('radial', $orientation) {
+    background-image: radial-gradient(
+      ellipse at center,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else if is-angle($orientation) {
+    background-image: linear-gradient(
+      $orientation,
+      $start-color $start-percent,
+      $end-color $end-percent
+    );
+  } @else {
+    @error 'Invalid $orientation value of `#{meta.inspect($orientation)}` for ' +
+      'the [ gradient() ] mixin.';
+  }
+}

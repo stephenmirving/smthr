@@ -1,0 +1,31 @@
+@use 'sass:math';
+
+/// Places a "ribbon" of angled corner text in the top right corner of an
+/// element. The parent element should have position: relative; appllied or
+/// otherwise be positioned in a separate stacking context.
+///
+/// @example html - <div class="parent"><span class="ribbon">FREE</span></div>
+/// scss - .ribbon { @include corner-ribbon; }
+@mixin corner-ribbon($padding-x: 2em) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 $padding-x;
+  text-align: center;
+  transform:
+    translateY(-100%)
+    rotate(90deg)
+    translateX(math.percentage(math.cos(45 * math.div(math.$pi, 180))))
+    rotate(-45deg);
+  transform-origin: 100% 100%;
+}
+
+/// Places a "ribbon" of angled corner text in the top right corner of an
+/// element. The parent element must have position: relative; appllied.
+///
+/// @example <div class="parent"><span class="ribbon">FREE</span></div>
+///
+/// @alias corner-ribbon
+@mixin ribbon($padding-x: 2em) {
+  @include corner-ribbon($padding-x);
+}

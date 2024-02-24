@@ -1,0 +1,45 @@
+@use 'sass:meta';
+@use 'sass:list';
+
+/// Applies position values to an element.
+///
+/// @param {String} $position [absolute] - The position value for the element.
+/// @param {List} $top-left [0 0] - The top and left values for the element in a
+/// space-separated list.
+/// @param {List} $bottom-right [null] - The botton and right values for the
+/// element in a space-separated list.
+/// @param {Number} $z-val [null] - The z-index value for the element.
+///
+/// @group Utilities
+@mixin position(
+  $position: absolute,
+  $top-left: 0 0,
+  $bottom-right: null,
+  $z-val: null
+) {
+  @if $position != relative and
+    $position != absolute and
+    $position != fixed and
+    $position != sticky
+  {
+    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
+        '`position()` mixin is invalid. You must choose between ' +
+        'absolute, relative, or sticky positioning.';
+  }
+
+  position: $position;
+
+  @if $top-left {
+    top: list.nth($top-left, 0);
+    left: list.nth($top-left, 1);
+  }
+
+  @if $bottom-right {
+    right: list.nth($bottom-right, 1);
+    bottom: list.nth($bottom-right, 0);
+  }
+
+  @if $z-val {
+    z-index: $z-val;
+  }
+}

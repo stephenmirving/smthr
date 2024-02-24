@@ -1,0 +1,21 @@
+/// Gives an element dynamic width by taking an absolute length as a min-width
+/// value for the first parameter, a relative length to use for the width
+/// property, and then another absolute length for the max-width property.
+/// Follows the same argument syntax as the CSS clamp() method, and the
+/// clamp-height mixin and clamp-val function in this library. If you want to
+/// get even more responsive, pass clamp(), calc(), min(), and max() functions
+/// for these values.
+///
+/// @access public
+///
+/// @param {Number} $min - The minimum width. Should be an absolute length value
+/// or a function that resolves to one.
+/// @param {Number} $rel - The relative length width of the element. Use units
+/// like vw, %, em, etc. or a function using relative units.
+/// @param {Number} $max - The maximum width. Should be an absolute length value
+/// or a function that resolves to one.
+@mixin clamp-width($min, $rel, $max) {
+  width: $rel;
+  min-width: $min;
+  max-width: $max;
+}

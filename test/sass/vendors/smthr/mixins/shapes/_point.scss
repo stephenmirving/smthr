@@ -1,0 +1,67 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-string' as *;
+
+/// Uses clip path to change an element to the shape of a pentagonal arrow point.
+///
+/// @param {String} $direction [right] The direction the arrow is pointing
+/// @param {Number} $size [15rem] - The size of the arrow. If
+/// the $height property is not set explicitly, it is both height and width, if
+/// @param {Color | Mixed} $bg [#80f] The color or background value.
+/// $height is set explicitly, then this value sets only the width.
+/// @param {Number} $height [$size] The height of the arrow.
+///
+/// @group Shapes
+///
+/// @throw Invalid $direction data type.
+/// @throw Invalid $direction keyword value.
+@mixin point($direction: right, $size: 15rem, $bg: #80f, $height: $size) {
+  @if $direction {
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    } @else {
+      @error 'Invalid data type for $direction in the [ point() ] mixin. ' +
+          'The value for $direction must be a string.';
+    }
+
+    @if is-alias('right', $direction) or is-alias('bottom right', $direction) {
+      clip-path: polygon(0 0, 75% 0, 100% 50%, 75% 100%, 0 100%);
+    } @else if is-alias('left', $direction) or is-alias('top left', $direction) {
+      clip-path: polygon(25% 0, 100% 0, 100% 100%, 25% 100%, 0 50%);
+    } @else if is-alias('top', $direction) or is-alias('top right', $direction) {
+      clip-path: polygon(100% 25%, 100% 100%, 0 100%, 0 25%, 50% 0);
+    } @else if
+      is-alias('bottom', $direction) or
+      is-alias('bottom left', $direction)
+    {
+      clip-path: polygon(100% 0, 100% 75%, 50% 100%, 0 75%, 0 0);
+    } @else {
+      @error 'Invalid direction of `#{meta.inspect($direction)}` for the ' +
+          '[ point() ] mixin.';
+    }
+  } @else {
+    @error 'You must choose a $direction for the [ point() ] mixin.';
+  }
+
+  @if $size {
+    width: $size;
+  }
+
+  @if $height {
+    height: $height;
+  }
+
+  @if $bg {
+    background: $bg;
+  }
+
+  @if is-alias('top right', $direction) or
+    is-alias('bottom right', $direction) or
+    is-alias('bottom left', $direction) or
+    is-alias('top left', $direction)
+  {
+    transform: rotate(45deg);
+  }
+}

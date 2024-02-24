@@ -1,0 +1,56 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:list';
+@use '../variables' as smth;
+
+/// Returns true if the given alias is found in the map's list for
+/// the given keyword, otherwise returns false.
+///
+/// @param {String} $keyword - The name of the keyword.
+/// @param {String} $alias - The shortcut or alias used for the keyword.
+/// @param {Map} $alias-map [$direction-resolution-map] - The map of
+/// keywords as keys with lists of their aliases as values.
+///
+/// @return {Bool} Returns true if the given alias is found in the map's list
+/// for the given keyword, otherwise returns false.
+///
+/// @throw Invalid $keyword data type/
+/// @throw Invalid $alias-map data type/
+@function is-alias($keyword, $alias, $alias-map: smth.$map-alias-resolutions) {
+  @if meta.type-of($keyword) != 'string' {
+    @error 'Invalid data type of [ #{meta.type-of($keyword)} ] for $keyword ' +
+        'passed to the [ is-alias() ] function. The data type of $keyword ' +
+        'must be a string.';
+  }
+
+  @if meta.type-of($alias-map) != 'map' {
+    @error 'Invalid data type of [ #{meta.type-of($alias-map)} ] for ' +
+        '$alias-map passed to the [ is-alias() ] function. The data type ' +
+        'of $alias-map must be a map.';
+  }
+
+  @return not not list.index(map.get($alias-map, $keyword), $alias);
+}
+
+/// Returns true if the given alias is found in the map's list for
+/// the given keyword, otherwise returns false.
+///
+/// @param {String} $keyword - The name of the keyword.
+/// @param {String} $alias - The shortcut or alias used for the keyword.
+/// @param {Map} $alias-map [$direction-resolution-map] - The map of
+/// keywords as keys with lists of their aliases as values.
+///
+/// @return {Bool} Returns true if the given alias is found in the map's list
+/// for the given keyword, otherwise returns false.
+///
+/// @throw Invalid $keyword data type.
+/// @throw Invalid $alias-map data type.
+///
+/// @alias is-alias
+@function is-alias-for(
+  $keyword,
+  $alias,
+  $alias-map: smth.$map-alias-resolutions
+) {
+  @return is-alias($keyword, $alias, $alias-map);
+}

@@ -1,0 +1,49 @@
+@use 'sass:string';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:list';
+@use './strip-unit' as *;
+@use '../variables' as *;
+
+/// Converts a REM value into pixel units.
+/// @access public
+///
+/// @param {Number} $rems - Values in rem's.
+/// @param {Number} $base - The base font-size.
+/// @return {Number} The values in pixels (px).
+@function conv-to-px($rems, $base: null) {
+  $px-vals: ();
+
+  @if meta.type-of($rems) != 'number' or math.unit($rems) != 'rem' {
+    @error 'Invalid $rems value of [ #{meta.inspect($rems)} ] passed to the ' +
+        '[ conv-to-px() ] function. You must pass a valid length in rem units.';
+  }
+
+  // If no base is defined, defer to the $base-font-size variable. If that does
+  // not exist, default to 16
+  @if not $base {
+    $base: if(
+      meta.variable-exists('base-font-size') or
+        meta.global-variable-exists('base-font-size'),
+      $base-font-size,
+      16
+    );
+  }
+
+  // If the base font size is a %, then multiply it by 16px
+  // This is because 100% font size = 16px in most all browsers
+  @if math.unit($base) == '%' {
+    $base: math.div($base, 100%) * 16px;
+  }
+
+  @each $val in $rems {
+    $val-in-pixels: strip-unit($val) * $base * 1px;
+    $px-vals: list.append($px-vals, $val-in-pixels);
+  }
+
+  @if length($px-vals) == 1 {
+    @return list.nth($px-vals, 1);
+  } @else {
+    @return $px-vals;
+  }
+}

@@ -1,0 +1,54 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:meta';
+@use './conv-color' as *;
+@use './get-color-type' as *;
+
+/// Takes a given color and gives its complement in the specified color syntax.
+/// This is the equivalent of doing color.adjust($color, $hue: 180deg).
+///
+/// @access public
+///
+/// @param {Color} $color - The color to find the complement.
+/// @param {String} $syntax [get-color-type($color)] - The color syntax to
+/// convert into. Defaults to the color notation used by $color.
+///
+/// @return {Color} - The color's complement in the given syntax.
+///
+/// @throw Invalid $color value.
+/// @throw Invalid $syntax.
+@function color-complement($color, $syntax: get-color-type($color)) {
+  @if meta.type-of($color) != 'color' {
+    @error 'Invalid $color value of [ #{meta.inspect($color)} ] passed to the ' +
+        '[ invert-color() ] function.';
+  }
+
+  @if not list.index(('hex' '#' 'rgb' 'rgba' 'hsl' 'hsla' 'hwb'), $syntax) {
+    @error 'Invalid $syntax value of [ #{$syntax} ] passed to ' +
+        'the [ invert-color() ] function. Value of $syntax must be a string ' +
+        'representing a valid CSS color function specification. This function ' +
+        'supports converting into the following $syntax values: ' +
+        '[ hex, \'#\', rgb, rgba, hsl, hsla, hwb, cmyk ].';
+  }
+
+  @return conv-color(color.complement($color), $syntax);
+}
+
+/// Takes a given color and gives its complement in the specified color syntax.
+/// This is the equivalent of doing color.adjust($color, $hue: 180deg).
+///
+/// @access public
+///
+/// @param {Color} $color - The color to find the complement.
+/// @param {String} $syntax [get-color-type($color)] - The color syntax to
+/// convert into. Defaults to the color notation used by $color.
+///
+/// @return {Color} - The color's complement in the given syntax.
+///
+/// @throw Invalid $color value.
+/// @throw Invalid $syntax.
+///
+/// @alias complement-color
+@function complement-color($color, $syntax: get-color-type($color)) {
+  @return color-complement($color, $syntax);
+}

@@ -1,0 +1,73 @@
+@use 'sass:meta';
+@use 'sass:math';
+
+/// Vertically aligns an alement using relative positioning and transform. You
+/// can modify the $top-pos argument to change the top property's value to alter
+/// the vertical alignment. If you want to center the element both horizontally
+/// and vertically, use the `position-center()` mixin instead.
+///
+/// @param {Number} $top-pos [50%] - The top property value. 50% will put the
+/// element in the vertical center.
+/// @param {String} $position [relative] - The position value desired,
+/// must use either relative or absolute positioning.
+///
+/// @group Utilities
+/// @throw $top-pos value out of range
+@mixin position-vertically($top-pos: 50%, $position: relative) {
+  @if $top-pos == 'middle' or
+    $top-pos == 'center' or
+    $top-pos == 'c' or
+    $top-pos == 'm'
+  {
+    $top-pos: 50%;
+  }
+  @if math.is-unitless($top-pos) {
+    $top-pos: $top-pos * 1%;
+  }
+  @if $top-pos < 0% or $top-pos > 100% {
+    @error 'The top position value of `#{meta.inspect($top-pos)}` is out of ' +
+        'range for the `vert-align` mixin. You must choose a value between ' +
+        '0% and 100%, inclusive.';
+  }
+
+  @if $position != relative and $position != absolute {
+    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
+        '`align-vertically()` mixin is invalid. You must choose between ' +
+        'relative or absolute positioning.';
+  }
+
+  position: $position;
+  top: $top-pos;
+  transform: translateY(-50%);
+}
+
+/// Vertically centers the element inside of its first parent using a method
+/// combining positioning and translation. If you want to center the element
+/// both horizontally and vertically, use the `position-center()` mixin instead.
+///
+/// @param {String} $position [relative] - The position value desired,
+/// must use either relative or absolute positioning.
+///
+/// @group Utilities
+/// @alias vertical-center
+@mixin center-vertically($position: relative) {
+  @if $position != relative and $position != absolute {
+    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
+        '`center-vertically()` mixin is invalid. You must choose between ' +
+        'relative or absolute positioning.';
+  }
+
+  position: $position;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/// Vertically centers the element inside of its first parent using a method
+/// combining positioning and translation. If you want to center the element
+/// both horizontally and vertically, use the `position-center()` mixin instead.
+///
+/// @group Utilities
+/// @alias center-vertically
+@mixin vertical-center($position: relative) {
+  @include center-vertically($position);
+}

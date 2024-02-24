@@ -1,0 +1,42 @@
+@use 'sass:meta';
+@use '../../functions/is-integer' as *;
+
+/// Applies the properties necessary to clamp text to a given number of lines.
+///
+/// @param {Number} $lines - Clamp the text to this number of lines.
+///
+/// @group Utilities
+///
+/// @throw Invalid data type for $lines. Value must be an integer.
+///
+/// @alias clamp-lines
+@mixin line-clamp($lines) {
+  @if not is-integer($lines) {
+    @error 'The $lines parameter of the [ line-clamp() ] mixin must be an integer.';
+  }
+
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+}
+
+/// Applies the properties necessary to clamp text to a given number of lines.
+///
+/// @param {Number} $lines - Clamp the text to this number of lines.
+///
+/// @group Utilities
+///
+/// @throw Invalid data type for $lines. Value must be an integer.
+///
+/// @alias line-clamp
+@mixin clamp-lines($lines) {
+  @if not is-integer($lines) {
+    @error 'The $lines parameter of the [ clamp-lines() ] mixin must be an integer.';
+  }
+
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+}

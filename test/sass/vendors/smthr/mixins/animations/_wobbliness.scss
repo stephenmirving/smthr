@@ -1,0 +1,294 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
+@use '../../functions/is-alias' as *;
+
+/// Adds a wobble animation to a given element
+///
+/// @param {String} $direction [bottom] - The base from which the wobble is
+/// generated. Takes 'top`, `left`, `right`, or `bottom`.
+/// @param {Number} $duration [0.8s] - The duration of the animation (`s` or `ms`).
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The animation-iteration-count
+/// value for the animation.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// `null` assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function
+/// for the animation. The default of null will set it to the default timing
+/// function of ease.
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @require {function} is-alias
+///
+/// @throw Incorrect keyword value for $direction.
+/// @throw Invalid data type for $duration.
+/// @throw Invalid data type for $delay.
+/// @throw Invalid data type for $iterations.
+/// @throw Invalid keyword value for $anim-dir.
+@mixin wobbliness(
+  $direction: bottom,
+  $duration: 0.8s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  // Default $direction values for bottom $direction
+  $dir-val1: translateX(0);
+  $dir-val2: translateX(-30px) rotate(-6deg);
+  $dir-val3: translateX(15px) rotate(6deg);
+  $dir-val4: translateX(-15px) rotate(-3.6deg);
+  $dir-val5: translateX(9px) rotate(2.4deg);
+  $dir-val6: translateX(-6px) rotate(-1.2deg);
+  $anim-suffix: '-from-bottom';
+
+  @if $direction and meta.type-of($direction) == 'string' {
+    $direction: string.to-lower-case($direction);
+  }
+
+  @if $delay and meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if is-alias('top', $direction) {
+    $dir-val1: translateX(0);
+    $dir-val2: translateX(-30px) rotate(6deg);
+    $dir-val3: translateX(15px) rotate(-6deg);
+    $dir-val4: translateX(-15px) rotate(3.6deg);
+    $dir-val5: translateX(9px) rotate(-2.4deg);
+    $dir-val6: translateX(-6px) rotate(1.2deg);
+    $anim-suffix: '-from-top';
+  } @else if is-alias('left', $direction) {
+    $dir-val1: translateY(0) rotate(0);
+    $dir-val2: translateY(-30px) rotate(-6deg);
+    $dir-val3: translateY(15px) rotate(6deg);
+    $dir-val4: translateY(-15px) rotate(-3.6deg);
+    $dir-val5: translateY(9px) rotate(2.4deg);
+    $dir-val6: translateY(-6px) rotate(-1.2deg);
+    $anim-suffix: '-from-left';
+  } @else if is-alias('right', $direction) {
+    $dir-val1: translateY(0) rotate(0);
+    $dir-val2: translateY(-30px) rotate(6deg);
+    $dir-val3: translateY(15px) rotate(-6deg);
+    $dir-val4: translateY(-15px) rotate(3.6deg);
+    $dir-val5: translateY(9px) rotate(-2.4deg);
+    $dir-val6: translateY(-6px) rotate(1.2deg);
+    $anim-suffix: '-from-right';
+  } @else if not is-alias('bottom', $direction) {
+    @error 'Invalid $direction of `#{meta.inspect($direction)}` for the ' +
+      '[ wobbliness() ] mixin. Valid directions include the following: ' +
+      '`top`, `right`, `bottom`, or `left`.';
+  }
+
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ wobbliness() ] mixin. The duration property must be a number.';
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, unless $duration > 60, assume seconds
+    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ wobbliness() ] mixin. The duration property must be in either ' +
+        's (seconds) or ms (milliseconds) units.';
+  } @else if $duration % 10 == 0ms {
+    // If time in ms would be shorter as seconds, convert it
+    $duration: math.div($duration, 1000ms) * 1s;
+
+    // Get rid of possible leading zero in front of decimal place
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: #{string.slice($duration + '', 2)};
+    }
+  }
+
+  @if not
+    $delay or
+    $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    is-alias('none', $delay)
+  {
+    $delay: null;
+  }
+  @if $delay {
+    @if meta.type-of($delay) != 'number' {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ wobbliness() ] ' +
+          'mixin. The delay property must be a number.';
+    } @else if math.is-unitless($delay) {
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ wobbliness() ] ' +
+          'mixin. The delay property must be in either s or ms units.';
+    } @else if $delay % 10 == 0ms {
+      $delay: math.div($delay, 1000ms) * 1s;
+
+      @if string.slice($delay + '', 1, 2) == '0.' {
+        $delay: #{string.slice($delay + '', 2)};
+      }
+    }
+  }
+
+  @if $iterations {
+    @if meta.type-of($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if is-alias('infinite', $iterations) {
+      $iterations: infinite;
+    } @else if
+      (
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for ' +
+          'the [ wobbliness() ] mixin.';
+    }
+  } @else {
+    $iterations: null;
+  }
+
+  @if not
+    $anim-dir or
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
+  {
+    $anim-dir: null;
+  } @else if is-alias('reverse', $anim-dir) {
+    $anim-drection: reverse;
+  } @else if is-alias('alternate', $anim-dir) {
+    $anim-dir: alternate;
+  } @else if is-alias('alternate-reverse', $anim-dir) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of `#{$anim-dir}`' +
+        'for the wobbliness` mixin.';
+  }
+
+  @if not
+    $timing-func or
+    $timing-func ==
+    'ease' or
+    is-alias('none', $timing-func) or
+    is-alias('normal', $timing-func)
+  {
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    $timing-func: null;
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  animation: wobble#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
+
+  @at-root {
+    @keyframes wobble#{$anim-suffix} {
+      0%,
+      100% {
+        transform: #{$dir-val1};
+        transform-origin: 50% 50%;
+      }
+
+      15% {
+        transform: #{$dir-val2};
+      }
+
+      30% {
+        transform: #{$dir-val3};
+      }
+
+      45% {
+        transform: #{$dir-val4};
+      }
+
+      60% {
+        transform: #{$dir-val5};
+      }
+
+      75% {
+        transform: #{$dir-val6};
+      }
+    }
+  }
+}
+
+/// Adds a wobble animation to a given element
+///
+/// @param {String} $direction ['bottom'] - The base from which the wobble is
+/// generated. Takes 'top`, `left`, `right`, or `bottom`.
+/// @param {Number} $duration [0.8s] - The duration of the animation (`s` or `ms`).
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The animation-iteration-count
+/// value for the animation.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// `null` assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function
+/// for the animation. The default of null will set it to the default timing
+/// function of ease.
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @require {function} is-alias
+///
+/// @throw Incorrect keyword value for $direction.
+/// @throw Invalid data type for $duration.
+/// @throw Invalid data type for $delay.
+/// @throw Invalid data type for $iterations.
+/// @throw Invalid keyword value for $anim-dir.
+///
+/// @alias wobbliness
+@mixin wobble(
+  $direction: 'bottom',
+  $duration: 0.8s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  @include wobbliness(
+    $direction,
+    $duration,
+    $delay,
+    $iterations,
+    $anim-dir,
+    $timing-func,
+    $anim-num
+  );
+}

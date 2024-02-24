@@ -1,0 +1,176 @@
+@use 'sass:math';
+@use '../../functions/conv-to-em' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/strip-unit' as *;
+
+/// Nest a combined max-width and min-width media query within a selector or on
+/// its own.
+/// If $convert is set to true, will convert `rem` or `px` $threshold widths
+/// into `em` unit widths.
+///
+/// @content Styles for screen widths equal to or larger than $min-threshold and
+/// equal to or smaller than $max-threshold.
+///
+/// @param {Number} $min-threshold - The minimum screen dimension for
+/// the style.
+/// @param {Number} $max-threshold - The maximum screen dimension for
+/// the style.
+/// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
+/// units if the lengths passed are in `px` or `rem` units.
+///
+/// @group Utilities
+///
+@mixin only-between-widths($min-threshold, $max-threshold, $convert: true) {
+  @if is-number($min-threshold) and math.is-unitless($min-threshold) {
+    $min-threshold: $min-threshold * 1px;
+  }
+
+  @if is-number($max-threshold) and math.is-unitless($max-threshold) {
+    $max-threshold: $max-threshold * 1px;
+  }
+
+  @if not is-length($min-threshold) or not is-length($max-threshold) {
+    @error 'Invalid breakpoint $threshold of `#{meta.inspect($threshold)}` ' +
+        'passed to the [ only-over-width() ] mixin. The $threshold must be ' +
+        'a length value.';
+  }
+
+  @if $convert {
+    @if math.unit($min-threshold) == 'rem' {
+      $min-threshold: strip-unit($min-threshold) * 1em;
+    } @else if math.unit($min-threshold) == 'px' {
+      $min-threshold: conv-to-em($min-threshold);
+    }
+
+    @if math.unit($max-threshold) == 'rem' {
+      $max-threshold: strip-unit($max-threshold) * 1em;
+    } @else if math.unit($max-threshold) == 'px' {
+      $max-threshold: conv-to-em($max-threshold);
+    }
+  }
+
+  @media screen and (min-width: $min-threshold) and (max-width: $max-threshold) {
+    @content;
+  }
+}
+
+/// Nest a combined max-width and min-width media query within a selector or on
+/// its own.
+/// If $convert is set to true, will convert `rem` or `px` $threshold widths
+/// into `em` unit widths.
+///
+/// @content Styles for screen widths equal to or larger than $min-threshold and
+/// equal to or smaller than $max-threshold.
+///
+/// @param {Number} $min-threshold - The minimum screen dimension for
+/// the style.
+/// @param {Number} $max-threshold - The maximum screen dimension for
+/// the style.
+/// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
+/// units if the lengths passed are in `px` or `rem` units.
+///
+/// @group Utilities
+///
+/// @alias only-between-widths
+@mixin only-between-width($min-threshold, $max-threshold, $convert: true) {
+  @include only-between-widths($min-threshold, $max-threshold, $convert) {
+    @content;
+  }
+}
+
+/// Nest a combined max-width and min-width media query within a selector or on
+/// its own.
+/// If $convert is set to true, will convert `rem` or `px` $threshold widths
+/// into `em` unit widths.
+///
+/// @content Styles for screen widths equal to or larger than $min-threshold and
+/// equal to or smaller than $max-threshold.
+///
+/// @param {Number} $min-threshold - The minimum screen dimension for
+/// the style.
+/// @param {Number} $max-threshold - The maximum screen dimension for
+/// the style.
+/// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
+/// units if the lengths passed are in `px` or `rem` units.
+///
+/// @group Utilities
+///
+/// @alias only-between-widths
+@mixin target-between-widths($min-threshold, $max-threshold, $convert: true) {
+  @include only-between-widths($min-threshold, $max-threshold, $convert) {
+    @content;
+  }
+}
+
+/// Nest a combined max-width and min-width media query within a selector or on
+/// its own.
+/// If $convert is set to true, will convert `rem` or `px` $threshold widths
+/// into `em` unit widths.
+///
+/// @content Styles for screen widths equal to or larger than $min-threshold and
+/// equal to or smaller than $max-threshold.
+///
+/// @param {Number} $min-threshold - The minimum screen dimension for
+/// the style.
+/// @param {Number} $max-threshold - The maximum screen dimension for
+/// the style.
+/// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
+/// units if the lengths passed are in `px` or `rem` units.
+///
+/// @group Utilities
+///
+/// @alias only-between-widths
+@mixin target-between-width($min-threshold, $max-threshold, $convert: true) {
+  @include only-between-widths($min-threshold, $max-threshold, $convert) {
+    @content;
+  }
+}
+
+/// Nest a combined max-width and min-width media query within a selector or on
+/// its own.
+/// If $convert is set to true, will convert `rem` or `px` $threshold widths
+/// into `em` unit widths.
+///
+/// @content Styles for screen widths equal to or larger than $min-threshold and
+/// equal to or smaller than $max-threshold.
+///
+/// @param {Number} $min-threshold - The minimum screen dimension for
+/// the style.
+/// @param {Number} $max-threshold - The maximum screen dimension for
+/// the style.
+/// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
+/// units if the lengths passed are in `px` or `rem` units.
+///
+/// @group Utilities
+///
+/// @alias only-between-widths
+@mixin min-to-max-widths($min-threshold, $max-threshold, $convert: true) {
+  @include only-between-widths($min-threshold, $max-threshold, $convert) {
+    @content;
+  }
+}
+
+/// Nest a combined max-width and min-width media query within a selector or on
+/// its own.
+/// If $convert is set to true, will convert `rem` or `px` $threshold widths
+/// into `em` unit widths.
+///
+/// @content Styles for screen widths equal to or larger than $min-threshold and
+/// equal to or smaller than $max-threshold.
+///
+/// @param {Number} $min-threshold - The minimum screen dimension for
+/// the style.
+/// @param {Number} $max-threshold - The maximum screen dimension for
+/// the style.
+/// @param {Bool} $convert - Attempts to convert the $threshold value into `em`
+/// units if the lengths passed are in `px` or `rem` units.
+///
+/// @group Utilities
+///
+/// @alias only-between-widths
+@mixin min-to-max-width($min-threshold, $max-threshold, $convert: true) {
+  @include only-between-widths($min-threshold, $max-threshold, $convert) {
+    @content;
+  }
+}

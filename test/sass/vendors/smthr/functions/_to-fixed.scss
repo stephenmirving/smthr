@@ -1,0 +1,86 @@
+@use 'sass:math';
+@use 'sass:meta';
+@use './is-integer' as *;
+
+/// Fixes a float to a given number of decimal places.
+///
+/// @access public
+///
+/// @param {Number} $float - The number to format.
+/// @param {Number} $digits [2] - A integer representing the number of digits
+/// to leave after the decimal.
+///
+/// @return {Number} The fixed digit number.
+///
+/// @throw Invalid $float type.
+/// @throw $digits precision not in range
+@function to-fixed($float, $digits: 2) {
+  $max-precision: 10;
+
+  @if meta.type-of($float) != 'number' {
+    @error 'Invalid data type of [ #{meta.inspect(meta.type-of($float))} ] ' +
+        'passed to the [ to-fixed() ] function. The value of $float must ' +
+        'be a number.';
+  }
+
+  @if not is-integer($digits) {
+    @error 'Invalid data type of [ #{meta.inspect($digits)} ] passed to ' +
+       'the `to-fixed()` function. The value of $digits must be an integer.';
+  }
+
+  @if $digits > $max-precision or $digits > 10 {
+    @warn 'Sass floats only support up to #{meta.inspect($max-precision)} digits' +
+        ' of precision after the decimal point. You have attempted to set the ' +
+        'precision to `#{meta.inspect($digits)}` in the `to-fixed` function. The ' +
+        'number of digits after the decimal point was reduced from your ' +
+        'requested precision to the maximum of #{$max-precision}.';
+
+    $digits: $max-precision;
+  } @else if $digits < 0 {
+    @warn 'The [ to-fixed() ] function only allows you to set the number of ' +
+        'decimal places with the $digits parameter. This value must be an ' +
+        'integer between 0 and the maximum Sass precision level of 10. The ' +
+        'precision level was reset to the minimum of 0';
+
+    $digits: 0;
+  }
+
+  $pow: math.pow(10, $digits);
+
+  @return math.div(math.round($float * $pow), $pow);
+}
+
+/// Fixes a float to a given number of decimal places.
+/// @access public
+///
+/// @param {Number} $float - The number to format.
+/// @param {Number} $digits [2] - A integer representing the number of digits
+/// to leave after the decimal.
+///
+/// @return {Number} The fixed digit number.
+///
+/// @throw Invalid $float type.
+/// @throw $digits precision not in range.
+///
+/// @alias to-fixed
+@function fix-to-place($float, $digits: 2) {
+  @return to-fixed($float, $digits);
+}
+
+/// Fixes a float to a given number of decimal places.
+///
+/// @access public
+///
+/// @param {Number} $float - The number to format.
+/// @param {Number} $digits [2] - A integer representing the number of digits
+/// to leave after the decimal.
+///
+/// @return {Number} The fixed digit number.
+///
+/// @throw Invalid $float type.
+/// @throw $digits precision not in range.
+///
+/// @alias to-fixed
+@function fix-to-decimal($float, $digits: 2) {
+  @return to-fixed($float, $digits);
+}

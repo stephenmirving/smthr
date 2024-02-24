@@ -1,0 +1,34 @@
+@use 'sass:list';
+@use 'sass:meta';
+
+/// Casts a map into a list.
+/// @access public
+///
+/// @param {Map} $map - Map to pull a value from.
+/// @param {String} $keep ['both'] - Whether to keep just the 'keys', just the 'values'
+/// or 'both' from the $map.
+///
+/// @return {List} Depending on the flag, returns either keys, values or both
+@function map-to-list($map, $keep: 'both') {
+  $keep: if(list.index('keys' 'values', $keep), $keep, 'both');
+
+  @if type-of($map) == 'map' {
+    $keys: ();
+    $values: ();
+
+    @each $key, $val in $map {
+      $keys: list.append($keys, $key);
+      $values: list.append($values, $val);
+    }
+
+    @if $keep == 'keys' {
+      @return $keys;
+    } @else if $keep == 'values' {
+      @return $values;
+    } @else {
+      @return list.zip($keys, $values);
+    }
+  }
+
+  @return if(meta.type-of($map) != 'list', ($value), $map);
+}

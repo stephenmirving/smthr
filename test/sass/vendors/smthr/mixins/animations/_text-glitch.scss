@@ -1,0 +1,201 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use 'sass:list';
+@use 'sass:math';
+@use '../../functions/is-alias' as *;
+
+/// Animates text by making it appear to be glitching in and out.
+///
+/// @param {Number} $duration [0.5s] - The duration of the animation (`s` or `ms`).
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The number of iterations
+/// for the animation to complete. Can be `infinite`, `inherit`, `initial`, or
+/// any unitless number.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
+/// `null` assumes the CSS property default of `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. A null timing function will cause the CSS default timing-function
+/// of `ease`.
+/// @param {Bool} $has-shifts [true] - If true, the animation will have
+/// side-to-side position shifts.
+/// @param {Bool} $use-margin [false] If true, the animation keyframes will use
+/// the `margin-left` property instead of the `left` property to create the
+/// glitch animation sideways shifts, If $no-shifts is true, $use-margin has
+/// no effect.
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @require {function} is-alias
+///
+/// @throw Invalid $duration value
+/// @throw Invalid $delay value
+/// @throw Invalid $anim-dir value
+@mixin text-glitch(
+  $duration: 0.5s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $has-shifts: true,
+  $use-margin: false,
+  $anim-num: null
+) {
+  $red: hsl(323.72 81.13% 41.57%);
+  $blue: hsl(200 100% 50%);
+  $yellow: hsl(56 100% 50%);
+  $green: hsl(150.12 100% 50%);
+  $colors: ($red $blue $yellow $green);
+
+  @if $delay and meta.type-of($delay) == 'string' {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and meta.type-of($timing-func) == 'string' {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if meta.type-of($duration) != 'number' {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-glitch() ] mixin. The duration property must be a number.';
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, unless $duration > 60, assume seconds
+    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the ' +
+        '[ text-glitch() ] mixin. The duration property must be in either '
+        's (second) or ms (millisecond) units.';
+  } @else if $duration % 10 == 0ms {
+    // If time in ms would be shorter as seconds, convert it
+    $duration: math.div($duration, 1000ms) * 1s;
+
+    // Get rid of possible leading zero in front of decimal place
+    @if string.slice($duration + '', 1, 2) == '0.' {
+      $duration: #{string.slice($duration + '', 2)};
+    }
+  }
+
+  @if not
+    $delay or
+    $delay ==
+    0 or
+    $delay ==
+    0s or
+    $delay ==
+    0ms or
+    is-alias('none', $delay)
+  {
+    $delay: null;
+  }
+  @if $delay {
+    @if meta.type-of($delay) != 'number' {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-glitch() ] mixin. The delay property must be a number.';
+    } @else if math.is-unitless($delay) {
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ text-glitch() ] mixin. The delay property must be in either '
+          's (second) or ms (millisecond) units.';
+    } @else if $delay % 10 == 0ms {
+      $delay: math.div($delay, 1000ms) * 1s;
+
+      @if string.slice($delay + '', 1, 2) == '0.' {
+        $delay: #{string.slice($delay + '', 2)};
+      }
+    }
+  }
+
+  @if $iterations {
+    @if meta.type-of($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if is-alias('infinite', $iterations) {
+      $iterations: infinite;
+    } @else if
+      (
+        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
+      ) or
+      $iterations ==
+      initial or
+      $iterations ==
+      inherit
+    {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ text-glitch() ] mixin.';
+    }
+  } @else {
+    $iterations: null;
+  }
+
+  @if not
+    $anim-dir or
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
+  {
+    $anim-dir: null;
+  } @else if is-alias('reverse', $anim-dir) {
+    $anim-drection: reverse;
+  } @else if is-alias('alternate', $anim-dir) {
+    $anim-dir: alternate;
+  } @else if is-alias('alternate-reverse', $anim-dir) {
+    $anim-dir: alternate-reverse;
+  } @else {
+    @error 'Invalid animation-direction value of `#{$anim-dir}` ' +
+        'for the [ text-glitch() ] mixin';
+  }
+
+  @if not
+    $timing-func or
+    is-alias('none', $timing-func) or
+    is-alias('normal', $timing-func)
+  {
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    $timing-func: null;
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  } @else {
+    $anim-num: '--#{$anim-num}';
+  }
+
+  @if $use-margin {
+    $use-margin: 'margin-'
+  } @else {
+    $use-margin: null;
+  }
+
+  animation: txt-glitch#{$anim-num} #{$duration} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
+
+  @at-root {
+    @keyframes txt-glitch#{$anim-num} {
+      @for $i from 0 through 100 {
+        $percent: 0% + $i;
+
+        #{$percent} {
+          $color: list.nth($colors, math.random(list.length($colors)));
+
+          @if $has-shifts {
+            #{#{$use-margin}left}: (math.random(12) * 1px) - 6px;
+          }
+
+          text-shadow: ((math.random(70) * 1px) - 35px) 0 0 $color;
+        }
+      }
+    }
+  }
+}

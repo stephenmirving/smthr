@@ -1,0 +1,14 @@
+@use 'sass:math';
+@use './factorial' as *;
+
+/// Complete the Maclaurin exponentiation.
+/// @access public
+///
+/// @param {Number} $x
+/// @param {Number} $n
+/// @return {Number} The result of the operation.
+///
+/// @require {function} factorial
+@function exp-maclaurin($x, $n) {
+  @return math.div(math.pow($x, $n), factorial($n));
+}
