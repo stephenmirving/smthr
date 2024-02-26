@@ -4,21 +4,22 @@
 @use 'sass:string';
 @use 'conv-color-name' as *;
 
-/// Converts a given color to hex notation in either 3, 6, or 8 digit
+/// Converts a given color to hex notation in either 3, 6, 4, or 8 digit
 /// notation based on the input. If the given `$color` has alpha-transparency,
-/// the 8 digit hex color is returned as an unquoted string that cannot be used
-/// with any Sass color module methods or other functions that implement type
-/// shecking as Sass will consider the output to be an unquoted string, not a
-/// color. If the $color value has no alpha-transparency, or an alpha value
-/// of `1`, the function will return either a 3 or 6 digit hex color, and this
-/// color will be correctly recognized by Sass type-checking as type `'color'`.
+/// the 4 or 8 digit hex color is returned as an unquoted string that cannot be
+/// used with any Sass color module methods or other functions that implement
+/// type checking, as Sass will consider the output to be an unquoted string,
+/// not a color. If the $color value has no alpha-transparency, or an alpha
+/// value of `1`, the function will return either a 3 or 6 digit hex color, and
+/// this color will be correctly recognized by Sass type-checking as type
+/// `'color'`.
 ///
 /// @access public
 ///
 /// @param {Color} $color - The color to convert.
 ///
-/// @return {Color | String} A 3 or 6 digit hex color, or an 8 digit hex color
-/// as an unquoted string.
+/// @return {Color | String} A 3 or 6 digit hex color, or a 4 or 8 digit hex
+/// color as an unquoted string.
 ///
 /// @require {function} _component-to-hex
 ///
@@ -36,14 +37,26 @@
   $blue-component: color.blue($color);
   $alpha-component: color.alpha($color);
 
-  // Handle alpha for 8-digit hex, if necessary
+  // Handle 8-digit and 4-digit hex, if the color has an alpha channel
   @if $alpha-component != 1 {
     // Convert each RGB component to hex
     $red-hex: string.to-lower-case(_component-to-hex($red-component));
     $green-hex: string.to-lower-case(_component-to-hex($green-component));
     $blue-hex: string.to-lower-case(_component-to-hex($blue-component));
     $alpha: math.round($alpha-component * 255);
-    $alpha-hex: _component-to-hex($alpha);
+    $alpha-hex: string.to-lower-case(_component-to-hex($alpha));
+
+    // If possible, convert the 8 digit hex into a 4 digit hex.
+    @if $red-component % 17 == 0 and
+      $green-component % 17 == 0 and
+      $blue-component % 17 == 0 and
+      $alpha % 17 == 0
+    {
+      $red-hex: string.slice($red-hex, 1, 1);
+      $green-hex: string.slice($green-hex, 1, 1);
+      $blue-hex: string.slice($blue-hex, 1, 1);
+      $alpha-hex: string.slice($alpha-hex, 1, 1);
+    }
 
     @return #{string.unquote(
       '##{$red-hex}#{$green-hex}#{$blue-hex}#{$alpha-hex}'
@@ -58,7 +71,7 @@
   );
 
   // Uses conv-color-name because the above color.change() method will convert
-  // into a CSS color name if possible, and we do not want that to be the output
+  // the color into a CSS color name when possible, do not want that in output.
   @return conv-color-name($color);
 }
 

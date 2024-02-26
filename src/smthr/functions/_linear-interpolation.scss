@@ -1,40 +1,88 @@
-@use 'sass:map';
 @use 'sass:list';
+@use 'sass:map';
 @use 'sass:math';
+@use 'conv-to-rem' as *;
+@use 'is-map' as *;
+@use 'is-truthy' as *;
+@use 'to-fixed' as *;
 
 /// Calculate the definition of a line between two points. This is very useful
 /// for things like setting responsive font-sizes.
 ///
 /// @access public
 ///
-/// @param {Map} $map - A map where the keys are viewport widths and each value
-/// associated is the desired pixel size at that given view width.
+/// @param {Map} $map - A map where the keys are viewport widths in pixels, and
+/// each value associated is the desired pixel size at that given view width.
+/// @param {Bool} $conv-to-rem [true] - If true, will convert the `px` value
+/// in the returned CSS `calc()` equation to `rem` units.
 ///
 /// @return {Calculation} A linear equation expressed as a calc() function
 ///
 /// @example font-size: linear-interpolation((320px: 16px, 768px: 20px));
-@function linear-interpolation($map) {
-  $keys: map.keys($map);
-
-  @if list.length($keys) != 2 {
-    @error 'The linear-interpolation() $map must be exactly 2 values.';
+/// RETURNS:
+///
+/// @throw Invalid data type for `$map` parameter.
+/// @throw The $map parameter must have exactly 2 key:value pairs.
+/// @throw The $map parameter's keys must not equal zero when the second is
+/// subtracted from the first.
+/// @throw The $map parameter's values must have a non-zero slope.
+@function linear-interpolation($map, $conv-to-rem: true) {
+  // Validate the input
+  @if not is-map($map) {
+    @error 'Invalid data type for $map parameter in the ' +
+        '[ linear-interpolation() ] function. Value must be a map.';
   }
 
-  $slope: math.div(
-    (map.get($map, list.nth($keys, 2)) - map.get($map, list.nth($keys, 1))),
-    (list.nth($keys, 2) - list.nth($keys, 1))
-  );
+  // Extract the keys and values from the map, saving them as individual lists
+  $keys: map.keys($map);
+  $values: map.values($map);
 
-  // The y-intercept
-  $y-intercept: map.get($map, list.nth($keys, 1)) - $slope * list.nth($keys, 1);
+  // Validate map only describes two points
+  @if list.length($keys) != 2 or list.length($values) != 2 {
+    @error 'The [ linear-interpolation() ] function\'s $map parameter must ' +
+        'have exactly 2 key:value pairs.';
+  }
+
+  // Get the x and y values from the map.
+  $x1: list.nth($keys, 1);
+  $y1: list.nth($values, 1);
+  $x2: list.nth($keys, 2);
+  $y2: list.nth($values, 2);
+
+  // Validate x2 - x1 is a non-zero value. The function will fail if x2 - x1 = 0
+  @if $x2 - $x1 == 0 {
+    @error 'Invalid $map values for the [ linear-interpolation() ] function. ' +
+        'The value of the second key (X2) minus the value of the first ' +
+        'key (X1) must not be equal to zero.';
+  }
+
+  // Calculate the slope based on the fomula: (y2 - y1) / (x2 - x1)
+  $slope: math.div(($y2 - $y1), ($x2 - $x1));
+
+  // Validate the slope is a non-zero value.
+  @if $slope == 0 {
+    @error 'The [ linear-interpolation() ] function\'s $map parameters must ' +
+        'have a non-zero slope.';
+  }
+
+  // Calculate the y-intercept
+  $y-intercept: $y1 - $slope * $x1;
 
   // Determine if the sign should be positive or negative
-  $sign: '+';
+  $operator: '+';
 
+  // If the y-intercept is negative, make it postitive and change the operator
+  // in the returned calculation from a plus to a minus.
   @if $y-intercept < 0 {
-    $sign: '-';
     $y-intercept: math.abs($y-intercept);
+    $operator: '-';
   }
 
-  @return calc(#{$slope * 100vw} #{$sign} #{$y-intercept});
+  // Return the CSS calc() function equation for the linear interpolation.
+  // If $conv-to-rem is truthy, y-intercept will be converted to a rem value
+  @if is-truthy($conv-to-rem) {
+    @return calc(to-fixed($slope * 100vw, 8) #{$operator} to-fixed(conv-to-rem($y-intercept), 5));
+  }
+
+  @return calc(to-fixed($slope * 100vw, 8) #{$operator} to-fixed($y-intercept));
 }

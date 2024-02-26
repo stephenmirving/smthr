@@ -30,6 +30,7 @@
 @forward 'is-string';
 @forward 'is-time';
 @forward 'is-conventional';
+@forward 'is-global-value';
 @forward 'is-truthy';
 
 // Math Functions
@@ -41,6 +42,7 @@
 @forward 'pi';
 @forward 'ratio-to-percentage';
 @forward 'to-fixed';
+@forward 'trend-line';
 
 // Conversion Functions
 @forward 'conv-angle';

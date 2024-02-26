@@ -1,33 +1,33 @@
 
 // @use 'vendors/betterize/betterize';
-// @use 'utilities';
-// @use 'base';
-// @use 'layout';
-// @use 'components';
-// @use 'pages';
-// @use 'themes';
+@use 'utilities';
+@use 'base';
+@use 'layout';
+@use 'components';
+@use 'pages';
+@use 'themes';
 // @use 'vendors/betterize/print';
 
-@use 'sass:meta';
-@use 'sass:color';
-@use 'sass:string';
-@use 'sass:map';
-@use 'sass:list';
-@use 'sass:selector';
-@use 'vendors/smthr/smth' as *;
+// @use 'sass:meta';
+// @use 'sass:color';
+// @use 'sass:string';
+// @use 'sass:map';
+// @use 'sass:list';
+// @use 'sass:selector';
+// @use 'vendors/smthr/smth' as *;
 
-.test5 {
-  $opacity: 0.5;
-  // $color: rgba(123, 118, 32, 1);
-  // $color: hsla(230, 88%, 22%, 1);
-  // $color: rgba(#f00, 0.4);
-  $color: rgba(#ff0000, 1);
-  // $color-hue: to-fixed(color.hue($color), 3);
-  // $color-saturation: to-fixed(color.saturation($color), 3);
-  // $color-lightness: to-fixed(color.lightness($color));
-  // $color-alpha: color.alpha($color);
-  // $conv-color: hsla($color-hue, $color-saturation, $color-lightness, $color-alpha);
-  $conv-color: conv-color($color, '#');
-  color: $conv-color;
-  content: meta.type-of($conv-color);
-}
+// .test5 {
+//   $opacity: 0.5;
+//   // $color: rgba(123, 118, 32, 1);
+//   // $color: hsla(230, 88%, 22%, 1);
+//   // $color: rgba(#f00, 0.4);
+//   $color: rgba(#ff0000, 1);
+//   // $color-hue: to-fixed(color.hue($color), 3);
+//   // $color-saturation: to-fixed(color.saturation($color), 3);
+//   // $color-lightness: to-fixed(color.lightness($color));
+//   // $color-alpha: color.alpha($color);
+//   // $conv-color: hsla($color-hue, $color-saturation, $color-lightness, $color-alpha);
+//   $conv-color: conv-color($color, '#');
+//   color: $conv-color;
+//   content: meta.type-of($conv-color);
+// }

@@ -1,28 +1,48 @@
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
+@use 'conv-to-rem' as *;
+@use 'is-map' as *;
+@use 'is-truthy' as *;
+@use 'to-fixed' as *;
 
 /// Calculate the least square fit linear regression, or "trend-line", of a
 /// mapped set of provided values.
 ///
 /// @access public
 ///
-/// @param {Map} $map - A map where the keys are viewport widths and each value
-/// associated is the desired pixel size at that given view width.
+/// @param {Map} $map - A map where the keys are viewport widths in pixels,
+/// and each value associated is the desired pixel size at that given view width.
+/// @param {Bool} $convert-to-rem [true] - If true, will convert the `px` value
+/// in the returned CSS `calc()` equation to `rem` units.
 ///
 /// @return {Calculation} A linear equation expressed as a calc() function.
 ///
-/// @example font-size: trend-line((576px: 24px, 768px: 24px, 992px: 34px))
-@function trend-line($map) {
+/// @example
+/// font-size: trend-line((576px: 24px, 768px: 24px, 992px: 34px))
+/// Compiles to...
+/// font-size: calc(2.46062992vw + 0.51083rem);
+///
+///
+/// @throw Invalid data type for `$map` parameter.
+/// @throw The $map parameter must have at least 2 key:value pairs.
+@function trend-line($map, $conv-to-rem: true) {
+  // Validate the input
+  @if not is-map($map) {
+    @error 'Invalid data type for $map parameter in the [ trend-line() ] ' +
+        'function. Value must be a map.';
+  }
+
   // Get the number of provided breakpoints
   $num-points: list.length(map.keys($map));
 
+  // Validate that the map describes at least two points.
   @if $num-points < 2 {
     @error 'The $map passed to the [ trend-line() ] fucntion must contain ' +
-        'at least 2 values.';
+        'at least 2 key:value pairs.';
   }
 
-  // Then calculate the averages
+  // Calculate the averages...
   $res-sum: 0;
   $size-sum: 0;
 
@@ -34,7 +54,7 @@
   $res-avg: math.div($res-sum, $num-points);
   $size-avg: math.div($size-sum, $num-points);
 
-  // Rest of the necessary calculations...
+  // Calculate the differences...
   $multiplied-diff: 0;
   $squared-diff: 0;
 
@@ -50,12 +70,30 @@
     $squared-diff: $squared-diff + ($res-diff * $res-diff);
   }
 
-  // Now calculate the slope of the line...
+  // Validate that $squared-diff is a non-zero value
+  @if $squared-diff == 0 {
+    @error 'An error has occured in the [ trend-line() ] function. Invalid ' +
+        '$map values were passed, resulting in a divide by zero calculation.';
+  }
+
+  // Calculate the slope of the line
   $slope: math.div($multiplied-diff, $squared-diff);
 
-  // ... and the y-intercept
+  // Validate the slope is a non-zero value.
+  @if $slope == 0 {
+    @error 'The [ trend-line() ] function\'s $map parameters must have a ' +
+        'non-zero slope.';
+  }
+
+  // Calculate the y-intercept of the line
   $y-intercept: $size-avg - ($slope * $res-avg);
 
-  // Return the CSS calc equation
-  @return calc(#{$slope * 100vw} + #{$y-intercept});
+  // Return the CSS calc() function equation for the trend line
+  // If $conv-to-rem is truthy, y-intercept will be converted to a rem value
+  @if is-truthy($conv-to-rem) {
+    @return calc(to-fixed($slope * 100vw, 8) + to-fixed(conv-to-rem($y-intercept), 5));
+  }
+
+  @return calc(to-fixed($slope * 100vw, 8) + to-fixed($y-intercept));
+
 }

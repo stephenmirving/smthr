@@ -48,7 +48,10 @@ $color-palette: (
 $black: hsl(0 0% 0%) !default;
 
 /// Color used for off-black UI elements.
-$off-black: hsl(0 0% 12.55%) !default;
+$off-black: hsl(0 0% 7.06%) !default;
+
+/// Slightly lighter than $off-black.
+$black-gray: hsl(0 0% 12.55%) !default;
 
 /// Color used for dark gray UI elements.
 $dark-gray: hsl(0 0% 54.12%) !default;

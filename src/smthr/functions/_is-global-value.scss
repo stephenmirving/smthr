@@ -1,0 +1,42 @@
+@use 'sass:list';
+@use 'sass:string';
+@use 'is-string' as *;
+@use '../variables/misc' as *;
+
+/// Detects if a given value is one of the CSS global values that can be used
+/// with virutally any CSS property.
+///
+/// @access public
+///
+/// @param {*} $value - The value being checked.
+/// @param {List} $global-list [$global-values] - The list containing all
+/// existing CSS global values.
+///
+/// @return {Bool} True if the $value is a CSS global value, false otherwise.
+///
+/// @require {function} is-string
+/// @require {variable} $global-values
+@function is-global-value($value, $global-list: $global-values) {
+  @return (
+    is-string($value) and not not list.index($global-list, string.to-lower-case($value))
+  );
+}
+
+/// Detects if a given value is one of the CSS global values that can be used
+/// with virutally any CSS property.
+///
+/// @access public
+///
+/// @param {*} $value - The value being checked.
+/// @param {List} [$global-values] - The list containing all existing CSS global
+/// values.
+///
+/// @return {Bool} True if the $value is a CSS global value, false otherwise.
+///
+/// @require {function} is-string
+/// @require {variable} $global-values
+///
+///@alias is-global-value
+@function is-global-val($value, $global-list: $global-values) {
+  @return is-global-value($value, $global-list);
+}

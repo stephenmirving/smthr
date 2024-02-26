@@ -1,7 +1,10 @@
 @use 'sass:list';
 @use 'sass:map';
+@use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
+@use 'is-number' as *;
+@use 'is-string' as *;
 @use '../variables/maps' as *;
 
 /// Safely converts a string representation of a number into an actual number
@@ -17,21 +20,21 @@
 /// @throw $string is not a string.
 /// @throw $string is not a valid numberic.
 @function str-to-num($string) {
-  @if meta.type-of($string) == 'number' {
+  @if is-number($string) {
     @warn 'Value of [ #{meta.inspect($string)} ] passed to the [ str-to-num() ] ' +
         'function is already a number and does not need to be converted.';
     @return $string;
   }
 
-  @if meta.type-of($string) != 'string' {
-    @warn 'Ivalid input of [ #{$string} ] used in the [ str-to-num ] function. ' +
-        'This is not a valid string. Returning input as-is.';
-    @return $string;
+  @if not is-string($string) {
+    @error 'Ivalid input of [ #{$string} ] used in the [ str-to-num ] function. ' +
+        'This is not a string. Returning input as-is.';
   }
 
   $result: 0;
-  $digits: 0;
-  $minus: string.slice($string, 1, 1) == '-';
+  $is-negative: string.slice($string, 1, 1) == '-';
+  $decimal-multiplier: 1; // Used for handling numbers with decimals
+  $found-decimal: false;
   $numbers: (
     '0': 0,
     '1': 1,
@@ -44,32 +47,36 @@
     '8': 8,
     '9': 9
   );
+  // $string-whole-num: null;
+  // $string-decimal-num: null;
 
-  @for $i from if($minus, 2, 1) through string.length($string) {
+  // Loop through the string's characters, starting after the minus if it exists
+  @for $i from if($is-negative, 2, 1) through string.length($string) {
+    // Get the current chacter of the string
     $char: string.slice($string, $i, $i);
 
-    @if not(list.index(map.keys($numbers), $char) or $char == '.') {
+
+    // Detect and process the unit of the end of the number
+    @if not (map.has-key($numbers, $char) or $char == '.') {
       @return _to-unit(
-        if($minus, $result * -1, $result),
+        if($is-negative, $result * -1, $result),
         string.slice($string, $i)
       );
     }
 
     @if $char == '.' {
-      $digits: 1;
-    } @else if $digits == 0 {
+      $found-decimal: true;
+    } @else if not $found-decimal {
       $result: $result * 10 + map.get($numbers, $char);
     } @else {
-      $digit: $digits * 10;
-      $result: $result + math.div(map.get($numbers, $char), $digits);
+      $decimal-multiplier: $decimal-multiplier * 0.1;
+      $result: $result + map.get($numbers, $char) * $decimal-multiplier;
     }
   }
 
-  $result: if($minus, $result * -1, $result);
-
-  // Check if coercion succeeded by comparing types.
-  @if type-of($result) == 'number' {
-    @return $result;
+   // Check if coercion succeeded by comparing types.
+  @if is-number($result) {
+    @return if($is-negative, $result * -1, $result);
   } @else {
     @error 'Failed to convert [ #{$string} ] into a number with the ' +
         '[ str-to-num ] function. This string is not a valid numeric value.';
@@ -119,6 +126,8 @@
 /// @param {String} $unit - The unit in the value being coerced.
 ///
 /// @return {Number} - A number with the given unit.
+///
+/// @require {variable} $map-units
 @function _to-unit($value, $unit) {
   @if not list.index(map.keys($map-units), $unit) {
     @error 'Invalid $unit value of `#{meta.inspect($unit)}` passed to the ' +

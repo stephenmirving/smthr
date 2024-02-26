@@ -161,6 +161,7 @@ module.exports = {
         'font-weight',
         'font-style',
         'font-variant',
+        'font-variant-caps',
         'font-size-adjust',
         'font-stretch',
         'src',

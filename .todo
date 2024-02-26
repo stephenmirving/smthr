@@ -1,27 +1,20 @@
 TODO:
 
   TESTING:
-    ☐ Test and fix functions and mixins and placeholders.
+    ☐ Test and fix functions and mixins
       ☐ Function testing
         ☐ Retest ratio-to-percentage
         ☐ Retest decimal-to-ratio
-        ✔ Fix functions-walk() and walk() or remove them @done(24-02-22 19:15)
-        ☐ Figure out how to fix missing-dependencies or remove it from the project.
-        ☐ Determine difference between linear-interpolation and trend-line functions.
-        ☐ COntinue working on conv-color. Maybe the hex conversion should be combined with the name syntax so that it returns type of color.
-        ☐ If the hex conversion is not combined with the color name syntax, it must be fixed as it is slightly off on some values
-          ☐ Need to find values where this is true???
+        ☐ to-hex function
+          ☐ If the hex conversion slightly off on some values 4 OR 8 digit hex values
+            ☐ Need to find values where this is true???
+          ✔ Convert 8 digit hex values to 4 digit hex values where possible. @done(24-02-25 18:57)
       ☐ Mixin Testing
-        ✔ Test all Shape mixins @done(24-02-18 16:33)
+        ☐ Restest shape-shadow
+          ☐ Test its new error checking
         ☐ Test all Utilities mixins
-          ✔ Change names of min-width, max-width, min-to-max-width mixins to only-over-width, only-under-width, only-between-width @started(24-02-19 20:23) @done(24-02-19 21:20) @lasted(57m14s)
-          ✔ Add aliases to avove for target-over-width, target-under-width, target-between-width @done(24-02-19 21:20)
-          ✔ button-base @done(24-02-20 16:03)
-          ✔ font @done(24-02-19 20:20)
           ☐ ghost-button
-          ✔ hide @done(24-02-20 17:25)
           ☐ inner-side-shadow
-          ✔ line-clamp @done(24-02-19 03:14)
           ☐ long-shadow
           ☐ max-width
           ☐ min-to-max-width
@@ -82,14 +75,7 @@ TODO:
     ☐ Finish propogating pseudo mixin to the dist folder
 
   Functions:
-    ☐ Continue to improve conv-color
-      ☐ Test the modified values for being of 'color' type
-      ☐ Try to get the to-hex subfunction to return a color hex when no alpha is found.
     ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.
-    ☐ Finish and propogate trend-line() function:
-      ☐ Function finished
-      ☐ Function added to main build file
-      ☐ Function propogated to a prefixed version and sass versions
     ☐ Finish and propogate linear-interpolation function:
       ☐ Function finished
       ☐ Function added to main build file
@@ -122,6 +108,34 @@ TODO:
 ================================================================================
 
 Archive:
+  ✔ Str-to-num still bugged, not working on some values. @done(24-02-25 18:44) @project(TODO.TESTING)
+  ✔ Find all invalid value types. @started(24-02-25 14:45) @done(24-02-25 18:44) @lasted(3h59m9s) @project(TODO.TESTING)
+  ✔ Handles big ints @done(24-02-25 15:15) @project(TODO.TESTING)
+  ✔ Handles negative intergers @done(24-02-25 15:15) @project(TODO.TESTING)
+  ✔ Cannot handle any float numbers @done(24-02-25 18:44) @project(TODO.TESTING)
+  ✔ Buggy on negative float numbers @done(24-02-25 18:44) @project(TODO.TESTING)
+  ✔ '-1.56' returns: -12 @done(24-02-25 18:44) @project(TODO.TESTING)
+  ✔ Buggy on float numbers between 0 and 1. @done(24-02-25 18:44) @project(TODO.TESTING)
+  ✔ '0.5' returns 5 @done(24-02-25 18:44) @project(TODO.TESTING)
+  ✔ Buggy on float values > 1 @done(24-02-25 18:43) @project(TODO.TESTING)
+  ✔ '13.54' returns: 22 @done(24-02-25 18:44) @project(TODO.TESTING)
+  ✔ Fix the invalid output @done(24-02-25 18:44) @project(TODO.TESTING)
+  ✔ use to-fixed on linear-interpolate and trend-lines output @done(24-02-25 15:11) @project(TODO.TESTING)
+  ✔ Ammend linear-interpolation and trend-lines to output in rem values by default and px if rem flag turned off. @done(24-02-25 15:11) @project(TODO.TESTING)
+  ✔ Fix functions-walk() and walk() or remove them @done(24-02-22 19:15) @project(TODO.TESTING)
+  ✔ Figure out how to fix missing-dependencies or remove it from the project. @done(24-02-25 14:43) @project(TODO.TESTING)
+  ✔ COntinue working on conv-color. Maybe the hex conversion should be combined with the name syntax so that it returns type of color. @done(24-02-25 14:43) @project(TODO.TESTING)
+  ✔ Test all Shape mixins @done(24-02-18 16:33) @project(TODO.TESTING)
+  ✔ Change names of min-width, max-width, min-to-max-width mixins to only-over-width, only-under-width, only-between-width @started(24-02-19 20:23) @done(24-02-19 21:20) @lasted(57m14s) @project(TODO.TESTING)
+  ✔ Add aliases to avove for target-over-width, target-under-width, target-between-width @done(24-02-19 21:20) @project(TODO.TESTING)
+  ✔ button-base @done(24-02-20 16:03) @project(TODO.TESTING)
+  ✔ font @done(24-02-19 20:20) @project(TODO.TESTING)
+  ✔ hide @done(24-02-20 17:25) @project(TODO.TESTING)
+  ✔ line-clamp @done(24-02-19 03:14) @project(TODO.TESTING)
+  ✔ Continue to improve conv-color @done(24-02-25 12:32) @project(TODO.Functions)
+  ✔ Test the modified values for being of 'color' type @done(24-02-25 12:32) @project(TODO.Functions)
+  ✔ Try to get the to-hex subfunction to return a color hex when no alpha is found. @done(24-02-25 12:32) @project(TODO.Functions)
+  ✔ Finish and propogate trend-line() function: @done(24-02-25 12:32) @project(TODO.Functions)
   ✔ Test all Animation mixins @done(24-02-15 00:57) @project(TODO.TESTING)
   ✔ Test and update text-focus-in @done(24-02-14 18:00) @project(TODO.TESTING)
   ✔ Test and update text-glitch @done(24-02-14 18:20) @project(TODO.TESTING)

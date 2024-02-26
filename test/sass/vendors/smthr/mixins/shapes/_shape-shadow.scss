@@ -1,15 +1,69 @@
-/// Use on the wrapper for an element with the a clip-path effect applied to add
-/// a drop shadow to the clipped shape.
+@use 'sass:meta';
+@use 'sass:list';
+@use '../../functions/is-color' as *;
+@use '../../functions/is-string' as *;
+@use '../../functions/is-truthy' as *;
+@use '../../variables/misc' as *;
+
+/// Use on the wrapper for an element with the a clip-path effect applied and
+/// it will add a drop shadow to the clipped shape.
 ///
-/// @param {List} $shadow-vars [-1px 6px 3px] - The values for the filter
-/// property's drop-shadow function that are passed before the color.
 /// @param {Color} $shadow-color [rgba(50, 50, 0, 0.5)] The shadow's color that
 /// will be passed to the filter property's drop-shadow function.
+/// @param {List} $shadow-vals [-1px 6px 3px] - The values passed before the
+/// color in the drop-shadow function that is used with the `filter` property.
+/// @param {Bool} $turn-off [false]
 ///
 /// @group Shapes
+///
+/// @throw Invalid color value for $shadow-color
+/// @throw Invalid data type for $shadow-vals
 @mixin shape-shadow(
-  $shadow-vars: -1px 6px 3px,
-  $shadow-color: rgba(50, 50, 0, 0.5)
+  $shadow-color: rgba(50, 50, 0, 0.5),
+  $shadow-vals: -1px 6px 3px,
+  $turn-off: false
 ) {
-  filter: drop-shadow(#{$shadow-vars} #{$shadow-color});
+  @if not
+    is-color($shadow-color) and not
+    (
+      is-string($shadow-vals) and
+        (
+          (
+              string.slice($shadow-vals, 1, 1) ==
+                '#' and
+                list.index((4 5 7 9), string.length($shadow-vals))
+            ) or
+            (
+              list.index(
+                ('rgb' 'rgba' 'hsl' 'hsla' 'hwb', 'lab', 'lch'),
+                string.to-lower-case(string.slice(1, string.index('(') - 1))
+              )
+            ) or
+            string.to-lower-case($shadow-vals) ==
+            'currentcolor'
+        )
+    )
+  {
+    @error 'Invalid $shadow-color value of `#{$shadow-color}` passed to the ' +
+        '[ shape-shadow() ] mixin. You must pass a color for this parameter.';
+  }
+
+  @if not is-list($shadow-vals) or list.length($shadow-vals) > 3 {
+    @error 'Invalid parameter of `#{meta.inspect($shadow-vals)}` passed as ' +
+        'the $shadow-vals parameter to the [ shape-shadow() ] mixin. This ' +
+        'value must be a list of 3 length values (usually px) that will make ' +
+        'up the values passed to the CSS `drop-shadow()` function which is ' +
+        'used with the `filter` property. The default value for this parameter ' +
+        'is (-1px 6px 3px).';
+  }
+
+  @if not
+    $shadow-color or not
+    $shadow-vals or
+    is-truthy($turn-off)
+  {
+    filter: none;
+  } @else {
+    filter: drop-shadow($shadow-vals $shadow-color);
+  }
 }
