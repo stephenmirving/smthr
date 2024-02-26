@@ -202,7 +202,6 @@
 // }
 
 .test76 {
-  $color: rgba(136, 0, 255, 0.1);
-  color: #8800ff1a;
-  color: to-hex($color);
+  $calc: calc(23vw + 13px);
+  content: meta.type-of($calc);
 }

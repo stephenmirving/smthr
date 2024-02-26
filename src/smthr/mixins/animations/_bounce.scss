@@ -3,6 +3,8 @@
 @use 'sass:math';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-global-value' as *;
 
 /// An animation that bounces an element in to view
 ///
@@ -14,7 +16,7 @@
 /// @param {Number} $duration [null] The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// to complete. If the value passed is not a number, it will be set to infinite.
+/// to complete.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
 /// `null` assumes the CSS property default of `normal`.
@@ -241,17 +243,8 @@
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if
-      (
-        (
-            math.is-unitless($iterations) and
-              meta.type-of($iterations) ==
-              'number'
-          ) or
-          $iterations ==
-          initial or
-          $iterations ==
-          inherit
-      )
+      (math.is-unitless($iterations) and is-number($iterations)) or
+      is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {
@@ -267,12 +260,12 @@
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
-    $anim-drection: reverse;
+    $anim-dir: reverse;
   } @else if is-alias('alternate', $anim-dir) {
     $anim-dir: alternate;
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
-  } @else {
+  } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
         '[ bounce() ] mixin';
   }

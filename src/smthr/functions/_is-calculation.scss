@@ -1,0 +1,10 @@
+@use 'sass:meta';
+
+/// Checks if a value is a CSS calc() function equation.
+/// @access public
+///
+/// @param {*} $value - A value to be checked.
+/// @return {Bool} True if $value is a calculation, false if it is not.
+@function is-calculation($value) {
+  @return meta.type-of($value) == 'calculation';
+}

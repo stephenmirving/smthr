@@ -4,6 +4,8 @@
 @use 'sass:math';
 @use '../utilities/only-moz' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-global-value' as *;
 
 /// Generates an animation that flips an element over while scaling it. The
 /// element this mixin is applied to must have a front-face and a back-face
@@ -22,10 +24,11 @@
 /// @param {Number} $duration [0.5s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// to complete. If the value passed is not a number, it will be set to infinite
+/// to complete.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// `null` assumes the CSS property default of `normal`.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value. Default of `null` assumes the CSS property default of
+/// `normal`.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
 /// animation.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
@@ -139,7 +142,7 @@
         'following values: `top` or `up` and `bottom` or `down`.';
   }
 
-  @if meta.type-of($duration) != 'number' {
+  @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the [ flip-scale() ] ' +
         'mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
@@ -171,7 +174,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.type-of($delay) != 'number' {
+    @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
           '[ flip-scale() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -197,13 +200,9 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
-        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
-      ) or
-      $iterations ==
-      initial or
-      $iterations ==
-      inherit
+    } @else if
+      (math.is-unitless($iterations) and is-number($iterations)) or
+      is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {
@@ -221,12 +220,12 @@
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
-    $anim-drection: reverse;
+    $anim-dir: reverse;
   } @else if is-alias('alternate', $anim-dir) {
     $anim-dir: alternate;
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
-  } @else {
+  } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
         ' for the [ flip-scale() ] mixin';
   }

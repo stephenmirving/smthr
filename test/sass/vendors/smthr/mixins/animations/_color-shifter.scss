@@ -3,6 +3,7 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-number' as *;
 
 /// Animates the shift between any quantity of given colors.
 ///
@@ -83,14 +84,14 @@
   @if not $duration {
     $duration: list.length($colors) * 2s;
   } @else {
-    @if meta.type-of($duration) != 'number' {
+    @if not is-number($duration) {
       @error 'Invalid $duration value of `#{$duration}` for the `color-shifter` ' +
           'mixin. The duration property must be a number.';
     }
 
     $duration: $duration * list.length($colors);
 
-    @if meta.type-of($duration) != 'number' {
+    @if not is-number($duration) {
       @error 'Invalid $duration value of `#{$duration}` for the ' +
           '[ color-shifter() ] mixin. The duration property must be a number.';
     } @else if math.is-unitless($duration) {
@@ -123,7 +124,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.type-of($delay) != 'number' {
+    @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
           '[ color-shifter ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {

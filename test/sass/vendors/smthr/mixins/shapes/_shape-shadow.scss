@@ -57,11 +57,7 @@
         'is (-1px 6px 3px).';
   }
 
-  @if not
-    $shadow-color or not
-    $shadow-vals or
-    is-truthy($turn-off)
-  {
+  @if not $shadow-color or not $shadow-vals or is-truthy($turn-off) {
     filter: none;
   } @else {
     filter: drop-shadow($shadow-vals $shadow-color);

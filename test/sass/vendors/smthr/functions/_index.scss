@@ -23,6 +23,7 @@
 @forward 'is-list';
 @forward 'is-map';
 @forward 'is-angle';
+@forward 'is-calculation';
 @forward 'is-frequency';
 @forward 'is-position';
 @forward 'is-reserved';
@@ -51,7 +52,6 @@
 @forward 'conv-to-rem';
 
 // String Functions
-
 @forward 'str-replace';
 @forward 'str-to-list';
 @forward 'str-to-num';

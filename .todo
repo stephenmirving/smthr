@@ -41,6 +41,8 @@ TODO:
     ☐ Determine if a .sass version can be automated in a build process
 
   Animations Mixins:
+    ☐ Add is-global-value function to animations to allow some values to have CSS global values passed as parameters.
+      - Completed up through the flip animation mixin.
     ☐ Fix text-tracking in relative to the older version found here: https://codepen.io/stephenirving/pen/PvRYwB
       - Difference probably just the perspective property on stage
     ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4

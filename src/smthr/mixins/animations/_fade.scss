@@ -3,12 +3,14 @@
 @use 'sass:math';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-global-value' as *;
 
 /// Generates an animation that fades an element in or out. If a forward or
 /// backward direction is chosen to augment the fade, it is recommended that
 /// the `animation-stage` mixin be used on the parent element.
 ///
-/// @param {String | Bool} $in-or-out [in] - Determines if the element will
+/// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// fade 'in' (pass `in`, `true`, or `i`) or 'out' (pass `out` `false`,
 /// or `o`).
 /// @param {String} $direction [null] - Will optionally either fade in from
@@ -16,10 +18,11 @@
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// to complete. If the value passed is not a number, it will be set to infinite.
+/// to complete.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// `null` assumes the CSS property default of `normal`.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also
+/// be any global value. Default of `null` assumes the CSS property default of
+/// `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
 /// function for this animation.
@@ -37,7 +40,7 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin fade(
-  $in-or-out: in,
+  $in-or-out: 'in',
   $direction: null,
   $duration: null,
   $delay: null,
@@ -167,7 +170,7 @@
     }
   }
 
-  @if meta.type-of($duration) != 'number' {
+  @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
         '[ fade ] mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
@@ -194,7 +197,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.type-of($delay) != 'number' {
+    @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ fade() ] mixin.' +
           'The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -210,15 +213,15 @@
   }
 
   @if $iterations {
+    @if meta.type-of($iterations) == 'string' {
+      $iterations: string.to-lower-case($iterations);
+    }
+
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
-        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
-      ) or
-      $iterations ==
-      initial or
-      $iterations ==
-      inherit
+    } @else if
+      (math.is-unitless($iterations) and is-number($iterations)) or
+      is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {
@@ -235,12 +238,12 @@
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
-    $anim-drection: reverse;
+    $anim-dir: reverse;
   } @else if is-alias('alternate', $anim-dir) {
     $anim-dir: alternate;
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
-  } @else {
+  } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
         '[ fade() ] mixin';
   }

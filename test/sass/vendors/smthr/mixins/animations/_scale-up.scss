@@ -231,7 +231,7 @@
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
-    $anim-drection: reverse;
+    $anim-dir: reverse;
   } @else if is-alias('alternate', $anim-dir) {
     $anim-dir: alternate;
   } @else if is-alias('alternate-reverse', $anim-dir) {
