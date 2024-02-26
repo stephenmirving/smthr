@@ -3,8 +3,9 @@
 @use 'sass:math';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
-@use '../../functions/is-number' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Generates an animation that fades an element in or out. If a forward or
 /// backward direction is chosen to augment the fade, it is recommended that
@@ -18,7 +19,8 @@
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// to complete.
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also
 /// be any global value. Default of `null` assumes the CSS property default of
@@ -58,8 +60,12 @@
   $is-fwd-or-bck: false;
   $anim-suffix: '';
 
-  @if $in-or-out and meta.type-of($in-or-out) == 'string' {
+  @if $in-or-out and is-string($in-or-out) {
     $in-or-out: string.to-lower-case($in-or-out);
+  }
+
+  @if $anim-dir and is-string($anim-dir) {
+    $anim-dir: string.to-lower-case($anim-dir);
   }
 
   @if $in-or-out == true or is-alias('in', $in-or-out) {
@@ -74,7 +80,7 @@
   }
 
   @if $direction {
-    @if meta.type-of($direction) == 'string' {
+    @if is-string($direction) {
       $direction: string.to-lower-case($direction);
     }
 
@@ -213,20 +219,20 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) == 'string' {
+    @if is-string($iterations) {
       $iterations: string.to-lower-case($iterations);
     }
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if
-      (math.is-unitless($iterations) and is-number($iterations)) or
+      (is-number($iterations) and math.is-unitless($iterations)) or
       is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
-          '[ fade() ] mixin. Value must be either a unitless number, ' +
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for ' +
+          'the [ fade() ] mixin. Value must be either a unitless number, ' +
           '`infinite`, `initial` or `inherit`.';
     }
   }

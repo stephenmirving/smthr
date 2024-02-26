@@ -517,7 +517,7 @@
 ///
 /// @throw Invalid $direction value
 @mixin child-index($num, $direction: 'forward', $index: 0) {
-  @if $direction and meta.type-of($direction) == 'string' {
+  @if $direction and is-string($direction) {
     $direction: string.to-lower-case($direction);
   }
 

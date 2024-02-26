@@ -1,6 +1,8 @@
-@use 'sass:meta';
 @use 'sass:list';
 @use 'sass:math';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-global-value' as *;
 
 /// Apply the animation stage to the parent element of any element that has
 /// a 3-D animation.
@@ -15,8 +17,8 @@
 /// x-position y-position 2-value format. The y-position value can be the
 /// keyword, `top` (equal to 0), `center` (equal to 50%), or `bottom` (equal to
 /// 100%), or can it can be a length-percentage. (Ex: `left bottom` or
-/// `100% 50%` or `left 30%). This property also accepts the global values of
-/// `inherit`, `initial`, `unset` and `revert` as valid.
+/// `100% 50%` or `left 30%). This property also accepts any CSS global value
+/// as valid.
 /// @param {Number} $width [null] - The width of the element.
 /// @param {Number} $z-index [null] - Sets the z-index value, if passed
 /// @param {Number} $height [$width] - The height of the element.
@@ -41,33 +43,28 @@
   }
 
   @if $z-index and
-    meta.type-of($z-index) ==
-    'number' and
+    is-number($z-index) and
     math.is-unitless($z-index)
   {
     z-index: $z-index;
+  } @else {
+    @error 'Invalid z-index value passed to the [ animation-stage() ] mixin.';
   }
 
   -webkit-user-select: none;
   user-select: none;
 
-  @if (
-      meta.type-of($perspective) ==
-        'number' and
-        $perspective >
-        0 and
+  @if not $perspective or is-alias('none', $perspective) {
+    perspective: none;
+  } @else if (
+      is-number($perspective) and $perspective > 0 and
         list.index('px' 'em' 'rem', math.unit($perspective))
-    ) or
-    $perspective ==
-    initial or
-    $perspective ==
-    inherit or
-    $perspective ==
-    unset or
-    $perspective ==
-    revert
+    ) or is-global-value($perspective)
   {
     perspective: $perspective;
+  } @else {
+    @error 'Invalid perspective value passed to the [ animation-stage() ] ' +
+        'mixin.';
   }
 
   perspective-origin: $p-origin;

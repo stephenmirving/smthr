@@ -5,6 +5,7 @@
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Adds bounciness to a given element, bouncing it in place.
 ///
@@ -13,10 +14,12 @@
 /// @param {Number} $duration [0.9s] The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// to complete.
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// `null` assumes the CSS property default of `normal`.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value. Default of `null` assumes the CSS property default of
+/// `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. The default of null applies the default timing function of ease.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
@@ -50,19 +53,19 @@
   $dir-val6: translateY(0);
   $anim-suffix: '-from-top';
 
-  @if $direction and meta.type-of($direction) == 'string' {
+  @if $direction and is-string($direction) {
     $direction: string.to-lower-case($direction);
   }
 
-  @if $delay and meta.type-of($delay) == 'string' {
+  @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+  @if $anim-dir and is-string($anim-dir) {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $timing-func and meta.type-of($timing-func) == 'string' {
+  @if $timing-func and is-string($timing-func) {
     $timing-func: string.to-lower-case($timing-func);
   }
 
@@ -95,7 +98,7 @@
         '[ bounciness() ] mixin.';
   }
 
-  @if meta.type-of($duration) != 'number' {
+  @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the [ bounciness() ] ' +
         'mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
@@ -128,7 +131,7 @@
   }
 
   @if $delay {
-    @if meta.type-of($delay) != 'number' {
+    @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
           '[ bounciness() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -148,14 +151,14 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) == 'string' {
+    @if is-string($iterations) {
       $iterations: string.to-lower-case($iterations);
     }
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if
-      (math.is-unitless($iterations) and is-number($iterations)) or
+      (is-number($iterations) and math.is-unitless($iterations)) or
       is-global-value($iterations)
     {
       $iterations: $iterations;

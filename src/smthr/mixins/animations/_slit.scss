@@ -2,24 +2,29 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
-@use '../utilities/only-moz' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-global-value' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
+@use '../utilities/only-moz' as *;
 
 /// Generates an animation that appears to either slit an element in or out on
 /// its axis.
 ///
-/// @param {Bool | String} $in-or-out [in] - Determines if the element will
+/// @param {Bool | String} $in-or-out ['in'] - Determines if the element will
 /// appear to slit `in` or `out`.
-/// @param {String} $axis [horizontal] - The axis on which the animation turns
+/// @param {String} $axis ['horizontal'] - The axis on which the animation turns
 /// the element. Must be one of the following values: `horizontal`, `vertical`,
 /// `diagonal` or `diagonal2`.
 /// @param {Number} $duration [0.5s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// to complete. If the value passed is not a number, it will be set to infinite
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// `null` assumes the CSS property default of `normal`.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value. Default of `null` assumes the CSS property default of
+/// `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for
 /// the animation. A default of null will apply a timing-function of ease-out
 /// on a slit-in animation and ease-in on a slit-out animation.
@@ -39,8 +44,8 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin slit(
-  $in-or-out: in,
-  $axis: horizontal,
+  $in-or-out: 'in',
+  $axis: 'horizontal',
   $duration: 0.5s,
   $delay: null,
   $iterations: null,
@@ -58,19 +63,19 @@
   $is-diagonal: false;
   $anim-suffix: '';
 
-  @if $in-or-out and meta.type-of($in-or-out) == 'string' {
+  @if $in-or-out and is-string($in-or-out) {
     $in-or-out: string.to-lower-case($in-or-out);
   }
 
-  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+  @if $anim-dir and is-string($anim-dir) {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $delay and meta.type-of($delay) == 'string' {
+  @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $timing-func and meta.type-of($timing-func) == 'string' {
+  @if $timing-func and is-string($timing-func) {
     $timing-func: string.to-lower-case($timing-func);
   }
 
@@ -86,7 +91,7 @@
   }
 
   @if $axis {
-    @if meta.type-of($axis) == 'string' {
+    @if is-string($axis) {
       $axis: string.to-lower-case($axis);
     }
 
@@ -143,7 +148,7 @@
     $opacity-val-2: 0;
   }
 
-  @if meta.type-of($duration) != 'number' {
+  @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the [ slit() ] ' +
         'mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
@@ -175,7 +180,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.type-of($delay) != 'number' {
+    @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ slit() ]' +
           ' mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -194,7 +199,7 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) == 'string' {
+    @if is-string($iterations) {
       $iterations: string.to-lower-case($iterations);
     }
 
@@ -202,12 +207,8 @@
       $iterations: infinite;
     } @else if
       (
-        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
-      ) or
-      $iterations ==
-      initial or
-      $iterations ==
-      inherit
+        is-number($iterations) and math.is-unitless($iterations)
+      ) or is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {
@@ -230,7 +231,7 @@
     $anim-dir: alternate;
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
-  } @else {
+  } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
         ' for the [ slit() ] mixin';
   }

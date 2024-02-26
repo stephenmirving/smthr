@@ -5,6 +5,7 @@
 @use '../utilities/only-moz' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 @use '../../functions/is-global-value' as *;
 
 /// Generates an animation that flips an element over. The element this mixin is
@@ -13,12 +14,12 @@
 /// `animation-front-face` and 'animation-back-face' mixins for element 'face'
 /// child elements and the 'animation-stage` mixin for the parent element.
 ///
-/// @param {String} $direction [up] - The direction the scale effect causes
+/// @param {String} $direction ['up'] - The direction the scale effect causes
 /// the element to seem to be moving towards. Can be one of the following values:
 /// `top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, `left`,
 /// `top-left`, `forwards`, or `backwards`. Many potential aliases are available
 /// for these values (see $map-alias-resolutions in the `variables/maps` folder).
-/// @param {String} $axis [horizontal] - The axis the element will flip over.
+/// @param {String} $axis ['horizontal'] - The axis the element will flip over.
 /// Can be one of the following values: `horizontal`, `vertical`, `diagonal`, or
 /// `diagonal2`. There are many alias values for these axis values. See the
 /// `$map-alias-resolutions` variable in the `variables/_maps.scss` file for
@@ -26,7 +27,8 @@
 /// @param {Number} $duration [0.5s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// to complete.
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also
 /// be any CSS global value. Default of `null` assumes the CSS property default
@@ -65,20 +67,22 @@
   $trans-val-2: rotateX(180deg);
   $anim-suffix: '';
 
-  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
-    $anim-dir: string.to-lower-case($anim-dir);
-  }
-
-  @if $delay and meta.type-of($delay) == 'string' {
+  @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $timing-func and meta.type-of($timing-func) == 'string' {
+  @if $anim-dir and is-string($anim-dir) {
+    $anim-dir: string.to-lower-case($anim-dir);
+  }
+
+  @if $timing-func and is-string($timing-func) {
     $timing-func: string.to-lower-case($timing-func);
   }
 
   @if $direction {
-    $direction: string.to-lower-case($direction);
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
 
     @if is-alias('bottom', $direction) {
       $direction: 'down';
@@ -154,9 +158,9 @@
       $trans-val-1: translateZ(0) rotateX(0);
       $trans-val-2: translateZ(-260px) rotateX(180deg);
     } @else if $direction != 'up' {
-      @error 'Invalid $direction value of `#{meta.inspect($direction)}` with an $axis of ' +
-          '`horizontal`. For a horizontal axis, you must choose a direction ' +
-          'of either `top`, `down`, `backwards`, or `forwards`.';
+      @error 'Invalid $direction value of `#{meta.inspect($direction)}` with an ' +
+          '$axis of `horizontal`. For a horizontal axis, you must choose a ' +
+          'direction of either `top`, `down`, `backwards`, or `forwards`.';
     }
   } @else if $axis == 'vertical' {
     $trans-val-1: rotateY(0);
@@ -189,8 +193,8 @@
       $trans-val-2: translateZ(-260px) rotate3d(1, 1, 0, -180deg);
     } @else if $direction != 'top-right' {
       @error 'Invalid $direction value of `#{meta.inspect($direction)}` with ' +
-      'an $axis of `diagonal1`. For the diagonal1 axis, you must choose a direction ' +
-      'of either `top-right`, `bottom-left`, `backwards`, or `forwards`.';
+      'an $axis of `diagonal1`. For the diagonal1 axis, you must choose a ' +
+      'direction of either `top-right`, `bottom-left`, `backwards`, or `forwards`.';
     }
   } @else if $axis == 'diagonal2' {
     $trans-val-1: rotate3d(-1, 1, 0, 0);
@@ -254,14 +258,14 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) == 'string' {
+    @if is-string($iterations) {
       $iterations: string.to-lower-case($iterations);
     }
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if
-      (math.is-unitless($iterations) and is-number($iterations)) or
+      (is-number($iterations) and math.is-unitless($iterations)) or
       is-global-value($iterations)
     {
       $iterations: $iterations;

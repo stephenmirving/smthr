@@ -4,6 +4,7 @@
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Animates the shift between any quantity of given colors.
 ///
@@ -50,6 +51,22 @@
 ) {
   @if list.length($colors) < 2 {
     @error 'You need at least 2 colors in order to use the color-shifter mixin.';
+  }
+
+  @if $delay and is-string($delay) {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $infinite and is-string($infinite) {
+    $infinite: string.to-lower-case($infinite);
+  }
+
+  @if $alternate and is-string($alternate) {
+    $alternate: string.to-lower-case($alternate);
+  }
+
+  @if $bg-or-fg and is-string($bg-or-fg) {
+    $bg-or-fg: string.to-lower-case($bg-or-fg);
   }
 
   // The list of percentage values to be used in the keyframes

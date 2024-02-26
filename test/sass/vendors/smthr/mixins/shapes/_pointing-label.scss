@@ -2,6 +2,7 @@
 @use 'sass:string';
 @use 'sass:math';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-string' as *;
 @use '../../functions/to-fixed' as *;
 
 /// Creates a little pointing label from an element using clip-path.
@@ -26,7 +27,7 @@
   $b-radius: 8px,
   $height: to-fixed(math.div($width, 4))
 ) {
-  @if meta.type-of($direction) == 'string' {
+  @if is-string($direction) {
     $direction: string.to-lower-case($direction);
   }
 

@@ -2,13 +2,16 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
-@use '../../functions/is-length' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-global-value' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Animates a panning wipe style effect on the background-image property
 /// of an element. Works best with a gradient or an image.
 ///
-/// @param {String} $direction [right] - The direction the pan is heading
+/// @param {String} $direction ['right'] - The direction the pan is heading
 /// @param {Number} $duration [6s] - The duration of the animation (`s` or `ms`)
 /// @param {Mixed} $bg
 /// [linear-gradient(270deg, #CC6AA5, #3E91CC, #2dCCA7) center / 600% 100%] -
@@ -19,10 +22,12 @@
 /// if $height is set explicitly, then this value sets only the width.
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// to complete. If the value passed is not a number, it will be set to infinite
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// `null` assumes the CSS property default of `normal`.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value. Default of `null` assumes the CSS property default of
+/// `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. The default of null will set it to the default timing function
 /// of ease.
@@ -43,7 +48,7 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin pan-wipe(
-  $direction: right,
+  $direction: 'right',
   $duration: 6s,
   $bg:
     linear-gradient(
@@ -66,18 +71,18 @@
   $pos-val2: 100% 50%;
   $anim-suffix: '-right';
 
-  @if $direction and meta.type-of($direction) == 'string' {
+  @if $direction and is-string($direction) {
     $direction: string.to-lower-case($direction);
   } @else {
     @error 'Invalid $direction unit type for the [ pan-wipe() ] mixin. Value must' +
     ' be of type "string".';
   }
 
-  @if $delay and meta.type-of($delay) == 'string' {
+  @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+  @if $anim-dir and is-string($anim-dir) {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
@@ -118,7 +123,7 @@
     @error 'Invalid direction of `#{meta.inspect($direction)}` for the [ pan-wipe() ] mixin.';
   }
 
-  @if meta.type-of($duration) != 'number' {
+  @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the [ pan-wipe() ] ' +
         'mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
@@ -149,16 +154,17 @@
   {
     $delay: null;
   }
+
   @if $delay {
-    @if meta.type-of($delay) != 'number' {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ pan-wipe() ] ' +
-          'mixin. The delay property must be a number.';
+    @if not is-number($delay) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ pan-wipe() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, unless $delay > 60, assume seconds
       $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ pan-wipe() ] ' +
-          'mixin. The delay property must be in either s or ms units.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ pan-wipe() ] mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
 
@@ -169,19 +175,15 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) == 'string' {
+    @if is-string($iterations) {
       $iterations: string.to-lower-case($iterations);
     }
+
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if
-      (
-        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
-      ) or
-      $iterations ==
-      initial or
-      $iterations ==
-      inherit
+      (is-number($iterations) and math.is-unitless($iterations)) or
+      is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {
@@ -204,7 +206,7 @@
     $anim-dir: alternate;
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
-  } @else {
+  } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
         '[ pan-wipe() ] mixin';
   }

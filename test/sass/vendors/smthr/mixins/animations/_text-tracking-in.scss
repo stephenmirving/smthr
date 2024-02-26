@@ -3,10 +3,13 @@
 @use 'sass:list';
 @use 'sass:math';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-global-value' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Animates text by tracking it into view
 ///
-/// @param {Bool | String} $expand-contract ['contract'] - Determines whether
+/// @param {Bool | String} $expand-contract ['expand'] - Determines whether
 /// the text will, `expand` (`true`) or `contract` (`false`) as it animates.
 /// @param {Bool} $animate-in-place [true] - If true, the animation will
 /// animate in its location on a 2-dimaensional plane. If false, it will allow
@@ -16,11 +19,13 @@
 /// be animating in from. Can be `null`, `top`, or `bottom`.
 /// @param {Number} $duration [0.9s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
-/// @param {Number | String} $iterations [null] - The animation-iteration-count
-/// value for the animation.
-/// @param {String} $anim-dir [null] - Sets the animation-direction
-/// property. Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`.
-/// Default of `null` assumes the CSS animation-direction default of `normal`.
+/// @param {Number | String} $iterations [null] - The number of iterations
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value. Default of `null` assumes the CSS property default of
+/// `normal`.
 /// @param {Timing-Function} $timing-func [cubic-bezier(0.215, 0.61, 0.355, 1)] -
 /// The timing function for the animation. Using the default is recommended.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
@@ -52,27 +57,27 @@
 ) {
   $anim-suffix: '';
 
-  @if $expand-contract and meta.type-of($expand-contract) == 'string' {
+  @if $expand-contract and is-string($expand-contract) {
     $expand-contract: string.to-lower-case($expand-contract);
   }
 
-  @if $animate-in-place and meta.type-of($animate-in-place) == 'string' {
+  @if $animate-in-place and is-string($animate-in-place) {
     $animate-in-place: string.to-lower-case($animate-in-place);
   }
 
-  @if $origin and meta.type-of($origin) == 'string' {
+  @if $origin and is-string($origin) {
     $origin: string.to-lower-case($origin);
   }
 
-  @if $delay and meta.type-of($delay) == 'string' {
+  @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+  @if $anim-dir and is-string($anim-dir) {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $timing-func and meta.type-of($timing-func) == 'string' {
+  @if $timing-func and is-string($timing-func) {
     $timing-func: string.to-lower-case($timing-func);
   }
 
@@ -118,7 +123,7 @@
         'mixin. This value should be true or false.';
   }
 
-  @if meta.type-of($duration) != 'number' {
+  @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the [ text-tracking-in() ] ' +
         'mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
@@ -151,7 +156,7 @@
   }
 
   @if $delay {
-    @if meta.type-of($delay) != 'number' {
+    @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ text-tracking-in() ] ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -170,19 +175,15 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) == 'string' {
+    @if is-string($iterations) {
       $iterations: string.to-lower-case($iterations);
     }
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if (
-        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
-      ) or
-      $iterations ==
-      initial or
-      $iterations ==
-      inherit
+        is-number($iterations) and math.is-unitless($iterations)
+      ) or is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {
@@ -205,7 +206,7 @@
     $anim-dir: alternate;
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
-  } @else {
+  } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` ' +
         'for the [ text-tracking-in() ] mixin';
   }

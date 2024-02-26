@@ -5,6 +5,8 @@
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-angle' as *;
+@use '../../functions/is-string' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/list-to-string' as *;
 
@@ -37,14 +39,30 @@
     $orientation: 'to right';
   }
 
-  @if $orientation and meta.type-of($orientation) == 'list' and
+  @if $orientation and is-list($orientation) and
       list.separator($orientation) == space
   {
     $orientation: list-to-string($orientation, ' ');
   }
 
-  @if $orientation and meta.type-of($orientation) == 'string' {
+  @if $orientation and is-string($orientation) {
     $orientation: string.to-lower-case($orientation);
+  }
+
+  @if $start-percent and is-string($start-percent) {
+    $start-percent: string.to-lower-case($start-percent);
+
+    @if $start-percent != 'start' {
+      @error 'Invalid value passed to $start-percent for the [ gradient() ] mixin.';
+    }
+  }
+
+  @if $end-percent and is-string($end-percent) {
+    $end-percent: string.to-lower-case($end-percent);
+
+    @if $end-percent != 'end' {
+      @error 'Invalid value passed to $start-percent for the [ gradient() ] mixin.';
+    }
   }
 
   @if not $start-percent or $start-percent == 'start' {

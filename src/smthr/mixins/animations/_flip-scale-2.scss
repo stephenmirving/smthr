@@ -4,8 +4,9 @@
 @use 'sass:string';
 @use '../utilities/only-moz' as *;
 @use '../../functions/is-alias' as *;
-@use '../../functions/is-number' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Generates an animation that flips an element over while scaling it. The
 /// effect is slightly different than in `flip-scale`. The element this mixin is
@@ -14,7 +15,7 @@
 /// `animation-front-face` and 'animation-back-face' mixins for card 'face'
 /// child elements and the 'animation-stage` mixin for the parent element.
 ///
-/// @param {String} $direction [top] - The direction the animation appears to
+/// @param {String} $direction ['top'] - The direction the animation appears to
 /// be fliping from. Can be either `top`, `bottom`, `right`, or `left`.
 /// @param {Number} $duration [0.5s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
@@ -42,8 +43,8 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin flip-scale-2(
-  $direction: top,
-  $axis: horizontal,
+  $direction: 'top',
+  $axis: 'horizontal',
   $duration: 0.5s,
   $delay: null,
   $iterations: null,
@@ -60,15 +61,15 @@
   $trans-orig-val3: 50% 100%;
   $anim-suffix: '-towards-top';
 
-  @if $direction and meta.type-of($direction) == 'string' {
+  @if $direction and is-string($direction) {
     $direction: string.to-lower-case($direction);
   }
 
-  @if $delay and meta.type-of($delay) == 'string' {
+  @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+  @if $anim-dir and is-string($anim-dir) {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
@@ -149,14 +150,14 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) == 'string' {
+    @if is-string('string') {
       $iterations: string.to-lower-case($iterations);
     }
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (math.is-unitless($iterations) and is-number($iterations)) or
+    } @else if (
+      is-number($iterations) and math.is-unitless($iterations)) or
       is-global-value($iterations)
     {
       $iterations: $iterations;

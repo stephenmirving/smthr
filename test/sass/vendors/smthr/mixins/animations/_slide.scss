@@ -3,6 +3,9 @@
 @use 'sass:math';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-global-value' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Generates an animation that slides an element in or out from or towards a
 /// given direction.
@@ -14,10 +17,12 @@
 /// @param {Number} $duration [0.6s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// to complete. If the value passed is not a number, it will be set to infinite
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// `null` assumes the CSS property default of `normal`.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value. Default of `null` assumes the CSS property default of
+/// `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A `null` value passed here will default to the recommended timing
 /// function for this animation of `cubic-bezier(0.25, 0.46, 0.45, 0.94)`
@@ -55,19 +60,19 @@
   $temp-val: null;
   $anim-suffix: '';
 
-  @if $in-or-out and meta.type-of($in-or-out) == 'string' {
+  @if $in-or-out and is-string($in-or-out) {
     $in-or-out: string.to-lower-case($in-or-out);
   }
 
-  @if $delay and meta.type-of($delay) == 'string' {
+  @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and meta.type-of($anim-dir) == 'string' {
+  @if $anim-dir and is-string($anim-dir) {
     $anim-dir: string.to-lower-case($anim-dir);
   }
 
-  @if $timing-func and meta.type-of($timing-func) == 'string' {
+  @if $timing-func and is-string($timing-func) {
     $timing-func: string.to-lower-case($timing-func);
   }
 
@@ -83,7 +88,7 @@
   }
 
   @if $direction {
-    @if meta.type-of($direction) == 'string' {
+    @if is-string($direction) {
       $direction: string.to-lower-case($direction);
     }
 
@@ -178,7 +183,7 @@
     $trans-val-2: $temp-val;
   }
 
-  @if meta.type-of($duration) != 'number' {
+  @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the [ slide() ] ' +
         'mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
@@ -210,7 +215,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.type-of($delay) != 'number' {
+    @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
           '[ slide() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
@@ -229,18 +234,14 @@
   }
 
   @if $iterations {
-    @if meta.type-of($iterations) == 'string' {
+    @if is-string($iterations) {
       $iterations: string.to-lower-case($iterations);
     }
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
     } @else if (
-        math.is-unitless($iterations) and meta.type-of($iterations) == 'number'
-      ) or
-      $iterations ==
-      initial or
-      $iterations ==
-      inherit
+        is-number($iterations) and math.is-unitless($iterations)
+      ) or is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {
@@ -261,7 +262,7 @@
     $anim-dir: alternate;
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
-  } @else {
+  } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
         '[ slide() ] mixin';
   }

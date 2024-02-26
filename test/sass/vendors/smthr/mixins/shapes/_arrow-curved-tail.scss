@@ -1,8 +1,9 @@
-@use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-angle' as *;
+@use '../../functions/is-string' as *;
+@use '../../functions/is-number' as *;
 @use '../../functions/conv-angle' as *;
 
 /// Uses psuedo-elements and transform to turn an element into the shape of an
@@ -33,8 +34,7 @@
 
   // Mixin will only accept direction keywords and degree units
   @if $direction and
-    meta.type-of($direction) ==
-    'number' and not
+    is-number($direction) and not
     math.is-unitless($direction) and not
     is-angle($direction)
   {
@@ -43,12 +43,11 @@
   }
 
   @if $direction {
-    @if meta.type-of($direction) == 'string' {
+    @if is-string($direction) {
       $direction: string.to-lower-case($direction);
     }
 
-    @if meta.type-of($direction) ==
-      'number' and
+    @if is-number($direction) and
       (math.is-unitless($direction) or is-angle($direction))
     {
       $angle: $direction;

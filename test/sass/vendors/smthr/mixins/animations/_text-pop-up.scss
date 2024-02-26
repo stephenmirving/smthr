@@ -3,6 +3,10 @@
 @use 'sass:list';
 @use 'sass:math';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-color' as *;
+@use '../../functions/is-global-value' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Applies a text pop-up animation with a shadow effect to a given element.
 ///
@@ -45,22 +49,19 @@
   $dir-val: translateY(-50px);
   $anim-suffix: '-to-top';
 
-  @if $direction and meta.type-of($direction) == 'string' {
+  @if $direction and is-string($direction) {
     $direction: string.to-lower-case($direction);
   }
 
-  @if $delay and meta.type-of($delay) == 'string' {
+  @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $timing-func and meta.type-of($timing-func) == 'string' {
+  @if $timing-func and is-string($timing-func) {
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if not
-    $shadow-color or
-    ($shadow-color and meta.type-of($shadow-color) != 'color')
-  {
+  @if not $shadow-color or not is-color($shadow-color) {
     $shadow-color: hsl(0 0% 80%);
 
     @warn 'Invalid $shadow-color value passed to the [ text-drop-shadow() ] ' +
@@ -101,7 +102,7 @@
         '`bottom-left`, `left`, or `top-left`.';
   }
 
-  @if meta.type-of($duration) != 'number' {
+  @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the [ text-pop-up() ] ' +
         'mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
@@ -133,7 +134,7 @@
     $delay: null;
   }
   @if $delay {
-    @if meta.type-of($delay) != 'number' {
+    @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
           '[ text-pop-up() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {

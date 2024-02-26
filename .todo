@@ -10,6 +10,10 @@ TODO:
             ☐ Need to find values where this is true???
           ✔ Convert 8 digit hex values to 4 digit hex values where possible. @done(24-02-25 18:57)
       ☐ Mixin Testing
+        ☐ Add parameter error checking in the animation-stage mixin
+        ☐ Retest more animations
+        ☐ Figure out why color-shifter puts space in the strings then calls the animation like #{$timing-func}#{$delay}#{$inf-alt}
+        ☐ Add error checking for $infinite-alternate
         ☐ Restest shape-shadow
           ☐ Test its new error checking
         ☐ Test all Utilities mixins
