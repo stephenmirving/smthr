@@ -3,8 +3,8 @@
 @use 'color-to-string' as *;
 
 /// Takes a color value and returns a string representing what type of notation
-/// is used for the color. Valid types are:
-/// [ 'hex', 'rgb', 'rgba', 'hsl', 'hsla', 'hwb' ]
+/// is used for the color.  Valid types curently include:
+/// [ 'hex', 'rgb', 'rgba', 'hsl', 'hsla' ]
 /// @access public
 ///
 /// @param {Color} $color - A color value

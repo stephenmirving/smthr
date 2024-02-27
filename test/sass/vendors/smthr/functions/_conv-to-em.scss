@@ -1,37 +1,34 @@
 @use 'sass:meta';
 @use 'sass:math';
-@use '../variables' as *;
+@use 'is-number' as *;
+@use '../variables/misc' as *;
 
 /// Converts a pixel value into em units.
+///
 /// @access public
 ///
 /// @param {Number} $pixels - A value to convert to em units.
-/// @param {Number} $base-context [null] - The contextual base font-size.
-/// @return {Number} The values in em.
+/// @param {Number} $base [null] - The contextual base font-size.
 ///
-/// @require {function} strip-unit
+/// @return {Number} The values in `em` units.
+///
+/// @require {function} is-number
+/// @require {variable} $base-font-size
+///
 /// @throw Invalid data type or units for $pixels
-@function conv-to-em($pixels, $base-context: null) {
-  @if meta.type-of($pixels) !=
-    'number' or
-    (
-      meta.type-of($pixels) ==
-        'number' and not
-        math.is-unitless($pixels) and
-        math.unit($pixels) !=
-        'px'
-    )
-  {
+@function conv-to-em($pixels, $base: null) {
+  @if not is-number($pixels) or (
+    not math.is-unitless($pixels) and math.unit($pixels) != 'px'
+  ) {
     @error 'Invalid value of [ #{meta.inspect($pixels)} ] passed to the ' +
         '[ conv-to-em() ] function. Value of $pixels must be number in px units.';
   }
 
-  // If no base is defined, defer to the $base-font-size variable. If that does
-  // not exist, default to 16
-  @if not $base-context {
-    $base-context: if(
-      meta.variable-exists('base-font-size') or
-        meta.global-variable-exists('base-font-size', smth),
+  // If no base font-size is passsed to the function as $base,
+  // use the $base-font-size variable. If that does not exist, default to 16
+  @if not $base {
+    $base: if(
+      meta.variable-exists('base-font-size'),
       $base-font-size,
       16
     );
@@ -41,9 +38,9 @@
     $pixels: $pixels * 1px;
   }
 
-  @if math.is-unitless($base-context) {
-    $base-context: $base-context * 1px;
+  @if math.is-unitless($base) {
+    $base: $base * 1px;
   }
 
-  @return math.div($pixels, $base-context) * 1em;
+  @return math.div($pixels, $base) * 1em;
 }

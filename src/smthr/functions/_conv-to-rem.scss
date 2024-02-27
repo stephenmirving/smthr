@@ -2,50 +2,53 @@
 @use 'sass:math';
 @use 'sass:list';
 @use 'strip-unit' as *;
-@use '../variables' as *;
+@use 'is-number' as *;
+@use '../variables/misc' as *;
 
 /// Converts values into rem units.
 /// @access public
 ///
-/// @param {Number} $values - Values to convert to REM units.
-/// @param {Number} $base [null] - The base font-size.
-/// @return {Number} The values in REMs.
+/// @param {Number | List} $values - The value(s) to convert to `rem` units.
+/// @param {Number} $base [null] - The base font-size. If none specified, defers
+/// to the $base-font-size variable. If that is not found, defaults to 16px.
+///
+/// @return {Number | List} The value(s) in `rem` units.
 ///
 /// @require {function} strip-unit
+/// @require {function} is-number
+/// @require {variable} $base-font-size
 @function conv-to-rem($values, $base: null) {
   $rem-values: ();
   $count: list.length($values);
 
   @each $value in $values {
-    @if meta.type-of($value) !=
-      'number' or
-      (not math.is-unitless($value) and list.index(('px' 'rem' 'em'), $value))
+    @if not is-number($value) or
+      (not math.is-unitless($value) and not list.index(('px' 'rem' 'em'), math.unit($value)))
     {
-      @error 'Invalid $values unit of [ #{meta.inspect($values)} ] ' +
-            'passed to the [ conv-to-rem() ] function. You must pass a valid ' +
-            'length in px units.';
+      @error 'Invalid $values unit of `#{meta.inspect($values)}` passed to ' +
+            'the [ conv-to-rem() ] function. You must pass a valid length in ' +
+            'px, rem, or em units.';
     }
   }
 
-  // If no base is defined, defer to the $base-font-size variable. If that does
-  // not exist, default to 16
+  // If no base font-size is passsed to the function as $base,
+  // use the $base-font-size variable. If that does not exist, default to 16
   @if not $base {
     $base: if(
-      meta.variable-exists('base-font-size') or
-        meta.global-variable-exists('base-font-size', smth),
+      meta.variable-exists('base-font-size'),
       $base-font-size,
       16
     );
   }
 
   // If the base font size is a %, then multiply it by 16px
-  // This is because 100% font size = 16px in most all browsers
+  // This is because 100% font size = 16px by default
   @if math.unit($base) == '%' {
     $base: math.div($base, 100%) * 16px;
   }
 
-  // Using rem as base allows correct scaling
-  @if math.unit($base) == 'rem' {
+  // Using rem or em as base allows correct scaling
+  @if math.unit($base) == 'rem' or math.unit($base) == 'em' {
     $base: strip-unit($base) * 16px;
   }
 
@@ -75,7 +78,7 @@
 ///
 /// @require {function} strip-unit
 @function _px-to-rem($value, $base: null) {
-  @if meta.type-of($value) != 'number' {
+  @if not is-number($value) {
     @error 'Invalid $value of [ #{meta.inspect($value)} ], was passed ' +
         'to the [ conv-to-rem() ] function. You must use a valid number.';
   }
@@ -91,7 +94,7 @@
   }
 
   // Eliminate units for 0rem
-  @if $value == 0 {
+  @if $value == 0rem {
     $value: 0;
   }
 

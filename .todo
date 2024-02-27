@@ -3,10 +3,15 @@ TODO:
   TESTING:
     ☐ Test and fix functions and mixins
       ☐ Function testing
+      ☐ Update all size conversion functions to take $base-font-size with units
+        ☐ Fix conv-to-rem
+          ✔ Allows % inputs but returns the wrong result @done(24-02-26 21:21)
+          ☐ Add support for % inputs
+          ☐ Use $base-font-size in betterize
         ☐ Retest ratio-to-percentage
         ☐ Retest decimal-to-ratio
         ☐ to-hex function
-          ☐ If the hex conversion slightly off on some values 4 OR 8 digit hex values
+          ☐ Is the hex conversion slightly off on some 4 OR 8 digit hex values?
             ☐ Need to find values where this is true???
           ✔ Convert 8 digit hex values to 4 digit hex values where possible. @done(24-02-25 18:57)
       ☐ Mixin Testing

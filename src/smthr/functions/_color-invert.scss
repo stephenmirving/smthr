@@ -2,6 +2,7 @@
 @use 'sass:list';
 @use 'sass:meta';
 @use 'conv-color' as *;
+@use 'is-color' as *;
 @use 'get-color-type' as *;
 @use 'is-percentage' as *;
 
@@ -22,7 +23,7 @@
 /// @throw Invalid $weight value.
 /// @throw Invalid $syntax.
 @function color-invert($color, $weight: 100%, $syntax: get-color-type($color)) {
-  @if meta.type-of($color) != 'color' {
+  @if not is-color($color) {
     @error 'Invalid $color value of [ #{meta.inspect($color)} ] passed to the ' +
         '[ invert-color() ] function.';
   }
@@ -33,12 +34,17 @@
         '0% and 100%.';
   }
 
-  @if not list.index(('hex' '#' 'rgb' 'rgba' 'hsl' 'hsla' 'hwb'), $syntax) {
+  @if not
+    list.index(
+      ('hex' '#' 'rgb' 'rgba' 'hsl' 'hsla' 'hwb', 'cmyk', 'name', 'function'),
+      $syntax
+    )
+  {
     @error 'Invalid $syntax value of [ #{meta.inspect($syntax)} ] passed to ' +
         'the [ invert-color() ] function. Value of $syntax must be a string ' +
         'representing a valid CSS color function specification. This function ' +
         'supports converting into the following $syntax values: ' +
-        '[ hex, \'#\', rgb, rgba, hsl, hsla, hwb, cmyk ].';
+        '[ hex, \'#\', rgb, rgba, hsl, hsla, hwb, cmyk, name, function ].';
   }
 
   @return conv-color(color.invert($color, $weight), $syntax);
