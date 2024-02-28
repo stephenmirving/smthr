@@ -8,6 +8,7 @@
 
 @use 'sass:meta';
 @use 'sass:map';
+@use 'sass:math';
 @use '../smthr/smth' as smth;
 
 ////////////////////////////////////////
@@ -15,6 +16,18 @@
 ////////////////////////////////////////
 
 html {
+  $_root-font-size: 1em;
+
+  @if meta.variable-exists('base-font-size') or
+    meta.global-variable-exists('base-font-size', 'smth')
+  {
+    $_root-font-size: if(
+      math.is-unitless(smth.$base-font-size),
+      math.div(smth.$base-font-size, 16) * 1em,
+      smth.$base-font-size
+    );
+  }
+
   overflow: hidden scroll;
   box-sizing: border-box;
   font-family:
@@ -26,7 +39,7 @@ html {
     'Apple Color Emoji',
     'Segoe UI Emoji',
     'Segoe UI Symbol';
-  font-size: 1em;
+  font-size: $_root-font-size;
   line-height: 1.4;
   overflow-wrap: break-word;
   -webkit-hyphens: auto;
@@ -303,6 +316,7 @@ dialog {
   border: solid;
   margin: auto;
   background-color: if(
+    meta.variable-exists('white') or
     meta.global-variable-exists('white', 'smth'),
     smth.$white,
     #fff

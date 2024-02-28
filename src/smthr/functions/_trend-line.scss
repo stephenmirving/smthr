@@ -3,7 +3,7 @@
 @use 'sass:math';
 @use 'conv-to-rem' as *;
 @use 'is-map' as *;
-@use 'is-truthy' as *;
+@use 'is-true' as *;
 @use 'to-fixed' as *;
 
 /// Calculate the least square fit linear regression, or "trend-line", of a
@@ -89,8 +89,8 @@
   $y-intercept: $size-avg - ($slope * $res-avg);
 
   // Return the CSS calc() function equation for the trend line
-  // If $conv-to-rem is truthy, y-intercept will be converted to a rem value
-  @if is-truthy($conv-to-rem) {
+  // If $conv-to-rem is true, y-intercept will be converted to a rem value
+  @if is-true($conv-to-rem) {
     @return calc(to-fixed($slope * 100vw, 8) + to-fixed(conv-to-rem($y-intercept), 5));
   }
 

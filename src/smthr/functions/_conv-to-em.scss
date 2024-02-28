@@ -3,14 +3,15 @@
 @use 'is-number' as *;
 @use '../variables/misc' as *;
 
-/// Converts a pixel value into em units.
+/// Converts a pixel value into em units (based on the root font-size).
+/// Can be a single value or a list of values.
 ///
 /// @access public
 ///
 /// @param {Number} $pixels - A value to convert to em units.
 /// @param {Number} $base [null] - The contextual base font-size.
 ///
-/// @return {Number} The values in `em` units.
+/// @return {Number} The value in `em` units.
 ///
 /// @require {function} is-number
 /// @require {variable} $base-font-size
@@ -28,7 +29,8 @@
   // use the $base-font-size variable. If that does not exist, default to 16
   @if not $base {
     $base: if(
-      meta.variable-exists('base-font-size'),
+      meta.variable-exists('base-font-size') or
+      meta.global-variable-exists('base-font-size'),
       $base-font-size,
       16
     );

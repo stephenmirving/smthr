@@ -15,6 +15,18 @@ _Smoother_ allows you to create a wide range of smooth and customizable visual
 effects, without having to deal with messy clip-path coordinates, complicated
 animation keyframe creation, or other verbose and complex code blocks.
 
+## Table of Contents
+
+1. [Version](#version)
+2. [Content](#content)
+3. [Deployment](#deployment)
+4. [Documentation](#documentation)
+5. [Parameter Aliases](#parameter-aliases)
+6. [Betterize](#betterize)
+7. [More Info](#more-info)
+8. [Authors](#authors)
+9. [Thanks](#thanks)
+
 ## Version
 
 _Smoother_ is **currently in active development**. Almost every day there are
@@ -35,7 +47,7 @@ This is **smthr** version 0.3.0 - _Last update:_ 02/26/24
   * More than 80 utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given number of lines, creating corner ribbons, centering elements, browser-targeted styling, making "hamburger" menu buttons and much more!
 * **75+** Functions, _including functions that...
-  * Extend existing Sass module method functionality
+  * Extend Sass' existing module's method functionality (ex: `update-list` function)
   * Convert and manipulate colors
   * Enhanced data type checking
   * Data type conversion

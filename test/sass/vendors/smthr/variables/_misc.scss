@@ -1,20 +1,28 @@
 @use 'sass:list';
 
+////
+///
+/// All the public variables that are used in the Smoother library other than
+/// those of the Map or Color type (found in _maps.scss and _colors.scss).
+///
+/// @access public
+///
+////
+
 /// Base font size for unit conversion. Default is 16 for 16px at 100%
-/// Common alternate is 10 for 10px at 62.5% for easier conversion with rem and
-/// em units.
+/// A common alternative is `10` for 10px/62.5%, for easier mental conversion
+/// with `rem` and and `em` units. If you are using Betterize, this value will
+/// be used to calculate the base font-size in `em` units, set on the html element.
 /// @type Number
 /// @todo Change this to match your root font-size
 $base-font-size: 16 !default;
 
 /// Base path for assets (fonts, images, etc.), do not use a trailing slash.
-/// @access public
 /// @type String
 $asset-base-path: 'assets' !default;
 
 /// Suffix appended to the end of an image name to indicate that it is for HiDPI.
 /// Retina displays
-/// @access public
 /// @type String
 $image-suffix-2x: '@2x' !default;
 
@@ -23,13 +31,16 @@ $image-suffix-2x: '@2x' !default;
 $btn-transition-properties: background-color, border-color, box-shadow, color,
   top !default;
 
+/// The duration of the transition used on buttons.
 /// @type Number
 $btn-transition-duration: 0.3s !default;
 
+/// The timing function used on button transitions.
 /// @type String
 $btn-transition-timing-function: ease-out !default;
 
-/// Transitions for buttons.
+/// The value for the `transition` property on buttons. Created from the previous
+/// button transition properties by the `@each` loop following this declaration.
 /// @type List
 $btn-transition: () !default;
 
@@ -42,7 +53,6 @@ $btn-transition: () !default;
 }
 
 /// A list containing all the available CSS global values that can be used
-/// with virtually any property
-///
+/// with virtually any property.
 /// @type List
 $global-values: (inherit initial revert revert-layer unset) !default;

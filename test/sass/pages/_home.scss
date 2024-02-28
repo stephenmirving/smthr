@@ -202,5 +202,7 @@
 // }
 
 .test100 {
-  content: conv-to-rem(0px);
+  $rems: 1rem 2rem 3 4rem;
+
+  content: conv-to-px($rems);
 }

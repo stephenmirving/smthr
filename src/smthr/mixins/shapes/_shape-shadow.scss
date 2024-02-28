@@ -2,7 +2,7 @@
 @use 'sass:list';
 @use '../../functions/is-color' as *;
 @use '../../functions/is-string' as *;
-@use '../../functions/is-truthy' as *;
+@use '../../functions/is-true' as *;
 @use '../../variables/misc' as *;
 
 /// Use on the wrapper for an element with the a clip-path effect applied and
@@ -57,7 +57,7 @@
         'is (-1px 6px 3px).';
   }
 
-  @if not $shadow-color or not $shadow-vals or is-truthy($turn-off) {
+  @if not $shadow-color or not $shadow-vals or is-true($turn-off) {
     filter: none;
   } @else {
     filter: drop-shadow($shadow-vals $shadow-color);

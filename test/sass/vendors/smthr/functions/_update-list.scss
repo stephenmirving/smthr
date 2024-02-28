@@ -1,7 +1,7 @@
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
-@use 'is-truthy' as *;
+@use 'is-true' as *;
 @use 'purge-list' as *;
 @use 'to-list' as *;
 
@@ -14,7 +14,7 @@
 ///
 /// @return {List} The new, updated list.
 ///
-/// @require {function} is-truthy
+/// @require {function} is-true
 /// @require {function} purge-list
 /// @require {function} to-list
 @function update-list($list, $old-value, $new-value) {
@@ -30,7 +30,7 @@
     }
   }
 
-  $list: if(is-truthy($new-value), $list, purge-list($list));
+  $list: if(is-true($new-value), $list, purge-list($list));
 
   @return to-list($list);
 }

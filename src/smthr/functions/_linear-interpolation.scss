@@ -3,7 +3,7 @@
 @use 'sass:math';
 @use 'conv-to-rem' as *;
 @use 'is-map' as *;
-@use 'is-truthy' as *;
+@use 'is-true' as *;
 @use 'to-fixed' as *;
 
 /// Calculate the definition of a line between two points. This is very useful
@@ -79,8 +79,8 @@
   }
 
   // Return the CSS calc() function equation for the linear interpolation.
-  // If $conv-to-rem is truthy, y-intercept will be converted to a rem value
-  @if is-truthy($conv-to-rem) {
+  // If $conv-to-rem is true, y-intercept will be converted to a rem value
+  @if is-true($conv-to-rem) {
     @return calc(to-fixed($slope * 100vw, 8) #{$operator} to-fixed(conv-to-rem($y-intercept), 5));
   }
 

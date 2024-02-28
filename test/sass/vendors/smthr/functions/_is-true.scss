@@ -1,0 +1,13 @@
+/// Returns the whether `$value` is "true", rather than just having "truthiness".
+///
+/// In Sass, empty strings and empty lists are all "truthy" and sometimes you
+/// may want to check if something is true in the more traditional sense.
+///
+/// @access public
+///
+/// @param {*} $value - A value to check.
+///
+/// @return {Bool} Returns `true` if `$value` is true (not just having truthiness).
+@function is-true($value) {
+  @return $value and $value != '' and $value != () and $value != (());
+}

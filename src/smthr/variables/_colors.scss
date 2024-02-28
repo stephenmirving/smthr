@@ -36,12 +36,12 @@
 /// @prop {string} 'alert' - The alert color, used to indicate errors or
 /// critical issues.
 $color-palette: (
-  'primary': #1779ba,
-  'secondary': #767676,
-  'accent': #0d004b,
-  'success': #3adb76,
-  'warning': #fb0,
-  'alert': #f00,
+  'primary': hsl(203.93 77.99% 40.98%),
+  'secondary': hsl(0 0% 46.27%),
+  'accent': hsl(250.4 100% 14.71%),
+  'success': hsl(142.36 69.1% 54.31%),
+  'warning': hsl(44 100% 50%),
+  'alert': hsl(0 100% 50%),
 ) !default;
 
 /// Color used for black UI items.

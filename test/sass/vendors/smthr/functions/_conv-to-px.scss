@@ -3,20 +3,34 @@
 @use 'sass:meta';
 @use 'sass:list';
 @use 'strip-unit' as *;
+@use 'is-number' as *;
+@use 'update-list' as *;
 @use '../variables' as *;
 
-/// Converts a REM value into pixel units.
+/// Converts `rem` value(s) into pixel units. Can be a single value of a List of
+/// values. Unitless values are assumed to be in `rem` units.
+///
 /// @access public
 ///
-/// @param {Number} $rems - Values in rem's.
+/// @param {List | Number} $rems - Values in `rem` units.
 /// @param {Number} $base - The base font-size.
-/// @return {Number} The values in pixels (px).
+///
+/// @return {List | Number} The value(s) in pixels `px`.
 @function conv-to-px($rems, $base: null) {
   $px-vals: ();
 
-  @if meta.type-of($rems) != 'number' or math.unit($rems) != 'rem' {
-    @error 'Invalid $rems value of [ #{meta.inspect($rems)} ] passed to the ' +
-        '[ conv-to-px() ] function. You must pass a valid length in rem units.';
+  @each $value in $rems {
+    @if is-number($value) and math.is-unitless($value) {
+      $rems: update-list($rems, $value, $value * 1rem);
+
+      $value: $value * 1rem;
+    }
+
+    @if not is-number($value) or math.unit($value) != 'rem' {
+      @error 'Invalid $rems value of [ #{meta.inspect($value)} ] passed to the ' +
+          '[ conv-to-px() ] function. You must pass a valid length in rem ' +
+          'units, or a List containing only such values.';
+    }
   }
 
   // If no base is defined, defer to the $base-font-size variable. If that does
@@ -24,14 +38,14 @@
   @if not $base {
     $base: if(
       meta.variable-exists('base-font-size') or
-        meta.global-variable-exists('base-font-size'),
+      meta.global-variable-exists('base-font-size'),
       $base-font-size,
       16
     );
   }
 
-  // If the base font size is a %, then multiply it by 16px
-  // This is because 100% font size = 16px in most all browsers
+  // If the base font size is a %, then divide by 100% and multiply it by 16px
+  // This is because 100% font size = 16px by default in browsers.
   @if math.unit($base) == '%' {
     $base: math.div($base, 100%) * 16px;
   }
