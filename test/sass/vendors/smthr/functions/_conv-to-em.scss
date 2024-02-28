@@ -3,8 +3,8 @@
 @use 'is-number' as *;
 @use '../variables/misc' as *;
 
-/// Converts a pixel value into em units (based on the root font-size).
-/// Can be a single value or a list of values.
+/// Converts a pixel value into `em` units (based on the root font-size).
+/// Unitless values are assumed to be in pixels.
 ///
 /// @access public
 ///
@@ -36,12 +36,22 @@
     );
   }
 
-  @if math.is-unitless($pixels) {
-    $pixels: $pixels * 1px;
+  // If the base font size is a %, then multiply it by 16px
+  // This is because 100% font size = 16px by default
+  @if math.unit($base) == '%' {
+    $base: math.div($base, 100%) * 16px;
+  }
+
+  @if math.unit($base) == 'rem' or math.unit($base) == 'em' {
+    $base: strip-unit($base) * 16px;
   }
 
   @if math.is-unitless($base) {
     $base: $base * 1px;
+  }
+
+  @if math.is-unitless($pixels) {
+    $pixels: $pixels * 1px;
   }
 
   @return math.div($pixels, $base) * 1em;

@@ -47,7 +47,15 @@
   // If the base font size is a %, then divide by 100% and multiply it by 16px
   // This is because 100% font size = 16px by default in browsers.
   @if math.unit($base) == '%' {
-    $base: math.div($base, 100%) * 16px;
+    $base: math.div($base, 100%) * 16;
+  }
+
+  @if math.unit($base) == 'rem' or math.unit($base) == 'em' {
+    $base: strip-unit($base) * 16;
+  }
+
+  @if math.unit($base) == 'px' {
+    $base: strip-unit($base);
   }
 
   @each $val in $rems {

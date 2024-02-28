@@ -18,9 +18,9 @@
 ///
 /// @return {Calculation} A linear equation expressed as a calc() function.
 ///
-/// @example
+/// @example scss
 /// font-size: trend-line((576px: 24px, 768px: 24px, 992px: 34px))
-/// Compiles to...
+/// RETURNS:
 /// font-size: calc(2.46062992vw + 0.51083rem);
 ///
 ///

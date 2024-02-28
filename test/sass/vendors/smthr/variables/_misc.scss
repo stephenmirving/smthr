@@ -9,12 +9,11 @@
 ///
 ////
 
-/// Base font size for unit conversion. Default is 16 for 16px at 100%
-/// A common alternative is `10` for 10px/62.5%, for easier mental conversion
-/// with `rem` and and `em` units. If you are using Betterize, this value will
-/// be used to calculate the base font-size in `em` units, set on the html element.
+/// Base font size for unit conversion. Default is 16 for 16px/100%/1em/1rem.
+/// This value is used in the `conv-to-rem()`, `conv-to-px()` and `conv-to-em()`
+/// functions. If you are using Betterize too, this value will be used to
+/// calculate the base font-size in `em` units, set on the html element.
 /// @type Number
-/// @todo Change this to match your root font-size
 $base-font-size: 16 !default;
 
 /// Base path for assets (fonts, images, etc.), do not use a trailing slash.
