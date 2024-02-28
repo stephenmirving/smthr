@@ -6,14 +6,14 @@
 /// get even more responsive, pass clamp(), calc(), min(), and max() functions
 /// for these values.
 ///
-/// @access public
-///
 /// @param {Number} $min - The minimum height. Should be an absolute length value
 /// or a function that resolves to one.
 /// @param {Number} $rel - The relative length height of the element. Use units
 /// like vh, %, em, etc. or a function using relative units.
 /// @param {Number} $max - The maximum height. Should be an absolute length value
 /// or a function that resolves to one.
+///
+/// @group Utilities
 @mixin clamp-height($min, $rel, $max) {
   height: $rel;
   min-height: $min;

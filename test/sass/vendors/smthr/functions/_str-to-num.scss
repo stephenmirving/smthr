@@ -119,7 +119,9 @@
   @return str-to-num($string);
 }
 
-/// Used by the str-to-num function as a helper for converting numbers with units.
+/// Used by the `str-to-num` function as a helper for converting numbers with
+/// units.
+///
 /// @access private
 ///
 /// @param {String} $value - The number part of the conversion.

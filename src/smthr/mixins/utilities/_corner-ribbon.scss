@@ -4,8 +4,11 @@
 /// element. The parent element should have position: relative; appllied or
 /// otherwise be positioned in a separate stacking context.
 ///
-/// @example html - <div class="parent"><span class="ribbon">FREE</span></div>
-/// scss - .ribbon { @include corner-ribbon; }
+/// @example
+/// <div class="parent"><span class="ribbon">FREE</span></div>
+/// .ribbon { @include corner-ribbon; }
+///
+/// @group Utilities
 @mixin corner-ribbon($padding-x: 2em) {
   position: absolute;
   top: 0;
