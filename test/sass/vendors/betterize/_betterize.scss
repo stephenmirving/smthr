@@ -79,18 +79,6 @@ html {
   text-decoration: inherit;
 }
 
-::-moz-selection {
-  background: rgb(52 81 113);
-  color: #fff;
-  text-shadow: none;
-}
-
-::selection {
-  background: smth.$color-selection-highlight;
-  color: smth.$color-selection-text;
-  text-shadow: none;
-}
-
 :focus {
   outline: 0;
 }
@@ -103,6 +91,18 @@ html {
 :-moz-focusring {
   outline: 2px solid #000;
   outline-offset: 4px;
+}
+
+::-moz-selection {
+  background: smth.$color-selection-highlight;
+  color: smth.$color-selection-text;
+  text-shadow: none;
+}
+
+::selection {
+  background: smth.$color-selection-highlight;
+  color: smth.$color-selection-text;
+  text-shadow: none;
 }
 
 body {
@@ -159,12 +159,11 @@ h4,
 h5,
 h6,
 blockquote {
-  white-space: unset;
   text-wrap: balance;
 }
 
 p {
-  max-width: 98ch;
+  max-inline-size: 95ch;
   text-wrap: pretty;
 }
 
