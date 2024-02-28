@@ -6,7 +6,6 @@
 /// Takes a potential alias for a keyword value and returns the corresponding
 /// keyword based on an alias resolution map.
 ///
-/// @param {String} $keyword - The name of the keyword.
 /// @param {String} $alias - The shortcut or alias used for the keyword.
 /// @param {Map} $alias-map [smth.$direction-resolution-map] - The map of
 /// keywords as keys with lists of their aliases as values.
