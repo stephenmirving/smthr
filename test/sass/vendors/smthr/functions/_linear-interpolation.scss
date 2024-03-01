@@ -18,8 +18,14 @@
 ///
 /// @return {Calculation} A linear equation expressed as a calc() function
 ///
-/// @example scss font-size: linear-interpolation((320px: 16px, 768px: 20px));
-/// RETURNS: font-size: calc(0.89285714vw + 0.82143rem)
+/// @example scss
+/// .element {
+///   font-size: linear-interpolation((320px: 16px, 768px: 20px));
+/// }
+/// // RETURNS:
+/// .element {
+///   font-size: linear-interpolation((320px: 16px, 768px: 20px));
+/// }
 ///
 /// @throw Invalid data type for `$map` parameter.
 /// @throw The $map parameter must have exactly 2 key:value pairs.

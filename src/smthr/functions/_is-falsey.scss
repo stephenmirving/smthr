@@ -1,0 +1,25 @@
+@use 'sass:string';
+
+/// Returns whether `$value` is "falsey" in a broader sense than by using
+/// the `not` keyword. Doing a conditional like `@if not $var { ... }` will only
+/// test as true for `false` and `null` values. By using this function like
+/// `@if is-falsey($var) { ... }`, it will test true for `false` and `null`
+/// values, but also for empty strings, empty lists, empty maps, and the
+/// unquoted string value of `'false'`.
+///
+/// is the opposite of the is-true function.
+///
+/// In Sass, empty strings and empty lists are all "truthy" and sometimes you
+/// may want to check if something is false in the more traditional sense.
+///
+/// @access public
+///
+/// @param {*} $value - A value to check.
+///
+/// @return {Bool} Returns `true` if `$value` is falsey (not just `null` or
+/// `false`).
+@function is-falsey($value) {
+  @return not $value or $value == '' or $value == () or $value == (()) or
+    or $value == ('':'') or $value == ('':()) or $value == ('':(())) or
+    $value == ('':null) or $value == string.unquote('false');
+}

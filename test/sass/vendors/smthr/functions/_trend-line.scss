@@ -19,9 +19,14 @@
 /// @return {Calculation} A linear equation expressed as a calc() function.
 ///
 /// @example scss
-/// font-size: trend-line((576px: 24px, 768px: 24px, 992px: 34px))
-/// RETURNS:
-/// font-size: calc(2.46062992vw + 0.51083rem);
+/// .element {
+///   font-size: trend-line((576px: 24px, 768px: 24px, 992px: 34px));
+/// }
+/// // RETURNS:
+/// .element {
+///   font-size: font-size: calc(2.46062992vw + 0.51083rem);
+/// }
+///
 ///
 ///
 /// @throw Invalid data type for `$map` parameter.

@@ -7,7 +7,7 @@
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 
-/// Animates text by tracking it out of view
+/// Animates text by tracking it out of view.
 ///
 /// @param {Bool | String} $expand-contract ['contract'] - Determines whether
 /// the text will, `expand` (`true`) or `contract` (`false`) as it animates.
@@ -35,6 +35,9 @@
 ///
 /// @group Animations
 /// @require {function} is-alias
+/// @require {function} is-global-value
+/// @require {function} is-number
+/// @require {function} is-string
 ///
 /// @throw Invalid $expand-contract value.
 /// @throw Invalid data type for $animate-in-place.

@@ -1,13 +1,20 @@
-/// Returns the whether `$value` is "true", rather than just having "truthiness".
+@use 'sass:string';
+
+/// Returns the whether `$value` is "true", in a more limited sense than the
+/// Sass definition of having "truthiness"
 ///
-/// In Sass, empty strings and empty lists are all "truthy" and sometimes you
-/// may want to check if something is true in the more traditional sense.
+/// In Sass, all values other than `false` and `null` are considered truthy.
+/// Empty strings, empty lists, and empty maps are all "truthy" and sometimes
+/// you may want to check if something is strictly true while excluding such
+/// values.
 ///
 /// @access public
 ///
 /// @param {*} $value - A value to check.
 ///
-/// @return {Bool} Returns `true` if `$value` is true (not just having truthiness).
+/// @return {Bool} Returns `true` if `$value` is true (not just having
+/// truthiness).
 @function is-true($value) {
-  @return $value and $value != '' and $value != () and $value != (());
+  @return $value and $value != '' and $value != () and $value != (()) and
+  $value != ('':'') and $value != ('':(())) and $value != ('':null);
 }

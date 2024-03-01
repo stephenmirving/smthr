@@ -65,7 +65,7 @@
       }
     ],
     "custom-property-no-missing-var-function": true,
-    "custom-property-pattern": "^smth-[a-z]+[a-z0-9-]*[a-z0-9]+$",
+    "custom-property-pattern": "^[a-z0-9]+(?:-{1,2}(?!-)[a-z0-9]+)*(?:(?:-{1,2})[1-9]\\d*)?(?:-{1,2}(?!-)[a-z0-9]+)*(?:(?:-{1,2})[1-9]\\d*)?$",
     "declaration-block-no-duplicate-properties": [
       true,
       {
