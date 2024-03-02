@@ -1,5 +1,6 @@
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/is-falsey';
 
 /// Adds a colored text outline to a font.
 ///
@@ -8,24 +9,16 @@
 /// should almost always be avoided.
 ///
 /// @group Utilities
+/// @require {function} is-falsey
 @mixin text-outline($color: hsl(0 0% 39.2%), $is-important: false) {
   @if meta.type-of($is-important) == 'string' {
     $is-important: string.to-lower-case($is-important);
   }
 
-  @if $is-important or
-    $is-important ==
-    't' or
-    $is-important ==
-    'imp' or
-    $is-important ==
-    'important' or
-    $is-important ==
-    '!important'
-  {
-    $is-important: !important;
-  } @else {
+  @if is-falsey($is-important) {
     $is-important: null;
+  } @else {
+    $is-important: !important;
   }
 
   text-shadow:

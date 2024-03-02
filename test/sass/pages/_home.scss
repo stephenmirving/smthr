@@ -5,212 +5,218 @@
 @use 'sass:string';
 @use '../vendors/smthr/smth' as *;
 
-.container {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  height: 100dvh;
-}
+// .container {
+//   display: grid;
+//   place-items: center;
+//   width: 100%;
+//   height: 100dvh;
+// }
 
-.controls-wrapper {
-  position: absolute;
-  top: 2%;
-  z-index: 9999;
-}
+// .controls-wrapper {
+//   position: absolute;
+//   top: 2%;
+//   z-index: 9999;
+// }
 
-.stage-title {
-  @include font(3rem, 700, normal, $family: font-stack('system'));
-  @include text-tracking-in('contract', true, null, 1.4s, 0.2s);
+// .stage-title {
+//   @include font(3rem, 700, normal, $family: font-stack('system'));
+//   @include text-tracking-in('contract', true, null, 1.4s, 0.2s);
 
-  position: absolute;
-  top: 10%;
-  color: $white;
+//   position: absolute;
+//   top: 10%;
+//   color: $white;
 
-  &:hover {
-    @include wobbliness(top);
-  }
-}
+//   &:hover {
+//     @include wobbliness(top);
+//   }
+// }
 
-.stage {
-  @include animation-stage(500px, 50% 45%, 80%, 900, 80vh);
-  @include gradient(conv-color(rgba(#80f, 0.3), hsl), rgba(blue, 0.5), 135deg);
-  @include flex-center($flex-dir: 'column');
+// .stage {
+//   @include animation-stage(500px, 50% 45%, 80%, 900, 80vh);
+//   @include gradient(conv-color(rgba(#80f, 0.3), hsl), rgba(blue, 0.5), 135deg);
+//   @include flex-center($flex-dir: 'column');
 
-  border: 4px solid #000;
-  margin: 0 auto;
-}
+//   border: 4px solid #000;
+//   margin: 0 auto;
+// }
 
-.card {
-  // @include roll(in, left, 0.7s, $iterations: 1);
-  @include clamp-width(11rem, 35%, 22rem);
-  @include clamp-height(5.5rem, 40%, 22rem);
-  @include depth-level(3);
+// .card {
+//   // @include roll(in, left, 0.7s, $iterations: 1);
+//   @include clamp-width(11rem, 35%, 22rem);
+//   @include clamp-height(5.5rem, 40%, 22rem);
+//   @include depth-level(3);
 
-  // @include shape-shadow;
+//   // @include shape-shadow;
 
-  @include font(
-    4rem,
-    900,
-    normal,
-    small-caps,
-    1.5,
-    font-stack('system'),
-    semi-expanded,
-    1.5px
-  );
+//   @include font(
+//     4rem,
+//     900,
+//     normal,
+//     small-caps,
+//     1.5,
+//     font-stack('system'),
+//     semi-expanded,
+//     1.5px
+//   );
 
-  position: relative;
-  border: 8px solid conv-color(#08f, 'hsl');
-  border-radius: 12px;
-  background: conv-color(#08f, 'hsl') padding-box;
-  font-variant-caps: all-small-caps;
-  text-align: center;
-  transition-property: transform, box-shadow, border-color, background-color;
-  transition-duration: 200ms;
-  transition-timing-function: ease-out;
+//   position: relative;
+//   border: 8px solid conv-color(#08f, 'hsl');
+//   border-radius: 12px;
+//   background: conv-color(#08f, 'hsl') padding-box;
+//   font-variant-caps: all-small-caps;
+//   text-align: center;
+//   transition-property: transform, box-shadow, border-color, background-color;
+//   transition-duration: 200ms;
+//   transition-timing-function: ease-out;
 
-  &:hover {
-    @include depth-level(5, #fff);
+//   &:hover {
+//     @include depth-level(5, #fff);
 
-    // @include shape-shadow;
-    // @include roll('out', 'right');
+//     // @include shape-shadow;
+//     // @include roll('out', 'right');
 
-    border-color: tint(rgba(#08f, 0.8), 10%);
-    transform: translateY(-1.06%) scale(1.021212);
-  }
+//     border-color: tint(rgba(#08f, 0.8), 10%);
+//     transform: translateY(-1.06%) scale(1.021212);
+//   }
 
-  &:active {
-    @include depth-level(0);
-    @include shape-shadow($turn-off: true);
+//   &:active {
+//     @include depth-level(0);
+//     @include shape-shadow($turn-off: true);
 
-    border-color: shade(rgba(#08f, 0.8), 10%);
-    transform: none;
-  }
-}
+//     border-color: shade(rgba(#08f, 0.8), 10%);
+//     transform: none;
+//   }
+// }
 
-.front {
-  @include animation-front-face;
-  @include flex-center;
+// .front {
+//   @include animation-front-face;
+//   @include flex-center;
 
-  border: 8px solid conv-color(#08f, 'hsl');
-  border-radius: 12px;
-  background: conv-color(#2dccb8, hwb) padding-box;
-  text-align: center;
-}
+//   border: 8px solid conv-color(#08f, 'hsl');
+//   border-radius: 12px;
+//   background: conv-color(#2dccb8, hwb) padding-box;
+//   text-align: center;
+// }
 
-$flip-axis: 'diagonal';
+// $flip-axis: 'diagonal';
 
-.back {
-  @include animation-back-face($flip-axis);
-  @include flex-center;
+// .back {
+//   @include animation-back-face($flip-axis);
+//   @include flex-center;
 
-  border: 8px solid conv-color(#08f, 'hsl');
-  border-radius: 12px;
-  background: conv-color($off-black, 'hsl') padding-box;
-  color: #fff;
-  text-align: center;
-}
+//   border: 8px solid conv-color(#08f, 'hsl');
+//   border-radius: 12px;
+//   background: conv-color($off-black, 'hsl') padding-box;
+//   color: #fff;
+//   text-align: center;
+// }
 
-.active-anim-flip {
-  @include flip(forwards, $flip-axis, 0.6s, $anim-dir: alternate);
-
-
-  // @include flip-scale-2(
-  //   top,
-  //   0.6s,
-  //   $anim-dir: alternate,
-  //   $timing-func: linear
-  // );
-}
-
-.active-anim-flip-rev {
-  @include flip(
-    forwards,
-    $flip-axis,
-    0.6s,
-    $anim-dir: alternate-reverse,
-    $anim-num: 2
-  );
+// .active-anim-flip {
+//   @include flip(forwards, $flip-axis, 0.6s, $anim-dir: alternate);
 
 
-  // @include flip-scale-2(
-  //   top,
-  //   0.6s,
-  //   $anim-dir: alternate-reverse,
-  //   $timing-func: linear,
-  //   $anim-num: 2
-  // );
-}
+//   // @include flip-scale-2(
+//   //   top,
+//   //   0.6s,
+//   //   $anim-dir: alternate,
+//   //   $timing-func: linear
+//   // );
+// }
 
-.active-anim-flip-scale {
-    @include flip-scale(
-    top,
-    $flip-axis,
-    0.6s,
-    $anim-dir: alternate-reverse,
-    $anim-num: 2
-  );
-}
+// .active-anim-flip-rev {
+//   @include flip(
+//     forwards,
+//     $flip-axis,
+//     0.6s,
+//     $anim-dir: alternate-reverse,
+//     $anim-num: 2
+//   );
 
-.activate-anim-shrink {
-  @include flip-scale(bottom, $flip-axis, 0.6s, $anim-dir: alternate);
-}
 
-.btn {
-  @include reset;
-  @include button-base(
-    rgba(#08f, 1),
-    #fff,
-    6px ridge rgba(#80f, 0.8),
-    16px,
-    0 1rem,
-    0.875rem 1.75rem,
-    system-ui,
-    1.5rem
-  );
-  @include depth-level(2, #80f);
+//   // @include flip-scale-2(
+//   //   top,
+//   //   0.6s,
+//   //   $anim-dir: alternate-reverse,
+//   //   $timing-func: linear,
+//   //   $anim-num: 2
+//   // );
+// }
 
-  transition-property: transform, box-shadow, border-color, background-color,
-    color;
-  transition-duration: 0.1s;
-  transition-timing-function: ease-out;
+// .active-anim-flip-scale {
+//     @include flip-scale(
+//     top,
+//     $flip-axis,
+//     0.6s,
+//     $anim-dir: alternate-reverse,
+//     $anim-num: 2
+//   );
+// }
 
-  &:hover {
-    @include depth-level(4, #80f);
+// .activate-anim-shrink {
+//   @include flip-scale(bottom, $flip-axis, 0.6s, $anim-dir: alternate);
+// }
 
-    border-color: tint(rgba(#80f, 0.8), 10%);
-    background-color: tint(rgba(#08f, 1), 10%);
-    transform: translateY(-2px) scale(1.005);
-  }
+// .btn {
+//   @include reset;
+//   @include button-base(
+//     rgba(#08f, 1),
+//     #fff,
+//     6px ridge rgba(#80f, 0.8),
+//     16px,
+//     0 1rem,
+//     0.875rem 1.75rem,
+//     system-ui,
+//     1.5rem
+//   );
+//   @include depth-level(2, #80f);
 
-  &:active {
-    @include depth-level(0);
+//   transition-property: transform, box-shadow, border-color, background-color,
+//     color;
+//   transition-duration: 0.1s;
+//   transition-timing-function: ease-out;
 
-    border-color: shade(rgba(#80f, 0.8), 10%);
-    background-color: shade(rgba(#08f, 1), 10%);
-    transform: none;
-  }
-}
+//   &:hover {
+//     @include depth-level(4, #80f);
 
-.ribbon {
-  @include corner-ribbon;
+//     border-color: tint(rgba(#80f, 0.8), 10%);
+//     background-color: tint(rgba(#08f, 1), 10%);
+//     transform: translateY(-2px) scale(1.005);
+//   }
 
-  @include font(
-    1.5rem,
-    700,
-    normal,
-    $height: 1,
-    $family: (system-ui, sans-serif)
-  );
+//   &:active {
+//     @include depth-level(0);
 
-  color: #fff;
+//     border-color: shade(rgba(#80f, 0.8), 10%);
+//     background-color: shade(rgba(#08f, 1), 10%);
+//     transform: none;
+//   }
+// }
 
-  &:hover {
-    @include text-glitch(
-      3s,
-      $iterations: infinite,
-      $anim-dir: alternate-reverse,
-      $use-margin: true
-    );
-  }
+// .ribbon {
+//   @include corner-ribbon;
+
+//   @include font(
+//     1.5rem,
+//     700,
+//     normal,
+//     $height: 1,
+//     $family: (system-ui, sans-serif)
+//   );
+
+//   color: #fff;
+
+//   &:hover {
+//     @include text-glitch(
+//       3s,
+//       $iterations: infinite,
+//       $anim-dir: alternate-reverse,
+//       $use-margin: true
+//     );
+//   }
+// }
+
+.element {
+  @include text-outline(#000, true);
+  /* */
+  content: is-falsey(null);
 }

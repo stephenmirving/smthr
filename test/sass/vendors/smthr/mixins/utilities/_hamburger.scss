@@ -2,7 +2,6 @@
 @use 'sass:math';
 @use '../../functions/tint' as *;
 @use '../../functions/to-fixed' as *;
-@use '../../variables' as *;
 
 /// Creates a menu icon 'hamburger' with a set width, height, number of bars,
 /// and colors. The mixin uses the height of the icon and the weight of the bars
@@ -19,7 +18,9 @@
 /// @param {List} $transition: - The transition property you want to apply to
 /// the hover and active states of the hamburger button.
 ///
-/// @group Shapes
+/// @group Utilities
+/// @require {function} tint
+/// @require {function} to-fixed
 @mixin hamburger(
   $color: #112,
   $color-hover: tint($color, 20%),

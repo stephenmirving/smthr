@@ -9,6 +9,7 @@
 /// @param {Number} $height [$size] The height of the frame.
 ///
 /// @group Shapes
+///
 /// @throw Invalid $direction value
 @mixin frame($size: 15rem, $bg: #61300d, $height: $size) {
   clip-path: polygon(

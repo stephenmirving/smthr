@@ -20,10 +20,11 @@
 /// @access public
 /// @group Utilities
 @function is-falsey($value) {
-  @return not $value or $value == '' or $value == () or $value == (()) or
-      $value == [] or $value == [()] or value == ([]) or $value == [[]]
-      $value == ('':'') or $value == ('':()) or $value == ('':(())) or
-      $value == ('':[]) or $value == ('':[()]) or $value == ('':([])) or
-      $value == ('':[[]]) or $value == ('':null) or
-      $value == string.unquote('false');
+  @return (
+      $value == '' or $value == () or $value == (()) or $value == [] or
+      $value == [()] or $value == ([]) or $value == [[]] or $value == ('':'') or
+      $value == ('':()) or $value == ('':(())) or $value == ('':[]) or
+      $value == ('':[()]) or $value == ('':([])) or $value == ('':[[]]) or
+      $value == ('':null) or $value == string.unquote('false') or not $value
+  );
 }

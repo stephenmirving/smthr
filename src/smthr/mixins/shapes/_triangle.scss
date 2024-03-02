@@ -13,6 +13,9 @@
 /// @param {Color} $color [#80f] - The color of the triangle.
 ///
 /// @group Shapes
+/// @require {function} is-alias
+/// @require {function} is-string
+///
 /// @throw Invalid $direction value
 @mixin triangle($direction: bottom, $size: 9px, $color: #80f) {
   @if is-string($direction) {

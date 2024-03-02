@@ -11,6 +11,7 @@
 /// that creates the infinity shape. Can be altered to mutate the shape.
 ///
 /// @group Shapes
+/// @require {function} to-fixed
 @mixin infinity-symbol($size: 130px, $symbol-color: #000, $rad-val: 50px) {
   $component-size: to-fixed($size * 0.4615389, 2);
 

@@ -3,6 +3,7 @@ TODO:
   TESTING:
     ☐ Test and fix functions and mixins
       ☐ Function testing
+        ☐ Test is-falsey and is-true
         ☐ Work on rainbow-shadow function
         ☐ Change is-truthy back to is-true then examine all uses of it.
         ☐ Update all size conversion functions to take $base-font-size with units

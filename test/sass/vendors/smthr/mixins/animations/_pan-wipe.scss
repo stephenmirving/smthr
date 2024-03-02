@@ -39,7 +39,10 @@
 ///
 /// @group Animations
 /// @require {function} is-alias
+/// @require {function} is-global-value
 /// @require {function} is-length
+/// @require {function} is-number
+/// @require {function} is-string
 ///
 /// @throw Invalid $direction type
 /// @throw Invalid $direction value

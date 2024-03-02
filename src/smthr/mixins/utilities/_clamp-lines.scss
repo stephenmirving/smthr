@@ -25,6 +25,7 @@
 /// @param {Number} $lines - Clamp the text to this number of lines.
 ///
 /// @group Utilities
+/// @require {function} is-integer
 ///
 /// @throw Invalid data type for $lines. Value must be an integer.
 ///

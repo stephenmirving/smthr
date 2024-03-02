@@ -3,7 +3,6 @@
 @use '../../functions/is-color' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/is-true' as *;
-@use '../../variables/misc' as *;
 
 /// Use on the wrapper for an element with the a clip-path effect applied and
 /// it will add a drop shadow to the clipped shape.
@@ -12,9 +11,13 @@
 /// will be passed to the filter property's drop-shadow function.
 /// @param {List} $shadow-vals [-1px 6px 3px] - The values passed before the
 /// color in the drop-shadow function that is used with the `filter` property.
-/// @param {Bool} $turn-off [false]
+/// @param {Bool} $turn-off [false] - Pass true to turn off the drop-shadow
+/// effect with `filter: none`.
 ///
 /// @group Shapes
+/// @require {function} is-color
+/// @require {function} is-string
+/// @require {function} is-true
 ///
 /// @throw Invalid color value for $shadow-color
 /// @throw Invalid data type for $shadow-vals
@@ -44,8 +47,9 @@
         )
     )
   {
-    @error 'Invalid $shadow-color value of `#{$shadow-color}` passed to the ' +
-        '[ shape-shadow() ] mixin. You must pass a color for this parameter.';
+    @error 'Invalid $shadow-color value of #{meta.inspect($shadow-color)} ' +
+        'passed to the [ shape-shadow() ] mixin. You must pass a color for ' +
+        'this parameter.';
   }
 
   @if not is-list($shadow-vals) or list.length($shadow-vals) > 3 {

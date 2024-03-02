@@ -2,11 +2,11 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:math';
-@use '../utilities/only-moz' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/is-global-value' as *;
+@use '../utilities/only-moz' as *;
 
 /// Generates an animation that flips an element over. The element this mixin is
 /// applied to must have a front-face and a back-face child element. It is
@@ -42,8 +42,11 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {mixin} only-moz
 /// @require {function} is-alias
+/// @require {function} is-global-value
+/// @require {function} is-number
+/// @require {function} is-string
+/// @require {mixin} only-moz
 /// @require {variable} $map-alias-resolutions
 ///
 /// @throw Invalid $direction value

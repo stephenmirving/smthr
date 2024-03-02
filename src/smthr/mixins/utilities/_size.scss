@@ -1,6 +1,5 @@
 @use 'sass:meta';
 @use 'sass:math';
-@use '../../functions/is-length' as *;
 
 /// Helper utility to set both height and weight at the same time. Pass a single
 /// value to set both height and width to the same size.
@@ -21,11 +20,11 @@
   }
 
   @if meta.type-of($width) == 'number' and math.is-unitless($width) {
-    $width: #{$width}rem;
+    $width: $width * 1rem;
   }
 
   @if meta.type-of($height) == 'number' and math.is-unitless($height) {
-    $height: #{$height}rem;
+    $height: $height * 1rem;
   }
 
   width: $width;

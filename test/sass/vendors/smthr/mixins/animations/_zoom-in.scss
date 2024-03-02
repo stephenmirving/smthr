@@ -21,6 +21,8 @@
 ///
 /// @group Animations
 /// @require {function} is-alias
+/// @require {function} is-number
+/// @require {function} is-string
 ///
 /// @throw Invalid keyword for $direction.
 /// @throw Invalid data type for $duration.

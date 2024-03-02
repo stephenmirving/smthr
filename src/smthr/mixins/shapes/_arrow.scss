@@ -15,6 +15,9 @@
 /// @param {Number} $height [$size] - The height of the arrow.
 ///
 /// @group Shapes
+/// @require {function} is-alias
+/// @require {function} is-angle
+/// @require {function} is-string
 ///
 /// @throw Invalid $direction value.
 @mixin arrow($direction: 'right', $size: null, $bg: #80f, $height: $size) {

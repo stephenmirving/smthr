@@ -36,6 +36,8 @@
 ///
 /// @group Animations
 /// @require {function} is-alias
+/// @require {function} is-number
+/// @require {function} is-string
 ///
 /// @throw Not enough colors listed in $colors.
 /// @throw Invalid $bg-or-fg value.

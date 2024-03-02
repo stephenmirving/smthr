@@ -1,7 +1,6 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
-@use '../../functions/is-length' as *;
 @use '../../functions/is-string' as *;
 
 /// Uses clip path to change an element to the shape of a pentagonal arrow point.
@@ -14,6 +13,8 @@
 /// @param {Number} $height [$size] The height of the arrow.
 ///
 /// @group Shapes
+/// @require {function} is-alias
+/// @require {function} is-string
 ///
 /// @throw Invalid $direction data type.
 /// @throw Invalid $direction keyword value.

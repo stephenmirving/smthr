@@ -20,6 +20,13 @@
 /// @param {Number} $end-percent [100%] - Ending percentage of the gradient.
 ///
 /// @group Utilities
+/// @require {function} is-alias
+/// @require {function} is-angle
+/// @require {function} is-string
+/// @require {function} is-list
+/// @require {function} is-number
+/// @require {function} list-to-string
+///
 /// @throw Invalid $orientation value
 /// @throw Invalid $start-percent data type
 /// @throw Invalid $start-percent unit type
@@ -27,7 +34,6 @@
 /// @throw Invalid $end-percent unit type
 /// @throw Value of $start-percent out of range
 /// @throw Value of $end-percent out of range
-/// @require {function} list-to-string
 @mixin gradient(
   $start-color,
   $end-color,

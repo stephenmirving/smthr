@@ -9,6 +9,7 @@
 /// @param {Color} $color [hsl(0 0% 0 / 0.4)] - The color of the shadow.
 ///
 /// @group Utilities
+/// @require {function} is-alias
 @mixin text-shadow($x: 2px, $y: 2px, $blur: 5px, $color: hsla(0, 0%, 0%, 0.4)) {
   $x: if((math.is-unitless($x)), $x * 1px, $x);
   $y: if((math.is-unitless($y)), $y * 1px, $y);

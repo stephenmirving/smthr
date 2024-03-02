@@ -22,6 +22,10 @@
 ///
 /// @group Animations
 /// @require {function} is-alias
+/// @require {function} is-color
+/// @require {function} is-global-value
+/// @require {function} is-number
+/// @require {function} is-string
 ///
 /// @throw Invalid $direction value
 /// @throw Invalid $duration value

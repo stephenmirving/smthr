@@ -31,6 +31,9 @@
 ///
 /// @group Animations
 /// @require {function} is-alias
+/// @require {function} is-global-value
+/// @require {function} is-number
+/// @require {function} is-string
 ///
 /// @throw Invalid $in-or-out value
 /// @throw Invalid $direction value

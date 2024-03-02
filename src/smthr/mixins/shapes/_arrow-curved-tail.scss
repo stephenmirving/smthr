@@ -1,10 +1,10 @@
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/conv-angle' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-angle' as *;
-@use '../../functions/is-string' as *;
 @use '../../functions/is-number' as *;
-@use '../../functions/conv-angle' as *;
+@use '../../functions/is-string' as *;
 
 /// Uses psuedo-elements and transform to turn an element into the shape of an
 /// arrow with a curved tail.
@@ -21,6 +21,8 @@
 /// @require {function} conv-angle
 /// @require {function} is-alias
 /// @require {function} is-angle
+/// @require {function} is-number
+/// @require {function} is-string
 ///
 /// @throw Invalid unit type for $direction
 /// @throw Invalid $direction keyword value

@@ -13,8 +13,9 @@
 ///
 /// @group Utilities
 ///
-/// @throw $padding-x is not a length and not a caluclation
-///
+/// @throw Error, $padding-x is not a length and not a caluclation.
+/// @throw Error, $max-width is not a length and not a calculation.
+/// @throw Warning, $max-height is not an absolute length and not a calculation.
 @mixin container($padding-x, $max-width: 1140px) {
   @if not is-length($padding-x) and not is-calculation($padding-x) {
     @error 'Invalid data type for the $padding-x parameter passed to the ' +

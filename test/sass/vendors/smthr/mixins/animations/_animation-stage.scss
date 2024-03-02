@@ -24,6 +24,9 @@
 /// @param {Number} $height [$width] - The height of the element.
 ///
 /// @group Animations
+/// @require {function} is-alias
+/// @require {function} is-global-value
+/// @require {function} is-number
 ///
 /// @throw Invalid $perspective value
 /// @throw Invalid $z-index value

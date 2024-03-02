@@ -18,6 +18,9 @@
 /// the height of the label.
 ///
 /// @group Shapes
+/// @require {function} is-alias
+/// @require {function} is-string
+/// @require {function} to-fixed
 ///
 /// @throw Invalid $direction value
 @mixin pointing-label(
