@@ -6,7 +6,7 @@
 /// $height is set explicitly, then this value sets only the width.
 /// @param {Number} $height [$size] The height of the shape.
 ///
-/// @group Utilities
+/// @group Shapes
 @mixin speech-bubble($size: 15rem, $bg: #80f, $height: $size) {
   clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 75%, 0 75%);
 
