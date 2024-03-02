@@ -484,10 +484,4 @@ svg:not([fill]) {
   animation: none !important;
 }
 
-.element {
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  /* */
-  content: true;
-}
-
 /*# sourceMappingURL=main.css.map */

@@ -214,9 +214,3 @@
 //     );
 //   }
 // }
-
-.element {
-  @include text-outline(#000, true);
-  /* */
-  content: is-falsey(null);
-}

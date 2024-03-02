@@ -16,9 +16,9 @@
 /// @access public
 /// @group Utilities
 @function is-true($value) {
-  @return $value and $value != '' and $value != () and $value != (()) and
+  @return not not ($value and $value != '' and $value != () and $value != (()) and
       $value != [] and $value != [()] and $value != ([]) and $value != [[]] and
       $value != ('':'') and $value != ('':(())) and $value != ('':[]) and
       $value != ('':([])) and $value != ('':[()]) and $value != ('':[[]]) and
-      $value != ('':null);
+      $value != ('':null));
 }

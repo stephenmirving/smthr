@@ -20,7 +20,7 @@
 /// @access public
 /// @group Utilities
 @function is-falsey($value) {
-  @return (
+  @return not not (
       $value == '' or $value == () or $value == (()) or $value == [] or
       $value == [()] or $value == ([]) or $value == [[]] or $value == ('':'') or
       $value == ('':()) or $value == ('':(())) or $value == ('':[]) or
