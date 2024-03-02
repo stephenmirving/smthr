@@ -2,16 +2,18 @@
 @use 'sass:math';
 
 /// Checks if a value is a percentage.
-/// @access public
 ///
 /// @param {*} $value - A value to be checked.
+///
 /// @return {Bool} True if $value is a percentage, false if it is not.
+///
+/// @access public
+/// @group Utilities
 @function is-percentage($value) {
   @return meta.type-of($value) == 'number' and math.unit($value) == '%';
 }
 
 /// Checks if a value is a percentage.
-/// @access public
 ///
 /// @param {*} $value - The value to be checked.
 /// @return {Bool} True if $value is a percentage, false if it is not.

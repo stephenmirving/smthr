@@ -12,8 +12,6 @@
 /// (in favor of `fuchsia`). Colors that were chosen over their aliases were
 /// chosen due to what Sass outputs from color module methods.
 ///
-/// @access public
-///
 /// @param {Color} $color - The CSS color name to be converted.
 /// @param {Map} $color-map [$map-color-names] - The map containing all the CSS
 /// colors and their hex values.
@@ -22,6 +20,8 @@
 /// the corresponding 3 or 6 digit hex color value. Otherwise, returns the
 /// same color.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} is-color
 /// @require {variable} $map-color-names
 ///
@@ -51,8 +51,6 @@
 /// (in favor of `fuchsia`). Colors that were chosen over their aliases were
 /// chosen due to what Sass outputs from color module methods.
 ///
-/// @access public
-///
 /// @param {Color} $color - The CSS color name to be converted.
 /// @param {Map} $color-map [$map-color-names] - The map containing all the CSS
 /// colors and their hex values.
@@ -61,6 +59,8 @@
 /// the corresponding 3 or 6 digit hex color value. Otherwise, returns the
 /// same color.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} is-color
 /// @require {variable} $map-color-names
 ///

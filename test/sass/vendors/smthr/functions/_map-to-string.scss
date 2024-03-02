@@ -9,6 +9,9 @@
 /// the key and value of each pair.
 ///
 /// @return {String} The converted string.
+///
+/// @access public
+/// @group Utilities
 @function map-to-string($map, $separator: ', ', $pair-separator: ': ') {
   $str: '';
 

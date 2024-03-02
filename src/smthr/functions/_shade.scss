@@ -4,12 +4,15 @@
 @use 'is-percentage' as *;
 
 /// Darken a color by a given percentage using the built-in color.scale() method.
-/// @access public
 ///
 /// @param {Color} $color - The color being darkened.
 /// @param {Number} $percentage - The percentage of lightness to remove from
 /// the color.
+///
 /// @return {Color} - The darkened color.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid $color type.
 /// @throw Invalid $percentage type.

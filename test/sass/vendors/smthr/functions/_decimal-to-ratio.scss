@@ -5,12 +5,13 @@
 
 /// Converts a decimal number into a ratio expressed as a space-separated list.
 ///
-/// @access public
-///
 /// @param {Number} $number - The decimal number to convert.
 /// @param {Number} $accuracy [50000] - The search limit for the denominator.
 ///
 /// @return {List} - The number converted into a ratio.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid number value.
 @function decimal-to-ratio($number, $accuracy: 50000) {

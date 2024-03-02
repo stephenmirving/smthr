@@ -84,13 +84,14 @@
 /// eries of transformations or calculations to a set of data in a single
 /// operation.
 ///
-/// @access public
-///
 /// @param {List} $functions - List of function names (as strings) to call.
 /// @param {Arglist} $args - Extra arguments to pass to each function.
 ///
 /// @return {List} The result of the arguments(s) being applied to the list of
 /// function(s).
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid function name
 @function functions-walk($functions, $args...) {

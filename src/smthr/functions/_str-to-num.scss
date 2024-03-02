@@ -11,24 +11,31 @@
 /// that will always work when things like string.unquote() or interpolation
 /// give errors.This function assumes the input string is a valid numerical
 /// value.
-/// @access public
 ///
 /// @param {String} $string - Value to be parsed.
 ///
 /// @return {Number} - The numerical representation of the input string.
 ///
+/// @access public
+/// @group Utilities
+/// @require {function} is-number
+/// @require {function} is-string
+///
+/// @throw $string is already of type Number warning.
 /// @throw $string is not a string.
-/// @throw $string is not a valid numberic.
+/// @throw $string is not a valid numeric.
 @function str-to-num($string) {
   @if is-number($string) {
     @warn 'Value of [ #{meta.inspect($string)} ] passed to the [ str-to-num() ] ' +
-        'function is already a number and does not need to be converted.';
+        'function is already a number and does not need to be converted.' +
+        'Returning input as-is.';
+
     @return $string;
   }
 
   @if not is-string($string) {
-    @error 'Ivalid input of [ #{$string} ] used in the [ str-to-num ] function. ' +
-        'This is not a string. Returning input as-is.';
+    @error 'Ivalid input of #{meta.inspect($string)} used in the ' +
+        '[ str-to-num() ] function. This is not a string.';
   }
 
   $result: 0;
@@ -47,8 +54,6 @@
     '8': 8,
     '9': 9
   );
-  // $string-whole-num: null;
-  // $string-decimal-num: null;
 
   // Loop through the string's characters, starting after the minus if it exists
   @for $i from if($is-negative, 2, 1) through string.length($string) {
@@ -78,8 +83,8 @@
   @if is-number($result) {
     @return if($is-negative, $result * -1, $result);
   } @else {
-    @error 'Failed to convert [ #{$string} ] into a number with the ' +
-        '[ str-to-num ] function. This string is not a valid numeric value.';
+    @error 'Failed to convert #{meta.inspect($string)} into a number with the ' +
+        '[ str-to-num() ] function. This string is not a valid numeric value.';
   }
 }
 
@@ -87,14 +92,19 @@
 /// that will always work when things like string.unquote() or interpolation
 /// give errors.This function assumes the input string is a valid numerical
 /// value.
-/// @access public
 ///
 /// @param {String} $string - Value to be parsed.
 ///
 /// @return {Number} - The numerical representation of the input string.
 ///
+/// @access public
+/// @group Utilities
+/// @require {function} is-number
+/// @require {function} is-string
+///
+/// @throw $string is already of type Number warning.
 /// @throw $string is not a string.
-/// @throw $string is not a valid numberic.
+/// @throw $string is not a valid numeric.
 ///
 /// @alias str-to-num
 @function string-to-number($string) {
@@ -105,14 +115,19 @@
 /// that will always work when things like string.unquote() or interpolation
 /// give errors.This function assumes the input string is a valid numerical
 /// value.
-/// @access public
 ///
 /// @param {String} $string - Value to be parsed.
 ///
 /// @return {Number} - The numerical representation of the input string.
 ///
+/// @access public
+/// @group Utilities
+/// @require {function} is-number
+/// @require {function} is-string
+///
+/// @throw $string is already of type Number warning.
 /// @throw $string is not a string.
-/// @throw $string is not a valid numberic.
+/// @throw $string is not a valid numeric.
 ///
 /// @alias str-to-num
 @function string-to-numeric($string) {
@@ -122,13 +137,13 @@
 /// Used by the `str-to-num` function as a helper for converting numbers with
 /// units.
 ///
-/// @access private
-///
 /// @param {String} $value - The number part of the conversion.
 /// @param {String} $unit - The unit in the value being coerced.
 ///
 /// @return {Number} - A number with the given unit.
 ///
+/// @access private
+/// @group Utilities
 /// @require {variable} $map-units
 @function _to-unit($value, $unit) {
   @if not list.index(map.keys($map-units), $unit) {

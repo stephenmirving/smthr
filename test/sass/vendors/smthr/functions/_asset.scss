@@ -4,12 +4,13 @@
 
 /// A simply asset file location builder.
 ///
-/// @access private
-///
 /// @param {String} $type - Asset type, matching folder name
 /// @param {String} $file - Asset file name, including extension
 ///
 /// @return {String} A file location leading to the asset.
+///
+/// @access private
+/// @group Utilities
 /// @require {variable} $asset-base-path
 @function _asset($type, $file) {
   $asset-path: if(
@@ -28,6 +29,7 @@
 /// @param {String} $file - Asset file name, including extension
 /// @return {String} A file location leading to the asset.
 ///
+/// @group Utilities
 /// @require {function} _asset
 @function image($file) {
   @return _asset('img', $file);
@@ -35,11 +37,11 @@
 
 /// Font asset helper.
 ///
-/// @access public
-///
 /// @param {String} $file - Asset file name, including extension
 /// @return {String} A file location leading to the asset.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} _asset
 @function font($file) {
   @return _asset('fonts', $file);

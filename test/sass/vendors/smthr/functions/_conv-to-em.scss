@@ -6,13 +6,13 @@
 /// Converts a pixel value into `em` units (based on the root font-size).
 /// Unitless values are assumed to be in pixels.
 ///
-/// @access public
-///
 /// @param {Number} $pixels - A value to convert to em units.
 /// @param {Number} $base [null] - The contextual base font-size.
 ///
 /// @return {Number} The value in `em` units.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} is-number
 /// @require {variable} $base-font-size
 ///

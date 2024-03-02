@@ -6,7 +6,12 @@
 /// Sass, and returns false if it is not a reserved word.
 ///
 /// @param {String} $word - The word being checked to see if it is reserved.
+///
 /// @return {Bool} Returns true if $word is reserved, otherwise returns false.
+///
+/// @access public
+/// @group Utilities
+///
 /// @throw Invalid data type for $word
 @function is-reserved($word) {
   $reserved-words: (

@@ -3,10 +3,13 @@
 @use 'sass:math';
 
 /// Checks if a value is a frequency.
-/// @access public
 ///
 /// @param {*} $value - A value to be checked.
+///
 /// @return {Bool} True if $value is a frequency, false if it is not.
+///
+/// @access public
+/// @group Utilities
 @function is-frequency($value) {
   @return (
     meta.type-of($value) == 'number' and

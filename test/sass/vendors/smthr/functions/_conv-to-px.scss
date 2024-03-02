@@ -10,12 +10,13 @@
 /// Converts `rem` value(s) into pixel units. Can be a single value of a List of
 /// values. Unitless values are assumed to be in `rem` units.
 ///
-/// @access public
-///
 /// @param {List | Number} $rems - Values in `rem` units.
 /// @param {Number} $base - The base font-size.
 ///
 /// @return {List | Number} The value(s) in pixels `px`.
+///
+/// @access public
+/// @group Utilities
 @function conv-to-px($rems, $base: null) {
   $px-vals: ();
 

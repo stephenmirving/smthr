@@ -28,14 +28,14 @@
 /// value, as it is guaranteed to work in the most places. However, all the
 /// colors returned by this function will work perfectly as CSS values.
 ///
-/// @access public
-///
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsla] - The color syntax to convert into. Can be
 /// `hex`, `rgb`, `rbga`, `hsl`, `hsla`, `hwb`, `function`, `name`, or `cmyk`.
 ///
 /// @return {Color | String} The converted color in the given syntax.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} conv-color-name
 /// @require {function} strip-unit
 /// @require {function} to-cmyk
@@ -187,14 +187,14 @@
 /// value, as it is guaranteed to work in the most places. However, all the
 /// colors returned by this function will work perfectly as CSS values.
 ///
-/// @access public
-///
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsla] - The color syntax to convert into. Can be
 /// `hex`, `rgb`, `rbga`, `hsl`, `hsla`, `hwb`, `function`, `name`, or `cmyk`.
 ///
 /// @return {Color | String} The converted color in the given syntax.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} conv-color-name
 /// @require {function} strip-unit
 /// @require {function} to-cmyk
@@ -228,14 +228,14 @@
 /// value, as it is guaranteed to work in the most places. However, all the
 /// colors returned by this function will work perfectly as CSS values.
 ///
-/// @access public
-///
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsla] - The color syntax to convert into. Can be
 /// `hex`, `rgb`, `rbga`, `hsl`, `hsla`, `hwb`, `function`, `name`, or `cmyk`.
 ///
 /// @return {Color | String} The converted color in the given syntax.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} conv-color-name
 /// @require {function} strip-unit
 /// @require {function} to-cmyk
@@ -269,14 +269,14 @@
 /// value, as it is guaranteed to work in the most places. However, all the
 /// colors returned by this function will work perfectly as CSS values.
 ///
-/// @access public
-///
 /// @param {Color} $color - The color to convert.
 /// @param {String} $syntax [hsla] - The color syntax to convert into. Can be
 /// `hex`, `rgb`, `rbga`, `hsl`, `hsla`, `hwb`, `function`, `name`, or `cmyk`.
 ///
 /// @return {Color | String} The converted color in the given syntax.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} conv-color-name
 /// @require {function} strip-unit
 /// @require {function} to-cmyk

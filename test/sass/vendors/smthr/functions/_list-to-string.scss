@@ -1,8 +1,7 @@
 @use 'sass:list';
 @use 'sass:meta';
 
-/// Iterates over a list and returns it as a converted string
-/// @access public
+/// Iterates over a list and returns it as a converted string.
 ///
 /// @param {List} $list - The list to convert into a string.
 /// @param {Bool} $extra-space [false] - Pass true to use an extra space
@@ -11,6 +10,9 @@
 /// the list elements. By default this is the separator used in $list.
 ///
 /// @return {String} The converted string.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid $list type error
 /// @throw Invalid $separator type error

@@ -4,13 +4,14 @@
 
 /// Fixes a float to a given number of decimal places.
 ///
-/// @access public
-///
 /// @param {Number} $float - The number to format.
 /// @param {Number} $digits [2] - A integer representing the number of digits
 /// to leave after the decimal.
 ///
 /// @return {Number} The fixed digit number.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid $float type.
 /// @throw $digits precision not in range

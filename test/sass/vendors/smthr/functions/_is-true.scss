@@ -8,13 +8,17 @@
 /// you may want to check if something is strictly true while excluding such
 /// values.
 ///
-/// @access public
-///
 /// @param {*} $value - A value to check.
 ///
 /// @return {Bool} Returns `true` if `$value` is true (not just having
 /// truthiness).
+///
+/// @access public
+/// @group Utilities
 @function is-true($value) {
   @return $value and $value != '' and $value != () and $value != (()) and
-  $value != ('':'') and $value != ('':(())) and $value != ('':null);
+      $value != [] and $value != [()] and value != ([]) and $value != [[]] and
+      $value != ('':'') and $value != ('':(())) and $value != ('':[]) and
+      $value != ('':([])) and $value != ('':[()]) and $value != ('':[[]]) and
+      $value != ('':null);
 }

@@ -5,13 +5,15 @@
 /// Takes a color value and returns a string representing what type of notation
 /// is used for the color.  Valid types curently include:
 /// [ 'hex', 'rgb', 'rgba', 'hsl', 'hsla' ]
-/// @access public
 ///
 /// @param {Color} $color - A color value
 ///
 /// @return {String} The type of notation used for the $color value. Can be
 /// 'hex', 'rgb', 'rgba', 'hsl', 'hsla', and any other color currently
 /// recognized as being of the 'color' type by Sass.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid $color value.
 @function get-color-type($color) {

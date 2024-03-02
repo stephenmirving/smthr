@@ -8,8 +8,6 @@
 /// Converts pixels into `rem` units. Can be a single value or a list of values.
 /// Unitless values are assumed to be in pixels.
 ///
-/// @access public
-///
 /// @param {Number | List} $values - The value(s) to convert to `rem` units.
 /// Can be a single value or a List containing `px`, `em`, `rem` and/or
 /// unitless values.
@@ -18,6 +16,8 @@
 ///
 /// @return {Number | List} The value(s) in `rem` units.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} strip-unit
 /// @require {function} is-number
 /// @require {variable} $base-font-size
@@ -78,14 +78,14 @@
 /// of unit, is assumed to be a pixel value. By default, the base pixel value
 /// used to calculate the rem value is taken from the `$base-font-size` variable.
 ///
-/// @access private
-///
 /// @param {Number} $value - Pixel value to convert.
 /// @param {Number} $base [null] - Base for pixel conversion.
 ///
 /// @return {Number} A number in rems, calculated based on the given value and
 /// the base pixel value. rem values are passed through as is.
 ///
+/// @access private
+/// @group Utilities
 /// @require {function} strip-unit
 @function _px-to-rem($value, $base: null) {
   @if not is-number($value) {

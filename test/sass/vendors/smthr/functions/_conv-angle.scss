@@ -13,8 +13,6 @@
 /// or radian (rad) units, and converts that angle into an alternate unit type
 /// defined by $convert-to.
 ///
-/// @access public
-///
 /// @param {Number | String} $angle - An angle value. Can be in turn, deg, grad,
 /// or rad units. Can also be a keyword string with one of the following values:
 /// `top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`,
@@ -24,6 +22,8 @@
 ///
 /// @return {Number} The converted angle.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} is-alias
 /// @require {function} is-angle
 /// @require {function} strip-unit

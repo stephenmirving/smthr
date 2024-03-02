@@ -11,8 +11,13 @@
 ///
 /// @return {Function} The cubic-bezier curve
 ///
-/// @example animation: fade-in 2s timing(ease-in-quad) 50ms both
+/// @example scss
+/// .element {
+///   animation: fade-in 2s timing(ease-in-quad) 50ms both
+/// }
 ///
+/// @access public
+/// @group Utilities
 /// @require {variable} $map-timing-functions
 ///
 /// @throw Invalid $func-name type.

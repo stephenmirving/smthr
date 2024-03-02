@@ -12,8 +12,6 @@
 /// comma separated list with the keyword first and then the difference
 /// in degrees between that and the given angle.
 ///
-/// @access public
-///
 /// @param {Number} $angle - An angle in any format or a unitless number
 /// which the function will assume to be in degrees.
 /// @param {Bool} $return-difference [false] - Pass true to have the function
@@ -26,10 +24,17 @@
 /// instead return a list with the keyword first and then the difference in deg
 /// between that position and the given angle.
 ///
-/// @example #{closest-position(288deg)}: 20%;
-/// Compiles to:
-/// left: 20%;
+/// @example scss
+/// .element {
+///   #{closest-position(288deg)}: 20%;
+/// }
+/// // Compiles to...
+/// .element {
+///   left: 20%;
+/// }
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} is-angle
 /// @require {function} is-number
 /// @require {function} conv-angle

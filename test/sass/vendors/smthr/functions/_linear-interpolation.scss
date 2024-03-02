@@ -9,8 +9,6 @@
 /// Calculate the definition of a line between two points. This is very useful
 /// for things like setting responsive font-sizes.
 ///
-/// @access public
-///
 /// @param {Map} $map - A map where the keys are viewport widths in pixels, and
 /// each value associated is the desired pixel size at that given view width.
 /// @param {Bool} $conv-to-rem [true] - If true, will convert the `px` value
@@ -26,6 +24,9 @@
 /// .element {
 ///   font-size: linear-interpolation((320px: 16px, 768px: 20px));
 /// }
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid data type for `$map` parameter.
 /// @throw The $map parameter must have exactly 2 key:value pairs.

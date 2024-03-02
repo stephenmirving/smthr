@@ -3,10 +3,13 @@
 @use 'sass:math';
 
 /// Checks if a value is a color.
-/// @access public
 ///
 /// @param {*} $value - A value to be checked.
+///
 /// @return {Bool} True if $value is an color, false if it is not.
+///
+/// @access public
+/// @group Utilities
 @function is-color($value) {
   @return meta.type-of($value) == 'color';
 }

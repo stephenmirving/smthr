@@ -14,6 +14,9 @@
 /// @return {Bool} Returns true if the given alias is found in the map's list
 /// for the given keyword, otherwise returns false.
 ///
+/// @access public
+/// @group Utilities
+///
 /// @throw Invalid $keyword data type
 /// @throw Invalid $alias-map data type
 @function is-alias($keyword, $alias, $alias-map: smth.$map-alias-resolutions) {
@@ -42,6 +45,9 @@
 ///
 /// @return {Bool} Returns true if the given alias is found in the map's list
 /// for the given keyword, otherwise returns false.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid $keyword data type.
 /// @throw Invalid $alias-map data type.

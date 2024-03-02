@@ -6,7 +6,6 @@
 @use 'to-list' as *;
 
 /// Replaces `$old-value` with `$new-value` in `$list`.
-/// @access public
 ///
 /// @param {List} $list - The list to update.
 /// @param {*} $old-value - The old value to replace in `$list`.
@@ -14,6 +13,8 @@
 ///
 /// @return {List} The new, updated list.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} is-true
 /// @require {function} purge-list
 /// @require {function} to-list

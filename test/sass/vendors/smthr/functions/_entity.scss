@@ -4,8 +4,6 @@
 /// Takes a character or a string representation for the name of a character
 /// and returns the CSS entity code for that character.
 ///
-/// @access public
-///
 /// @param {String} $char-name - The character (if it is available on a standard
 /// keyboard), name of the character, or an abbreviated name for the character,
 /// being converted into a CSS entity code.
@@ -17,6 +15,9 @@
 ///
 /// @example `entity('&')` and `entity('amp')` both return `'\0026'`
 /// @example entity('tm', $is-coded: false) returns `'™'`
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Value of $char-name not a valid string.
 /// @throw Value of $char-name does not correspond to an avaialable CSS entity code.

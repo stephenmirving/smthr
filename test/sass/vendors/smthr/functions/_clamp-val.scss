@@ -9,8 +9,6 @@
 /// and `max()` methods but with the more simplified clamp() syntax that is the
 /// same as in the CSS version.
 ///
-/// @access public
-///
 /// @param {Number} $min - The minimum value.
 /// @param {Number} $value - The number to clamp between $min and $max.
 /// @param {Number} $max - The maximum value.
@@ -18,6 +16,9 @@
 /// @return {Calculation} If $value is within the limits, returns the `$value`,
 /// if it is below the limit of `$min`, it will return `$min`, if it is above
 /// the limit of `$max`, it will return `$max`.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw $min value greater than $max value.
 @function clamp-val($min, $value, $max) {

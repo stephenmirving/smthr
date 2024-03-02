@@ -2,31 +2,36 @@
 @use 'sass:map';
 @use 'sass:list';
 
-/// Designed to improve on the built-in map.merge() functionality so that it
-/// is recursive and able to merge more than 2 maps at once.
+/// Designed to improve on the built-in `map.merge()` (formerly `map-merge()`
+/// functionality so that it is recursive and able to merge more than 2 maps at
+/// once.
 ///
-/// About `map-merge()`:
+/// About `map.merge()`:
 /// * only takes 2 arguments
 /// * is not recursive
 ///
-/// @param {Map} $object - first map
-/// @param {ArgList} $objects - other maps
-/// @param {Bool} $deep - recursive mode
+/// @param {Map} $object - First map
+/// @param {ArgList} $objects - Other maps
+/// @param {Bool} $deep - Optional recursive mode
 ///
 /// @return {Map} The merged map
 ///
-/// @throw Invalid $objects type.
-/// @throw Invalid $deep type.
+/// @access public
+/// @group Utilities
+///
+/// @throw Invalid $object type, not of type 'map'.
+/// @throw Invalid type in $objects, not of type 'map'
+/// @throw Invalid $deep type, not of type 'bool'
 @function extend-map($object, $objects... /*, $deep */) {
   @if meta.type-of($object) != 'map' {
     @error 'Invalid $object type passed to the [ extend-map() ] function. ' +
-        'Objects passed must be maps.';
+        'The object passed via $object passed must be a map.';
   }
 
   @each $cur-obj in $objects {
     @if meta.type-of($cur-obj) != 'map' {
-      @error 'Invalid $objects type passed to the [ extend-map() ] function. ' +
-          'Objects passed must be maps.';
+      @error 'Invalid type in $objects passed to the [ extend-map() ] function. ' +
+          'Objects passed to $objects must be maps.';
     }
   }
 
@@ -46,7 +51,7 @@
       @if meta.type-of($deep) != 'bool' {
         @error 'Invalid $deep value of `#{meta.inspect($deep)}` passed to the ' +
             '[ extend-map() ] function. If you pass a value for the $deep ' +
-            'argument, it must be a Boolean.';
+            'argument, it must be a Bool value of either `true` or `false`.';
       }
       @each $key, $value in $current {
         // If value is a nested map and the same key from $object
@@ -72,21 +77,26 @@
   @return $object;
 }
 
-/// Designed to improve on the built-in map.merge() functionality so that it
-/// is recursive and able to merge more than 2 maps at once.
+/// Designed to improve on the built-in `map.merge()` (formerly `map-merge()`
+/// functionality so that it is recursive and able to merge more than 2 maps at
+/// once.
 ///
-/// About `map-merge()`:
+/// About `map.merge()`:
 /// * only takes 2 arguments
 /// * is not recursive
 ///
-/// @param {Map} $object - first map
-/// @param {ArgList} $objects - other maps
-/// @param {Bool} $deep - recursive mode
+/// @param {Map} $object - First map
+/// @param {ArgList} $objects - Other maps
+/// @param {Bool} $deep - Optional recursive mode
 ///
 /// @return {Map} The merged map
 ///
-/// @throw Invalid $objects type.
-/// @throw Invalid $deep type.
+/// @access public
+/// @group Utilities
+///
+/// @throw Invalid $object type, not of type 'map'.
+/// @throw Invalid type in $objects, not of type 'map'
+/// @throw Invalid $deep type, not of type 'bool'
 /// @alias extend-map
 @function extend($object, $objects... /*, $deep */) {
   @if meta.type-of($object) != 'map' {

@@ -4,10 +4,13 @@
 @use 'sass:string';
 
 /// Checks if a value is a relative length.
-/// @access public
 ///
 /// @param {*} $value - A value to be checked.
+///
 /// @return {Bool} True if $value is a relative length, false if it is not.
+///
+/// @access public
+/// @group Utilities
 @function is-relative-length($value) {
   $rel-length-units: (
     'em',

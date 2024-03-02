@@ -1,10 +1,13 @@
 @use 'sass:math';
 
-/// Strips a given value of its associated unit (ex: 3rem returns 3)
-/// @access public
+/// Strips a given value of its associated unit and returns the unitless number.
 ///
 /// @param {Number} $num - A value with a unit to be stripped
-/// @return {Number} The unit-less number
+///
+/// @return {Number} The unitless number.
+///
+/// @access public
+/// @group Utilities
 @function strip-unit($num) {
   @return math.div($num, ($num * 0 + 1));
 }

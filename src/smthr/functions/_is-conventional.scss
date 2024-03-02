@@ -4,7 +4,6 @@
 
 /// Checks if a string contains only conventional naming chacters, which
 /// includes the 26 character alphabet and the standard hyphen.
-/// @access public
 ///
 /// @param {String} $string - The string to check.
 /// @param {Bool} $allow-nums [false] - Whether to allow for number
@@ -16,9 +15,13 @@
 /// allow for capital letters. When false, the function will return as false if
 /// $string contains capital letter characters.
 ///
-/// @return {Bool} True if $string only contians hyphens, numbers if
-/// $allow-nums is true, underscores if $allow-bem is true, and characters from
-/// the 26 character alphabet. Otherwise returns false.
+/// @return {Bool} True if $string only contians hyphens and lowercase characters
+/// from the 26 character alphabet. Will return true for capital letters if
+/// $allow-capitals is flagged `true`, for numbers if $allow-nums is flagged
+/// `true`, and for underscores if $allow-bem is true. Otherwise returns false.
+///
+/// @access public
+/// @group Utilities
 @function is-conventional(
   $string,
   $allow-nums: false,

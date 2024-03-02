@@ -2,12 +2,14 @@
 @use 'sass:math';
 
 /// Helper function that mixes white with a given opacity level.
-/// @access public
 ///
 /// @param {Number} $opacity [1] - An opacity level between either 0 and 1
 /// or 0% and 100%, inclusive.
 ///
 /// @return {Color} The white color at the given opacity level.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid data type for $opacity
 /// @throw Invalid unit type for $opacity

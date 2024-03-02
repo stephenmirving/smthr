@@ -6,10 +6,13 @@
 
 /// Takes a given color in virtually any notation and converts it into CMYK
 /// notation using the [ device-cmyk ] CSS color function.
-/// @access public
 ///
 /// @param {Color} $color - The color to convert into cmyk.
+///
 /// @return {Color} The converted color in [ device-cmyk ] function format.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid data type for $color
 @function to-cmyk($color) {

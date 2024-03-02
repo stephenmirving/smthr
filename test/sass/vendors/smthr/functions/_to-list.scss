@@ -2,24 +2,28 @@
 
 /// Casts `$value` into a list.
 ///
-/// @access public
-///
 /// @param {*} $value - Value to cast into a list
-/// @param {String} $separator [space] - The separator to use in the new list.
+/// @param {String} $separator [list.separator($value)] - The separator to use
+/// in the new list.
 ///
 /// @return {List} - The new list.
+///
+/// @access public
+/// @group Utilities
 @function to-list($value, $separator: list.separator($value)) {
   @return list.join((), $value, $separator);
 }
 
 /// Casts `$value` into a list.
 ///
-/// @access public
-///
 /// @param {*} $value - Value to cast into a list
-/// @param {String} $separator [space] - The separator to use in the new list.
+/// @param {String} $separator [list.separator($value)] - The separator to use
+/// in the new list.
 ///
 /// @return {List} - The new list.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @alias to-list
 @function parse-list($value, $separator: list.separator($value)) {

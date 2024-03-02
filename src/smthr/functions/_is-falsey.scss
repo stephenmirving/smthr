@@ -12,14 +12,18 @@
 /// In Sass, empty strings and empty lists are all "truthy" and sometimes you
 /// may want to check if something is false in the more traditional sense.
 ///
-/// @access public
-///
 /// @param {*} $value - A value to check.
 ///
 /// @return {Bool} Returns `true` if `$value` is falsey (not just `null` or
 /// `false`).
+///
+/// @access public
+/// @group Utilities
 @function is-falsey($value) {
   @return not $value or $value == '' or $value == () or $value == (()) or
-    or $value == ('':'') or $value == ('':()) or $value == ('':(())) or
-    $value == ('':null) or $value == string.unquote('false');
+      $value == [] or $value == [()] or value == ([]) or $value == [[]]
+      $value == ('':'') or $value == ('':()) or $value == ('':(())) or
+      $value == ('':[]) or $value == ('':[()]) or $value == ('':([])) or
+      $value == ('':[[]]) or $value == ('':null) or
+      $value == string.unquote('false');
 }

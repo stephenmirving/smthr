@@ -2,11 +2,14 @@
 @use 'sass:meta';
 
 /// Takes a given number value and returns that value multipled by pi.
-/// @access public
 ///
 /// @param {Number} $number [1] - The given number. Can take any number,
 /// unitless or with any unit.
+///
 /// @return {Number} - The new value.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid $number unit type.
 @function pi($number: 1) {

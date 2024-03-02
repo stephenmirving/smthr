@@ -75,13 +75,15 @@
 @use 'white' as *;
 
 /// Apply `$function` with `$args` to each item from `$list`.
-/// @access public
 ///
 /// @param {List} $list - List of items
 /// @param {String} $function - Function to apply to every item from `$list`.
 /// @param {Arglist} $args - Extra arguments to pass to `$function`.
 ///
 /// @return {List} The result of the function being applied to the list.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid function name
 @function walk($list, $function, $args...) {

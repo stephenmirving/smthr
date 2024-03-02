@@ -13,6 +13,8 @@
 /// @return {String | Null} Returns the parameter keyword string if the given
 /// alias is found in the alias map, otherwise returns `null`.
 ///
+/// @access public
+/// @group Utilities
 /// @require {variable} $map-alias-resolutions
 ///
 /// @throw Invalid $alias data type.

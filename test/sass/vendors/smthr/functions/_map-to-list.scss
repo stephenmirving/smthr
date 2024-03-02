@@ -2,13 +2,15 @@
 @use 'sass:meta';
 
 /// Casts a map into a list.
-/// @access public
 ///
 /// @param {Map} $map - Map to pull a value from.
-/// @param {String} $keep ['both'] - Whether to keep just the 'keys', just the 'values'
-/// or 'both' from the $map.
+/// @param {String} $keep ['both'] - Whether to keep just the 'keys', just the
+/// 'values' or 'both' from the $map.
 ///
-/// @return {List} Depending on the flag, returns either keys, values or both
+/// @return {List} Depending on the flag, returns either keys, values or both.
+///
+/// @access public
+/// @group Utilities
 @function map-to-list($map, $keep: 'both') {
   $keep: if(list.index('keys' 'values', $keep), $keep, 'both');
 

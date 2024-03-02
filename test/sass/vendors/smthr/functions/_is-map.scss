@@ -1,10 +1,13 @@
 @use 'sass:meta';
 
 /// Checks if a value is a map.
-/// @access public
 ///
 /// @param {*} $value - A value to be checked.
+///
 /// @return {Bool} True if $value is a map, false if it is not.
+///
+/// @access public
+/// @group Utilities
 @function is-map($value) {
   @return meta.type-of($value) == 'map';
 }

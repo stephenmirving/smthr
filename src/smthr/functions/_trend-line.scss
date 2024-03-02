@@ -9,8 +9,6 @@
 /// Calculate the least square fit linear regression, or "trend-line", of a
 /// mapped set of provided values.
 ///
-/// @access public
-///
 /// @param {Map} $map - A map where the keys are viewport widths in pixels,
 /// and each value associated is the desired pixel size at that given view width.
 /// @param {Bool} $convert-to-rem [true] - If true, will convert the `px` value
@@ -22,12 +20,13 @@
 /// .element {
 ///   font-size: trend-line((576px: 24px, 768px: 24px, 992px: 34px));
 /// }
-/// // RETURNS:
+/// // Compiles to...
 /// .element {
 ///   font-size: font-size: calc(2.46062992vw + 0.51083rem);
 /// }
 ///
-///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid data type for `$map` parameter.
 /// @throw The $map parameter must have at least 2 key:value pairs.

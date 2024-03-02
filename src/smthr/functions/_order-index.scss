@@ -1,11 +1,13 @@
 /// Used by the child-index mixin in _family.scss. It will return the proper
 /// sorted numbers depending on the `$index` value.
-/// @access public
 ///
 /// @param {Number} $num - The number of children.
 /// @param {Number} $index - The index of the sorting.
 ///
-/// @return {Number} The order index
-@function order-index($i, $index) {
-  @return ($index + $i);
+/// @return {Number} The order index.
+///
+/// @access public
+/// @group Utilities
+@function order-index($num, $index) {
+  @return ($index + $num);
 }

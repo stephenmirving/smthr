@@ -2,11 +2,12 @@
 
 /// Converts a color into a string representation of that color.
 ///
-/// @access public
-///
 /// @param {Color} $color - The color to convert into a string.
 ///
 /// @return {String} A color value wrapped inside a string.
+///
+/// @access public
+/// @group Utilities
 ///
 /// @throw Invalid $color value.
 @function color-to-string($color) {
