@@ -4,11 +4,10 @@ TODO:
     ☐ Test and fix functions and mixins
       ☐ Function testing
         ☐ Work on rainbow-shadow function
-        ☐ Change is-truthy back to is-true then examine all uses of it.
-        ☐ Update all size conversion functions to take $base-font-size with units
-          ☐ Fix conv-to-rem
-            ☐ Add support for % inputs
-            ☐ Use $base-font-size in betterize
+        ✔ Update all size conversion functions to take $base-font-size with units @done(24-03-02 12:32)
+          ✔ Fix conv-to-rem @done(24-03-02 15:58)
+            ✔ Add support for % inputs @done(24-03-02 15:58)
+            ✔ Use $base-font-size in betterize @done(24-03-02 12:32)
           ☐ Retest ratio-to-percentage
           ☐ Retest decimal-to-ratio
           ☐ to-hex function
@@ -44,16 +43,23 @@ TODO:
           ☐ truncate
 
   General Changes:
-    ☐ Examine responsive font mixin
+    ☐ Test :focus-visible vs :focus and possible change :focus-visible styles back to :focus due to accessibility concerns
+      - https://www.nicchan.me/blog/tips-for-focus-styles/
+      - https://www.smashingmagazine.com/2021/03/complete-guide-accessible-front-end-components/#accessible-focus-styles
+      - https://css-tricks.com/focusing-on-focus-styles/
+      - https://hacks.mozilla.org/2019/06/indicating-focus-to-improve-accessibility/
+      - https://www.tpgi.com/focus-visible-and-backwards-compatibility/
+      - https://www.deque.com/blog/give-site-focus-tips-designing-usable-focus-indicators/
+      - Copy any changes to Betterize repo as well
+    ☐ Examine responsive font mixin and improve it using the trend-line function
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Take a look at the line-clamp mixin
     ☐ Determine if a .sass version can be automated in a build process
 
   Animations Mixins:
-    ☐ Add is-global-value function to animations to allow some values to have CSS global values passed as parameters.
-      - Completed up through the flip animation mixin.
-    ☐ Fix text-tracking in relative to the older version found here: https://codepen.io/stephenirving/pen/PvRYwB
-      - Difference probably just the perspective property on stage
+    ✔ Add is-global-value function to animations to allow some values to have CSS global values passed as parameters. @done(24-03-02 15:55)
+    ✔ Add is-global-value function to rest of animations @done(24-03-02 15:58)
+      ✔ Completed up through the flip animation mixin. @done(24-03-02 15:56)
     ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
     ☐ Add typewrtiter animation effect. https://codepen.io/stephenirving/pen/QWoPVVW/e5eb204f9c2b209d5ca65c6d5ea4801c?editors=1100

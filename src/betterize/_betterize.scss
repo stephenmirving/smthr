@@ -11,9 +11,11 @@
 @use 'sass:math';
 @use '../smthr/smth' as smth;
 
-////////////////////////////////////////
-// BASE STYLES: opinionated defaults ///
-////////////////////////////////////////
+//////////////////////////////////////////
+// ------------------------------------ //
+// #BASE STYLES: opinionated defaults - //
+// ------------------------------------ //
+//////////////////////////////////////////
 
 html {
   $_root-font-size: 1em;
@@ -132,8 +134,10 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0;
+  background: smth.$color-body-bg;
   color: smth.$color-body;
   font-family: $_body-font-stack;
+  font-size: smth.$body-font-size;
 
   @include smth.smooth-retina-fonts;
 
@@ -337,9 +341,13 @@ template {
   display: none;
 }
 
-////////////////////////////////////////
-// FORMS ///////////////////////////////
-////////////////////////////////////////
+
+//////////////////////////////////////////
+// ------------------------------------ //
+// #FORMS ----------------------------- //
+// ------------------------------------ //
+//////////////////////////////////////////
+
 
 ///
 /// Change the font styles correctly across browsers and remove the margins in
@@ -566,9 +574,11 @@ progress {
   -webkit-appearance: none;
 }
 
-////////////////////////////////////////
-// EMBEDDED CONTENT ////////////////////
-////////////////////////////////////////
+//////////////////////////////////////////
+// ------------------------------------ //
+// #EMBEDDED CONTENT ------------------ //
+// ------------------------------------ //
+//////////////////////////////////////////
 
 ///
 /// Remove the gap between audio, canvas, iframes, images, videos and the bottom
@@ -673,23 +683,24 @@ svg:not([fill]) {
   clip: rect(0, 0, 0, 0);
 }
 
+/// The Next rule is only needed if your project uses a JS framework or library
+/// like React. You want the selector of this rule to select the top level
+/// element that your application is rendered within. It ensures that
+/// high-priority elements will show up above all others and prevents stacking
+/// context bugs and common z-index issues.
 ///
-// Next rule only needed if using a JS framework like React. You want
-// to select the top level element that your application is rendered within.
-// It ensures that high-priority elements will show up above the others
-// and prevents stacking context bugs and z-index issues.
-///
-
+/// @todo If not using React or something similar, delete this rule and comment.
+/// If you are going to use the rule, just delete this todo (or entire comment).
 #root,
 #__next {
   isolation: isolate;
 }
 
-////////////////////////////////////////////////
-/// -------------------------------------------/
-/// #UTILITIES --------------------------------/
-/// -------------------------------------------/
-////////////////////////////////////////////////
+//////////////////////////////////////////
+// ------------------------------------ //
+// #UTILITIES ------------------------- //
+// ------------------------------------ //
+//////////////////////////////////////////
 
 [hidden] {
   display: none !important;
@@ -701,7 +712,7 @@ svg:not([fill]) {
 
 .sr-only,
 .visually-hidden {
-  @include smth.hide-visually;
+  @include smth.hide-visually('focusable');
 }
 
 // Hide visually and from screen readers, but maintain layout
