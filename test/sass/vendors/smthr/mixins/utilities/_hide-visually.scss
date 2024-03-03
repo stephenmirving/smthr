@@ -17,8 +17,8 @@
   white-space: nowrap;
 
   @if $focusable {
-    &:active,
-    &:focus {
+    &:focus,
+    &:active {
       position: static;
       overflow: visible;
       clip: auto;
@@ -31,7 +31,7 @@
   }
 }
 
-/// Reverses the effect of the `hide-visually()` mixin.
+/// Reverses the effects of the `hide-visually()` mixin.
 ///
 /// @group Utilities
 @mixin show-visually {

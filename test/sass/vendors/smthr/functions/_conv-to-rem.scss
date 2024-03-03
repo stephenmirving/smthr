@@ -9,7 +9,7 @@
 /// Unitless values are assumed to be in pixels.
 ///
 /// @param {Number | List} $values - The value(s) to convert to `rem` units.
-/// Can be a single value or a List containing `px`, `em`, `rem` and/or
+/// Can be a single value or a List containing `px`, `em`, `rem`, `%`, and/or
 /// unitless values.
 /// @param {Number} $base [null] - The base font-size. If none specified, defers
 /// to the $base-font-size variable. If that is not found, defaults to 16px.
@@ -50,13 +50,9 @@
   // This is because 100% font size = 16px by default
   @if math.unit($base) == '%' {
     $base: math.div($base, 100%) * 16;
-  }
-
-  @if math.unit($base) == 'rem' or math.unit($base) == 'em' {
+  } @else if math.unit($base) == 'rem' or math.unit($base) == 'em' {
     $base: strip-unit($base) * 16;
-  }
-
-  @if math.unit($base) == 'px' {
+  } @else if math.unit($base) == 'px' {
     $base: strip-unit($base);
   }
 
@@ -77,27 +73,26 @@
 /// Converts a value to matching rem value. By default, the base pixel value
 /// used to calculate the rem value is taken from the `$base-font-size` variable.
 ///
-/// @param {Number} $value - Pixel value to convert.
-/// @param {Number} $base [null] - Base for pixel conversion.
+/// @param {Number} $value - Value to convert.
+/// @param {Number} $base - Base for pixel conversion.
 ///
-/// @return {Number} A number in rems, calculated based on the given value and
-/// the base pixel value. rem values are passed through as is.
+/// @return {Number} A number in `rem`s, calculated based on the given value and
+/// the `$base-font-size` value. Values in `rem` are passed through as is.
+/// Values of `0rem` are passed back without any unit as `0`,
 ///
 /// @access private
 /// @group Utilities
 /// @require {function} strip-unit
-@function _unit-to-rem($value, $base: null) {
+@function _unit-to-rem($value, $base) {
   @if not is-number($value) {
-    @error 'Invalid $value of [ #{meta.inspect($value)} ], was passed ' +
+    @error 'Invalid $value of #{meta.inspect($value)} was passed ' +
         'to the [ conv-to-rem() ] function. You must use a valid number.';
   }
 
   // Transform em into rem if someone hands over 'em's
   @if math.unit($value) == 'em' {
     $value: strip-unit($value) * 1rem;
-  }
-
-  @if math.unit($value) == '%' {
+  } @else if math.unit($value) == '%' {
     $value: math.div($value, 100%) * 16px;
   }
 
@@ -106,7 +101,7 @@
     $value: math.div(strip-unit($value), strip-unit($base)) * 1rem;
   }
 
-  // Eliminate units for 0rem
+  // Eliminate units for 0rem values
   @if $value == 0rem {
     $value: 0;
   }

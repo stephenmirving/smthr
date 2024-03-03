@@ -1,0 +1,13 @@
+/// A simple utility mixin that selects both of the `:hover` and `:focus`
+/// pseudo-classes at the same time and applies your content's rules to them.
+///
+/// @content [ Write the style rules you want to apply to `:hover` and `:focus`
+/// pseudo-classes, and they will be added within the content directive ]
+///
+/// @group Utilities
+@mixin hocus {
+  &:hover,
+  &:focus {
+    @content;
+  }
+}
