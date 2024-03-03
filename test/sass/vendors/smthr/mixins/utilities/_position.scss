@@ -1,45 +1,56 @@
 @use 'sass:meta';
 @use 'sass:list';
+@use '../../functions/is-global-value' as *;
 
 /// Applies position values to an element.
 ///
 /// @param {String} $position [absolute] - The position value for the element.
-/// @param {List} $top-left [0 0] - The top and left values for the element in a
-/// space-separated list.
-/// @param {List} $bottom-right [null] - The botton and right values for the
-/// element in a space-separated list.
-/// @param {Number} $z-val [null] - The z-index value for the element.
+/// @param {Number} $top [0] - The `top` value for the element.
+/// @param {Number} $left [0] - The `left` value for the element.
+/// @param {Number} $bottom [null] - The `bottom` value for the element.
+/// @param {Number} $right [null] - The `right` value for the element.
+/// @param {Number} $z-index [null] - The z-index value for the element.
 ///
 /// @group Utilities
 @mixin position(
   $position: absolute,
-  $top-left: 0 0,
-  $bottom-right: null,
-  $z-val: null
+  $top: 0,
+  $left: 0,
+  $bottom: null,
+  $right: null,
+  $z-index: null
 ) {
   @if $position != relative and
     $position != absolute and
     $position != fixed and
-    $position != sticky
+    $position != sticky and
+    not is-global-value($position)
   {
-    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
-        '`position()` mixin is invalid. You must choose between ' +
-        'absolute, relative, or sticky positioning.';
+    @error 'The $position value of #{meta.inspect($position)} used in the ' +
+        '[ position() ] mixin is invalid. You must choose between ' +
+        'absolute, relative, fixed, or sticky positioning. Additionally, ' +
+        'you may choose any of the CSS global values.';
   }
 
   position: $position;
 
-  @if $top-left {
-    top: list.nth($top-left, 0);
-    left: list.nth($top-left, 1);
+  @if $top {
+    top: $top;
   }
 
-  @if $bottom-right {
-    right: list.nth($bottom-right, 1);
-    bottom: list.nth($bottom-right, 0);
+  @if $left {
+    left: $left;
   }
 
-  @if $z-val {
-    z-index: $z-val;
+  @if $bottom {
+    bottom: $bottom;
+  }
+
+  @if $right {
+    right: $right;
+  }
+
+  @if $z-index {
+    z-index: $z-index;
   }
 }

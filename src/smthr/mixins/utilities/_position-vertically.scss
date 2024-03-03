@@ -12,10 +12,15 @@
 /// must use either relative or absolute positioning.
 ///
 /// @group Utilities
+///
 /// @throw $top-pos value out of range
 @mixin position-vertically($top-pos: 50%, $position: relative) {
   @if $top-pos == 'middle' or
     $top-pos == 'center' or
+    $top-pos == 'centre' or
+    $top-pos == 'mid' or
+    $top-pos == 'cent' or
+    $top-pos == 'cen' or
     $top-pos == 'c' or
     $top-pos == 'm'
   {
@@ -25,14 +30,14 @@
     $top-pos: $top-pos * 1%;
   }
   @if $top-pos < 0% or $top-pos > 100% {
-    @error 'The top position value of `#{meta.inspect($top-pos)}` is out of ' +
-        'range for the `vert-align` mixin. You must choose a value between ' +
-        '0% and 100%, inclusive.';
+    @error 'The top position value of #{meta.inspect($top-pos)} is out of ' +
+        'range for the [ position-vertically() ] mixin. You must choose a ' +
+        'value between 0% and 100%, inclusive.';
   }
 
   @if $position != relative and $position != absolute {
-    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
-        '`align-vertically()` mixin is invalid. You must choose between ' +
+    @error 'The $position value of #{meta.inspect($position)} used in the ' +
+        '[ position-vertically() ] mixin is invalid. You must choose between ' +
         'relative or absolute positioning.';
   }
 
@@ -52,7 +57,7 @@
 /// @alias vertical-center
 @mixin center-vertically($position: relative) {
   @if $position != relative and $position != absolute {
-    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
+    @error 'The $position value of #{meta.inspect($position)} used in the ' +
         '`center-vertically()` mixin is invalid. You must choose between ' +
         'relative or absolute positioning.';
   }
