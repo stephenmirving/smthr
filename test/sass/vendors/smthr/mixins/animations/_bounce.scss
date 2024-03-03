@@ -2,6 +2,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-number' as *;
@@ -30,6 +31,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-global-value
 /// @require {function} is-number
@@ -81,7 +83,7 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $in-or-out == true or is-alias('in', $in-or-out) {
+  @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
     $in-or-out: true;
     $anim-suffix: '-in-from';
   } @else if not $in-or-out or is-alias('out', $in-or-out) {

@@ -2,6 +2,7 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
@@ -35,6 +36,7 @@
 /// animation name so that the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-number
 /// @require {function} is-string
@@ -165,8 +167,7 @@
   }
 
   // Allow for multiple types of 'true' input for $infinite and $alternate
-  @if $infinite ==
-    true or
+  @if is-true($infinite) or
     $infinite ==
     'yes' or
     $infinite ==
@@ -175,8 +176,7 @@
   {
     $inf-alt: #{' ' + infinite};
 
-    @if $alternate ==
-      true or
+    @if is-true($alternate) or
       $alternate ==
       'yes' or
       $alternate ==

@@ -1,6 +1,6 @@
 @use 'sass:string';
 
-/// Returns the whether `$value` is "true", in a more limited sense than the
+/// Returns whether `$value` is "true", in a more limited sense than the
 /// Sass definition of having "truthiness"
 ///
 /// In Sass, all values other than `false` and `null` are considered truthy.

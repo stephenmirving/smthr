@@ -7,16 +7,20 @@
 
 /// Converts a ratio into a percentage.
 ///
-/// @param {List|Number|string} $ratio - A ratio value represented either by a
-/// two value list (ex: `16 9` for a 16:9 ratio) or by a single number
-/// (ex: 0.75 for a 4:3 ratio)
+/// @param {List | String | Number} $ratio - A ratio value that can be expressed
+/// one of three ways: by a two number List (ex: `(16 9)` for a 16:9 ratio), by
+/// a String containing two numbers separated by either a colon, slash, comma or
+/// space (ex: `'21:9'`, `'21/9', `'21,9'`, etc), or by single number
+/// (ex: `0.75` for a 3:4 ratio)
 ///
 /// @return {Number} A percentage value equal to the given ratio
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} decimal-to-ratio
+/// @require {function} str-to-num
 ///
-/// @throw Invalid ratio format.
+/// @throw Invalid ratio number value, it must be unitless.
 @function ratio-to-percentage($ratio) {
   $separators: (' : ', ':', ' / ', '/', ', ', ',', ' ');
   $found-separators: 0;
@@ -26,8 +30,8 @@
   $height: null;
 
   @if meta.type-of($ratio) == 'number' and not math.is-unitless($ratio) {
-    @error 'Invalid $ratio value of [ #{meta.inspect($ratio)} ] passed to ' +
-        'the [ ratio-to-percentage ] function.';
+    @error 'Invalid $ratio value of #{meta.inspect($ratio)} passed to ' +
+        'the [ ratio-to-percentage() ] function. The $ratio must be unitless.';
   }
 
   @if meta.type-of($ratio) == 'string' {
@@ -39,7 +43,7 @@
     }
 
     @if $found-separators > 1 {
-      @error 'Invalid ratio format of [ #{$ratio} ] passed to the ' +
+      @error 'Invalid ratio format of #{meta.inspect($ratio)} ] passed to the ' +
       '[ ratio-to-percentage() ] function.';
     }
 
@@ -64,7 +68,7 @@
   }
 
   @if meta.type-of($ratio) == 'number' and math.is-unitless($ratio) {
-    $ratio: decimal-to-ratio($ratio);
+    $ratio: decimal-to-ratio($ratio, 'common');
   }
 
   $width: list.nth($ratio, 1) + 0;
@@ -85,16 +89,20 @@
 
 /// Converts a ratio into a percentage.
 ///
-/// @param {List|Number} $ratio - A ratio value represented either by a two
-/// value list (ex: `16 9` for a 16:9 ratio) or by a single number (ex: 0.75 for
-/// a 4:3 ratio)
+/// @param {List | String | Number} $ratio - A ratio value that can be expressed
+/// one of three ways: by a two number List (ex: `(16 9)` for a 16:9 ratio), by
+/// a String containing two numbers separated by either a colon, slash, comma or
+/// space (ex: `'21:9'`, `'21/9', `'21,9'`, etc), or by single number
+/// (ex: `0.75` for a 3:4 ratio)
 ///
 /// @return {Number} A percentage value equal to the given ratio
 ///
-/// @throw Invalid ratio format.
-///
 /// @access public
 /// @group Utilities
+/// @require {function} decimal-to-ratio
+/// @require {function} str-to-num
+///
+/// @throw Invalid ratio number value, it must be unitless.
 ///
 /// @alias ratio-to-percentage
 @function ratio-to-percent($ratio) {

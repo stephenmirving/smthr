@@ -2,6 +2,7 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:math';
+@use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-number' as *;
@@ -34,6 +35,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-global-value
 /// @require {function} is-number
@@ -84,7 +86,7 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if $expand-contract == true or is-alias('expand', $expand-contract) {
+  @if equals-true($expand-contract) or is-alias('expand', $expand-contract) {
     $expand-contract: true;
   } @else if not $expand-contract or is-alias('contract', $expand-contract) {
     $expand-contract: false;
@@ -106,7 +108,7 @@
         'be one of the following: `null`, `top`, or `bottom`';
   }
 
-  @if $animate-in-place == true {
+  @if equals-true($animate-in-place) {
     @if $destination {
       @warn 'The [ text-tracking-out() ] mixin cannot create an animation ' +
           'that moves towards the the `#{meta.inspect($destination)}` while ' +

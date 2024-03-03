@@ -4,12 +4,7 @@ TODO:
     ☐ Test and fix functions and mixins
       ☐ Function testing
         ☐ Work on rainbow-shadow function
-        ✔ Update all size conversion functions to take $base-font-size with units @done(24-03-02 12:32)
-          ✔ Fix conv-to-rem @done(24-03-02 15:58)
-            ✔ Add support for % inputs @done(24-03-02 15:58)
-            ✔ Use $base-font-size in betterize @done(24-03-02 12:32)
-          ☐ Retest ratio-to-percentage
-          ☐ Retest decimal-to-ratio
+        ☐ Improve decimal to ratio so the loop more accurately grabs the closest common aspect ratio within tolerance
           ☐ to-hex function
             ☐ Is the hex conversion slightly off on some 4 OR 8 digit hex values?
               ☐ Need to find values where this is true???
@@ -57,9 +52,6 @@ TODO:
     ☐ Determine if a .sass version can be automated in a build process
 
   Animations Mixins:
-    ✔ Add is-global-value function to animations to allow some values to have CSS global values passed as parameters. @done(24-03-02 15:55)
-    ✔ Add is-global-value function to rest of animations @done(24-03-02 15:58)
-      ✔ Completed up through the flip animation mixin. @done(24-03-02 15:56)
     ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
     ☐ Add typewrtiter animation effect. https://codepen.io/stephenirving/pen/QWoPVVW/e5eb204f9c2b209d5ca65c6d5ea4801c?editors=1100
@@ -125,6 +117,17 @@ TODO:
 ================================================================================
 
 Archive:
+  ✔ Update all size conversion functions to take $base-font-size with units @done(24-03-02 12:32) @project(TODO.TESTING)
+  ✔ Fix conv-to-rem @done(24-03-02 15:58) @project(TODO.TESTING)
+  ✔ Add support for % inputs @done(24-03-02 15:58) @project(TODO.TESTING)
+  ✔ Use $base-font-size in betterize @done(24-03-02 12:32) @project(TODO.TESTING)
+  ✔ Retest ratio-to-percentage @done(24-03-03 01:41) @project(TODO.TESTING)
+  ✔ Working except for decimal to ratio conversions are off on some @done(24-03-03 01:41) @project(TODO.TESTING)
+  ✔ Retest decimal-to-ratio @done(24-03-03 01:41) @project(TODO.TESTING)
+  ✔ Fix off decimal to ratio conversions such as 2.4 or 1.89 1.78 @done(24-03-03 01:41) @project(TODO.TESTING)
+  ✔ Add is-global-value function to animations to allow some values to have CSS global values passed as parameters. @done(24-03-02 15:55) @project(TODO.Animations Mixins)
+  ✔ Add is-global-value function to rest of animations @done(24-03-02 15:58) @project(TODO.Animations Mixins)
+  ✔ Completed up through the flip animation mixin. @done(24-03-02 15:56) @project(TODO.Animations Mixins)
   ✔ Test is-falsey and is-true @done(24-03-01 21:08) @project(TODO.TESTING)
   ✔ Allows % inputs but returns the wrong result @done(24-02-26 21:21) @project(TODO.TESTING)
   ✔ Convert 8 digit hex values to 4 digit hex values where possible. @done(24-02-25 18:57) @project(TODO.TESTING)
