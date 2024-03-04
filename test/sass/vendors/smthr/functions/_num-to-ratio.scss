@@ -2,6 +2,7 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
+@use 'is-number' as *;
 @use 'str-to-num' as *;
 
 /// Converts a decimal number into a ratio expressed as a space-separated list.
@@ -18,9 +19,8 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} is-number
 /// @require {function} str-to-num
-///
-/// @throw Invalid number value.
 @function num-to-ratio($number, $common-ratio: false, $accuracy: 50000, $tolerance: 0.0175) {
   $common-ratios: (
     '0.56': (9 16), // Vertical video on social media, rotated 16:9
@@ -53,6 +53,11 @@
   $closest-denominator: 1;
   $min-difference: math.abs($number - math.div($closest-numerator, $closest-denominator));
 
+  @if not is-number($number) {
+    @error 'Invalid $number passed to [ num-to-ratio() ] function. Value must ' +
+        'be a valid number.';
+  }
+
   @if $common-ratio {
     @each $decimal, $ratio in $common-ratios {
       @if math.abs($number - str-to-num($decimal)) < $tolerance {
@@ -80,16 +85,23 @@
 }
 
 /// Converts a decimal number into a ratio expressed as a space-separated list.
-/// @access public
 ///
-/// @param {Number} $number - The decimal number to convert.
-/// @param {Number} $accuracy [10000] - The search limit for the denominator.
+/// @param {Number} $number - The number to convert into a media ratio.
+/// @param {Bool} $common-ratio [false] - If value is anything except for `null`
+/// and `false`, this flag will direct the function to return the closest common
+/// media ratio.
+/// @param {Number} $accuracy [50000] - The search limit for the denominator.
+/// @param {Number} $tolerance [0.01] - How close the provied $number can get to
+/// return a common media ratio when the $common-ratio flag is truthy.
 ///
 /// @return {List} - The number converted into a ratio.
 ///
-/// @throw Invalid number value.
+/// @access public
+/// @group Utilities
+/// @require {function} is-number
+/// @require {function} str-to-num
 ///
-/// @alias num-to-ratio
-@function decimal-to-ratio($number, $accuracy: 10000) {
-  @return num-to-ratio($number, $accuracy);
+/// @alias decimal-to-ratio
+@function decimal-to-ratio($number, $common-ratio: false, $accuracy: 50000, $tolerance: 0.0175) {
+  @return num-to-ratio($number, $common-ratio, $accuracy, $tolerance);
 }
