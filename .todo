@@ -36,7 +36,7 @@ TODO:
           ☐ text-emboss
           ☐ text-outline
           ☐ text-shadow
-          ☐ truncate
+          ✔ truncate @done(24-03-04 18:39)
 
   General Changes:
     ☐ Test :focus-visible vs :focus and possible change :focus-visible styles back to :focus due to accessibility concerns
@@ -74,32 +74,26 @@ TODO:
     ☐ Make a mixin for animating between clip-path shapes. https://css-tricks.com/animating-with-clip-path/
 
   Utility Mixins:
-    ☐ Finish and propogate line-clamp mixin
-    ☐ Add .sass versions of responsive-square mixin
+    ✔ Finish and propogate line-clamp mixin @done(24-03-04 18:40)
     ☐ Create more flex-box prefix mixins
       ☐ Finish testing and copying over flex-flow mixin
     ☐ Create new CSS grid mixins and functions
-      ☐ Finish it if necessary
-      ☐ Propogate it across all
-    ☐ Finish the font-face mixin then propogate it
-    ☐ Allow opacity mixin to take percentages
-    ☐ Finish propogating responsive-ratio mixin to the dist folder
-    ☐ Finish propogating pseudo mixin to the dist folder
+    ☐ Create an @font-face mixin
+    ✔ Allow opacity mixin to take percentages @done(24-03-04 18:44)
+    ✔ Finish propogating responsive-ratio mixin to the dist folder @done(24-03-04 18:41)
 
   Functions:
     ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.
-    ☐ Finish and propogate linear-interpolation function:
-      ☐ Function finished
-      ☐ Function added to main build file
-      ☐ Function propogated to a prefixed version and sass versions
-    ☐ Finish doing everything from the smashing magazine article the above two came from
-    ☐ Finish and propogate the new precision function
+    ✔ Finish and propogate linear-interpolation function: @done(24-03-04 18:42)
+      ✔ Function finished @done(24-03-04 18:42)
+      ✔ Function added to main build file @done(24-03-04 18:42)
+      ✔ Function propogated to a prefixed version and sass versions @done(24-03-04 18:42)
+    ☐ Finish doing everything from the smashing magazine article the linear-interpolation function (and possibly trend line?) came from
+    ☐ Finish and propogate the new precision function ??
       ☐ Function finished
       ☐ Function added to main build file
       ☐ Function propogated to a prefixed version and sass versions
     ☐ Add more entity codes to the entity function
-    ☐ Fix the ratio-to-percentage mixin
-    ☐ Special character detecting function, finish and propogate
 
   Publishing:
     ☐ Get the SassDoc API compiled and ran

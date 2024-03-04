@@ -1,18 +1,53 @@
-/// Truncates a given field with ellipses by default.
+/// Truncates a field or line of text on the inline progression direction,
+/// adding the text-overflow value at the end. Uses ellipsis by default.
+///
+/// If you would like to truncate multiple lines of text, such a text
+/// overflowing at the bottom of a box, try the `clamp-lines()` function instead.
 ///
 /// @param {Number} $max-width [100%] - The max width for the element.
-/// @param {String} $display [null] - The display value.
-/// @param {String} $overflow [ellipsis] - The text-overflow value.
+/// @param {String} $text-overflow [ellipsis] - The text-overflow value.
 ///
 /// @group Utilities
-@mixin truncate($max-width: 100%, $display: null, $overflow: ellipsis) {
-  @if $display {
-    display: $display;
+@mixin truncate($max-width: 100%, $text-overflow: ellipsis) {
+  @if $text-overflow == '...' {
+    $text-overflow: ellipsis;
   }
 
   overflow: hidden;
   max-width: $max-width;
   white-space: nowrap;
-  text-overflow: $overflow;
+  text-overflow: #{$text-overflow};
   overflow-wrap: normal;
+}
+
+/// Truncates a field or line of text on the inline progression direction,
+/// adding the text-overflow value at the end. Uses ellipsis by default.
+///
+/// If you would like to truncate multiple lines of text, such a text
+/// overflowing at the bottom of a box, try the `clamp-lines()` function instead.
+///
+/// @param {Number} $max-width [100%] - The max width for the element.
+/// @param {String} $text-overflow [ellipsis] - The text-overflow value.
+///
+/// @group Utilities
+///
+/// @alias truncate
+@mixin truncate-line($max-width: 100%, $text-overflow: ellipsis) {
+  @include truncate($max-width, $text-overflow);
+}
+
+/// Truncates a field or line of text on the inline progression direction,
+/// adding the text-overflow value at the end. Uses ellipsis by default.
+///
+/// If you would like to truncate multiple lines of text, such a text
+/// overflowing at the bottom of a box, try the `clamp-lines()` function instead.
+///
+/// @param {Number} $max-width [100%] - The max width for the element.
+/// @param {String} $text-overflow [ellipsis] - The text-overflow value.
+///
+/// @group Utilities
+///
+/// @alias truncate
+@mixin truncate-text($max-width: 100%, $text-overflow: ellipsis) {
+  @include truncate($max-width, $text-overflow);
 }

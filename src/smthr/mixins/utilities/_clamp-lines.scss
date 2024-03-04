@@ -1,35 +1,95 @@
 @use 'sass:meta';
+@use '../../functions/is-global-value' as *;
 @use '../../functions/is-integer' as *;
 
 /// Applies the properties necessary to clamp text to a given number of lines.
+/// Despite the `-webkit` browser prefixes on these properties, this should
+/// work in all major browsers. The CSS Overflow Module Level 4 defines a
+/// line-clamp property which is meant to replace this. However, there is
+/// currently still no unprefixed version of these properties' combined effects
+/// that is supported by any browser,
 ///
-/// @param {Number} $lines - Clamp the text to this number of lines.
+/// If you would like to truncate only a single line of text, try the
+/// `truncate()` function instead.
+///
+/// @param {Number} $lines - Clamp the text to this number of lines. Accepts
+/// integer values greater than 0. Also accepts any of the CSS global values
+/// and the keyword value of `none`, but these are not generally recommended for
+/// use with this mixin.
 ///
 /// @group Utilities
+/// @require {function} is-global-value
 /// @require {function} is-integer
 ///
 /// @throw Invalid data type for $lines. Value must be an integer.
+/// @throw Invalid data type for $text-overflow. Value must be a string.
 @mixin clamp-lines($lines) {
-  @if not is-integer($lines) {
-    @error 'The $lines parameter of the [ line-clamp() ] mixin must be an integer.';
+  @if not (is-integer($lines) and $lines > 0) and $lines != 'none' and
+      not is-global-value($lines)
+  {
+    @error 'Invalid value of #{meta.inspect($lines)} used for the $lines ' +
+        'parameter of the [ clamp-lines() ] mixin. This value should be an ' +
+        'integer greater than 0. Also accepts any of the CSS global values ' +
+        'and the keyword value of `none`, but these are not recommended.';
   }
 
   display: -webkit-box;
+  overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: $lines;
+  -webkit-line-clamp: #{$lines};
 }
 
 /// Applies the properties necessary to clamp text to a given number of lines.
+/// Despite the `-webkit` browser prefixes on these properties, this should
+/// work in all major browsers. The CSS Overflow Module Level 4 defines a
+/// line-clamp property which is meant to replace this. However, there is
+/// currently still no unprefixed version of these properties' combined effects
+/// that is supported by any browser,
 ///
-/// @param {Number} $lines - Clamp the text to this number of lines.
+/// If you would like to truncate only a single line of text, try the
+/// `truncate()` function instead.
+///
+/// @param {Number} $lines - Clamp the text to this number of lines. Accepts
+/// integer values greater than 0. Also accepts any of the CSS global values
+/// and the keyword value of `none`, but these are not generally recommended for
+/// use with this mixin.
 ///
 /// @group Utilities
+/// @require {function} is-global-value
 /// @require {function} is-integer
 ///
 /// @throw Invalid data type for $lines. Value must be an integer.
+/// @throw Invalid data type for $text-overflow. Value must be a string.
 ///
 /// @alias clamp-lines
 @mixin line-clamp($lines) {
+  @include clamp-lines($lines);
+}
+
+/// Applies the properties necessary to clamp text to a given number of lines.
+/// Despite the `-webkit` browser prefixes on these properties, this should
+/// work in all major browsers. The CSS Overflow Module Level 4 defines a
+/// line-clamp property which is meant to replace this. However, there is
+/// currently still no unprefixed version of these properties' combined effects
+/// that is supported by any browser,
+///
+/// If you would like to truncate only a single line of text, try the
+/// `truncate()` function instead.
+///
+/// @param {Number} $lines - Clamp the text to this number of lines. Accepts
+/// integer values greater than 0. Also accepts any of the CSS global values
+/// and the keyword value of `none`, but these are not generally recommended for
+/// use with this mixin.
+///
+/// @group Utilities
+/// @require {function} is-global-value
+/// @require {function} is-integer
+///
+/// @throw Invalid data type for $lines. Value must be an integer.
+/// @throw Invalid data type for $text-overflow. Value must be a string.
+///
+/// @alias clamp-lines
+@mixin truncate-lines($lines) {
   @include clamp-lines($lines);
 }

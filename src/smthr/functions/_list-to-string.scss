@@ -43,7 +43,7 @@
       $separator: ',';
     }
   } @else if $separator == space or $separator == ' ' or $separator == '  ' {
-    @if $extra-space{
+    @if $extra-space {
       $separator: '  ';
     } @else {
       $separator: ' ';
