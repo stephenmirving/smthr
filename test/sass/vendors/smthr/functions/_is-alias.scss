@@ -16,18 +16,19 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {variable} $map-alias-resolutions
 ///
 /// @throw Invalid $keyword data type
 /// @throw Invalid $alias-map data type
 @function is-alias($keyword, $alias, $alias-map: smth.$map-alias-resolutions) {
   @if meta.type-of($keyword) != 'string' {
-    @error 'Invalid data type of [ #{meta.type-of($keyword)} ] for $keyword ' +
+    @error 'Invalid data type of `#{meta.type-of($keyword)}` for $keyword ' +
         'passed to the [ is-alias() ] function. The data type of $keyword ' +
         'must be a string.';
   }
 
   @if meta.type-of($alias-map) != 'map' {
-    @error 'Invalid data type of [ #{meta.type-of($alias-map)} ] for ' +
+    @error 'Invalid data type of `#{meta.type-of($alias-map)}` for ' +
         '$alias-map passed to the [ is-alias() ] function. The data type ' +
         'of $alias-map must be a map.';
   }

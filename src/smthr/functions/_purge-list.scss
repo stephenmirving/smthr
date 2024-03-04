@@ -2,7 +2,8 @@
 @use 'is-true' as *;
 @use 'to-list' as *;
 
-/// Removes all false and null values from $list.
+/// Removes all values from $list that are `null`, `false`, or are empty maps,
+/// lists, or strings.
 ///
 /// @param {List} $list - The list to purge.
 ///
@@ -24,7 +25,8 @@
   @return to-list($result);
 }
 
-/// Removes all false and null values from `$list`.
+/// Removes all values from $list that are `null`, `false`, or are empty maps,
+/// lists, or strings.
 ///
 /// @param {List} $list - The list to purge.
 ///
@@ -40,7 +42,8 @@
   @return purge-list($list);
 }
 
-/// Removes all false and null values from `$list`.
+/// Removes all values from $list that are `null`, `false`, or are empty maps,
+/// lists, or strings.
 ///
 /// @param {List} $list - The list to purge.
 ///

@@ -4,34 +4,35 @@ TODO:
     ☐ Test and fix functions and mixins
       ☐ Function testing
         ☐ Work on rainbow-shadow function
-        ☐ Improve decimal to ratio so the loop more accurately grabs the closest common aspect ratio within tolerance
-          ☐ to-hex function
-            ☐ Is the hex conversion slightly off on some 4 OR 8 digit hex values?
-              ☐ Need to find values where this is true???
+        ☐ Improve num-to-ratio so the loop more accurately grabs the closest common aspect ratio within tolerance
+          ☐ Ensure that it only rounds up towards the next closest common aspect ratio, never down.
+        ☐ to-hex function improvement - Is the hex conversion slightly off on some 4 OR 8 digit hex values?
+            ☐ Need to find example values where this is true and list below
       ☐ Mixin Testing
-        ☐ Add parameter error checking in the animation-stage mixin
-        ☐ Retest more animations
-        ☐ Figure out why color-shifter puts space in the strings then calls the animation like #{$timing-func}#{$delay}#{$inf-alt}
-        ☐ Add error checking for $infinite-alternate
+        ☐ Refactor color-shifter
+          ☐ Change $infinite and $alternate to $iterations and $anim-dir like other animations
+          ☐ Figure out if can remove the space in the strings when the animation is called like #{$timing-func}#{$delay}#{$inf-alt}
+          ☐ Touch up bg-or-fg decision and add whether bg-or-fg into the animation name
+          ✔ Add error checking for $infinite-alternate @done(24-03-03 19:12)
         ☐ Restest shape-shadow
           ☐ Test its new error checking
         ☐ Test all Utilities mixins
           ☐ ghost-button
           ☐ inner-side-shadow
           ☐ long-shadow
-          ☐ max-width
-          ☐ min-to-max-width
-          ☐ min-width
-          ☐ only-hidpi
-          ☐ only-phones
-          ☐ position-center
-          ☐ position-horizontally
-          ☐ position-vertically
-          ☐ position
+          ✔ max-width @done(24-03-03 02:51)
+          ✔ min-to-max-width @done(24-03-03 02:51)
+          ✔ min-width @done(24-03-03 02:51)
+          ✔ only-hidpi @done(24-03-03 02:51)
+          ✔ only-phones @done(24-03-03 02:51)
+          ✔ position-center @done(24-03-03 02:45)
+          ✔ position-horizontally @done(24-03-03 02:45)
+          ✔ position-vertically @done(24-03-03 02:40)
+          ✔ position @done(24-03-03 02:40)
           ☐ responsive-font
-          ☐ responsive-ratio
+          ✔ responsive-ratio @done(24-03-03 02:51)
           ☐ scrollbar
-          ☐ smooth-retina-fonts
+          ✔ smooth-retina-fonts @done(24-03-03 02:52)
           ☐ text-emboss
           ☐ text-outline
           ☐ text-shadow

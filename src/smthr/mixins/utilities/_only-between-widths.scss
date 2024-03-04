@@ -20,7 +20,6 @@
 /// units if the lengths passed are in `px` or `rem` units.
 ///
 /// @group Utilities
-///
 @mixin only-between-widths($min-threshold, $max-threshold, $convert: true) {
   @if is-number($min-threshold) and math.is-unitless($min-threshold) {
     $min-threshold: $min-threshold * 1px;

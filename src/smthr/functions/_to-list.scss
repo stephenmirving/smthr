@@ -1,12 +1,12 @@
 @use 'sass:list';
 
-/// Casts `$value` into a list.
+/// Casts `$value` into a List.
 ///
-/// @param {*} $value - Value to cast into a list
+/// @param {*} $value - Value to cast into a List
 /// @param {String} $separator [list.separator($value)] - The separator to use
-/// in the new list.
+/// in the new List.
 ///
-/// @return {List} - The new list.
+/// @return {List} - The new List.
 ///
 /// @access public
 /// @group Utilities
@@ -14,13 +14,13 @@
   @return list.join((), $value, $separator);
 }
 
-/// Casts `$value` into a list.
+/// Casts `$value` into a List.
 ///
-/// @param {*} $value - Value to cast into a list
+/// @param {*} $value - Value to cast into a List
 /// @param {String} $separator [list.separator($value)] - The separator to use
-/// in the new list.
+/// in the new List.
 ///
-/// @return {List} - The new list.
+/// @return {List} - The new List.
 ///
 /// @access public
 /// @group Utilities

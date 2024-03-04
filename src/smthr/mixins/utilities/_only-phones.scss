@@ -10,15 +10,15 @@
 /// @param {Bool} $target-all-devices [false] - If true, query will target
 /// all devices that fall within the specified maximum viewport width.
 /// Otherwise, attempts to target only phone devices by setting a minimum
-/// resolution.
+/// resolution along with the maximum viewport width.
 /// @param {Number} $min-resolution-ratio [1.8] - A minimum pixel ratio
 /// resolution value used to calculate the media query if $target-all-devices
 /// is false.
 ///
-/// @content Styles that target phones and/or phone-sized devices.
+/// @content Styles that target phones and/or phone-sized devices added within
+/// the content directive.
 ///
 /// @group Utilities
-/// @alias target-phones
 /// @require {function} conv-to-em
 /// @require {function} strip-unit
 @mixin only-phones(
@@ -65,23 +65,25 @@
 /// @param {Bool} $target-all-devices [false] - If true, query will target
 /// all devices that fall within the specified maximum viewport width.
 /// Otherwise, attempts to target only phone devices by setting a minimum
-/// resolution.
+/// resolution along with the maximum viewport width.
 /// @param {Number} $min-resolution-ratio [1.8] - A minimum pixel ratio
 /// resolution value used to calculate the media query if $target-all-devices
 /// is false.
 ///
-/// @content Styles that target phones and/or phone-sized devices.
+/// @content Styles that target phones and/or phone-sized devices added within
+/// the content directive.
 ///
 /// @group Utilities
-/// @alias only-phones
 /// @require {function} conv-to-em
 /// @require {function} strip-unit
+///
+/// @alias only-phones
 @mixin target-phones(
   $max-phone-width: 436px,
   $target-all-devices: false,
   $min-resolution-ratio: 1.8
 ) {
-  @include only-phones {
+  @include only-phones($max-phone-width, $target-all-devices, $min-resolution-ratio) {
     @content;
   }
 }

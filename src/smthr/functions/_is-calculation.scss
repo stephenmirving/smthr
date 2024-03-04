@@ -1,6 +1,7 @@
 @use 'sass:meta';
 
-/// Checks if a value is a CSS calc() function equation.
+/// Checks if a value is a CSS function equation, such as `calc()`, `min()`,
+/// `max()`, `clamp()`, etc.
 ///
 /// @param {*} $value - A value to be checked.
 ///

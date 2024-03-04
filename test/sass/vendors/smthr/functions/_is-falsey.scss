@@ -4,8 +4,8 @@
 /// the `not` keyword. Doing a conditional like `@if not $var { ... }` will only
 /// test as true for `false` and `null` values. By using this function like
 /// `@if is-falsey($var) { ... }`, it will test true for `false` and `null`
-/// values, but also for empty strings, empty lists, empty maps, and the
-/// unquoted string value of `'false'`.
+/// values, but also for empty strings, empty lists, empty maps, the number `0`,
+/// and the unquoted string value of `'false'`.
 ///
 /// is the opposite of the is-true function.
 ///
@@ -25,6 +25,7 @@
       $value == [()] or $value == ([]) or $value == [[]] or $value == ('':'') or
       $value == ('':()) or $value == ('':(())) or $value == ('':[]) or
       $value == ('':[()]) or $value == ('':([])) or $value == ('':[[]]) or
-      $value == ('':null) or $value == string.unquote('false') or not $value
+      $value == ('':null) or $value == 0 or $value == string.unquote('false') or
+      not $value
   );
 }

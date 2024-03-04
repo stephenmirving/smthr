@@ -4,7 +4,6 @@
 /// @content Styles that target Safari browsers.
 ///
 /// @group Utilities
-/// @alias safari-only
 @mixin only-safari {
   @media not all and (min-resolution:.001dpcm) {
     @supports (-webkit-appearance: none) {

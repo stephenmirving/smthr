@@ -2,7 +2,7 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
-@use 'decimal-to-ratio' as *;
+@use 'num-to-ratio' as *;
 @use 'str-to-num' as *;
 
 /// Converts a ratio into a percentage.
@@ -12,16 +12,20 @@
 /// a String containing two numbers separated by either a colon, slash, comma or
 /// space (ex: `'21:9'`, `'21/9', `'21,9'`, etc), or by single number
 /// (ex: `0.75` for a 3:4 ratio)
+/// @param {Bool} $num-returns-common-ratio - If this is set to any value except
+/// `null` or `false`, when $ratio is provided as a single Number the function
+/// will try to look for a common media ratio that is close to the provided
+/// number, on which to base the returned percentage.
 ///
 /// @return {Number} A percentage value equal to the given ratio
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} decimal-to-ratio
+/// @require {function} num-to-ratio
 /// @require {function} str-to-num
 ///
 /// @throw Invalid ratio number value, it must be unitless.
-@function ratio-to-percentage($ratio) {
+@function ratio-to-percentage($ratio, $num-returns-common-ratio: false) {
   $separators: (' : ', ':', ' / ', '/', ', ', ',', ' ');
   $found-separators: 0;
   $separator-used: null;
@@ -68,7 +72,7 @@
   }
 
   @if meta.type-of($ratio) == 'number' and math.is-unitless($ratio) {
-    $ratio: decimal-to-ratio($ratio, 'common');
+    $ratio: num-to-ratio($ratio, $num-returns-common-ratio);
   }
 
   $width: list.nth($ratio, 1) + 0;
@@ -99,7 +103,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} decimal-to-ratio
+/// @require {function} num-to-ratio
 /// @require {function} str-to-num
 ///
 /// @throw Invalid ratio number value, it must be unitless.

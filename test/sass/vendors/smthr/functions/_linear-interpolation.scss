@@ -22,7 +22,7 @@
 /// }
 /// // RETURNS:
 /// .element {
-///   font-size: linear-interpolation((320px: 16px, 768px: 20px));
+///   font-size: calc(0.89285714vw + 0.82143rem);
 /// }
 ///
 /// @access public

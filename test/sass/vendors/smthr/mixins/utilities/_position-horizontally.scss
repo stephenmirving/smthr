@@ -1,10 +1,11 @@
 @use 'sass:meta';
 @use 'sass:math';
 
-/// Horizontally aligns an alement using absolute positioning and transform. You
-/// can modify the $left-pos argument to change the left property's value to
-/// alter the horizontal alignment. If you want to center the element both
-/// horizontally and vertically, use the `position-center` mixin instead.
+/// Horizontally aligns an alement using relative or absolute positioning and
+/// transform. You can modify the `$left-pos` argument to change the `left`
+/// property's value to alter the horizontal alignment. If you want to center
+/// the element both horizontally and vertically, use the `position-center`
+/// mixin instead.
 ///
 /// @param {Number} $left-pos [50%] - The top property value. 50% will put the
 /// element in the vertical center.
@@ -17,6 +18,10 @@
 @mixin position-horizontally($left-pos: 50%, $position: relative) {
   @if $left-pos == 'middle' or
     $left-pos == 'center' or
+    $left-pos == 'centre' or
+    $left-pos == 'cent' or
+    $left-pos == 'cen' or
+    $left-pos == 'mid' or
     $left-pos == 'c' or
     $left-pos == 'm'
   {
@@ -26,14 +31,14 @@
     $left-pos: $left-pos * 1%;
   }
   @if $left-pos < 0% or $left-pos > 100% {
-    @error 'The left position value of `#{meta.inspect($left-pos)}` is out of ' +
-        'range for the `align-horizontally` mixin. You must choose a value ' +
-        'between 0% and 100%, inclusive.';
+    @error 'The left position value of #{meta.inspect($left-pos)} is out of ' +
+        'range for the [ position-horizontally ] mixin. You must choose a ' +
+        'value between 0% and 100%, inclusive.';
   }
 
   @if $position != relative and $position != absolute {
-    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
-        '`position-horizontally()` mixin is invalid. You must choose between ' +
+    @error 'The $position value of #{meta.inspect($position)} used in the ' +
+        '[ position-horizontally() ] mixin is invalid. You must choose between ' +
         'relative or absolute positioning.';
   }
 
@@ -52,8 +57,8 @@
 /// @group Utilities
 @mixin center-horizontally($position: relative) {
   @if $position != relative and $position != absolute {
-    @error 'The $position value of `#{meta.inspect($position)}` used in the ' +
-        '`center-horizontally()` mixin is invalid. You must choose between ' +
+    @error 'The $position value of #{meta.inspect($position)} used in the ' +
+        '[ center-horizontally() ] mixin is invalid. You must choose between ' +
         'relative or absolute positioning.';
   }
 

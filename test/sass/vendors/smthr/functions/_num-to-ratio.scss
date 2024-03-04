@@ -1,0 +1,95 @@
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:string';
+@use 'str-to-num' as *;
+
+/// Converts a decimal number into a ratio expressed as a space-separated list.
+///
+/// @param {Number} $number - The number to convert into a media ratio.
+/// @param {Bool} $common-ratio [false] - If value is anything except for `null`
+/// and `false`, this flag will direct the function to return the closest common
+/// media ratio.
+/// @param {Number} $accuracy [50000] - The search limit for the denominator.
+/// @param {Number} $tolerance [0.01] - How close the provied $number can get to
+/// return a common media ratio when the $common-ratio flag is truthy.
+///
+/// @return {List} - The number converted into a ratio.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} str-to-num
+///
+/// @throw Invalid number value.
+@function num-to-ratio($number, $common-ratio: false, $accuracy: 50000, $tolerance: 0.0175) {
+  $common-ratios: (
+    '0.56': (9 16), // Vertical video on social media, rotated 16:9
+    '0.8': (4 5), // Vertical images - especially on social media
+    '1': (1 1), // Popular for images/video on Instagram and other social media
+    '1.25': (5 4), // Old computer monitors, medium format cameras
+    '1.33': (4 3), // SD television and computer monitors, Academy ratio
+    '1.37': (137 100), // Classic 35mm film
+    '1.43': (143 100), // IMAX film format
+    '1.5': (3 2), // Photography, 35mm film, digital cameras, 1620x1080 monitors
+    '1.56': (14 9), // Compromise format between 4:3 and 16:9
+    '1.6': (16 10), // Tablets, 1728x1080 monitors
+    '1.66': (5 3), // European widescreen theater standard
+    '1.78': (16 9), // HDTV, Full HD, 4K UHD, YouTube videos, 1920x1080 monitors
+    '1.85': (37 20), // American cinema, between Academy and widescreen ratios
+    '1.89': (17 9), // Used in some digital cinema and 4k content
+    '2': (18 9), // Smartphones, FullHD+, Univisium, some films and TV productions
+    '2.16': (19.5 9), // Modern smartphones
+    '2.2': (11 5), // 70mm film format
+    '2.33': (21 9), // Ultra-wide HD monitors, cinema, gaming
+    '2.35': (47 20), // CinemaScope "65 and wide", movies in theaters, Blu-ray
+    '2.39': (239 100), // Alternate CinemaScope, movies in theaters, Blu-ray
+    '2.4': (12 5), // Cinema ratio, ultra-widescreen and cinematic content
+    '2.55': (51 20), // Original CinemaScope
+    '2.76': (69 25), // Ultra Panavision 70, MGM Camera 65
+    '3.56': (32 9), // Super ultra-wide monitors
+    '4': (4 1) // Ultra-wide panoramic, Polyvision
+  );
+  $closest-numerator: 1;
+  $closest-denominator: 1;
+  $min-difference: math.abs($number - math.div($closest-numerator, $closest-denominator));
+
+  @if $common-ratio {
+    @each $decimal, $ratio in $common-ratios {
+      @if math.abs($number - str-to-num($decimal)) < $tolerance {
+        @return $ratio;
+      }
+    }
+  }
+
+  @for $denominator from 1 through $accuracy + 1 {
+    $numerator: math.round($number * $denominator);
+    $difference: math.abs($number - math.div($numerator, $denominator));
+
+    @if $difference < $min-difference {
+      $min-difference: $difference;
+      $closest-numerator: $numerator;
+      $closest-denominator: $denominator;
+
+      @if $min-difference == 0 or $difference > $min-difference{
+        @return ($closest-numerator $closest-denominator);
+      }
+    }
+  }
+
+  @return ($closest-numerator $closest-denominator);
+}
+
+/// Converts a decimal number into a ratio expressed as a space-separated list.
+/// @access public
+///
+/// @param {Number} $number - The decimal number to convert.
+/// @param {Number} $accuracy [10000] - The search limit for the denominator.
+///
+/// @return {List} - The number converted into a ratio.
+///
+/// @throw Invalid number value.
+///
+/// @alias num-to-ratio
+@function decimal-to-ratio($number, $accuracy: 10000) {
+  @return num-to-ratio($number, $accuracy);
+}

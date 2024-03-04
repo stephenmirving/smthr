@@ -73,6 +73,7 @@
     'invert', 'grayscale', 'hue-rotate', 'drop-shadow', 'contrast',
     'brightness', 'blur', 'abs', 'sign', 'exp', 'log', 'hypot', 'sqrt',
     'pow', 'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'atan2', 'mod',
+    'pi', 'e', 'infinity', '-infinity', 'NaN',
     'color-contrast', 'devoce-cmyk', 'light-dark', 'color-scheme',
     'linear-gradient', 'radial-gradient', 'conic-gradient',
     'repeating-linear-gradient', 'repeating-radial-gradient',
@@ -145,7 +146,7 @@
     'normal', 'semi-expanded', 'expanded', 'extra-expanded', 'ultra-expanded',
     'small-caps', 'all-small-caps', 'italic', 'oblique', 'bold', 'inherit',
     'initial', 'revert', 'revert-layer', 'unset', 'none', 'always', 'never',
-    'auto', 'first', 'last', 'force-end', 'allow-end'
+    'auto', 'first', 'last', 'force-end', 'allow-end',
   );
 
   @if meta.type-of($word) != 'string' {

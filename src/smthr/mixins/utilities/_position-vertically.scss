@@ -1,10 +1,11 @@
 @use 'sass:meta';
 @use 'sass:math';
 
-/// Vertically aligns an alement using relative positioning and transform. You
-/// can modify the $top-pos argument to change the top property's value to alter
-/// the vertical alignment. If you want to center the element both horizontally
-/// and vertically, use the `position-center()` mixin instead.
+/// Vertically aligns an alement using relative or absolute positioning and
+/// transform. You can modify the `$top-pos` argument to change the `top`
+/// property's value to alter the vertical alignment. If you want to center the
+/// element both horizontally and vertically, use the `position-center()` mixin
+/// instead.
 ///
 /// @param {Number} $top-pos [50%] - The top property value. 50% will put the
 /// element in the vertical center.
@@ -18,9 +19,9 @@
   @if $top-pos == 'middle' or
     $top-pos == 'center' or
     $top-pos == 'centre' or
-    $top-pos == 'mid' or
     $top-pos == 'cent' or
     $top-pos == 'cen' or
+    $top-pos == 'mid' or
     $top-pos == 'c' or
     $top-pos == 'm'
   {
@@ -54,11 +55,10 @@
 /// must use either relative or absolute positioning.
 ///
 /// @group Utilities
-/// @alias vertical-center
 @mixin center-vertically($position: relative) {
   @if $position != relative and $position != absolute {
     @error 'The $position value of #{meta.inspect($position)} used in the ' +
-        '`center-vertically()` mixin is invalid. You must choose between ' +
+        '[ center-vertically() ] mixin is invalid. You must choose between ' +
         'relative or absolute positioning.';
   }
 

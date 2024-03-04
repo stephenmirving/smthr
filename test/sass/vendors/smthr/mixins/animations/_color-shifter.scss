@@ -167,7 +167,7 @@
   }
 
   // Allow for multiple types of 'true' input for $infinite and $alternate
-  @if is-true($infinite) or
+  @if equals-true($infinite) or
     $infinite ==
     'yes' or
     $infinite ==
@@ -176,18 +176,25 @@
   {
     $inf-alt: #{' ' + infinite};
 
-    @if is-true($alternate) or
+    @if equals-true($alternate) or
       $alternate ==
       'yes' or
       $alternate ==
       'y' or
-      $alternate ==
-      'alt' or
-      $alternate ==
-      'a'
+      is-alias('alternate', $alternate)
     {
       $inf-alt: #{' ' + infinite alternate};
+    } @else if $alternate {
+      @warn 'Invalid $alternate value of #{meta.inspect($alternate)} for the ' +
+          '[ color-shifter() ] mixin. The alternate property must be a boolean ' +
+          'value of true or false. A value of `alternate` is also accepted.' +
+          '`alternate` was not added to the animation.';
     }
+  } @else if $infinite {
+    @warn 'Invalid $infinite value of #{meta.inspect($infinite)} for the ' +
+        '[ color-shifter() ] mixin. The $infinite property must be a ' +
+        'boolean value of true or false. A value of `infinite` is also ' +
+        'accepted. `infinite` was not added to the animation.';
   }
 
   @if $bg-or-fg ==

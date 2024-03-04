@@ -189,10 +189,10 @@ this:
 If you prefer to namespace the module to something shorter, you can choose almost
 anything you want that is not used by another module. While there is no explicit
 warning against it in the documentation, I recommend not choosing a `$`, `#`,
-`@`, `_` or `-` character as your namespace, as this could potentially cause
+`@`, `e`, `_` or `-` character as your namespace, as this could potentially cause
 conflicts due to `$` being used for variables, `#` being used for interpolation,
-`@` being used for at-rules, and `_` or `-` being used at the start of member
-names to
+`@` being used for at-rules, `e` being reserved for the mathematical constant _[e](https://en.wikipedia.org/wiki/E_(mathematical_constant))_,
+and `_` or `-` being used at the start of member names to
 [make those members private](https://sass-lang.com/documentation/at-rules/use/#private-members).
 
 ```scss

@@ -5,8 +5,8 @@
 ///
 /// In Sass, all values other than `false` and `null` are considered truthy.
 /// Empty strings, empty lists, and empty maps are all "truthy" and sometimes
-/// you may want to check if something is strictly true while excluding such
-/// values.
+/// you may want to check if something is more strictly true while excluding
+/// such values.
 ///
 /// @param {*} $value - A value to check.
 ///
