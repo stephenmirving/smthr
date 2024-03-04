@@ -14,7 +14,10 @@
 /// @param {Bool | String} $in-or-out ['in'] - Determines if the element will
 /// slide 'in' (`in`, `true`, or `i`) or 'out' (`out`, `false`, or `o`).
 /// @param {String} $direction ['top'] - Will either slide in from this
-/// direction or slide out towards this direction.
+/// direction or slide out towards this direction, depending on the value of
+/// $in-or-out. Accepts the following $direction values: `top`, `top-right`,
+/// `right`, `bottom-right`, `bottom`, `bottom-left`, `left`, and `top-left`.
+/// Accepted values also include all valid aliases for these $direction values.
 /// @param {Number} $duration [0.6s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -22,8 +25,8 @@
 /// any CSS global value.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
-/// any CSS global value. Default of `null` assumes the CSS property default of
-/// `normal`.
+/// any CSS global value. Default of `null` assumes the CSS property's default
+/// of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A `null` value passed here will default to the recommended timing
 /// function for this animation of `cubic-bezier(0.25, 0.46, 0.45, 0.94)`
@@ -57,7 +60,7 @@
   $timing-func: null,
   $anim-num: null
 ) {
-  // Default values for a slide in from the top
+  // Default values for a slide 'in' from the 'top' $direction
   $opacity-val-1: 0;
   $opacity-val-2: 1;
   $trans-val-1: translateY(-1000px);
@@ -128,25 +131,7 @@
         'top-left',
         string.length($anim-suffix) + 1
       );
-    } @else if (
-        $direction ==
-          'top-right' or
-          $direction ==
-          'topright' or
-          $direction ==
-          't-r' or
-          $direction ==
-          'tr' or
-          $direction ==
-          'right-top' or
-          $direction ==
-          'righttop' or
-          $direction ==
-          'r-t' or
-          $direction ==
-          'rt'
-      )
-    {
+    } @else if is-alias('top right', $direction) {
       $trans-val-1: translateY(-1000px) translateX(1000px);
       $trans-val-2: translateY(0) translateX(0);
       $anim-suffix: string.insert(
@@ -170,12 +155,19 @@
         'bottom-left',
         string.length($anim-suffix) + 1
       );
-    } @else {
+    } @else if not is-alias('top', $direction) {
       @error 'Invalid direction of `#{meta.inspect($direction)}` chosen for the ' +
-          '[ slide() ] mixin.';
+          '[ slide() ] mixin. Accepted values for $direction are: `top`, ' +
+          '`top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, ' +
+          '`left`, and `top-left`, along with the various accepted aliases of ' +
+          'those values.';
     }
   } @else {
-    $direction: null;
+    @error 'No $direction value specified for the [ slide() ] mixin. You must ' +
+        'provide a value for $direction. Accepted values for $direction are: ' +
+          '`top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, ' +
+          '`left`, and `top-left`, along with the various accepted aliases of ' +
+          'those values.';
   }
 
   // If slide is out rather than in, swap and reverse the necessary values

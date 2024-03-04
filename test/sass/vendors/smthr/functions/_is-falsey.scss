@@ -7,8 +7,6 @@
 /// values, but also for empty strings, empty lists, empty maps, the number `0`,
 /// and the unquoted string value of `'false'`.
 ///
-/// is the opposite of the is-true function.
-///
 /// In Sass, empty strings and empty lists are all "truthy" and sometimes you
 /// may want to check if something is false in the more traditional sense.
 ///

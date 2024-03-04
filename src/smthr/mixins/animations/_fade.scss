@@ -15,8 +15,12 @@
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// fade 'in' (pass `in`, `true`, or `i`) or 'out' (pass `out` `false`,
 /// or `o`).
-/// @param {String} $direction [null] - Will optionally either fade in from
-/// this direction or fade out towards this direction, depending on $in-or-out.
+/// @param {String} $direction [null] - Will optionally either fade 'in' from
+/// this direction or fade 'out' towards this direction, depending on the value
+/// of $in-or-out. May also not come from a direction at all if `null` is passed.
+/// Accepted values are `null`, `top`, `top-right`, `right`, `bottom-right`,
+/// `bottom`, `bottom-left`, `left`, `top-left`, `forwards`, and `backwards`, or
+/// any valid aliases for these $direction values.
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -56,7 +60,7 @@
   $timing-func: null,
   $anim-num: null
 ) {
-  // Default values for a fade in with no direction
+  // Default values for a fade 'in' with no direction
   $opacity-val-1: 0;
   $opacity-val-2: 1;
   $trans-val-1: null;
@@ -133,9 +137,9 @@
       $direction: 'bottom-left';
     } @else {
       @error 'Invalid $direction of `#{meta.inspect($direction)}` chosen for the ' +
-          '[ fade() ] mixin. The value of $direction must either be null or ' +
-          'one of the followwing: `top`, `top-right`, `right`, `bottom-right`, ' +
-          '`bottom`, `bottom-left`, `left`, `top-left`, `front`, or `back`.';
+          '[ fade() ] mixin. The value of $direction must either be `null` or ' +
+          'one of the following: `top`, `top-right`, `right`, `bottom-right`, ' +
+          '`bottom`, `bottom-left`, `left`, `top-left`, `forwards`, or `backwards`.';
     }
   } @else {
     $direction: null;
@@ -230,8 +234,7 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (is-number($iterations) and math.is-unitless($iterations)) or
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
       is-global-value($iterations)
     {
       $iterations: $iterations;

@@ -8,10 +8,13 @@
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 
-/// Animates a panning wipe style effect on the background-image property
-/// of an element. Works best with a gradient or an image.
+/// Animates a panning wipe style effect on the background property of an
+/// element. Works best with a gradient or an image.
 ///
-/// @param {String} $direction ['right'] - The direction the pan is heading
+/// @param {String} $direction ['right'] - The direction the pan-wipe effect is
+/// heading. Accepted values are `top`, `top-right`, `right`, `bottom-right`,
+/// `bottom`, `bottom-left`, `left`, `top-left`, and all valid aliases for these
+/// $direction values.
 /// @param {Number} $duration [6s] - The duration of the animation (`s` or `ms`)
 /// @param {Mixed} $bg
 /// [linear-gradient(270deg, #CC6AA5, #3E91CC, #2dCCA7) center / 600% 100%] -
@@ -69,7 +72,7 @@
   $height: $size,
   $anim-num: null
 ) {
-    // $direction default of `right` values
+  // Values for the default $direction of 'right'
   $pos-val1: 0% 50%;
   $pos-val2: 100% 50%;
   $anim-suffix: '-right';
@@ -123,7 +126,8 @@
     $pos-val2: 100% 100%;
     $anim-suffix: '-bottom-right';
   } @else if not is-alias('right', $direction) {
-    @error 'Invalid direction of `#{meta.inspect($direction)}` for the [ pan-wipe() ] mixin.';
+    @error 'Invalid $direction value of #{meta.inspect($direction)} for the ' +
+        '[ pan-wipe() ] mixin.';
   }
 
   @if not is-number($duration) {
@@ -184,8 +188,7 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (is-number($iterations) and math.is-unitless($iterations)) or
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
       is-global-value($iterations)
     {
       $iterations: $iterations;

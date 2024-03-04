@@ -9,8 +9,9 @@
 
 /// Adds bounciness to a given element, bouncing it in place.
 ///
-/// @param {String} $direction [top] - The direction the animation will appear
-/// to be bouncing towards. Acceptable values are 'up', 'down', 'left', 'right'.
+/// @param {String} $direction ['top'] - The direction the animation will appear
+/// to be bouncing towards. Accepted values are `top`, `bottom`, `left`, `right`,
+/// or any valid aliases for these $direction values.
 /// @param {Number} $duration [0.9s] The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -39,7 +40,7 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin bounciness(
-  $direction: top,
+  $direction: 'top',
   $duration: 0.9s,
   $delay: null,
   $iterations: null,
@@ -47,7 +48,7 @@
   $timing-func: null,
   $anim-num: null
 ) {
-  // Values for top $direction default
+  // Values for $direction default of 'top'
   $dir-val1: translateY(-45px);
   $dir-val2: translateY(-24px);
   $dir-val3: translateY(-12px);
@@ -97,8 +98,9 @@
     $dir-val6: translateY(0);
     $anim-suffix: '-from-right';
   } @else if not is-alias('top', $direction) {
-    @error 'Invalid direction of `#{meta.inspect($direction)}` for the ' +
-        '[ bounciness() ] mixin.';
+    @error 'Invalid $direction value of #{meta.inspect($direction)} for the ' +
+        '[ bounciness() ] mixin. Accepted value for $direction are `top`, ' +
+        '`bottom`, `left`, and `right`.';
   }
 
   @if not is-number($duration) {
@@ -160,8 +162,7 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (is-number($iterations) and math.is-unitless($iterations)) or
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
       is-global-value($iterations)
     {
       $iterations: $iterations;

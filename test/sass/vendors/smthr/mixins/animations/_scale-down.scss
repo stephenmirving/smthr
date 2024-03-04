@@ -9,10 +9,10 @@
 
 /// Animates an element by scaling it down.
 ///
-/// @param {String} $direction ['center'] - The direction the element will appear
-/// to be scaling down from. Can be `center`, `top`, `top-right,` `right`,
-/// `bottom-right`, `bottom`, `bottom-left`, `left, or `top-left`. Several
-/// aliases aliases also exist for these values.
+/// @param {String} $direction ['center'] - The direction from which the element
+/// will appear to be scaling down. Accepted values are `center`, `top`,
+/// `top-right,` `right`, `bottom-right`, `bottom`, `bottom-left`, `left,
+/// `top-left`, and all valid aliases for these $direction values.
 /// @param {Number} $duration [0.4s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally start along an

@@ -14,11 +14,11 @@
 /// `animation-front-face` and 'animation-back-face' mixins for element 'face'
 /// child elements and the 'animation-stage` mixin for the parent element.
 ///
-/// @param {String} $direction ['up'] - The direction the scale effect causes
-/// the element to seem to be moving towards. Can be one of the following values:
-/// `top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, `left`,
-/// `top-left`, `forwards`, or `backwards`. Many potential aliases are available
-/// for these values (see $map-alias-resolutions in the `variables/maps` folder).
+/// @param {String} $direction ['top'] - The direction the scale effect causes
+/// the element to seem to be moving towards. Accepted values are: `top`,
+/// `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, `left`,
+/// `top-left`, `forwards`, `backwards`, and all valid aliases for these
+/// $direction values.
 /// @param {String} $axis ['horizontal'] - The axis the element will flip over.
 /// Can be one of the following values: `horizontal`, `vertical`, `diagonal`, or
 /// `diagonal2`. There are many alias values for these axis values. See the
@@ -56,7 +56,7 @@
 /// @throw Invalid $iterations value
 /// @throw Invalid $anim-dir value
 @mixin flip(
-  $direction: 'up',
+  $direction: 'top',
   $axis: 'horizontal',
   $duration: 0.5s,
   $delay: null,
@@ -88,13 +88,13 @@
     }
 
     @if is-alias('bottom', $direction) {
-      $direction: 'down';
+      $direction: 'bottom';
     } @else if is-alias('forwards', $direction) {
       $direction: 'forwards';
     } @else if is-alias('backwards', $direction) {
       $direction: 'backwards';
     } @else if is-alias('top', $direction) {
-      $direction: 'up';
+      $direction: 'top';
     } @else if is-alias('left', $direction) {
       $direction: 'left';
     } @else if is-alias('right', $direction) {
@@ -152,7 +152,7 @@
   }
 
   @if $axis == 'horizontal' {
-    @if $direction == 'down' {
+    @if $direction == 'bottom' {
       $trans-val-2: rotateX(-180deg);
     } @else if $direction == 'forwards' {
       $trans-val-1: translateZ(0) rotateX(0);
@@ -160,10 +160,10 @@
     } @else if $direction == 'backwards' {
       $trans-val-1: translateZ(0) rotateX(0);
       $trans-val-2: translateZ(-260px) rotateX(180deg);
-    } @else if $direction != 'up' {
+    } @else if $direction != 'top' {
       @error 'Invalid $direction value of `#{meta.inspect($direction)}` with an ' +
           '$axis of `horizontal`. For a horizontal axis, you must choose a ' +
-          'direction of either `top`, `down`, `backwards`, or `forwards`.';
+          'direction of either `top`, `bottom`, `backwards`, or `forwards`.';
     }
   } @else if $axis == 'vertical' {
     $trans-val-1: rotateY(0);
@@ -178,9 +178,9 @@
       $trans-val-1: translateZ(0) rotateY(0);
       $trans-val-2: translateZ(160px) rotateY(180deg);
     } @else if $direction != 'right' {
-      @error 'Invalid $direction value of `#{meta.inspect($direction)}` with an $axis of ' +
-      '`vertical`. For a vertical axis, you must choose a direction ' +
-      'of either `left`, `right`, `backwards`, or `forwards`.';
+      @error 'Invalid $direction value of #{meta.inspect($direction)} with ' +
+          'an $axis of \'vertical\'. For a vertical axis, you must choose ' +
+          'a $direction of either `left`, `right`, `backwards`, or `forwards`.';
     }
   } @else if $axis == 'diagonal1' {
     $trans-val-1: rotate3d(1, 1, 0, 0);
@@ -267,8 +267,7 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (is-number($iterations) and math.is-unitless($iterations)) or
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
       is-global-value($iterations)
     {
       $iterations: $iterations;

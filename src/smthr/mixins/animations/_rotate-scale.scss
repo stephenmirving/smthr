@@ -5,6 +5,7 @@
 @use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 @use '../utilities/only-moz' as *;
@@ -16,7 +17,8 @@
 /// applied, respectively.
 ///
 /// @param {Bool | String} $up-or-down ['up'] - Whether the elelment is
-/// scaling `up` or `down`.
+/// scaling 'up' (pass `up`, `top` or `true`) or 'down' (pass `down`. `bottom`,
+/// or `false`).
 /// @param {Number} $duration [0.4s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {String} $axis [null] - The animation can optionally rotate along an
@@ -42,6 +44,7 @@
 /// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-global-value
+/// @require {function} is-falsey
 /// @require {function} is-number
 /// @require {function} is-string
 /// @require {mixin} only-moz
@@ -61,7 +64,7 @@
   $timing-func: linear,
   $anim-num: null
 ) {
-  // Values for a default scale up
+  // Values for the default $up-or-down value of 'up' with $axis of `null`
   $trans-val-1: scale(1) rotateZ(0);
   $trans-val-2: scale(2) rotateZ(180deg);
   $trans-val-3: scale(1) rotateZ(360deg);
@@ -92,13 +95,13 @@
   @if equals-true($up-or-down) or is-alias('top', $up-or-down) {
     $up-or-down: true;
     $anim-suffix: '-up';
-  } @else if not $up-or-down or is-alias('bottom', $up-or-down) {
+  } @else if is-falsey($up-or-down) or is-alias('bottom', $up-or-down) {
     $up-or-down: false;
     $trans-val-2: scale(0.5) rotateZ(180deg);
     $anim-suffix: '-down';
   } @else {
     @error 'Invalid $up-or-down value of [#{meta.inspect($up-or-down)}] for ' +
-        'the `rotate-scale` mixin.';
+        'the [ rotate-scale() ] mixin.';
   }
 
   @if $axis and not is-alias('none', $axis) {
@@ -149,19 +152,8 @@
         string.length($anim-suffix) + 1
       );
 
-      @if $axis ==
-        'diagonal-2' or
-        $axis ==
-        'diagonal2' or
-        $axis ==
-        'diag-2' or
-        $axis ==
-        'diag2' or
-        $axis ==
-        'd-2' or
-        $axis ==
-        'd2'
-      {
+      @if is-alias('bottom-right-to-top-left', $axis) {
+        // diagonal-2 values
         $trans-val-1: if(
           $up-or-down,
           scale(1) rotate3d(-1, 1, 0, 0),
@@ -197,20 +189,20 @@
       }
     } @else {
       @error 'Invalid $axis value of `#{meta.inspect($axis)}` for the ' +
-          '`rotate-scale` mixin. Value of $axis must be one of the following: ' +
+          '[ rotate-scale() ] mixin. Value of $axis must be one of the following: ' +
           '`horizontal`, `vertical`, `diagonal1`, or `diagonal2`';
     }
   }
 
   @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '`rotate-scale` mixin. The duration property must be a number.';
+        '[ rotate-scale() ] mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
     // If no there is no unit for $duration, unless $duration > 60, assume seconds
     $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
   } @else if not list.index('s' 'ms', math.unit($duration)) {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '`rotate-scale` mixin. The duration property must be in either ' +
+        '[ rotate-scale() ] mixin. The duration property must be in either ' +
         's or ms units.';
   } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -237,14 +229,15 @@
 
   @if $delay {
     @if not is-number($delay) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `rotate-scale` ' +
-          'mixin. The delay property must be a number.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ rotate-scale() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, unless $delay > 60, assume seconds
       $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the `rotate-scale` ' +
-          'mixin. The delay property must be in either s or ms units.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
+          '[ rotate-scale() ] mixin. The delay property must be in either ' +
+          's or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
 
@@ -261,14 +254,13 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
-        is-number($iterations) and math.is-unitless($iterations)
-      ) or is-global-value($iterations)
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
+      is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {
-      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for the ' +
-          '`rotate-scale` mixin.';
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ rotate-scale() ] mixin.';
     }
   } @else {
     $iterations: null;
@@ -287,8 +279,8 @@
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
-    @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
-        '`rotate-scale` mixin';
+    @error 'Invalid $anim-dir value of #{meta.inspect($anim-dir)}` for the ' +
+        '[ rotate-scale() ] mixin';
   }
 
   @if not $timing-func or is-alias('normal', $timing-func) {

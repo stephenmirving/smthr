@@ -16,7 +16,8 @@
 /// @param {String} $direction ['left'] - Will either roll in from this
 /// direction or roll out towards this direction, depending on the value of
 /// $in-or-out. The value of $direction must be one of the following:
-/// `top`, `right`, `bottom`, `left`.
+/// `top`, `right`, `bottom`, `left`, or any valid aliases for these $direction
+/// values.
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations

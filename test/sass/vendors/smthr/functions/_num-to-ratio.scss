@@ -2,6 +2,7 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
+@use 'is-falsey' as *;
 @use 'is-number' as *;
 @use 'str-to-num' as *;
 
@@ -19,6 +20,7 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} is-falsey
 /// @require {function} is-number
 /// @require {function} str-to-num
 @function num-to-ratio($number, $common-ratio: false, $accuracy: 50000, $tolerance: 0.0175) {
@@ -58,7 +60,7 @@
         'be a valid number.';
   }
 
-  @if $common-ratio {
+  @if not is-falsey($common-ratio) {
     @each $decimal, $ratio in $common-ratios {
       @if math.abs($number - str-to-num($decimal)) < $tolerance {
         @return $ratio;

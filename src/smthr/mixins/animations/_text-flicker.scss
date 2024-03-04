@@ -134,10 +134,8 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (
-        is-number($iterations) and math.is-unitless($iterations)
-      ) or is-global-value($iterations)
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
+      is-global-value($iterations)
     {
       $iterations: $iterations;
     } @else {

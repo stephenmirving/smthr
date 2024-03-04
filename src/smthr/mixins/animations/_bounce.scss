@@ -13,8 +13,10 @@
 /// @param {String | Bool} $in-or-out [in] - Determines if the element will
 /// bounce 'in' (pass `in`, `true`, or `i`) or 'out' (pass `out`, `false`, or `o`).
 /// @param {String} $direction ['top'] - The direction the animation will appear
-/// to be bouncing 'in' from or bouncing 'out' towards (based on $in-or-out).
-/// Accepts the values of `bottom`, `top`, `left`, `right`, `backwards` or `forwards`.
+/// to be bouncing 'in' from or bouncing 'out' towards, depending on the value
+/// of $in-or-out. Accepts the values of `top`, `bottom`, `left`, `right`,
+/// `backwards` or `forwards`. Accepted values also include all valid aliases
+/// for these $direction values.
 /// @param {Number} $duration [null] The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -24,7 +26,7 @@
 /// any CSS global value. Default of `null` assumes the CSS property default of
 /// `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
-/// animation. The default of null applies the default timing function of ease.
+/// animation. The default of `null` applies the default timing function of ease.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -249,8 +251,7 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if
-      (is-number($iterations) and math.is-unitless($iterations)) or
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
       is-global-value($iterations)
     {
       $iterations: $iterations;

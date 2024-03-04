@@ -51,6 +51,8 @@ TODO:
     ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Take a look at the line-clamp mixin
     ☐ Determine if a .sass version can be automated in a build process
+    ☐ Improve and standardize all error messages.
+    ☐ Ensure all parameters that only take certain keyword strings have those strings listed in the SassDoc
 
   Animations Mixins:
     ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4

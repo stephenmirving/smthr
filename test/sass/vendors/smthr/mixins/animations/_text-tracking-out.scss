@@ -4,6 +4,7 @@
 @use 'sass:math';
 @use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
@@ -11,7 +12,8 @@
 /// Animates text by tracking it out of view.
 ///
 /// @param {Bool | String} $expand-contract ['contract'] - Determines whether
-/// the text will, `expand` (`true`) or `contract` (`false`) as it animates.
+/// the text will, `expand` (or `grow` or `true`) or `contract` (or `shrink` or
+/// `false`) as it animates.
 /// @param {Bool} $animate-in-place [true] - If true, the animation will
 /// animate in its location on a 2-dimaensional plane. If false, it will allow
 /// the animation to track towards the $destination, appearing to move forwards
@@ -37,6 +39,7 @@
 /// @group Animations
 /// @require {function} equals-true
 /// @require {function} is-alias
+/// @require {function} is-falsey
 /// @require {function} is-global-value
 /// @require {function} is-number
 /// @require {function} is-string
@@ -88,7 +91,7 @@
 
   @if equals-true($expand-contract) or is-alias('expand', $expand-contract) {
     $expand-contract: true;
-  } @else if not $expand-contract or is-alias('contract', $expand-contract) {
+  } @else if is-falsey($expand-contract) or is-alias('contract', $expand-contract) {
     $expand-contract: false;
   }
 
@@ -96,8 +99,7 @@
     $destination: 'top';
   } @else if is-alias('bottom', $destination) {
     $destination: 'bottom';
-  } @else if not
-    $destination or
+  } @else if is-falsey($destination) or
     is-alias('normal', $destination) or
     is-alias('none', $destination)
   {
@@ -114,7 +116,7 @@
           'that moves towards the the `#{meta.inspect($destination)}` while ' +
           'the $animate-in-place parameter is set to `true`.';
     }
-  } @else if not $animate-in-place {
+  } @else if is-falsey($animate-in-place) {
     $animate-in-place: false;
 
     @if $expand-contract {

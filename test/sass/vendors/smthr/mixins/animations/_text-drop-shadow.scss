@@ -37,8 +37,9 @@
   $shadow-color: #000,
   $anim-num: null
 ) {
-  $dir-vals: 0 0 18px; // Default of center
-  $anim-suffix: '';
+  // Values for the default of center
+  $dir-vals: 0 0 18px;
+  $anim-suffix: '-center';
 
   @if $direction and is-string($direction) {
     $direction: string.to-lower-case($direction);
@@ -80,9 +81,7 @@
   } @else if is-alias('bottom left', $direction) {
     $dir-vals: -6px 6px 18px;
     $anim-suffix: '-bottom-left';
-  } @else if is-alias('center', $direction) {
-    $anim-suffix: '-center';
-  } @else {
+  } @else if not is-alias('center', $direction) {
     @error 'Invalid $direction value of `#{meta.inspect($direction)}` ' +
         'for the [ text-drop-shadow() ] mixin. The value of $direction ' +
         'must be one of the following: `center`, `top`, `top-right`, ' +

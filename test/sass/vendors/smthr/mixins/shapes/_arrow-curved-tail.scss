@@ -86,7 +86,7 @@
       $angle: -80deg;
     } @else if not is-alias('bottom right', $direction) {
       @error 'Invalid $direction value for the [ arrow-curved-tail() ] mixin.' +
-          ' Acceptable values include: `top`,`top-right`, `right`, ' +
+          ' Accepted values include: `top`,`top-right`, `right`, ' +
           '`bottom-right`, `bottom`, `bottom-left`, `left`, or `top-left`.';
     }
   }

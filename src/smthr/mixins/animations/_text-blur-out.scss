@@ -11,7 +11,8 @@
 ///
 /// @param {String} $style ['out'] - The style of the blur-out effect. Can be
 /// `out` (or `none` or `default`), `expand` (or `grow`),
-/// `contract`, (or `shrink`) `forwards`, or `backwards`.
+/// `contract`, (or `shrink`) `forwards`, `backwards`, or any valid aliases for
+/// these values.
 /// @param {Number} $duration [1s] - The duration of the animation (in s or ms).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations

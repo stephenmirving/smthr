@@ -11,9 +11,9 @@
 /// Applies a text pop-up animation with a shadow effect to a given element.
 ///
 /// @param {String} $direction ['top'] - The direction the animation will appear
-/// to be going in. Valid $direction values include the following: `top`,
-/// `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, `left`, or
-/// `top-left`.
+/// to be going in. Accepted $direction values are: `top`, `top-right`, `right`,
+/// `bottom-right`, `bottom`, `bottom-left`, `left`, `top-left`, and all valid
+/// aliases for these $direction values.
 /// @param {Number} $duration [0.5s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The duration of the optional delay of the
 /// animation (`s` or `ms`).
@@ -49,7 +49,7 @@
   $infinite: null,
   $anim-num: null
 ) {
-  // Default values for the default $direction of top
+  // Values for the default $direction of 'top'
   $dir-val: translateY(-50px);
   $anim-suffix: '-to-top';
 
