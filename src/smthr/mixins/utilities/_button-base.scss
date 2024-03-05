@@ -3,106 +3,106 @@
 
 /// Generates the base visual styles for a button element.
 ///
-/// @param {Color} $btn-background - The background color of the button.
-/// @param {Color} $btn-color - The button text color.
-/// @param {String} $btn-border - The border value for the buttton.
-/// @param {Number} $btn-radius - The border radius value.
-/// @param {Number} $btn-margin - The button's margin value.
-/// @param {Number} $btn-padding - The button's padding value.
-/// @param {List} $btn-font-family - The button's font-family stack.
-/// @param {Number} $btn-font-size [1.25rem] - The button's font-size.
-/// @param {Number | String} $btn-font-weight [400] - The button's font-weight.
-/// @param {String} $btn-transition [null] - The button's transition value.
+/// @param {Color} $background - The background color of the button.
+/// @param {Color} $color - The button text color.
+/// @param {String} $border - The border value for the buttton.
+/// @param {Number} $radius - The border radius value.
+/// @param {Number} $margin - The button's margin value.
+/// @param {Number} $padding - The button's padding value.
+/// @param {List} $font-family - The button's font-family stack.
+/// @param {Number} $font-size [1.25rem] - The button's font-size.
+/// @param {Number | String} $font-weight [400] - The button's font-weight.
+/// @param {String} $transition [null] - The button's transition value.
 /// By default, a null value here will have the mixin search for a global
-/// $button-transition variable as is found in the variables file in this
-/// library. If no global variable is found, it will apply the following
+/// $button-transition variable as is found in the variables/_misc.scss file in
+/// this library. If no global variable is found, it will apply the following
 /// default: `background-color 0.2s ease-out, color 0.2s ease-out`.
 ///
 /// @group Utilities
 @mixin button-base(
-  $btn-background,
-  $btn-color,
-  $btn-border,
-  $btn-radius,
-  $btn-margin,
-  $btn-padding,
-  $btn-font-family,
-  $btn-font-size: 1.25rem,
-  $btn-font-weight: 700,
-  $btn-transition: null
+  $background,
+  $color,
+  $border,
+  $radius,
+  $margin,
+  $padding,
+  $font-family,
+  $font-size: 1.25rem,
+  $font-weight: 700,
+  $transition: null
 ) {
-  @if not $btn-transition {
-    $btn-transition: if(
+  @if not $transition {
+    $transition: if(
       meta.variable-exists('button-transition') or
       meta.global-variable-exists('button-transition'),
       $button-transition,
       (background-color 0.2s ease-out, color 0.2s ease-out)
     );
-  } @else if not $btn-transition or is-alias('none', $btn-transition) {
-    $btn-transition: null;
+  } @else if not $transition or is-alias('none', $transition) {
+    $transition: null;
   }
 
   display: inline-block;
   vertical-align: middle;
-  padding: $btn-padding;
-  border: $btn-border;
-  border-radius: $btn-radius;
-  margin: $btn-margin;
-  background: $btn-background;
-  color: $btn-color;
+  padding: $padding;
+  border: $border;
+  border-radius: $radius;
+  margin: $margin;
+  background: $background;
+  color: $color;
   text-align: center;
   cursor: pointer;
 
-  @if $btn-font-family and $btn-font-size {
-    @if $btn-font-weight {
-      font: $btn-font-weight $btn-font-size $btn-font-family;
+  @if $font-family and $font-size {
+    @if $font-weight {
+      font: $font-weight $font-size $font-family;
     } @else {
-      font: $btn-font-size $btn-font-family;
+      font: $font-size $font-family;
     }
   } @else {
-    @if $btn-font-family and
-      $btn-font-size and
-      $btn-font-weight and
-      $btn-font-weight and
-      $btn-font-weight !=
+    @if $font-family and
+      $font-size and
+      $font-weight and
+      $font-weight and
+      $font-weight !=
       400 and
-      $btn-font-weight !=
+      $font-weight !=
       normal
     {
-      font: $btn-font-weight $btn-font-size $btn-font-family;
+      font: $font-weight $font-size $font-family;
     } @else if
-      $btn-font-family and
-      $btn-font-size and
+      $font-family and
+      $font-size and
       (
         not
-          $btn-font-weight or
-          $btn-font-weight ==
+          $font-weight or
+          $font-weight ==
           400 or
-          $btn-font-weight ==
+          $font-weight ==
           normal
       )
     {
-      font: $btn-font-size $btn-font-family;
+      font: $font-size $font-family;
     } @else {
-      @if $btn-font-family {
-        font-family: $btn-font-family;
+      @if $font-family {
+        font-family: $font-family;
       }
-      @if $btn-font-size {
-        font-size: $btn-font-size;
+      @if $font-size {
+        font-size: $font-size;
       }
-      @if $btn-font-weight and
-        $btn-font-weight !=
+      @if $font-weight and
+        $font-weight !=
         400 and
-        $btn-font-weight !=
+        $font-weight !=
         normal
       {
-        font-weight: $btn-font-weight;
+        font-weight: $font-weight;
       }
     }
   }
 
-  @if $btn-transition {
-    transition: $btn-transition;
+  @if $transition {
+    transition: $transition;
   }
 }
 
@@ -110,16 +110,16 @@
 ///
 /// @access public
 ///
-/// @param {Color} $btn-background - The background color of the button.
-/// @param {Color} $btn-color - The button text color.
-/// @param {String} $btn-border - The border value for the buttton.
-/// @param {Number} $btn-radius - The border radius value.
-/// @param {Number} $btn-margin - The button's margin value.
-/// @param {Number} $btn-padding - The button's padding value.
-/// @param {List} $btn-font-family - The button's font-family stack.
-/// @param {Number} $btn-font-size [1rem] - The button's font-size.
-/// @param {Number | String} $btn-font-weight [400] - The button's font-weight.
-/// @param {String} $btn-transition [null] - The button's transition value.
+/// @param {Color} $background - The background color of the button.
+/// @param {Color} $color - The button text color.
+/// @param {String} $border - The border value for the buttton.
+/// @param {Number} $radius - The border radius value.
+/// @param {Number} $margin - The button's margin value.
+/// @param {Number} $padding - The button's padding value.
+/// @param {List} $font-family - The button's font-family stack.
+/// @param {Number} $font-size [1rem] - The button's font-size.
+/// @param {Number | String} $font-weight [400] - The button's font-weight.
+/// @param {String} $transition [null] - The button's transition value.
 /// By default, a null value here will have the mixin search for a global
 /// $button-transition variable as is found in the variables file in this
 /// library. If no global variable is found, it will apply the following
@@ -129,27 +129,27 @@
 ///
 /// @alias button-base
 @mixin btn-base(
-  $btn-background,
-  $btn-color,
-  $btn-border,
-  $btn-radius,
-  $btn-margin,
-  $btn-padding,
-  $btn-font-family,
-  $btn-font-size: 1rem,
-  $btn-font-weight: 400,
-  $btn-transition: null
+  $background,
+  $color,
+  $border,
+  $radius,
+  $margin,
+  $padding,
+  $font-family,
+  $font-size: 1rem,
+  $font-weight: 400,
+  $transition: null
 ) {
   @include button-base(
-    $btn-background,
-    $btn-color,
-    $btn-border,
-    $btn-radius,
-    $btn-margin,
-    $btn-padding,
-    $btn-font-family,
-    $btn-font-size,
-    $btn-font-weight,
-    $btn-transition
+    $background,
+    $color,
+    $border,
+    $radius,
+    $margin,
+    $padding,
+    $font-family,
+    $font-size,
+    $font-weight,
+    $transition
   );
 }

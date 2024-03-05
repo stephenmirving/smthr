@@ -1,8 +1,9 @@
+
 @use 'sass:color';
 @use 'sass:meta';
 @use '../../functions/bottom-shadow' as *;
-@use '../../functions/conv-color' as *;
 @use '../../functions/top-shadow' as *;
+@use '../../functions/conv-color' as *;
 @use '../../functions/is-integer' as *;
 
 /// Uses box-shadow to give an element a depth effect based on Google's
@@ -18,8 +19,9 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {function} top-shadow
 /// @require {function} bottom-shadow
+/// @require {function} top-shadow
+/// @require {function} conv-color
 /// @require {function} is-integer
 ///
 /// @throw Invalid $level value.
@@ -67,8 +69,9 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {function} top-shadow
 /// @require {function} bottom-shadow
+/// @require {function} top-shadow
+/// @require {function} conv-color
 /// @require {function} is-integer
 ///
 /// @throw Invalid $level value.
@@ -93,8 +96,9 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {function} top-shadow
 /// @require {function} bottom-shadow
+/// @require {function} top-shadow
+/// @require {function} conv-color
 /// @require {function} is-integer
 ///
 /// @throw Invalid $level value.
@@ -119,8 +123,9 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {function} top-shadow
 /// @require {function} bottom-shadow
+/// @require {function} top-shadow
+/// @require {function} conv-color
 /// @require {function} is-integer
 ///
 /// @throw Invalid $level value.
@@ -145,8 +150,9 @@
 /// look like it is lifted off the screen.
 ///
 /// @group Utilities
-/// @require {function} top-shadow
 /// @require {function} bottom-shadow
+/// @require {function} top-shadow
+/// @require {function} conv-color
 /// @require {function} is-integer
 ///
 /// @throw Invalid $level value.

@@ -41,12 +41,9 @@
 }
 
 .card {
-  // @include roll(in, left, 0.7s, $iterations: 1);
   @include clamp-width(11rem, 35%, 22rem);
   @include clamp-height(5.5rem, 40%, 22rem);
   @include depth-level(3);
-
-  // @include shape-shadow;
 
   @include font(
     4rem,
@@ -71,9 +68,6 @@
 
   &:hover {
     @include depth-level(5, #fff);
-
-    // @include shape-shadow;
-    // @include roll('out', 'right');
 
     border-color: tint(rgba(#08f, 0.8), 10%);
     transform: translateY(-1.06%) scale(1.021212);
@@ -113,14 +107,6 @@ $flip-axis: 'diagonal';
 
 .active-anim-flip {
   @include flip(forwards, $flip-axis, 0.6s);
-
-
-  // @include flip-scale-2(
-  //   top,
-  //   0.6s,
-  //   $anim-dir: alternate,
-  //   $timing-func: linear
-  // );
 }
 
 .active-anim-flip-rev {
@@ -131,15 +117,6 @@ $flip-axis: 'diagonal';
     $anim-dir: alternate-reverse,
     $anim-num: 2
   );
-
-
-  // @include flip-scale-2(
-  //   top,
-  //   0.6s,
-  //   $anim-dir: alternate-reverse,
-  //   $timing-func: linear,
-  //   $anim-num: 2
-  // );
 }
 
 .active-anim-flip-scale {
