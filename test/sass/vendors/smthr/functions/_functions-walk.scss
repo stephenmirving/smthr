@@ -99,7 +99,8 @@
 
   @each $function in $functions {
     @if not meta.function-exists($function) {
-      @error 'There is no `#{meta.inspect($function)}` function.';
+      @error 'There is no #{meta.inspect($function)} function available to ' +
+        'the [ functions-walk() ] function.';
     }
 
     $list: list.append($list, meta.call(meta.get-function($function), $args...));

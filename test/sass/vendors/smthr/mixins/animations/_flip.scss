@@ -3,9 +3,11 @@
 @use 'sass:list';
 @use 'sass:math';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-global-value' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
-@use '../../functions/is-global-value' as *;
+@use '../../functions/list-to-string' as *;
 @use '../utilities/only-moz' as *;
 
 /// Generates an animation that flips an element over. The element this mixin is
@@ -43,18 +45,20 @@
 ///
 /// @group Animations
 /// @require {function} is-alias
+/// @require {function} is-list
 /// @require {function} is-global-value
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 /// @require {mixin} only-moz
 /// @require {variable} $map-alias-resolutions
 ///
-/// @throw Invalid $direction value
-/// @throw Invalid $axis value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-/// @throw Invalid $iterations value
-/// @throw Invalid $anim-dir value
+/// @throw Invalid $direction value error.
+/// @throw Invalid $axis value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
+/// @throw Invalid $iterations value error.
+/// @throw Invalid $anim-dir value error.
 @mixin flip(
   $direction: 'top',
   $axis: 'horizontal',
@@ -74,8 +78,14 @@
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and is-string($anim-dir) {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
   }
 
   @if $timing-func and is-string($timing-func) {
@@ -83,6 +93,10 @@
   }
 
   @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
     @if is-string($direction) {
       $direction: string.to-lower-case($direction);
     }
@@ -232,18 +246,13 @@
     $duration: math.div($duration, 1000ms) * 1s;
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    is-alias('none', $delay)
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
+
   @if $delay {
     @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
@@ -279,10 +288,9 @@
     $iterations: null;
   }
 
-  @if not
-    $anim-dir or
-    is-alias('none', $anim-dir) or
-    is-alias('normal', $anim-dir)
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
@@ -306,7 +314,7 @@
     string.length($anim-suffix) + 1
   );
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(

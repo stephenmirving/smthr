@@ -3,15 +3,16 @@
 @use 'sass:meta';
 @use 'conv-color' as *;
 @use 'is-color' as *;
+@use 'is-string' as *;
 @use 'get-color-type' as *;
 @use 'is-percentage' as *;
 
-/// Inverts a given color and inverts it then convert it to a specified color
+/// Takes a given color and inverts it then converts it to a specified color
 /// syntax.
 ///
 /// @param {Color} $color - The color to invert.
 /// @param {Number} $weight [100%] - How much to invert the color. Must be
-/// a percentage between 0% and 100%.
+/// a percentage between 0% and 100% inclusive.
 /// @param {String} $syntax [get-color-type($color)] - The color syntax to
 /// convert into. Defaults to the color notation used by $color.
 ///
@@ -19,50 +20,80 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} conv-color
+/// @require {function} get-color-type
+/// @require {function} is-color
+/// @require {function} is-string
 ///
-/// @throw Invalid $color syntax.
-/// @throw Invalid $weight value.
-/// @throw Invalid $syntax.
+/// @throw Invalid $color data type, must be a color.
+/// @throw Invalid $weight value, must be a percentage between 0% and 100% inclusive.
+/// @throw Invalid $syntax data type, must be a string.
+/// @throw Invalid $syntax value, must be a color syntax string.
 @function color-invert($color, $weight: 100%, $syntax: get-color-type($color)) {
+  $valid-syntax-values: (
+    'hex', '#', 'rgb', 'rgba', 'hsl', 'hsla', 'hwb', 'function', 'name', 'cmyk'
+  );
+
   @if not is-color($color) {
-    @error 'Invalid $color value of [ #{meta.inspect($color)} ] passed to the ' +
-        '[ invert-color() ] function.';
+    @error 'Invalid $color data type of #{meta.inspect(meta.type-of($color))} ' +
+        'passed to the [ color-invert() ] function. This value is not ' +
+        'currently recognized as a color by your version of Sass.';
   }
 
   @if not is-percentage($weight) or $weight < 0% or $weight > 100% {
-    @error 'Invalid $weight value of [ #{meta.inspect($weight)} ] passed to ' +
-        'the [ invert-color() ] function. Value must be a percentage between ' +
+    @error 'Invalid $weight value of `#{meta.inspect($weight)}` passed to ' +
+        'the [ color-invert() ] function. Value must be a percentage between ' +
         '0% and 100%.';
   }
 
-  @if not
-    list.index(
-      ('hex' '#' 'rgb' 'rgba' 'hsl' 'hsla' 'hwb', 'cmyk', 'name', 'function'),
-      $syntax
-    )
-  {
-    @error 'Invalid $syntax value of [ #{meta.inspect($syntax)} ] passed to ' +
-        'the [ invert-color() ] function. Value of $syntax must be a string ' +
+  @if $syntax and is-string($syntax) {
+    $syntax: string.to-lower-case($syntax);
+  } @else if not $syntax {
+    $syntax: get-color-type($color);
+  } @else {
+    @error 'Invalid $sytax data type of #{meta.type-of($syntax)} passed to ' +
+        'the [ color-invert() ] function. The $syntax parameter must be ' +
+        'of type \'string\' or be `null` or `false`. This function supports ' +
+        'converting into the following $syntax values: ' +
+        '[ \'hex\', \'#\', \'rgb\', \'rgba\', \'hsl\', \'hsla\', \'hwb\', ' +
+        '\'function\', \'name\', \'cmyk\' ].';
+  }
+
+  @if not list.index($valid-syntax-values, $syntax) {
+    @error 'Invalid $syntax value of #{meta.inspect($syntax)} passed to ' +
+        'the [ color-invert() ] function. Value of $syntax must be a string ' +
         'representing a valid CSS color function specification. This function ' +
         'supports converting into the following $syntax values: ' +
-        '[ hex, \'#\', rgb, rgba, hsl, hsla, hwb, cmyk, name, function ].';
+        '[ \'hex\', \'#\', \'rgb\', \'rgba\', \'hsl\', \'hsla\', \'hwb\', ' +
+        '\'function\', \'name\', \'cmyk\' ].';
   }
 
   @return conv-color(color.invert($color, $weight), $syntax);
 }
 
-/// Inverts a given color and converts it to a specified color syntax.
-///
-/// @access public
+/// Takes a given color and inverts it then converts it to a specified color
+/// syntax.
 ///
 /// @param {Color} $color - The color to invert.
+/// @param {Number} $weight [100%] - How much to invert the color. Must be
+/// a percentage between 0% and 100% inclusive.
 /// @param {String} $syntax [get-color-type($color)] - The color syntax to
 /// convert into. Defaults to the color notation used by $color.
 ///
 /// @return {Color} - The inverted color in the given syntax.
 ///
-/// @throw Invalid $color notation.
-/// @throw Invalid $synax value.
+/// @access public
+/// @group Utilities
+/// @require {function} conv-color
+/// @require {function} get-color-type
+/// @require {function} is-color
+/// @require {function} is-string
+///
+/// @throw Invalid $color data type, must be a color.
+/// @throw Invalid $weight value, must be a percentage between 0% and 100% inclusive.
+/// @throw Invalid $syntax data type, must be a string.
+/// @throw Invalid $syntax value, must be a color syntax string.
+///
 /// @alias color-invert
 @function invert-color($color, $weight: 100%, $syntax: get-color-type($color)) {
   @return color-invert($color, $weight, $syntax);

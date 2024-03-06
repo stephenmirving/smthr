@@ -2,6 +2,7 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
@@ -41,6 +42,7 @@
 /// animation name so that the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
 /// @require {function} is-falsey
 /// @require {function} is-global-value
@@ -51,7 +53,7 @@
 /// @require {function} list-to-string
 ///
 /// @throw The $colors parameter is not a valid list containing enough colors.
-/// @throw No valid argument passed to the $duration parameter.
+/// @throw No valid argument passed to the $duration parameter error.
 /// @throw Invalid $duration data type, must be a number.
 /// @throw Invalid $duration unit type, must be a time value in `s` or `ms` units.
 /// @throw Invalid $delay data type, must be a number.
@@ -207,9 +209,9 @@
     $iteratons: null;
   }
 
-  @if not $anim-dir or
-    is-alias('none', $anim-dir) or
-    is-alias('normal', $anim-dir)
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
@@ -244,7 +246,7 @@
     $anim-prefix: 'fg-'
   }
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else if is-string($anim-num) or is-number($anim-num) {
     $anim-num: '--#{$anim-num}';

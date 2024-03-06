@@ -1,9 +1,11 @@
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
+@use 'sass:string';
 @use 'conv-to-rem' as *;
+@use 'equals-true' as *;
 @use 'is-map' as *;
-@use 'is-true' as *;
+@use 'is-string' as *;
 @use 'to-fixed' as *;
 
 /// Calculate the least square fit linear regression, or "trend-line", of a
@@ -27,6 +29,11 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} conv-to-rem
+/// @require {function} equals-true
+/// @require {function} is-map
+/// @require {function} is-string
+/// @require {function} to-fixed
 ///
 /// @throw Invalid data type for `$map` parameter.
 /// @throw The $map parameter must have at least 2 key:value pairs.
@@ -35,6 +42,10 @@
   @if not is-map($map) {
     @error 'Invalid data type for $map parameter in the [ trend-line() ] ' +
         'function. Value must be a map.';
+  }
+
+  @if $conv-to-rem and is-string($conv-to-rem) {
+    $conv-to-rem: string.to-lower-case($conv-to-rem);
   }
 
   // Get the number of provided breakpoints
@@ -94,7 +105,7 @@
 
   // Return the CSS calc() function equation for the trend line
   // If $conv-to-rem is true, y-intercept will be converted to a rem value
-  @if is-true($conv-to-rem) {
+  @if equals-true($conv-to-rem) or $conv-to-rem == 'rem' {
     @return calc(to-fixed($slope * 100vw, 8) + to-fixed(conv-to-rem($y-intercept), 5));
   }
 

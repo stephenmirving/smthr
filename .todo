@@ -55,7 +55,7 @@ TODO:
     ✔ Take a look at the line-clamp mixin @done(24-03-05 18:14)
     ☐ Add list-to-string functionality for parameters so if 2 values are passed without quotes, like `top left`, it turns it into `'top left'`
       - Otherwise is-alias() won't work on such values.
-      - Done on mixins from bounce to color-shifter. Need anywhere there could be a two word keyword value
+      - Done on mixins from bounce to puffa. Need anywhere there could be a two word keyword value
     ☐ Determine if a .sass version can be automated in a build process
     ☐ Improve and standardize all error messages.
     ☐ Ensure all parameters that only take certain keyword strings have those strings listed in the SassDoc
@@ -98,9 +98,8 @@ TODO:
     ☐ Finish doing everything from the smashing magazine article the linear-interpolation function (and possibly trend line?) came from
     ☐ Finish and propogate the new precision function ??
       ☐ Function finished
-      ☐ Function added to main build file
-      ☐ Function propogated to a prefixed version and sass versions
     ☐ Add more entity codes to the entity function
+    ☐ Make an is-color-name function that returns true or false if the value is a css color name
 
   Publishing:
     ☐ Get the SassDoc API compiled and ran

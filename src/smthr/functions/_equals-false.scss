@@ -1,0 +1,16 @@
+/// Returns the whether `$value` is strictly equal to `false`, `null`, or the
+/// string equivalent of `'false'`.
+///
+/// In Sass, all values other than `false` and `null` are considered truthy.
+/// Sometimes, you may just want to test only for either the Bool type `false` or
+/// the String equivalent of `'false'`.
+///
+/// @param {*} $value - A value to check.
+///
+/// @return {Bool} Returns `true` if `$value` is `null`, `false` or `'false'`.
+///
+/// @access public
+/// @group Utilities
+@function equals-false($value) {
+  @return not not (not $value or $value == 'false');
+}

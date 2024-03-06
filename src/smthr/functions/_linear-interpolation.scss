@@ -2,8 +2,8 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'conv-to-rem' as *;
+@use 'equals-true' as *;
 @use 'is-map' as *;
-@use 'is-true' as *;
 @use 'to-fixed' as *;
 
 /// Calculate the definition of a line between two points. This is very useful
@@ -20,15 +20,19 @@
 /// .element {
 ///   font-size: linear-interpolation((320px: 16px, 768px: 20px));
 /// }
-/// // RETURNS:
+/// // Compiles to...
 /// .element {
 ///   font-size: calc(0.89285714vw + 0.82143rem);
 /// }
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} conv-to-rem
+/// @require {function} equals-true
+/// @require {function} is-map
+/// @require {function} to-fixed
 ///
-/// @throw Invalid data type for `$map` parameter.
+/// @throw Invalid data type error for `$map` parameter.
 /// @throw The $map parameter must have exactly 2 key:value pairs.
 /// @throw The $map parameter's keys must not equal zero when the second is
 /// subtracted from the first.
@@ -87,7 +91,7 @@
 
   // Return the CSS calc() function equation for the linear interpolation.
   // If $conv-to-rem is true, y-intercept will be converted to a rem value
-  @if is-true($conv-to-rem) {
+  @if equals-true($conv-to-rem) {
     @return calc(to-fixed($slope * 100vw, 8) #{$operator} to-fixed(conv-to-rem($y-intercept), 5));
   }
 

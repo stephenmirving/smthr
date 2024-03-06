@@ -14,8 +14,8 @@
 /// @access public
 /// @group Utilities
 ///
-/// @throw Invalid $list type error
-/// @throw Invalid $separator type error
+/// @throw Invalid $list type error.
+/// @throw Invalid $separator type error.
 @function list-to-string(
   $list,
   $separator: if(meta.type-of($list) == 'list', list.separator($list), ' '),
@@ -71,24 +71,27 @@
   @return $str;
 }
 
-/// Iterates over a list and returns it as a converted string
-/// @access public
+/// Iterates over a list and returns it as a converted string.
 ///
 /// @param {List} $list - The list to convert into a string.
-/// @param {Bool} $extra-space [false] - Pass true to use an extra space
-/// between list items in the resulting string.
 /// @param {String} $separator [' '] - The separator to use between
 /// the list elements. By default this is the separator used in $list.
+/// @param {Bool} $extra-space [false] - Pass true to use extra space between
+/// list items in the resulting string.
 ///
 /// @return {String} The converted string.
 ///
-/// @throw Invalid $list type error
-/// @throw Invalid $separator type error
+/// @access public
+/// @group Utilities
+///
+/// @throw Invalid $list type error.
+/// @throw Invalid $separator type error.
+///
 /// @alias list-to-string
 @function list-to-str(
   $list,
-  $extra-space: false,
-  $separator: if(meta.type-of($list) == 'list', list.separator($list), ' ')
+  $separator: if(meta.type-of($list) == 'list', list.separator($list), ' '),
+  $extra-space: false
 ) {
   @return list-to-string($list, $extra-space, $separator);
 }

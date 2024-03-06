@@ -12,9 +12,11 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} is-integer
 ///
-/// @throw Invalid $float type.
-/// @throw $digits precision not in range
+/// @throw Invalid $float data type error, must be of type 'number'.
+/// @throw Invalid $digits data type error, must be an integer.
+/// @throw The precision of $digits is not in range warning.
 @function to-fixed($float, $digits: 2) {
   $max-precision: 10;
 
@@ -52,7 +54,6 @@
 }
 
 /// Fixes a float to a given number of decimal places.
-/// @access public
 ///
 /// @param {Number} $float - The number to format.
 /// @param {Number} $digits [2] - A integer representing the number of digits
@@ -60,8 +61,13 @@
 ///
 /// @return {Number} The fixed digit number.
 ///
-/// @throw Invalid $float type.
-/// @throw $digits precision not in range.
+/// @access public
+/// @group Utilities
+/// @require {function} is-integer
+///
+/// @throw Invalid $float data type error, must be of type 'number'.
+/// @throw Invalid $digits data type error, must be an integer.
+/// @throw The precision of $digits is not in range warning.
 ///
 /// @alias to-fixed
 @function fix-to-place($float, $digits: 2) {
@@ -70,16 +76,19 @@
 
 /// Fixes a float to a given number of decimal places.
 ///
-/// @access public
-///
 /// @param {Number} $float - The number to format.
 /// @param {Number} $digits [2] - A integer representing the number of digits
 /// to leave after the decimal.
 ///
 /// @return {Number} The fixed digit number.
 ///
-/// @throw Invalid $float type.
-/// @throw $digits precision not in range.
+/// @access public
+/// @group Utilities
+/// @require {function} is-integer
+///
+/// @throw Invalid $float data type error, must be of type 'number'.
+/// @throw Invalid $digits data type error, must be an integer.
+/// @throw The precision of $digits is not in range warning.
 ///
 /// @alias to-fixed
 @function fix-to-decimal($float, $digits: 2) {

@@ -2,10 +2,14 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 @use '../utilities/only-moz' as *;
 
 /// Animates an element by rotating it along a point and/or an axis. For the the
@@ -43,17 +47,21 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
 /// @require {function} is-global-value
+/// @require {function} is-falsey
+/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 /// @require {mixin} only-moz
 ///
-/// @throw Invalid $point value
-/// @throw Invalid $axis value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-/// @throw Invalid $anim-dir value
+/// @throw Invalid $point value error.
+/// @throw Invalid $axis value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
+/// @throw Invalid $anim-dir value error.
 @mixin rotate(
   $point: 'center',
   $duration: 0.4s,
@@ -72,20 +80,38 @@
   $is-diagonal: false;
   $anim-suffix: '-around';
 
-  @if $point and is-string($point) {
-    $point: string.to-lower-case($point);
+  @if $point {
+    @if is-list($point) {
+      $point: list-to-string($point);
+    }
+
+    @if is-string($point) {
+      $point: string.to-lower-case($point);
+    }
   }
 
-  @if $axis and is-string($axis) {
-    $axis: string.to-lower-case($axis);
+  @if $axis {
+    @if is-list($axis) {
+      $axis: list-to-string($axis);
+    }
+
+    @if is-string($axis) {
+      $axis: string.to-lower-case($axis);
+    }
   }
 
   @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and is-string($anim-dir) {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
   }
 
   @if $timing-func and is-string($timing-func) {
@@ -119,7 +145,7 @@
   } @else if is-alias('center', $point) {
     $point: 'center';
   } @else {
-    @error 'Invalid $point value of `#{meta.inspect($point)}` for the ' +
+    @error 'Invalid $point value of #{meta.inspect($point)} for the ' +
         '[ rotate() ] mixin. The value of $point must be one of the following: ' +
         '`top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, ' +
         '`left`, `top-left`, or `center`.';
@@ -146,8 +172,8 @@
       );
 
       @if $point != 'left' and $point != 'right' and $point != 'center' {
-        @error 'You have chosen an axis value of `vertical` that cannot be ' +
-            'used with the $point value of `#{meta.inspect($point)}` for the ' +
+        @error 'You have chosen an axis value of \'vertical\' that cannot be ' +
+            'used with the $point value of #{meta.inspect($point)} for the ' +
             '[ rotate() ] mixin. A vertical axis must have $point value of ' +
             'either `left`, `right`, or `center`.';
       } @else if $point == 'left' {
@@ -165,8 +191,8 @@
       );
 
       @if $point != 'top' and $point != 'bottom' and $point != 'center' {
-        @error 'You have chosen an axis value of `horizontal` that cannot be ' +
-            'used with the $point value of `#{meta.inspect($point)}` for the ' +
+        @error 'You have chosen an axis value of \'horizontal\' that cannot be ' +
+            'used with the $point value of #{meta.inspect($point)} for the ' +
             '[ rotate() ] mixin. A horizontal axis must have $point value of ' +
             'either `top`, `bottom`, or `center`.';
       } @else if $point == 'top' {
@@ -196,8 +222,8 @@
         $point !=
         'bottom-left'
       {
-        @error 'You have chosen an axis value of `diagonal` that cannot be ' +
-            'used with the $point value of `#{meta.inspect($point)}` for the ' +
+        @error 'You have chosen an axis value of \'diagonal\' that cannot be ' +
+            'used with the $point value of #{meta.inspect($point)} for the ' +
             '[ rotate() ] mixin. A diagonal axis must have $point value of ' +
             'either `top-left`, `top-right`, `bottom-right`, `bottom-left`, ' +
             'or `center`.';
@@ -234,7 +260,7 @@
         $trans-origin-val: 0% 0%;
       }
     } @else {
-      @error 'Invalid $axis value of [ #{meta.inspect($axis)} ] for the ' +
+      @error 'Invalid $axis value of #{meta.inspect($axis)} for the ' +
           '[ rotate() ] mixin. The value of $axis must either be `null` or one ' +
           'of the following: `horizontal`, `vertical`, `diagonal1`, or ' +
           '`diagonal2`.';
@@ -260,15 +286,9 @@
     }
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    is-alias('none', $delay)
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
@@ -298,12 +318,9 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
-        is-number($iterations) and math.is-unitless($iterations)
-      ) or is-global-value($iterations)
+    } @else if not (is-number($iterations) and math.is-unitless($iterations))
+      and not is-global-value($iterations)
     {
-      $iterations: $iterations;
-    } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
           'for the [ rotate() ] mixin.';
     }
@@ -311,10 +328,9 @@
     $iterations: null;
   }
 
-  @if not
-    $anim-dir or
-    is-alias('none', $anim-dir) or
-    is-alias('normal', $anim-dir)
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
@@ -336,7 +352,7 @@
     );
   }
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(
@@ -355,8 +371,8 @@
     }
   }
 
-  animation: rotate#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  animation: rotate#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
 
   @at-root {
     @keyframes rotate#{$anim-suffix} {

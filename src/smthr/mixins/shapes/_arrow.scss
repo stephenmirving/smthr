@@ -2,12 +2,16 @@
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-angle' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Uses clip path to change an element to the shape of an arrow.
 ///
 /// @param {String} $direction [right] - The direction the arrow is
-/// pointing.
+/// pointing. Accepted values are: `top`, `top-right`, `right`, `bottom-right`,
+/// `bottom`, `bottom-left`, `left`, `top-left`, `forwards`, `backwards`, and
+/// all valid aliases for these $direction values.
 /// @param {Number} $size [null] - The size of the arrow. If
 /// the $height property is not set explicitly, it is both height and width, if
 /// $height is set explicitly, then this value sets only the width.
@@ -17,12 +21,23 @@
 /// @group Shapes
 /// @require {function} is-alias
 /// @require {function} is-angle
+/// @require {function} is-list
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
 /// @throw Invalid $direction value.
 @mixin arrow($direction: 'right', $size: null, $bg: #80f, $height: $size) {
-  @if is-string($direction) {
-    $direction: string.to-lower-case($direction);
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    } @else {
+      @error 'Invalid data type for $direction in the [ arrow() ] mixin.' +
+          'The value for $direction must be a string.';
+    }
 
     @if is-alias('right', $direction) or is-alias('bottom right', $direction) {
       clip-path: polygon(
@@ -100,7 +115,7 @@
     );
     transform: rotate($direction);
   } @else {
-    @error 'Invalid $direction of `#{meta.inspect($direction)}` for the ' +
+    @error 'Invalid $direction of #{meta.inspect($direction)} for the ' +
           '[ arrow() ] mixin.';
   }
 

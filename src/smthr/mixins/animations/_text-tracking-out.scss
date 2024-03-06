@@ -2,12 +2,15 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:math';
+@use '../../functions/equals-false' as *;
 @use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Animates text by tracking it out of view.
 ///
@@ -37,21 +40,24 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-falsey
 /// @require {function} is-global-value
+/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
-/// @throw Invalid $expand-contract value.
-/// @throw Invalid data type for $animate-in-place.
-/// @throw Invalid $destination value.
-/// @throw Invalid data type for $duration.
-/// @throw Invalid data type for $delay.
-/// @throw Invalid data type for $iterations.
-/// @throw Invalid keyword value for $anim-dir.
-/// @throw Conflict between value for $animate-in-place and $destination.
+/// @throw Invalid $expand-contract value error.
+/// @throw Invalid data type for $animate-in-place error.
+/// @throw Invalid $destination value error.
+/// @throw Invalid data type for $duration error.
+/// @throw Invalid data type for $delay error.
+/// @throw Invalid data type for $iterations error.
+/// @throw Invalid keyword value for $anim-dir error.
+/// @throw Conflict between value for $animate-in-place and $destination error.
 @mixin text-tracking-out(
   $expand-contract: 'contract',
   $animate-in-place: true,
@@ -81,8 +87,14 @@
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and is-string($anim-dir) {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
   }
 
   @if $timing-func and is-string($timing-func) {
@@ -150,15 +162,9 @@
     }
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    is-alias('none', $delay)
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
@@ -191,12 +197,10 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (
+    } @else if not (
         is-number($iterations) and math.is-unitless($iterations)
-      ) or is-global-value($iterations)
+      ) and not is-global-value($iterations)
     {
-      $iterations: $iterations;
-    } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
           'for the [ text-tracking-out() ] mixin.';
     }
@@ -204,10 +208,9 @@
     $iterations: null;
   }
 
-  @if not
-    $anim-dir or
-    is-alias('none', $anim-dir) or
-    is-alias('normal', $anim-dir)
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
@@ -239,7 +242,7 @@
     );
   }
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(
@@ -254,8 +257,8 @@
     transform-style: preserve-3d;
   }
 
-  animation: txt-track-out#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  animation: txt-track-out#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+      #{$iterations} #{$anim-dir} both;
 
   @at-root {
     @keyframes txt-track-out#{$anim-suffix} {

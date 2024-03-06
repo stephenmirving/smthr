@@ -1,5 +1,6 @@
 @use 'sass:list';
 @use 'sass:math';
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-global-value' as *;
@@ -24,12 +25,13 @@
 /// @param {Number} $height [$width] - The height of the element.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
 /// @require {function} is-global-value
 /// @require {function} is-number
 ///
-/// @throw Invalid $perspective value
-/// @throw Invalid $z-index value
+/// @throw Invalid $perspective value error.
+/// @throw Invalid $z-index value error.
 @mixin animation-stage(
   $perspective: 500px,
   $p-origin: 55% 50%,
@@ -57,7 +59,7 @@
   -webkit-user-select: none;
   user-select: none;
 
-  @if not $perspective or is-alias('none', $perspective) {
+  @if equals-false($perspective) or is-alias('none', $perspective) {
     perspective: none;
   } @else if (
       is-number($perspective) and $perspective > 0 and

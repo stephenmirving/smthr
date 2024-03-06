@@ -2,10 +2,14 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:math';
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Adds a wobble animation to a given element
 ///
@@ -29,16 +33,20 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
+/// @require {function} is-falsey
 /// @require {function} is-global-value
+/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
-/// @throw Incorrect keyword value for $direction.
-/// @throw Invalid data type for $duration.
-/// @throw Invalid data type for $delay.
-/// @throw Invalid data type for $iterations.
-/// @throw Invalid keyword value for $anim-dir.
+/// @throw Incorrect keyword value for $direction error.
+/// @throw Invalid data type for $duration error.
+/// @throw Invalid data type for $delay error.
+/// @throw Invalid data type for $iterations error.
+/// @throw Invalid keyword value for $anim-dir error.
 @mixin wobbliness(
   $direction: 'bottom',
   $duration: 0.8s,
@@ -57,16 +65,28 @@
   $dir-val6: translateX(-6px) rotate(-1.2deg);
   $anim-suffix: '-from-bottom';
 
-  @if $direction and is-string($direction) {
-    $direction: string.to-lower-case($direction);
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
   }
 
   @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and is-string($anim-dir) {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
   }
 
   @if $timing-func and is-string($timing-func) {
@@ -123,18 +143,13 @@
     }
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    is-alias('none', $delay)
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
+
   @if $delay {
     @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ wobbliness() ] ' +
@@ -161,11 +176,9 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
-      is-global-value($iterations)
+    } @else if not (is-number($iterations) and math.is-unitless($iterations)) and
+        not is-global-value($iterations)
     {
-      $iterations: $iterations;
-    } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for ' +
           'the [ wobbliness() ] mixin.';
     }
@@ -173,10 +186,9 @@
     $iterations: null;
   }
 
-  @if not
-    $anim-dir or
-    is-alias('none', $anim-dir) or
-    is-alias('normal', $anim-dir)
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
@@ -202,7 +214,7 @@
     $timing-func: null;
   }
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(
@@ -212,8 +224,8 @@
     );
   }
 
-  animation: wobble#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  animation: wobble#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
 
   @at-root {
     @keyframes wobble#{$anim-suffix} {
@@ -252,11 +264,13 @@
 /// generated. Takes 'top`, `left`, `right`, or `bottom`.
 /// @param {Number} $duration [0.8s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
-/// @param {Number | String} $iterations [null] - The animation-iteration-count
-/// value for the animation.
+/// @param {Number | String} $iterations [null] - The number of iterations
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
 /// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Default of
-/// `null` assumes the CSS property default of `normal`.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value. Default of `null` assumes the CSS property default of
+/// `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function
 /// for the animation. The default of null will set it to the default timing
 /// function of ease.
@@ -266,13 +280,20 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
+/// @require {function} is-falsey
+/// @require {function} is-global-value
+/// @require {function} is-list
+/// @require {function} is-number
+/// @require {function} is-string
+/// @require {function} list-to-string
 ///
-/// @throw Incorrect keyword value for $direction.
-/// @throw Invalid data type for $duration.
-/// @throw Invalid data type for $delay.
-/// @throw Invalid data type for $iterations.
-/// @throw Invalid keyword value for $anim-dir.
+/// @throw Incorrect keyword value for $direction error.
+/// @throw Invalid data type for $duration error.
+/// @throw Invalid data type for $delay error.
+/// @throw Invalid data type for $iterations error.
+/// @throw Invalid keyword value for $anim-dir error.
 ///
 /// @alias wobbliness
 @mixin wobble(

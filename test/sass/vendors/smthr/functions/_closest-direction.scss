@@ -2,10 +2,11 @@
 @use 'sass:map';
 @use 'sass:list';
 @use 'sass:math';
+@use 'equals-true' as *;
 @use 'is-angle' as *;
 @use 'is-number' as *;
 @use 'conv-angle' as *;
-@use '../variables' as *;
+@use '../variables/maps' as *;
 
 /// Takes an angle and returns the closest direction keyword as an
 /// unquoted string. If $return-difference is set to true, it will return a
@@ -14,10 +15,10 @@
 ///
 /// @param {Number} $angle - An angle in any format or a unitless number
 /// which the function will assume to be in degrees.
-/// @param {Bool} $return-difference [false] - Pass true to have the function
+/// @param {Bool} $return-difference [false] - Pass `true` to have the function
 /// return a list with the keyword and the difference in degrees between that
-/// direction and the given anstgle. Pass false to have the function return an
-/// unquoted string with just the closest direction keyword.
+/// direction and the given angle. Pass `false` or `null` to have the function
+/// return an unquoted string with just the closest direction keyword.
 ///
 /// @return {String | List} Returns an unquoted string with the closest
 /// direction keyword. If $return-difference is set to true, it will
@@ -35,6 +36,11 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} equals-true
+/// @require {function} is-angle
+/// @require {function} is-number
+/// @require {function} conv-angle
+/// @require {variable} $map-directions
 ///
 /// @throw Invalid data type error for $angle.
 @function closest-direction($angle, $return-difference: false) {
@@ -98,9 +104,9 @@
   // Return the closest direction keyword as a string. If $return-difference
   // is true, return both the closest direction and the difference between
   // that and the given angle as a list.
-  @if $return-difference {
+  @if equals-true($return-difference) {
     @return #{(#{map.get($closest-direction, 'name')}, $final-difference * -1)};
-  } @else {
+  } @else if not $return-difference {
     @return #{map.get($closest-direction, 'name')};
   }
 }

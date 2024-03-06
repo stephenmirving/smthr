@@ -519,8 +519,14 @@
 ///
 /// @throw Invalid $direction value
 @mixin child-index($num, $direction: 'forward', $index: 0) {
-  @if $direction and is-string($direction) {
-    $direction: string.to-lower-case($direction);
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
   }
 
   @for $i from 1 through $num {

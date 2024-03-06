@@ -17,7 +17,7 @@
 /// or rad units. Can also be a keyword string with one of the following values:
 /// `top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`,
 /// `left`, or `top-left`.
-/// @param {String} $convert-to [deg] - The type of angle notation the given
+/// @param {String} $convert-to ['deg'] - The type of angle notation the given
 /// $angle should be converted to.
 ///
 /// @return {Number} The converted angle.
@@ -26,14 +26,18 @@
 /// @group Utilities
 /// @require {function} is-alias
 /// @require {function} is-angle
+/// @require {function} is-number
+/// @require {function} is-string
 /// @require {function} strip-unit
 /// @require {function} pi
 ///
-/// @throw Invalid $angle unit type.
-/// @throw Invalid $angle keyword string.
-/// @throw Invalid $angle data type.
+/// @throw Invalid $angle unit type error.
+/// @throw Invalid $angle keyword string error.
+/// @throw Invalid $angle data type error.
+/// @throw Invalid $convert-to data type error.
 /// @throw Invalid $convert-to angle unit keyword string.
-@function conv-angle($angle, $convert-to: deg) {
+/// @throw No value for $convert-to warning. Assuming 'deg' units.
+@function conv-angle($angle, $convert-to: 'deg') {
   $start-unit: '';
   $directions-to-degrees: (
     'top': 0deg,
@@ -78,23 +82,41 @@
           '`bottom`, `bottom-left`, `left`, or `top-left`.';
     }
   } @else {
-    @error 'Invalid $angle data type of `#{meta.type-of($angle)}` passed to ' +
-        'the [ conv-angle() ] function. You must pass either a number or ' +
-        'a string.';
+    @error 'Invalid $angle data type of #{meta.inspect(meta.type-of($angle))} ' +
+        'passed to the [ conv-angle() ] function. You must pass either a ' +
+        'number or a string for $angle.';
   }
 
-  @if is-alias('turn', $convert-to) {
-    $convert-to: turn;
-  } @else if is-alias('deg', $convert-to) {
-    $convert-to: deg;
-  } @else if is-alias('rad', $convert-to) {
-    $convert-to: rad;
-  } @else if is-alias('grad', $convert-to) {
-    $convert-to: grad;
+  @if $convert-to {
+    @if is-string($convert-to) {
+      $convert-to: string.to-lower-case($convert-to);
+    } @else {
+      @error 'Invalid data type of #{meta.inspect(meta.type-of($convert-to))} ' +
+          'for $convert-to passed to the [ conv-angle() ] function. This ' +
+          'value must be a \'string\' representing an angle unit. Valid ' +
+          'angle units are `deg`, `turn`, `rad`, or `grad`.';
+    }
+
+    @if is-alias('turn', $convert-to) {
+      $convert-to: turn;
+    } @else if is-alias('deg', $convert-to) {
+      $convert-to: deg;
+    } @else if is-alias('rad', $convert-to) {
+      $convert-to: rad;
+    } @else if is-alias('grad', $convert-to) {
+      $convert-to: grad;
+    } @else {
+      @error 'Invalid $convert-to unit name passed to the [ conv-angle() ] ' +
+          'function. Valid angle units are `deg`, `turn`, `rad`, or `grad`.';
+    }
   } @else {
-    @error 'Invalid $convert-to unit name passed to the [ conv-angle() ] ' +
-        'function. Valid angle units are `deg`, `turn`, `rad`, or `grad`.';
+    $convert-to: deg;
+
+    @warn 'No value for $convert-to passed to the [ conv-angle() ] function. ' +
+        'Assuming `deg` units.';
   }
+
+
 
   // If the angle is the same type as $convert-to, simply return it as-is.
   @if math.unit($angle) == $convert-to {
@@ -138,4 +160,38 @@
   }
 
   @return $angle;
+}
+
+/// Takes a given $angle in either turns (turn), degrees (deg), gradians (grad),
+/// or radian (rad) units, and converts that angle into an alternate unit type
+/// defined by $convert-to.
+///
+/// @param {Number | String} $angle - An angle value. Can be in turn, deg, grad,
+/// or rad units. Can also be a keyword string with one of the following values:
+/// `top`, `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`,
+/// `left`, or `top-left`.
+/// @param {String} $convert-to ['deg'] - The type of angle notation the given
+/// $angle should be converted to.
+///
+/// @return {Number} The converted angle.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-alias
+/// @require {function} is-angle
+/// @require {function} is-number
+/// @require {function} is-string
+/// @require {function} strip-unit
+/// @require {function} pi
+///
+/// @throw Invalid $angle unit type error.
+/// @throw Invalid $angle keyword string error.
+/// @throw Invalid $angle data type error.
+/// @throw Invalid $convert-to data type error.
+/// @throw Invalid $convert-to angle unit keyword string.
+/// @throw No value for $convert-to warning. Assuming 'deg' units.
+///
+/// @alias conv-angle
+@function convert-angle($angle, $convert-to: 'deg') {
+  @return conv-angle($angle, $convert-to);
 }

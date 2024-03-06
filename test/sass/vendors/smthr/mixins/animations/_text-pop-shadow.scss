@@ -2,11 +2,15 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-color' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Animates text by popping forward out from a shadow.
 ///
@@ -31,16 +35,20 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
 /// @require {function} is-color
+/// @require {function} is-falsey
 /// @require {function} is-global-value
+/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
-/// @throw Invalid $direction value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-/// @throw Invalid $anim-dir value
+/// @throw Invalid $direction value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
+/// @throw Invalid $anim-dir value error.
 @mixin text-pop-shadow(
   $direction: 'bottom-left',
   $duration: 0.7s,
@@ -74,16 +82,28 @@
         'for the [ text-pop-shadow ] mixin.';
   }
 
-  @if $direction and is-string($direction) {
-    $direction: string.to-lower-case($direction);
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
   }
 
   @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and is-string($anim-dir) {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
   }
 
   @if $timing-func and is-string($timing-func) {
@@ -205,7 +225,10 @@
     }
   }
 
-  @if $delay == 0 or $delay == 0s or $delay == 0ms or is-alias('none', $delay) {
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
+  {
     $delay: null;
   }
 
@@ -248,10 +271,9 @@
     $iterations: null;
   }
 
-  @if not
-    $anim-dir or
-    is-alias('none', $anim-dir) or
-    is-alias('normal', $anim-dir)
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
@@ -265,10 +287,8 @@
         '[ text-pop-shadow() ] mixin.';
   }
 
-  @if not
-    $timing-func or
-    $timing-func ==
-    'ease' or
+  @if not $timing-func or
+    $timing-func == 'ease' or
     is-alias('none', $timing-func) or
     is-alias('normal', $timing-func)
   {
@@ -277,7 +297,7 @@
     $timing-func: null;
   }
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(

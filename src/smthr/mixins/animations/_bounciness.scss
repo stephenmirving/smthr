@@ -2,9 +2,12 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-number' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
@@ -30,17 +33,20 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
 /// @require {function} is-global-value
+/// @require {function} is-falsey
+/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
 /// @require {function} list-to-string
 ///
-/// @throw Invalid $direction value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-/// @throw Invalid $iterations value
-/// @throw Invalid $anim-dir value
+/// @throw Invalid $direction value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
+/// @throw Invalid $iterations value error.
+/// @throw Invalid $anim-dir value error.
 @mixin bounciness(
   $direction: 'top',
   $duration: 0.9s,
@@ -136,15 +142,9 @@
     }
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    is-alias('none', $delay)
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
@@ -176,11 +176,9 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
-      is-global-value($iterations)
+    } @else if not (is-number($iterations) and math.is-unitless($iterations)) and
+      not is-global-value($iterations)
     {
-      $iterations: $iterations;
-    } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
           'for the [ bounciness() ] mixin.';
     }
@@ -188,10 +186,9 @@
     $iteratons: null;
   }
 
-  @if not
-    $anim-dir or
-    is-alias('none', $anim-dir) or
-    is-alias('normal', $anim-dir)
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
@@ -217,7 +214,7 @@
     $timing-func: null;
   }
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(

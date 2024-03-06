@@ -7,6 +7,7 @@
 @use '../../functions/is-length' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Animates a panning wipe style effect on the background property of an
 /// element. Works best with a gradient or an image.
@@ -46,13 +47,14 @@
 /// @require {function} is-length
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
-/// @throw Invalid $direction type
-/// @throw Invalid $direction value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-/// @throw Invalid $iterations value
-/// @throw Invalid $anim-dir value
+/// @throw Invalid $direction type error.
+/// @throw Invalid $direction value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
+/// @throw Invalid $iterations value error.
+/// @throw Invalid $anim-dir value error.
 @mixin pan-wipe(
   $direction: 'right',
   $duration: 6s,
@@ -77,8 +79,14 @@
   $pos-val2: 100% 50%;
   $anim-suffix: '-right';
 
-  @if $direction and is-string($direction) {
-    $direction: string.to-lower-case($direction);
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
   } @else {
     @error 'Invalid $direction unit type for the [ pan-wipe() ] mixin. Value must' +
     ' be of type "string".';
@@ -88,8 +96,14 @@
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and is-string($anim-dir) {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
   }
 
   @if not is-length($size) or not is-length($height) {
@@ -149,15 +163,9 @@
     }
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    is-alias('none', $delay)
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
@@ -200,10 +208,9 @@
     $iterations: null;
   }
 
-  @if not
-    $anim-dir or
-    is-alias('none', $anim-dir) or
-    is-alias('normal', $anim-dir)
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
@@ -217,7 +224,7 @@
         '[ pan-wipe() ] mixin.';
   }
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(

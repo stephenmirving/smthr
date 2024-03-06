@@ -1,5 +1,5 @@
-/// Returns the whether `$value` is equal to `true` or the string equivalent of
-/// `'true'`.
+/// Returns the whether `$value` is strictly equal to `true` or the string
+/// equivalent of `'true'`.
 ///
 /// In Sass, all values other than `false` and `null` are considered truthy.
 /// Sometimes, you may just want to test only for either the Bool type `true` or

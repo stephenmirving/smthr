@@ -7,6 +7,7 @@
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Generates an animation that puffs an element in or out. If a forward or
 /// backward $direction is chosen to augment the puff, it is recommended that
@@ -44,12 +45,14 @@
 /// @require {function} is-global-value
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} is-list
+/// @require {function} list-to-string
 ///
-/// @throw Invalid $in-or-out value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-/// @throw Invalid $iterations value
-/// @throw Invalid $anim-dir value
+/// @throw Invalid $in-or-out value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
+/// @throw Invalid $iterations value error.
+/// @throw Invalid $anim-dir value error.
 @mixin puff(
   $in-or-out: 'in',
   $direction: 'center',
@@ -75,8 +78,14 @@
     $in-or-out: string.to-lower-case($in-or-out);
   }
 
-  @if $anim-dir and is-string($anim-dir) {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
   }
 
   @if $delay and is-string($delay) {
@@ -99,6 +108,10 @@
   }
 
   @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
     @if is-string($direction) {
       $direction: string.to-lower-case($direction);
     }
@@ -203,15 +216,9 @@
     $duration: math.div($duration, 1000ms) * 1s;
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    is-alias('none', $delay)
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
@@ -249,10 +256,9 @@
     }
   }
 
-  @if not
-    $anim-dir or
-    is-alias('none', $anim-dir) or
-    is-alias('normal', $anim-dir)
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
   {
     $anim-dir: null;
   } @else if is-alias('reverse', $anim-dir) {
@@ -280,7 +286,7 @@
     string.length($anim-suffix) + 1
   );
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(

@@ -85,10 +85,11 @@
 /// @access public
 /// @group Utilities
 ///
-/// @throw Invalid function name
+/// @throw Invalid $function name
 @function walk($list, $function, $args...) {
   @if not meta.function-exists($function) {
-    @error 'There is no `#{meta.inspect($function)}` function.';
+    @error 'There is no #{meta.inspect($function)} function available to ' +
+        'the [ walk() ] function.';
   }
 
   @for $i from 1 through list.length($list) {

@@ -1,6 +1,8 @@
 @use 'sass:color';
 @use 'sass:math';
 @use 'sass:meta';
+@use 'is-color' as *;
+@use 'is-number' as *;
 @use 'is-percentage' as *;
 
 /// Darken a color by a given percentage using the built-in color.scale() method.
@@ -13,19 +15,30 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} is-color
+/// @require {function} is-number
+/// @require {function} is-percentage
 ///
-/// @throw Invalid $color type.
-/// @throw Invalid $percentage type.
+/// @throw Invalid $color data type error, must be of type 'color'.
+/// @throw Invalid $percentage data type error.
 @function shade($color, $percentage) {
-  @if meta.type-of($color) != 'color' {
+  @if not is-color($color) {
     @error 'Invalid data type passed to [ shade() ] function. You passed ' +
-      '[ #{$color} ] for the $color argument, which is not a ' +
-      'a color that can be darkened by this function.';
+      '#{meta.inspect($color)} for the $color argument, which is not a ' +
+      'a color that can be darkened by this function, as it is not currently ' +
+      'recognized as a color by Sass.';
   }
 
   // If $percentage is a unitless number, convert to a percentage.
-  @if meta.type-of($percentage) == 'number' and math.is-unitless($percentage) {
-    $percentage: $percentage * 1%;
+  @if is-number($percentage) and math.is-unitless($percentage) {
+    // When converting, if it is between -1 and 1, assume the user meant it as a
+    // decimal that represents a percentage (ex: 0.6 = 60%). Otherwise, assume
+    // it is just a percentage missing its % sign (ex: 60 = 60%).
+    @if $percentage > -1 and $percentage < 1 {
+      $percentage: math.percentage($percentage);
+    } @else {
+      $percentage: $percentage * 1%;
+    }
   }
 
   @if not is-percentage($percentage) {
@@ -43,17 +56,111 @@
 }
 
 /// Darken a color by a given percentage using the built-in color.scale() method.
-/// @access public
 ///
 /// @param {Color} $color - The color being darkened.
 /// @param {Number} $percentage - The percentage of lightness to remove from
 /// the color.
+///
 /// @return {Color} - The darkened color.
 ///
-/// @throw Invalid $color type.
-/// @throw Invalid $percentage type.
+/// @access public
+/// @group Utilities
+/// @require {function} is-color
+/// @require {function} is-number
+/// @require {function} is-percentage
+///
+/// @throw Invalid $color data type error, must be of type 'color'.
+/// @throw Invalid $percentage data type error.
 ///
 /// @alias shade
 @function darker($color, $percentage) {
+  @return shade($color, $percentage);
+}
+
+/// Darken a color by a given percentage using the built-in color.scale() method.
+///
+/// @param {Color} $color - The color being darkened.
+/// @param {Number} $percentage - The percentage of lightness to remove from
+/// the color.
+///
+/// @return {Color} - The darkened color.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-color
+/// @require {function} is-number
+/// @require {function} is-percentage
+///
+/// @throw Invalid $color data type error, must be of type 'color'.
+/// @throw Invalid $percentage data type error.
+///
+/// @alias shade
+@function darken($color, $percentage) {
+  @return shade($color, $percentage);
+}
+
+/// Darken a color by a given percentage using the built-in color.scale() method.
+///
+/// @param {Color} $color - The color being darkened.
+/// @param {Number} $percentage - The percentage of lightness to remove from
+/// the color.
+///
+/// @return {Color} - The darkened color.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-color
+/// @require {function} is-number
+/// @require {function} is-percentage
+///
+/// @throw Invalid $color data type error, must be of type 'color'.
+/// @throw Invalid $percentage data type error.
+///
+/// @alias shade
+@function color-shade($color, $percentage) {
+  @return shade($color, $percentage);
+}
+
+/// Darken a color by a given percentage using the built-in color.scale() method.
+///
+/// @param {Color} $color - The color being darkened.
+/// @param {Number} $percentage - The percentage of lightness to remove from
+/// the color.
+///
+/// @return {Color} - The darkened color.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-color
+/// @require {function} is-number
+/// @require {function} is-percentage
+///
+/// @throw Invalid $color data type error, must be of type 'color'.
+/// @throw Invalid $percentage data type error.
+///
+/// @alias shade
+@function color-darker($color, $percentage) {
+  @return shade($color, $percentage);
+}
+
+/// Darken a color by a given percentage using the built-in color.scale() method.
+///
+/// @param {Color} $color - The color being darkened.
+/// @param {Number} $percentage - The percentage of lightness to remove from
+/// the color.
+///
+/// @return {Color} - The darkened color.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-color
+/// @require {function} is-number
+/// @require {function} is-percentage
+///
+/// @throw Invalid $color data type error, must be of type 'color'.
+/// @throw Invalid $percentage data type error.
+///
+/// @alias shade
+@function color-darken($color, $percentage) {
   @return shade($color, $percentage);
 }

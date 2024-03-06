@@ -1,20 +1,19 @@
-@use 'sass:meta';
-@use 'sass:math';
 @use 'sass:color';
+@use 'sass:math';
+@use 'sass:meta';
 @use 'sass:string';
-@use 'to-fixed' as *;
 
 /// Takes a given color in virtually any notation and converts it into CMYK
-/// notation using the [ device-cmyk ] CSS color function.
+/// notation using the [ device-cmyk() ] CSS color function.
 ///
 /// @param {Color} $color - The color to convert into cmyk.
 ///
-/// @return {Color} The converted color in [ device-cmyk ] function format.
+/// @return {Color} The converted color in [ device-cmyk() ] function format.
 ///
 /// @access public
 /// @group Utilities
 ///
-/// @throw Invalid data type for $color
+/// @throw Invalid $color data type error, must be of type 'color'.
 @function to-cmyk($color) {
   @if meta.type-of($color) != 'color' {
     @error 'Invalid data type passed to [ to-cmyk() ] function. You passed ' +

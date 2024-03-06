@@ -2,11 +2,15 @@
 @use 'sass:string';
 @use 'sass:list';
 @use 'sass:math';
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-color' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Applies a text pop-up animation with a shadow effect to a given element.
 ///
@@ -22,7 +26,7 @@
 /// @param {Color} $shadow-color [hsl(0 0% 80%)] - The color of the shadow used
 /// in the effect. Leave this value blank for the default color unless you
 /// want something less subtle.
-/// @param {*} $infinite [null] If any value other than null, or false is
+/// @param {Bool} $infinite [null] If any value other than `null` or `false` is
 /// passed, the `infinite alternate` values will be applied to the animation.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
@@ -30,16 +34,20 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
 /// @require {function} is-color
+/// @require {function} is-falsey
 /// @require {function} is-global-value
+/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
-/// @throw Invalid $direction value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
-/// @throw Invalid $iterations value
+/// @throw Invalid $direction value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
+/// @throw Invalid $iterations value error.
 @mixin text-pop-up(
   $direction: 'top',
   $duration: 0.5s,
@@ -53,8 +61,14 @@
   $dir-val: translateY(-50px);
   $anim-suffix: '-to-top';
 
-  @if $direction and is-string($direction) {
-    $direction: string.to-lower-case($direction);
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
   }
 
   @if $delay and is-string($delay) {
@@ -125,18 +139,13 @@
     }
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    is-alias('none', $delay)
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
+
   @if $delay {
     @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
@@ -157,7 +166,7 @@
     }
   }
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(
@@ -167,8 +176,8 @@
     );
   }
 
-  animation: txt-pop-up#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$infinite}
-    both;
+  animation: txt-pop-up#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+      #{$infinite} both;
 
   @at-root {
     @keyframes txt-pop-up#{$anim-suffix} {

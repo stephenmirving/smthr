@@ -25,6 +25,8 @@
 /// @require {function} str-to-num
 ///
 /// @throw Invalid ratio number value, it must be unitless.
+/// @throw Invalid ratio value format, more than one separator found.
+/// @throw Invalid ratio value format, value must be a proper ratio.
 @function ratio-to-percentage($ratio, $num-returns-common-ratio: false) {
   $separators: (' : ', ':', ' / ', '/', ', ', ',', ' ');
   $found-separators: 0;
@@ -98,6 +100,10 @@
 /// a String containing two numbers separated by either a colon, slash, comma or
 /// space (ex: `'21:9'`, `'21/9', `'21,9'`, etc), or by single number
 /// (ex: `0.75` for a 3:4 ratio)
+/// @param {Bool} $num-returns-common-ratio - If this is set to any value except
+/// `null` or `false`, when $ratio is provided as a single Number the function
+/// will try to look for a common media ratio that is close to the provided
+/// number, on which to base the returned percentage.
 ///
 /// @return {Number} A percentage value equal to the given ratio
 ///
@@ -107,6 +113,8 @@
 /// @require {function} str-to-num
 ///
 /// @throw Invalid ratio number value, it must be unitless.
+/// @throw Invalid ratio value format, more than one separator found.
+/// @throw Invalid ratio value format, value must be a proper ratio.
 ///
 /// @alias ratio-to-percentage
 @function ratio-to-percent($ratio) {

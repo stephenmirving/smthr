@@ -2,11 +2,14 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
-@use '../../functions/is-color' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Adds a shadow dropping animation to a given element's text
 ///
@@ -21,15 +24,18 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
-/// @require {function} is-color
+/// @require {function} is-falsey
 /// @require {function} is-global-value
+/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
-/// @throw Invalid $direction value
-/// @throw Invalid $duration value
-/// @throw Invalid $delay value
+/// @throw Invalid $direction value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
 @mixin text-drop-shadow(
   $direction: 'center',
   $duration: 0.7s,
@@ -41,8 +47,14 @@
   $dir-vals: 0 0 18px;
   $anim-suffix: '-center';
 
-  @if $direction and is-string($direction) {
-    $direction: string.to-lower-case($direction);
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
   }
 
   @if $delay and is-string($delay) {
@@ -109,18 +121,13 @@
     }
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
-    $delay ==
-    0s or
-    $delay ==
-    0ms or
-    is-alias('none', $delay)
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
+
   @if $delay {
     @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
@@ -142,7 +149,7 @@
     }
   }
 
-  @if not $anim-num {
+  @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
     $anim-suffix: string.insert(

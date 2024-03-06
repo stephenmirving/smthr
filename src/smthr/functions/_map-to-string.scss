@@ -47,3 +47,21 @@
 
   @return $str;
 }
+
+/// Iterates over a map and returns it as a converted string
+///
+/// @param {Map} $map - The map to convert into a string.
+/// @param {String} $separator [', '] - The separator to use between
+/// the map's each of the map's properties.
+/// @param {String} $pair-separator [', '] - The separator to use between
+/// the key and value of each pair.
+///
+/// @return {String} The converted string.
+///
+/// @access public
+/// @group Utilities
+///
+/// @alias map-to-string
+@function map-to-str($map, $separator: ', ', $pair-separator: ': ') {
+  @return map-to-string($map, $separator, $pair-separator);
+}

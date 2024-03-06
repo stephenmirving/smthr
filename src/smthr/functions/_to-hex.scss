@@ -22,13 +22,14 @@
 /// @access public
 /// @group Utilities
 /// @require {function} _component-to-hex
+/// @require {function} conv-color-name
 ///
-/// @throw Invalid data type for $color
+/// @throw Invalid data type for $color error.
 @function to-hex($color) {
   @if meta.type-of($color) != 'color' {
-    @error 'Invalid data type passed to `conv-color()` function. You passed ' +
+    @error 'Invalid data type passed to [ to-hex() ] function. You passed ' +
       '#{meta.inspect($color)} for the $color argument, which is not an ' +
-      'accepted color as it is of type #{meta.type-of($color)}.';
+      'accepted color as it is of type #{meta.inspect(meta.type-of($color))}.';
   }
 
   // Extract RGB components and alpha channel
@@ -93,8 +94,9 @@
 /// @access public
 /// @group Utilities
 /// @require {function} _component-to-hex
+/// @require {function} conv-color-name
 ///
-/// @throw Invalid data type for $color
+/// @throw Invalid data type for $color error.
 ///
 /// @alias to-hex
 @function color-to-hex($color) {
@@ -119,8 +121,9 @@
 /// @access public
 /// @group Utilities
 /// @require {function} _component-to-hex
+/// @require {function} conv-color-name
 ///
-/// @throw Invalid data type for $color
+/// @throw Invalid data type for $color error.
 ///
 /// @alias to-hex
 @function conv-to-hex($color) {
@@ -145,8 +148,9 @@
 /// @access public
 /// @group Utilities
 /// @require {function} _component-to-hex
+/// @require {function} conv-color-name
 ///
-/// @throw Invalid data type for $color
+/// @throw Invalid data type for $color error.
 ///
 /// @alias to-hex
 @function convert-to-hex($color) {
