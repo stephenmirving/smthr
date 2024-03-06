@@ -29,7 +29,7 @@
   $content-suffix: '-content'
 ) {
   @if meta.type-of($banner-size) != 'number' or not math.is-unitless($banner-size) {
-    @error 'Invalid $banner-size value for the `banner` mixin.';
+    @error 'Invalid $banner-size value for the [ banner() ] mixin.';
   }
 
   position: relative;

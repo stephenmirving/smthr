@@ -23,7 +23,7 @@
     z-index: $z-index;
   } @else if $z-val {
     @error 'Invalid $z-val z-index value of `#{meta.inspect($z-val)}` for the ' +
-        '[ animation-front-face() ] mixin';
+        '[ animation-front-face() ] mixin.';
   }
 }
 

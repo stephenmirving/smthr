@@ -250,7 +250,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
-        ' for the [ scale-down() ] mixin';
+        ' for the [ scale-down() ] mixin.';
   }
 
   @if not $timing-func or is-alias('normal', $timing-func) {

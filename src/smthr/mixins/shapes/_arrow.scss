@@ -86,7 +86,7 @@
       }
     } @else {
       @error 'Invalid $direction of `#{meta.inspect($direction)}` for the ' +
-          '[ arrow() ] mixin';
+          '[ arrow() ] mixin.';
     }
   } @else if is-angle($direction) {
     clip-path: polygon(
@@ -101,7 +101,7 @@
     transform: rotate($direction);
   } @else {
     @error 'Invalid $direction of `#{meta.inspect($direction)}` for the ' +
-          '[ arrow() ] mixin';
+          '[ arrow() ] mixin.';
   }
 
   @if $size {

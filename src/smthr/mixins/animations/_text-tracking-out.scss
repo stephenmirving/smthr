@@ -218,7 +218,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
-        '[ text-tracking-out() ] mixin';
+        '[ text-tracking-out() ] mixin.';
   }
 
   @if not $timing-func or is-alias('default', $timing-func) {

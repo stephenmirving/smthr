@@ -263,7 +263,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` passed with ' +
-        '$anim-dir to the [ puff() ] mixin';
+        '$anim-dir to the [ puff() ] mixin.';
   }
 
   @if not $timing-func or is-alias('normal', $timing-func) {

@@ -4,10 +4,10 @@
 /// Iterates over a list and returns it as a converted string.
 ///
 /// @param {List} $list - The list to convert into a string.
-/// @param {Bool} $extra-space [false] - Pass true to use an extra space
-/// between list items in the resulting string.
 /// @param {String} $separator [' '] - The separator to use between
 /// the list elements. By default this is the separator used in $list.
+/// @param {Bool} $extra-space [false] - Pass true to use extra space between
+/// list items in the resulting string.
 ///
 /// @return {String} The converted string.
 ///
@@ -18,8 +18,8 @@
 /// @throw Invalid $separator type error
 @function list-to-string(
   $list,
-  $extra-space: false,
-  $separator: if(meta.type-of($list) == 'list', list.separator($list), ' ')
+  $separator: if(meta.type-of($list) == 'list', list.separator($list), ' '),
+  $extra-space: false
 ) {
   $str: '';
 

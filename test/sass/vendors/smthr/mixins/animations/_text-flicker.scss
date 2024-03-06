@@ -73,7 +73,7 @@
     $in-or-out: false;
     $anim-suffix: '-out';
   } @else {
-    @error 'Invalid in-out value of `#{meta.inspect($in-or-out)}` for the `text-flicer` mixin';
+    @error 'Invalid in-out value of `#{meta.inspect($in-or-out)}` for the `text-flicer` mixin.';
   }
 
   @if not is-number($duration) {
@@ -158,7 +158,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
-        '[ text-flicker() ] mixin';
+        '[ text-flicker() ] mixin.';
   }
 
   @if not

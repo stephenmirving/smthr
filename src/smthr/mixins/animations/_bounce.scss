@@ -7,6 +7,7 @@
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// An animation that bounces an element in to view
 ///
@@ -38,6 +39,7 @@
 /// @require {function} is-global-value
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
 /// @throw Invalid $in-or-out value
 /// @throw Invalid $direction value
@@ -69,12 +71,24 @@
     $in-or-out: string.to-lower-case($in-or-out);
   }
 
-  @if $direction and is-string($direction) {
-    $direction: string.to-lower-case($direction);
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
   }
 
-  @if $anim-dir and is-string($anim-dir) {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
   }
 
   @if $delay and is-string($delay) {
@@ -275,7 +289,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
-        '[ bounce() ] mixin';
+        '[ bounce() ] mixin.';
   }
 
   @if not

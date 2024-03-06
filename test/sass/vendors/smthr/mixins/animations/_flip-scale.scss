@@ -106,7 +106,7 @@
       $anim-suffix: '-up-horizontally';
     } @else {
       @error 'Invalid $axis value of `#{meta.inspect($axis)}` for the ' +
-          '[ flip-scale() ] mixin';
+          '[ flip-scale() ] mixin.';
     }
   } @else if is-alias('bottom', $direction) or is-alias('backwards', $direction) {
     $scale-val1: scale(1);
@@ -227,7 +227,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
-        ' for the [ flip-scale() ] mixin';
+        ' for the [ flip-scale() ] mixin.';
   }
 
   @if not $anim-num {

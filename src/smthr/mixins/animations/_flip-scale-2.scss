@@ -98,7 +98,7 @@
     $anim-suffix: '-towards-bottom';
   } @else if not is-alias('top', $direction) {
     @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
-        '[ flip-scale-2() ] mixin';
+        '[ flip-scale-2() ] mixin.';
   }
 
   @if not is-number($duration) {
@@ -186,7 +186,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
-        '[ flip-scale-2() ] mixin';
+        '[ flip-scale-2() ] mixin.';
   }
 
   @if not $anim-num {

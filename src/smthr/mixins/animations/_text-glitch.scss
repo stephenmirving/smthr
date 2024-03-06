@@ -155,7 +155,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` ' +
-        'for the [ text-glitch() ] mixin';
+        'for the [ text-glitch() ] mixin.';
   }
 
   @if not

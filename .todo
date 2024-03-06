@@ -2,6 +2,9 @@ TODO:
 
   TESTING:
     ☐ Test and fix functions and mixins
+      ☐ Mixin Testing
+        ☐ Check all mixins and make sure they have $anim-dir in the actual animation!
+        ☐ Figure out why 'reverse alternate' isn't erroring out on anim-dir, maybe need to fix in all instances
       ☐ Function testing
         ☐ Work on rainbow-shadow function
         ☐ Improve num-to-ratio so the loop more accurately grabs the closest common aspect ratio within tolerance
@@ -10,7 +13,7 @@ TODO:
             ☐ Need to find example values where this is true and list below
       ☐ Mixin Testing
         ☐ Refactor color-shifter
-          ☐ Change $infinite and $alternate to $iterations and $anim-dir like other animations
+          ✔ Change $infinite and $alternate to $iterations and $anim-dir like other animations @started(24-03-05 18:15) @done(24-03-05 21:17) @lasted(3h2m18s)
           ☐ Figure out if can remove the space in the strings when the animation is called like #{$timing-func}#{$delay}#{$inf-alt}
           ☐ Touch up bg-or-fg decision and add whether bg-or-fg into the animation name
           ✔ Add error checking for $infinite-alternate @done(24-03-03 19:12)
@@ -48,13 +51,17 @@ TODO:
       - https://www.deque.com/blog/give-site-focus-tips-designing-usable-focus-indicators/
       - Copy any changes to Betterize repo as well
     ☐ Examine responsive font mixin and improve it using the trend-line function
-    ☐ Possibly modify outline mixins or create new mixin to include the -webkit-text-stroke property
-    ☐ Take a look at the line-clamp mixin
+    ☐ Possibly modify text-outline mixins or create new mixin to include the -webkit-text-stroke property
+    ✔ Take a look at the line-clamp mixin @done(24-03-05 18:14)
+    ☐ Add list-to-string functionality for parameters so if 2 values are passed without quotes, like `top left`, it turns it into `'top left'`
+      - Otherwise is-alias() won't work on such values.
+      - Done on mixins from bounce to color-shifter. Need anywhere there could be a two word keyword value
     ☐ Determine if a .sass version can be automated in a build process
     ☐ Improve and standardize all error messages.
     ☐ Ensure all parameters that only take certain keyword strings have those strings listed in the SassDoc
 
   Animations Mixins:
+    ☐ Add more animation property options to the animations, animation-fill-mode and animation-play-state
     ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
     ☐ Add typewrtiter animation effect. https://codepen.io/stephenirving/pen/QWoPVVW/e5eb204f9c2b209d5ca65c6d5ea4801c?editors=1100

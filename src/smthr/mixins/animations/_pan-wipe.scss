@@ -214,7 +214,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}` for the ' +
-        '[ pan-wipe() ] mixin';
+        '[ pan-wipe() ] mixin.';
   }
 
   @if not $anim-num {

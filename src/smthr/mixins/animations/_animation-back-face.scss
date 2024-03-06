@@ -40,7 +40,7 @@
     $trans-val: rotate3d(-1, 1, 0, -180deg);
   } @else if not is-alias('left-to-right', $flip-axis) {
     @error 'Invalid flip-axis value of `#{meta.inspect($flip-axis)}` for the ' +
-        '[ animation-back-face() ] mixin';
+        '[ animation-back-face() ] mixin.';
   }
 
   position: absolute;
@@ -54,7 +54,7 @@
     z-index: $z-val;
   } @else if $z-val {
     @error 'Invalid $z-val z-index value of `#{meta.inspect($z-val)}` for the ' +
-        '[ animation-back-face() ] mixin';
+        '[ animation-back-face() ] mixin.';
   }
 }
 

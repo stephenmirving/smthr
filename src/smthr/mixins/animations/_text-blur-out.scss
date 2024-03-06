@@ -163,7 +163,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
-        ' for the [ text-blur-out() ] mixin';
+        ' for the [ text-blur-out() ] mixin.';
   }
 
   @if is-alias('contract', $style) {

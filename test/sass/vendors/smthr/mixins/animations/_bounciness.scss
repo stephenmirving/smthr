@@ -6,6 +6,7 @@
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Adds bounciness to a given element, bouncing it in place.
 ///
@@ -33,6 +34,7 @@
 /// @require {function} is-global-value
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
 /// @throw Invalid $direction value
 /// @throw Invalid $duration value
@@ -57,16 +59,28 @@
   $dir-val6: translateY(0);
   $anim-suffix: '-from-top';
 
-  @if $direction and is-string($direction) {
-    $direction: string.to-lower-case($direction);
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
   }
 
   @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
 
-  @if $anim-dir and is-string($anim-dir) {
-    $anim-dir: string.to-lower-case($anim-dir);
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
   }
 
   @if $timing-func and is-string($timing-func) {
@@ -187,8 +201,8 @@
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
-    @error 'Invalid animation-direction value of `#{$anim-dir}` for' +
-        'the [ bounciness() ] mixin';
+    @error 'Invalid animation-direction value of `#{$anim-dir}` for ' +
+        'the [ bounciness() ] mixin.';
   }
 
   @if not
@@ -213,8 +227,8 @@
     );
   }
 
-  animation: bounciness#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    both;
+  animation: bounciness#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
 
   @at-root {
     @keyframes bounciness#{$anim-suffix} {

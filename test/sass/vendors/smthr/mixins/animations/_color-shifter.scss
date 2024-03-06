@@ -2,10 +2,14 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
-@use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
+@use '../../functions/is-global-value' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/is-time' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Animates the shift between any quantity of given colors.
 ///
@@ -18,61 +22,50 @@
 /// passed, the default timing is 2s per color shift.
 /// @param {String | Number} $delay [null] - The amount of time before the color
 /// shifting animation first starts. No delay is the default. This value must be
-/// in either milliseconds (`ms`) or seconds (`s`). If only a unit-less number is
-/// passed, it will be assumed that the value is in seconds.
-/// @param {Bool | String} $infinite [false] - Determines whether or not the
-/// color shifting animation will go on infinitely.
-/// @param {Bool | String} $alternate [null] - When true, this will reverse the
-/// order of the color shift when it reaches the end of the animation,
-/// otherwise the animation will restart at the first color. $infinite must be
-/// true for $alternate to take effect.
+/// in either milliseconds (`ms`) or seconds (`s`). If only a unit-less number
+/// is passed, it will be assumed that the value is in seconds.
+/// @param {Number | String} $iterations [infinite] - The number of iterations
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
+/// @param {String} $anim-dir [alternate] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
 /// animation's shifting effect.
-/// @param {String} $bg-or-fg [null] - Determines if animation will shift the
-/// background-color or the font color. Null value defaults to the background.
+/// @param {Bool | String} $is-fg-shifter [null] - All values except for `null`
+/// `false`, `'false'`, `'background'`, and `'bg'` will make the animation
+/// shift the foreground (text) color instead of the default background-color.
 /// @param {Number | String} $anim-num [null] - If the color-shifter mixin is
 /// used more than once in a stylesheet with different values, you can pass a
 /// number or string to the mixin here that gets appeneded to end of the
 /// animation name so that the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {function} equals-true
 /// @require {function} is-alias
+/// @require {function} is-falsey
+/// @require {function} is-global-value
+/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} is-time
+/// @require {function} list-to-string
 ///
-/// @throw Not enough colors listed in $colors.
-/// @throw Invalid $bg-or-fg value.
+/// @throw The $colors parameter is not a valid list containing enough colors.
+/// @throw No valid argument passed to the $duration parameter.
+/// @throw Invalid $duration data type, must be a number.
+/// @throw Invalid $duration unit type, must be a time value in `s` or `ms` units.
+/// @throw Invalid $delay data type, must be a number.
+/// @throw Invalid $delay unit type, must be a time value in `s` or `ms` units.
 @mixin color-shifter(
   $colors: (),
   $duration: null,
   $delay: null,
-  $infinite: false,
-  $alternate: null,
+  $iterations: infinite,
+  $anim-dir: alternate,
   $timing-func: linear,
-  $bg-or-fg: null,
+  $is-fg-shifter: null,
   $anim-num: null
 ) {
-  @if list.length($colors) < 2 {
-    @error 'You need at least 2 colors in order to use the color-shifter mixin.';
-  }
-
-  @if $delay and is-string($delay) {
-    $delay: string.to-lower-case($delay);
-  }
-
-  @if $infinite and is-string($infinite) {
-    $infinite: string.to-lower-case($infinite);
-  }
-
-  @if $alternate and is-string($alternate) {
-    $alternate: string.to-lower-case($alternate);
-  }
-
-  @if $bg-or-fg and is-string($bg-or-fg) {
-    $bg-or-fg: string.to-lower-case($bg-or-fg);
-  }
-
   // The list of percentage values to be used in the keyframes
   $interval-values: ();
 
@@ -94,32 +87,67 @@
   // The combination variable for $infinite and $alternate
   $inf-alt: null;
 
-  // Generate the full list of intervals for the keyframes
-  @for $k from 1 through $num-intervals {
-    $current-interval: $last-interval + $interval-multiple;
-    $interval-values: list.append($interval-values, $current-interval);
-    $last-interval: $current-interval;
+  // Prefix for the animation name, if $is-fg-shifter flag is true, becomes 'fg-'
+  $anim-prefix: 'bg-';
+
+  @if not is-list($colors) or list.length($colors) < 2 {
+    @error 'You need to pass a list of at least 2 colors in order to use the ' +
+        '[ color-shifter() ] mixin.';
+  }
+
+  @if $delay and is-string($delay) {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
+  }
+
+  @if $timing-func and is-string($timing-func) {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if $is-fg-shifter and is-string($is-fg-shifter) {
+    $is-fg-shifter: string.to-lower-case($is-fg-shifter);
   }
 
   // If no argument passed to $duration, create the default timing of 2s per color
-  @if not $duration {
+  @if is-falsey($duration) {
     $duration: list.length($colors) * 2s;
+
+    @warn 'No valid argument passed to the $duration parameter of the ' +
+        '[ color-shifter() ] mixin. Assuming a duration of 2s per color.';
   } @else {
-    @if not is-number($duration) {
-      @error 'Invalid $duration value of `#{$duration}` for the `color-shifter` ' +
-          'mixin. The duration property must be a number.';
-    }
-
-    $duration: $duration * list.length($colors);
-
     @if not is-number($duration) {
       @error 'Invalid $duration value of `#{$duration}` for the ' +
           '[ color-shifter() ] mixin. The duration property must be a number.';
-    } @else if math.is-unitless($duration) {
-      // If no there is no unit for $duration, assume seconds
-      $duration: $duration * 1s;
-    } @else if not list.index('s' 'ms', math.unit($duration)) {
-      @error 'Invalid $duration value of `#{$duration}` for the `color-shifter` ' +
+    }
+
+    @if math.is-unitless($duration) {
+      // If no there is no unit for $duration, and $duration < 30, assume seconds
+      @if $duration < 30 {
+        $duration: $duration * 1s;
+      } @else {
+        $duration: $duration * 1ms; // ... otherwise assume ms
+      }
+
+      @warn 'The number passed to the $duration parameter of the ' +
+            '[ color-shifter() ] mixin was unitless. Assuming a #{$duration} ' +
+            'duration for each color shift.';
+    }
+
+    // The duration parameter is the time it takes to animate from one color to
+    // the next, so multiple the duration by the number of colors in the list.
+    $duration: $duration * list.length($colors);
+
+    @if not is-duration($duration) {
+      @error 'Invalid $duration value of `#{$duration}` for the [ color-shifter() ] ' +
           'mixin. The duration property must be in either s or ms units.';
     } @else if $duration % 10 == 0ms {
       // If time in ms would be shorter as seconds, convert it
@@ -132,10 +160,7 @@
     }
   }
 
-  @if not
-    $delay or
-    $delay ==
-    0 or
+  @if is-falsey($delay) or
     $delay ==
     0s or
     $delay ==
@@ -144,6 +169,7 @@
   {
     $delay: null;
   }
+
   @if $delay {
     @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
@@ -162,102 +188,90 @@
         $delay: #{string.slice($delay + '', 2)};
       }
     }
-
-    $delay: #{' ' + $delay};
   }
 
-  // Allow for multiple types of 'true' input for $infinite and $alternate
-  @if equals-true($infinite) or
-    $infinite ==
-    'yes' or
-    $infinite ==
-    'y' or
-    is-alias('infinite', $infinite)
-  {
-    $inf-alt: #{' ' + infinite};
-
-    @if equals-true($alternate) or
-      $alternate ==
-      'yes' or
-      $alternate ==
-      'y' or
-      is-alias('alternate', $alternate)
-    {
-      $inf-alt: #{' ' + infinite alternate};
-    } @else if $alternate {
-      @warn 'Invalid $alternate value of #{meta.inspect($alternate)} for the ' +
-          '[ color-shifter() ] mixin. The alternate property must be a boolean ' +
-          'value of true or false. A value of `alternate` is also accepted.' +
-          '`alternate` was not added to the animation.';
+  @if $iterations {
+    @if is-string($iterations) {
+      $iterations: string.to-lower-case($iterations);
     }
-  } @else if $infinite {
-    @warn 'Invalid $infinite value of #{meta.inspect($infinite)} for the ' +
-        '[ color-shifter() ] mixin. The $infinite property must be a ' +
-        'boolean value of true or false. A value of `infinite` is also ' +
-        'accepted. `infinite` was not added to the animation.';
-  }
 
-  @if $bg-or-fg ==
-    'foreground' or
-    $bg-or-fg ==
-    'fg' or
-    $bg-or-fg ==
-    'f' or
-    $bg-or-fg ==
-    'font' or
-    $bg-or-fg ==
-    'text' or
-    $bg-or-fg ==
-    'txt' or
-    $bg-or-fg ==
-    'color' or
-    $bg-or-fg ==
-    'col' or
-    $bg-or-fg ==
-    'c'
-  {
-    $bg-or-fg: 'color';
-  } @else if not
-    $bg-or-fg or
-    $bg-or-fg ==
-    'background' or
-    $bg-or-fg ==
-    'back' or
-    $bg-or-fg ==
-    'bck' or
-    $bg-or-fg ==
-    'bg' or
-    $bg-or-fg ==
-    'bckgrnd' or
-    $bg-or-fg ==
-    'background-color' or
-    $bg-or-fg ==
-    'bg-col' or
-    $bg-or-fg ==
-    'bgcol' or
-    $bg-or-fg ==
-    'bc' or
-    $bg-or-fg ==
-    'bgc'
-  {
-    $bg-or-fg: 'background-color';
+    @if is-alias('infinite', $iterations) {
+      $iterations: infinite;
+    } @else if not (is-number($iterations) and math.is-unitless($iterations)) and
+      not is-global-value($iterations)
+    {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ color-shifter() ] mixin.';
+    }
   } @else {
-    @error 'Invalid $bg-or-fg value or `#{meta.inspect($bg-or-fg)}` for the ' +
-        '[ color-shifter() ] mixin.';
+    $iteratons: null;
   }
 
-  animation: color-shifter#{$anim-num} #{$duration} #{$timing-func}#{$delay}#{$inf-alt}
-    both;
+  @if not $anim-dir or
+    is-alias('none', $anim-dir) or
+    is-alias('normal', $anim-dir)
+  {
+    $anim-dir: null;
+  } @else if is-alias('reverse', $anim-dir) {
+    $anim-dir: reverse;
+  } @else if is-alias('alternate', $anim-dir) {
+    $anim-dir: alternate;
+  } @else if is-alias('alternate-reverse', $anim-dir) {
+    $anim-dir: alternate-reverse;
+  } @else if not is-global-value($anim-dir) {
+    @error 'Invalid animation-direction value of #{meta.inspect($anim-dir)} ' +
+        'for the [ color-shifter() ] mixin.';
+  }
+
+  @if is-falsey($timing-func) or
+      is-alias('none', $timing-func) or
+      is-alias('normal', $timing-func) or
+      $timing-func == 'ease'
+  {
+    // Take all potential values the user might pass to keep the default setting
+    // and ensure that the timing function remains at that default
+    $timing-func: null;
+  }
+
+  @if is-falsey($is-fg-shifter) or
+      is-alias('background-color', $is-fg-shifter) or
+      is-alias('background', $is-fg-shifter) or
+      is-alias('none', $is-fg-shifter)
+  {
+    $is-fg-shifter: 'background-color';
+  } @else {
+    $is-fg-shifter: 'color';
+    $anim-prefix: 'fg-'
+  }
+
+  @if not $anim-num {
+    $anim-num: null;
+  } @else if is-string($anim-num) or is-number($anim-num) {
+    $anim-num: '--#{$anim-num}';
+  } @else {
+    @error 'Invalid data type for the $anim-num parameter passed to the ' +
+        '[ color-shifter() ] mixin. You must pass a number or a string.';
+  }
+
+  // Generate the full list of intervals for the keyframes
+  @for $k from 1 through $num-intervals {
+    $current-interval: $last-interval + $interval-multiple;
+    $interval-values: list.append($interval-values, $current-interval);
+    $last-interval: $current-interval;
+  }
+
+  animation: #{$anim-prefix}color-shifter#{$anim-num} #{$duration} #{$timing-func}
+    #{$delay} #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes color-shifter#{$anim-num} {
+    @keyframes #{$anim-prefix}color-shifter#{$anim-num} {
       $index: 1;
 
       @each $interval in $interval-values {
         $rounded-val: math.div(math.round($interval * 1000), 1000);
 
         #{$rounded-val + '%'} {
-          #{$bg-or-fg}: list.nth($colors, $index);
+          #{$is-fg-shifter}: list.nth($colors, $index);
         }
 
         $index: $index + 1;

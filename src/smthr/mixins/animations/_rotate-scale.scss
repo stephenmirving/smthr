@@ -280,7 +280,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid $anim-dir value of #{meta.inspect($anim-dir)}` for the ' +
-        '[ rotate-scale() ] mixin';
+        '[ rotate-scale() ] mixin.';
   }
 
   @if not $timing-func or is-alias('normal', $timing-func) {

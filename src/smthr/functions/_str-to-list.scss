@@ -24,9 +24,9 @@
 @function str-to-list($string, $string-separator: ' ', $list-separator: comma) {
   @if meta.type-of($string) == 'list' {
     @warn 'You passed a list value to the [ str-to-list() ] function.' +
-        'Returning original list of #{$list}';
+        'Returning original list of #{$string}';
 
-    @return $list;
+    @return $string;
   }
 
   @if meta.type-of($string) != 'string' {

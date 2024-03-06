@@ -162,7 +162,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
-        ' for the [ text-focus-in() ] mixin';
+        ' for the [ text-focus-in() ] mixin.';
   }
 
   @if is-alias('contract', $style) {
@@ -220,7 +220,7 @@
           is-alias('in', $style)
         {
           @error 'Invalid $style value of `#{meta.inspect($style)}` used for ' +
-            'the [ text-focus-in() ] mixin';
+            'the [ text-focus-in() ] mixin.';
         }
       }
 

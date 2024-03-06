@@ -112,7 +112,7 @@
     $direction: 'center';
   } @else {
     @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
-    '`scale-up` mixin.';
+    '[ scale-up() ] mixin.';
   }
 
   @if $axis and not is-alias('none', $axis) {
@@ -124,7 +124,7 @@
       @if $direction != 'top' and $direction != 'bottom' and $direction != 'center' {
         @error 'You have chosen an axis value of `vertical` that cannot be ' +
             'used with the direction value of `#{meta.inspect($direction)}` for' +
-            ' the `scale-up` mixin. A vertical axis must have direction value' +
+            ' the [ scale-up() ] mixin. A vertical axis must have direction value' +
             ' of either `top`, `bottom`, or `center`.';
       } @else if $direction == 'top' {
         $trans-origin-val: 100% 0%;
@@ -145,7 +145,7 @@
       {
         @error 'You have chosen an axis value of `horizontal` that cannot be ' +
             'used with the direction value of `#{meta.inspect($direction)}` ' +
-            'for the `scale-up` mixin. A horizontal axis must have direction ' +
+            'for the [ scale-up() ] mixin. A horizontal axis must have direction ' +
             'value of either `left`, `right`, or `center`.';
       } @else if $direction == 'left' {
         $trans-origin-val: 0% 0%;
@@ -153,19 +153,19 @@
         $trans-origin-val: 100% 100%;
       }
     } @else {
-      @error 'Invalid $axis value of `#{meta.inspect($axis)}` for the `scale-up` mixin.';
+      @error 'Invalid $axis value of `#{meta.inspect($axis)}` for the [ scale-up() ] mixin.';
     }
   }
 
   @if not is-number($duration) {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '`scale-up` mixin. The duration property must be a number.';
+        '[ scale-up() ] mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
     // If no there is no unit for $duration, unless $duration > 60, assume seconds
     $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
   } @else if not list.index('s' 'ms', math.unit($duration)) {
     @error 'Invalid $duration value of `#{$duration}` for the ' +
-        '`scale-up` mixin. The duration property must be in either s or ms units.';
+        '[ scale-up() ] mixin. The duration property must be in either s or ms units.';
   } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $duration: math.div($duration, 1000ms) * 1s;
@@ -191,13 +191,13 @@
   @if $delay {
     @if not is-number($delay) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`scale-up` mixin. The delay property must be a number.';
+          '[ scale-up() ] mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, unless $delay > 60, assume seconds
       $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
       @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '`scale-up` mixin. The delay property must be in either s or ms units.';
+          '[ scale-up() ] mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
 
@@ -221,7 +221,7 @@
       $iterations: $iterations;
     } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
-          'for the `scale-up` mixin.';
+          'for the [ scale-up() ] mixin.';
     }
   } @else {
     $iterations: null;
@@ -241,7 +241,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
-        ' for the `scale-up` mixin';
+        ' for the [ scale-up() ] mixin.';
   }
 
   @if not $timing-func or is-alias('normal', $timing-func) {
