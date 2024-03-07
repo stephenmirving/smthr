@@ -5,11 +5,13 @@
 
 /// Uses clip path to change an element to the shape of a pentagonal arrow point.
 ///
-/// @param {String} $direction [right] The direction the arrow is pointing
-/// @param {Number} $size [15rem] - The size of the arrow. If
-/// the $height property is not set explicitly, it is both height and width, if
+/// @param {String} $direction ['right'] The direction the arrow is pointing.
+/// Accepted values for $direction are: `top`, `top-right`, `right,`
+/// `bottom-right`, `bottom`, `bottom-left`, `left,` and `top-left`.
+/// @param {Number} $size [15rem] - The size of the arrow. If the $height
+/// property is not set explicitly, it sets both height and width, if $height is
+/// set explicitly, then this value sets only the width.
 /// @param {Color | Mixed} $bg [#80f] The color or background value.
-/// $height is set explicitly, then this value sets only the width.
 /// @param {Number} $height [$size] The height of the arrow.
 ///
 /// @group Shapes
@@ -18,12 +20,13 @@
 ///
 /// @throw Invalid $direction data type.
 /// @throw Invalid $direction keyword value.
-@mixin point($direction: right, $size: 15rem, $bg: #80f, $height: $size) {
+@mixin point($direction: 'right', $size: 15rem, $bg: #80f, $height: $size) {
   @if $direction {
     @if is-string($direction) {
       $direction: string.to-lower-case($direction);
     } @else {
-      @error 'Invalid data type for $direction in the [ point() ] mixin. ' +
+      @error 'Invalid data type for $direction of ' +
+          '#{meta.inspect(meta.type-of($direction))} in the [ point() ] mixin. ' +
           'The value for $direction must be a string.';
     }
 

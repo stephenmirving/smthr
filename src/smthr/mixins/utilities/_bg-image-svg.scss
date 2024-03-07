@@ -3,6 +3,7 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-map' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
@@ -33,13 +34,14 @@
 ///
 /// @group Utilities
 /// @require {function} is-alias
+/// @require {function} is-falsey
 /// @require {function} is-map
 /// @require {function} is-number
 /// @require {function} is-string
 ///
-/// @throw Invalid $img-2x-suffix data type.
-/// @throw Invalid $min-ratio data type.
-/// @throw Invalid $hidpi-bg-props data type.
+/// @throw Invalid $img-2x-suffix data type error.
+/// @throw Invalid $min-ratio data type error.
+/// @throw Invalid $hidpi-bg-props data type error.
 @mixin bg-image-svg(
   $svg-img-name,
   $bg-size,
@@ -69,13 +71,9 @@
         'This value must be a number.';
   }
 
-  @if not
-    $hidpi-bg-props or
-    is-alias('none', $hidpi-bg-props) or
-    $hidpi-bg-props ==
-    ' ' or
-    $hidpi-bg-props ==
-    ()
+  @if is-falsey($hidpi-bg-props) or
+      is-alias('none', $hidpi-bg-props) or
+      $hidpi-bg-props == ' '
   {
     $hidpi-bg-props: null;
   } @else if not is-map($hidpi-bg-props) {
@@ -106,8 +104,9 @@
 
   // Scaled up version of the image for HiDPI displays
   @media screen and (-webkit-min-device-pixel-ratio: $min-ratio),
-    screen and (min-resolution: $min-ratio * 96dpi),
-    screen and (min-resolution: $min-ratio * 1dppx) {
+         screen and (min-resolution: $min-ratio * 96dpi),
+         screen and (min-resolution: $min-ratio * 1dppx)
+  {
     background: url(#{$ret-png-img}); // 2x PNG fallback image
     background: url(#{$svg-img-name}), linear-gradient(transparent, transparent);
     background-size: $bg-size;

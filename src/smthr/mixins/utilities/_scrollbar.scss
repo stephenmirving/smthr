@@ -27,6 +27,7 @@
   $is-internal: false
 ) {
   $ff-scroll-size: if($size < 15, thin, auto);
+
   @if $is-internal {
     scrollbar-color: $fg-color $bg-color; // Firefox 64+
     scrollbar-width: $ff-scroll-size; // Firefox 64+

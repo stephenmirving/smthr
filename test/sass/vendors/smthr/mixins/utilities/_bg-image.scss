@@ -3,6 +3,7 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-map' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
@@ -30,6 +31,7 @@
 ///
 /// @group Utilities
 /// @require {function} is-alias
+/// @require {function} is-falsey
 /// @require {function} is-map
 /// @require {function} is-number
 /// @require {function} is-string
@@ -68,13 +70,9 @@
         'This value must be a number.';
   }
 
-  @if not
-    $hidpi-bg-props or
-    is-alias('none', $hidpi-bg-props) or
-    $hidpi-bg-props ==
-    ' ' or
-    $hidpi-bg-props ==
-    ()
+  @if is-falsey($hidpi-bg-props) or
+      is-alias('none', $hidpi-bg-props) or
+      $hidpi-bg-props == ' '
   {
     $hidpi-bg-props: null;
   } @else if not is-map($hidpi-bg-props) {

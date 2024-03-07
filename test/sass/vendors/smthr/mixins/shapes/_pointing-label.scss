@@ -7,12 +7,13 @@
 
 /// Creates a little pointing label from an element using clip-path.
 ///
-/// @param {String} $direction [right] - Indicates the direction the label
-/// will be pointing towards.
-/// @param {Number} $width [5rem] - A length value setting the width.
+/// @param {String} $direction ['right'] - Indicates the direction the label
+/// will be pointing towards. Accepted values are: `top`, `right`, `bottom`,
+/// and `left`.
+/// @param {Number} $width [8rem] - A length value setting the width.
 /// @param {Color | Mixed} $bg [#80f} Any value that is valid for the background
 /// shorthand property.
-/// @param {Number} $b-radius: [4px] A single value border radius for the
+/// @param {Number} $b-radius: [8px] A single value border radius for the
 /// corners on the opposite side of the label from the direction it is pointing.
 /// @param {Number} $height [$width / 4] Length value that sets
 /// the height of the label.
@@ -24,7 +25,7 @@
 ///
 /// @throw Invalid $direction value
 @mixin pointing-label(
-  $direction: top,
+  $direction: 'right',
   $width: 8rem,
   $bg: #80f,
   $b-radius: 8px,

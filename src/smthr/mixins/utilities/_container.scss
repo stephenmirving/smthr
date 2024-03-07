@@ -30,9 +30,9 @@
   }
 
   @if not is-absolute-length($max-width) and not is-calculation($max-width) {
-    @warn 'You may want to set the $max-width value of the [ container() ] mixin ' +
-        'to be an absolute length or a calculation that produces an absolute ' +
-        'length.';
+    @warn 'You may want to set the $max-width value of the [ container() ] ' +
+        'mixin to be an absolute length or a calculation that produces an ' +
+        'absolute length.';
   }
 
   width: 100%;
@@ -42,9 +42,5 @@
   @media screen and (min-width: 48em) {
     max-width: min(96%, $max-width);
     padding: 0;
-  }
-
-  @media screen and (min-width: 80em) {
-    max-width: $max-width;
   }
 }

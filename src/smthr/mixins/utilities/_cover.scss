@@ -1,59 +1,74 @@
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
-@use '../../functions/strip-unit' as *;
+@use '../../functions/equals-false' as *;
+@use '../../functions/equals-true' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-percentage' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
+@use '../../functions/strip-unit' as *;
 
 /// Makes an element cover 100% of the screen or cover 100% of the closet
 /// stacking context.
 ///
 /// @param {Number} $z-val [999] - A z-index number value
-/// @param {Bool} $is-fullscreen [false] - A flag indicating whether the
-/// element will attempt to cover the entire viewport rather than just
-/// covering the nearest stacking context. This is not 100% reliable depending
+/// @param {Bool | String} $is-fullscreen [false] - A flag indicating whether
+/// the element will attempt to cover the entire viewport rather than just
+/// covering the nearest stacking context. This is not 100% reliable, depending
 /// on the stacking context properties of the elements in the parent chain.
-/// @param {Color | Mixed} $bg [null] - A shorthand background value
-/// @param {Number} $opacity [null] - A decimal value between 0 and 1
+/// @param {Color | Mixed} $bg [null] - The shorthand `background` property's
+/// value.
+/// @param {Number} $opacity [null] - A decimal value between 0 and 1 or a
+/// percentage value between 0% and 100%.
 ///
 /// @group Utilities
 ///
-/// @require {function} strip-unit
+/// @require {function} equals-false
+/// @require {function} equals-true
+/// @require {function} is-list
 /// @require {function} is-number
+/// @require {function} is-percentage
+/// @require {function} is-string
+/// @require {function} list-to-string
+/// @require {function} strip-unit
 ///
-/// @throw Invalid data type for $is-fullscreen.
-/// @throw Invalid data type for $z-val.
-/// @throw Invalid $opacity range.
-/// @throw Invalid $opacity data type.
-/// @throw Invalid $opacity unit type.
+/// @throw Invalid data type for $is-fullscreen error.
+/// @throw Invalid data type for $z-val error.
+/// @throw Invalid $opacity range error.
+/// @throw Invalid $opacity data type error.
+/// @throw Invalid $opacity unit type error.
 @mixin cover(
   $z-val: 999,
   $is-fullscreen: false,
   $bg: null,
   $opacity: null
 ) {
-  @if is-string($is-fullscreen) {
-    $is-fullscreen: string.to-lower-case($is-fullscreen);
+  @if $is-fullscreen {
+    @if is-list($is-fullscreen) {
+      $is-fullscreen: list-to-string($is-fullscreen);
+    }
+
+    @if is-string($is-fullscreen) {
+      $is-fullscreen: string.to-lower-case($is-fullscreen);
+    }
   }
 
-  @if $is-fullscreen ==
-    true or
-    $is-fullscreen ==
-    'full' or
-    $is-fullscreen ==
-    'ifs' or
-    $is-fullscreen ==
-    'fs' or
-    $is-fullscreen ==
-    'full-screen' or
-    $is-fullscreen ==
-    'fullscreen' or
-    $is-fullscreen ==
-    'full screen'
+  @if equals-true($is-fullscreen) or
+      $is-fullscreen == 'full-screen' or
+      $is-fullscreen == 'full screen' or
+      $is-fullscreen == 'fullscreen' or
+      $is-fullscreen == 'full-s' or
+      $is-fullscreen == 'fulls' or
+      $is-fullscreen == 'full' or
+      $is-fullscreen == 'ifs' or
+      $is-fullscreen == 'f-s' or
+      $is-fullscreen == 'f s' or
+      $is-fullscreen == 'fs'
   {
     $is-fullscreen: true;
-  } @else if not $is-fullscreen or is-alias('none', $is-fullscreen) {
+  } @else if equals-false($is-fullscreen) or is-alias('none', $is-fullscreen) {
     $is-fullscreen: false;
   } @else {
     @error 'Invalid $is-fullscreen value of `#{meta.inspect($is-fullscreen)}` ' +
@@ -77,13 +92,13 @@
     right: 0;
     bottom: 0;
     width: 100vw;
-    width: 100lvw;
+    width: 100dvw;
     max-width: 100vw;
-    max-width: 100lvw;
+    max-width: 100dvw;
     height: 100vw;
-    height: 100lvw;
+    height: 100dvw;
     max-height: 100vw;
-    max-height: 100lvw;
+    max-height: 100dvw;
   } @else {
     width: 100%;
     max-width: 100%;

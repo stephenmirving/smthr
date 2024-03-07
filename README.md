@@ -254,8 +254,8 @@ parameter.
 
 To get an idea of the full list of aliases for these keyword values, see the
 `$map-alias-resolutions` variable inside this
-[documentation link](https://stephenmirving.github.io/smthr/#undefined-variable-map-alias-resolutions),
-or by looking for it in the `src/smthr/variables/_maps.scss` file.
+[documentation](https://stephenmirving.github.io/smthr/#utilities-variable-map-alias-resolutions)
+link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Betterize
 
@@ -287,7 +287,8 @@ libraries, please refer to the official
 
 For more information about how to update your project's Sass files to replace
 the soon-to-be-deprecated `@import` feature with the newer `@use` and `@forward`
-features, refer to the [documentation for the sass-migrator tool](https://sass-lang.com/documentation/cli/migrator/).
+features, refer to the
+[documentation for the sass-migrator tool](https://sass-lang.com/documentation/cli/migrator/).
 
 ## Authors
 
@@ -308,6 +309,6 @@ Thank you to the contributors and maintainers of [Sass](https://sass-lang.com/).
 Thank you to the creators and writers at [css-tricks.com](https://css-tricks.com/),
 [Smashing Magazine](https://www.smashingmagazine.com/) and the
 [Mozilla Developer's Network](https://developer.mozilla.org/), from whom I have
-learned so much from.
+learned so much.
 
 Thank you to my father, Michael Graham Irving.

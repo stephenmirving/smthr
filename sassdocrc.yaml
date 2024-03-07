@@ -16,8 +16,6 @@ options:
     'undefined': 'General'
     'color': 'Colors'
     'variable': 'Variables'
-    'function': 'Functions'
-    'mixin': 'Mixins'
     'placeholder': 'Placeholders'
     'Animations': 'Animations'
     'Shapes': 'Shapes'
@@ -25,7 +23,7 @@ options:
   package:
     title: 'Smoother'
     name: 'smthr'
-    version: '0.2.2'
+    version: '0.3.3'
     homepage: 'https://github.com/stephenmirving/smthr'
     repository: https://github.com/stephenmirving/smthr.git'
     license: 'MIT'

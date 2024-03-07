@@ -14,8 +14,12 @@
 ///
 /// @param {Color} $start-color - The starting color in the gradient.
 /// @param {Color} $end-color - The ending color in the gradient.
-/// @param {String | Number} $orientation ['horizontal'] - The direction
-/// of the grandient.
+/// @param {String | Number} $orientation ['to right'] - The orientation
+/// of the grandient. Can be an angle value or one of the orientation keywords
+/// used with gradients, `to top`, `to top right`, `to right`, `to bottom right`,
+/// `to right`, `to bottom left`, `to left`, `to top left`, or one of the alias
+/// values for these orientations.
+///
 /// @param {Number} $start-percent [0%] - Starting percentage of the gradient.
 /// @param {Number} $end-percent [100%] - Ending percentage of the gradient.
 ///
@@ -48,7 +52,7 @@
   @if $orientation and is-list($orientation) and
       list.separator($orientation) == space
   {
-    $orientation: list-to-string($orientation, ' ');
+    $orientation: list-to-string($orientation);
   }
 
   @if $orientation and is-string($orientation) {

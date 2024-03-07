@@ -21,7 +21,7 @@
 ///
 /// @group Shapes
 ///
-/// @throw Invalid $banner-size value
+/// @throw Invalid $banner-size value, you must choose a unitless number.
 @mixin banner(
   $banner-size: 1,
   $font-size: 1em,
@@ -29,7 +29,8 @@
   $content-suffix: '-content'
 ) {
   @if meta.type-of($banner-size) != 'number' or not math.is-unitless($banner-size) {
-    @error 'Invalid $banner-size value for the [ banner() ] mixin.';
+    @error 'Invalid $banner-size value for the [ banner() ] mixin. You must ' +
+        'choose a unitless number value for $banner-size.';
   }
 
   position: relative;

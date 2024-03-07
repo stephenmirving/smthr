@@ -3,15 +3,19 @@
 @use '../../functions/conv-angle' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-angle' as *;
+@use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Uses psuedo-elements and transform to turn an element into the shape of an
 /// arrow with a curved tail.
 ///
 /// @param {String | Number} $direction ['bottom-right'] The direction that the
-/// arrow is pointing. Can either be a direction or an angle in degrees, turns,
-/// radians, or gradians.
+/// arrow is pointing. Value can either be a an angle (in degrees, turns,
+/// radians, gradians) or a direction with one of the following values: `top`,
+/// `top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, `left`,
+/// `top-left`. Alias values for these direction keywords are also accepted.
 /// @param {Number} $size [2rem] - The size of the arrow is calculated based on
 /// this value.
 /// @param {Color} $color [#f00] The color of the arrow.
@@ -21,8 +25,10 @@
 /// @require {function} conv-angle
 /// @require {function} is-alias
 /// @require {function} is-angle
+/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} list-to-string
 ///
 /// @throw Invalid unit type for $direction
 /// @throw Invalid $direction keyword value
@@ -34,17 +40,21 @@
   // Default angle for the 'bottom-right' direction
   $angle: 10deg;
 
-  // Mixin will only accept direction keywords and degree units
+  // Throw error if $direction is a number with a unit and is not an angle
   @if $direction and
-    is-number($direction) and not
-    math.is-unitless($direction) and not
-    is-angle($direction)
+      is-number($direction) and not
+      math.is-unitless($direction) and not
+      is-angle($direction)
   {
     @error 'Invalid unit type for the $direction parameter of the ' +
       '[ arrow-curved-tail() ] mixin. Numbers must be entered in angle units.';
   }
 
   @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
+
     @if is-string($direction) {
       $direction: string.to-lower-case($direction);
     }
@@ -89,6 +99,11 @@
           ' Accepted values include: `top`,`top-right`, `right`, ' +
           '`bottom-right`, `bottom`, `bottom-left`, `left`, or `top-left`.';
     }
+  } @else {
+    @error 'You did not pass a $direction value for the [ arrow-curved-tail() ] ' +
+        'mixin. Accepted values include angles and the direction keywords of: ' +
+        '`top`,`top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, ' +
+        '`left`, or `top-left`.';
   }
 
   position: relative;

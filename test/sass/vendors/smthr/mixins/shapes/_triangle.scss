@@ -7,8 +7,8 @@
 /// pips, and more. Use this mixin inside a `&::before` or `&::after` selector,
 /// to attach the triangle to an existing element.
 ///
-/// @param {String} $direction [down] - Direction that the triangle points.
-/// Can be `up`, `right`, `down`, or `left`.
+/// @param {String} $direction ['bottom'] - Direction that the triangle points.
+/// Can be `top`, `right`, `bottom`, or `left`.
 /// @param {Number} $size [9px] - The width of the triangle.
 /// @param {Color} $color [#80f] - The color of the triangle.
 ///
@@ -17,7 +17,7 @@
 /// @require {function} is-string
 ///
 /// @throw Invalid $direction value
-@mixin triangle($direction: bottom, $size: 9px, $color: #80f) {
+@mixin triangle($direction: 'bottom', $size: 9px, $color: #80f) {
   @if is-string($direction) {
     $direction: string.to-lower-case($direction);
   }
@@ -46,7 +46,7 @@
     border-right-style: solid;
     border-left-width: 0;
   } @else {
-    @error 'Invalid direction of `#{meta.inspect($direction)}` for the ' +
+    @error 'Invalid direction of #{meta.inspect($direction)} for the ' +
         '[ triangle() ] mixin. The value for $direction must be ' +
         'one of the following: `top`, `right`, `bottom`, or `left`.';
   }

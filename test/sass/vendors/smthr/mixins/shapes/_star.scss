@@ -1,7 +1,7 @@
 /// Uses clip path to change an element to a star shape
 ///
-/// @param {Color | Mixed} $bg [#80f] The background property value.
 /// @param {Number} $size [15rem] - The height and width.
+/// @param {Color | Mixed} $bg [#80f] The background property value.
 ///
 /// @group Shapes
 @mixin star($size: 15rem, $bg: #80f) {

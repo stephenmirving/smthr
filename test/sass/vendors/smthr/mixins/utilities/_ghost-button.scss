@@ -9,8 +9,8 @@
 /// @param {Number} $border-size - The border-width for the button.
 /// @param {Color} $border-color - The border-color for the button.
 /// @param {Number} $padding - The button's padding.
-/// @param {Number} $transition-speed - The speed the button will transition.
-/// @param {Color} $hover-color - The color of the button's hover state.
+/// @param {Number} $transition-duration - The button's transition duration.
+/// @param {Color} $hover-color - The text color of the button's hover state.
 ///
 /// @group Utilities
 @mixin ghost-button(
@@ -21,7 +21,7 @@
   $border-size,
   $border-color,
   $padding,
-  $transition-speed,
+  $transition-duration,
   $hover-color
 ) {
   display: inline-block;
@@ -30,8 +30,8 @@
   color: $font-color;
 
   @if $font-fam and $font-size {
-    @if $font-weight and $font-weight != 400 {
-      font: $font-weight $font-size $font-fam;
+    @if $font-weight and $font-weight != 400 and $font-weight != 'normal' {
+      font: #{$font-weight} $font-size $font-fam;
     } @else {
       font: $font-size $font-fam;
     }
@@ -42,16 +42,17 @@
     @if $font-size {
       font-size: $font-size;
     }
-    @if $font-weight and $font-weight != 400 {
-      font-weight: $font-weight;
+    @if $font-weight and $font-weight != 400 and $font-weight != 'normal' {
+      font-weight: #{$font-weight};
     }
   }
 
   text-transform: uppercase;
   text-decoration: none;
   transition:
-    color $transition-speed,
-    background $transition-speed;
+    color $transition-duration,
+    background $transition-duration,
+    border-color $transition-duration;
 
   &:hover {
     background: $border-color;

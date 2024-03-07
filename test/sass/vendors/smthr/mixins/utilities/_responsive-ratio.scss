@@ -2,7 +2,10 @@
 
 /// Creates a scalable element that maintains a given ratio.
 ///
-/// @example scss = @include responsive-ratio(16, 9);
+/// @example scss
+/// .element {
+///   @include responsive-ratio(16, 9);
+/// }
 ///
 /// @param {Number} $x - The width portion of the ratio.
 /// @param {Number} $y - The height portion of the ratio.

@@ -1,21 +1,32 @@
 @use 'sass:meta';
 @use 'sass:list';
+@use 'sass:string';
 
 /// Applies the float clearing 'clearfix' hack. This modern incarnation of the
 /// clearfix will work as far back as Internet Explorer 8.
 ///
-/// @param {String} $clear-val - The clear property's value. Can either be
-/// left, right, or both.
+/// @param {String} $clear-val [both] - The clear property's value. Can either
+/// be `left`, `right`, or `both`.
 ///
 /// @group Utilities
-/// @throw Invalid $clear-value parameter value
+///
+/// @throw Invalid $clear-value data type error.
+/// @throw Invalid $clear-value keyword error.
 @mixin clearfix($clear-value: both) {
   $accepted-values: 'both', 'left', 'right';
 
+  @if $clear-value and meta.type-of($clear-value) == 'string' {
+    $clear-value: string.to-lower-case($clear-value);
+  } @else {
+    @error 'Invalid $clear-value data type of '
+        '#{meta.inspect(meta.type-of($clear-value))} was passed to the ' +
+        '[ clearfix() ] mixin. Value must be either `left`, `right` or `both`.';
+  }
+
   @if not list.index($accepted-values, $clear-value) {
     @error 'Invalid $clear-value parameter of `#{meta.inspect($clear-value)}` ' +
-        'was passed to the [ clearfix() ] mixin. Value must be either `left`, ' +
-        '`right` or `both`.';
+        'was passed to the [ clearfix() ] mixin. Value must be either ' +
+        '`left`, `right` or `both`.';
   }
 
   &::before,
@@ -25,6 +36,6 @@
   }
 
   &::after {
-    clear: $clear-value;
+    clear: #{$clear-value};
   }
 }

@@ -10,7 +10,8 @@
 
 /// Uses clip path to change an element to the shape of a chevron arrow
 ///
-/// @param {String} $direction [right] The direction the chevron is pointing
+/// @param {String} $direction ['right'] The direction the chevron is pointing.
+/// Valid direction values are: `top`, `right`, `bottom`, and `left`.
 /// @param {Number} $size [15rem] - The size of the chevron.
 /// If the $height property is not set explicitly, it is both height and width,
 /// @param {Color | Mixed} $bg [#80f] The color or background value.
@@ -27,7 +28,7 @@
 ///
 /// @throw Invalid $direciton unit type.
 /// @throw Invalid $direction keyword type.
-@mixin chevron($direction: right, $size: 10rem, $bg: #80f, $height: $size) {
+@mixin chevron($direction: 'right', $size: 10rem, $bg: #80f, $height: $size) {
   $closest-position-list: null;
   $closest-position: null;
   $angle-difference: null;
@@ -66,8 +67,9 @@
     } @else if is-alias('bottom', $direction) {
       clip-path: polygon(100% 75%, 50% 100%, 0 75%, 0 0, 50% 25%, 100% 0);
     } @else {
-      @error 'Invalid direction value of `#{meta.inspect($direction)}` for ' +
-        'the [ chevron() ] mixin.';
+      @error 'Invalid $direction value of #{meta.inspect($direction)} for ' +
+        'the [ chevron() ] mixin. Valid directions are: `top`, `right`, ' +
+        '`bottom`, `left`.';
     }
   }
 

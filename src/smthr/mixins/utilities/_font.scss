@@ -15,7 +15,7 @@
 /// @param {String} $kern [null] - The font-kerning value.
 ///
 /// @group Utilities
-/// @throw Invalid $kern keyword value for font-kerning property.
+/// @throw Error, invalid $kern keyword value for font-kerning property.
 @mixin font(
   $size: null,
   $weight: null,
@@ -63,7 +63,7 @@
   }
   @if not $family or not $size {
     @if $family {
-      font-family: $stretch;
+      font-family: #{$stretch};
     }
     @if $kern {
       font-kerning: $kern;
@@ -81,7 +81,7 @@
       font-variant: $variant;
     }
     @if $weight {
-      font-weight: $weight;
+      font-weight: #{$weight};
     }
     @if $spacing {
       letter-spacing: $spacing;

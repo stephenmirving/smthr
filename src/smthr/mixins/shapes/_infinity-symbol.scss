@@ -13,6 +13,8 @@
 /// @group Shapes
 /// @require {function} to-fixed
 @mixin infinity-symbol($size: 130px, $symbol-color: #000, $rad-val: 50px) {
+  // Magic numbers used in $size calculations were just the values that were
+  // closest to making the infinity symbol come out right at different sizes.
   $component-size: to-fixed($size * 0.4615389, 2);
 
   position: relative;

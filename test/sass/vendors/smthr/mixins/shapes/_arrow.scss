@@ -25,18 +25,15 @@
 /// @require {function} is-string
 /// @require {function} list-to-string
 ///
-/// @throw Invalid $direction value.
+/// @throw Invalid $direction value error.
 @mixin arrow($direction: 'right', $size: null, $bg: #80f, $height: $size) {
-  @if $direction {
+  @if $direction and (is-string($direction) or is-list($direction)) {
     @if is-list($direction) {
       $direction: list-to-string($direction);
     }
 
     @if is-string($direction) {
       $direction: string.to-lower-case($direction);
-    } @else {
-      @error 'Invalid data type for $direction in the [ arrow() ] mixin.' +
-          'The value for $direction must be a string.';
     }
 
     @if is-alias('right', $direction) or is-alias('bottom right', $direction) {
@@ -67,8 +64,7 @@
       @if is-alias('top left', $direction) {
         transform: rotate(45deg);
       }
-    } @else if is-alias('top', $direction) or is-alias('top right', $direction)
-    {
+    } @else if is-alias('top', $direction) or is-alias('top right', $direction) {
       clip-path: polygon(
         100% 50%,
         75% 50%,
@@ -100,10 +96,13 @@
         transform: rotate(45deg);
       }
     } @else {
-      @error 'Invalid $direction of `#{meta.inspect($direction)}` for the ' +
-          '[ arrow() ] mixin.';
+      @error 'Invalid $direction keyword of #{meta.inspect($direction)} for ' +
+          'the [ arrow() ] mixin. To pass a valid $direction value, choose ' +
+          'an angle or one of the following direction keywords: `top`, ' +
+          '`top-right`, `right`, `bottom-right`, `bottom`, `bottom-left`, ' +
+          '`left`, `top-left` ';
     }
-  } @else if is-angle($direction) {
+  } @else if $direction and is-angle($direction) {
     clip-path: polygon(
       100% 50%,
       75% 50%,
@@ -115,8 +114,10 @@
     );
     transform: rotate($direction);
   } @else {
-    @error 'Invalid $direction of #{meta.inspect($direction)} for the ' +
-          '[ arrow() ] mixin.';
+    @error 'Invalid $direction value of #{meta.inspect($direction)} for the ' +
+        '[ arrow() ] mixin. To pass a valid $direction value, choose an angle ' +
+        'or one of the following direction keywords: `top`, `top-right`, ' +
+        '`right`, `bottom-right`, `bottom`, `bottom-left`, `left`, `top-left` ';
   }
 
   @if $size {
