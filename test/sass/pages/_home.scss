@@ -196,9 +196,3 @@ $flip-axis: 'diagonal';
     );
   }
 }
-
-.test99 {
-  $shadow-color: hwb(100, 100%, 100%);
-
-  content: string.slice($shadow-color, 1, string.index($shadow-color, '(') - 1)
-}
