@@ -369,8 +369,9 @@
   }
 }
 
-/// This quantity-query mixin will select every items if there is at most `$num`
-/// items. It will not if there is not as much as item as you set in `$num`.
+/// This quantity-query mixin will select every item if there is at most `$num`
+/// items. It will not select anything if there are more children than the
+/// quantity of `$num`.
 ///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
@@ -391,7 +392,7 @@
 
 /// This quantity-query mixin will select every items there is between `$min`
 /// and `$max` items. If the quantity of child elements is less than the $min
-/// or $greater than the $max, none will be selected. If the quantity is in
+/// or greater than the $max, none will be selected. If the quantity is in
 /// range, all will be selected.
 ///
 /// @content [ Write the style rules that you want to apply to the children,

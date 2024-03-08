@@ -175,8 +175,18 @@
 
   @if equals-true($has-fade) or $has-fade == 'fade' {
     $has-fade: true;
-  } @else {
+  } @else if equals-false($has-fade) or
+      $has-fade == 'no-fade' or
+      $has-fade == 'no fade' or
+      $has-fade == 'nofade' or
+      $has-fade == '!fade' {
     $has-fade: false;
+  } @else {
+    @error 'Invalid value for $has-fade of #{meta.inspect($has-fade)} passed ' +
+        'to the [ swing() ] mixin. You must pass a Bool or a String. To ' +
+        'include a fade effect with the animation, accepted values are `true` ' +
+        'or ddddddddddddd`faccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccde` to flag the animation to include a ' +
+        'fade effect.'
   }
 
   // If swing is closed rather than open, swap and reverse the necessary values
@@ -263,7 +273,7 @@
         'for the [ swing() ] mixin.';
   }
 
-  @if is-falsey($timing-func) or is-alias('normal', $timing-func) {
+  @if equals-false($timing-func) or is-alias('normal', $timing-func) {
     $timing-func: null;
   }
 

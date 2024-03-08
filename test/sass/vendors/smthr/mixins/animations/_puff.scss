@@ -17,10 +17,10 @@
 /// the `animation-stage` mixin be used on the parent element.
 ///
 /// @param {Bool | String} $in-or-out ['in'] - Determines if the element will
-/// puff `in` (or `true`) or `out` (or `false`).
-/// @param {String} $direction ['center'] - Will, depending on `$in-or-out`, either
-/// puff in from this direction or puff out towards this direction. Acceptable
-/// values include the following: `center`, '`top`, `ottom`, `left`, `right`,
+/// puff 'in' (`in`, `i`, or `true`) or 'out' (`out`, `o`, or `false`).
+/// @param {String} $direction ['center'] - Will, depending on `$in-or-out`,
+/// either puff in from this direction or puff out towards this direction.
+/// Accepted values include: `center`, '`top`, `bottom`, `left`, `right`,
 /// `top-left`, `top-right`, `bottom-left`, `bottom-right`, `horizontal`, and
 /// `vertical`.
 /// @param {Number} $duration [0.7s] - The duration of the animation (`s` or `ms`)
@@ -108,7 +108,7 @@
     $anim-suffix: '-out-to';
   } @else {
     @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
-        '[ puff() ] mixin. Value must be either "in" or "out"';
+        '[ puff() ] mixin. Value must be either `in` or `out`';
   }
 
   @if $direction {
@@ -276,7 +276,7 @@
         '$anim-dir to the [ puff() ] mixin.';
   }
 
-  @if not $timing-func or is-alias('normal', $timing-func) {
+  @if equals-false($timing-func) or is-alias('normal', $timing-func) {
     $timing-func: if(
       $in-or-out,
       cubic-bezier(0.47, 0, 0.745, 0.715),

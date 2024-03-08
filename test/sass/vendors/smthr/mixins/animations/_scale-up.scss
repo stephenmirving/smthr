@@ -261,7 +261,7 @@
         ' for the [ scale-up() ] mixin.';
   }
 
-  @if not $timing-func or is-alias('normal', $timing-func) {
+  @if equals-false($timing-func) or is-alias('normal', $timing-func) {
     $timing-func: cubic-bezier(0.39, 0.575, 0.565, 1); // ease-out-sine
   }
 

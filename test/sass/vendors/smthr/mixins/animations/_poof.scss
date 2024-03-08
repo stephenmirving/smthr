@@ -5,24 +5,20 @@
 @use '../../functions/equals-false' as *;
 @use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
-@use '../../functions/is-global-value' as *;
 @use '../../functions/is-falsey' as *;
+@use '../../functions/is-global-value' as *;
 @use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Generates a twister animation that twists an element in or out, from or
-/// towards a given direction.
+/// Generates an animation that poofs an element in or out. If a forward or
+/// backward $direction is chosen to augment the poof, it is recommended that
+/// the `animation-stage` mixin be used on the parent element.
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
-/// spac 'in' (`in`, `true`, or `i`) or 'out' (`out`, `false`, or `o`).
-/// @param {String} $direction ['top'] - Will either twist in from this
-/// direction or twist out towards this direction, depending on the value of
-/// $in-or-out. The value of $direction must be one of the following:
-/// `top`, `bottom`, or any valid aliases for these $direction
-/// values.
-/// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`)
+/// poof `in` (or `i` or `true`) or `out` (or `o`, or `false`).
+/// @param {Number} $duration [1s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
 /// for the animation to complete. Can be `infinite`, any unitless number, or
@@ -31,10 +27,11 @@
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
 /// any CSS global value. Default of `null` assumes the CSS property default of
 /// `normal`.
-/// @param {Timing-Function} $timing-func [null] - The timing function for
-/// the animation. A null value passed here will default to the recommended
-/// timing function for this animation of `ease-out` on a twister-in animation,
-/// and `ease-in` on a twister-out animation.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. A null value passed here will default to the recommended timing
+/// function for this animation of `cubic-bezier(0.47, 0, 0.745, 0.715)` if
+/// the animation is poofing in, and `cubic-bezier(0.165, 0.84, 0.44, 1)` if
+/// the animation is poofing out.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -44,37 +41,33 @@
 /// @require {function} equals-false
 /// @require {function} equals-true
 /// @require {function} is-alias
-/// @require {function} is-falsey
 /// @require {function} is-global-value
-/// @require {function} is-list
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {function} is-list
 /// @require {function} list-to-string
 ///
 /// @throw Invalid $in-or-out value error.
-/// @throw Invalid $direction value error.
 /// @throw Invalid $duration value error.
 /// @throw Invalid $delay value error.
 /// @throw Invalid $iterations value error.
 /// @throw Invalid $anim-dir value error.
-@mixin twister(
+@mixin poof(
   $in-or-out: 'in',
-  $direction: 'top',
-  $duration: 1s,
+  $duration: 0.7s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
   $timing-func: null,
-  $anim-num: null,
+  $anim-num: null
 ) {
+  // Default values for a poof in
+  $trans-val-1: scale(2, 2);
+  $trans-val-2: scale(1, 1);
   $opacity-val-1: 0;
   $opacity-val-2: 1;
-  $trans-val-1: null;
-  $trans-val-2: null;
-  $trans-val-3: null;
-  $temp-val: null;
-  $trans-origin-1: null;
-  $trans-origin-2: null;
+  $blur-val-1: blur(90px);
+  $blur-val-2: blur(0);
   $anim-suffix: '';
 
   @if $in-or-out and is-string($in-or-out) {
@@ -101,76 +94,38 @@
 
   @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
     $in-or-out: true;
-    $anim-suffix: '-in-from-';
-  } @else if is-falsey($in-or-out) or is-alias('out', $in-or-out) {
+    $anim-suffix: '-in';
+  } @else if not $in-or-out or is-alias('out', $in-or-out) {
     $in-or-out: false;
-    $anim-suffix: '-out-to-';
+    $anim-suffix: '-out';
   } @else {
-    @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for ' +
-        'the [ twister() ] mixin. It must be either `in` or `out`, `true` ' +
-        'or `false`.';
+    @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
+        '[ poof() ] mixin. Value must be either `in` or `out`';
   }
 
-  @if $direction {
-    @if is-list($direction) {
-      $direction: list-to-string($direction);
-    }
-
-    @if is-string($direction) {
-      $direction: string.to-lower-case($direction);
-    }
-
-    @if is-alias('top', $direction) {
-      $trans-val-1: scale(0, 0) rotate(360deg) translateY(100%);
-      $trans-val-2: scale(0, 0) rotate(360deg) translateY(100%);
-      $trans-val-3: scale(1, 1) rotate(0deg) translateY(0);
-      $trans-origin-1: 100% 0%;
-      $trans-origin-2: 0% 0%;
-      $anim-suffix: string.insert(
-        $anim-suffix,
-        'top',
-        string.length($anim-suffix) + 1
-      );
-    } @else if is-alias('bottom', $direction) {
-      $trans-val-1: scale(0, 0) rotate(360deg) translateY(-100%);
-      $trans-val-2: scale(0, 0) rotate(360deg) translateY(-100%);
-      $trans-val-3: scale(1, 1) rotate(0deg) translateY(0%);
-      $trans-origin-1: 0 100%;
-      $trans-origin-2: 100% 100%;
-      $anim-suffix: string.insert(
-        $anim-suffix,
-        'bottom',
-        string.length($anim-suffix) + 1
-      );
-    } @else {
-      @error 'Invalid $direction of #{meta.inspect($direction)} chosen for ' +
-          'the [ twister() ] mixin. The $direction value must be one of the ' +
-          'following: `top`, `bottom`.';
-    }
-  } @else {
-    @error 'You must pass a $direction for the [ twister() ] mixin. The ' +
-        '$direction value must be one of the following: `top`, `bottom`.';
-  }
-
-  // If twister is out rather than in, swap and reverse the necessary values
+  // If poof is out rather than in, swap and reverse the necessary values
   @if not $in-or-out {
     $opacity-val-1: 1;
     $opacity-val-2: 0;
+    $trans-val-1: scale(1, 1);
+    $trans-val-2: scale(2, 2);
+    $blur-val-1: blur(0);
+    $blur-val-2: blur(20px);
+  }
 
-    $temp-val: $trans-val-1;
-    $trans-val-1: $trans-val-3;
-    $trans-val-3: $temp-val;
+  @if not $duration {
+    $duration: if($in-or-out, 0.9s, 1s);
   }
 
   @if not is-number($duration) {
-    @error 'Invalid $duration value of #{meta.inspect($duration)} for the ' +
-        '[ twister() ] mixin. The duration property must be a number.';
+    @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] ' +
+        'mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
     // If no there is no unit for $duration, unless $duration > 60, assume seconds
     $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
   } @else if not list.index('s' 'ms', math.unit($duration)) {
-    @error 'Invalid $duration value of `#{meta.inspect($duration)}` for the ' +
-        '[ twister() ] mixin. The duration property must be in either s or ms units.';
+    @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] mixin.' +
+        'The duration property must be in either s or ms units.';
   } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
     // If time in ms would be shorter as seconds, convert it
     $duration: math.div($duration, 1000ms) * 1s;
@@ -178,21 +133,21 @@
 
   @if is-falsey($delay) or
       is-alias('none', $delay) or
-      $delay == 0s or
-      $delay == 0ms
+      $delay == 0s or $delay == 0ms
   {
     $delay: null;
   }
+
   @if $delay {
     @if not is-number($delay) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '[ twister() ] mixin. The delay property must be a number.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ poof() ] mixin.' +
+          'The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, unless $delay > 60, assume seconds
       $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the ' +
-          '[ twister() ] mixin. The delay property must be in either s or ms units.';
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ poof() ] mixin.' +
+          'The delay property must be in either s or ms units.';
     } @else if math.unit($delay) == 'ms' and $delay % 100 == 0ms {
       // If time in ms would be shorter as seconds, convert it
       $delay: math.div($delay, 1000ms) * 1s;
@@ -206,14 +161,14 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if not (is-number($iterations) and math.is-unitless($iterations)) and
-      not is-global-value($iterations)
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
+      is-global-value($iterations)
     {
-      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
-          'for the [ twister() ] mixin.';
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
+          ' for the [ poof() ] mixin.';
     }
-  } @else {
-    $iterations: null;
   }
 
   @if is-falsey($anim-dir) or
@@ -228,12 +183,12 @@
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
-    @error 'Invalid animation-direction value of #{meta.inspect($anim-dir)} ' +
-        'for the [ twister() ] mixin.';
+    @error 'Invalid animation-direction value of `#{$anim-dir}` passed with ' +
+        '$anim-dir to the [ poof() ] mixin.';
   }
 
   @if equals-false($timing-func) or is-alias('normal', $timing-func) {
-    $timing-func: if(($in-or-out), ease-out, ease-in);
+    $timing-func: null;
   }
 
   @if equals-false($anim-num) or $anim-num == '' {
@@ -246,26 +201,23 @@
     );
   }
 
-  animation: twister#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+  animation: poof#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes twister#{$anim-suffix} {
+    @keyframes poof#{$anim-suffix} {
       0% {
         opacity: $opacity-val-1;
+        filter: $blur-val-1;
         transform: $trans-val-1;
-        transform-origin: $trans-origin-1;
-      }
-
-      #{if($in-or-out, 30%, 70%)} {
-        transform: $trans-val-2;
-        transform-origin: $trans-origin-1;
+        transform-origin: 50% 50%;
       }
 
       100% {
         opacity: $opacity-val-2;
-        transform: $trans-val-3;
-        transform-origin: $trans-origin-2;
+        filter: $blur-val-2;
+        transform: $trans-val-2;
+        transform-origin: 50% 50%;
       }
     }
   }

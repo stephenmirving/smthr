@@ -221,7 +221,7 @@
         'for the [ text-tracking-in() ] mixin.';
   }
 
-  @if not $timing-func or is-alias('normal', $timing-func) {
+  @if equals-false($timing-func) or is-alias('normal', $timing-func) {
     $timing-func: cubic-bezier(0.215, 0.61, 0.355, 1); // ease-out-cubic
   }
 

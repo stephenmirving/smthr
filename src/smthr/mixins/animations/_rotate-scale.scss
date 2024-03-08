@@ -293,7 +293,7 @@
         '[ rotate-scale() ] mixin.';
   }
 
-  @if is-falsey($timing-func) or is-alias('normal', $timing-func) {
+  @if equals-false($timing-func) or is-alias('normal', $timing-func) {
     $timing-func: linear;
   }
 

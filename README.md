@@ -260,7 +260,7 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-* New animations added, `space()`, `swing()`, and `twister()`!
+* New animations added, `poof()`, `space()`, `swing()`, and `twister()`!
 
 * Greatly improved the BEM mixins `elem()` and `mod()` such that they can now be
 passed a limitless Arglist of element or modifier names and be used on selector groups
