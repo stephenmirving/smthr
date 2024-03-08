@@ -5,6 +5,7 @@
 @use '../../functions/equals-false' as *;
 @use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;

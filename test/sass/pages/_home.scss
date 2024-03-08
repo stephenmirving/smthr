@@ -90,11 +90,11 @@
   border: 8px solid conv-color(#08f, 'hsl');
   border-radius: 12px;
   background: conv-color(#2dccb8, hwb) padding-box;
-  @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, alternate, linear, 'bg');
+  // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, alternate, linear, 'bg');
   text-align: center;
 
   > .txt {
-    @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, reverse alternate, linear, 'fg');
+    // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, reverse alternate, linear, 'fg');
   }
 }
 
@@ -130,7 +130,7 @@ $flip-axis: 'diagonal';
     top,
     $flip-axis,
     0.6s,
-    $anim-dir: alternate-reverse,
+    // $anim-dir: alternate-reverse,
     $anim-num: 2
   );
 }

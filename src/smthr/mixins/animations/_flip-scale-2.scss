@@ -4,6 +4,7 @@
 @use 'sass:string';
 @use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;

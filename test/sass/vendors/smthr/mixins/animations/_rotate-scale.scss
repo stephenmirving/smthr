@@ -44,6 +44,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-falsey

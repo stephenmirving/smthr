@@ -5,6 +5,7 @@
 @use '../utilities/only-moz' as *;
 @use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/is-list' as *;

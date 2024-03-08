@@ -2,6 +2,14 @@
 /// This file is an updated fork of _family.scss for Sass versions 1.6+.
 /// @author Lucas Bonomi < @lukyvj -- lucasbonomi.com >
 ///
+/// family.scss is a set of 26 smart Sass mixins which will help you to manage
+/// the style of :nth-child’ified elements, in an easy and classy way.
+///
+/// The goal of this project is to unleash the power of the nth-child property,
+/// in an easy way.
+/// The best way to understand each and every mixin, is to read it, literally.
+/// For example: first(3) => first three
+///
 /// Taken from the family.scss library
 /// @link http://lukyvj.github.io/family.scss/
 ///
@@ -13,14 +21,30 @@
 @use 'sass:list';
 @use 'sass:string';
 @use '../../functions/order-index' as *;
+@use '../../functions/is-alias' as *;
 
-/// Select all children from the first to `$num`.
+/// Select all children of an element from the first to `$num`.
 ///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
 /// @param {Number} $num - All child elements counted from the first to this
 /// number will be selected.
+///
+/// @example scss
+/// ul li {
+///   background: blue;
+///
+///   @include first(3) {
+///     background: red
+///   }
+/// } // Compiles to...
+/// ul li {
+///   background: blue;
+/// }
+/// ul li:nth-child(-n + 3) {
+///   background: red;
+/// }
 ///
 /// @group Utilities
 @mixin first($num: 1) {
@@ -510,61 +534,35 @@
 /// and they will be added within the content directive ]
 ///
 /// @param {Number} $num - Number of children to index.
-/// @param {String} $direction ['forward'] - Direction of the sort. Can be
-/// `forward` or `backward`.
+/// @param {String} $direction ['forwards'] - Direction of the sort. Can be
+/// `forwards`, `backwards`, or one of a number of alias values for these two
+/// words, such as `forward`, `front`, `back`, `backward`, or just `f`, or `b`.
 /// @param {Number} $index [0] - Base indexing number for the sort.
 ///
 /// @group Utilities
 /// @require {function} order-index
 ///
-/// @throw Invalid $direction value
-@mixin child-index($num, $direction: 'forward', $index: 0) {
-  @if $direction {
-    @if is-list($direction) {
-      $direction: list-to-string($direction);
-    }
-
-    @if is-string($direction) {
-      $direction: string.to-lower-case($direction);
-    }
+/// @throw Invalid $direction value error.
+@mixin child-index($num, $direction: 'forwards', $index: 0) {
+  @if $direction and is-string($direction) {
+    $direction: string.to-lower-case($direction);
   }
 
   @for $i from 1 through $num {
-    @if $direction ==
-      'forward' or
-      $direction ==
-      'fwd' or
-      $direction ==
-      'fw' or
-      $direction ==
-      'f'
-    {
+    @if is-alias('forwards', $direction) {
       &:nth-child(#{$i}) {
         z-index: order-index($i, $index);
         @content;
       }
-    } @else if
-      $direction ==
-      'backward' or
-      $direction ==
-      'back' or
-      $direction ==
-      'bckwrd' or
-      $direction ==
-      'bw' or
-      $direction ==
-      'bck' or
-      $direction ==
-      'b'
-    {
+    } @else if is-alias('backwards', $direction) {
       &:nth-last-child(#{$i}) {
         z-index: order-index($i, $index);
         @content;
       }
     } @else {
-      @error 'Invalid direction value of `#{meta.inspect($direction)}` for ' +
-          'the `child-index` mixin. You must choose a direction of either ' +
-          '`forward` or `backward`.';
+      @error 'Invalid $direction value of #{meta.inspect($direction)} for ' +
+          'the [ child-index() ] mixin. You must choose a $direction of either ' +
+          '`forwards` or `backwards`.';
     }
   }
 }

@@ -3,6 +3,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use '../utilities/only-moz' as *;
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
@@ -41,6 +42,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} is-alias
 /// @require {function} is-list
 /// @require {function} is-number
