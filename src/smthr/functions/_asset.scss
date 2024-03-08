@@ -1,6 +1,6 @@
 @use 'sass:meta';
 @use 'sass:string';
-@use '../variables' as *;
+@use '../variables/misc' as *;
 
 /// A simply asset file location builder.
 ///
@@ -14,31 +14,37 @@
 /// @require {variable} $asset-base-path
 @function _asset($type, $file) {
   $asset-path: if(
-    meta.variable-exists('asset-base-path') or meta.global-variable-exists('asset-base-path', smth),
+    meta.variable-exists('asset-base-path') or
+    meta.global-variable-exists('asset-base-path'),
     $asset-base-path,
     'assets'
   );
 
-  @return string.unquote($asset-path + '/' + $type + '/' + $file);
+  @if not $asset-path or $asset-path == '' {
+    @return string.unquote('#{$type}/#{$file}');
+  }
+
+  @return string.unquote('#{$asset-path}/#{$type}/#{$file}');
 }
 
-/// Image asset helper.
+/// Image asset helper. Returns the full relative file path for the image.
+///
+/// @param {String} $file - The image file name, including extension.
+///
+/// @return {String} The relative file location leading to the image.
 ///
 /// @access public
-///
-/// @param {String} $file - Asset file name, including extension
-/// @return {String} A file location leading to the asset.
-///
 /// @group Utilities
 /// @require {function} _asset
 @function image($file) {
   @return _asset('img', $file);
 }
 
-/// Font asset helper.
+/// Font asset helper. Returns the full relative file path for the font.
 ///
-/// @param {String} $file - Asset file name, including extension
-/// @return {String} A file location leading to the asset.
+/// @param {String} $file - The font file name, including extension.
+///
+/// @return {String} The relative file location leading to the font.
 ///
 /// @access public
 /// @group Utilities

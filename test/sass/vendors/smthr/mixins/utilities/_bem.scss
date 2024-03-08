@@ -1,21 +1,126 @@
+////
+/// @group Utilities
+/// @link https://en.bem.info/methodology/quick-start/
+/// @link https://csswizardry.com/2013/01/mindbemding-getting-your-head-round-bem-syntax/
+////
+
+@use 'sass:list';
+@use 'sass:selector';
+@use '../../variables/misc' as *;
+
 /// Block Element - Used with BEM (Block-Element-Modifier) naming convention.
-/// @content
+///
+/// @param {ArgList} $elements - Elements' names. These should simply be the
+/// comma separated name(s) of the element(s), not including the separating
+/// characters and not including the name of the block. For the class selector
+/// `.search-form__input` you would simply pass `input`.
+///
+/// @content [ Write the style rules that you want to apply to the elements,
+/// and they will be added within the content directive ]
+///
+/// @example scss
+/// .search-form {
+///   width: 50%;
+///
+///   @include elem(button, input) {
+///     border-color: hsl(274 100% 50% / 0.8);
+///   }
+/// }
+/// /* Compiles to... */
+/// .search-form {
+///   width: 50%;
+/// }
+/// .search-form__button,
+/// .search-form__input {
+///   border-color: border-color: hsl(274 100% 50% / 0.8);
+/// }
 ///
 /// @group Utilities
-/// @param {String} $element - Element's name
-@mixin elem($element) {
-  &__#{$element} {
+/// @require {variable} $bem-elem-separator
+@mixin elem($elements...) {
+  $selectors-list: ();
+
+  // Loop through the Arglist of element names
+  @each $element in $elements {
+    // Loop through all the parent selectors for the mixin
+    @each $parent in & {
+      // Append the elements to every block selector in a comma separarated list
+      $selectors-list: list.append(
+        $selectors-list,
+        selector.append(
+          $parent,
+          '#{$bem-elem-separator}#{$element}'
+        ),
+        comma
+      );
+    }
+  }
+
+  // Output the new selectors
+  @at-root #{$selectors-list} {
     @content;
   }
 }
 
-/// Block Modifier - Used with BEM (Block-Element-Modifier) naming convention.
-/// @content
+/// Element Modifier - Used with BEM (Block-Element-Modifier) naming convention.
+///
+/// @param {ArgList} $elements - Modifiers' names. These should simply be the
+/// comma separated name(s) of the modifier(s), not including the separating
+/// characters and not including the name of the block or element. For the class
+/// selector `.search-form__input--focused` you would simply pass `focused`.
+///
+/// @content [ Write the style rules that you want to apply to the elements,
+/// and they will be added within the content directive ]
+///
+/// @example scss
+/// .search-form {
+///   width: 50%;
+///
+///   @include elem(button, input) {
+///     border-color: hsl(274 100% 50% / 0.8);
+///
+///     @include mod(focused) {
+///       border-color: hsl(348 100% 50% / 0.95);
+///     }
+///
+///   }
+/// }
+/// /* Compiles to... */
+/// .search-form {
+///   width: 50%;
+/// }
+/// .search-form__button,
+/// .search-form__input {
+///   border-color: border-color: hsl(274 100% 50% / 0.8);
+/// }
+/// .search-form__button--focused,
+/// .search-form__input--focused {
+///   border-color: border-color: hsl(274 100% 50% / 0.8);
+/// }
 ///
 /// @group Utilities
-/// @param {String} $modifier - Modifier's name
-@mixin mod($modifier) {
-  &--#{$modifier} {
+/// @require {variable} $bem-mod-separator
+@mixin mod($modifiers...) {
+  $selectors-list: ();
+
+  // Loop through the Arglist of modifier names
+  @each $modifier in $modifiers {
+    // Loop through all the parent selectors for the mixin
+    @each $parent in & {
+      // Append the modifiers to every parent selector in a comma separarated list
+      $selectors-list: list.append(
+        $selectors-list,
+        selector.append(
+          $parent,
+          '#{$bem-mod-separator}#{$modifier}'
+        ),
+        comma
+      );
+    }
+  }
+
+  // Output the modified selectors
+  @at-root #{$selectors-list} {
     @content;
   }
 }

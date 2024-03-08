@@ -6,8 +6,8 @@
 
 /// Creates an inner box-shadow for only one side of an element.
 ///
-/// @param {String} $side [bottom] - Side the shadow is supposed to appear.
-/// Can be `top`, `left`, `right` or `bottom`.
+/// @param {String} $side ['bottom'] - The inner side of the element where the
+/// shadow is supposed to appear. Can be `top`, `left`, `right` or `bottom`.
 /// @param {Number} $size [20px] - The width of the shadow on the target side.
 /// @param {Color} $color [hsl(0 0% 0 / 0.3] - The color of the shadow.
 ///
@@ -36,7 +36,8 @@
   } @else if is-alias('bottom', $side) {
     box-shadow: inset 0 (-1) * $helper $size (-1) * $helper $color;
   } @else {
-    @error 'Invalid side value of `#{meta.inspect($side)}` for the ' +
-        '[ inner-side-shadow() ] mixin.';
+    @error 'Invalid $side value of #{meta.inspect($side)} for the ' +
+        '[ inner-side-shadow() ] mixin. Accepted values are `top`, `right`, ' +
+        '`bottom`, and `left`.';
   }
 }

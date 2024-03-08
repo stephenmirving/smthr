@@ -63,7 +63,7 @@
   }
   @if not $family or not $size {
     @if $family {
-      font-family: #{$stretch};
+      font-family: #{$family};
     }
     @if $kern {
       font-kerning: $kern;
@@ -72,7 +72,7 @@
       font-size: $size;
     }
     @if $stretch {
-      font-stretch: $stretch;
+      font-stretch: #{$stretch};
     }
     @if $style {
       font-style: $style;

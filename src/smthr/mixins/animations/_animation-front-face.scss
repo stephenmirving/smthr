@@ -8,7 +8,7 @@
 ///
 /// @group Animations
 ///
-/// @throw Invalid $z-index z-index value
+/// @throw Invalid $z-index z-index value error.
 @mixin animation-front-face($z-index: 20) {
   position: absolute;
   width: 100%;

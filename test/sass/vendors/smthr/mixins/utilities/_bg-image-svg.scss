@@ -7,14 +7,14 @@
 @use '../../functions/is-map' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
-@use '../../variables' as *;
+@use '../../variables/misc' as *;
 
 /// Apply an SVG background image with a fall-back version and a version
 /// that is scaled to 2x for Retina and other HiDPI displays. This mixin will
-/// apply the background-image and background-size properties. You can set other background properties
-/// manually. For the 2x version of the image in the media query this mixin will
-/// generate, you can pass additional background properties to the mixin inside
-/// a map via the $hidpi-bg-props parameter.
+/// apply the background-image and background-size properties. You can set other
+/// background properties manually. For the 2x version of the image in the media
+/// query this mixin will generate, you can pass additional background properties
+/// to the mixin inside a map via the $hidpi-bg-props parameter.
 ///
 /// @param {String} $svg-img-name - File path for the image. The '.svg' file
 /// extension is not required, but if it is included the string must either be
@@ -30,7 +30,7 @@
 /// being used. Pass values like 'png', 'jpg', etc.
 /// @param {Map} $hidpi-bg-props [null] - You can pass this argument
 /// a map of property: value pairs that will be added to the HiDPI/Retina
-/// media query since the mixin will be the only way to access it.
+/// media query, since the mixin will be the only way to access it.
 ///
 /// @group Utilities
 /// @require {function} is-alias
@@ -49,7 +49,7 @@
   $img-2x-suffix:
     if(
       meta.variable-exists('image-suffix-2x') or
-        meta.global-variable-exists('image-suffix-2x', smth),
+      meta.global-variable-exists('image-suffix-2x'),
       $image-suffix-2x,
       '@2x'
     ),

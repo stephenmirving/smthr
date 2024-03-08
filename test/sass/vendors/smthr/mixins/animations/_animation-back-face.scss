@@ -5,29 +5,31 @@
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 
-/// Apply to the child element of the element with the a 3-d transform effect
-/// to represent the back-face of the card that the animation flips to or past.
+/// Apply to the child element of the element with the a 3D transform effect
+/// to represent the backside of the card that the animation flips to or past.
 ///
 /// @param {String} $flip-axis ['horizontal'] - Set this value equal to the axis
 /// the element will flip over in order to ensure that the content of the
-/// back-face of the element is oriented correctly. The $axis is generally a
-/// parameter set in the animation mixins.
-/// @param {Number} $z-val [10] - The z-index value.
+/// back-face of the element is oriented correctly. The $axis is a parameter set
+/// in animation mixins which involve a 3D flipping effect. Accepted values for
+/// the $flip-axis are `horizontal`, `vertical`, `diagonal`, and `diagonal2`.
+/// @param {Number} $z-val [10] - The z-index value.s
 ///
 /// @group Animations
 /// @require {function} is-alias
 /// @require {function} is-number
 /// @require {function} is-string
 ///
-/// @throw Invalid type of $flip-axis.
-/// @throw Invalid $z-val z-index value.
+/// @throw Invalid data type of $flip-axis error.
+/// @throw Invalid $flip-axis keyword error.
+/// @throw Invalid $z-val z-index value error.
 @mixin animation-back-face($flip-axis: 'horizontal', $z-val: 10) {
   // Default rotation for the flip-axis value of horizontal
   $trans-val: rotateX(180deg);
 
   @if not is-string($flip-axis) {
-    @error 'Value of $flip-axis passed to the [ animation-back-face() ] mixin ' +
-        'must be of type \'string\'.';
+    @error 'Invalid $flip-axis data type passed to the ' +
+        '[ animation-back-face() ] mixin. Value must be of type \'string\'.';
   }
 
   $flip-axis: string.to-lower-case($flip-axis);
@@ -58,13 +60,14 @@
   }
 }
 
-/// Apply to the child element of the element with the a 3-d transform effect
-/// to represent the back-face of the card that the animation flips to or past.
+/// Apply to the child element of the element with the a 3D transform effect
+/// to represent the backside of the card that the animation flips to or past.
 ///
 /// @param {String} $flip-axis ['horizontal'] - Set this value equal to the axis
 /// the element will flip over in order to ensure that the content of the
-/// back-face of the element is oriented correctly. The $axis is generally a
-/// parameter set in the animation mixins.
+/// back-face of the element is oriented correctly. The $axis is a parameter set
+/// in animation mixins which involve a 3D flipping effect. Accepted values for
+/// the $flip-axis are `horizontal`, `vertical`, `diagonal`, and `diagonal2`.
 /// @param {Number} $z-val [10] - The z-index value.
 ///
 /// @group Animations
@@ -72,8 +75,9 @@
 /// @require {function} is-number
 /// @require {function} is-string
 ///
-/// @throw Invalid type of $flip-axis.
-/// @throw Invalid $z-val z-index value.
+/// @throw Invalid data type of $flip-axis error.
+/// @throw Invalid $flip-axis keyword error.
+/// @throw Invalid $z-val z-index value error.
 ///
 /// @alias animation-back-face
 @mixin animation-back-side($flip-axis: horizontal, $z-val: 10) {

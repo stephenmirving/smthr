@@ -6,12 +6,12 @@
 @use '../../functions/is-global-value' as *;
 
 /// Apply the animation stage to the parent element of any element that has
-/// a 3-D animation.
+/// a 3D animation.
 ///
 /// @param {Number | String} $perspective [500px] - The perspective value that
-/// will effect the child element's 3-d animation.
+/// will affect the child element's 3D animation.
 /// @param {String | Number | List} $p-origin [55% 50%] - The
-/// perspecitve-origin value that will effect the child element's 3-d animation
+/// perspecitve-origin value that will effect the child element's 3D animation
 /// The syntax for this property can be just an x-position which can be the
 /// keyword, `left` (equal to a 0 value), `center` (equal to 50%), or `right`
 /// (equal to 100%), or can be a length-percentage. It can be also be in an

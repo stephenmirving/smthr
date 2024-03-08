@@ -3,6 +3,7 @@
 @use 'sass:map';
 @use 'sass:list';
 @use 'sass:string';
+@use 'sass:selector';
 @use '../vendors/smthr/smth' as *;
 
 .container {
@@ -194,5 +195,19 @@ $flip-axis: 'diagonal';
       $anim-dir: alternate-reverse,
       $use-margin: true
     );
+  }
+}
+
+.search-form,
+.login-form,
+.new-account-form {
+  width: 50%;
+
+  @include elem(button, input) {
+    border-color: hsl(274 100% 50% / 0.8);
+
+    @include mod(focused, active) {
+      border-color: hsl(348 100% 50% / 0.95);
+    }
   }
 }

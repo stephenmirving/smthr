@@ -7,7 +7,7 @@
 @use '../../functions/is-map' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
-@use '../../variables' as *;
+@use '../../variables/misc' as *;
 
 /// Apply a background image with a version that is scaled to 2x for Retina and
 /// other HiDPI displays. This mixin will apply the background-image and
@@ -35,13 +35,14 @@
 /// @require {function} is-map
 /// @require {function} is-number
 /// @require {function} is-string
+/// @require {variable} $image-suffix-2x
 ///
-/// @throw Invalid $img-name file name, no file extension used.
-/// @throw SVG file used for $img-name.
-/// @throw Invalid $min-ratio data type.
-/// @throw Invalid $img-2x-suffix data type.
-/// @throw Invalid $hidpi-bg-props data type.
-/// @throw Unknown file type for $img-name.
+/// @throw Invalid $img-name file name, no file extension used error.
+/// @throw SVG file used for $img-name error.
+/// @throw Invalid $min-ratio data type error.
+/// @throw Invalid $img-2x-suffix data type error.
+/// @throw Invalid $hidpi-bg-props data type error.
+/// @throw Unknown file type for $img-name error.
 @mixin bg-image(
   $img-name,
   $bg-size,
@@ -49,7 +50,7 @@
   $img-2x-suffix:
     if(
       meta.variable-exists('image-suffix-2x') or
-        meta.global-variable-exists('image-suffix-2x', smth),
+      meta.global-variable-exists('image-suffix-2x'),
       $image-suffix-2x,
       '@2x'
     ),
@@ -172,8 +173,8 @@
 
     @warn 'You are using an unknown file type on the image you referenced in ' +
         'the [ bg-image() ] mixin. Please ensure you are using a valid image ' +
-        'file type. If you use an unknown file type with multiple `.` ' +
-        'characters the [ bg-image() ] mixin may not work correctly.';
+        'file type. If you use an unknown file type, or a file with multiple ' +
+        '`.` characters the [ bg-image() ] mixin may not work correctly.';
   } @else {
     @error 'The image you referenced in the [ bg-image() ] mixin does not ' +
         'have a file extension. Please use the full image name including the ' +

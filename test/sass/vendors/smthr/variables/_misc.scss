@@ -23,7 +23,8 @@ $base-font-size: 16 !default;
 /// @type Number
 $body-font-size: 1rem !default;
 
-/// Base path for assets (fonts, images, etc.), do not use a trailing slash.
+/// Base path for assets (fonts, images, etc.). Do not use a trailing slash.
+/// If you are not using an assets folder, you can set this to `null` or `''`.
 /// @type String
 $asset-base-path: 'assets' !default;
 
@@ -32,7 +33,15 @@ $asset-base-path: 'assets' !default;
 /// @type String
 $image-suffix-2x: '@2x' !default;
 
-/// Button transition properties
+/// Separation characters between a block and an element if using BEM notation.
+/// @type String
+$bem-elem-separator: '__' !default;
+
+/// Separation characters between a modifier and its parent if using BEM notation.
+/// @type String
+$bem-mod-separator: '--' !default;
+
+/// Button transition properties.
 /// @type List
 $btn-transition-properties: background-color, border-color, box-shadow, color,
   top !default;
