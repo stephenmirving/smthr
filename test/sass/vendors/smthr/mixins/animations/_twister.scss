@@ -169,7 +169,7 @@
     // If no there is no unit for $duration, unless $duration > 60, assume seconds
     $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
   } @else if not list.index('s' 'ms', math.unit($duration)) {
-    @error 'Invalid $duration value of `#{$duration}` for the ' +
+    @error 'Invalid $duration value of `#{meta.inspect($duration)}` for the ' +
         '[ twister() ] mixin. The duration property must be in either s or ms units.';
   } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
     // If time in ms would be shorter as seconds, convert it

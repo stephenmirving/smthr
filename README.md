@@ -36,7 +36,7 @@ _Smoother_ for use in a project, I recommend checking back here regurally for
 new updates, at least until it launches on NPM and updating it becomes more
 seamless.
 
-This is **smthr** version 0.3.4 - _Last update:_ 03/08/24
+This is **smthr** version 0.3.5 - _Last update:_ 03/08/24
 
 ## Content
 
@@ -260,7 +260,7 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-* New animations added, `space()` and `twister()`!
+* New animations added, `space()`, `swing()`, and `twister()`!
 
 * Greatly improved the BEM mixins `elem()` and `mod()` such that they can now be
 passed a limitless Arglist of element or modifier names and be used on selector groups

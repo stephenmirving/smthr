@@ -127,7 +127,7 @@
         '[ color-shifter() ] mixin. Assuming a duration of 2s per color.';
   } @else {
     @if not is-number($duration) {
-      @error 'Invalid $duration value of `#{$duration}` for the ' +
+      @error 'Invalid $duration value of `#{meta.inspect($duration)}` for the ' +
           '[ color-shifter() ] mixin. The duration property must be a number.';
     }
 
