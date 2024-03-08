@@ -117,7 +117,8 @@
     $anim-suffix: '-close-from-';
   } @else {
     @error 'Invalid $open-or-closed value of #{meta.inspect($open-or-closed)} ' +
-        'for the [ swing() ] mixin. It must be either `in` or `out`, `true` or `false`.';
+        'for the [ swing() ] mixin. It must be either `open` (or `o` or `true`) ' +
+        'or `closed` (or `close` `c` or `false`.';
   }
 
   @if $corner {
