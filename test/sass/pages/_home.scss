@@ -112,7 +112,7 @@ $flip-axis: 'diagonal';
 }
 
 .active-anim-flip {
-  @include twister('out', 'up');
+  @include swing('open', 'top-left');
 }
 
 .active-anim-flip-rev {
