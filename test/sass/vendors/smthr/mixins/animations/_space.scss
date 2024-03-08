@@ -155,7 +155,7 @@
         string.length($anim-suffix) + 1
       );
     } @else {
-      @error 'Invalid $direction of `#{meta.inspect($direction)}` chosen for ' +
+      @error 'Invalid $direction of #{meta.inspect($direction)} chosen for ' +
           'the [ space() ] mixin. The $direction value must be one of the ' +
           'following: `top`, `right`, `bottom`, `left`.';
     }

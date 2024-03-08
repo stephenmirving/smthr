@@ -11,14 +11,13 @@
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
-@use '../utilities/only-moz' as *;
 
 /// Generates a twister animation that twists an element in or out, from or
 /// towards a given direction.
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// spac 'in' (`in`, `true`, or `i`) or 'out' (`out`, `false`, or `o`).
-/// @param {String} $direction ['left'] - Will either twist in from this
+/// @param {String} $direction ['top'] - Will either twist in from this
 /// direction or twist out towards this direction, depending on the value of
 /// $in-or-out. The value of $direction must be one of the following:
 /// `top`, `bottom`, or any valid aliases for these $direction
@@ -108,7 +107,8 @@
     $anim-suffix: '-out-to-';
   } @else {
     @error 'Invalid $in-or-out value of `#{meta.inspect($in-or-out)}` for ' +
-        'the [ twister() ] mixin. It must be either `in` or `out`, `true` or `false`.';
+        'the [ twister() ] mixin. It must be either `in` or `out`, `true` ' +
+        'or `false`.';
   }
 
   @if $direction {
@@ -143,7 +143,7 @@
         string.length($anim-suffix) + 1
       );
     } @else {
-      @error 'Invalid $direction of `#{meta.inspect($direction)}` chosen for ' +
+      @error 'Invalid $direction of #{meta.inspect($direction)} chosen for ' +
           'the [ twister() ] mixin. The $direction value must be one of the ' +
           'following: `top`, `bottom`.';
     }
@@ -163,7 +163,7 @@
   }
 
   @if not is-number($duration) {
-    @error 'Invalid $duration value of `#{$duration}` for the ' +
+    @error 'Invalid $duration value of #{meta.inspect($duration)} for the ' +
         '[ twister() ] mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
     // If no there is no unit for $duration, unless $duration > 60, assume seconds
@@ -228,7 +228,7 @@
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
-    @error 'Invalid animation-direction value of `#{$anim-dir}` ' +
+    @error 'Invalid animation-direction value of #{meta.inspect($anim-dir)} ' +
         'for the [ twister() ] mixin.';
   }
 
