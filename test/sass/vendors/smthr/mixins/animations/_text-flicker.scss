@@ -90,7 +90,7 @@
     $in-or-out: false;
     $anim-suffix: '-out';
   } @else {
-    @error 'Invalid in-out value of `#{meta.inspect($in-or-out)}` for the `text-flicer` mixin.';
+    @error 'Invalid in-out value of #{meta.inspect($in-or-out)} for the `text-flicer` mixin.';
   }
 
   @if not is-number($duration) {

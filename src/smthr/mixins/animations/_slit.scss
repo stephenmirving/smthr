@@ -105,7 +105,7 @@
     $in-or-out: false;
     $anim-suffix: '-out';
   } @else {
-    @error 'Invalid $in-or-out value of `#{meta.inspect($in-or-out)}` for the ' +
+    @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
         '[ slit() ] mixin.';
   }
 

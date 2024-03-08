@@ -16,7 +16,7 @@
 /// towards a given direction.
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
-/// spac 'in' (`in`, `true`, or `i`) or 'out' (`out`, `false`, or `o`).
+/// space 'in' (`in`, `true`, or `i`) or 'out' (`out`, `false`, or `o`).
 /// @param {String} $direction ['left'] - Will either space in from this
 /// direction or space out towards this direction, depending on the value of
 /// $in-or-out. The value of $direction must be one of the following:
@@ -104,8 +104,9 @@
     $in-or-out: false;
     $anim-suffix: '-out-to-';
   } @else {
-    @error 'Invalid $in-or-out value of `#{meta.inspect($in-or-out)}` for ' +
-        'the [ space() ] mixin. It must be either `in` or `out`, `true` or `false`.';
+    @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for ' +
+        'the [ space() ] mixin. It must be either `in` or `out`, ' +
+        '`true` or `false`.';
   }
 
   @if $direction {

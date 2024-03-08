@@ -107,7 +107,7 @@
     $in-or-out: false;
     $anim-suffix: '-out-to';
   } @else {
-    @error 'Invalid $in-or-out value of `#{meta.inspect($in-or-out)}` for the ' +
+    @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
         '[ puff() ] mixin. Value must be either "in" or "out"';
   }
 
