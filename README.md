@@ -35,7 +35,7 @@ _Smoother_ for use in a project, I recommend checking back here regurally for
 new updates, at least until it launches on NPM and updating it becomes more
 seamless.
 
-This is **smthr** version 0.3.3 - _Last update:_ 03/06/24
+This is **smthr** version 0.3.3 - _Last update:_ 03/08/24
 
 ## Content
 
