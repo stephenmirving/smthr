@@ -124,7 +124,7 @@
       $trans-origin: 50% 0%;
       $anim-suffix: string.insert(
         $anim-suffix,
-        'up',
+        'top',
         string.length($anim-suffix) + 1
       );
     } @else if is-alias('bottom', $direction) {
@@ -133,7 +133,7 @@
       $trans-origin: 50% 100%;
       $anim-suffix: string.insert(
         $anim-suffix,
-        'down',
+        'bottom',
         string.length($anim-suffix) + 1
       );
     } @else if is-alias('right', $direction) {
@@ -267,11 +267,13 @@
       0% {
         opacity: $opacity-val-1;
         transform: $trans-val-1;
+        transform-origin: $trans-origin;
       }
 
       100% {
         opacity: $opacity-val-2;
         transform: $trans-val-2;
+        transform-origin: $trans-origin;
       }
     }
   }

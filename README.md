@@ -260,13 +260,16 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-* New animation added, `space()`
+* New animations added, `space()` and `twister()`!
 
 * Greatly improved the BEM mixins `elem()` and `mod()` such that they can now be
 passed a limitless Arglist of element or modifier names and be used on selector groups
 that have a limitless number of parent selectors.
 
-* Fixed an issue with animation suffixes not always working correctly.
+* Fixed an issue with animation suffixes and `animation-direction` not always
+working correctly since the 0.3.3 update.
+
+* New functions, `is-falsey()`, `equals-true()`, `equals-false()`
 
 * Updated all mixins and functions that had a likelihood of being passed an
 argument with a 2 word keyword such as `top left`  or `to right` so that they
