@@ -109,7 +109,10 @@
   {
     $open-or-closed: true;
     $anim-suffix: '-open-from-';
-  } @else if equals-false($open-or-closed) or is-alias('out', $open-or-closed) {
+  } @else if equals-false($open-or-closed) or
+      $open-or-closed == 'closed' or
+      $open-or-closed == 'close' or
+      $open-or-closed == 'c' {
     $open-or-closed: false;
     $anim-suffix: '-close-from-';
   } @else {

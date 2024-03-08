@@ -24,8 +24,8 @@
 /// `top-right`, `bottom-right`, `bottom-left`, `top-left`, or any valid aliases
 /// for these $corner values.
 /// @param {Bool | String} $has-fade [false] - Adds a fade to the animation that
-/// fades in or out depending on the value of $open-or-closed. To flag as true,
-/// pass `true`, `'true'` or `'fade'`.
+/// fades out on 'open' and fades in when 'closed', depending on the value of
+/// $open-or-closed. To flag as true, pass `true`, `'true'` or `'fade'`.
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -109,7 +109,10 @@
   {
     $open-or-closed: true;
     $anim-suffix: '-open-from-';
-  } @else if equals-false($open-or-closed) or is-alias('out', $open-or-closed) {
+  } @else if equals-false($open-or-closed) or
+      $open-or-closed == 'closed' or
+      $open-or-closed == 'close' or
+      $open-or-closed == 'c' {
     $open-or-closed: false;
     $anim-suffix: '-close-from-';
   } @else {
