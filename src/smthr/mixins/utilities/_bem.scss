@@ -9,11 +9,16 @@
 @use '../../variables/misc' as *;
 
 /// Block Element - Used with BEM (Block-Element-Modifier) naming convention.
+/// Works with an unlimited number of elements on an unlimited number of blocks
+/// in the parent selector group. You can customize the separator characters
+/// used (`__` by default) by changing the $bem-elem-separator variable, either
+/// when importing the smthr module or in the file `./variables/misc`
 ///
 /// @param {ArgList} $elements - Elements' names. These should simply be the
 /// comma separated name(s) of the element(s), not including the separating
 /// characters and not including the name of the block. For the class selector
-/// `.search-form__input` you would simply pass `input`.
+/// `.search-form__input` you would call this mixin on the `.search-form` block
+/// selector and pass the argument `input`.
 ///
 /// @content [ Write the style rules that you want to apply to the elements,
 /// and they will be added within the content directive ]
@@ -64,10 +69,17 @@
 
 /// Element Modifier - Used with BEM (Block-Element-Modifier) naming convention.
 ///
+/// Works with an unlimited number of modifiers on an unlimited number of elements
+/// in the parent selector group. You can customize the separator characters
+/// used (`--` by default) by changing the $bem-mod-separator variable, either
+/// when importing the smthr module or in the file `./variables/misc`
+///
 /// @param {ArgList} $elements - Modifiers' names. These should simply be the
 /// comma separated name(s) of the modifier(s), not including the separating
 /// characters and not including the name of the block or element. For the class
-/// selector `.search-form__input--focused` you would simply pass `focused`.
+/// selector `.search-form__input--focused` you would call this mixin on the
+/// `.search-form__input` selector and pass the argument `focused`. You may also
+/// call this mixin from within the content directive of an `elem()` mixin.
 ///
 /// @content [ Write the style rules that you want to apply to the elements,
 /// and they will be added within the content directive ]

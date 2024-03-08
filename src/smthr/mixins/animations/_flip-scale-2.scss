@@ -2,13 +2,14 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
-@use '../utilities/only-moz' as *;
+@use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-global-value' as *;
 @use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
+@use '../utilities/only-moz' as *;
 
 /// Generates an animation that flips an element over while scaling it. The
 /// effect is slightly different than in `flip-scale`. The element this mixin is

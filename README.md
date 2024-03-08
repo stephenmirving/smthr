@@ -22,10 +22,11 @@ animation keyframe creation, or other verbose and complex code blocks.
 3. [Deployment](#deployment)
 4. [Documentation](#documentation)
 5. [Parameter Aliases](#parameter-aliases)
-6. [Betterize](#betterize)
-7. [More Info](#more-info)
-8. [Authors](#authors)
-9. [Thanks](#thanks)
+6. [Recently Improved](#recently-improved)
+7. [Betterize](#betterize)
+8. [More Info](#more-info)
+9. [Authors](#authors)
+10. [Thanks](#thanks)
 
 ## Version
 
@@ -35,7 +36,7 @@ _Smoother_ for use in a project, I recommend checking back here regurally for
 new updates, at least until it launches on NPM and updating it becomes more
 seamless.
 
-This is **smthr** version 0.3.3 - _Last update:_ 03/08/24
+This is **smthr** version 0.3.4 - _Last update:_ 03/08/24
 
 ## Content
 
@@ -256,6 +257,28 @@ To get an idea of the full list of aliases for these keyword values, see the
 `$map-alias-resolutions` variable inside this
 [documentation](https://stephenmirving.github.io/smthr/#utilities-variable-map-alias-resolutions)
 link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
+
+## Recently Improved
+
+* Greatly improved the BEM mixins `elem()` and `mod()` such that they can now be
+passed a limitless Arglist of element or modifier names and be used on selector groups
+that have a limitless number of parent selectors.
+
+* Updated all mixins and functions that had a likelihood of being passed an
+argument with a 2 word keyword such as `top left`  or `to right` so that they
+would accept a greater number of alias values when not wrapped in strings.
+
+* Allowed for passing CSS global values on a greater number of mixin arguments,
+such as for the animation-direction property on animations.
+
+* Refactored the `color-shifter()` mixin to allow for the `animation-direction`
+and the `animation-iteration-count` properties to be passed as arguments.
+
+* Improved the annotations and error reporting for all the mixins and functions
+so that parameters with many possible keyword values have those keywords listed
+in the documentation.
+
+* Got the SassDoc annotation documentation online
 
 ## Betterize
 

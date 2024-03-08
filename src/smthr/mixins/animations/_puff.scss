@@ -2,6 +2,7 @@
 @use 'sass:list';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/equals-false' as *;
 @use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-global-value' as *;
@@ -40,6 +41,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
+/// @require {function} equals-false
 /// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-global-value
