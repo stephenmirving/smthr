@@ -130,7 +130,7 @@ $flip-axis: 'diagonal';
     top,
     $flip-axis,
     0.6s,
-    // $anim-dir: alternate-reverse,
+    $anim-dir: alternate-reverse,
     $anim-num: 2
   );
 }
