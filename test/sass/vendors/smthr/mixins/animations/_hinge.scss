@@ -11,6 +11,7 @@
 @use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
+@use '../utilities/only-moz' as *;
 
 /// Generates an hingeing open or hingeing closed animation that turns an
 /// element from one of its corners.
@@ -31,9 +32,9 @@
 /// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
 /// any CSS global value. Default of `null` assumes the CSS property default of
 /// `normal`.
-/// @param {Timing-Function} $timing-func [null] - The timing function for the
-/// animation. A null value passed here will cause the animation to render
-/// according to the CSS default timing function value of `ease`;
+/// @param {Timing-Function} $timing-func [null] - The timing function for
+/// the animation. A default of null will apply a timing-function of ease-out
+/// on a hinge-open animation and ease-in on a hinge-closed animation.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -246,7 +247,7 @@
   }
 
   @if equals-false($timing-func) or is-alias('normal', $timing-func) {
-    $timing-func: null;
+    $timing-func: if(($open-or-closed), ease-out, ease-in);
   }
 
   @if equals-false($anim-num) or $anim-num == '' {
@@ -259,8 +260,14 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
+  transform-style: preserve-3d;
   animation: hinge#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
+
+  @include only-moz {
+    backface-visibility: hidden;
+  }
 
   @at-root {
     @keyframes hinge#{$anim-suffix} {

@@ -98,7 +98,7 @@
   }
 }
 
-$flip-axis: 'diagonal';
+$flip-axis: 'vertical';
 
 .back {
   @include animation-back-face($flip-axis);
@@ -112,7 +112,7 @@ $flip-axis: 'diagonal';
 }
 
 .active-anim-flip {
-  @include hinge('open', 'left', 1.1s, 0);
+  @include hinge('open', 'left');
 }
 
 .active-anim-flip-rev {
