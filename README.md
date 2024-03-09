@@ -42,7 +42,7 @@ This is **smthr** version 0.3.6 - _Last update:_ 03/09/24
 
 **_Smoother_ currently contains:**
 
-* **140+** Mixins, _including..._
+* **150+** Mixins, _including..._
   * More than 35 easily configurable animation types, allowing for more than 100 unique animations.
   * More than 20 element shapes created with a combination of `clip-path`, pseudo-elements, and `border-radius`
   * More than 80 utility mixins for things like creating responsive ratios,
