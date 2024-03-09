@@ -7,8 +7,10 @@
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-length' as *;
 @use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
+@use '../../functions/is-position' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
@@ -18,6 +20,12 @@
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// poof `in` (or `i` or `true`) or `out` (or `o`, or `false`).
+/// @param {String | Number | List} $trans-origin [center] - The argument for
+/// the `transform-origin` property used in the keyframes of the animation.
+/// Almost any value that is valid for `transform-origin` is valid here, along
+/// with many aliases (such as 'top-right` or `tr` is the equivalent of
+/// `right top` or `100% 0%`. Does not accept CSS global values due to being
+/// used in the keyframes, not on the selector itself.
 /// @param {Number} $duration [1s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -42,7 +50,9 @@
 /// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-global-value
+/// @require {function} is-length
 /// @require {function} is-number
+/// @require {function} is-position
 /// @require {function} is-string
 /// @require {function} is-list
 /// @require {function} list-to-string
@@ -54,6 +64,7 @@
 /// @throw Invalid $anim-dir value error.
 @mixin poof(
   $in-or-out: 'in',
+  $trans-origin: 50%,
   $duration: 0.7s,
   $delay: null,
   $iterations: null,
@@ -69,6 +80,13 @@
   $blur-val-1: blur(90px);
   $blur-val-2: blur(0);
   $anim-suffix: '';
+
+  // $trans-origin error checking and alias-proofing
+  $cur-val: null;
+  $horizontal-axis-used: false;
+  $vertical-axis-used: false;
+  $trans-origin-position: null;
+  $trans-origin-zoffset: null;
 
   @if $in-or-out and is-string($in-or-out) {
     $in-or-out: string.to-lower-case($in-or-out);
@@ -102,6 +120,114 @@
     @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
         '[ poof() ] mixin. Value must be either `in` or `out`';
   }
+
+  // $trans-origin extensive error checking
+  @if $trans-origin {
+    $trans-error-start: 'Invalid value in the $trans-origin parameter, which ' +
+        'sets the `transform-origin` value for the keyframes in the ' +
+        '[ poof() ] mixin.';
+
+    @if is-list($trans-origin) {
+      $num-origin-vals: list.length($trans-origin);
+
+      @if $num-origin-vals > 3 {
+        @error '#{$trans-error-start} The transform-origin property only ' +
+          'allows for 1, 2, and 3-value syntax. You passed more than 3 values.';
+      }
+
+      // From this point we know $trans-origin is a 2 or 3 value list
+      @for $i from 1 through $num-origin-vals {
+        $cur-val: list.nth($trans-origin, $i);
+
+        @if $i == 3 and not is-length($cur-val) {
+          @error '#{$trans-error-start} When using the 3-value syntax with the ' +
+              'transform-origin property, the third value must be a length ' +
+              'that represents the Z offset.';
+        }
+
+        @if $i < 3 {
+          @if is-position($cur-val, 'allow-aliases') {
+            @if $i == 1 {
+              @if is-alias('left', $cur-val) or is-alias('right', $cur-val) {
+                $horizontal-axis-used: true;
+              } @else if is-alias('top', $cur-val) or is-alias('bottom', $cur-val) {
+                $vertical-axis-used: true;
+              }
+            } @else { // $i == 2
+              @if $horizontal-axis-used and
+                  (is-alias('left', $cur-val) or is-alias('right', $cur-val))
+              {
+                @error '#{$trans-error-start} Horizontal axis for this property ' +
+                  'already set when you passed #{meta.inspect(list.nth($trans-origin, 1))} ' +
+                  'for the first $trans-origin value. You must pass a ' +
+                  'length, a percentage, or one of the keywords for the vertical ' +
+                  'axis (`top` or `bottom`) for the 2nd value of $trans-origin.';
+              } @else if $vertical-axis-used and
+                    (is-alias('top', $cur-val) or is-alias('bottom', $cur-val))
+              {
+                @error '#{$trans-error-start} Vertical axis for this property ' +
+                  'already set when you passed #{meta.inspect(list.nth($trans-origin, 1))} ' +
+                  'for the first $trans-origin value. You must pass a ' +
+                  'length, a percentage, or one of the keywords for the horizontal ' +
+                  'axis (`left` or `right`) for the 2nd value of $trans-origin.';
+              }
+            }
+          } @else {
+            @error '#{$trans-error-start} When using the #{$num-origin-vals}' +
+                '-value syntax with the transform-origin property, ' +
+                'value one and value two must be either a length, a percentage ' +
+                'or one of the position keywords: `center`, `top`, `right' +
+                '`bottom`, or `left`.';
+          }
+        }
+      }
+
+      @if $num-origin-vals == 3 {
+        $trans-origin-position: (
+          list.nth($trans-origin, 1) list.nth($trans-origin, 2)
+        );
+        $trans-origin-zoffset: list.nth($trans-origin, 3);
+      } @else {
+        $trans-origin-position: $trans-origin;
+      }
+    } @else {
+      $trans-origin-position: $trans-origin;
+    }
+
+    @if is-list($trans-origin-position) {
+      $trans-origin-position: list-to-string($trans-origin-position);
+    }
+
+    @if is-string($trans-origin-position) {
+      $trans-origin-position: string.to-lower-case($trans-origin-position);
+    }
+
+    @if is-alias('top', $trans-origin-position) {
+      $trans-origin-position: 50% 0%;
+    } @else if is-alias('top right', $trans-origin-position) {
+      $trans-origin-position: 100% 0%;
+    } @else if is-alias('right', $trans-origin-position) {
+      $trans-origin-position: 100% 50%;
+    } @else if is-alias('bottom right', $trans-origin-position) {
+      $trans-origin-position: 100% 100%
+    } @else if is-alias('bottom', $trans-origin-position) {
+      $trans-origin-position: 50% 100%;
+    } @else if is-alias('bottom left', $trans-origin-position) {
+      $trans-origin-position: 0% 100%;
+    } @else if is-alias('left', $trans-origin-position) {
+      $trans-origin-position: 0% 50%;
+    } @else if is-alias('top left', $trans-origin-position) {
+      $trans-origin-position: 0% 0%;
+    }
+  } @else {
+    $trans-origin-position: 50%;
+  }
+
+  $trans-origin: list.append(
+    $trans-origin-position,
+    $trans-origin-zoffset,
+    $separator: space
+  );
 
   // If poof is out rather than in, swap and reverse the necessary values
   @if not $in-or-out {
@@ -210,14 +336,14 @@
         opacity: $opacity-val-1;
         filter: $blur-val-1;
         transform: $trans-val-1;
-        transform-origin: 50% 50%;
+        transform-origin: #{$trans-origin};
       }
 
       100% {
         opacity: $opacity-val-2;
         filter: $blur-val-2;
         transform: $trans-val-2;
-        transform-origin: 50% 50%;
+        transform-origin: #{$trans-origin};
       }
     }
   }

@@ -1,19 +1,96 @@
 @use 'sass:list';
+@use 'sass:string';
+@use 'equals-false' as *;
+@use 'equals-true' as *;
+@use 'is-alias' as *;
 @use 'is-length' as *;
 @use 'is-percentage' as *;
+@use 'is-string' as *;
+@use 'resolve-alias' as *;
 
-/// Checks if a value is a position.
+/// Checks if a value is a position/offset, which is defined as either a length,
+/// a percentage, or one of the following keyword values: `center`, `top`, `right`,
+/// `bottom`, or `left`. This is useful when writing mixins that use properties
+/// such as `transform-origin`, which has a 1-3 value syntax where the first
+/// two values must be a position/offset.
 ///
 /// @param {*} $value - A value to be checked.
+/// @param {Bool | String } $allow-aliases [false] - If `true`, the function
+/// will return true if the `$value` is an alias for a position/offset, not
+/// just for exact matches. For example, if this is set to true, the function
+/// will return true for a $value of `btm` as well as `bottom`. This parameter
+/// also accepts a number of string values such as a `aliases`, `alias`, `allow`,
+/// and `allow-alias`.
+///
 /// @return {Bool} True if $value is a position, false if it is not.
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} equals-false
+/// @require {function} equals-true
+/// @require {function} is-alias
 /// @require {function} is-length
 /// @require {function} is-percentage
-@function is-position($value) {
+/// @require {function} resolve-alias
+@function is-position($value, $allow-aliases: false) {
+  @if is-string($value) {
+    $value: string.to-lower-case($value);
+  }
+
+  @if equals-true($allow-aliases) or
+      $allow-aliases == 'aliases' or
+      $allow-aliases == 'alias' or
+      $allow-aliases == 'allow' or
+      $allow-aliases == 'allow-aliases' or
+      $allow-aliases == 'allow aliases' or
+      $allow-aliases == 'allowaliases' or
+      $allow-aliases == 'allow-alias' or
+      $allow-aliases == 'allow alias' or
+      $allow-aliases == 'allowalias'
+  {
+    $value: resolve-alias($value);
+  } @else if not equals-false($allow-aliases) and
+      not is-alias('none', $allow-aliases) and
+      $allow-aliases != 'no'
+  {
+    @warn 'Unknown $allow-aliases value of of #{meta.inspect($allow-aliases)} '
+        'passed to the [ is-position() ] function. This value should be either '
+        '`true` (or `aliases`, `alias`, `allow`) or `false` (or `none` or `no`). ' +
+        'Assuming the default value of `false`.';
+  }
+
   @return (
     is-length($value) or is-percentage($value) or
-    list.index('top' 'right' 'bottom' 'left' 'center', $value) != null
+      list.index('top' 'right' 'bottom' 'left' 'center', $value) != null
   );
+}
+
+/// Checks if a value is a position/offset, which is defined as either a length,
+/// a percentage, or one of the following keyword values: `center`, `top`, `right`,
+/// `bottom`, or `left`. This is useful when writing mixins that use properties
+/// such as `transform-origin`, which has a 1-3 value syntax where the first
+/// two values must be a position/offset.
+///
+/// @param {*} $value - A value to be checked.
+/// @param {Bool | String } $allow-aliases [false] - If `true`, the function
+/// will return true if the `$value` is an alias for a position/offset, not
+/// just for exact matches. For example, if this is set to true, the function
+/// will return true for a $value of `btm` as well as `bottom`. This parameter
+/// also accepts a number of string values such as a `aliases`, `alias`, `allow`,
+/// and `allow-alias`.
+///
+/// @return {Bool} True if $value is a position, false if it is not.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} equals-false
+/// @require {function} equals-true
+/// @require {function} is-alias
+/// @require {function} is-length
+/// @require {function} is-percentage
+/// @require {function} resolve-alias
+///
+/// @alias is-position
+@function is-offset($value, $allow-aliases: false) {
+  @return is-position($value, $allow-aliases);
 }

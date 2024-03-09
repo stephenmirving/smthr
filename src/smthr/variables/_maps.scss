@@ -192,7 +192,7 @@ $map-directions: (
   )
 ) !default;
 
-/// Map of only the position keywords and their associated angles in degrees.
+/// Map of only the position/offset keywords and their associated angles in degrees.
 ///
 /// This map is designed to provide a simple way to reference positions
 /// (top, right, bottom, left) and their associated angles in degrees.
