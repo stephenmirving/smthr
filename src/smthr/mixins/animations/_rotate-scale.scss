@@ -307,11 +307,11 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: rotate-scale#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
   @if $is-on-axis {
-    transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
 
     @include only-moz {

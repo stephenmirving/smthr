@@ -362,8 +362,9 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
+
   @if $axis {
-    transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
 
     @include only-moz {

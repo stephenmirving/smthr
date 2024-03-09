@@ -203,6 +203,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: ping#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 

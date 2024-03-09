@@ -281,8 +281,10 @@
     );
   }
 
-  animation: scale-up#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  transform: translate3d(0, 0, 0);
+  animation: scale-up#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
+
   @at-root {
     @keyframes scale-up#{$anim-suffix} {
       0% {

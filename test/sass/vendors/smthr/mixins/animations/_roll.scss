@@ -252,6 +252,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: roll#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 

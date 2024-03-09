@@ -261,8 +261,8 @@
 
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: slit#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  animation: slit#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
 
   @include only-moz {
     backface-visibility: hidden;

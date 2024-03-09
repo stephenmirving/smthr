@@ -324,6 +324,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: flick#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 

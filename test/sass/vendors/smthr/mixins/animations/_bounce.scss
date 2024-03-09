@@ -319,12 +319,14 @@
     );
   }
 
-  animation: bounce#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  transform: translate3d(0, 0, 0);
+
   @if $fwd-bck {
-    transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
   }
+
+  animation: bounce#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
 
   @at-root {
     @keyframes bounce#{$anim-suffix} {
