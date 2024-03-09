@@ -203,21 +203,21 @@
     }
 
     @if is-alias('top', $trans-origin-position) {
-      $trans-origin-position: 50% 0%;
-    } @else if is-alias('top right', $trans-origin-position) {
-      $trans-origin-position: 100% 0%;
-    } @else if is-alias('right', $trans-origin-position) {
-      $trans-origin-position: 100% 50%;
-    } @else if is-alias('bottom right', $trans-origin-position) {
-      $trans-origin-position: 100% 100%
-    } @else if is-alias('bottom', $trans-origin-position) {
       $trans-origin-position: 50% 100%;
-    } @else if is-alias('bottom left', $trans-origin-position) {
+    } @else if is-alias('top right', $trans-origin-position) {
       $trans-origin-position: 0% 100%;
-    } @else if is-alias('left', $trans-origin-position) {
+    } @else if is-alias('right', $trans-origin-position) {
       $trans-origin-position: 0% 50%;
-    } @else if is-alias('top left', $trans-origin-position) {
+    } @else if is-alias('bottom right', $trans-origin-position) {
       $trans-origin-position: 0% 0%;
+    } @else if is-alias('bottom', $trans-origin-position) {
+      $trans-origin-position: 50% 0%;
+    } @else if is-alias('bottom left', $trans-origin-position) {
+      $trans-origin-position: 100% 0%;
+    } @else if is-alias('left', $trans-origin-position) {
+      $trans-origin-position: 100% 50%;
+    } @else if is-alias('top left', $trans-origin-position) {
+      $trans-origin-position: 100% 100%;
     }
   } @else {
     $trans-origin-position: 50%;
@@ -239,22 +239,25 @@
     $blur-val-2: blur(20px);
   }
 
-  @if not $duration {
-    $duration: if($in-or-out, 0.9s, 1s);
-  }
+  @if $duration {
+    @if not is-number($duration) {
+      @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] ' +
+          'mixin. The duration property must be a number.';
+    } @else if math.is-unitless($duration) {
+      // If no there is no unit for $duration, unless $duration > 60, assume seconds
+      $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+    } @else if not list.index('s' 'ms', math.unit($duration)) {
+      @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] mixin.' +
+          'The duration property must be in either s or ms units.';
+    } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
+      // If time in ms would be shorter as seconds, convert it
+      $duration: math.div($duration, 1000ms) * 1s;
+    }
+  } @else {
+    $duration: 1s;
 
-  @if not is-number($duration) {
-    @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] ' +
-        'mixin. The duration property must be a number.';
-  } @else if math.is-unitless($duration) {
-    // If no there is no unit for $duration, unless $duration > 60, assume seconds
-    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
-  } @else if not list.index('s' 'ms', math.unit($duration)) {
-    @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] mixin.' +
-        'The duration property must be in either s or ms units.';
-  } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
-    // If time in ms would be shorter as seconds, convert it
-    $duration: math.div($duration, 1000ms) * 1s;
+    @warn 'You did not pass a $duration for the [ poof() ] mixin. Using the ' +
+        'default duration of 1s.'
   }
 
   @if is-falsey($delay) or
