@@ -14,11 +14,10 @@
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Generates an animation that looks like an old CRT televsion being powered
-/// on or off.
+/// Generates an animation that looks like it is being flicked in or out.
 
-/// @param {String | Bool} $on-or-off ['on'] - Determines if the element will
-/// power `on` (`true`) or `out` (`false`).
+/// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
+/// flick `in` (`true`) or `out` (`false`).
 /// @param {String | Number | List} $trans-origin [50%] - The argument for
 /// the `transform-origin` property used in the keyframes of the animation.
 /// Almost any value that is valid for `transform-origin` is valid here, along
@@ -54,14 +53,15 @@
 /// @require {function} is-list
 /// @require {function} list-to-string
 ///
-/// @throw Invalid $on-or-off value error.
+/// @throw Invalid $in-or-out value error.
+/// @throw Invalid $trans-origin value error.
 /// @throw Invalid $duration value error.
 /// @throw Invalid $delay value error.
 /// @throw Invalid $iterations value error.
 /// @throw Invalid $anim-dir value error.
-@mixin power(
-  $on-or-off: 'on',
-  $trans-origin: 50% 50%,
+@mixin flick(
+  $in-or-out: 'on',
+  $trans-origin: 50%,
   $duration: 1s,
   $delay: null,
   $iterations: null,
@@ -69,7 +69,7 @@
   $timing-func: null,
   $anim-num: null
 ) {
-  // Default values for a power in
+  // Default values for a flick in
   $trans-val-1: scale(0, 0) rotateY(180deg);
   $trans-val-2: scale(1, 1) rotateY(0deg);
   $opacity-val-1: 0;
@@ -83,8 +83,8 @@
   $trans-origin-position: null;
   $trans-origin-zoffset: null;
 
-  @if $on-or-off and is-string($on-or-off) {
-    $on-or-off: string.to-lower-case($on-or-off);
+  @if $in-or-out and is-string($in-or-out) {
+    $in-or-out: string.to-lower-case($in-or-out);
   }
 
   @if $anim-dir {
@@ -105,22 +105,23 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($on-or-off) or $on-or-off == 'on' {
-    $on-or-off: true;
-    $anim-suffix: '-on';
-  } @else if not $on-or-off or $on-or-off == 'off' {
-    $on-or-off: false;
-    $anim-suffix: '-off';
+  @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
+    $in-or-out: true;
+    $anim-suffix: '-in';
+  } @else if equals-false($in-or-out) or is-alias('out', $in-or-out) {
+    $in-or-out: false;
+    $anim-suffix: '-out';
   } @else {
-    @error 'Invalid $on-or-off value of #{meta.inspect($on-or-off)} for the ' +
-        '[ power() ] mixin. Value must be either `on` (`true`) or `off` (`false`).';
+    @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
+        '[ flick() ] mixin. Value must be either `in` (`i`, `true`) or ' +
+        '`off` (`o`, `false`).';
   }
 
   // $trans-origin extensive error checking
   @if $trans-origin {
     $trans-error-start: 'Invalid valusse in the $trans-origin parameter, which ' +
         'sets the `transform-origin` value for the keyframes in the ' +
-        '[ power() ] mixin.';
+        '[ flick() ] mixin.';
 
     @if is-list($trans-origin) {
       $num-origin-vals: list.length($trans-origin);
@@ -224,8 +225,8 @@
     $separator: space
   );
 
-  // If power is switched off rather than on, reverse the necessary values
-  @if not $on-or-off {
+  // If flicking out rather than in, reverse the necessary values
+  @if not $in-or-out {
     $opacity-val-1: 1;
     $opacity-val-2: 0;
     $trans-val-1: scale(1, 1) rotateY(0deg);
@@ -234,13 +235,13 @@
 
   @if $duration {
     @if not is-number($duration) {
-      @error 'Invalid $duration value of `#{$duration}` for the [ power() ] ' +
+      @error 'Invalid $duration value of `#{$duration}` for the [ flick() ] ' +
           'mixin. The duration property must be a number.';
     } @else if math.is-unitless($duration) {
       // If no there is no unit for $duration, unless $duration > 60, assume seconds
       $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
     } @else if not list.index('s' 'ms', math.unit($duration)) {
-      @error 'Invalid $duration value of `#{$duration}` for the [ power() ] mixin.' +
+      @error 'Invalid $duration value of `#{$duration}` for the [ flick() ] mixin.' +
           'The duration property must be in either s or ms units.';
     } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
       // If time in ms would be shorter as seconds, convert it
@@ -249,7 +250,7 @@
   } @else {
     $duration: 1s;
 
-    @warn 'You did not pass a $duration for the [ power() ] mixin. Using the ' +
+    @warn 'You did not pass a $duration for the [ flick() ] mixin. Using the ' +
         'default duration of 1s.';
   }
 
@@ -262,13 +263,13 @@
 
   @if $delay {
     @if not is-number($delay) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ power() ] mixin.' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ flick() ] mixin.' +
           'The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, unless $delay > 60, assume seconds
       $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ power() ] mixin.' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ flick() ] mixin.' +
           'The delay property must be in either s or ms units.';
     } @else if math.unit($delay) == 'ms' and $delay % 100 == 0ms {
       // If time in ms would be shorter as seconds, convert it
@@ -289,7 +290,7 @@
       $iterations: $iterations;
     } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
-          ' for the [ power() ] mixin.';
+          ' for the [ flick() ] mixin.';
     }
   }
 
@@ -306,7 +307,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of #{meta.inspect($anim-dir)} ' +
-        'passed with $anim-dir to the [ power() ] mixin.';
+        'passed with $anim-dir to the [ flick() ] mixin.';
   }
 
   @if equals-false($timing-func) or is-alias('normal', $timing-func) {
@@ -323,11 +324,11 @@
     );
   }
 
-  animation: power#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+  animation: flick#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes power#{$anim-suffix} {
+    @keyframes flick#{$anim-suffix} {
       0% {
         opacity: $opacity-val-1;
         transform: $trans-val-1;

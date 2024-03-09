@@ -101,7 +101,7 @@
   @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
     $in-or-out: true;
     $anim-suffix: '-in';
-  } @else if not $in-or-out or is-alias('out', $in-or-out) {
+  } @else if equals-false($in-or-out) or is-alias('out', $in-or-out) {
     $in-or-out: false;
     $anim-suffix: '-out';
   } @else {

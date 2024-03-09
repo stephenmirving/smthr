@@ -56,6 +56,7 @@
 /// @require {function} list-to-string
 ///
 /// @throw Invalid $in-or-out value error.
+/// @throw Invalid $trans-origin value error.
 /// @throw Invalid $duration value error.
 /// @throw Invalid $delay value error.
 /// @throw Invalid $iterations value error.
@@ -111,7 +112,7 @@
   @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
     $in-or-out: true;
     $anim-suffix: '-in';
-  } @else if not $in-or-out or is-alias('out', $in-or-out) {
+  } @else if equals-false($in-or-out) or is-alias('out', $in-or-out) {
     $in-or-out: false;
     $anim-suffix: '-out';
   } @else {
