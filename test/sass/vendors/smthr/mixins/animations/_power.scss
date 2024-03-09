@@ -14,12 +14,11 @@
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Generates an animation that poofs an element in or out. If a forward or
-/// backward $direction is chosen to augment the poof, it is recommended that
-/// the `animation-stage` mixin be used on the parent element.
-///
-/// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
-/// poof `in` (or `i` or `true`) or `out` (or `o`, or `false`).
+/// Generates an animation that looks like an old CRT televsion being powered
+/// on or off.
+
+/// @param {String | Bool} $on-or-off ['on'] - Determines if the element will
+/// power `on` (`true`) or `out` (`false`).
 /// @param {String | Number | List} $trans-origin [50%] - The argument for
 /// the `transform-origin` property used in the keyframes of the animation.
 /// Almost any value that is valid for `transform-origin` is valid here, along
@@ -38,8 +37,8 @@
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will default to the recommended timing
 /// function for this animation of `cubic-bezier(0.47, 0, 0.745, 0.715)` if
-/// the animation is poofing in, and `cubic-bezier(0.165, 0.84, 0.44, 1)` if
-/// the animation is poofing out.
+/// the animation is powering in, and `cubic-bezier(0.165, 0.84, 0.44, 1)` if
+/// the animation is powering out.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -57,13 +56,13 @@
 /// @require {function} is-list
 /// @require {function} list-to-string
 ///
-/// @throw Invalid $in-or-out value error.
+/// @throw Invalid $on-or-off value error.
 /// @throw Invalid $duration value error.
 /// @throw Invalid $delay value error.
 /// @throw Invalid $iterations value error.
 /// @throw Invalid $anim-dir value error.
-@mixin poof(
-  $in-or-out: 'in',
+@mixin power(
+  $on-or-off: 'on',
   $trans-origin: 50%,
   $duration: 0.7s,
   $delay: null,
@@ -72,13 +71,11 @@
   $timing-func: null,
   $anim-num: null
 ) {
-  // Default values for a poof in
-  $trans-val-1: scale(2, 2);
-  $trans-val-2: scale(1, 1);
+  // Default values for a power in
+  $trans-val-1: scale(0, 0) rotateY(180deg);
+  $trans-val-2: scale(1, 1) rotateY(0deg);
   $opacity-val-1: 0;
   $opacity-val-2: 1;
-  $blur-val-1: blur(90px);
-  $blur-val-2: blur(0);
   $anim-suffix: '';
 
   // $trans-origin error checking and alias-proofing
@@ -88,8 +85,8 @@
   $trans-origin-position: null;
   $trans-origin-zoffset: null;
 
-  @if $in-or-out and is-string($in-or-out) {
-    $in-or-out: string.to-lower-case($in-or-out);
+  @if $on-or-off and is-string($on-or-off) {
+    $on-or-off: string.to-lower-case($on-or-off);
   }
 
   @if $anim-dir {
@@ -110,22 +107,22 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
-    $in-or-out: true;
-    $anim-suffix: '-in';
-  } @else if not $in-or-out or is-alias('out', $in-or-out) {
-    $in-or-out: false;
-    $anim-suffix: '-out';
+  @if equals-true($on-or-off) or $on-of-off == 'on' {
+    $on-or-off: true;
+    $anim-suffix: '-on';
+  } @else if not $on-or-off or $on-of-off == 'off' {
+    $on-or-off: false;
+    $anim-suffix: '-off';
   } @else {
-    @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
-        '[ poof() ] mixin. Value must be either `in` or `out`';
+    @error 'Invalid $on-or-off value of #{meta.inspect($on-or-off)} for the ' +
+        '[ power() ] mixin. Value must be either `on` (`true`) or `off` (`false`).';
   }
 
   // $trans-origin extensive error checking
   @if $trans-origin {
-    $trans-error-start: 'Invalid value in the $trans-origin parameter, which ' +
+    $trans-error-start: 'Invalid valusse in the $trans-origin parameter, which ' +
         'sets the `transform-origin` value for the keyframes in the ' +
-        '[ poof() ] mixin.';
+        '[ power() ] mixin.';
 
     @if is-list($trans-origin) {
       $num-origin-vals: list.length($trans-origin);
@@ -229,25 +226,23 @@
     $separator: space
   );
 
-  // If poofing out rather than in, reverse the necessary values
-  @if not $in-or-out {
+  // If power is switched off rather than on, reverse the necessary values
+  @if not $on-or-off {
     $opacity-val-1: 1;
     $opacity-val-2: 0;
-    $trans-val-1: scale(1, 1);
-    $trans-val-2: scale(2, 2);
-    $blur-val-1: blur(0);
-    $blur-val-2: blur(20px);
+    $trans-val-1: scale(1, 1) rotateY(0deg);
+    $trans-val-2: scale(0, 0) rotateY(180deg);
   }
 
   @if $duration {
     @if not is-number($duration) {
-      @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] ' +
+      @error 'Invalid $duration value of `#{$duration}` for the [ power() ] ' +
           'mixin. The duration property must be a number.';
     } @else if math.is-unitless($duration) {
       // If no there is no unit for $duration, unless $duration > 60, assume seconds
       $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
     } @else if not list.index('s' 'ms', math.unit($duration)) {
-      @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] mixin.' +
+      @error 'Invalid $duration value of `#{$duration}` for the [ power() ] mixin.' +
           'The duration property must be in either s or ms units.';
     } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
       // If time in ms would be shorter as seconds, convert it
@@ -256,7 +251,7 @@
   } @else {
     $duration: 1s;
 
-    @warn 'You did not pass a $duration for the [ poof() ] mixin. Using the ' +
+    @warn 'You did not pass a $duration for the [ power() ] mixin. Using the ' +
         'default duration of 1s.';
   }
 
@@ -269,13 +264,13 @@
 
   @if $delay {
     @if not is-number($delay) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ poof() ] mixin.' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ power() ] mixin.' +
           'The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, unless $delay > 60, assume seconds
       $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ poof() ] mixin.' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ power() ] mixin.' +
           'The delay property must be in either s or ms units.';
     } @else if math.unit($delay) == 'ms' and $delay % 100 == 0ms {
       // If time in ms would be shorter as seconds, convert it
@@ -296,7 +291,7 @@
       $iterations: $iterations;
     } @else {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
-          ' for the [ poof() ] mixin.';
+          ' for the [ power() ] mixin.';
     }
   }
 
@@ -313,7 +308,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of #{meta.inspect($anim-dir)} ' +
-        'passed with $anim-dir to the [ poof() ] mixin.';
+        'passed with $anim-dir to the [ power() ] mixin.';
   }
 
   @if equals-false($timing-func) or is-alias('normal', $timing-func) {
@@ -330,21 +325,19 @@
     );
   }
 
-  animation: poof#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+  animation: power#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
   @at-root {
-    @keyframes poof#{$anim-suffix} {
+    @keyframes power#{$anim-suffix} {
       0% {
         opacity: $opacity-val-1;
-        filter: $blur-val-1;
         transform: $trans-val-1;
         transform-origin: #{$trans-origin};
       }
 
       100% {
         opacity: $opacity-val-2;
-        filter: $blur-val-2;
         transform: $trans-val-2;
         transform-origin: #{$trans-origin};
       }

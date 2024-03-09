@@ -20,7 +20,7 @@
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// poof `in` (or `i` or `true`) or `out` (or `o`, or `false`).
-/// @param {String | Number | List} $trans-origin [center] - The argument for
+/// @param {String | Number | List} $trans-origin [50%] - The argument for
 /// the `transform-origin` property used in the keyframes of the animation.
 /// Almost any value that is valid for `transform-origin` is valid here, along
 /// with many aliases (such as 'top-right` or `tr` is the equivalent of
@@ -229,7 +229,7 @@
     $separator: space
   );
 
-  // If poof is out rather than in, swap and reverse the necessary values
+  // If poofing out rather than in, reverse the necessary values
   @if not $in-or-out {
     $opacity-val-1: 1;
     $opacity-val-2: 0;
@@ -257,7 +257,7 @@
     $duration: 1s;
 
     @warn 'You did not pass a $duration for the [ poof() ] mixin. Using the ' +
-        'default duration of 1s.'
+        'default duration of 1s.';
   }
 
   @if is-falsey($delay) or
@@ -312,8 +312,8 @@
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
-    @error 'Invalid animation-direction value of `#{$anim-dir}` passed with ' +
-        '$anim-dir to the [ poof() ] mixin.';
+    @error 'Invalid animation-direction value of #{meta.inspect($anim-dir)} ' +
+        'passed with $anim-dir to the [ poof() ] mixin.';
   }
 
   @if equals-false($timing-func) or is-alias('normal', $timing-func) {

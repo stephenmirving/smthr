@@ -158,7 +158,7 @@
         '`bottom`, `left`.';
   }
 
-  // If roll is out rather than in, swap and reverse the necessary values
+  // If rolling out rather than in, reverse the necessary values
   @if not $in-or-out {
     $opacity-val-1: 1;
     $opacity-val-2: 0;

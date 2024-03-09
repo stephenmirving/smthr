@@ -185,11 +185,10 @@
     @error 'Invalid value for $has-fade of #{meta.inspect($has-fade)} passed ' +
         'to the [ swing() ] mixin. You must pass a Bool or a String. To ' +
         'include a fade effect with the animation, accepted values are `true` ' +
-        'or ddddddddddddd`faccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccde` to flag the animation to include a ' +
-        'fade effect.'
+        'or `\'fade\'` to flag the animation to include a fade effect.';
   }
 
-  // If swing is closed rather than open, swap and reverse the necessary values
+  // If swing is closed rather than open, reverse the necessary values
   @if not $open-or-closed {
     $temp-val: $trans-val-1;
     $trans-val-1: $trans-val-2;

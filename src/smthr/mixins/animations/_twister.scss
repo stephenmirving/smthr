@@ -152,7 +152,7 @@
         '$direction value must be one of the following: `top`, `bottom`.';
   }
 
-  // If twister is out rather than in, swap and reverse the necessary values
+  // If twister is out rather than in, reverse the necessary values
   @if not $in-or-out {
     $opacity-val-1: 1;
     $opacity-val-2: 0;

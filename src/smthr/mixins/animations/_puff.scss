@@ -190,7 +190,7 @@
     $direction: 'center';
   }
 
-  // If puff is out rather than in, swap and reverse the necessary values
+  // If puff is out rather than in, reverse the necessary values
   @if not $in-or-out {
     $opacity-val-1: 1;
     $opacity-val-2: 0;
@@ -272,8 +272,8 @@
   } @else if is-alias('alternate-reverse', $anim-dir) {
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
-    @error 'Invalid animation-direction value of `#{$anim-dir}` passed with ' +
-        '$anim-dir to the [ puff() ] mixin.';
+    @error 'Invalid animation-direction value of #{meta.inspect($anim-dir)} ' +
+        'passed with $anim-dir to the [ puff() ] mixin.';
   }
 
   @if equals-false($timing-func) or is-alias('normal', $timing-func) {

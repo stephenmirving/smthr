@@ -158,7 +158,7 @@
     @error 'You must choose an axis for the [ slit() ] mixin.';
   }
 
-  // If animation slits out rather than in, swap and reverse the necessary values
+  // If animation slits out rather than in, reverse the necessary values
   @if not $in-or-out {
     $temp-val: $trans-val-1;
     $trans-val-1: $trans-val-3;
