@@ -1,0 +1,248 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:string';
+@use '../../functions/equals-false' as *;
+@use '../../functions/equals-true' as *;
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
+@use '../../functions/is-global-value' as *;
+@use '../../functions/is-list' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
+
+/// Generates an animation that looks like it is being pinged in or out.
+
+/// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
+/// ping `in` (`true`) or `out` (`false`).
+/// @param {Number} $duration [1s] - The duration of the animation (`s` or `ms`)
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The number of iterations
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value. Default of `null` assumes the CSS property default of
+/// `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. A null value passed here will cause the animation to render
+/// according to the CSS default timing function value of `ease`;
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @require {function} equals-false
+/// @require {function} equals-true
+/// @require {function} is-alias
+/// @require {function} is-global-value
+/// @require {function} is-list
+/// @require {function} is-number
+/// @require {function} is-string
+/// @require {function} list-to-string
+///
+/// @throw Invalid $in-or-out value error.
+/// @throw Invalid $trans-origin value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
+/// @throw Invalid $iterations value error.
+/// @throw Invalid $anim-dir value error.
+@mixin ping(
+  $in-or-out: 'in',
+  $duration: 1s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  // Default values for a ping 'in' - in list form. Lists reversed for ping 'out'
+  $trans-vals: (
+    scale(0, 0) rotate(360deg),
+    scale(0.5, 0.5) rotate(0deg),
+    scale(0.5, 0.5) rotate(0deg),
+    scale(0.5, 0.5) rotate(0deg),
+    scale(0.5, 0.5) rotate(0deg),
+    scale(1, 1) rotate(0deg)
+  );
+  $trans-origin-vals: (50% 50%, 0% 100%, 100% 100%, 0%, 0% 0%, 50% 50%);
+  $opacity-vals: (0, 1, 1, 1, 1, 1);
+  $anim-suffix: '';
+
+  // $trans-origin error checking and alias-proofing
+  $cur-val: null;
+  $horizontal-axis-used: false;
+  $vertical-axis-used: false;
+  $trans-origin-position: null;
+  $trans-origin-zoffset: null;
+
+  @if $in-or-out and is-string($in-or-out) {
+    $in-or-out: string.to-lower-case($in-or-out);
+  }
+
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
+  }
+
+  @if $delay and is-string($delay) {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $timing-func and is-string($timing-func) {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
+    $in-or-out: true;
+    $anim-suffix: '-in';
+  } @else if equals-false($in-or-out) or is-alias('out', $in-or-out) {
+    $in-or-out: false;
+    $anim-suffix: '-out';
+  } @else {
+    @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
+        '[ ping() ] mixin. Value must be either `in` (`i`, `true`) or ' +
+        '`out` (`o`, `false`).';
+  }
+
+  @if $duration {
+    @if not is-number($duration) {
+      @error 'Invalid $duration value of `#{$duration}` for the [ ping() ] ' +
+          'mixin. The duration property must be a number.';
+    } @else if math.is-unitless($duration) {
+      // If no there is no unit for $duration, unless $duration > 60, assume seconds
+      $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+    } @else if not list.index('s' 'ms', math.unit($duration)) {
+      @error 'Invalid $duration value of `#{$duration}` for the [ ping() ] mixin.' +
+          'The duration property must be in either s or ms units.';
+    } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
+      // If time in ms would be shorter as seconds, convert it
+      $duration: math.div($duration, 1000ms) * 1s;
+    }
+  } @else {
+    $duration: 1s;
+
+    @warn 'You did not pass a $duration for the [ ping() ] mixin. Using the ' +
+        'default duration of 1s.';
+  }
+
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
+  {
+    $delay: null;
+  }
+
+  @if $delay {
+    @if not is-number($delay) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ ping() ] mixin.' +
+          'The delay property must be a number.';
+    } @else if math.is-unitless($delay) {
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ ping() ] mixin.' +
+          'The delay property must be in either s or ms units.';
+    } @else if math.unit($delay) == 'ms' and $delay % 100 == 0ms {
+      // If time in ms would be shorter as seconds, convert it
+      $delay: math.div($delay, 1000ms) * 1s;
+    }
+  }
+
+  @if $iterations {
+    @if is-string($iterations) {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if is-alias('infinite', $iterations) {
+      $iterations: infinite;
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
+      is-global-value($iterations)
+    {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
+          ' for the [ ping() ] mixin.';
+    }
+  }
+
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
+  {
+    $anim-dir: null;
+  } @else if is-alias('reverse', $anim-dir) {
+    $anim-dir: reverse;
+  } @else if is-alias('alternate', $anim-dir) {
+    $anim-dir: alternate;
+  } @else if is-alias('alternate-reverse', $anim-dir) {
+    $anim-dir: alternate-reverse;
+  } @else if not is-global-value($anim-dir) {
+    @error 'Invalid animation-direction value of #{meta.inspect($anim-dir)} ' +
+        'passed with $anim-dir to the [ ping() ] mixin.';
+  }
+
+  @if equals-false($timing-func) or is-alias('normal', $timing-func) {
+    $timing-func: null;
+  }
+
+  @if equals-false($anim-num) or $anim-num == '' {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  animation: ping#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
+
+  @at-root {
+    @keyframes ping#{$anim-suffix} {
+      0% {
+        opacity: list.nth($opacity-vals, if($in-or-out, 1, 6));
+        transform: list.nth($trans-vals, if($in-or-out, 1, 6));
+        transform-origin: list.nth($trans-origin-vals, if($in-or-out, 1, 6));
+      }
+
+      20% {
+        opacity: list.nth($opacity-vals, if($in-or-out, 2, 5));
+        transform: list.nth($trans-vals, if($in-or-out, 2, 5));
+        transform-origin: list.nth($trans-origin-vals, if($in-or-out, 2, 5));
+      }
+
+      40% {
+        opacity: list.nth($opacity-vals, if($in-or-out, 3, 4));
+        transform: list.nth($trans-vals, if($in-or-out, 3, 4));
+        transform-origin: list.nth($trans-origin-vals, if($in-or-out, 3, 4));
+      }
+
+      60% {
+        opacity: list.nth($opacity-vals, if($in-or-out, 4, 3));
+        transform: list.nth($trans-vals, if($in-or-out, 4, 3));
+        transform-origin: list.nth($trans-origin-vals, if($in-or-out, 4, 3));
+      }
+
+      80% {
+        opacity: list.nth($opacity-vals, if($in-or-out, 5, 2));
+        transform: list.nth($trans-vals, if($in-or-out, 5, 2));
+        transform-origin: list.nth($trans-origin-vals, if($in-or-out, 5, 2));
+      }
+
+      100% {
+        opacity: list.nth($opacity-vals, if($in-or-out, 6, 1));
+        transform: list.nth($trans-vals, if($in-or-out, 6, 1));
+        transform-origin: list.nth($trans-origin-vals, if($in-or-out, 6, 1));
+      }
+    }
+  }
+}

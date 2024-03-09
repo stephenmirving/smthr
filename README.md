@@ -43,7 +43,7 @@ This is **smthr** version 0.3.6 - _Last update:_ 03/09/24
 **_Smoother_ currently contains:**
 
 * **140+** Mixins, _including..._
-  * More than 30 easily configurable animation types, allowing for more than 100 unique animations.
+  * More than 35 easily configurable animation types, allowing for more than 100 unique animations.
   * More than 20 element shapes created with a combination of `clip-path`, pseudo-elements, and `border-radius`
   * More than 80 utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given number of lines, creating corner ribbons, centering elements, browser-targeted styling, making "hamburger" menu buttons and much more!
@@ -260,13 +260,14 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-* 6 new animations added: `hinge()`, `flick()`, `poof()`, `space()`, `swing()`, and `twister()`!
+* 7 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `space()`,
+`swing()`, and `twister()`!
 
 * Improved `is-position()` function with the ability to allow alias values.
 
 * Greatly improved the BEM mixins `elem()` and `mod()` such that they can now be
-passed a limitless Arglist of element or modifier names and be used on selector groups
-that have a limitless number of parent selectors.
+passed a limitless Arglist of element or modifier names and be used on selector
+groups that have a limitless number of parent selectors.
 
 * Fixed an issue with animation suffixes and `animation-direction` not always
 working correctly since the 0.3.3 update.

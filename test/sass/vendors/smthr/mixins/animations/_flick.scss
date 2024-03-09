@@ -60,7 +60,7 @@
 /// @throw Invalid $iterations value error.
 /// @throw Invalid $anim-dir value error.
 @mixin flick(
-  $in-or-out: 'on',
+  $in-or-out: 'in',
   $trans-origin: 50%,
   $duration: 1s,
   $delay: null,
@@ -114,7 +114,7 @@
   } @else {
     @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
         '[ flick() ] mixin. Value must be either `in` (`i`, `true`) or ' +
-        '`off` (`o`, `false`).';
+        '`out` (`o`, `false`).';
   }
 
   // $trans-origin extensive error checking
