@@ -22,13 +22,13 @@
 @function resolve-alias($alias, $alias-map: smth.$map-alias-resolutions) {
   @if meta.type-of($alias) != 'string' {
     @error 'Invalid data type of [ #{meta.type-of($alias)} ] for $alias ' +
-        'passed to the [ is-alias() ] function. The data type of $alias must ' +
+        'passed to the [ resolve-alias() ] function. The data type of $alias must ' +
         'be a string.';
   }
 
   @if meta.type-of($alias-map) != 'map' {
     @error 'Invalid data type of [ #{meta.type-of($alias-map)} ] for ' +
-        '$alias-map passed to the [ is-alias() ] function. The data type ' +
+        '$alias-map passed to the [ resolve-alias() ] function. The data type ' +
         'of $alias-map must be a map.';
   }
 

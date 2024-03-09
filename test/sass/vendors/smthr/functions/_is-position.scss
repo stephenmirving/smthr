@@ -31,10 +31,15 @@
 /// @require {function} is-alias
 /// @require {function} is-length
 /// @require {function} is-percentage
+/// @require {function} is-string
 /// @require {function} resolve-alias
 @function is-position($value, $allow-aliases: false) {
   @if is-string($value) {
     $value: string.to-lower-case($value);
+  }
+
+  @if $allow-aliases and is-string($allow-aliases) {
+    $allow-aliases: string.to-lower-case($allow-aliases);
   }
 
   @if equals-true($allow-aliases) or
@@ -48,7 +53,9 @@
       $allow-aliases == 'allow alias' or
       $allow-aliases == 'allowalias'
   {
-    $value: resolve-alias($value);
+    @if is-string($value) {
+      $value: resolve-alias($value);
+    }
   } @else if not equals-false($allow-aliases) and
       not is-alias('none', $allow-aliases) and
       $allow-aliases != 'no'

@@ -112,7 +112,7 @@ $flip-axis: 'diagonal';
 }
 
 .active-anim-flip {
-@include poof('in', left, 1s, 0s);
+  @include power('off');
 }
 
 .active-anim-flip-rev {

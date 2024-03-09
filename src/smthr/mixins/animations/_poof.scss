@@ -36,10 +36,8 @@
 /// any CSS global value. Default of `null` assumes the CSS property default of
 /// `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
-/// animation. A null value passed here will default to the recommended timing
-/// function for this animation of `cubic-bezier(0.47, 0, 0.745, 0.715)` if
-/// the animation is poofing in, and `cubic-bezier(0.165, 0.84, 0.44, 1)` if
-/// the animation is poofing out.
+/// animation. A null value passed here will cause the animation to render
+/// according to the CSS default timing function value of `ease`;
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -65,7 +63,7 @@
 @mixin poof(
   $in-or-out: 'in',
   $trans-origin: 50%,
-  $duration: 0.7s,
+  $duration: 1s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
