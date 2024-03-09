@@ -12,7 +12,8 @@
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Generates an animation that looks like it is being pinged in or out.
+/// Generates an animation that looks like it is being pinged in or out as it
+/// bounces around.
 
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// ping `in` (`true`) or `out` (`false`).
@@ -44,7 +45,6 @@
 /// @require {function} list-to-string
 ///
 /// @throw Invalid $in-or-out value error.
-/// @throw Invalid $trans-origin value error.
 /// @throw Invalid $duration value error.
 /// @throw Invalid $delay value error.
 /// @throw Invalid $iterations value error.
