@@ -15,7 +15,7 @@
 @use '../../functions/list-to-string' as *;
 
 /// Generates an animation that looks like it is being flicked in or out.
-
+///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// flick `in` (`true`) or `out` (`false`).
 /// @param {String | Number | List} $trans-origin [50%] - The argument for
