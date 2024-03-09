@@ -25,7 +25,10 @@
 /// `left`, or any valid aliases for these $side values.
 /// @param {Bool | String} $has-fade [false] - Adds a fade to the animation that
 /// fades out on 'open' and fades in when 'closed', depending on the value of
-/// $open-or-closed. To flag as true, pass `true`, `'true'` or `'fade'`.
+/// $open-or-closed. To flag as true, pass `true`, `'true'` or `'fade'`. If the
+/// fade is turned on, the animation will not display the backside of the
+/// element if you are trying to achieve that with `animation-front-face()`, and
+/// `animation-back-face()` mixins.
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -76,8 +79,8 @@
   $trans-val-2: null;
   $temp-val: null;
   $trans-origin: null;
-  $opacity-val-1: 0;
-  $opacity-val-2: 1;
+  $opacity-val-1: 1;
+  $opacity-val-2: 0;
   $anim-suffix: '';
 
   @if $open-or-closed and is-string($open-or-closed) {
@@ -270,8 +273,8 @@
     $temp-val: $trans-val-1;
     $trans-val-1: $trans-val-2;
     $trans-val-2: $temp-val;
-    $opacity-val-1: 1;
-    $opacity-val-2: 0;
+    $opacity-val-1: 0;
+    $opacity-val-2: 1;
   }
 
   @if equals-false($anim-num) or $anim-num == '' {
@@ -284,13 +287,16 @@
     );
   }
 
-  transform: translate3d(0, 0, 0);
-  transform-style: preserve-3d;
   animation: hinge#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
-  @include only-moz {
-    backface-visibility: hidden;
+  @if not $has-fade {
+    transform: translate3d(0, 0, 0);
+    transform-style: preserve-3d;
+
+    @include only-moz {
+      backface-visibility: hidden;
+    }
   }
 
   @at-root {
@@ -302,6 +308,18 @@
 
         transform: $trans-val-1;
         transform-origin: $trans-origin;
+      }
+
+      @if $has-fade {
+        @if $open-or-closed {
+          52% {
+            opacity: $opacity-val-1;
+          }
+        } @else {
+          48% {
+            opacity: $opacity-val-2;
+          }
+        }
       }
 
       100% {

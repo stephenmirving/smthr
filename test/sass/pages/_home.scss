@@ -45,11 +45,10 @@
   @include clamp-width(11rem, 35%, 22rem);
   @include clamp-height(5.5rem, 40%, 22rem);
   @include depth-level(3);
-
   @include font(
     4rem,
     900,
-    normal,
+  normal,omdex
     small-caps,
     1.5,
     font-stack('system'),
@@ -83,57 +82,59 @@
   }
 }
 
-.front {
-  @include animation-front-face;
-  @include flex-center;
+// .front {
+//   @include animation-front-face;
+//   @include flex-center;
+//   border: 8px solid conv-color(#08f, 'hsl');
+//   border-radius: 12px;
+//   background: conv-color(#2dccb8, hwb) padding-box;
+//   // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, alternate, linear, 'bg');
+//   text-align: center;
 
-  border: 8px solid conv-color(#08f, 'hsl');
-  border-radius: 12px;
-  background: conv-color(#2dccb8, hwb) padding-box;
-  // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, alternate, linear, 'bg');
-  text-align: center;
+//   > .txt {
+//     // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, reverse alternate, linear, 'fg');
+//   }
+// }
 
-  > .txt {
-    // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, reverse alternate, linear, 'fg');
-  }
-}
+$flip-axis: 'horizontal';
 
-$flip-axis: 'vertical';
+// .back {
+//   @include animation-back-face($flip-axis);
+//   @include flex-center;
 
-.back {
-  @include animation-back-face($flip-axis);
-  @include flex-center;
-
-  border: 8px solid conv-color(#08f, 'hsl');
-  border-radius: 12px;
-  background: conv-color($off-black, 'hsl') padding-box;
-  color: #fff;
-  text-align: center;
-}
+//   border: 8px solid conv-color(#08f, 'hsl');
+//   border-radius: 12px;
+//   background: conv-color($off-black, 'hsl') padding-box;
+//   color: #fff;
+//   text-align: center;
+// }
 
 .active-anim-flip {
-  @include hinge('open', 'top');
+  @include hinge('open', 'top', true, 3s);
 }
 
 .active-anim-flip-rev {
-  @include flip(
-    forwards,
-    $flip-axis,
-    0.6s,
-    $anim-dir: alternate-reverse,
-    $anim-num: 2
-  );
+
+
+  @include hinge('close', 'top', true, 3s);
+  // @include flip(
+  //   forwards,
+  //   $flip-axis,
+  //   0.6s,
+  //   $anim-dir: alternate-reverse,
+  //   $anim-num: 2
+  // );
 }
 
-.active-anim-flip-scale {
-    @include flip-scale(
-    top,
-    $flip-axis,
-    0.6s,
-    $anim-dir: alternate-reverse,
-    $anim-num: 2
-  );
-}
+// .active-anim-flip-scale {
+//     @include flip-scale(
+//     top,
+//     $flip-axis,
+//     0.6s,
+//     $anim-dir: alternate-reverse,
+//     $anim-num: 2
+//   );
+// }
 
 .active-anim-shrink {
   @include flip-scale(bottom, $flip-axis, 0.6s, $anim-dir: alternate-reverse);

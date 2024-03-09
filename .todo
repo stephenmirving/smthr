@@ -34,7 +34,7 @@ TODO:
           ✔ position @done(24-03-03 02:40)
           ✔ responsive-font @done(24-03-09 17:19)
           ✔ responsive-ratio @done(24-03-03 02:51)
-          ☐ scrollbar
+          ✔ scrollbar @started(24-03-09 17:41) @done(24-03-09 18:05) @lasted(24m8s)
           ✔ smooth-retina-fonts @done(24-03-03 02:52)
           ☐ text-emboss
           ☐ text-outline
