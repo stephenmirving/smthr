@@ -18,10 +18,11 @@
 /// x-position y-position 2-value format. The y-position value can be the
 /// keyword, `top` (equal to 0), `center` (equal to 50%), or `bottom` (equal to
 /// 100%), or can it can be a length-percentage. (Ex: `left bottom` or
-/// `100% 50%` or `left 30%). This property also accepts any CSS global value
+/// `100% 50%` or `left 30%`). This property also accepts any CSS global value
 /// as valid.
+///
 /// @param {Number} $width [null] - The width of the element.
-/// @param {Number} $z-index [null] - Sets the z-index value, if passed
+/// @param {Number} $z-index [null] - Sets the z-index value, if passed.
 /// @param {Number} $height [$width] - The height of the element.
 ///
 /// @group Animations

@@ -1,21 +1,30 @@
 @use 'sass:math';
 
-/// Viewport sized typography with minimum and maximum values
-/// @author Eduardo Boucas (@eduardoboucas)
-/// @link https://css-tricks.com/snippets/sass/viewport-sized-typography-minimum-maximum-sizes/
+/// A way to generate viewport sized typography with minimum and maximum values
+/// through the use of calculated media queries. A fork of a mixin by Eduardo
+/// Boucas.
 ///
 /// @param {Number} $responsive - Viewport-based size
 /// @param {Number} $min - Minimum font size (px)
 /// @param {Number} $max - Maximum font size (px) (optional)
 /// @param {Number} $fallback - Fallback for viewport-based units (optional)
 ///
-/// @example A 5vw font size (with 50px fallback), min of 35px and max of 150px:
-///          @include responsive-font(5vw, 35px, 150px, 50px);
+/// @example scss -
+/// // A 5vw font size (with 50px fallback),
+/// // min of 35px and max of 150px:
+/// @include responsive-font(5vw, 35px, 150px, 50px);
+///
+/// @author Eduardo Boucas <@eduardoboucas>
+/// @link https://css-tricks.com/snippets/sass/viewport-sized-typography-minimum-maximum-sizes/
 ///
 /// @group Utilities
 @mixin responsive-font($responsive, $min, $max: false, $fallback: false) {
   $responsive-unitless: math.div($responsive, ($responsive - $responsive + 1));
-  $dimension: if(math.unit($responsive) == 'vh', 'height', 'width');
+  $dimension: if(
+    list.index(('vh' 'svh' 'dvh' 'lvh'), math.unit($responsive)),
+    'height',
+    'width'
+  );
   $min-breakpoint: math.div($min, $responsive-unitless * 100);
 
   @media (max-#{$dimension}: #{$min-breakpoint}) {

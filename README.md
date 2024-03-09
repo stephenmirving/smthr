@@ -36,7 +36,7 @@ _Smoother_ for use in a project, I recommend checking back here regurally for
 new updates, at least until it launches on NPM and updating it becomes more
 seamless.
 
-This is **smthr** version 0.3.6 - _Last update:_ 03/09/24
+This is **smthr** version 0.3.7 - _Last update:_ 03/09/24
 
 ## Content
 
@@ -187,6 +187,19 @@ this:
 }
 ```
 
+Alternately, you can choose to not explicitly declare the namespace, and since
+Sass will then namespace it to the last part of the file path, which is `smth`.
+
+```scss
+// FILE: sass/pages/_home.scss
+
+@use '../vendors/smthr/smth';
+
+.element {
+  @include smth.bounciness('down', 0.6s);
+}
+```
+
 If you prefer to namespace the module to something shorter, you can choose almost
 anything you want that is not used by another module. While there is no explicit
 warning against it in the documentation, I recommend not choosing a `$`, `#`,
@@ -194,7 +207,8 @@ warning against it in the documentation, I recommend not choosing a `$`, `#`,
 conflicts due to `$` being used for variables, `#` being used for interpolation,
 `@` being used for at-rules, `e` being reserved for the mathematical constant _[e](https://en.wikipedia.org/wiki/E_(mathematical_constant))_,
 and `_` or `-` being used at the start of member names to
-[make those members private](https://sass-lang.com/documentation/at-rules/use/#private-members).
+[make those members private](https://sass-lang.com/documentation/at-rules/use/#private-members). At the very least, it could screw up your syntax highlighting,
+so choose something unique.
 
 ```scss
 @use '../vendors/smthr/smth' as ~;
@@ -236,22 +250,22 @@ For more information about migrating away from the soon-to-be-deprecated
 
 In the future, there will be a more comprehensive wiki with example
 code snippets that show their CSS output and picture or video examples of the
-code's effect on the page. For now though, you can get started with the SassDoc
-[documentation page](https://stephenmirving.github.io/smthr/) generated for
+code's effect on the page. For now though, you can get started with the
+[documentation page](https://stephenmirving.github.io/smthr/), generated for
 the library using the [SassDoc](http://sassdoc.com/) annotations in the code.
 
 ## Parameter Aliases
 
-Most of the SassDoc annotations will describe the valid parameters that you
-can pass to the various functions and mixins, and the forms those parameters can
-take. In an attempt to make the library more easy to pick up and use, many alias
-values were created for most of the commonly used keyword strings that you could
-pass as parameters to the library members. So if an animation mixin's `$axis`
-parameter accepts a value of `'horizontal'`, to indicate that it should animate
-over the horizontal axis, you should expect that the mixin would also accept
-alias values of `'horizontally'`, `'horiz'`, `horz`, `'left-to-right'` and more
-as correct and useable alias values for the `horizontal` value of the `$axis`
-parameter.
+Most of the documentation and SassDoc annotations will describe the valid
+parameters that you can pass to the various functions and mixins, and the forms
+those parameters can take. In an attempt to make the library more easy to pick
+up and use, many alias values were created for most of the commonly used keyword
+strings that you could pass as parameters to the library members. So if an
+animation mixin's `$axis` parameter accepts a value of `'horizontal'`, to
+indicate that it should animate over the horizontal axis, you should expect that
+the mixin would also accept alias values of `'horizontally'`, `'horiz'`, `horz`,
+`'left-to-right'` and more as correct and useable alias values for the
+`horizontal` value of the `$axis` parameter.
 
 To get an idea of the full list of aliases for these keyword values, see the
 `$map-alias-resolutions` variable inside this
@@ -260,8 +274,8 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-* 7 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `space()`,
-`swing()`, and `twister()`!
+* 8 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `power()`,
+`space()`, `swing()`, and `twister()`!
 
 * Improved `is-position()` function with the ability to allow alias values.
 

@@ -112,7 +112,7 @@ $flip-axis: 'vertical';
 }
 
 .active-anim-flip {
-  @include ping('out');
+  @include hinge('open', 'top');
 }
 
 .active-anim-flip-rev {

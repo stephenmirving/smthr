@@ -1,0 +1,3 @@
+@use '../vendors/smthr/smth';
+
+@include smth.scrollbar(10px, blue, green, 8px);

@@ -1,5 +1,5 @@
 /// Uses a media query to apply the given styles only to Chromium browesers,
-/// Chrome versions 29 and up.
+/// Works on Chromium versions 29 and up.
 ///
 /// @content Styles that target Chromium browsers version 29 and up.
 ///
@@ -10,8 +10,8 @@
   }
 }
 
-/// Uses a media query to apply the given styles only to Chromium browesers,
-/// Chrome versions 29 and up.
+/// Uses a media query to apply the given styles only to Chromium browesers.
+/// Works on Chromium versions 29 and up.
 ///
 /// @content Styles that target Chromium browsers version 29 and up.
 ///
@@ -19,6 +19,20 @@
 ///
 /// @alias only-chromium
 @mixin chromium-only {
+  @include only-chromium {
+    @content;
+  }
+}
+
+/// Uses a media query to apply the given styles only to Chromium browesers.
+/// Works on Chromium versions 29 and up.
+///
+/// @content Styles that target Chromium browsers version 29 and up.
+///
+/// @group Utilities
+///
+/// @alias only-chromium
+@mixin target-chromium {
   @include only-chromium {
     @content;
   }

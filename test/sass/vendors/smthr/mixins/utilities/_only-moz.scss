@@ -1,53 +1,59 @@
 @use 'sass:meta';
 
-/// Uses @supports queries and a clever hack to apply the given styles to
-/// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
-/// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
+/// Uses @supports queries and a hack using `@-moz-document url-prefix()` to
+/// apply the given styles to either all version of Gecko based Mozilla browsers,
+/// only Quantam (Stylo) Mozilla browsers, or only legacy (pre-Stylo) Mozilla
+/// browsers.
 ///
-/// @param {Bool | String} $only-legacy [null] - Pass nothing or null to target
-/// all version of Gecko based Mozilla browsers. To target newer Quantam Mozilla
-/// browsers, pass false, null, `quantam`, `new`, `stylo`, or `q`.
-/// To target Legacy (pre-Stylo) Mozilla browsers, pass true, `legacy`, `old`,
-/// or `pre-stylo`. TO target all Gecko-based Mozilla browsers,
-/// pass 'both' or 'all'.
+/// @param {Bool | String} $target-versions [null] - Pass nothing, `null`,
+/// `false`, `both`, `none` or `no` to not target any specific version of Gecko
+/// based Mozilla browsers (basically targetting all of them). To target
+/// only newer, Quantam Mozilla browsers, pass `quantam`, `q`, `new`, `modern`,
+/// `stylo`, or `green`. To target Legacy (pre-Stylo) Mozilla browsers, pass
+/// `true`, `legacy`, `old`, or `pre-stylo`.
 ///
 /// @content Styles to apply to Gecko-based Mozilla browsers.
 ///
 /// @group Utilities
-/// @alias moz-only
-@mixin only-moz($only-legacy: null) {
-  @if $only-legacy and meta.type-of($only-legacy) == 'string' {
-    $only-legacy: string.to-lower-case($only-legacy);
+@mixin only-moz($target-versions: null) {
+  @if $target-versions and meta.type-of($target-versions) == 'string' {
+    $target-versions: string.to-lower-case($target-versions);
   }
 
-  @if not $only-legacy or
-    $only-legacy ==
-    'f' or
-    $only-legacy ==
-    'quantam' or
-    $only-legacy ==
-    'new' or
-    $only-legacy ==
-    'stylo' or
-    $only-legacy ==
-    'q'
+
+  @if not $target-versions or
+      $target-versions == 'false' or
+      $target-versions == 'f' or
+      $target-versions == 'all' or
+      $target-versions == 'both' or
+      $target-versions == 'none' or
+      $target-versions == 'no' or
+      $target-versions == 'n'
+  {
+    @-moz-document url-prefix() {
+      @content;
+    }
+  } @else if $target-versions == 'quantam' or
+      $target-versions == 'quant'
+      $target-versions == 'q'
+      $target-versions == 'new' or
+      $target-versions == 'stylo' or
+      $target-versions == 'modern' or
+      $target-versions == 'green'
   {
     @-moz-document url-prefix() {
       @supports (animation: calc(0s)) {
         @content;
       }
     }
-  } @else if
-    $only-legacy ==
-    true or
-    $only-legacy ==
-    't' or
-    $only-legacy ==
-    'legacy' or
-    $only-legacy ==
-    'old' or
-    $only-legacy ==
-    'pre-stylo'
+  } @else if $target-versions == true or
+      $target-versions == 'true' or
+      $target-versions == 't' or
+      $target-versions == 'legacy' or
+      $target-versions == 'old' or
+      $target-versions == 'pre-stylo' or
+      $target-versions == 'pre stylo' or
+      $target-versions == 'prestylo'
   {
     @-moz-document url-prefix() {
       @supports not (animation: calc(0s)) {
@@ -55,33 +61,55 @@
       }
     }
   } @else {
-    @-moz-document url-prefix() {
-      @content;
-    }
-
-    @if $only-legacy != 'both' and $only-legacy != 'all' {
-      @warn 'You have passed and incorrect argument to the `only-moz` mixin. ' +
-      'Ignoring the argument and targeting all Gecko-based Mozilla ' +
-      'browsers instead.';
-    }
+    @warn 'You have passed an unknown keyword value of ' +
+        '#{meta.inspect($target-versions)}} to the [ only-moz() ] mixin. ' +
+        'Ignoring the parameter and targeting all Gecko-based Mozilla ' +
+        'browsers.';
   }
 }
 
-/// Uses @supports queries and a clever hack to apply the given styles to
-/// either all version of Gecko based Mozilla browsers, only Quantam (Stylo)
-/// Mozilla browsers, or only legacy (pre-Stylo) Mozilla browsers.
+/// Uses @supports queries and a hack using `@-moz-document url-prefix()` to
+/// apply the given styles to either all version of Gecko based Mozilla browsers,
+/// only Quantam (Stylo) Mozilla browsers, or only legacy (pre-Stylo) Mozilla
+/// browsers.
 ///
-/// @param {Bool | String} $only-legacy [null] - Pass nothing or null to target
-/// all version of Gecko based Mozilla browsers. To target Quantam Mozilla
-/// browsers, pass false, `quantam`, `new`, `stylo`, or `q`. To target Legacy
-/// (pre-Stylo) Mozilla browsers, pass true, `legacy`, `old`, or `pre-stylo`.
+/// @param {Bool | String} $target-versions [null] - Pass nothing, `null`,
+/// `false`, `both`, `none` or `no` to not target any specific version of Gecko
+/// based Mozilla browsers (basically targetting all of them). To target
+/// only newer, Quantam Mozilla browsers, pass `quantam`, `q`, `new`, `modern`,
+/// `stylo`, or `green`. To target Legacy (pre-Stylo) Mozilla browsers, pass
+/// `true`, `legacy`, `old`, or `pre-stylo`.
 ///
 /// @content Styles to apply to Gecko-based Mozilla browsers.
 ///
 /// @group Utilities
+///
 /// @alias only-moz
-@mixin moz-only($only-legacy: null) {
-  @include only-moz($only-legacy) {
+@mixin moz-only($target-versions: null) {
+  @include only-moz($target-versions) {
+    @content;
+  }
+}
+
+/// Uses @supports queries and a hack using `@-moz-document url-prefix()` to
+/// apply the given styles to either all version of Gecko based Mozilla browsers,
+/// only Quantam (Stylo) Mozilla browsers, or only legacy (pre-Stylo) Mozilla
+/// browsers.
+///
+/// @param {Bool | String} $target-versions [null] - Pass nothing, `null`,
+/// `false`, `both`, `none` or `no` to not target any specific version of Gecko
+/// based Mozilla browsers (basically targetting all of them). To target
+/// only newer, Quantam Mozilla browsers, pass `quantam`, `q`, `new`, `modern`,
+/// `stylo`, or `green`. To target Legacy (pre-Stylo) Mozilla browsers, pass
+/// `true`, `legacy`, `old`, or `pre-stylo`.
+///
+/// @content Styles to apply to Gecko-based Mozilla browsers.
+///
+/// @group Utilities
+///
+/// @alias only-moz
+@mixin target-moz($target-versions: null) {
+  @include only-moz($target-versions) {
     @content;
   }
 }

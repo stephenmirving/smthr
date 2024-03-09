@@ -23,6 +23,9 @@
 /// from this side of the element, depending on the value of $open-or-closed
 /// The value of $side must be one of the following: `top`, `right`, `bottom`,
 /// `left`, or any valid aliases for these $side values.
+/// @param {Bool | String} $has-fade [false] - Adds a fade to the animation that
+/// fades out on 'open' and fades in when 'closed', depending on the value of
+/// $open-or-closed. To flag as true, pass `true`, `'true'` or `'fade'`.
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -53,6 +56,7 @@
 ///
 /// @throw Invalid $open-or-closed value error.
 /// @throw Invalid $side value error.
+/// @throw Invalid $has-fade value error.
 /// @throw Invalid $duration value error.
 /// @throw Invalid $delay value error.
 /// @throw Invalid $iterations value error.
@@ -60,6 +64,7 @@
 @mixin hinge(
   $open-or-closed: 'open',
   $side: 'top',
+  $has-fade: false,
   $duration: 1s,
   $delay: null,
   $iterations: null,
@@ -71,6 +76,8 @@
   $trans-val-2: null;
   $temp-val: null;
   $trans-origin: null;
+  $opacity-val-1: 0;
+  $opacity-val-2: 1;
   $anim-suffix: '';
 
   @if $open-or-closed and is-string($open-or-closed) {
@@ -169,11 +176,19 @@
         '`bottom`, `left`.';
   }
 
-  // If hinge is closed rather than open, reverse the necessary values
-  @if not $open-or-closed {
-    $temp-val: $trans-val-1;
-    $trans-val-1: $trans-val-2;
-    $trans-val-2: $temp-val;
+  @if equals-true($has-fade) or $has-fade == 'fade' {
+    $has-fade: true;
+  } @else if equals-false($has-fade) or
+      $has-fade == 'no-fade' or
+      $has-fade == 'no fade' or
+      $has-fade == 'nofade' or
+      $has-fade == '!fade' {
+    $has-fade: false;
+  } @else {
+    @error 'Invalid value for $has-fade of #{meta.inspect($has-fade)} passed ' +
+        'to the [ swing() ] mixin. You must pass a Bool or a String. To ' +
+        'include a fade effect with the animation, accepted values are `true` ' +
+        'or `\'fade\'` to flag the animation to include a fade effect.';
   }
 
   @if not is-number($duration) {
@@ -250,6 +265,15 @@
     $timing-func: if(($open-or-closed), ease-out, ease-in);
   }
 
+  // If hinge is closing rather than opening, reverse the necessary values
+  @if not $open-or-closed {
+    $temp-val: $trans-val-1;
+    $trans-val-1: $trans-val-2;
+    $trans-val-2: $temp-val;
+    $opacity-val-1: 1;
+    $opacity-val-2: 0;
+  }
+
   @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
   } @else {
@@ -272,11 +296,19 @@
   @at-root {
     @keyframes hinge#{$anim-suffix} {
       0% {
+        @if $has-fade {
+          opacity: $opacity-val-1;
+        }
+
         transform: $trans-val-1;
         transform-origin: $trans-origin;
       }
 
       100% {
+        @if $has-fade {
+          opacity: $opacity-val-2;
+        }
+
         transform: $trans-val-2;
         transform-origin: $trans-origin;
       }

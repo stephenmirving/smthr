@@ -1,7 +1,7 @@
-/// Uses a media query to apply the given styles to any webkit browser,
-/// including Safari, Edge, Chrome, and other webkit based browsers.
+/// Apply the given styles to WebKit-based browsers, including Safari, Edge,
+/// Chrome, and any other WebKit browser.
 ///
-/// @content Styles that target Chrome and Safari browsers.
+/// @content Styles that target WebKit browsers like Chrome, Safari, modern Edge.
 ///
 /// @group Utilities
 @mixin only-webkit {
@@ -10,15 +10,29 @@
   }
 }
 
-/// Uses a media query to apply the given styles to any webkit browser,
-/// including Safari, Edge, Chrome, and other webkit based browsers.
+/// Apply the given styles to WebKit-based browsers, including Safari, Edge,
+/// Chrome, and any other WebKit browser.
 ///
-/// @content Styles that target Chrome and Safari browsers.
+/// @content Styles that target WebKit browsers like Chrome, Safari, modern Edge.
 ///
 /// @group Utilities
 ///
 /// @alias only-webkit
 @mixin webkit-only {
+  @include only-webkit {
+    @content;
+  }
+}
+
+/// Apply the given styles to WebKit-based browsers, including Safari, Edge,
+/// Chrome, and any other WebKit browser.
+///
+/// @content Styles that target WebKit browsers like Chrome, Safari, modern Edge.
+///
+/// @group Utilities
+///
+/// @alias only-webkit
+@mixin target-webkit {
   @include only-webkit {
     @content;
   }

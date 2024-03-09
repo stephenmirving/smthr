@@ -1,7 +1,6 @@
-/// Apply the given styles to Legacy MS Edge (pre-webkit) only by using a
-/// `@supports` query.
+/// Apply the given styles to Legacy Microsoft Edge (pre-WebKit, version 1-18).
 ///
-/// @content Styles that target MS Edge.
+/// @content Styles that target pre-WebKit MS Edge.
 ///
 /// @group Utilities
 @mixin only-legacy-edge {
@@ -10,13 +9,23 @@
   }
 }
 
-/// Apply the given styles to Legacy MS Edge (pre-webkit) only by using a
-/// `@supports` query.
+/// Apply the given styles to Legacy Microsoft Edge (pre-WebKit, version 1-18).
+///
+/// @content Styles that target pre-WebKit MS Edge.
 ///
 /// @group Utilities
-///
-/// @alias only-legacy-edge
 @mixin legacy-edge-only {
+  @include only-legacy-edge {
+    @content;
+  }
+}
+
+/// Apply the given styles to Legacy Microsoft Edge (pre-WebKit, version 1-18).
+///
+/// @content Styles that target pre-WebKit MS Edge.
+///
+/// @group Utilities
+@mixin target-legacy-edge {
   @include only-legacy-edge {
     @content;
   }
