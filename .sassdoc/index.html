@@ -343,12 +343,14 @@
     );
   }
 
-  animation: bounce#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  transform: translate3d(0, 0, 0);
+
   @if $fwd-bck {
-    transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
   }
+
+  animation: bounce#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
+    #{$anim-dir} both;
 
   @at-root {
     @keyframes bounce#{$anim-suffix} {
@@ -1393,6 +1395,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: flick#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
@@ -2460,6 +2463,7 @@
   width: $size;
   height: $height;
   background: $bg;
+  transform: translate3d(0, 0, 0);
   animation: pan-wipe#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
@@ -2620,6 +2624,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: ping#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
@@ -2921,6 +2926,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: poof#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
@@ -3175,6 +3181,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: puff#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
@@ -3388,6 +3395,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: roll#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
@@ -3642,11 +3650,11 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: rotate-scale#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
   @if $is-on-axis {
-    transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
 
     @include only-moz {
@@ -3960,8 +3968,9 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
+
   @if $axis {
-    transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
 
     @include only-moz {
@@ -4226,6 +4235,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: scale-down#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
     #{$anim-dir} both;
 
@@ -4464,8 +4474,10 @@
     );
   }
 
-  animation: scale-up#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  transform: translate3d(0, 0, 0);
+  animation: scale-up#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
+
   @at-root {
     @keyframes scale-up#{$anim-suffix} {
       0% {
@@ -4707,6 +4719,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: slide#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
@@ -4919,8 +4932,8 @@
 
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: slit#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  animation: slit#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
 
   @include only-moz {
     backface-visibility: hidden;
@@ -5351,6 +5364,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: space#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
@@ -5585,6 +5599,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: swing#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
@@ -6948,6 +6963,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: txt-pop-up#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
       #{$infinite} both;
 
@@ -7667,6 +7683,7 @@
     );
   }
 
+  transform: translate3d(0, 0, 0);
   animation: twister#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
