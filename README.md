@@ -260,7 +260,7 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-* 5 new animations added: `hinge()`, `flick()`, `poof()`, `space()`, `swing()`, and `twister()`!
+* 6 new animations added: `hinge()`, `flick()`, `poof()`, `space()`, `swing()`, and `twister()`!
 
 * Improved `is-position()` function with the ability to allow alias values.
 
