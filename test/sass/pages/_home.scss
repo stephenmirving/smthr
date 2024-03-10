@@ -85,6 +85,7 @@
 .front {
   @include animation-front-face;
   @include flex-center;
+
   border: 8px solid conv-color(#08f, 'hsl');
   border-radius: 12px;
   background: conv-color(#2dccb8, hwb) padding-box;
@@ -110,19 +111,17 @@ $flip-axis: 'horizontal';
 }
 
 .active-anim-flip {
-  @include hinge('open', 'bck', 'top' );
+  @include hinge('open', 'fwd', 'top-right', 'fade');
 }
 
 .active-anim-flip-rev {
-
-
-  // @include hinge('close', 'top', true, 3s);
+  @include hinge('close', 'bck', 'top-right', 'fade');
   // @include swing(open, top-right, nofade);
   // @include flip(
   //   forwards,
   //   $flip-axis,
   //   0.6s,
-  //   $anim-dir: alternate-reverse,
+  //   $anim-dir: alternate-reverse,s
   //   $anim-num: 2
   // );
 }
@@ -212,4 +211,8 @@ $flip-axis: 'horizontal';
       border-color: hsl(348 100% 50% / 0.95);
     }
   }
+}
+
+.test {
+  width: resolve-equation();
 }

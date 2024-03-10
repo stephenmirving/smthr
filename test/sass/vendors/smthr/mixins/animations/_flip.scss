@@ -12,11 +12,12 @@
 @use '../../functions/list-to-string' as *;
 @use '../utilities/only-moz' as *;
 
-/// Generates an animation that flips an element over. The element this mixin is
-/// applied to must have a front-face and a back-face child element. It is
-/// recommended that you use this mixin in conjunction with the
-/// `animation-front-face` and 'animation-back-face' mixins for element 'face'
-/// child elements and the 'animation-stage` mixin for the parent element.
+/// Generates an animation that flips an element over. The element this mixin
+/// is applied to must have a front-face and a back-face child element.
+/// It is recommended that you use this mixin in conjunction with the
+/// `animation-front-face()` and 'animation-back-face()' mixins for element
+/// `face` child elements and the 'animation-stage()` mixin for the parent
+/// element.
 ///
 /// @param {String} $direction ['top'] - The direction the scale effect causes
 /// the element to seem to be moving towards. Accepted values are: `top`,

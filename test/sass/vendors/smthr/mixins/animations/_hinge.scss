@@ -14,7 +14,8 @@
 @use '../utilities/only-moz' as *;
 
 /// Generates an hingeing open or hingeing closed animation that turns an
-/// element from one of its corners.
+/// element from one of its corners. It is recommended that the
+/// `animation-stage()` mixin be used on the parent element.
 ///
 /// @param {String | Bool} $open-or-closed ['open'] - Determines if the element
 /// will hinge 'open' (`open`, `true`, or `o`) or 'closed' (`closed`, `close`,
@@ -62,6 +63,7 @@
 /// @require {function} list-to-string
 ///
 /// @throw Invalid $open-or-closed value error.
+/// @throw Invalid $fwd-or-bck value error.
 /// @throw Invalid $position value error.
 /// @throw Invalid $has-fade value error.
 /// @throw Invalid $duration value error.

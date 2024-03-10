@@ -13,7 +13,8 @@
 @use '../../functions/list-to-string' as *;
 
 /// Generates a twister animation that twists an element in or out, from or
-/// towards a given direction.
+/// towards a given direction. It is recommended that the `animation-stage()`
+/// mixin be used on the parent element.
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// spac 'in' (`in`, `true`, or `i`) or 'out' (`out`, `false`, or `o`).
@@ -99,10 +100,10 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
+  @if equals-true($in-or-out) or $in-or-out == 'in' {
     $in-or-out: true;
     $anim-suffix: '-in-from-';
-  } @else if is-falsey($in-or-out) or is-alias('out', $in-or-out) {
+  } @else if is-falsey($in-or-out) or $in-or-out == 'out' {
     $in-or-out: false;
     $anim-suffix: '-out-to-';
   } @else {

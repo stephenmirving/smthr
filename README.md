@@ -36,7 +36,7 @@ _Smoother_ for use in a project, I recommend checking back here regurally for
 new updates, at least until it launches on NPM and updating it becomes more
 seamless.
 
-This is **smthr** version 0.3.7 - _Last update:_ 03/10/24
+This is **smthr** version 0.4.0 - _Last update:_ 03/10/24
 
 ## Content
 
@@ -55,6 +55,7 @@ This is **smthr** version 0.3.7 - _Last update:_ 03/10/24
   * Calculate unit conversions (such as px to rem)
   * Fix floats to a given number of decimal places
   * Return custum cubic-bezier curves for timing functions based on Penner equations
+  * Return custom calc() equations based on trigonometry
   * Calculate the "least square fit" or trend-line of a mapped set of points (useful for setting responsive font sizes)
   * Functions that aid in the creation of mixins and placeholders.
   * Much more!
@@ -276,6 +277,9 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 * 8 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `power()`,
 `space()`, `swing()`, and `twister()`!
+
+* New function added called `resolve-equation()` that returns a custom CSS `calc()`
+based on trigonometry.
 
 * Improved `is-position()` function with the ability to allow alias values.
 

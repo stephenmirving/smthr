@@ -16,8 +16,8 @@
 /// effect is slightly different than in `flip-scale`. The element this mixin is
 /// applied to must have a front-side and a back-side child element. It is
 /// recommended that you use this mixin in conjunction with the
-/// `animation-front-face` and 'animation-back-face' mixins for card 'face'
-/// child elements and the 'animation-stage` mixin for the parent element.
+/// `animation-front-face()` and 'animation-back-face()' mixins for card 'face'
+/// child elements and the 'animation-stage()` mixin for the parent element.
 ///
 /// @param {String} $direction ['top'] - The direction the animation appears to
 /// be fliping from. Can be either `top`, `bottom`, `right`, or `left`.
@@ -63,11 +63,11 @@
 ) {
   // Default tranform values for $direction of `top`
   $trans-val-1: translateY(0) rotateX(0) scale(1); // Same for top and bottom
-  $trans-orig-val1: 50% 0%;
+  $trans-origin-val-1: 50% 0%;
   $trans-val-2: translateY(-50%) rotateX(-90deg) scale(2);
-  $trans-orig-val2: 50% 50%; // Same for all $direction values
+  $trans-origin-val-2: 50% 50%; // Same for all $direction values
   $trans-val-3: translateY(-100%) rotateX(-180deg) scale(1);
-  $trans-orig-val3: 50% 100%;
+  $trans-origin-val-3: 50% 100%;
   $anim-suffix: '-towards-top';
 
   @if $direction {
@@ -96,23 +96,23 @@
 
   @if is-alias('right', $direction) {
     $trans-val-1: translateX(0) rotateY(0) scale(1);
-    $trans-orig-val1: 100% 50%;
+    $trans-origin-val-1: 100% 50%;
     $trans-val-2: translateX(50%) rotateY(-90deg) scale(2);
     $trans-val-3: translateX(100%) rotateY(-180deg) scale(1);
-    $trans-orig-val3: 0% 50%;
+    $trans-origin-val-3: 0% 50%;
     $anim-suffix: '-from-right';
   } @else if is-alias('left', $direction) {
     $trans-val-1: translateX(0) rotateY(0) scale(1);
-    $trans-orig-val1: 0% 50%;
+    $trans-origin-val-1: 0% 50%;
     $trans-val-2: translateX(-50%) rotateY(90deg) scale(2);
     $trans-val-3: translateX(-100%) rotateY(180deg) scale(1);
-    $trans-orig-val3: 100% 50%;
+    $trans-origin-val-3: 100% 50%;
     $anim-suffix: '-from-left';
   } @else if is-alias('bottom', $direction) {
-    $trans-orig-val1: 50% 100%;
+    $trans-origin-val-1: 50% 100%;
     $trans-val-2: translateY(50%) rotateX(90deg) scale(2);
     $trans-val-3: translateY(100%) rotateX(180deg) scale(1);
-    $trans-orig-val3: 50% 0%;
+    $trans-origin-val-3: 50% 0%;
     $anim-suffix: '-towards-bottom';
   } @else if not is-alias('top', $direction) {
     @error 'Invalid direction value of `#{meta.inspect($direction)}` for the ' +
@@ -213,8 +213,8 @@
 
   transform: translate3d(0, 0, 0);
   transform-style: preserve-3d;
-  animation: flip-scale-2#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  animation: flip-scale-2#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
 
   @include only-moz {
     backface-visibility: hidden;
@@ -224,17 +224,17 @@
     @keyframes flip-scale-2#{$anim-suffix} {
       0% {
         transform: $trans-val-1;
-        transform-origin: $trans-orig-val1;
+        transform-origin: $trans-origin-val-1;
       }
 
       50% {
         transform: $trans-val-2;
-        transform-origin: $trans-orig-val2;
+        transform-origin: $trans-origin-val-2;
       }
 
       100% {
         transform: $trans-val-3;
-        transform-origin: $trans-orig-val3;
+        transform-origin: $trans-origin-val-3;
       }
     }
   }

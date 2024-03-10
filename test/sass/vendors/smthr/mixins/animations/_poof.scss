@@ -16,7 +16,7 @@
 
 /// Generates an animation that poofs an element in or out. If a forward or
 /// backward $direction is chosen to augment the poof, it is recommended that
-/// the `animation-stage` mixin be used on the parent element.
+/// the `animation-stage()` mixin be used on the parent element.
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// poof `in` (or `i` or `true`) or `out` (or `o`, or `false`).
@@ -109,10 +109,10 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
+  @if equals-true($in-or-out) or $in-or-out == 'in' {
     $in-or-out: true;
     $anim-suffix: '-in';
-  } @else if equals-false($in-or-out) or is-alias('out', $in-or-out) {
+  } @else if equals-false($in-or-out) or $in-or-out == 'out' {
     $in-or-out: false;
     $anim-suffix: '-out';
   } @else {

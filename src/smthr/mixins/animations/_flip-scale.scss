@@ -15,8 +15,9 @@
 /// Generates an animation that flips an element over while scaling it. The
 /// element this mixin is applied to must have a front-face and a back-face
 /// child element. It is recommended that you use this mixin in conjunction with
-/// the `animation-front-face` and 'animation-back-face' mixins for card `face`
-/// child elements and the 'animation-stage` mixin for the parent element.
+/// the `animation-front-face()` and 'animation-back-face()' mixins for card
+/// `face` child elements and the 'animation-stage()` mixin for the parent
+/// element.
 ///
 /// @param {String} $direction ['right'] - The direction the scale effect causes
 /// the element to seem to be moving towards. Can be one of the following

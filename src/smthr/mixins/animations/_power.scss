@@ -15,6 +15,7 @@
 @use '../../functions/list-to-string' as *;
 
 /// Generates an animation that looks like a CRT tv being powered on or off.
+/// It is recommended to use the `animation-stage()` mixin on the parent element.
 ///
 /// @param {String | Bool} $on-or-off ['in'] - Determines if the element will
 /// power `on` (`true`) or `off` (`false`).

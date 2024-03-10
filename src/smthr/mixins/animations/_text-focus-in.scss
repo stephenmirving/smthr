@@ -12,10 +12,15 @@
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Animates text from a blurred to a focused state
+/// Animates text from a blurred to a focused state. If a `forwards` or
+/// `backwards` $direction is chosen to augment the animation, it is recommended
+/// that the `animation-stage()` mixin be used on the parent element.
 ///
-/// @param {String} $style ['in'] - The style of the focus-in effect. Can be
-/// `in` , `expand`, `contract`, `forwards`, or `backwards`.
+/// @param {String| Bool} $style ['default'] - The style of the focus-in effect.
+/// Can pass nothing, `null`, `false`, `none`, `normal`, or `default` for the
+/// default text-focus-in animation. Available styles to modify the animation
+/// are: `expand` (or `grow`), `forwards` (or `forward`, `fwd`), `contract` (or
+/// `shrink`), and `backwards` (or `backwards`, `back`, `bck`).
 /// @param {Number} $duration [0.9s] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -49,7 +54,7 @@
 /// @throw Invalid $delay value error.
 /// @throw Invalid $anim-dir value error.
 @mixin text-focus-in(
-  $style: 'in',
+  $style: 'default',
   $duration: 0.9s,
   $delay: null,
   $iterations: null,
@@ -79,19 +84,6 @@
 
   @if $timing-func and is-string($timing-func) {
     $timing-func: string.to-lower-case($timing-func);
-  }
-
-  @if not $timing-func {
-    @if not
-      $style or
-      is-alias('in', $style) or
-      is-alias('normal', $style) or
-      is-alias('none', $style)
-    {
-      $timing-func: cubic-bezier(0.55, 0.085, 0.68, 0.53);
-    } @else {
-      $timing-func: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
   }
 
   @if not is-number($duration) {
@@ -148,13 +140,11 @@
 
     @if is-alias('infinite', $iterations) {
       $iterations: infinite;
-    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
-      is-global-value($iterations)
+    } @else if not (is-number($iterations) and math.is-unitless($iterations)) and
+      not is-global-value($iterations)
     {
-      $iterations: $iterations;
-    } @else {
-      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
-          ' for the [ text-focus-in() ] mixin.';
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` ' +
+          'for the [ text-focus-in() ] mixin.';
     }
   }
 
@@ -186,6 +176,24 @@
   } @else if is-alias('backwards', $style) {
     $style: 'backwards';
     $anim-suffix: '-contract-backwards';
+  } @else if equals-false($style) or
+      is-alias('normal', $style) or
+      is-alias('none', $style)
+  {
+    $style: null;
+  } @else {
+    @error 'Invalid $style value of `#{meta.inspect($style)}` used for ' +
+            'the [ text-focus-in() ] mixin. Available $style keywords ' +
+            'for this mixin are `default` (or pass `none` `null` or nothing), ' +
+            '`expand`, `forwards`, `contract`, and `backwards`';
+  }
+
+  @if not $timing-func {
+    $timing-func: if(
+      $style,
+      cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      cubic-bezier(0.55, 0.085, 0.68, 0.53)
+    );
   }
 
   @if equals-false($anim-num) or $anim-num == '' {
@@ -198,7 +206,7 @@
     );
   }
 
-  @if is-alias('forwards', $style) or is-alias('backwards', $style) {
+  @if $style == 'forwards' or $style == 'backwards' {
     transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
   }
@@ -222,14 +230,6 @@
         } @else if $style == 'backwards' {
           letter-spacing: 1em;
           transform: translateZ(300px);
-        } @else if
-          $style and not
-          is-alias('none', $style) and not
-          is-alias('normal', $style) and not
-          is-alias('in', $style)
-        {
-          @error 'Invalid $style value of `#{meta.inspect($style)}` used for ' +
-            'the [ text-focus-in() ] mixin.';
         }
       }
 

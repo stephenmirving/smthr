@@ -15,7 +15,7 @@
 /// Animates an element by rotating it along a point and/or an axis. For the the
 /// best effect on a diagonal rotation, use the `animation-stage` mixin on the
 /// parent element, and a front and back child element within the rotated
-/// element, with the animation-front-face and animation-back-face mixins
+/// element, with the `animation-front-face()` and `animation-back-face()` mixins
 /// applied, respectively.
 ///
 /// @param {String} $point ['center'] - The point the element will appear to be

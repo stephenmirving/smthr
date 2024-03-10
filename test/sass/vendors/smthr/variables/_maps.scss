@@ -192,20 +192,21 @@ $map-directions: (
   )
 ) !default;
 
-/// Map of only the position/offset keywords and their associated angles in degrees.
+/// Map of only the position/offset keywords and their associated angles, in
+/// degrees.
 ///
-/// This map is designed to provide a simple way to reference positions
+/// This map is designed to provide a simple way to reference position/offsets
 /// (top, right, bottom, left) and their associated angles in degrees.
 /// Each key in the map represents an angle in degrees, and the value is a map
 /// containing the 'name' of the position and its 'deg' angle. This can be
 /// particularly useful for calculations or when you need to reference positions
 /// in a more dynamic way.
 ///
-/// @prop {Map} 0 - The position 'top' with an angle of 0 degrees.
-/// @prop {Map} 90 - The position 'right' with an angle of 90 degrees.
-/// @prop {Map} 180 - The position 'bottom' with an angle of 180 degrees.
-/// @prop {Map} 270 - The position 'left' with an angle of 270 degrees.
-/// @prop {Map} 360 - The position 'top' with an angle of 360 degrees,
+/// @prop {Map} 0 - The position name 'top' with an angle of 0 degrees.
+/// @prop {Map} 90 - The position name 'right' with an angle of 90 degrees.
+/// @prop {Map} 180 - The position name 'bottom' with an angle of 180 degrees.
+/// @prop {Map} 270 - The position name 'left' with an angle of 270 degrees.
+/// @prop {Map} 360 - The position name 'top' with an angle of 360 degrees,
 /// effectively wrapping around to the start.
 $map-positions: (
   0: (
@@ -452,7 +453,6 @@ $map-alias-resolutions: (
     'bottom',
     'btm',
     'b',
-    'v',
     'down',
     'd'
   ),
@@ -1173,8 +1173,7 @@ $map-alias-resolutions: (
     'bward',
     'back',
     'bck',
-    'bw',
-    'b'
+    'bw'
   ),
   'expand': (
     'expand',
@@ -1188,14 +1187,6 @@ $map-alias-resolutions: (
     'shrink',
     'cont',
     'con'
-  ),
-  'in': (
-    'in',
-    'i'
-  ),
-  'out': (
-    'out',
-    'o'
   ),
   'reverse': (
     'reverses',
@@ -1332,7 +1323,6 @@ $map-alias-resolutions: (
   'infinite': (
     'infinite',
     'inf',
-    'i'
   ),
   'deg': (
     'degrees',

@@ -50,7 +50,8 @@ TODO:
       - https://www.tpgi.com/focus-visible-and-backwards-compatibility/
       - https://www.deque.com/blog/give-site-focus-tips-designing-usable-focus-indicators/
       - Copy any changes to Betterize repo as well
-    ☐ Examine responsive font mixin and improve it using the trend-line function
+    ☐ Possible change the aliases for things like "bottom-left-to-top-right" to resolve to "to top right"
+    ☐ Create a new responsive font mixin using the trend-line function
     ✔ Fix BEM elem() and mod() mixins so that they can take arglists and be used on group selectors @done(24-03-08 01:05)
     ☐ Possibly modify text-outline mixins or create new mixin to include the -webkit-text-stroke property
     ✔ Take a look at the line-clamp mixin @done(24-03-05 18:14)

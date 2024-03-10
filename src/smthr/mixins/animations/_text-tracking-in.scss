@@ -12,7 +12,8 @@
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Animates text by tracking it into view
+/// Animates text by tracking it into view. It is recommended to use the
+/// `animation-stage()` mixin on the parent element.
 ///
 /// @param {Bool | String} $expand-contract ['expand'] - Determines whether
 /// the text will `expand` (or `grow` or `true`) or `contract` (or `shrink` or

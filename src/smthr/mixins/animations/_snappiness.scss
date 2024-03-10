@@ -11,7 +11,8 @@
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Animates an element like it is a rubber band being pulled and snapped.
+/// Animates an element like it is a rubber band being pulled and snapped. It
+/// is recommended to use the `animation-stage()` mixin on the parent element.
 ///
 /// @param {String} $axis ['horizontal'] - The axis the animation occurs along.
 /// Can be `horizontal`, `vertical`, `diagonal`, or `diagonal2`.

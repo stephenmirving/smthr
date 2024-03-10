@@ -14,7 +14,8 @@
 @use '../utilities/only-moz' as *;
 
 /// Generates an animation that appears to either slit an element in or out on
-/// its axis.
+/// its axis. It is recommended to use the `animation-stage()` mixin on the
+/// parent element.
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// appear to slit `in` or `out`.
@@ -98,10 +99,10 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
+  @if equals-true($in-or-out) or $in-or-out == 'in' {
     $in-or-out: true;
     $anim-suffix: '-in';
-  } @else if equals-false($in-or-out) or is-alias('out', $in-or-out) {
+  } @else if equals-false($in-or-out) or $in-or-out == 'out' {
     $in-or-out: false;
     $anim-suffix: '-out';
   } @else {

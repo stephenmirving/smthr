@@ -1,0 +1,46 @@
+@use 'sass:meta';
+@use 'sass:map';
+@use '../variables/maps' as *;
+
+/// Takes a name for an equation and returns the respective CSS calc() equation.
+///
+/// @param {String} $equation-name - The name of the custom equation.
+/// @param {Map} $alias-map [$map-equations] - The map containing the
+/// calc() equations, mostly based on trigonometry.
+///
+/// @return {Calculation} The cubic-bezier curve
+///
+/// @example scss
+/// .element {
+///   animation: fade-in 2s timing(ease-in-quad) 50ms both
+/// }
+///
+/// @access public
+/// @group Utilities
+/// @require {variable} $map-timing-functions
+///
+/// @throw Invalid $func-name type.
+/// @throw Invalid $alias-map type.
+/// @throw Function name not found in alias map.
+@function timing($func-name, $alias-map: $map-timing-functions) {
+  @if meta.type-of($func-name) != 'string' {
+    @error 'Invalid data type of [ #{meta.type-of($func-name)} ] for $func-name ' +
+        'passed to the [ timing() ] function. The data type of $func-name must ' +
+        'be a string.';
+  }
+
+  @if meta.type-of($alias-map) != 'map' {
+    @error 'Invalid data type of [ #{meta.type-of($alias-map)} ] for ' +
+        '$alias-map passed to the [ timing ] function. The data type ' +
+        'of $alias-map must be a map.';
+  }
+
+  $timing-function: map.get($alias-map, $func-name);
+
+  @if not $timing-function {
+    @error 'The timing function name passed to the [ timing() ] function ' +
+        'could not be found in the given alias map.';
+  } @else {
+    @return $timing-function;
+  }
+}

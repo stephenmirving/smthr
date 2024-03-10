@@ -12,9 +12,9 @@
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Generates an animation that puffs an element in or out. If a forward or
-/// backward $direction is chosen to augment the puff, it is recommended that
-/// the `animation-stage` mixin be used on the parent element.
+/// Generates an animation that puffs an element in or out. If a `forwards` or
+/// `backwards` $direction is chosen to augment the puff, it is recommended that
+/// the `animation-stage()` mixin be used on the parent element.
 ///
 /// @param {Bool | String} $in-or-out ['in'] - Determines if the element will
 /// puff 'in' (`in`, `i`, or `true`) or 'out' (`out`, `o`, or `false`).
@@ -100,10 +100,10 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or is-alias('in', $in-or-out) {
+  @if equals-true($in-or-out) or $in-or-out == 'in' {
     $in-or-out: true;
     $anim-suffix: '-in-from';
-  } @else if equals-false($in-or-out) or is-alias('out', $in-or-out) {
+  } @else if equals-false($in-or-out) or $in-or-out == 'out' {
     $in-or-out: false;
     $anim-suffix: '-out-to';
   } @else {
@@ -157,17 +157,17 @@
       $direction: 'top-right';
       $trans-val-1: translateX(50px) translateY(-50px);
       $trans-val-2: translateX(0) translateY(0);
-      $trans-orig-val: 100% 0%;
+      $trans-origin-val: 100% 0%;
     } @else if is-alias('bottom right', $direction) {
       $direction: 'bottom-right';
       $trans-val-1: translateX(50px) translateY(50px);
       $trans-val-2: translateX(0) translateY(0);
-      $trans-orig-val: 100% 100%;
+      $trans-origin-val: 100% 100%;
     } @else if is-alias('bottom left', $direction) {
       $direction: 'bottom-left';
       $trans-val-1: translateX(-50px) translateY(50px);
       $trans-val-2: translateX(0) translateY(0);
-      $trans-orig-val: 0% 100%;
+      $trans-origin-val: 0% 100%;
     } @else if is-alias('center', $direction) {
       $direction: 'center';
     } @else if is-alias('left-to-right', $direction) {
@@ -184,22 +184,11 @@
       @error 'Invalid direction of `#{meta.inspect($direction)}` chosen for the ' +
           '[ puff() ] mixin. The $direction value must be one of the following: ' +
           '`center`, `top`, `top-right`, `right`, `bottom-right`, `bottom`, ' +
-          '`bottom-left`, `left`, `top-left`, `horizontal`, or `vertical';
+          '`bottom-left`, `left`, `top-left`, `forwards`, `backwards`, ' +
+          '`horizontal`, or `vertical';
     }
   } @else {
     $direction: 'center';
-  }
-
-  // If puff is out rather than in, reverse the necessary values
-  @if not $in-or-out {
-    $opacity-val-1: 1;
-    $opacity-val-2: 0;
-    $blur-val-1: blur(0);
-    $blur-val-2: blur(4px);
-
-    $temp-val: $trans-val-1;
-    $trans-val-1: $trans-val-2;
-    $trans-val-2: $temp-val;
   }
 
   @if not $duration {
@@ -284,6 +273,18 @@
     );
   }
 
+  // If puffing out rather than puffing in, reverse the necessary values
+  @if not $in-or-out {
+    $opacity-val-1: 1;
+    $opacity-val-2: 0;
+    $blur-val-1: blur(0);
+    $blur-val-2: blur(4px);
+
+    $temp-val: $trans-val-1;
+    $trans-val-1: $trans-val-2;
+    $trans-val-2: $temp-val;
+  }
+
   $anim-suffix: string.insert(
     $anim-suffix,
     '-#{$direction}',
@@ -301,8 +302,8 @@
   }
 
   transform: translate3d(0, 0, 0);
-  animation: puff#{$anim-suffix} #{$duration} #{$timing-func} #{$delay} #{$iterations}
-    #{$anim-dir} both;
+  animation: puff#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+      #{$iterations} #{$anim-dir} both;
 
   @at-root {
     @keyframes puff#{$anim-suffix} {
