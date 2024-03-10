@@ -1,0 +1,14 @@
+@use 'sass:math';
+
+/// Used with user-created animation keyframes to create a circular motion based
+/// on parametric equations.
+///
+/// @param {Number} $radius - Pass a lenght value for the radius of the motion.
+/// @param {Number} $progress - Pass the current progress of the animation when
+/// the mixin is being used. Can be a value between 0-1 or a percentage 0% - 100%.
+///
+/// @group Animations
+@mixin circular-motion($radius, $progress) {
+  top: calc(50% + $radius * math.sin($progress) * 1px);
+  left: calc(50% + $radius * math.cos($progress) * 1px);
+}

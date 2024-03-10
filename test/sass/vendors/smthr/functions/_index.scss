@@ -6,7 +6,6 @@
 @forward 'order-index';
 @forward 'strip-unit';
 @forward 'resolve-alias';
-@forward 'timing';
 @forward 'functions-walk';
 @forward 'walk';
 
@@ -45,6 +44,8 @@
 @forward 'linear-interpolation';
 @forward 'pi';
 @forward 'ratio-to-percentage';
+@forward 'resolve-equation';
+@forward 'timing';
 @forward 'to-fixed';
 @forward 'trend-line';
 

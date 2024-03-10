@@ -5,7 +5,14 @@
 /// Takes a name for a custom timing function and return the associated
 /// cubic-bezier curve.
 ///
-/// @param {String} $func-name - The name of the custom timing function.
+/// @param {String} $func-name - The name of the custom timing function. The
+/// full list of function names is: 'ease-in-quad', 'ease-in-cubic',
+/// 'ease-in-quart', 'ease-in-quint' 'ease-in-sine', 'ease-in-expo',
+/// 'ease-in-circ' 'ease-in-back', 'ease-out-quad', 'ease-out-cubic',
+/// 'ease-out-quart', 'ease-out-quint', 'ease-out-sine', 'ease-out-expo',
+/// 'ease-out-circ' 'ease-out-back', 'ease-in-out-quad', 'ease-in-out-cubic',
+/// 'ease-in-out-quart', 'ease-in-out-quint', 'ease-in-out-sine',
+/// 'ease-in-out-expo', 'ease-in-out-circ', 'ease-in-out-back'
 /// @param {Map} $alias-map [$map-timing-functions] - The map containing the
 /// custom timing functions.
 ///
@@ -25,15 +32,15 @@
 /// @throw Function name not found in alias map.
 @function timing($func-name, $alias-map: $map-timing-functions) {
   @if meta.type-of($func-name) != 'string' {
-    @error 'Invalid data type of [ #{meta.type-of($func-name)} ] for $func-name ' +
-        'passed to the [ timing() ] function. The data type of $func-name must ' +
-        'be a string.';
+    @error 'Invalid data type of #{meta.inspect(meta.type-of($func-name))} ' +
+        'for $func-name passed to the [ timing() ] function. The data type ' +
+        'of $func-name must be a \'string\'.';
   }
 
   @if meta.type-of($alias-map) != 'map' {
-    @error 'Invalid data type of [ #{meta.type-of($alias-map)} ] for ' +
-        '$alias-map passed to the [ timing ] function. The data type ' +
-        'of $alias-map must be a map.';
+    @error 'Invalid data type of #{meta.inspect(meta.type-of($alias-map))} ' +
+        'for $alias-map passed to the [ timing() ] function. The data type ' +
+        'of $alias-map must be a \'map\'.';
   }
 
   $timing-function: map.get($alias-map, $func-name);
