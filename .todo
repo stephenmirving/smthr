@@ -62,6 +62,10 @@ TODO:
     ☐ Ensure all parameters that only take certain keyword strings have those strings listed in the SassDoc
 
   Animations Mixins:
+    ✔ Improve new `hinge()` mixin animation @started(24-03-10 03:40) @done(24-03-10 04:55) @lasted(1h15m49s)
+      ✔ add all corner positions @done(24-03-10 04:28)
+      ✔ add backward direction @done(24-03-10 04:55)
+      ✔ Test out the transform origin property and see if they look better being the exact same as for the position or better the way they were originally @done(24-03-10 04:35)
     ☐ Add more animation property options to the animations, animation-fill-mode and animation-play-state
     ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.

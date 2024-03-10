@@ -16,13 +16,17 @@
 /// Generates an hingeing open or hingeing closed animation that turns an
 /// element from one of its corners.
 ///
-/// @param {String | Bool} $open-or-closed ['open'] - Determines if the element will
-/// hinge 'open' (`open`, `true`, or `o`) or 'closed' (`closed`, `close`,
+/// @param {String | Bool} $open-or-closed ['open'] - Determines if the element
+/// will hinge 'open' (`open`, `true`, or `o`) or 'closed' (`closed`, `close`,
 /// `false`, or `c`).
-/// @param {String} $side ['top'] - Will either hinge open or closed
-/// from this side of the element, depending on the value of $open-or-closed
-/// The value of $side must be one of the following: `top`, `right`, `bottom`,
-/// `left`, or any valid aliases for these $side values.
+/// @param {String | Bool} $fwd-or-bck ['forwards'] - Determines if the element
+/// will hinge 'forwards' (`forwards`, `forward`, `fwd`, or `true`), or hinge
+/// 'backwards' (`backwards`, `backward`, `back`, `bck`, or `false`).
+/// @param {String} $position ['top'] - This animation will either hinge open or
+/// closed from this position on the element, The value of $position must be one
+/// of the following: `top`, `top-right`, `right`, `bottom-right`, `bottom`,
+/// `bottom-left`, `left, `top-left`, or any valid aliases for these $position
+/// values.
 /// @param {Bool | String} $has-fade [false] - Adds a fade to the animation that
 /// fades out on 'open' and fades in when 'closed', depending on the value of
 /// $open-or-closed. To flag as true, pass `true`, `'true'` or `'fade'`. If the
@@ -58,7 +62,7 @@
 /// @require {function} list-to-string
 ///
 /// @throw Invalid $open-or-closed value error.
-/// @throw Invalid $side value error.
+/// @throw Invalid $position value error.
 /// @throw Invalid $has-fade value error.
 /// @throw Invalid $duration value error.
 /// @throw Invalid $delay value error.
@@ -66,7 +70,8 @@
 /// @throw Invalid $anim-dir value error.
 @mixin hinge(
   $open-or-closed: 'open',
-  $side: 'top',
+  $fwd-or-bck: 'forwards',
+  $position: 'top',
   $has-fade: false,
   $duration: 1s,
   $delay: null,
@@ -75,12 +80,14 @@
   $timing-func: null,
   $anim-num: null,
 ) {
+  $perspective: perspective(800px);
   $trans-val-1: null;
   $trans-val-2: null;
   $temp-val: null;
   $trans-origin: null;
   $opacity-val-1: 1;
   $opacity-val-2: 0;
+  $direction-multiplier: 1;
   $anim-suffix: '';
 
   @if $open-or-closed and is-string($open-or-closed) {
@@ -110,73 +117,140 @@
       $open-or-closed == 'o'
   {
     $open-or-closed: true;
-    $anim-suffix: '-open-from-';
+    $anim-suffix: '-open-';
   } @else if equals-false($open-or-closed) or
       $open-or-closed == 'closed' or
       $open-or-closed == 'close' or
       $open-or-closed == 'c' {
     $open-or-closed: false;
-    $anim-suffix: '-close-from-';
+    $anim-suffix: '-close-';
   } @else {
     @error 'Invalid $open-or-closed value of #{meta.inspect($open-or-closed)} ' +
         'for the [ hinge() ] mixin. It must be either `open` (or `o` or `true`) ' +
         'or `closed` (or `close` `c` or `false`.';
   }
 
-  @if $side {
-    @if is-list($side) {
-      $side: list-to-string($side);
+  @if equals-true($fwd-or-bck) or
+      $fwd-or-bck == 'forwards' or
+      $fwd-or-bck == 'forward' or
+      $fwd-or-bck == 'fwd' or
+      $fwd-or-bck == 'f'
+  {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      'forwards-from-',
+      string.length($anim-suffix) + 1
+    );
+  } @else if equals-false($fwd-or-bck) or
+      $fwd-or-bck == 'backwards' or
+      $fwd-or-bck == 'backward' or
+      $fwd-or-bck == 'back' or
+      $fwd-or-bck == 'bck' or
+      $fwd-or-bck == 'b'
+  {
+    $direction-multiplier: -1;
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      'backwards-from-',
+      string.length($anim-suffix) + 1
+    );
+  } @else {
+    @error 'Invalid $fwd-or-bck value of #{meta.inspect($fwd-or-bck)} ' +
+        'for the [ hinge() ] mixin. It must be either `forwards` (or `fwd` or ' +
+        '`true`) or `backwards` (or `back`, `bck`, or `false`.';
+  }
+
+  @if $position {
+    @if is-list($position) {
+      $position: list-to-string($position);
     }
 
-    @if is-string($side) {
-      $side: string.to-lower-case($side);
+    @if is-string($position) {
+      $position: string.to-lower-case($position);
     }
 
-    @if is-alias('top', $side) {
-      $trans-val-1: perspective(800px) rotateX(0deg);
-      $trans-val-2: perspective(800px) rotateX(180deg);
-      $trans-origin: 0% 0%;
+    @if is-alias('top', $position) {
+      $trans-val-1: $perspective rotateX(0deg);
+      $trans-val-2: $perspective rotateX($direction-multiplier * 180deg);
+      $trans-origin: 50% 0%;
       $anim-suffix: string.insert(
         $anim-suffix,
         'top',
         string.length($anim-suffix) + 1
       );
-    } @else if is-alias('right', $side) {
-      $trans-val-1: perspective(800px) rotateY(0deg);
-      $trans-val-2: perspective(800px) rotateY(180deg);
+    } @else if is-alias('top right', $position) {
+      $trans-val-1: rotate3d(1, 1, 0, 0deg);
+      $trans-val-2: rotate3d(1, 1, 0, $direction-multiplier * 180deg);
       $trans-origin: 100% 0%;
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        'top-right',
+        string.length($anim-suffix) + 1
+      );
+    } @else if is-alias('right', $position) {
+      $trans-val-1: $perspective rotateY(0deg);
+      $trans-val-2: $perspective rotateY($direction-multiplier * 180deg);
+      $trans-origin: 100% 50%;
       $anim-suffix: string.insert(
         $anim-suffix,
         'right',
         string.length($anim-suffix) + 1
       );
-    } @else if is-alias('bottom', $side) {
-      $trans-val-1: perspective(800px) rotateX(0deg);
-      $trans-val-2: perspective(800px) rotateX(-180deg);
-      $trans-origin: 0% 100%;
+    } @else if is-alias('bottom right', $position) {
+      $trans-val-1: rotate3d(-1, 1, 0, 0deg);
+      $trans-val-2: rotate3d(-1, 1, 0, $direction-multiplier * 180deg);
+      $trans-origin: 100% 100%;
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        'bottom-right',
+        string.length($anim-suffix) + 1
+      );
+    } @else if is-alias('bottom', $position) {
+      $trans-val-1: $perspective rotateX(0deg);
+      $trans-val-2: $perspective rotateX($direction-multiplier * -180deg);
+      $trans-origin: 50% 100%;
       $anim-suffix: string.insert(
         $anim-suffix,
         'bottom',
         string.length($anim-suffix) + 1
       );
-    } @else if is-alias('left', $side) {
-      $trans-val-1: perspective(800px) rotateY(0deg);
-      $trans-val-2: perspective(800px) rotateY(-180deg);
-      $trans-origin: 0% 0%;
+    } @else if is-alias('bottom left', $position) {
+      $trans-val-1: rotate3d(1, 1, 0, 0deg);
+      $trans-val-2: rotate3d(1, 1, 0, $direction-multiplier * -180deg);
+      $trans-origin: 0% 100%;
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        'bottom-left',
+        string.length($anim-suffix) + 1
+      );
+    } @else if is-alias('left', $position) {
+      $trans-val-1: $perspective rotateY(0deg);
+      $trans-val-2: $perspective rotateY($direction-multiplier * -180deg);
+      $trans-origin: 0% 50%;
       $anim-suffix: string.insert(
         $anim-suffix,
         'left',
         string.length($anim-suffix) + 1
       );
+    } @else if is-alias('top left', $position) {
+      $trans-val-1: rotate3d(-1, 1, 0, 0deg);
+      $trans-val-2: rotate3d(-1, 1, 0, $direction-multiplier * -180deg);
+      $trans-origin: 0% 0%;
+      $anim-suffix: string.insert(
+        $anim-suffix,
+        'top-left',
+        string.length($anim-suffix) + 1
+      );
     } @else {
-      @error 'Invalid $side of #{meta.inspect($side)} chosen for ' +
-          'the [ hinge() ] mixin. The $side value must be one of the ' +
-          'following: `top`, `right`, `bottom`, `left`.';
+      @error 'Invalid $position of #{meta.inspect($position)} chosen for ' +
+          'the [ hinge() ] mixin. The $position value must be one of the ' +
+          'following: `top`, `top-right`, `right`, `bottom-right`, `bottom`, ' +
+          '`bottom-left`, `left`, `top-left`.';
     }
   } @else {
-    @error 'You must pass a $side for the [ hinge() ] mixin. The ' +
-        '$side value must be one of the following: `top`, `right` ' +
-        '`bottom`, `left`.';
+    @error 'You must pass a $position for the [ hinge() ] mixin. The ' +
+        '$position value must be one of the following: `top`, `top-right` ' +
+        '`right`, `bottom-right`, `bottom`, `bottom-left`, `left`, `top-left`.';
   }
 
   @if equals-true($has-fade) or $has-fade == 'fade' {
@@ -287,17 +361,20 @@
     );
   }
 
-  animation: hinge#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
-    #{$iterations} #{$anim-dir} both;
+  transform: translate3d(0, 0, 0);
 
   @if not $has-fade {
-    transform: translate3d(0, 0, 0);
     transform-style: preserve-3d;
 
     @include only-moz {
       backface-visibility: hidden;
     }
   }
+
+  animation: hinge#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
+
+
 
   @at-root {
     @keyframes hinge#{$anim-suffix} {
