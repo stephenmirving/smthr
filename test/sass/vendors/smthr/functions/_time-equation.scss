@@ -131,7 +131,6 @@
     // Z-coordinate of modulated wave motion, use with `mod-wave-x` and `mod-wave-y`
     'mod-wave-z': calc(math.sin($rads) * math.sin($rads) * 100px),
     // Utilizes the tangent function for a sharp, periodic oscillation, useful for
-    // Utilizes the tangent function for a sharp, periodic oscillation, useful for
     // animations that need a sudden change in direction
     'tan-oscillation': calc(math.tan($rads) * 20 * 1px),
     // Creates a wave-like movement using the tangent function, suitable for
@@ -208,10 +207,10 @@
       calc((math.sin($rads) * 10 * 1px) + (math.cos($rads) * 10 * 1px)),
     // Use for the box-shadow property
     'dynamic-box-shadow': calc(10px * math.sin($rads)),
-    // Dynamic skew with sine (Best for x-axis)
     // Creates a logarithmic movement along the X-axis, starting rapidly and
     // slowing down
     'log-displacement': calc(math.log($progress * 9 + 1) * 10%),
+    // Dynamic skew with sine (Best for x-axis)
     'sin-dynamic-skew':
       calc((math.sin($rads) * 20 * 1deg)),
     // A sine function with a phase shift, offering a different starting point
