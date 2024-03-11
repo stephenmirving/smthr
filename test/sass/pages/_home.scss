@@ -111,7 +111,9 @@ $flip-axis: 'horizontal';
 }
 
 .active-anim-flip {
-  @include hinge('open', 'fwd', 'top-right', 'fade');
+  // @include hinge('open', 'fwd', 'top-right', 'fade');
+
+  animation: vibration 3s;
 }
 
 .active-anim-flip-rev {
@@ -208,11 +210,14 @@ $flip-axis: 'horizontal';
     border-color: hsl(274 100% 50% / 0.8);
 
     @include mod(focused, active) {
-      border-color: hsl(348 100% 50% / 0.95);
+    border-color: hsl(348 100% 50% / 0.95);
     }
   }
 }
-
-.test {
-
+@keyframes vibration {
+  @for $i from 0 through 100 {
+    #{$i}% {
+      transform: time-equation('perspective-rotation', math.div($i, 100));
+    }
+  }
 }

@@ -1,0 +1,203 @@
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:map';
+@use 'sass:math';
+@use '../variables/maps' as *;
+
+/// Takes a name for an equation and returns the respective equation. Unless
+/// mentioned otherwise in the comments, will return a CSS calc() function, but
+/// some keyword equation names will return other CSS functions. Pass an argument
+/// representing the progress of the animation, a value of 0-1 or 0% - 100%.
+/// For example, when `$progress` is equal to `0`, the animation is at its starting
+/// point, when it is equal to `1`, the animation is at its end.
+///
+/// @param {String} $equation-name - The name of the custom equation. The full
+/// list of potential equations is:
+/// @param {Number} $progress - Represents one of two possible things. It could
+/// represent the current state or progress of an animation that changes one
+/// value to another over a specific duration. For example, this could be a
+/// number between 0-1 or a percentage between 0%-100% that matches the
+/// percentage value of the part of the keyframe in which it is being used.
+/// This could also represent an interaction-based value, for instance a
+/// scroll position, mouse-movement, other interactive event, allowing the
+/// animation to respond dynamically to user input. In this case, you may
+/// want to pass a CSS custom property for this parameter.
+///
+/// @return {Calculation} The CSS function that matches the equation name.
+///
+/// @example scss
+/// .element {
+///
+/// }
+///
+/// @access public
+/// @group Utilities
+/// @require {variable} $map-time-equations
+///
+/// @throw Invalid $equation-name data type error.
+/// @throw Equation name not found in alias map error.
+@function time-equation($equation-name, $progress) {
+  @if math.unit($progress) == '%' {
+    $progress: math.div($progress, 100%);
+  }
+
+  // Convert time progression into a unitless angle measure representing radians
+  $rads: $progress * (2 * math.$pi);
+
+  @if meta.type-of($equation-name) != 'string' {
+    @error 'Invalid data type of #{meta.inspect(meta.type-of($equation-name))} ' +
+        'for $equation-name passed to the [ timing() ] function. The data type ' +
+        'of $equation-name must be a string.';
+  }
+
+  $equations-map: (
+    // Horizontal cosine wave motion, ideal for left-and-right oscillating effects.
+    'wave-x': calc(50% + math.cos($rads) * 50 * 1px),
+    // Vertical sine wave motion, ideal for up-and-down oscillating effects.
+    'wave-y': calc(50vh + (math.sin($rads) * 100 * 1px)),
+    // Emulate cosine harmonic wave motion (horizontal)
+    'harmonic-x': calc(50% + (math.cos($rads) * 100 * 1px)),
+    // Emulate sinusoidal harmonic wave motion (vertical)
+    'harmonic-y': calc(50% + (math.sin($rads) * 100 * 1px)),
+    // An inverted cosine wave motion, ideal for creating a movement that mirrors
+    // the standard sinusoidal motion in `'harmonic-y'` but in the opposite direction
+    'inverted-harmonic-x': calc(100% - math.cos($rads) * 50 * 1%),
+    // An inverted sine wave motion, ideal for creating a movement that mirrors the
+    // the standard sinusoidal motion in `'harmonic-y'` but in the opposite direction
+    'inverted-harmonic-y': calc(100% - math.sin($rads) * 50 * 1%),
+    // Models an oscillating motion that gradually reduces in amplitude, useful for
+    // effects that need to settle over time.
+    'damped-harmonic': calc(math.pow(math.$e, (-1 * $rads)) * math.cos($rads) * 100 * 1px),
+    // X-coordinate for circular motion, great for orbiting animations.
+    'circular-motion-x': calc(50% + (math.cos($rads) * 100 * 1px)),
+    // Y-coordinate for circular motion, great for orbiting animations.
+    // Pairs with X coordinate for full circular paths.
+    'circular-motion-y': calc(50% + (math.sin($rads) * 100 * 1px)),
+    // Creates a spiral effect moving outward/inward along the X axis.
+    'spiral-motion-x': calc(50% + (($rads * math.cos($rads * 2)) * 100 * 1px)),
+    // Y-coordinate for spiral motion, combining with X for a complete spiral animation.
+    'spiral-motion-y': calc(50% + (($rads * math.sin($rads * 2)) * 100 * 1px)),
+    // X-coordinate for a logarithmic spiral, creating a spiral effect that
+    // expands exponentially.
+    'log-spiral-x': calc(50% + (math.pow(math.$e, $rads) * math.cos($rads) * 100 * 1px)),
+    // Y-coordinate for a logarithmic spiral, pairs with `$log-spiral-x` for an
+    // exponential spiral effect.
+    'log-spiral-y': calc(50% + (math.pow(math.$e, $rads) * math.sin($rads) * 100 * 1px)),
+    // Creates an Archimedean spiral path, suitable for elements that should
+    // move in a spiral pattern, increasing in radius over time.
+    'archimedes-spiral-x': calc((10 * $rads) * math.cos($rads) * 10 * 1px),
+    // // Y-coordinate that combines with `'archimedes-spiral-x'`
+    'archimedes-spiral-y': calc((10 * $rads) * math.sin($rads) * 10 * 1px),
+    // Hypotrochoid X-coordinates for a hypotrochoid path, useful for intricate
+    // and looping animations.
+    'hypot-x':
+      calc((2 * math.cos($rads) + 3 * math.cos(math.div(2, 3) * $rads)) * 1px),
+    // Hypotrochoid Y-coordinates for a hypotrochoid path, used with 'hypot-x'
+    'hypot-y':
+      calc((2 * math.sin($rads) - 3 * math.sin(math.div(2, 3) * $rads)) * 1px),
+    // Part of creating a Lissajous curve, this equation provides the X-coordinate
+    // for complex, looping animations.
+    'liss-x': calc(50% + math.sin($rads * 3) * 100 * 1px),
+    // Lissajous Y-coordinates for a hypotrochoid path, used with 'liss-x'
+    'liss-y': calc(50% + math.cos($rads * 4) * 100 * 1px),
+    // Figure-eight movement using parametric equations, x-axis coordinate
+    'figure-eight-x': calc(math.sin($rads) * 100 * 1px),
+    // Y-axis coordinate for figure-eight movement use with `'figure-eight-x'`
+    'figure-eight-y': calc(math.sin($rads) * math.cos($rads) * 100 * 1px),
+    // Utilizes the tangent function for a sharp, periodic oscillation, useful for
+    // animations that need a sudden change in direction
+    'tan-oscillation': calc(math.tan($rads) * 20 * 1px),
+    // Creates a wave-like movement using the tangent function, suitable for
+    // creating abrupt yet smooth transitions.
+    'tan-wave': calc(50% + math.tan(math.div($progress * math.$pi, 4)) * 10 * 1px),
+    // Dynamic scaling, for use in a scale functions
+    'dynamic-scale': calc(1 + 0.5 * math.cos($rads)),
+    // Y-axis sine bounce
+    'sin-bounce': calc(50% + math.sin($rads) * 30 * 1px),
+    // Mimics a heartbeat or pulse by combining high-frequency sine with an
+    // exponential decay.
+    'heartbeat':
+      calc(math.sin(10 * $rads) * (math.div(1, math.pow(math.$e, $rads * 3)) * 100 * 1px)),
+    // Useful for bounce effects that mimic (Earth) gravity
+    'gravity-bounce': calc((100 - (math.abs(math.sin($rads)) * 100)) * 1%),
+    // Sinusoidal elastic stretch with exponential decay. Mimics an elastic
+    // stretch and release effect, ideal for bounce-like animations.
+    'sin-stretch':
+      calc(math.sin(3 * $rads) * math.pow(math.$e, -3 * $rads) * 100 * 1px),
+    // Simulates increasing angular velocity, Represents a rotation that
+    // accelerates over time, useful for spinning animations that start slow and
+    // speed up over time.
+    'rotational-acceleration':
+      calc(((360 * math.pow($progress, 2)) - (math.floor(math.div((360 * math.pow($progress, 2)), 360)) * 360)) * 1deg),
+    // Simulates decreasing angular velocity, Represents a rotation that
+    // decelerates over time, useful for spinning animations that start fast and
+    // slow down over time.
+    'rotational-deceleration':
+      calc((360 - (360 * math.pow(1 - $progress, 3))) * 1deg),
+    // Simulate cycloidal movement which is common in mechanical systems. A
+    // non-uniform, rhythmic horizontal transition
+    'cycloidal':
+      calc(math.div($progress - math.sin($rads), math.percentage((2 * math.$pi)))),
+    // Models exponential growth, great for animations that should accelerate rapidly.
+    'exponential-growth': calc(math.pow(math.$e, $rads) * 100 * 1px),
+    // A logarithmic increase, ideal for animations that start quickly and slow
+    // down as they progress.
+    'log-approach': calc(math.log($rads * 9 + 1) * 100 * 1px),
+    // Transitions opacity smoothly
+    'opacity-variation': calc(0.5 * (1 + math.cos($rads))),
+    // Combines exponential decay with a cosine function for an opacity effect
+    // that diminishes over time.
+    'opacity-damped': calc(math.pow(math.$e, (-1 * $progress * 3)) * math.cos($rads)),
+    // Can be used for a color-changing effect, where the hue rotates through
+    // the color spectrum, use for the hue part of an hsl() color
+    'hue-rotation':
+      calc((360 * math.sin($rads)) - (math.floor(math.div((360 * math.sin($rads)), 360)) * 360)),
+    // Varies the width of an element, creating a pulse or heartbeat effect.
+    'width-pulse': calc(50% + math.sin($rads) * 25 * 1%),
+    // For dynamic text size or element sizing, creating a rhythmical increase
+    // and decrease in size.
+    'sine-size-adjustment': calc(10px + math.sin($rads) * 5 * 1px),
+    // This equation can create a diagonal wave effect, useful for elements that
+    // should move in a zigzag pattern.
+    'diagonal-wave':
+      calc((math.sin($rads) * 10 * 1px) + (math.cos($rads) * 10 * 1px)),
+    // Use for the box-shadow property
+    'dynamic-box-shadow': calc(10px * math.sin($rads)),
+    // Dynamic skew with sine (Best for x-axis)
+    'sin-dynamic-skew':
+      calc((math.sin($rads) * 20 * 1deg)),
+    // A sine function with a phase shift, offering a different starting point
+    // for the oscillation.
+    'sin-phase': calc(50% + math.sin($rads - math.div(math.$pi, 2)) * 100 * 1px),
+    // Dynamic skew with cosine (Best for y-axis)
+    'cos-dynamic-skew': calc(math.cos($rads) * 20 * 1deg),
+    // Dynamic skew with tangent
+    'dynamic-skew':
+      calc(math.tan(math.div($progress * math.$pi, 2) - math.div(math.$pi, 4)) * 1rad),
+    // This creates a vibrating effect by combining sine and cosine functions,
+    // ideal for drawing attention or indicating activity.
+    'vibration': calc(math.sin($progress * 20) * math.cos($progress * 20) * 5 * 1px),
+    // A horizontal vibration
+    'vibration-x': calc(math.sin($progress * math.$pi * 30) * 5 * 1px),
+    // A vertical vibration, works with `'vibration-x'`
+    'vibration-y': calc(math.cos($progress * math.$pi * 30) * 5 * 1px),
+    // Applies a varying level of blur, creating a focus effect that can draw
+    // attention to or away from elements.
+    'blur-variation': blur(math.abs(math.sin($rads)) * 5 * 1px),
+    // Rotates an element in perspective, adding a 3D effect to the rotation
+    'perspective-rotation': perspective(500px) rotate3d(1, 0, 0, math.sin($rads) * 180deg),
+    // Changes the clipping path of an element in a wave-like pattern, creating
+    // dynamic shape changes.
+    'clip-path-wave':
+      circle(#{50% + math.sin($rads) * 25 * 1%} at #{50% + math.cos($rads) * 25 * 1%})
+  );
+
+  $equation: map.get($equations-map, $equation-name);
+
+  @if not $equation {
+    @error 'The timing function name passed to the [ resolve-equation() ] ' +
+        'function could not be found in the given alias map.';
+  } @else {
+    @return $equation;
+  }
+}

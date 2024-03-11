@@ -96,6 +96,7 @@ TODO:
     ✔ Finish propogating responsive-ratio mixin to the dist folder @done(24-03-04 18:41)
 
   Functions:
+    ☐ Add mmore equations to the time-equations function, more are saved in workspace file css-equations.txt
     ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.
     ✔ Finish and propogate linear-interpolation function: @done(24-03-04 18:42)
       ✔ Function finished @done(24-03-04 18:42)

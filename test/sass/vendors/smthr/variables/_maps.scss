@@ -106,6 +106,31 @@ $font-stacks: (
 ///
 /// Each of the map's key's is a string value that has a cubic-bezier timing
 /// function curve as its value.
+///
+/// @prop {String} ease-in-quad
+/// @prop {String} ease-in-cubic
+/// @prop {String} ease-in-quart
+/// @prop {String} ease-in-quint
+/// @prop {String} ease-in-sine
+/// @prop {String} ease-in-expo
+/// @prop {String} ease-in-circ
+/// @prop {String} ease-in-back
+/// @prop {String} ease-out-quad
+/// @prop {String} ease-out-cubic
+/// @prop {String} ease-out-quart
+/// @prop {String} ease-out-quint
+/// @prop {String} ease-out-sine
+/// @prop {String} ease-out-expo
+/// @prop {String} ease-out-circ
+/// @prop {String} ease-out-back
+/// @prop {String} ease-in-out-quad
+/// @prop {String} ease-in-out-cubic
+/// @prop {String} ease-in-out-quart
+/// @prop {String} ease-in-out-quint
+/// @prop {String} ease-in-out-sine
+/// @prop {String} ease-in-out-expo
+/// @prop {String} ease-in-out-circ
+/// @prop {String} ease-in-out-back
 $map-timing-functions: (
   'ease-in-quad': cubic-bezier(0.55, 0.085, 0.68, 0.53),
   'ease-in-cubic': cubic-bezier(0.55, 0.055, 0.675, 0.19),
