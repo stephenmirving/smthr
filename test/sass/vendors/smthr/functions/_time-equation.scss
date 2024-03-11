@@ -10,19 +10,22 @@
 /// point, when it is equal to `1`, the animation is at its end.
 ///
 /// @param {String} $equation-name - The name of the custom equation. The list
-/// of potential equations is: `wave-x`, `wave-y`, `harmonic-x`, `harmonic-y`,
-/// `inverted-harmonic-x`, `inverted-harmonic-y`, `circular-motion-x`,
-/// `circular-motion-y`, `spiral-motion-x`, `spiral-motion-y`, `log-spiral-x`,
-/// `log-spiral-y`, `archimedes-spiral-x`, `archimedes-spiral-y`,
-/// `damped-harmonic`, `hypot-x`, `hypot-y`, `liss-x`, `liss-y`,
-/// `figure-eight-x`, `figure-eight-y`, `tan-oscillation`, `tan-wave`,
+/// of equation keyword names is: `wave-x`, `wave-y`, `harmonic-x`,
+/// `harmonic-y`, `inverted-harmonic-x`, `inverted-harmonic-y`,
+/// `circular-motion-x`, `circular-motion-y`, `spiral-motion-x`,
+/// `spiral-motion-y`, `log-spiral-x`, `log-spiral-y`, `archimedes-spiral-x`,
+/// `archimedes-spiral-y`, `damped-harmonic`, `hypot-x`, `hypot-y`, `liss-x`,
+/// `liss-y`, `figure-eight-x`, `figure-eight-y`, `tan-oscillation`, `tan-wave`,
 /// `dynamic-scale`, `sin-bounce`, `heartbeat`, `gravity-bounce`, `sin-stretch`,
 /// `dynamic-scale`, `cycloidal`, `exponential-growth`, `log-approach`,
 /// `opacity-variation`, `rotational-acceleration`, `rotational-deceleration`,
 /// `sin-size-adjustment`, `dynamic-box-shadow`, `dynamic-skew`, `vibration`,
 /// `vibration-x`, vibration-y`, `blur-variation`, `perspective-rotation`,
 /// `clip-path-wave`, `sin-phase`, `cos-dynamic-skew`, `width-pulse`,
-/// `hue-rotation`, `opacity-damped`, `helix-x`, `helix-y`, `helix-z`...
+/// `hue-rotation`, `opacity-damped`, `helix-x`, `helix-y`, `helix-z`,
+/// `mod-wave-x`, `mod-wave-y`, `mod-wave-z`, `breath`, `elastic-bounce`,
+/// `arccos-width`, `arcsin-height`, `radius-morph`, `log-displacement`,
+/// `spiral-zoom-x`, `spiral-zoom-y`.
 /// @param {Number} $progress - Represents one of two possible things. It could
 /// represent the current state or progress of an animation that changes one
 /// value to another over a specific duration. For example, this could be a
