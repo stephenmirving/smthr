@@ -47,7 +47,7 @@ This is **smthr** version 0.4.1 - _Last update:_ 03/11/24
   * More than 20 element shapes created with a combination of `clip-path`, pseudo-elements, and `border-radius`
   * More than 80 utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given number of lines, creating corner ribbons, centering elements, browser-targeted styling, making "hamburger" menu buttons and much more!
-* **75+** Functions, _including functions that...
+* **80+** Functions, _including functions that...
   * Extend Sass' existing module's method functionality (ex: `update-list` function)
   * Convert and manipulate colors
   * Enhanced data type checking
@@ -55,12 +55,12 @@ This is **smthr** version 0.4.1 - _Last update:_ 03/11/24
   * Calculate unit conversions (such as px to rem)
   * Fix floats to a given number of decimal places
   * Return custum cubic-bezier curves for timing functions based on Penner equations
-  * Return custom calc() equations based on trigonometry
+  * Return custom calc() equations based on trigonometry and linear algebra
   * Calculate the "least square fit" or trend-line of a mapped set of points (useful for setting responsive font sizes)
   * Functions that aid in the creation of mixins and placeholders.
   * Much more!
 * A modern, opinionated CSS normalization file written in Sass called _betterize.scss
-* A print style file written in Sass called _print.scss
+* A print style file written in Sass called _smooth-print.scss
 * A collection of helpful and configurable `!default` variables.
 
 Because `_smth.scss` is a Sass library comprised entirely of functions, mixins
@@ -164,7 +164,7 @@ partials, now you would instead write something like this:
 @use 'themes';
 
 // If you want to use the print styles, load them at the end
-@use 'vendors/betterize/print';
+@use 'vendors/betterize/smooth-print';
 ```
 
 Then, inside each of your partial files, if you want to use a variable, function,
@@ -311,7 +311,7 @@ in the documentation.
 ## Betterize
 
 If you want to use the modern normalization replacement file `_betterize.scss`,
-or the print style file `_print.scss`, simply follow the same instructions
+or the print style file `_smooth-print.scss`, simply follow the same instructions
 above by copying the `betterize` folder into the `vendors` folder in your
 project, or in any folder that works for the way you have organized your project.
 Just make sure that the `betterize` folder exists in the same directory in your
