@@ -9,8 +9,20 @@
 /// For example, when `$progress` is equal to `0`, the animation is at its starting
 /// point, when it is equal to `1`, the animation is at its end.
 ///
-/// @param {String} $equation-name - The name of the custom equation. The full
-/// list of potential equations is:
+/// @param {String} $equation-name - The name of the custom equation. The list
+/// of potential equations is: `wave-x`, `wave-y`, `harmonic-x`, `harmonic-y`,
+/// `inverted-harmonic-x`, `inverted-harmonic-y`, `circular-motion-x`,
+/// `circular-motion-y`, `spiral-motion-x`, `spiral-motion-y`, `log-spiral-x`,
+/// `log-spiral-y`, `archimedes-spiral-x`, `archimedes-spiral-y`,
+/// `damped-harmonic`, `hypot-x`, `hypot-y`, `liss-x`, `liss-y`,
+/// `figure-eight-x`, `figure-eight-y`, `tan-oscillation`, `tan-wave`,
+/// `dynamic-scale`, `sin-bounce`, `heartbeat`, `gravity-bounce`, `sin-stretch`,
+/// `dynamic-scale`, `cycloidal`, `exponential-growth`, `log-approach`,
+/// `opacity-variation`, `rotational-acceleration`, `rotational-deceleration`,
+/// `sin-size-adjustment`, `dynamic-box-shadow`, `dynamic-skew`, `vibration`,
+/// `vibration-x`, vibration-y`, `blur-variation`, `perspective-rotation`,
+/// `clip-path-wave`, `sin-phase`, `cos-dynamic-skew`, `width-pulse`,
+/// `hue-rotation`, `opacity-damped`...
 /// @param {Number} $progress - Represents one of two possible things. It could
 /// represent the current state or progress of an animation that changes one
 /// value to another over a specific duration. For example, this could be a
@@ -148,7 +160,7 @@
     'width-pulse': calc(50% + math.sin($rads) * 25 * 1%),
     // For dynamic text size or element sizing, creating a rhythmical increase
     // and decrease in size.
-    'sine-size-adjustment': calc(10px + math.sin($rads) * 5 * 1px),
+    'sin-size-adjustment': calc(10px + math.sin($rads) * 5 * 1px),
     // This equation can create a diagonal wave effect, useful for elements that
     // should move in a zigzag pattern.
     'diagonal-wave':
