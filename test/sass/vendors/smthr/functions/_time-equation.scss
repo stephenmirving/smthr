@@ -22,7 +22,7 @@
 /// `sin-size-adjustment`, `dynamic-box-shadow`, `dynamic-skew`, `vibration`,
 /// `vibration-x`, vibration-y`, `blur-variation`, `perspective-rotation`,
 /// `clip-path-wave`, `sin-phase`, `cos-dynamic-skew`, `width-pulse`,
-/// `hue-rotation`, `opacity-damped`...
+/// `hue-rotation`, `opacity-damped`, `helix-x`, `helix-y`, `helix-z`...
 /// @param {Number} $progress - Represents one of two possible things. It could
 /// represent the current state or progress of an animation that changes one
 /// value to another over a specific duration. For example, this could be a
@@ -81,6 +81,11 @@
     'spiral-motion-x': calc(50% + (($rads * math.cos($rads * 2)) * 100 * 1px)),
     // Y-coordinate for spiral motion, combining with X for a complete spiral animation.
     'spiral-motion-y': calc(50% + (($rads * math.sin($rads * 2)) * 100 * 1px)),
+    // Creates a spiral motion that increases in radius as the progress variable
+    // advances, useful for zoom-in spiral effects. Use with 'spiral-zoom-y'
+    'spiral-zoom-x': calc(math.cos($progress * math.$pi * 8) * $progress * 100px),
+    // Y-coordinate for creating a spiral motion zoom. Use with 'spiral-zoom-x'
+    'spiral-zoom-y': calc(math.sin($progress * math.$pi * 8) * $progress * 100px),
     // X-coordinate for a logarithmic spiral, creating a spiral effect that
     // expands exponentially.
     'log-spiral-x': calc(50% + (math.pow(math.$e, $rads) * math.cos($rads) * 100 * 1px)),
@@ -108,6 +113,21 @@
     'figure-eight-x': calc(math.sin($rads) * 100 * 1px),
     // Y-axis coordinate for figure-eight movement use with `'figure-eight-x'`
     'figure-eight-y': calc(math.sin($rads) * math.cos($rads) * 100 * 1px),
+    // Creates a 3d mhelix motion effect when used with `translate3d()`,
+    // use this with `helix-y` and `helix-z`
+    'helix-x': calc(math.sin($rads) * 100px),
+    // Y-coordinate of helix motion, use with `helix-x` and `helix-z`
+    'helix-y': calc(math.cos($rads) * 100px),
+    // Z-coordinate of helix motion, use with `helix-x` and `helix-y`
+    'helix-z': calc($progress * 500px),
+    // Creates a 3d modulated wave motion effect when used with `translate3d()`,
+    // use this with `mod-wave-y` and `mod-wave-z`
+    'mod-wave-x': calc(math.cos($rads) * math.cos($rads) * 100px),
+    // Y-coordinate of modulated wave motion, use with `mod-wave-x` and `mod-wave-z`
+    'mod-wave-y': calc(math.sin($rads) * math.cos($rads) * 100px),
+    // Z-coordinate of modulated wave motion, use with `mod-wave-x` and `mod-wave-y`
+    'mod-wave-z': calc(math.sin($rads) * math.sin($rads) * 100px),
+    // Utilizes the tangent function for a sharp, periodic oscillation, useful for
     // Utilizes the tangent function for a sharp, periodic oscillation, useful for
     // animations that need a sudden change in direction
     'tan-oscillation': calc(math.tan($rads) * 20 * 1px),
@@ -122,8 +142,15 @@
     // exponential decay.
     'heartbeat':
       calc(math.sin(10 * $rads) * (math.div(1, math.pow(math.$e, $rads * 3)) * 100 * 1px)),
+    // Create a pulsating effect where an element scales up and down gently to
+    // simulate the rhythm of a person breathing
+    'breath': calc(1 + (0.1 * math.sin($rads))),
     // Useful for bounce effects that mimic (Earth) gravity
     'gravity-bounce': calc((100 - (math.abs(math.sin($rads)) * 100)) * 1%),
+    // Utilizes both sine and cosine functions with a progress-dependent frequency
+    // to create an elastic bounce effect, mimicking the behavior of an elastic band.
+    'elastic-bounce':
+      calc(math.sin($progress * math.$pi * (2 + $progress * 2)) * math.cos($rads) * 100 * 1px),
     // Sinusoidal elastic stretch with exponential decay. Mimics an elastic
     // stretch and release effect, ideal for bounce-like animations.
     'sin-stretch':
@@ -156,8 +183,19 @@
     // the color spectrum, use for the hue part of an hsl() color
     'hue-rotation':
       calc((360 * math.sin($rads)) - (math.floor(math.div((360 * math.sin($rads)), 360)) * 360)),
-    // Varies the width of an element, creating a pulse or heartbeat effect.
+    // Varies the width of an element, creating a pulse effect.
     'width-pulse': calc(50% + math.sin($rads) * 25 * 1%),
+    // Applies the arc cosine for a novel, wave-like adjustment in width,
+    // starting and ending smoothly. Uses the CSS function `acos` so only works
+    // on very modern browsers
+    'arccos-width': calc((acos(1 - $progress * 2) / math.$pi) * 100%),
+    // Applies the arcsine for a novel, wave-like adjustment in height,
+    // starting and ending smoothly. Uses the CSS function `asin` so only works
+    // on very modern browsers
+    'arcsin-height': calc(((asin($progress * 2 - 1) / math.$pi) / 1deg + 0.5) * 100%),
+    // Dynamically changes the border radius in a sinusoidal pattern, allowing a
+    // shape to morph smoothly.
+    'radius-morph': calc(50 * (1 + math.sin($rads)) * 1%),
     // For dynamic text size or element sizing, creating a rhythmical increase
     // and decrease in size.
     'sin-size-adjustment': calc(10px + math.sin($rads) * 5 * 1px),
@@ -168,6 +206,9 @@
     // Use for the box-shadow property
     'dynamic-box-shadow': calc(10px * math.sin($rads)),
     // Dynamic skew with sine (Best for x-axis)
+    // Creates a logarithmic movement along the X-axis, starting rapidly and
+    // slowing down
+    'log-displacement': calc(math.log($progress * 9 + 1) * 10%),
     'sin-dynamic-skew':
       calc((math.sin($rads) * 20 * 1deg)),
     // A sine function with a phase shift, offering a different starting point
