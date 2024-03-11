@@ -1,8 +1,6 @@
-@use 'sass:list';
 @use 'sass:meta';
 @use 'sass:map';
 @use 'sass:math';
-@use '../variables/maps' as *;
 
 /// Takes a name for an equation and returns the respective equation. Unless
 /// mentioned otherwise in the comments, will return a CSS calc() function, but
@@ -25,14 +23,8 @@
 ///
 /// @return {Calculation} The CSS function that matches the equation name.
 ///
-/// @example scss
-/// .element {
-///
-/// }
-///
 /// @access public
 /// @group Utilities
-/// @require {variable} $map-time-equations
 ///
 /// @throw Invalid $equation-name data type error.
 /// @throw Equation name not found in alias map error.
@@ -195,8 +187,9 @@
   $equation: map.get($equations-map, $equation-name);
 
   @if not $equation {
-    @error 'The timing function name passed to the [ resolve-equation() ] ' +
-        'function could not be found in the given alias map.';
+    @error 'The equation name passed to the [ time-equation() ] ' +
+        'function could not be found in the equation alias map. Check the ' +
+        'function\'s comments for the equation name keywords.';
   } @else {
     @return $equation;
   }
