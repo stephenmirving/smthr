@@ -113,7 +113,7 @@ $flip-axis: 'horizontal';
 .active-anim-flip {
   // @include hinge('open', 'fwd', 'top-right', 'fade');
 
-  animation: vibration 3s;
+  animation: helix 6s infinite timing('ease-in-out-quad');
 }
 
 .active-anim-flip-rev {
@@ -214,10 +214,13 @@ $flip-axis: 'horizontal';
     }
   }
 }
-@keyframes vibration {
+@keyframes helix {
   @for $i from 0 through 100 {
+    $completeness: math.div($i, 100);
+
     #{$i}% {
-      transform: time-equation('perspective-rotation', math.div($i, 100));
+      transform:
+        translateX(time-equation('liss-x', $completeness)) translateY(time-equation('liss-y', $completeness));
     }
   }
 }

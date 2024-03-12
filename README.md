@@ -80,7 +80,7 @@ looking for the green colored "<> Code" button. Click that and choose
 "Download ZIP". After unzipping the project folder, go into the `src` folder
 and copy the `smthr` and `betterize` _(betterize is optional)_ folders into your
 own project's directory, in the folder where you keep the rest of your `.scss`
-files. This is probably in a `sass` or `scss` folder, or within one of the
+files. This is probably in a `/sass` or `/scss` folder, or within one of the
 subdirectories of that folder.
 
 If you are breaking your Sass code down into partials with
@@ -146,8 +146,8 @@ that folder called `_index.scss` and that file should look like this:
 // all other partials in the sass/layout/ folder should have an @forward here
 ```
 
-Then in your `main.scss` file where you used to use `@import` to load all your
-partials, now you would instead write something like this:
+Then in your `main.scss` file where formerly you woud use `@import` to load all
+your partials, now you would instead write something like this:
 
 ```scss
 // If you want to use betterize, load it first
