@@ -39,11 +39,13 @@
   },
   "homepage": "https://github.com/stephenmirving/smthr#readme",
   "devDependencies": {
+    "@ruslanuz/sass-convert": "^0.1.1",
     "postcss": "^8.4.35",
     "postcss-cli": "^11.0.0",
     "postcss-scss": "^4.0.9",
     "postcss-sorting": "^8.0.2",
     "prettier": "^3.2.5",
+    "sass-convert": "^0.5.2",
     "sass-embedded": "^1.71.1",
     "stylelint": "^16.2.1",
     "stylelint-config-clean-order": "^5.4.1",
