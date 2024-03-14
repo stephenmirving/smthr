@@ -1,51 +1,139 @@
 @use 'sass:list';
 @use 'sass:math';
+@use 'sass:string';
 @use '../../functions/equals-false' as *;
 @use '../../functions/is-alias' as *;
-@use '../../functions/is-number' as *;
+@use '../../functions/is-calculation' as *;
 @use '../../functions/is-global-value' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-list' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-percentage' as *;
+@use '../../functions/is-position' as *;
+@use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
 /// Apply the animation stage to the parent element of any element that has
 /// a 3D animation.
 ///
-/// @param {Number | String} $perspective [500px] - The perspective value that
-/// will affect the child element's 3D animation.
+/// @param {Number | String} $perspective [500px] - The `perspective` property's
+/// value that will affect the child element's 3D animation. Can be a length
+/// value, the keyword value `none`, or a CSS global value.
 /// @param {String | Number | List} $p-origin [55% 50%] - The
-/// perspecitve-origin value that will effect the child element's 3D animation
-/// The syntax for this property can be just an x-position which can be the
-/// keyword, `left` (equal to a 0 value), `center` (equal to 50%), or `right`
-/// (equal to 100%), or can be a length-percentage. It can be also be in an
-/// x-position y-position 2-value format. The y-position value can be the
+/// `perspecitve-origin` property's value that will affect the child element's
+/// 3D animation. The syntax for this property can be just an x-position which
+/// can be the keyword, `left` (equal to a 0 value), `center` (equal to 50%), or
+/// `right` (equal to 100%), or can be a length-percentage. It can be also be in
+/// an x-position y-position 2-value format. The y-position value can be the
 /// keyword, `top` (equal to 0), `center` (equal to 50%), or `bottom` (equal to
 /// 100%), or can it can be a length-percentage. (Ex: `left bottom` or
-/// `100% 50%` or `left 30%`). This property also accepts any CSS global value
-/// as valid.
-///
-/// @param {Number} $width [null] - The width of the element.
+/// `100% 50%`). This property also accepts any CSS global value as valid.
+/// @param {Number} $size [null] - The size of the element. If the $height value
+/// is not explicitly set, this will set both width and height. If the $height
+/// value is passed, this will only set the width.
 /// @param {Number} $z-index [null] - Sets the z-index value, if passed.
-/// @param {Number} $height [$width] - The height of the element.
+/// @param {Number} $height [$size] - The height of the element.
 ///
 /// @group Animations
 /// @require {function} equals-false
 /// @require {function} is-alias
+/// @require {function} is-calculation
 /// @require {function} is-global-value
+/// @require {function} is-length
+/// @require {function} is-list
 /// @require {function} is-number
+/// @require {function} is-percentage
+/// @require {function} is-position
+/// @require {function} is-string
+/// @require {function} list-to-string
 ///
 /// @throw Invalid $perspective value error.
+/// @throw Invalid $p-origin value error.
+/// @throw Invalid $size value warning. The width of the element was not set.
+/// @throw Invalid $height value warning. The height of the element was not set.
 /// @throw Invalid $z-index value error.
 @mixin animation-stage(
   $perspective: 500px,
   $p-origin: 55% 50%,
-  $width: null,
+  $size: null,
   $z-index: null,
-  $height: $width
+  $height: $size
 ) {
-  @if $width {
-    width: $width;
+  $keyword-found: false;
+
+  @if $perspective and is-string($perspective) {
+    $perspective: string.to-lower-case($perspective);
   }
 
-  @if $height {
-    height: $height;
+  @if $p-origin {
+    @if is-list($p-origin) {
+
+      @if list.length($p-origin) > 2 {
+        @error 'Invalid number of values used for $p-origin in the ' +
+            '[ animation-stage() ] mixin. The `perspective-origin` property ' +
+            'only accepts one or two values.';
+      }
+
+      @each $val in $p-origin {
+        @if is-string($val) and is-position($val) {
+          $keyword-found: true;
+        } @else if $keyword-found or
+            (not is-percentage($val) and not is-global-value($val)) {
+          @error 'Invalid value used for $p-origin in the ' +
+              '[ animation-stage() ] mixin. The `perspective-origin` property' +
+              'only accepts 1 or 2 values made up of either position keywords ' +
+              '(`center`, `top`, `bottom`, `left`, `right`), length-percentage ' +
+              'values, both indivating the position of the vanishing point, ' +
+              'or CSS global values.';
+        }
+      }
+
+      @if $keyword-found {
+        $p-origin: list-to-string($p-origin);
+      }
+    }
+
+    @if is-string($p-origin) {
+      $p-origin: string.to-lower-case($p-origin);
+    }
+  }
+
+  @if $size and is-string($size) {
+    $size: string.to-lower-case($size);
+  }
+
+  @if $height and is-string($height) {
+    $height: string.to-lower-case($height);
+  }
+
+  @if $size and (
+    is-length($size) or
+    is-calculation($size) or
+    $size == 'auto' or
+    $size == 'max-content' or
+    $size == 'min-content' or
+    string.index($size, 'fit-content') or
+    is-global-value($size)
+  ) {
+    width: #{$size};
+  } @else {
+    @warn 'Invalid $size value of #{meta.insepct($size)} passed to the ' +
+        '[ animation-stage() ] mixin. The width of the element has not been set.';
+  }
+
+  @if $height and (
+      is-length($height) or
+      is-calculation($height) or
+      $height == 'auto' or
+      $height == 'max-content' or
+      $height == 'min-content' or
+      string.index($height, 'fit-content') or
+      is-global-value($height)
+  ) {
+    height: #{$height};
+  } @else {
+    @warn 'Invalid $height value of #{meta.insepct($height)} passed to the ' +
+        '[ animation-stage() ] mixin. The height of the element has not been set.';
   }
 
   @if $z-index and
@@ -63,15 +151,16 @@
   @if equals-false($perspective) or is-alias('none', $perspective) {
     perspective: none;
   } @else if (
-      is-number($perspective) and $perspective > 0 and
-        list.index('px' 'em' 'rem', math.unit($perspective))
+      is-length($perspective) and $perspective > 0
     ) or is-global-value($perspective)
   {
-    perspective: $perspective;
+    perspective: #{$perspective};
   } @else {
-    @error 'Invalid perspective value passed to the [ animation-stage() ] ' +
+    @error 'Invalid $perspective value passed to the [ animation-stage() ] ' +
         'mixin.';
   }
 
-  perspective-origin: $p-origin;
+  @if $p-origin {
+    perspective-origin: #{$p-origin};
+  }
 }

@@ -24,8 +24,7 @@
 /// `clip-path-wave`, `sin-phase`, `cos-dynamic-skew`, `width-pulse`,
 /// `hue-rotation`, `opacity-damped`, `helix-x`, `helix-y`, `helix-z`,
 /// `mod-wave-x`, `mod-wave-y`, `mod-wave-z`, `breath`, `elastic-bounce`,
-/// `arccos-width`, `arcsin-height`, `radius-morph`, `log-displacement`,
-/// `spiral-zoom-x`, `spiral-zoom-y`.
+/// `radius-morph`, `log-displacement`, `spiral-zoom-x`, `spiral-zoom-y`.
 /// @param {Number} $progress - Represents one of two possible things. It could
 /// represent the current state or progress of an animation that changes one
 /// value to another over a specific duration. For example, this could be a
@@ -227,7 +226,7 @@
     // Changes the clipping path of an element in a wave-like pattern, creating
     // dynamic shape changes.
     'clip-path-wave':
-      circle(#{50% + math.sin($rads) * 25 * 1%} at #{50% + math.cos($rads) * 25 * 1%})
+      circle(#{50% + math.sin($rads) * 25%} at #{50% + math.cos($rads) * 25%})
   );
 
   $equation: map.get($equations-map, $equation-name);

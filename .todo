@@ -72,7 +72,7 @@ TODO:
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
     ☐ Add typewrtiter animation effect. https://codepen.io/stephenirving/pen/QWoPVVW/e5eb204f9c2b209d5ca65c6d5ea4801c?editors=1100
     ☐ Add MetaFizzy animation effect https://codepen.io/stephenirving/pen/KYYZjm?editors=1100
-    ☐ Add all animations from
+    ☐ Look through animations here for inspiration
         ☐ https://animista.net/
         ☐ https://animate.style/
         ☐ https://www.minimamente.com/project/magic/

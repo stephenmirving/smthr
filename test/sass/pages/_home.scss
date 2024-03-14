@@ -33,7 +33,7 @@
 }
 
 .stage {
-  @include animation-stage(500px, 50% 55%, 80%, 900, 80vh);
+  @include animation-stage(500px, 50%, 80%, 900, 80vh);
   @include gradient(conv-color(rgba(#80f, 0.3), hsl), rgba(blue, 0.5), 135deg);
   @include flex-center($flex-dir: 'column');
 
@@ -82,6 +82,16 @@
   }
 }
 
+@keyframes hue-shift {
+  @for $i from 0 to 100 {
+    $completeness: math.div($i, 100);
+
+    #{$i}% {
+      background-color: hsl(time-equation('hue-rotation', $completeness), 80%, 90%);
+    }
+  }
+}
+
 .front {
   @include animation-front-face;
   @include flex-center;
@@ -91,6 +101,7 @@
   background: conv-color(#2dccb8, hwb) padding-box;
   // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, alternate, linear, 'bg');
   text-align: center;
+  // animation: hue-shift 20s infinite;
 
   > .txt {
     // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, reverse alternate, linear, 'fg');
@@ -111,13 +122,13 @@ $flip-axis: 'horizontal';
 }
 
 .active-anim-flip {
-  @include hinge('open', 'fwd', 'top-right', 'fade');
+  @include hinge('open', 'fwd', 'top-right');
 
   // animation: accelerate-rotation 3s infinite;
 }
 
 .active-anim-flip-rev {
-  @include hinge('close', 'bck', 'top-right', 'fade');
+  @include hinge('close', 'bck', 'top-right');
   // @include swing(open, top-right, nofade);
   // @include flip(
   //   forwards,
@@ -133,7 +144,7 @@ $flip-axis: 'horizontal';
     top,
     $flip-axis,
     0.6s,
-    $anim-dir: alternate-reverse,
+    // $anim-dir: alternate-reverse,
     $anim-num: 2
   );
 }
@@ -223,4 +234,10 @@ $flip-axis: 'horizontal';
      transform: rotate(time-equation('rotational-acceleration', $completeness));
     }
   }
+}
+
+.test {
+  $var: 30rem;
+
+  content: $var > 0;
 }

@@ -12,3 +12,18 @@
 @function is-calculation($value) {
   @return meta.type-of($value) == 'calculation';
 }
+
+/// Checks if a value is a CSS function equation, such as `calc()`, `min()`,
+/// `max()`, `clamp()`, etc.
+///
+/// @param {*} $value - A value to be checked.
+///
+/// @return {Bool} True if $value is a calculation, false if it is not.
+///
+/// @access public
+/// @group Utilities
+///
+/// @alias is-calculation
+@function is-calc($value) {
+  @return is-calculation($value);
+}
