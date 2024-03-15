@@ -21,6 +21,8 @@
 /// will return true for a $value of `btm` as well as `bottom`. This parameter
 /// also accepts a number of string values such as a `aliases`, `alias`, `allow`,
 /// and `allow-alias`.
+/// @param {Bool} $include-center [true] - Pass true to include the `'center'`
+/// position/offset. Pass `false` or `null` to not include center.
 ///
 /// @return {Bool} True if $value is a position, false if it is not.
 ///
@@ -33,7 +35,13 @@
 /// @require {function} is-percentage
 /// @require {function} is-string
 /// @require {function} resolve-alias
-@function is-position($value, $allow-aliases: false) {
+@function is-position($value, $allow-aliases: false, $include-center: true) {
+  $positions: ('top' 'right' 'bottom' 'left');
+
+  @if equals-true($include-center) {
+    $positions: list.append($positions, 'center')
+  }
+
   @if is-string($value) {
     $value: string.to-lower-case($value);
   }
@@ -68,7 +76,7 @@
 
   @return (
     is-length($value) or is-percentage($value) or
-      list.index('top' 'right' 'bottom' 'left' 'center', $value) != null
+      list.index($positions, $value) != null
   );
 }
 

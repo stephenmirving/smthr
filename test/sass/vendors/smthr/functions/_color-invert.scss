@@ -74,11 +74,12 @@
 /// Takes a given color and inverts it then converts it to a specified color
 /// syntax.
 ///
-/// @param {Color} $color - The color to invert.
+/// @param {Color} $color - The color to invert. Must be a color type
+/// recognized by Sass.
 /// @param {Number} $weight [100%] - How much to invert the color. Must be
 /// a percentage between 0% and 100% inclusive.
 /// @param {String} $syntax [get-color-type($color)] - The color syntax to
-/// convert into. Defaults to the color notation used by $color.
+/// convert into. Defaults to the color notation used by `$color`.
 ///
 /// @return {Color} - The inverted color in the given syntax.
 ///
@@ -89,10 +90,10 @@
 /// @require {function} is-color
 /// @require {function} is-string
 ///
-/// @throw Invalid $color data type, must be a color.
-/// @throw Invalid $weight value, must be a percentage between 0% and 100% inclusive.
-/// @throw Invalid $syntax data type, must be a string.
-/// @throw Invalid $syntax value, must be a color syntax string.
+/// @throw Invalid `$color` data type, must be a color.
+/// @throw Invalid `$weight` value, must be a percentage between 0% and 100% inclusive.
+/// @throw Invalid `$syntax` data type, must be a string.
+/// @throw Invalid `$syntax` value, must be a color syntax string.
 ///
 /// @alias color-invert
 @function invert-color($color, $weight: 100%, $syntax: get-color-type($color)) {

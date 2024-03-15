@@ -46,7 +46,7 @@
     },
     "block-no-empty": true,
     "color-hex-length": "short",
-    "color-function-notation": "modern",
+    "color-function-notation": "legacy",
     "color-no-invalid-hex": true,
     "comment-empty-line-before": [
       "always",

@@ -1,8 +1,9 @@
 @use 'sass:meta';
 @use 'sass:math';
 
-/// Helper utility to set both height and weight at the same time. Pass a single
-/// value to set both height and width to the same size.
+/// Helper utility to set both height and weight. Pass a single value to set
+/// both height and width to the same value. Unitless values are assumed to
+/// be in `rem`s.
 ///
 /// @param {Length-Percentage|string} $width - A length dimension (ex. 20rem or
 /// 300px or 10%). Passing 'max' is equivalent to passing 100%.
@@ -27,6 +28,6 @@
     $height: $height * 1rem;
   }
 
-  width: $width;
-  height: $height;
+  width: #{$width};
+  height: #{$height};
 }

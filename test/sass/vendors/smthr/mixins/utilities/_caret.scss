@@ -1,0 +1,101 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-string' as *;
+
+/// Used by the `caret()` mixin to make a down-facing caret.
+///
+/// @group Utilities
+/// @access private
+@mixin _caret-down {
+  border-top: $caret-width solid;
+  border-right: $caret-width solid transparent;
+  border-bottom: 0;
+  border-left: $caret-width solid transparent;
+}
+
+/// Used by the `caret()` mixin to make an up-facing caret.
+///
+/// @group Utilities
+/// @access private
+@mixin _caret-up {
+  border-top: 0;
+  border-right: $caret-width solid transparent;
+  border-bottom: $caret-width solid;
+  border-left: $caret-width solid transparent;
+}
+
+/// Used by the `caret()` mixin to make a right-facing caret.
+///
+/// @group Utilities
+/// @access private
+@mixin _caret-right {
+  border-top: $caret-width solid transparent;
+  border-bottom: $caret-width solid transparent;
+  border-left: $caret-width solid;
+}
+
+/// Used by the `caret()` mixin to make a left-facing caret.
+///
+/// @group Utilities
+/// @access private
+@mixin _caret-left {
+  border-top: $caret-width solid transparent;
+  border-right: $caret-width solid;
+  border-bottom: $caret-width solid transparent;
+}
+
+
+/// Add a caret using pseudo-elements that can face up, down, left, or right.
+///
+/// @param {String} $direction ['down'] - The desired direction for the caret
+/// to face. Can be either `up`, `down`, `left`, or `right`. Can also be any
+/// of the aliases for these values.
+///
+/// @group Utilities
+@mixin caret($direction: 'down') {
+  @if $direction and is-string($direction) {
+    $direction: string.to-lower-case($direction);
+  }
+
+  &::after {
+    content: '';
+    display: inline-block;
+    vertical-align: $caret-width * 0.85;
+    width: 0;
+    height: 0;
+    margin-left: $caret-width * 0.85;
+
+    @if is-alias('bottom', $direction) {
+      @include _caret-down;
+    } @else if is-alias('top', $direction) {
+      @include _caret-up;
+    } @else if is-alias('right', $direction) {
+      @include _caret-right;
+    } @else if not is-alias('left', $direction) {
+      @error 'Invalid $direction value passed to the [ caret() ] mixin. ' +
+          'Value must be either \'up\', \'down\', \'left\', or \'right\'.';
+    }
+  }
+
+  @if is-alias('left', $direction) {
+    &::after {
+      display: none;
+    }
+
+    &::before {
+      content: '';
+      display: inline-block;
+      vertical-align: $caret-width * 0.85;
+      width: 0;
+      height: 0;
+      margin-right: $caret-width * 0.85;
+
+      @include _caret-left;
+    }
+  }
+
+  &:empty::after {
+    margin-left: 0;
+  }
+}

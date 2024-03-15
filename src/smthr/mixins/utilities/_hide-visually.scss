@@ -31,6 +31,24 @@
   }
 }
 
+/// Apply only the properties necessary to make an already visually hidden
+/// element focusable.
+///
+/// @group Utilities
+@mixin hide-visually-focusable {
+  &:focus,
+  &:active {
+    position: static;
+    overflow: visible;
+    clip: auto;
+    clip-path: none;
+    width: auto;
+    height: auto;
+    margin: 0;
+    white-space: inherit;
+  }
+}
+
 /// Reverses the effects of the `hide-visually()` mixin.
 ///
 /// @group Utilities

@@ -50,6 +50,8 @@ TODO:
       - https://www.tpgi.com/focus-visible-and-backwards-compatibility/
       - https://www.deque.com/blog/give-site-focus-tips-designing-usable-focus-indicators/
       - Copy any changes to Betterize repo as well
+    ☐ Add more form utilities and mixins
+    ☐ Further test and improve Betterize
     ☐ Possible change the aliases for things like "bottom-left-to-top-right" to resolve to "to top right"
     ☐ Create a new responsive font mixin using the trend-line function
     ✔ Fix BEM elem() and mod() mixins so that they can take arglists and be used on group selectors @done(24-03-08 01:05)
@@ -79,6 +81,7 @@ TODO:
 
   Button Mixins:
     ☐ Create and add a bunch of button mixins for different style buttons
+    ☐ Add :disabled states to button mixins
 
   Shapes Mixins:
     ☐ Go to shapes page with psuedo elements and add those (Figure out what shapes page is?)

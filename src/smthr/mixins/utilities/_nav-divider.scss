@@ -1,0 +1,14 @@
+@use 'sass:math';
+@use '../../variables/misc' as *;
+
+/// Add horizontal dividers (basically an hr) within dropdowns and nav lists.
+///
+/// @param {Color} $color [#e5e5e5] - The color of the dividing line.
+///
+/// @group Utilities
+@mixin nav-divider($color: #e5e5e5) {
+  overflow: hidden;
+  height: 0;
+  border-top: 1px solid $color;
+  margin: math.div($spacer, 2) 0;
+}

@@ -116,7 +116,7 @@ $flip-axis: 'horizontal';
 
   border: 8px solid conv-color(#08f, 'hsl');
   border-radius: 12px;
-  background: conv-color($off-black, 'hsl') padding-box;
+  background: conv-color($gray-900, 'hsl') padding-box;
   color: #fff;
   text-align: center;
 }

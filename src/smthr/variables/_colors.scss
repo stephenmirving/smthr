@@ -37,49 +37,43 @@
 /// @prop {string} 'alert' - The alert color, used to indicate errors or
 /// critical issues.
 $color-palette: (
-  'primary': hsl(203.93 77.99% 40.98%),
-  'secondary': hsl(0 0% 46.27%),
-  'accent': hsl(250.4 100% 14.71%),
-  'success': hsl(142.36 69.1% 54.31%),
-  'warning': hsl(44 100% 50%),
-  'alert': hsl(0 100% 50%),
+  'primary': hsl(203.93, 77.99%, 40.98%),
+  'secondary': hsl(0, 0%, 46.27%),
+  'accent': hsl(250.4, 100%, 14.71%),
+  'success': hsl(142.36, 69.1%, 54.31%),
+  'warning': hsl(44, 100%, 50%),
+  'alert': hsl(0, 100%, 50%),
 ) !default;
 
-/// Color used for black UI items.
-$black: hsl(0 0% 0%) !default;
-
-/// Color used for off-black UI elements.
-$off-black: hsl(0 0% 7.06%) !default;
-
-/// Slightly lighter than $off-black.
-$black-gray: hsl(0 0% 12.55%) !default;
-
-/// Color used for dark gray UI elements.
-$dark-gray: hsl(0 0% 54.12%) !default;
-
-/// Color used for medium gray UI elements.
-$medium-gray: hsl(0 0% 79.22%) !default;
-
-/// Color used for light gray UI elements.
-$light-gray: hsl(0 0% 90.2%) !default;
-
-/// Color used for off-white UI elements.
-$off-white: hsl(0 0% 94.9%) !default;
-
-/// Color used for white UI elements.
-$white: hsl(0 0% 100%) !default;
+$white: #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black: #000 !default;
 
 /// Default text color for the page
-$color-body: hsl(0 0% 20%) !default;
+$color-body: hsl(0, 0%, 20%) !default;
 
 /// Default background color for the page
-$color-body-bg: hsl(0 0% 94.9%) !default;
+$color-body-bg: hsl(0, 0%, 94.9%) !default;
 
 /// Highlight background color when text is selected.
-$color-selection-highlight: hsl(211.48 36.97% 32.35%) !default;
+$color-selection-highlight: hsl(211.48, 36.97%, 32.35%) !default;
 
 /// Text color when it is selected.
-$color-selection-text: hsl(0 0% 100%) !default;
+$color-selection-text: hsl(0, 0%, 100%) !default;
 
 /// The color of the ring around elements when they are keyboard focused.
-$color-focus-ring: hsl(0 0% 0%) !default;
+$color-focus-ring: hsl(0, 0%, 0%) !default;
+
+/// Customize the light and dark text colors for use in
+/// the `color-text-contrast` function.
+/// @type Color
+$yiq-text-dark: $gray-900 !default;
+$yiq-text-light: $white !default;

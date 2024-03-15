@@ -1,0 +1,40 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-global-value' as *;
+
+/// Resize anything!
+///
+/// @param $resize [vertical] - The way to make an element resizable. Can be
+/// `horizontal`, `vertical`, `block`, `inline` or `both`. Can also be any
+/// CSS global value.
+///
+/// @group Utilities
+/// @require {function} is-alias
+/// @require {function} is-global-value
+@mixin resizable($resize) {
+  @if $resize and meta.type-of($resize) == 'string' {
+    $resize: string.to-lower-case($resize);
+  }
+
+  @if is-alias('left-to-right', $resize) {
+    $resize: horizontal;
+  } @else if is-alias('top-to-bottom', $resize) {
+    $resize: vertical;
+  } @else if $resize == 'block' {
+    $resize: block;
+  } @else if $resize == 'inline' {
+    $resize: inline;
+  } @else if $resize == 'both' {
+    $resize: both;
+  } @else if not is-global-value($resize) {
+    @error 'Invalid $resize value of #{meta.inspect($resize)} for the ' +
+        '[ resizable() ] mixin. You must pass one of the following values: ' +
+        '`horizontal`, `vertical`, `block`, `inline` or `both`. Can also be ' +
+        'any CSS global value.';
+  }
+
+  // Per CSS3 UI, `resize` only applies when `overflow` isn't `visible`
+  overflow: auto;
+  resize: #{$resize};
+}

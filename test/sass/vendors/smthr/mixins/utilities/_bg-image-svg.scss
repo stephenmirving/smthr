@@ -100,7 +100,7 @@
 
   // SVG image with properties to ensure it overwrites PNG if SVG is supported
   background: url(#{$svg-img-name}), linear-gradient(transparent, transparent);
-  background-size: $bg-size;
+  background-size: #{$bg-size};
 
   // Scaled up version of the image for HiDPI displays
   @media screen and (-webkit-min-device-pixel-ratio: $min-ratio),
@@ -109,7 +109,7 @@
   {
     background: url(#{$ret-png-img}); // 2x PNG fallback image
     background: url(#{$svg-img-name}), linear-gradient(transparent, transparent);
-    background-size: $bg-size;
+    background-size: #{$bg-size};
 
     @if $hidpi-bg-props {
       $key-list: map.keys($hidpi-bg-props);

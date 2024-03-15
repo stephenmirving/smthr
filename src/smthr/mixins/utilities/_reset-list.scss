@@ -15,7 +15,15 @@
 ///
 /// @alias reset-list
 @mixin list-reset {
-  padding: 0;
-  margin: 0;
-  list-style: none;
+  @include reset-list;
+}
+
+/// Resets an ordered, unordered, or detail list to have no inherent
+/// list style, margin or padding.
+///
+/// @group Utilities
+///
+/// @alias reset-list
+@mixin unstyle-list {
+  @include reset-list;
 }

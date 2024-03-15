@@ -71,3 +71,16 @@ $btn-transition: () !default;
 /// with virtually any property.
 /// @type List
 $global-values: (inherit initial revert revert-layer unset) !default;
+
+/// The yiq lightness value that determines when the lightness of color changes
+/// from "dark" to "light". Acceptable values are between 0 and 255.
+/// @type Number
+$yiq-contrasted-threshold: 150 !default;
+
+/// Set the width of up, down, left, and right facing carets
+/// @type Number
+$caret-width: 0.3em !default;
+
+/// Default spacer size
+/// @type Number
+$spacer: 1rem !default;

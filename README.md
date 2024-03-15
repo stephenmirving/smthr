@@ -36,7 +36,7 @@ _Smoother_ for use in a project, I recommend checking back here regurally for
 new updates, at least until it launches on NPM and updating it becomes more
 seamless.
 
-This is **smthr** version 0.4.1 - _Last update:_ 03/11/24
+This is **smthr** version 0.5.0 - _Last update:_ 03/15/24
 
 ## Content
 
@@ -274,6 +274,13 @@ To get an idea of the full list of aliases for these keyword values, see the
 link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
+
+* Updated _Betterize_ to v.1.1.0
+
+* 6 new mixins added: `caret()`, `fluid-media()`, `nav-divider()`, `visible()`
+`resizable()`, and `reset-text()`
+
+* New function that provides a dark or light text contrast color: `color-text-contrast()`
 
 * 8 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `power()`,
 `space()`, `swing()`, and `twister()`!

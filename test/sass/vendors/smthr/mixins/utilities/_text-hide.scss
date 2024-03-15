@@ -1,0 +1,26 @@
+/// Help replace an element's text content with a background image. Maintain
+/// the accessibility and SEO benefits of heading tags, while utilizing a
+/// background image instead of text.
+///
+/// @group Utilities
+@mixin text-hide {
+  border: 0;
+  background-color: transparent;
+  color: transparent;
+  font: 0/0 a;
+  text-shadow: none;
+}
+
+/// Help replace an element's text content with a background image. Maintain
+/// the accessibility and SEO benefits of heading tags, while utilizing a
+/// background image instead of text.
+///
+/// @group Utilities
+/// @alias text-hide
+@mixin hide-text {
+  border: 0;
+  background-color: transparent;
+  color: transparent;
+  font: 0/0 a;
+  text-shadow: none;
+}

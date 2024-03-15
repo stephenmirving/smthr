@@ -1,0 +1,17 @@
+/// Keep images from scaling beyond the width of their parents and help them
+/// maintain their aspect ratio more easily.
+///
+/// @group Utilities
+@mixin fluid-media {
+  max-width: 100%;
+  height: auto;
+}
+
+/// Keep images from scaling beyond the width of their parents and help them
+/// maintain their aspect ratio more easily.
+///
+/// @group Utilities
+/// @alias fluid-media
+@mixin responsive-media {
+  @include fluid-media;
+}

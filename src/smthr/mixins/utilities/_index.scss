@@ -3,6 +3,7 @@
 @forward 'bg-image';
 @forward 'border-radius';
 @forward 'button-base';
+@forward 'caret';
 @forward 'clamp-height';
 @forward 'clamp-lines';
 @forward 'clamp-width';
@@ -13,16 +14,17 @@
 @forward 'disable-outline';
 @forward 'family';
 @forward 'flex-center';
+@forward 'fluid-media';
 @forward 'font';
 @forward 'ghost-button';
 @forward 'gradient';
 @forward 'hamburger';
-@forward 'hide-text';
 @forward 'hide-visually';
 @forward 'hide';
 @forward 'hocus';
 @forward 'inner-side-shadow';
 @forward 'long-shadow';
+@forward 'nav-divider';
 @forward 'on-event';
 @forward 'only-chromium';
 @forward 'only-legacy-edge';
@@ -42,7 +44,9 @@
 @forward 'position-vertically';
 @forward 'position';
 @forward 'reset-list';
+@forward 'reset-text';
 @forward 'reset';
+@forward 'resizable';
 @forward 'responsive-font';
 @forward 'responsive-ratio';
 @forward 'scrollbar';
@@ -50,6 +54,8 @@
 @forward 'smooth-retina-fonts';
 @forward 'sticky';
 @forward 'text-emboss';
+@forward 'text-hide';
 @forward 'text-outline';
 @forward 'text-shadow';
 @forward 'truncate';
+@forward 'visible';

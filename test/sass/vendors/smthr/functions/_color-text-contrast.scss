@@ -6,17 +6,18 @@
 @use 'get-color-type' as *;
 @use 'is-color' as *;
 @use 'is-string' as *;
+@use '../variables/misc' as *;
 
-/// Takes a given color and gives its complement in the specified color syntax.
-/// This is the equivalent of doing color.adjust($color, $hue: 180deg) but while
-/// being able to choose the output color format.
+
+/// Return a light or dark contrast color for text based on the given color.
 ///
-/// @param {Color} $color - The color to find the complement. Must be a color
-/// type recognized by Sass.
+/// @param {Color} $color - The color you are finding the contrast for.
+/// Must be a color type recognized by Sass.
+///
 /// @param {String} $syntax [get-color-type($color)] - The color syntax to
 /// convert into. Defaults to the color notation used by `$color`.
 ///
-/// @return {Color} - The color's complement in the given syntax.
+/// @return {Color} - The contrast color in the given syntax.
 ///
 /// @access public
 /// @group Utilities
@@ -24,18 +25,21 @@
 /// @require {function} get-color-type
 /// @require {function} is-color
 /// @require {function} is-string
+/// @require {variable} $yiq-contrasted-threshold
+/// @require {variable} $yiq-text-dark
+/// @require {variable} $yiq-text-light
 ///
 /// @throw Invalid $color data type, must be a color.
 /// @throw Invalid $syntax data type, must be a string.
 /// @throw Invalid $syntax value, must be a color syntax string.
-@function color-complement($color, $syntax: get-color-type($color)) {
+@function color-contrast($color, $syntax: get-color-type(color)) {
   $valid-syntax-values: (
     'hex', '#', 'rgb', 'rgba', 'hsl', 'hsla', 'hwb', 'function', 'name', 'cmyk'
   );
 
   @if not is-color($color) {
     @error 'Invalid $color data type of #{meta.inspect(meta.type-of($color))} ' +
-        'passed to the [ color-complement() ] function. This value is not ' +
+        'passed to the [ color-contrast() ] function. This value is not ' +
         'currently recognized as a color by your version of Sass.';
   }
 
@@ -45,7 +49,7 @@
     $syntax: get-color-type($color);
   } @else {
     @error 'Invalid $sytax data type of #{meta.type-of($syntax)} passed to ' +
-        'the [ color-complement() ] function. The $syntax parameter must be ' +
+        'the [ color-contrast() ] function. The $syntax parameter must be ' +
         'of type \'string\' or be `null` or `false`. This function supports ' +
         'converting into the following $syntax values: ' +
         '[ \'hex\', \'#\', \'rgb\', \'rgba\', \'hsl\', \'hsla\', \'hwb\', ' +
@@ -61,31 +65,15 @@
         '\'function\', \'name\', \'cmyk\' ].';
   }
 
-  @return conv-color(color.complement($color), $syntax);
-}
+  $red: color.red($color);
+  $green: color.green($color);
+  $blue: color.blue($color);
+  $alpha: color.alpha($color);
+  $yiq: math.div((($red * 299) + ($green * 587) + ($blue * 114)), 1000);
 
-/// Takes a given color and gives its complement in the specified color syntax.
-/// This is the equivalent of doing color.adjust($color, $hue: 180deg) but while
-/// being able to choose the output color format.
-///
-/// @param {Color} $color - The color to find the complement.
-/// @param {String} $syntax [get-color-type($color)] - The color syntax to
-/// convert into. Defaults to the color notation used by $color.
-///
-/// @return {Color} - The color's complement in the given syntax.
-///
-/// @access public
-/// @group Utilities
-/// @require {function} conv-color
-/// @require {function} get-color-type
-/// @require {function} is-color
-/// @require {function} is-string
-///
-/// @throw Invalid $color data type, must be a color.
-/// @throw Invalid $syntax data type, must be a string.
-/// @throw Invalid $syntax value, must be a color syntax string.
-///
-/// @alias complement-color
-@function complement-color($color, $syntax: get-color-type($color)) {
-  @return color-complement($color, $syntax);
+  @if $yiq >= $yiq-contrasted-threshold {
+    @return conv-color($yiq-text-dark, $syntax);
+  } @else {
+    @return conv-color($yiq-text-light, $syntax);
+  }
 }

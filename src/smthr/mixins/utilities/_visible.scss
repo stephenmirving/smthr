@@ -1,0 +1,39 @@
+@use 'sass:meta';
+@use 'sass:string';
+@use '../../functions/is-global-value' as *;
+
+/// Hide an element visually, while maintaining it for screen readers, or
+/// reverse the effects and make an element visible again.
+///
+/// @param {Bool | String} $visibility [false] - Either make an element visible
+/// (`true`, `visible`, or `vis`), or make it invisible (`false`, `null`,
+/// `hidden`, `hide`, or `hid`). It can also have a value of `collapse`
+/// (or `col`) and any CSS global value.
+///
+/// @group Utilities
+/// @require {function} is-global-value
+@mixin visible($visibility: false) {
+  @if $visibility and meta.type-of($visibility) == 'string' {
+    $visibility: string.to-lower-case($visibility);
+  }
+
+  @if $visibility == true or $visibility == 'true' or
+      $visibility == 'visible' or $visibility == 'vis'
+  {
+    $visibility: visible;
+  } @else if not $visibility or $visibility == 'false' or
+      $visibility == 'hidden' or $visibility == 'hide' or
+      $visibility == 'hid'
+  {
+    $visibility: hidden;
+  } @else if $visibility == 'collapse' or $visibility == 'col' {
+    $visibility: collapse;
+  } @else if not is-global-value($visibility) {
+    @error 'Invalid value for $visibility of #{meta.inspect($visibility)} ' +
+        'passed to the [ visible() ] mixin. You must pass one of the ' +
+        'following: `true` or `visible`, `false` or `hidden`, `collapse`, or ' +
+        'any of the CSS global values.';
+  }
+
+  visibility: #{$visibility} !important;
+}
