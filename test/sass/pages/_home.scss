@@ -238,6 +238,11 @@ $flip-axis: 'horizontal';
 
 .test {
   $var: 30rem;
-
+  color: color-text-contrast(blue);
   content: $var > 0;
+  @include caret;
+  @include fluid-media;
+  @include nav-divider;
+  @include visible('hide');
+  @include resizable();
 }

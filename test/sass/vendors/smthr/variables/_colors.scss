@@ -72,8 +72,10 @@ $color-selection-text: hsl(0, 0%, 100%) !default;
 /// The color of the ring around elements when they are keyboard focused.
 $color-focus-ring: hsl(0, 0%, 0%) !default;
 
-/// Customize the light and dark text colors for use in
-/// the `color-text-contrast` function.
+/// The dark color for use in the `color-text-contrast()` function.
 /// @type Color
-$yiq-text-dark: $gray-900 !default;
-$yiq-text-light: $white !default;
+$contrast-text-dark: $gray-900 !default;
+
+/// The light color for use in the `color-text-contrast()` function.
+/// @type Color
+$contrast-text-light: $white !default;

@@ -1,11 +1,13 @@
 @use 'sass:color';
 @use 'sass:list';
+@use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
 @use 'conv-color' as *;
 @use 'get-color-type' as *;
 @use 'is-color' as *;
 @use 'is-string' as *;
+@use '../variables/colors' as *;
 @use '../variables/misc' as *;
 
 
@@ -25,14 +27,14 @@
 /// @require {function} get-color-type
 /// @require {function} is-color
 /// @require {function} is-string
-/// @require {variable} $yiq-contrasted-threshold
-/// @require {variable} $yiq-text-dark
-/// @require {variable} $yiq-text-light
+/// @require {variable} $text-contrast-threshold
+/// @require {variable} $contrast-text-dark
+/// @require {variable} $contrast-text-light
 ///
 /// @throw Invalid $color data type, must be a color.
 /// @throw Invalid $syntax data type, must be a string.
 /// @throw Invalid $syntax value, must be a color syntax string.
-@function color-contrast($color, $syntax: get-color-type(color)) {
+@function color-text-contrast($color, $syntax: get-color-type($color)) {
   $valid-syntax-values: (
     'hex', '#', 'rgb', 'rgba', 'hsl', 'hsla', 'hwb', 'function', 'name', 'cmyk'
   );
@@ -71,9 +73,9 @@
   $alpha: color.alpha($color);
   $yiq: math.div((($red * 299) + ($green * 587) + ($blue * 114)), 1000);
 
-  @if $yiq >= $yiq-contrasted-threshold {
-    @return conv-color($yiq-text-dark, $syntax);
+  @if $yiq >= $text-contrast-threshold {
+    @return conv-color($contrast-text-dark, $syntax);
   } @else {
-    @return conv-color($yiq-text-light, $syntax);
+    @return conv-color($contrast-text-light, $syntax);
   }
 }

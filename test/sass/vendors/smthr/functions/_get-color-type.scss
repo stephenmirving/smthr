@@ -1,6 +1,7 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use 'color-to-string' as *;
+@use 'conv-color-name' as *;
 
 /// Takes a color value and returns a string representing what type of notation
 /// is used for the color.  Valid types curently include:
@@ -14,24 +15,36 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} color-to-string
+/// @require {function} conv-color-name
 ///
 /// @throw Invalid $color value.
 @function get-color-type($color) {
+  $error-msg: 'Invalid data type passed to [ get-color-type() ] function. You ' +
+      'passed #{$color} for the $color argument, which is not a ' +
+      'valid color that can be converted by this function.';
+
   @if meta.type-of($color) != 'color' {
-    @error 'Invalid data type passed to [ get-color-type() ] function. You ' +
-      'passed [ #{$color} ] for the $color argument, which is not a ' +
-      'a valid color that can be converted by this function.';
+    @error $error-msg;
   }
+
+  $color: conv-color-name($color);
 
   $color-string: color-to-string($color);
 
   @if string.slice($color-string, 1, 1) == '#' {
     @return 'hex';
   } @else {
-    @return string.slice(
-      $color-string,
-      1,
-      string.index($color-string, '(') - 1
-    );
+    $paren-index: string.index($color-string, '(');
+
+    @if $paren-index {
+      @return string.slice(
+        $color-string,
+        1,
+        $paren-index - 1
+      );
+    } @else {
+      @error $error-msg;
+    }
   }
 }

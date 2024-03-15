@@ -3,16 +3,16 @@
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-global-value' as *;
 
-/// Resize anything!
+/// Make an element resizable.
 ///
-/// @param $resize [vertical] - The way to make an element resizable. Can be
+/// @param {String} $resize [vertical] - The way to make an element resizable. Can be
 /// `horizontal`, `vertical`, `block`, `inline` or `both`. Can also be any
 /// CSS global value.
 ///
 /// @group Utilities
 /// @require {function} is-alias
 /// @require {function} is-global-value
-@mixin resizable($resize) {
+@mixin resizable($resize: 'vertical') {
   @if $resize and meta.type-of($resize) == 'string' {
     $resize: string.to-lower-case($resize);
   }
