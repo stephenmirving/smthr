@@ -3,7 +3,7 @@
 /// betterize.scss - Opinionated normalization, better cross-browser design - //
 /// Special version design for use with the Smoother library ---------------- //
 /// @author Stephen M Irving -- <@metric_dev> ------------------------------- //
-/// version 1.1.0 03/15/2024 ----------------------------------------------- //
+/// version 1.1.1 03/15/2024 ----------------------------------------------- //
 /// ------------------------------------------------------------------------- //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -90,14 +90,26 @@ html {
   overflow: hidden scroll; // 1
   box-sizing: border-box; // 2
   font-family: // 3
+    // Newer browsers
     system-ui,
+    // Safari for OS X and iOS (San Francisco)
     -apple-system,
+    // Chrome < 56 for OS X (San Francisco)
     BlinkMacSystemFont,
+    // Windows
     'Segoe UI',
+    // Android
+    Roboto,
+    // Basic web fallback
+    'Helvetica Neue',
+    Helvetica,
+    Arial,
     sans-serif,
+    // Emoji fonts
     'Apple Color Emoji',
     'Segoe UI Emoji',
-    'Segoe UI Symbol';
+    'Segoe UI Symbol',
+    'Noto Color Emoji';
   font-size: $_root-font-size; // 4
   line-height: 1.15; // 5
   overflow-wrap: break-word; // 6
@@ -168,15 +180,22 @@ html {
 
 body {
   $_body-font-stack:
+    // Newer browsers
     system-ui,
+    // Safari for OS X and iOS (San Francisco)
     -apple-system,
+    // Chrome < 56 for OS X (San Francisco)
     BlinkMacSystemFont,
+    // Windows
     'Segoe UI',
-    Ubuntu,
-    Helvetica,
+    // Android
+    Roboto,
+    // Basic web fallback
     'Helvetica Neue',
+    Helvetica,
     Arial,
     sans-serif,
+    // Emoji fonts
     'Apple Color Emoji',
     'Segoe UI Emoji',
     'Segoe UI Symbol',

@@ -55,15 +55,22 @@ $font-stacks: (
     'Segoe UI Symbol'
   ),
   'system': (
+    // Newer browsers
     system-ui,
+    // Safari for OS X and iOS (San Francisco)
     -apple-system,
+    // Chrome < 56 for OS X (San Francisco)
     BlinkMacSystemFont,
+    // Windows
     'Segoe UI',
-    Ubuntu,
-    Helvetica,
+    // Android
+    Roboto,
+    // Basic web fallback
     'Helvetica Neue',
+    Helvetica,
     Arial,
     sans-serif,
+    // Emoji fonts
     'Apple Color Emoji',
     'Segoe UI Emoji',
     'Segoe UI Symbol',
