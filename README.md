@@ -35,7 +35,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get the
 best functionality possible from it.
 
-This is **smthr** version 0.7.2 - _Last update:_ 03/17/24
+This is **smthr** version 0.7.3 - _Last update:_ 03/17/24
 
 ## Content
 
