@@ -579,16 +579,15 @@ select {
   background: no-repeat right center / 1em;
 }
 
-// 1.
-// 2. Remove the default `border-radius` that macOS Chrome adds.
-// 3. Correct the inability to style clickable types in iOS and Safari.
+// 1. Remove the default `border-radius` that macOS Chrome adds.
+// 2. Correct the inability to style clickable types in iOS and Safari.
 
 button,
-html [type='button'],
+[type='button'],
 [type='reset'],
 [type='submit'] {
   border-radius: 0; // 1
-  -webkit-appearance: button; // 3
+  -webkit-appearance: button; // 2
 }
 
 // Remove the inner border and padding on focused buttons in Firefox.
