@@ -39,13 +39,20 @@ This is **smthr** version 0.7.3 - _Last update:_ 03/17/24
 
 ## Content
 
+Because `_smth.scss` is a Sass library comprised entirely of functions, mixins
+and variables, importing it into your project won't add any overhead or increased
+filesize to your project's stylesheet except for the parts that you actually use
+by calling a function, variable, or by using a mixin with `@includes`.
+
 **_Smoother_ currently contains:**
 
 * **150+** Mixins, _including..._
   * More than 35 easily configurable animation types, allowing for more than 100 unique animations.
   * More than 20 element shapes created with a combination of `clip-path`, pseudo-elements, and `border-radius`
   * More than 80 utility mixins for things like creating responsive ratios,
-    box-shadow effects that adhere to Material Design, clamping text to a given number of lines, creating corner ribbons, centering elements, browser-targeted styling, making "hamburger" menu buttons and much more!
+    box-shadow effects that adhere to Material Design, clamping text to a given
+    number of lines, creating corner ribbons, centering elements,
+    browser-targeted styling, making "hamburger" menu buttons and much more!
 * **80+** Functions, _including functions that...
   * Extend Sass' existing module's method functionality (ex: `update-list` function)
   * Convert and manipulate colors
@@ -53,19 +60,16 @@ This is **smthr** version 0.7.3 - _Last update:_ 03/17/24
   * Data type conversion
   * Calculate unit conversions (such as px to rem)
   * Fix floats to a given number of decimal places
-  * Return custum cubic-bezier curves for timing functions based on Penner equations
+  * Return custum cubic-bezier curves for timing functions based on Penner equations.
   * Return custom calc() equations based on trigonometry and linear algebra
-  * Calculate the "least square fit" or trend-line of a mapped set of points (useful for setting responsive font sizes)
-  * Functions that aid in the creation of mixins and placeholders.
+  * Calculate the "least square fit" or trend-line of a mapped set of points
+    (useful for setting responsive font sizes)
+  * Functions that aid in the creation of mixins and placeholders
   * Much more!
 * A modern, opinionated CSS normalization file written in Sass called _betterize.scss
 * A print style file written in Sass called _smooth-print.scss
 * A collection of helpful and configurable `!default` variables.
-
-Because `_smth.scss` is a Sass library comprised entirely of functions, mixins
-and variables, importing it into your project won't add any overhead or increased
-filesize to your project's stylesheet except for the parts that you actually use
-by calling a function, variable, or by using a mixin with `@includes`.
+* Helpful documentation for every function, mixin, and variable
 
 ## Deployment
 
