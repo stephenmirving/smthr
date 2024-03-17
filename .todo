@@ -112,10 +112,11 @@ TODO:
     ☐ Make an is-color-name function that returns true or false if the value is a css color name
 
   Publishing:
-    ☐ Get the SassDoc API compiled and ran
+    ✔ Get the SassDoc API compiled and ran @done(24-03-16 19:37)
     ☐ Create website and API guide using Github Pages
-    ☐ Publish as an npm package
-    ☐ Use SassDoc to generate web documentation from files
+    ✔ Publish as an npm package @done(24-03-16 19:37)
+    ☐ 
+    ✔ Use SassDoc to generate web documentation from files @done(24-03-16 19:37)
 
   Test Site:
     ☐ Front page layout

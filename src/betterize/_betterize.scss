@@ -1,11 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
-/// ------------------------------------------------------------------------- //
-/// betterize.scss - Opinionated normalization, better cross-browser design - //
-/// Special version design for use with the Smoother library ---------------- //
-/// @author Stephen M Irving -- <@metric_dev> ------------------------------- //
-/// version 1.1.1 03/15/2024 ----------------------------------------------- //
-/// ------------------------------------------------------------------------- //
+/// ------------------------------------------------------------------------ ///
+/// betterize.scss -- Modern normalization for better cross-browser design - ///
+/// Special version designed for use with the Smoother library ------------- ///
+/// @author Stephen M Irving -- <@metric_dev> ------------------------------ ///
+/// version 1.2.2 -- 03/16/2024 -------------------------------------------- ///
+/// ------------------------------------------------------------------------ ///
 ////////////////////////////////////////////////////////////////////////////////
+
 
 @use 'sass:meta';
 @use 'sass:map';
@@ -22,7 +23,9 @@
 
 // 1. Set `box-sizing` to `inherit` while setting the inheritance root,
 //    which is the html element, to `box-sizing: border-box`. This is
-//    a much more intuitive default box-model than `content-box`.
+//    a much more intuitive default box-model than `content-box` as it
+//    will make `width` and `height` calculations include `padding` and
+//    `border` size.
 // 2. Setting `min-width: 0` here is a VERY opinionated decision. It can save
 //    you a lot of time trying to figure out a ton of odd and unintuitive
 //    behavior, especially with flexbox, but it can also cause unexpected

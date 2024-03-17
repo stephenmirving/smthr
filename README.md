@@ -32,11 +32,10 @@ animation keyframe creation, or other verbose and complex code blocks.
 
 _Smoother_ is **currently in active development**. Almost every day there are
 updates to the functionality or documentation of this library. If you download
-_Smoother_ for use in a project, I recommend checking back here regurally for
-new updates, at least until it launches on NPM and updating it becomes more
-seamless.
+_Smoother_ for use in a project, I recommend updating it frequently to get the
+best functionality possible from it.
 
-This is **smthr** version 0.5.1 - _Last update:_ 03/16/24
+This is **smthr** version 0.6.0 - _Last update:_ 03/16/24
 
 ## Content
 
@@ -70,18 +69,26 @@ by calling a function, variable, or by using a mixin with `@includes`.
 
 ## Deployment
 
-Soon, the _Smoother_ library will be available more easily with NPM. For now
-though, you will need to download the repo manually from here and copy/paste the
-contents of the `./src` folder (the folders `/smthr` and `/betterize`), into
-your own project.
+To download _Smoother_ for your project using NPM, use the following from
+the command line in you'r project's root directory.
 
-Download a zipped copy of the code by going to the top of this README page and
-looking for the green colored "<> Code" button. Click that and choose
-"Download ZIP". After unzipping the project folder, go into the `src` folder
-and copy the `smthr` and `betterize` _(betterize is optional)_ folders into your
-own project's directory, in the folder where you keep the rest of your `.scss`
-files. This is probably in a `/sass` or `/scss` folder, or within one of the
-subdirectories of that folder.
+```bash
+npm install smoother
+```
+
+You can also download the repo manually from here and copy/paste the
+contents of the `./src` folder (the folders `/smthr` and `/betterize`), into
+your own project. If you are taking that route, download a zipped copy of the
+code by going to the top of this README page and looking for the green colored
+"<> Code" button. Click that and choose "Download ZIP". Once it is downloaded,
+unzipping the project folder.
+
+Whether you downloaded from NPM or grabbed the entire repo manually, find the
+package folder (If you downloaded from NPM that would be `/node_modules/smthr`)
+and go into the `src` folder. Copy the `smthr` and `betterize`
+_(betterize is optional)_ folders into your own project's styling directory,
+in the folder where you keep the rest of your `.scss` files. This is probably in
+a `/sass` or `/scss` folder, or within one of the subdirectories of that folder.
 
 If you are breaking your Sass code down into partials with
 [the 7-1 pattern](https://sass-guidelin.es/#the-7-1-pattern) or
@@ -206,9 +213,11 @@ anything you want that is not used by another module. While there is no explicit
 warning against it in the documentation, I recommend not choosing a `$`, `#`,
 `@`, `e`, `_` or `-` character as your namespace, as this could potentially cause
 conflicts due to `$` being used for variables, `#` being used for interpolation,
-`@` being used for at-rules, `e` being reserved for the mathematical constant _[e](https://en.wikipedia.org/wiki/E_(mathematical_constant))_,
+`@` being used for at-rules, `e` being reserved for the mathematical constant
+_[e](https://en.wikipedia.org/wiki/E_(mathematical_constant))_,
 and `_` or `-` being used at the start of member names to
-[make those members private](https://sass-lang.com/documentation/at-rules/use/#private-members). At the very least, it could screw up your syntax highlighting,
+[make those members private](https://sass-lang.com/documentation/at-rules/use/#private-members).
+At the very least, it could screw up your syntax highlighting,
 so choose something unique.
 
 ```scss
@@ -275,13 +284,15 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
+* Added library to NPM!
+
 * 6 new mixins added: `caret()`, `fluid-media()`, `nav-divider()`, `visible()`
 `resizable()`, and `reset-text()`
 
 * 8 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `power()`,
 `space()`, `swing()`, and `twister()`!
 
-* Updated _Betterize_ to v.1.1.1
+* Updated _Betterize_ to v.1.2.2
 
 * New function that provides a dark or light text contrast color: `color-text-contrast()`
 
