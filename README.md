@@ -35,7 +35,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get the
 best functionality possible from it.
 
-This is **smthr** version 0.7.1 - _Last update:_ 03/17/24
+This is **smthr** version 0.7.2 - _Last update:_ 03/17/24
 
 ## Content
 
@@ -305,7 +305,7 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 * 8 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `power()`,
 `space()`, `swing()`, and `twister()`!
 
-* Updated _Betterize_ to v.1.2.2
+* Updated _Betterize_ to version 1.2.4
 
 * New function that provides a dark or light text contrast color: `color-text-contrast()`
 

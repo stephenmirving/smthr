@@ -3,7 +3,7 @@
 /// betterize.scss -- Modern normalization for better cross-browser design - ///
 /// Special version designed for use with the Smoother library ------------- ///
 /// @author Stephen M Irving -- <@metric_dev> ------------------------------ ///
-/// version 1.2.2 -- 03/16/2024 -------------------------------------------- ///
+/// version 1.2.4 -- 03/17/2024 -------------------------------------------- ///
 /// ------------------------------------------------------------------------ ///
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -52,7 +52,7 @@
 //     scrolling. If you want a page with no scrollbar at all change
 //     to `overflow: hidden`.
 //  2. Set the root element box-sizing, the universal selector will inherit.
-//  3. Improve consistency of default font in all browsers.
+//  3. Add backup font stack that works across all browsers and devices.
 //  4. Set the default font size in an accessible way (such that a user
 //     can change the default size with the browser settings).
 //  5. Normalize default `line-height` across browsers.
@@ -92,7 +92,7 @@ html {
 
   overflow: hidden scroll; // 1
   box-sizing: border-box; // 2
-  font-family: // 3
+  font-family:
     // Newer browsers
     system-ui,
     // Safari for OS X and iOS (San Francisco)
@@ -112,7 +112,7 @@ html {
     'Apple Color Emoji',
     'Segoe UI Emoji',
     'Segoe UI Symbol',
-    'Noto Color Emoji';
+    'Noto Color Emoji'; // 3
   font-size: $_root-font-size; // 4
   line-height: 1.15; // 5
   overflow-wrap: break-word; // 6
@@ -228,6 +228,15 @@ body {
   @include smth.only-over-width(1280px) {
     text-rendering: optimizeLegibility; // 7
   }
+}
+
+// Ensure HTML5 structual elements and media elements
+// display correctly in all browsers.
+
+article, aside, dialog, figcaption, figure,
+footer, header, hgroup, main, nav, section,
+canvas, details, legend, img, svg, video {
+  display: block;
 }
 
 // Better balance blocks of text in headings, blockqutoes, and figure captions.
@@ -377,7 +386,7 @@ table {
   vertical-align: middle;
   border-spacing: 0;
   border-collapse: collapse;
-  border-color: currentcolor;
+  border-color: currentColor;
   text-indent: 0;
   font-variant-numeric: tabular-nums;
 }
@@ -407,9 +416,24 @@ hr {
   height: 0;
   padding: 0;
   border: 0;
-  border-top: 2px solid currentcolor;
+  border-top: 2px solid currentColor;
   margin: 1em 0;
   color: inherit;
+}
+
+// If you do not like the look of the modified <hr> above, and you want a more
+// basic horizontal rule without having to overwrite styling yourself, use the
+// `hr-light` class.
+// 1. Show overflow in legacy Edge and IE.
+// 2. Correct box-sizing in Firefox.
+// 3. Correct the inheritance of border-color in Firefox.
+//    See: (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+
+.hr-light {
+  overflow: visible; // 1
+  box-sizing: content-box; // 2
+  height: 0; // 1
+  color: inherit; // 3
 }
 
 // Add the correct font style in Android 4.3-
@@ -441,15 +465,9 @@ footer ul {
 // Remove the margin on nested detail lists in Chrome, Edge, IE, and Safari,
 // on nested ordered and unordered lists in Edge 18- and IE.
 
-dl dl,
-dl ol,
-dl ul,
-ol dl,
-ol ol,
-ol ul,
-ul dl,
-ul ol,
-ul ul {
+dl dl, dl ol, dl ul,
+ol dl, ol ol, ol ul,
+ul dl, ul ol, ul ul {
   margin: 0;
 }
 
@@ -466,7 +484,6 @@ dialog {
   position: absolute;
   right: 0;
   left: 0;
-  display: block;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
@@ -658,7 +675,6 @@ fieldset {
 // out when they zero out <fieldset> elements.
 
 legend {
-  display: block;
   width: 100%;
   max-width: 100%;
   padding: 0;
@@ -800,14 +816,6 @@ video {
   vertical-align: middle;
 }
 
-canvas,
-details,
-img,
-svg,
-video {
-  display: block;
-}
-
 // The styles necessary for the most optimized <img> defaults.
 // The other styles associated with img are grouped with other selectors.
 
@@ -839,7 +847,7 @@ svg:not(:root) {
 // Ensure SVGs without fill attributes inherit color correctly.
 
 svg:not([fill]) {
-  fill: currentcolor;
+  fill: currentColor;
 }
 
 
