@@ -76,6 +76,9 @@ the command line in you'r project's root directory.
 npm install smoother
 ```
 
+You can see it on the NPM website here:
+[https://www.npmjs.com/package/smoother](https://www.npmjs.com/package/smoother)
+
 You can also download the repo manually from here and copy/paste the
 contents of the `./src` folder (the folders `/smthr` and `/betterize`), into
 your own project. If you are taking that route, download a zipped copy of the
