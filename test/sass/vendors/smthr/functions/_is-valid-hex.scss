@@ -2,24 +2,38 @@
 @use 'sass:string';
 @use 'sass:meta';
 
-/// Checks if a string is a valid hex color code. The string must start with
+/// Checks if a value is a valid hex color code. The value must start with
 /// '#' and be followed by 3, 4, 6, or 8 hexadecimal characters.
 ///
-/// @param {String} $str - The string to check.
+/// @param {*} $value - The value to check.
 ///
-/// @return {Bool} - True if the string is a valid hex color code, false if not.
+/// @return {Bool} - True if the value is a valid hex color code, false if not.
 ///
 /// @access public
 /// @group Utilities
-@function is-valid-hex($str) {
+@function is-valid-hex($value) {
+  @if meta.type-of($value) != 'color' and meta.type-of($value) != 'string' {
+    @return false;
+  }
+
+  @if meta.type-of($value) == 'color' {
+    $value: '#{$color}';
+  }
+
+  @if meta.type-of($value) == 'string' {
+    $value: string.to-lower-case($value);
+  } @else {
+    @return false;
+  }
+
   // Check if the string starts with '#' and has a length of 4, 5, 7, or 9.
-  @if string.slice($str, 1, 1) != '#' or not list.index((4 5 7 9), string.length($str)) {
+  @if string.slice($value, 1, 1) != '#' or not list.index((4 5 7 9), string.length($value)) {
     @return false;
   }
 
   // Iterate over each character after '#' to check if it's a valid hex character.
-  @for $i from 2 through string.length($str) {
-    $char: string.to-lower-case(string.slice($str, $i, $i));
+  @for $i from 2 through string.length($value) {
+    $char: string.to-lower-case(string.slice($value, $i, $i));
 
     // Check if character is not a valid hexadecimal character.
     @if not index('0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f', $char) {

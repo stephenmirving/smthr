@@ -35,7 +35,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get the
 best functionality possible from it.
 
-This is **smthr** version 0.6.0 - _Last update:_ 03/16/24
+This is **smthr** version 0.7.0 - _Last update:_ 03/17/24
 
 ## Content
 
@@ -287,11 +287,15 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-* Fixed bug in `shape-shadow()` function with some edge-case parameters.
+* Improved functionality of `shape-shadow()` function and fixed a bug with some
+  edge-case parameters .
+
+* Added `is-valid-hex()` function that tests input and determines if it is a
+  valid hex color or string.
 
 * Added `fibonacci()` function that returns an nth number in the sequence or a
-range in the sequence represented as a comma-separated list. Also added
-a `hypotenuse()` function.
+  range in the sequence represented as a comma-separated list. Also added
+  a `hypotenuse()` function.
 
 * Added library to NPM! You can now add this to your project using `npm i smoother`
 
@@ -311,8 +315,8 @@ equations based on trigonometry and linear algebra.
 * Improved `is-position()` function with the ability to allow alias values.
 
 * Greatly improved the BEM mixins `elem()` and `mod()` such that they can now be
-passed a limitless Arglist of element or modifier names and be used on selector
-groups that have a limitless number of parent selectors.
+  passed a limitless Arglist of element or modifier names and be used on selector
+  groups that have a limitless number of parent selectors.
 
 * Fixed an issue with animation suffixes and `animation-direction` not always
 working correctly since the 0.3.3 update.
@@ -320,8 +324,8 @@ working correctly since the 0.3.3 update.
 * New functions, `is-falsey()`, `equals-true()`, `equals-false()`
 
 * Updated all mixins and functions that had a likelihood of being passed an
-argument with a 2 word keyword such as `top left`  or `to right` so that they
-would accept a greater number of alias values when not wrapped in strings.
+  argument with a 2 word keyword such as `top left`  or `to right` so that they
+  would accept a greater number of alias values when not wrapped in strings.
 
 * Allowed for passing CSS global values on a greater number of mixin arguments,
 such as for the animation-direction property on animations.
@@ -330,8 +334,8 @@ such as for the animation-direction property on animations.
 and the `animation-iteration-count` properties to be passed as arguments.
 
 * Improved the annotations and error reporting for all the mixins and functions
-so that parameters with many possible keyword values have those keywords listed
-in the documentation.
+  so that parameters with many possible keyword values have those keywords listed
+  in the documentation.
 
 * Got the SassDoc annotation documentation online
 
