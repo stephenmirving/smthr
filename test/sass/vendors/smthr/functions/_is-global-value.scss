@@ -36,7 +36,7 @@
 /// @require {function} is-string
 /// @require {variable} $global-values
 ///
-///@alias is-global-value
+/// @alias is-global-value
 @function is-global-val($value, $global-list: $global-values) {
   @return is-global-value($value, $global-list);
 }

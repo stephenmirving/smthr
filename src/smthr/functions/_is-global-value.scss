@@ -25,14 +25,14 @@
 /// Detects if a given value is one of the CSS global values that can be used
 /// with virutally any CSS property.
 ///
-/// @access public
-///
 /// @param {*} $value - The value being checked.
-/// @param {List} [$global-values] - The list containing all existing CSS global
-/// values.
+/// @param {List} $global-list [$global-values] - The list containing all
+/// existing CSS global values.
 ///
 /// @return {Bool} True if the $value is a CSS global value, false otherwise.
 ///
+/// @access public
+/// @group Utilities
 /// @require {function} is-string
 /// @require {variable} $global-values
 ///
