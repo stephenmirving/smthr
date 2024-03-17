@@ -73,7 +73,7 @@ To download _Smoother_ for your project using NPM, use the following from
 the command line in you'r project's root directory.
 
 ```bash
-npm install smoother
+npm i smoother
 ```
 
 You can see it on the NPM website here:
