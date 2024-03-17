@@ -1,8 +1,11 @@
 @use 'sass:meta';
 @use 'sass:list';
+@use 'sass:string';
+@use '../../functions/conv-color-name' as *;
 @use '../../functions/is-color' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/is-true' as *;
+@use '../../functions/is-valid-hex' as *;
 
 /// Use on the wrapper for an element with the a clip-path effect applied and
 /// it will add a drop shadow to the clipped shape.
@@ -15,9 +18,11 @@
 /// effect with `filter: none`.
 ///
 /// @group Shapes
+/// @require {function} conv-color-name
 /// @require {function} is-color
 /// @require {function} is-string
 /// @require {function} is-true
+/// @require {function} is-valid-hex
 ///
 /// @throw Invalid color value for $shadow-color
 /// @throw Invalid data type for $shadow-vals
@@ -26,32 +31,34 @@
   $shadow-vals: -1px 6px 3px,
   $turn-off: false
 ) {
-  @if not is-color($shadow-color) and not
-    (
-      is-string($shadow-color) and
-        (
-          (
-              string.slice($shadow-color, 1, 1) ==
-                '#' and
-                list.index((4 5 7 9), string.length($shadow-color))
-            ) or
-            (
-              list.index(
-                ('rgb' 'rgba' 'hsl' 'hsla' 'hwb', 'lab', 'lch'),
-                string.to-lower-case(
-                  string.slice(
-                    $shadow-color,
-                    1,
-                    string.index($shadow-color, '(') - 1
-                  )
-                )
-              )
-            ) or
-            string.to-lower-case($shadow-color) ==
-            'currentcolor'
-        )
+  $parenthesis-index: null;
+
+  @if $shadow-color and is-string($shadow-color) {
+    $parenthesis-index: string.index($shadow-color, '(');
+  }
+
+  @if is-color($shadow-color) {
+    $shadow-color: conv-color-name($shadow-color);
+  } @else if not (
+    is-string($shadow-color) and (
+      is-valid-hex($shadow-color) or
+      (
+        $parenthesis-index and
+        list.index(
+          ('rgb', 'rgba', 'hsl', 'hsla', 'hwb', 'lab', 'lch'),
+          string.to-lower-case(
+            string.slice(
+              $shadow-color,
+              1,
+              $parenthesis-index - 1
+            )
+          )
+        ) and
+        ($parenthesis-index == 4 or $parenthesis-index == 5)
+      ) or
+      $shadow-color == 'transparent'
     )
-  {
+  ) {
     @error 'Invalid $shadow-color value of #{meta.inspect($shadow-color)} ' +
         'passed to the [ shape-shadow() ] mixin. You must pass a color for ' +
         'this parameter.';

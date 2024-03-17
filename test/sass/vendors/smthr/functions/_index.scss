@@ -41,6 +41,8 @@
 @forward 'num-to-ratio';
 @forward 'exp-maclaurin';
 @forward 'factorial';
+@forward 'fibonacci';
+@forward 'hypotenuse';
 @forward 'linear-interpolation';
 @forward 'pi';
 @forward 'ratio-to-percentage';
@@ -76,6 +78,8 @@
 @forward 'map-to-list';
 
 // Color Functions
+@forward 'black';
+@forward 'bottom-shadow';
 @forward 'color-invert';
 @forward 'color-complement';
 @forward 'color-text-contrast';
@@ -83,12 +87,11 @@
 @forward 'conv-color';
 @forward 'conv-color-name';
 @forward 'get-color-type';
-@forward 'black';
-@forward 'white';
+@forward 'is-valid-hex';
 @forward 'shade';
 @forward 'tint';
 @forward 'to-cmyk';
 @forward 'to-hex';
-@forward 'bottom-shadow';
 @forward 'top-shadow';
 @forward 'make-long-shadow';
+@forward 'white';

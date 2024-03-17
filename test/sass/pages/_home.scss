@@ -44,7 +44,7 @@
 .card {
   @include clamp-width(11rem, 35%, 22rem);
   @include clamp-height(5.5rem, 40%, 22rem);
-  @include depth-level(3);
+  // @include depth-level(3);
   @include font(
     4rem,
     900,
@@ -80,6 +80,10 @@
     border-color: shade(rgba(#08f, 0.8), 10%);
     transform: none;
   }
+
+  animation: 3s clip-wave infinite;
+
+  @include shape-shadow(#3336);
 }
 
 @keyframes hue-shift {
@@ -236,13 +240,25 @@ $flip-axis: 'horizontal';
   }
 }
 
+@keyframes clip-wave {
+  @for $i from 0 through 100 {
+    $completeness: math.div($i, 100);
+
+    #{$i}% {
+      clip-path: time-equation('clip-path-wave', $completeness)
+    }
+  }
+
+}
+
 .test {
   $var: 30rem;
-  color: color-text-contrast(blue);
+
   content: $var > 0;
+  color: color-text-contrast(blue);
   @include caret;
   @include fluid-media;
   @include nav-divider;
   @include visible('hide');
-  @include resizable();
+  @include resizable;
 }

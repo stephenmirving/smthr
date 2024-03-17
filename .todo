@@ -17,8 +17,8 @@ TODO:
           ✔ Figure out if can remove the space in the strings when the animation is called like #{$timing-func}#{$delay}#{$inf-alt} @done(24-03-08 01:17)
           ✔ Touch up bg-or-fg decision and add whether bg-or-fg into the animation name @done(24-03-08 01:17)
           ✔ Add error checking for $infinite-alternate @done(24-03-03 19:12)
-        ☐ Restest shape-shadow
-          ☐ Test its new error checking
+        ✔ Restest shape-shadow @done(24-03-17 03:01)
+          ✔ Test its new error checking @done(24-03-17 03:01)
         ☐ Test all Utilities mixins
           ☐ ghost-button
           ☐ inner-side-shadow
@@ -115,7 +115,7 @@ TODO:
     ✔ Get the SassDoc API compiled and ran @done(24-03-16 19:37)
     ☐ Create website and API guide using Github Pages
     ✔ Publish as an npm package @done(24-03-16 19:37)
-    ☐ 
+    ☐
     ✔ Use SassDoc to generate web documentation from files @done(24-03-16 19:37)
 
   Test Site:

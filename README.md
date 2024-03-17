@@ -287,7 +287,13 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-* Added library to NPM!
+* Fixed bug in `shape-shadow()` function with some edge-case parameters.
+
+* Added `fibonacci()` function that returns an nth number in the sequence or a
+range in the sequence represented as a comma-separated list. Also added
+a `hypotenuse()` function.
+
+* Added library to NPM! You can now add this to your project using `npm i smoother`
 
 * 6 new mixins added: `caret()`, `fluid-media()`, `nav-divider()`, `visible()`
 `resizable()`, and `reset-text()`
