@@ -71,7 +71,7 @@ by calling a function, variable, or by using a mixin with `@includes`.
   - Much more!
 - A modern, opinionated CSS normalization file written in Sass called _betterize.scss
 - A print style file written in Sass called _smooth-print.scss
-- A collection of helpful and configurable `!default` variables.
+- A collection of helpful and configurable `!default` variables
 - Helpful documentation for every function, mixin, and variable
 
 ## Sass Version Requirement
