@@ -21,11 +21,11 @@
 
 .stage-title {
   @include font(3rem, 700, normal, $family: font-stack('system'));
-  // @include text-tracking-in('contract', true, null, 1.4s, 0.2s);
+  @include text-tracking-in('contract', true, null, 1.4s, 0.2s);
   // @include text-emboss(0.8, #000, 3px);
-  // @include text-outline(black, $is-important: true);
+  @include text-outline(black, $is-important: true);
   // @include text-shadow(calc(1vw + 1px), calc(2px + 1rem), calc(0.5rem - 1px), hsla(0, 0%, 0%, 0.8));
-  @include long-shadow();
+  // @include long-shadow();
 
   position: absolute;
   top: 10%;
@@ -48,7 +48,7 @@
 .card {
   @include clamp-width(11rem, 35%, 22rem);
   @include clamp-height(5.5rem, 40%, 22rem);
-  // @include depth-level(3);
+  @include depth-level(3);
   @include font(
     4rem,
     900,
@@ -65,17 +65,15 @@
   position: relative;
   border: 8px solid conv-color(#08f, 'hsl');
   border-radius: 12px;
-  // background: conv-color(#08f, 'hsl') padding-box;
+  background: conv-color(#08f, 'hsl') padding-box;
   font-variant-caps: all-small-caps;
   text-align: center;
   transition-property: transform, box-shadow, border-color, background-color;
   transition-duration: 200ms;
   transition-timing-function: ease-out;
 
-  box-shadow: make-long-shadow($longness: 80);
-
   &:hover {
-    // @include depth-level(5, #fff);
+    @include depth-level(5, #fff);
 
     border-color: tint(rgba(#08f, 0.8), 10%);
     transform: translateY(-1.06%) scale(1.021212);
@@ -83,7 +81,7 @@
 
   &:active {
     @include depth-level(0);
-    @include shape-shadow($turn-off: true);
+    // @include shape-shadow($turn-off: true);
 
     border-color: shade(rgba(#08f, 0.8), 10%);
     transform: none;
@@ -166,32 +164,32 @@ $flip-axis: 'horizontal';
 }
 
 .btn {
-  @include ghost-button(1.25rem, rgb(3, 23, 95, 1), 700, system-ui, 3px, rgb(3, 23, 95, 1), 1rem 1.25rem, 0.5s, color-text-contrast(rgba(3, 23, 95, 1)));
-  // @include reset;
-  // @include button-base(
-  //   rgba(#08f, 1),
-  //   #fff,
-  //   6px ridge rgba(#80f, 0.8),
-  //   16px,
-  //   0 1rem,
-  //   0.875rem 1.75rem,
-  //   system-ui,
-  //   1.5rem
-  // );
-  // @include depth-level(2, #80f);
+  // @include ghost-button(1.25rem, rgb(3, 23, 95, 1), 700, system-ui, 3px, rgb(3, 23, 95, 1), 1rem 1.25rem, 0.5s, color-text-contrast(rgba(3, 23, 95, 1)));
+  @include reset;
+  @include button-base(
+    rgba(#08f, 1),
+    #fff,
+    6px ridge rgba(#80f, 0.8),
+    16px,
+    0 1rem,
+    0.875rem 1.75rem,
+    system-ui,
+    1.5rem
+  );
+  @include depth-level(2, #80f);
 
-  // transition-property: transform, box-shadow, border-color, background-color,
-  //   color;
-  // transition-duration: 0.1s;
-  // transition-timing-function: ease-out;
+  transition-property: transform, box-shadow, border-color, background-color,
+    color;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-out;
 
-  // &:hover {
-  //   @include depth-level(4, #80f);
+  &:hover {
+    @include depth-level(4, #80f);
 
-  //   border-color: tint(rgba(#80f, 0.8), 10%);
-  //   background-color: tint(rgba(#08f, 1), 10%);
-  //   transform: translateY(-2px) scale(1.005);
-  // }
+    border-color: tint(rgba(#80f, 0.8), 10%);
+    background-color: tint(rgba(#08f, 1), 10%);
+    transform: translateY(-2px) scale(1.005);
+  }
 
   &:active {
     @include depth-level(0);
