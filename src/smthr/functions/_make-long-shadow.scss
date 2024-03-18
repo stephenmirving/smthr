@@ -1,18 +1,40 @@
-/// Generates the values to create a long shadow. Used by `long-shadow` mixin.
+@use 'sass:math';
+@use 'is-integer' as *;
+
+/// Generates the values to create a long shadow on text or any other element.
+/// Used by the `long-shadow()` mixin, but can also be used on its own as the
+/// value for a `text-shadow` or `box-shadow` property.
 ///
-/// @param {Color} $color - The color of the long shadow.
-/// @param {Number} $longness - The integer length of the shadow.
+/// @param {Color} $color [hsla(0, 0%, 15%, 0.95)] - The color of the long shadow.
+/// @param {Number} $longness [20] - Used to calculate the length of the shadow.
+/// Must be a unitless integer greater than 0.
 ///
-/// @return {List} The list of values for the text-shadow property used by the
-/// long-shadow() mixin.
+/// @return {List} The list of values that can be used by the `text-shadow` or
+/// `box-shadow` properties. These values are also used by the `long-shadow()`
+/// mixin.
 ///
 /// @access public
 /// @group Utilities
-@function make-long-shadow($color, $longness) {
-  $val: 0 0 $color;
+/// @require {function} is-integer
+///
+/// @throw Invalid $longness value error, must be a unitless integer greater
+/// than 0.
+@function make-long-shadow($color: hsla(0, 0%, 15%, 0.95), $longness: 20) {
+  @if not is-integer($longness) or
+      not math.is-unitless($longness) or
+      $longness <= 0
+  {
+    @error 'Invalid input for $longness in the [ make-long-shadow() ] ' +
+        'function. This value must be a unitless integer greater than 0. ' +
+        'It is used by the function to calculate the values for the length ' +
+        'of the shadow, most commonly for the [ long-shadow() ] mixin.';
+  }
+
+  $val: 0 0 #{$color};
 
   @for $i from 1 through $longness {
-    $val: $val, $i * 1px $i * 1px $color;
+    $val: $val, $i * 1px $i * 1px #{$color};
   }
+
   @return $val;
 }

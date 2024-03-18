@@ -1,12 +1,26 @@
+@use 'sass:math';
+@use '../../functions/is-integer' as *;
 @use '../../functions/make-long-shadow' as *;
 
-/// Creates a long text shadow effect.
+/// Creates a long shadow effect on text.
 ///
-/// @param {Color} $color - The color of the long shadow.
-/// @param {Number} $longness - The integer length of the shadow.
+/// @param {Color} $color [hsla(0, 0%, 15%, 0.95)] - The color of the long shadow.
+/// @param {Number} $longness [20] - Used to calculate the length of the shadow.
+/// Must be a unitless integer greater than 0.
 ///
 /// @group Utilities
+/// @require {function} is-integer
 /// @require {function} make-long-shadow
-@mixin long-shadow($color: #191919, $longness: 180) {
+@mixin long-shadow($color: hsla(0, 0%, 15%, 0.95), $longness: 20) {
+  @if not is-integer($longness) or
+      not math.is-unitless($longness) or
+      $longness <= 0
+  {
+    @error 'Invalid input for $longness in the [ long-shadow() ] ' +
+        'mixin. This value must be a unitless integer greater than 0. ' +
+        'It is used by the mixin to calculate the values for the length ' +
+        'of the shadow.';
+  }
+
   text-shadow: make-long-shadow($color, $longness);
 }

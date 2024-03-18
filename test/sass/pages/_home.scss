@@ -59,7 +59,8 @@
     semi-expanded,
     1.5px
   );
-  @include inner-side-shadow('top', 5vh, hsla(180, 80%, 20%, 1));
+  // @include inner-side-shadow('top', 5vh, hsla(180, 80%, 20%, 1));
+
 
   position: relative;
   border: 8px solid conv-color(#08f, 'hsl');
@@ -71,8 +72,10 @@
   transition-duration: 200ms;
   transition-timing-function: ease-out;
 
+  box-shadow: make-long-shadow($longness: 80);
+
   &:hover {
-    @include depth-level(5, #fff);
+    // @include depth-level(5, #fff);
 
     border-color: tint(rgba(#08f, 0.8), 10%);
     transform: translateY(-1.06%) scale(1.021212);
