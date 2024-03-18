@@ -37,7 +37,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get the
 best functionality possible from it.
 
-This is **smthr** version 0.8.0 - _Last updated:_ 03/17/24
+This is **smthr** version 0.8.1 - _Last updated:_ 03/17/24
 
 ## Content
 
@@ -148,7 +148,7 @@ you can simply `@import` the library at the top of the other partials you
 
 ```scss
 // FILE: sass/main.scss
-
+// ** Method not recommended **
 @import 'vendors/smthr/smth';
 @import 'vendors/betterize/betterize';
 
@@ -175,7 +175,7 @@ The downsides of this method are twofold:
 - This method will [soon be deprecated](https://github.com/sass/sass/blob/main/accepted/module-system.md#timeline) by Sass, which lists many [reasons for discouraging and deprecating the feature](https://sass-lang.com/documentation/at-rules/import/) in their documentation.
 
 The better choice would be to follow the specification for the newer versions of
-Sass (At time of writing, DartSass version 1.71.1). Doing it this way will ensure
+Sass (At time of writing, DartSass version 1.72.0). Doing it this way will ensure
 your project will continue to compile if you update your Sass version past the
 point that `@import` is deprecated (most likely sometime this year in 2024).
 
@@ -300,7 +300,8 @@ For more information about migrating away from the soon-to-be-deprecated
 
 ## Documentation
 
-_Smoother_ documentation: [https://stephenmirving.github.io/smthr/]
+_Smoother_ documentation:
+[https://stephenmirving.github.io/smthr/](https://stephenmirving.github.io/smthr/)
 
 In the future, there will be a more Getting Started section and a comprehensive
 wiki with example code snippets that show their CSS output, with picture or
@@ -327,6 +328,16 @@ To get an idea of the full list of aliases for these keyword values, see the
 link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
+
+### Versions 0.8.1 Patch Notes
+
+- Fixed a bug in the new `fibonacci()` function that was preventing the use
+  of the function to return a range of numbers in the sequence rather tha
+  just a single number.
+- Fixed a bug with `inner-side-shadow()` that prevented that mixin from
+  working at all.
+- Added ability to pass calc() function equations to the `text-shadow()` mixin.
+- Improved error checking, error messages, and SassDoc annotations on some mixins.
 
 ### Version 0.8.0 Patch Notes
 
@@ -425,21 +436,6 @@ For more information about how to update your project's Sass files to replace
 the soon-to-be-deprecated `@import` feature with the newer `@use` and `@forward`
 features, refer to the
 [documentation for the sass-migrator tool](https://sass-lang.com/documentation/cli/migrator/).
-
-## Contributions
-
-If you would like to contribute to _Smoother_, whether it is to add something
-new or fix a bug you have found, check out the
-[Contributions](https://github.com/stephenmirving/smthr/blob/master/CONTRIBUTIONS.md)
-document.
-
-## License
-
-_Smoother_ is distributed under an
-[MIT License](https://github.com/stephenmirving/smthr/blob/master/LICENSE).
-
-**TLDR:** Anyone can use this code however they want as long as they include a
-copy of the above license.
 
 ## Authors
 

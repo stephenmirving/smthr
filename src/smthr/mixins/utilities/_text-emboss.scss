@@ -1,17 +1,28 @@
 @use 'sass:color';
 @use '../../functions/conv-color' as *;
+@use '../../functions/is-color' as *;
 
 /// Apply a subtle embossing text shadow effect.
-/// @param {Float} $opacity - The opacity value.
+/// @param {Number} $opacity - The opacity value. Should be a unitless number
+/// between 0 and 1.
 /// @param {Color} $color [#fff} - The embossing shadow's color value. Can be
 /// and color type, but if the color has an alpha/opacity value other than 1 it
 /// will be disregarded in favor of the $opacity parameter.
+/// @param {Number} $blue [null] - The optional blur value for the text-shadow
+/// sproperty. If not specified, it defaults to 0. If specified, it should be
+/// a length value.
 ///
 /// @group Utilities
 ///
-/// @throw Invalid color value.
-/// @throw Color value stripped of alpha value in favor of $opacity.
-@mixin text-emboss($opacity, $color: #fff, $blur: 0) {
+/// @throw Invalid $color value error.
+/// @throw Color value stripped of alpha value in favor of $opacity warning.
+@mixin text-emboss($opacity, $color: #fff, $blur: null) {
+  @if not is-color($color) {
+    @error 'Invalid $color value passed to the [ text-emboss() ] mixin. ' +
+        'The value passed is not recognized as a color by Sass and cannot ' +
+        'be processed by this function.';
+  }
+
   @if color.alpha($color) != 1 {
     @warn 'Ignoring alpha value of #{meta.inspect($color)} passed to the' +
         '[ text-emboss() ] mixin in favor of the $opacity parameter for the ' +
@@ -22,5 +33,5 @@
   // in the color removed from it (in favor of the $opacity value).
   $color: conv-color($color, 'name');
 
-  text-shadow: 0 1px $blur rgba($color, $opacity);
+  text-shadow: 0 1px #{$blur} rgba($color, $opacity);
 }

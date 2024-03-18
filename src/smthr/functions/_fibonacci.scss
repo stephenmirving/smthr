@@ -50,8 +50,8 @@
 
   $error-msg-section: 'Passing a single integer will ' +
         'return the nth value in the fibonacci sequence. Passing two ' +
-        'arguments will return the range between those numbers in the ' +
-        'fibonacci sequence as a comma-separated list.';
+        'arguments will return the value inclusive range between those ' +
+        'numbers in the fibonacci sequence as a comma-separated list.';
 
   @if not is-integer($n) or ($end and not is-integer($end)) {
     @error 'Invalid input for the [ fibonacci() ] function. Any value passed ' +
@@ -64,9 +64,13 @@
         '#{$error-msg-section}';
   }
 
-  @if $end and $end > $n {
+  @if $end and $end < $n {
     @error 'Invalid input for the [ fibonacci() ] function. The second argument' +
-        ', $end, cannot be larger than the first argument, $n. #{$error-msg-section}';
+        ', $end, cannot be smaller than the first argument, $n. #{$error-msg-section}';
+  }
+
+  @if $end == $n {
+    $end: null;
   }
 
   @if not $end {

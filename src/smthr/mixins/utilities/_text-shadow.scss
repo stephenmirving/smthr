@@ -1,23 +1,58 @@
 @use 'sass:math';
-@use '../../functions/is-alias' as *;
+@use 'sass:meta';
+@use '../../functions/is-calculation' as *;
+@use '../../functions/is-number' as *;
 
 /// Apply a text shadow effect.
 ///
-/// @param {Number} $x [2px] - The x-axis offset of the shadow.
-/// @param {Number} $y [2px] - The x-axis offset of the shadow.
-/// @param {Number} $blur [5px] - The blur range of the shadow.
-/// @param {Color} $color [hsl(0 0% 0 / 0.4)] - The color of the shadow.
+/// @param {Number} $x-offset [2px] - The x-axis offset of the shadow. Must be
+/// a length or a unitless number (will be converted to a px value).
+/// @param {Number} $y-offset [2px] - The x-axis offset of the shadow. Must be
+/// a length or a unitless number (will be converted to a px value).
+/// @param {Number} $blur [5px] - The blur-radius of the shadow. Must be
+/// a length or a unitless number (will be converted to a px value).
+/// @param {Color} $color [hsl(0, 0%, 0%, 0.4)] - The color of the shadow.
 ///
 /// @group Utilities
-/// @require {function} is-alias
-@mixin text-shadow($x: 2px, $y: 2px, $blur: 5px, $color: hsla(0, 0%, 0%, 0.4)) {
-  $x: if((math.is-unitless($x)), $x * 1px, $x);
-  $y: if((math.is-unitless($y)), $y * 1px, $y);
-  $blur: if((math.is-unitless($blur)), $blur * 1px, $blur);
-
-  @if not $blur or $blur == 0px or $blur == 0 or is-alias('none', $blur) {
-    text-shadow: $x $y $color;
-  } @else {
-    text-shadow: $x $y $blur $color;
+/// @require {function} is-calculation
+/// @require {function} is-number
+@mixin text-shadow(
+  $x-offset: 2px,
+  $y-offset: 2px,
+  $blur: 5px,
+  $color: hsla(0, 0%, 0%, 0.4)
+) {
+  // Input scrubbing error check
+  @if (
+    not $x-offset or (not is-number($x-offset) and not is-calculation($x-offset))
+  ) or (
+    not $y-offset or (not is-number($y-offset) and not is-calculation($y-offset))
+  ) or (
+    $blur and not is-number($blur) and not is-calculation($blur)
+  ) {
+    @error 'Invalid input for the [ text-shadow() ] mixin. All parameters ' +
+        'passed must either be a number or a calc() function, with the ' +
+        'exception of the $blur parameter which is optional and may also ' +
+        'be `null` or `false`.';
   }
+
+  // If any value is unitless, convert it to a px value
+  @if is-number($x-offset) and math.is-unitless($x-offset) {
+    $x-offset: $x-offset * 1px;
+  }
+
+  @if is-number($y-offset) and math.is-unitless($y-offset) {
+    $y-offset: $y-offset * 1px;
+  }
+
+  @if is-number($blur) and math.is-unitless($blur) {
+    $blur: $blur * 1px;
+  }
+
+  // Set the blur to `null` if nothing or 0 is passed
+  @if not $blur or $blur == 0px {
+    $blur: null;
+  }
+
+  text-shadow: $x-offset $y-offset #{$blur} #{$color};
 }

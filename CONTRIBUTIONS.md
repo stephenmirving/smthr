@@ -26,7 +26,7 @@ behavior to [stephenmichaelirving@gmail.com].
   - Violent threats or language.
   - Discriminatory or derogatory jokes and language.
   - Posting sexually explicit or violent material.
-  - Posting, or threatening to post, people’s personally identifying information (“doxing”).
+  - Posting, or threatening to post, people’s personally identifying information (“doxxing”).
   - Insults, especially those using discriminatory terms or slurs.
   - Behavior that could be perceived as sexual attention.
   - Advocating for or encouraging any of the above behaviors.

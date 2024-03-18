@@ -21,7 +21,11 @@
 
 .stage-title {
   @include font(3rem, 700, normal, $family: font-stack('system'));
-  @include text-tracking-in('contract', true, null, 1.4s, 0.2s);
+  // @include text-tracking-in('contract', true, null, 1.4s, 0.2s);
+  // @include text-emboss(0.8, #000, 3px);
+  // @include text-outline(black, $is-important: true);
+  // @include text-shadow(calc(1vw + 1px), calc(2px + 1rem), calc(0.5rem - 1px), hsla(0, 0%, 0%, 0.8));
+  @include long-shadow();
 
   position: absolute;
   top: 10%;
@@ -55,11 +59,12 @@
     semi-expanded,
     1.5px
   );
+  @include inner-side-shadow('top', 5vh, hsla(180, 80%, 20%, 1));
 
   position: relative;
   border: 8px solid conv-color(#08f, 'hsl');
   border-radius: 12px;
-  background: conv-color(#08f, 'hsl') padding-box;
+  // background: conv-color(#08f, 'hsl') padding-box;
   font-variant-caps: all-small-caps;
   text-align: center;
   transition-property: transform, box-shadow, border-color, background-color;
@@ -83,7 +88,7 @@
 
   // animation: 3s clip-wave infinite;
 
-  @include shape-shadow(#3336);
+  // @include shape-shadow(#3336);
 }
 
 @keyframes hue-shift {
@@ -257,6 +262,7 @@ $flip-axis: 'horizontal';
 
   content: $var > 0;
   color: color-text-contrast(blue);
+  content: fibonacci(5, 20);
   @include caret;
   @include fluid-media;
   @include nav-divider;

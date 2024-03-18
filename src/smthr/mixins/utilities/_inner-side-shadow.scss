@@ -1,28 +1,49 @@
 @use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
-@use '../../functions/is-alias';
-@use '../../functions/is-string';
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
 
 /// Creates an inner box-shadow for only one side of an element.
 ///
 /// @param {String} $side ['bottom'] - The inner side of the element where the
 /// shadow is supposed to appear. Can be `top`, `left`, `right` or `bottom`.
 /// @param {Number} $size [20px] - The width of the shadow on the target side.
-/// @param {Color} $color [hsl(0 0% 0 / 0.3] - The color of the shadow.
+/// Used in combination with $side to calculate all the values for the box-shadow.
+/// @param {Color} $color [hsl(0, 0%, 0%, 0.33] - The color of the shadow.
 ///
 /// @group Utilities
+/// @require {function} is-alias
+/// @require {function} is-length
+/// @require {function} is-number
+/// @require {function} is-string
+///
+/// @throw Invalid $side value error. Must be either `top`, `right`, `bottom`,
+/// or `left`.
+/// @throw Invalid $size value error. Must be a length or a unitless number.
 @mixin inner-side-shadow(
   $side: 'bottom',
   $size: 20px,
-  $color: hsla(0, 0%, 0%, 0.3)
+  $color: hsla(0, 0%, 0%, 0.33)
 ) {
-  @if math.is-unitless($size) {
-    $size: $size * 1px;
+  $helper: 0;
+
+  @if $side and is-string($side) {
+    $side: string.to-lower-case($side);
   }
 
-  @if is-string($side) {
-    $side: string.to-lower-case($side);
+  @if $size and is-number($size) and $size != 0 {
+    @if math.is-unitless($size) {
+      $size: $size * 1px;
+    }
+
+    @if not is-length($size) {
+      @error 'Invalid $size input for the [ inner-side-shadow() ] mixin. ' +
+          'The value for $size should either be a valid length or a unitless ' +
+          'number (would be converted to pixels).';
+    }
   }
 
   $helper: math.round($size * 0.65);

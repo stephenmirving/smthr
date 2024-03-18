@@ -1,45 +1,11 @@
 TODO:
 
   TESTING:
-    ☐ Test and fix functions and mixins
-      ☐ Mixin Testing
-        ✔ Check all mixins and make sure they have $anim-dir in the actual animation! @done(24-03-08 01:31)
-        ✔ Figure out why 'reverse alternate' isn't erroring out on anim-dir, maybe need to fix in all instances @done(24-03-08 01:31)
-      ☐ Function testing
-        ☐ Work on rainbow-shadow function
-        ☐ Improve num-to-ratio so the loop more accurately grabs the closest common aspect ratio within tolerance
-          ☐ Ensure that it only rounds up towards the next closest common aspect ratio, never down.
-        ☐ to-hex function improvement - Is the hex conversion slightly off on some 4 OR 8 digit hex values?
-            ☐ Need to find example values where this is true and list below
-      ☐ Mixin Testing
-        ✔ Refactor color-shifter @done(24-03-08 01:22)
-          ✔ Change $infinite and $alternate to $iterations and $anim-dir like other animations @started(24-03-05 18:15) @done(24-03-05 21:17) @lasted(3h2m18s)
-          ✔ Figure out if can remove the space in the strings when the animation is called like #{$timing-func}#{$delay}#{$inf-alt} @done(24-03-08 01:17)
-          ✔ Touch up bg-or-fg decision and add whether bg-or-fg into the animation name @done(24-03-08 01:17)
-          ✔ Add error checking for $infinite-alternate @done(24-03-03 19:12)
-        ✔ Restest shape-shadow @done(24-03-17 03:01)
-          ✔ Test its new error checking @done(24-03-17 03:01)
-        ☐ Test all Utilities mixins
-          ✔ ghost-button @done(24-03-18 02:25)
-          ☐ inner-side-shadow
-          ☐ long-shadow
-          ✔ max-width @done(24-03-03 02:51)
-          ✔ min-to-max-width @done(24-03-03 02:51)
-          ✔ min-width @done(24-03-03 02:51)
-          ✔ only-hidpi @done(24-03-03 02:51)
-          ✔ only-phones @done(24-03-03 02:51)
-          ✔ position-center @done(24-03-03 02:45)
-          ✔ position-horizontally @done(24-03-03 02:45)
-          ✔ position-vertically @done(24-03-03 02:40)
-          ✔ position @done(24-03-03 02:40)
-          ✔ responsive-font @done(24-03-09 17:19)
-          ✔ responsive-ratio @done(24-03-03 02:51)
-          ✔ scrollbar @started(24-03-09 17:41) @done(24-03-09 18:05) @lasted(24m8s)
-          ✔ smooth-retina-fonts @done(24-03-03 02:52)
-          ☐ text-emboss
-          ☐ text-outline
-          ☐ text-shadow
-          ✔ truncate @done(24-03-04 18:39)
+    ☐ Function testing
+      ☐ Improve num-to-ratio so the loop more accurately grabs the closest common aspect ratio within tolerance
+        ☐ Ensure that it only rounds up towards the next closest common aspect ratio, never down.
+      ☐ to-hex function improvement - Is the hex conversion slightly off on some 4 OR 8 digit hex values?
+          ☐ Need to find example values where this is true and list below
 
   General Changes:
     ☐ Test :focus-visible vs :focus and possible change :focus-visible styles back to :focus due to accessibility concerns
@@ -55,21 +21,13 @@ TODO:
     ☐ Further test and improve Betterize
     ☐ Possible change the aliases for things like "bottom-left-to-top-right" to resolve to "to top right"
     ☐ Create a new responsive font mixin using the trend-line function
-    ✔ Fix BEM elem() and mod() mixins so that they can take arglists and be used on group selectors @done(24-03-08 01:05)
     ☐ Possibly modify text-outline mixins or create new mixin to include the -webkit-text-stroke property
-    ✔ Take a look at the line-clamp mixin @done(24-03-05 18:14)
-    ✔ Add list-to-string functionality for parameters so if 2 values are passed without quotes, like `top left`, it turns it into `'top left'` @done(24-03-08 01:04)
-      ✔ Otherwise is-alias() won't work on such values. @done(24-03-08 01:04)
-      ✔ Done on mixins from bounce to puffa. Need anywhere there could be a two word keyword value @done(24-03-08 01:04)
     ☐ Determine if a .sass version can be automated in a build process without too much work
+    ☐ Add more input error checking in mixins and functions
     ☐ Improve and standardize all error messages.
     ☐ Ensure all parameters that only take certain keyword strings have those strings listed in the SassDoc
 
   Animations Mixins:
-    ✔ Improve new `hinge()` mixin animation @started(24-03-10 03:40) @done(24-03-10 04:55) @lasted(1h15m49s)
-      ✔ add all corner positions @done(24-03-10 04:28)
-      ✔ add backward direction @done(24-03-10 04:55)
-      ✔ Test out the transform origin property and see if they look better being the exact same as for the position or better the way they were originally @done(24-03-10 04:35)
     ☐ Add more animation property options to the animations, animation-fill-mode and animation-play-state
     ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
@@ -91,21 +49,14 @@ TODO:
     ☐ Make a mixin for animating between clip-path shapes. https://css-tricks.com/animating-with-clip-path/
 
   Utility Mixins:
-    ✔ Finish and propogate line-clamp mixin @done(24-03-04 18:40)
     ☐ Create more flex-box prefix mixins
       ☐ Finish testing and copying over flex-flow mixin
     ☐ Create new CSS grid mixins and functions
     ☐ Create an @font-face mixin
-    ✔ Allow opacity mixin to take percentages @done(24-03-04 18:44)
-    ✔ Finish propogating responsive-ratio mixin to the dist folder @done(24-03-04 18:41)
 
   Functions:
     ☐ Add mmore equations to the time-equations function, more are saved in workspace file css-equations.txt
     ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.
-    ✔ Finish and propogate linear-interpolation function: @done(24-03-04 18:42)
-      ✔ Function finished @done(24-03-04 18:42)
-      ✔ Function added to main build file @done(24-03-04 18:42)
-      ✔ Function propogated to a prefixed version and sass versions @done(24-03-04 18:42)
     ☐ Finish doing everything from the smashing magazine article the linear-interpolation function (and possibly trend line?) came from
     ☐ Finish and propogate the new precision function ??
       ☐ Function finished
@@ -113,11 +64,7 @@ TODO:
     ☐ Make an is-color-name function that returns true or false if the value is a css color name
 
   Publishing:
-    ✔ Get the SassDoc API compiled and ran @done(24-03-16 19:37)
     ☐ Create website and API guide using Github Pages
-    ✔ Publish as an npm package @done(24-03-16 19:37)
-    ☐
-    ✔ Use SassDoc to generate web documentation from files @done(24-03-16 19:37)
 
   Test Site:
     ☐ Front page layout
@@ -132,6 +79,59 @@ TODO:
 ================================================================================
 
 Archive:
+  ✔ Use SassDoc to generate web documentation from files @done(24-03-16 19:37) @project(TODO.Publishing)
+  ✔ Test and fix functions and mixins @done(24-03-18 16:49) @project(TODO.TESTING)
+  ✔ Mixin Testing @done(24-03-18 16:49) @project(TODO.TESTING)
+  ✔ Check all mixins and make sure they have $anim-dir in the actual animation! @done(24-03-08 01:31) @project(TODO.TESTING)
+  ✔ Figure out why 'reverse alternate' isn't erroring out on anim-dir, maybe need to fix in all instances @done(24-03-08 01:31) @project(TODO.TESTING)
+  ✔ Mixin Testing @done(24-03-18 16:49) @project(TODO.TESTING)
+  ✔ Refactor color-shifter @done(24-03-08 01:22) @project(TODO.TESTING)
+  ✔ Change $infinite and $alternate to $iterations and $anim-dir like other animations @started(24-03-05 18:15) @done(24-03-05 21:17) @lasted(3h2m18s) @project(TODO.TESTING)
+  ✔ Figure out if can remove the space in the strings when the animation is called like #{$timing-func}#{$delay}#{$inf-alt} @done(24-03-08 01:17) @project(TODO.TESTING)
+  ✔ Touch up bg-or-fg decision and add whether bg-or-fg into the animation name @done(24-03-08 01:17) @project(TODO.TESTING)
+  ✔ Add error checking for $infinite-alternate @done(24-03-03 19:12) @project(TODO.TESTING)
+  ✔ Restest shape-shadow @done(24-03-17 03:01) @project(TODO.TESTING)
+  ✔ Test its new error checking @done(24-03-17 03:01) @project(TODO.TESTING)
+  ✔ Test all Utilities mixins @done(24-03-18 16:39) @project(TODO.TESTING)
+  ✔ ghost-button @done(24-03-18 02:25) @project(TODO.TESTING)
+  ✔ inner-side-shadow @done(24-03-18 15:46) @project(TODO.TESTING)
+  ✔ long-shadow @done(24-03-18 16:39) @project(TODO.TESTING)
+  ✔ max-width @done(24-03-03 02:51) @project(TODO.TESTING)
+  ✔ min-to-max-width @done(24-03-03 02:51) @project(TODO.TESTING)
+  ✔ min-width @done(24-03-03 02:51) @project(TODO.TESTING)
+  ✔ only-hidpi @done(24-03-03 02:51) @project(TODO.TESTING)
+  ✔ only-phones @done(24-03-03 02:51) @project(TODO.TESTING)
+  ✔ position-center @done(24-03-03 02:45) @project(TODO.TESTING)
+  ✔ position-horizontally @done(24-03-03 02:45) @project(TODO.TESTING)
+  ✔ position-vertically @done(24-03-03 02:40) @project(TODO.TESTING)
+  ✔ position @done(24-03-03 02:40) @project(TODO.TESTING)
+  ✔ responsive-font @done(24-03-09 17:19) @project(TODO.TESTING)
+  ✔ responsive-ratio @done(24-03-03 02:51) @project(TODO.TESTING)
+  ✔ scrollbar @started(24-03-09 17:41) @done(24-03-09 18:05) @lasted(24m8s) @project(TODO.TESTING)
+  ✔ smooth-retina-fonts @done(24-03-03 02:52) @project(TODO.TESTING)
+  ✔ text-emboss @done(24-03-18 15:58) @project(TODO.TESTING)
+  ✔ text-outline @done(24-03-18 16:02) @project(TODO.TESTING)
+  ✔ text-shadow @done(24-03-18 16:23) @project(TODO.TESTING)
+  ✔ truncate @done(24-03-04 18:39) @project(TODO.TESTING)
+  ✔ Fix BEM elem() and mod() mixins so that they can take arglists and be used on group selectors @done(24-03-08 01:05) @project(TODO.General Changes)
+  ✔ Take a look at the line-clamp mixin @done(24-03-05 18:14) @project(TODO.General Changes)
+  ✔ Add list-to-string functionality for parameters so if 2 values are passed without quotes, like `top left`, it turns it into `'top left'` @done(24-03-08 01:04) @project(TODO.General Changes)
+  ✔ Otherwise is-alias() won't work on such values. @done(24-03-08 01:04) @project(TODO.General Changes)
+  ✔ Done on mixins from bounce to puffa. Need anywhere there could be a two word keyword value @done(24-03-08 01:04) @project(TODO.General Changes)
+  ✔ Improve new `hinge()` mixin animation @started(24-03-10 03:40) @done(24-03-10 04:55) @lasted(1h15m49s) @project(TODO.Animations Mixins)
+  ✔ add all corner positions @done(24-03-10 04:28) @project(TODO.Animations Mixins)
+  ✔ add backward direction @done(24-03-10 04:55) @project(TODO.Animations Mixins)
+  ✔ Test out the transform origin property and see if they look better being the exact same as for the position or better the way they were originally @done(24-03-10 04:35) @project(TODO.Animations Mixins)
+  ✔ Finish and propogate line-clamp mixin @done(24-03-04 18:40) @project(TODO.Utility Mixins)
+  ✔ Allow opacity mixin to take percentages @done(24-03-04 18:44) @project(TODO.Utility Mixins)
+  ✔ Finish propogating responsive-ratio mixin to the dist folder @done(24-03-04 18:41) @project(TODO.Utility Mixins)
+  ✔ Finish and propogate linear-interpolation function: @done(24-03-04 18:42) @project(TODO.Functions)
+  ✔ Function finished @done(24-03-04 18:42) @project(TODO.Functions)
+  ✔ Function added to main build file @done(24-03-04 18:42) @project(TODO.Functions)
+  ✔ Function propogated to a prefixed version and sass versions @done(24-03-04 18:42) @project(TODO.Functions)
+  ✔ Get the SassDoc API compiled and ran @done(24-03-16 19:37) @project(TODO.Publishing)
+  ✔ Publish as an npm package @done(24-03-16 19:37) @project(TODO.Publishing)
+  ☐
   ✔ Update all size conversion functions to take $base-font-size with units @done(24-03-02 12:32) @project(TODO.TESTING)
   ✔ Fix conv-to-rem @done(24-03-02 15:58) @project(TODO.TESTING)
   ✔ Add support for % inputs @done(24-03-02 15:58) @project(TODO.TESTING)
