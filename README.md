@@ -339,7 +339,7 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
   working at all.
 - Added ability to pass calc() function equations to the `text-shadow()` mixin.
 - Improved error checking, error messages, and SassDoc annotations on some mixins.
-- Added sections to this README
+- Added sections to this README.
 
 ### Version 0.8.0 Patch Notes
 
