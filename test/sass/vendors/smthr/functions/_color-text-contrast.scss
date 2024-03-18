@@ -11,7 +11,8 @@
 @use '../variables/misc' as *;
 
 
-/// Return a light or dark contrast color for text based on the given color.
+/// Determines whether to return a light or dark contrast color for text based
+/// on the given background color.
 ///
 /// @param {Color} $color - The color you are finding the contrast for.
 /// Must be a color type recognized by Sass.

@@ -9,12 +9,6 @@
     "test": "test"
   },
   "files": [
-    "docs/assets/css/main.css",
-    "docs/assets/images/favicon.png",
-    "docs/assets/images/*.svg",
-    "docs/assets/js/vendor/*.js",
-    "docs/assets/js/*.js",
-    "docs/index.html",
     "src/betterize/*.scss",
     "src/smthr/functions/*.scss",
     "src/smthr/mixins/animations/*.scss",

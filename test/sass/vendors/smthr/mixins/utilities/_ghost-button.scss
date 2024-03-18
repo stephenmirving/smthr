@@ -24,7 +24,7 @@
 /// @param {Color} $text-hover-color - The text color of the button's hover state.
 ///
 /// @group Utilities
-/// @require {function} transition-color
+/// @require {mixin} transition-color
 ///
 /// @throw Invalid $transition-duration input error.
 /// @throw Invalid $border-width input error.
