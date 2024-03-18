@@ -2,7 +2,8 @@
 @use 'sass:list';
 @use 'is-integer' as *;
 
-/// Calculates the nth Fibonacci number or a range of Fibonacci numbers.
+/// Calculates the nth Fibonacci number or a range of Fibonacci numbers. This
+/// can be used in calculations for a range of possible effects.
 ///
 /// If one argument is provided, returns the nth Fibonacci number.
 /// If two arguments are provided, returns a list of Fibonacci numbers in the
@@ -24,6 +25,10 @@
 /// @access public
 /// @group Utilities
 /// @require {function} is-integer
+///
+/// @throw Invalid input error. Both arguments must be integers.
+/// @throw Invalid input error. Cannot return anything past the 79th number.
+/// @throw Invalid input error. If $end is passed, it must be larger than $n.
 @function fibonacci($n, $end: null) {
   // Pre-calculated Fibonacci sequence to optimize performance.
   $fibonacci-sequence: (
@@ -45,7 +50,7 @@
 
   $error-msg-section: 'Passing a single integer will ' +
         'return the nth value in the fibonacci sequence. Passing two ' +
-        'argument will return the range between those numbers in the ' +
+        'arguments will return the range between those numbers in the ' +
         'fibonacci sequence as a comma-separated list.';
 
   @if not is-integer($n) or ($end and not is-integer($end)) {

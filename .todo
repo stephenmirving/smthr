@@ -20,7 +20,7 @@ TODO:
         ✔ Restest shape-shadow @done(24-03-17 03:01)
           ✔ Test its new error checking @done(24-03-17 03:01)
         ☐ Test all Utilities mixins
-          ☐ ghost-button
+          ✔ ghost-button @done(24-03-18 02:25)
           ☐ inner-side-shadow
           ☐ long-shadow
           ✔ max-width @done(24-03-03 02:51)
@@ -50,6 +50,7 @@ TODO:
       - https://www.tpgi.com/focus-visible-and-backwards-compatibility/
       - https://www.deque.com/blog/give-site-focus-tips-designing-usable-focus-indicators/
       - Copy any changes to Betterize repo as well
+    ☐ Create is-color-string function that returns whether a string could be a valid color
     ☐ Add more form utilities and mixins
     ☐ Further test and improve Betterize
     ☐ Possible change the aliases for things like "bottom-left-to-top-right" to resolve to "to top right"
@@ -60,7 +61,7 @@ TODO:
     ✔ Add list-to-string functionality for parameters so if 2 values are passed without quotes, like `top left`, it turns it into `'top left'` @done(24-03-08 01:04)
       ✔ Otherwise is-alias() won't work on such values. @done(24-03-08 01:04)
       ✔ Done on mixins from bounce to puffa. Need anywhere there could be a two word keyword value @done(24-03-08 01:04)
-    ☐ Determine if a .sass version can be automated in a build process
+    ☐ Determine if a .sass version can be automated in a build process without too much work
     ☐ Improve and standardize all error messages.
     ☐ Ensure all parameters that only take certain keyword strings have those strings listed in the SassDoc
 

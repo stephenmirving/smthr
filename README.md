@@ -1,15 +1,14 @@
 # _smth.scss
 
-_Smoother_ is a Sassy CSS (SCSS) library designed for a smoother front-end
-development experience. Smoother is filled with simple-to-use functions &amp;
-mixins that aid in UI creation by serving up workflow enhancing utilities
+_Smoother_ is a Sass library designed for a smoother front-end
+development experience. Smoother is filled with simple-to-use functions and
+mixins that aid in UI creation, serving up workflow enhancing utilities
 along with production ready element styles and animations.
 
 In addition to the many utility functions that extend and improve on the
 functionality of the built-in Sass modules, and the mixins that allow for
 intuitive and fast style development without repetition, this library focuses
-heavily on aiding in the creation of CSS animations, transition, and clip-path
-shapes.
+heavily on aiding in the creation of CSS animations.
 
 _Smoother_ allows you to create a wide range of smooth and customizable visual
 effects, without having to deal with messy clip-path coordinates, complicated
@@ -19,14 +18,17 @@ animation keyframe creation, or other verbose and complex code blocks.
 
 1. [Version](#version)
 2. [Content](#content)
-3. [Deployment](#deployment)
-4. [Documentation](#documentation)
-5. [Parameter Aliases](#parameter-aliases)
-6. [Recently Improved](#recently-improved)
-7. [Betterize](#betterize)
-8. [More Info](#more-info)
-9. [Authors](#authors)
-10. [Thanks](#thanks)
+3. [Sass Version Requirement](#sass-version-requirement)
+4. [Deployment](#deployment)
+5. [Documentation](#documentation)
+6. [Parameter Aliases](#parameter-aliases)
+7. [Recently Improved](#recently-improved)
+8. [Betterize](#betterize)
+9. [More Info](#more-info)
+10. [Contributions](#contributions)
+11. [Authors](#authors)
+12. [License](#license)
+13. [Thanks](#thanks)
 
 ## Version
 
@@ -35,46 +37,64 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get the
 best functionality possible from it.
 
-This is **smthr** version 0.7.3 - _Last update:_ 03/17/24
+This is **smthr** version 0.8.0 - _Last updated:_ 03/17/24
 
 ## Content
 
 Because `_smth.scss` is a Sass library comprised entirely of functions, mixins
 and variables, importing it into your project won't add any overhead or increased
-filesize to your project's stylesheet except for the parts that you actually use
+file size to your project's stylesheet except for the parts that you actually use
 by calling a function, variable, or by using a mixin with `@includes`.
 
 **_Smoother_ currently contains:**
 
-* **150+** Mixins, _including..._
-  * More than 35 easily configurable animation types, allowing for more than 100 unique animations.
-  * More than 20 element shapes created with a combination of `clip-path`, pseudo-elements, and `border-radius`
-  * More than 80 utility mixins for things like creating responsive ratios,
+- **150+** Mixins, _including..._
+  - More than 35 easily configurable animation types, allowing for more than 100 unique animations.
+  - More than 20 element shapes created with a combination of `clip-path`, pseudo-elements, and `border-radius`
+  - More than 80 utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given
     number of lines, creating corner ribbons, centering elements,
     browser-targeted styling, making "hamburger" menu buttons and much more!
-* **80+** Functions, _including functions that...
-  * Extend Sass' existing module's method functionality (ex: `update-list` function)
-  * Convert and manipulate colors
-  * Enhanced data type checking
-  * Data type conversion
-  * Calculate unit conversions (such as px to rem)
-  * Fix floats to a given number of decimal places
-  * Return custum cubic-bezier curves for timing functions based on Penner equations.
-  * Return custom calc() equations based on trigonometry and linear algebra
-  * Calculate the "least square fit" or trend-line of a mapped set of points
+- **80+** Functions, _including functions that...
+  - Extend Sass' existing module's method functionality (ex: `update-list` function)
+  - Convert and manipulate colors
+  - Enhanced data type checking
+  - Data type conversion
+  - Calculate unit conversions (such as px to rem)
+  - Fix floats to a given number of decimal places
+  - Return custom cubic-bezier curves for timing functions based on Penner equations.
+  - Return custom calc() equations based on trigonometry and linear algebra
+  - Calculate the "least square fit" or trend-line of a mapped set of points
     (useful for setting responsive font sizes)
-  * Functions that aid in the creation of mixins and placeholders
-  * Much more!
-* A modern, opinionated CSS normalization file written in Sass called _betterize.scss
-* A print style file written in Sass called _smooth-print.scss
-* A collection of helpful and configurable `!default` variables.
-* Helpful documentation for every function, mixin, and variable
+  - Functions that aid in the creation of mixins and placeholders
+  - Much more!
+- A modern, opinionated CSS normalization file written in Sass called _betterize.scss
+- A print style file written in Sass called _smooth-print.scss
+- A collection of helpful and configurable `!default` variables.
+- Helpful documentation for every function, mixin, and variable
+
+## Sass Version Requirement
+
+Not every mixin and function in _Smoother_ will compile unless you are using
+DartSass version 1.57.0 or higher.
+
+_Smoother_ uses many of the more recent Sass features that are not available in
+the now deprecated Ruby and C/C++ versions of Sass (RubySass and LibSass).
+
+It is strongly recommended that you use the most recent version of DartSass
+available. At time of writing, that is version 1.72.0. _Smoother_ will work
+with DartSass >= 1.57.0 (the version `string.split()` was added), but it is
+preferable that you use a version >= 1.69.1, as features are coming soon
+that will take advantage of the new ability to have first-class mixins.
+
+There are some breaking changes coming in the new versions to come, so if you
+need to get an older project ready with the new syntax, check out the
+[Sass Migrator](https://sass-lang.com/documentation/cli/migrator/) tool.
 
 ## Deployment
 
 To download _Smoother_ for your project using NPM, use the following from
-the command line in you'r project's root directory.
+the command line in your project's root directory.
 
 ```bash
 npm i smoother
@@ -88,14 +108,29 @@ contents of the `./src` folder (the folders `/smthr` and `/betterize`), into
 your own project. If you are taking that route, download a zipped copy of the
 code by going to the top of this README page and looking for the green colored
 "<> Code" button. Click that and choose "Download ZIP". Once it is downloaded,
-unzipping the project folder.
+unzip the project folder.
 
-Whether you downloaded from NPM or grabbed the entire repo manually, find the
-package folder (If you downloaded from NPM that would be `/node_modules/smthr`)
-and go into the `src` folder. Copy the `smthr` and `betterize`
-_(betterize is optional)_ folders into your own project's styling directory,
-in the folder where you keep the rest of your `.scss` files. This is probably in
-a `/sass` or `/scss` folder, or within one of the subdirectories of that folder.
+Another way is to clone the repo using one of the below methods:
+
+**HTTPS** method:
+
+```bash
+git clone https://github.com/stephenmirving/smthr.git
+```
+
+**GitHub CLI** method:
+
+```bash
+gh repo clone stephenmirving/smthr
+```
+
+Whether you downloaded from NPM, cloned the repo, or just grabbed it manually,
+find the package folder (If you downloaded from NPM that would be
+`/node_modules/smthr`) and go into the `src` folder. Copy the `smthr` and
+`betterize` _(betterize is optional)_ folders into your own project's styling
+directory, in the folder where you keep the rest of your `.scss` files. This is
+probably in a `/sass` or `/scss` folder, or within one of the subdirectories of
+that folder.
 
 If you are breaking your Sass code down into partials with
 [the 7-1 pattern](https://sass-guidelin.es/#the-7-1-pattern) or
@@ -134,10 +169,10 @@ everything globally.
 
 The downsides of this method are twofold:
 
-* None of these members will be namespaced and could increase
-the potential for naming collisions between the smthr library, your own
-project's members, and any other third-party libraries or frameworks you use.
-* This method will [soon be deprecated](https://github.com/sass/sass/blob/main/accepted/module-system.md#timeline) by Sass, which lists many [reasons for discouraging and deprecating the feature](https://sass-lang.com/documentation/at-rules/import/) in their documentation.
+- None of these members will be namespaced and could increase
+  the potential for naming collisions between the smthr library, your own
+  project's members, and any other third-party libraries or frameworks you use.
+- This method will [soon be deprecated](https://github.com/sass/sass/blob/main/accepted/module-system.md#timeline) by Sass, which lists many [reasons for discouraging and deprecating the feature](https://sass-lang.com/documentation/at-rules/import/) in their documentation.
 
 The better choice would be to follow the specification for the newer versions of
 Sass (At time of writing, DartSass version 1.71.1). Doing it this way will ensure
@@ -259,15 +294,17 @@ For more information about migrating away from the soon-to-be-deprecated
 `@import` and using the newer `@forward` and `@use` directives, see the offical
 [Sass documentation](https://sass-lang.com/documentation/) for:
 
-* [@forward](https://sass-lang.com/documentation/at-rules/forward/)
-* [@use](https://sass-lang.com/documentation/at-rules/use/)
-* [Sass Migrator Tool](https://sass-lang.com/documentation/cli/migrator/)
+- [@forward](https://sass-lang.com/documentation/at-rules/forward/)
+- [@use](https://sass-lang.com/documentation/at-rules/use/)
+- [Sass Migrator Tool](https://sass-lang.com/documentation/cli/migrator/)
 
 ## Documentation
 
-In the future, there will be a more comprehensive wiki with example
-code snippets that show their CSS output and picture or video examples of the
-code's effect on the page. For now though, you can get started with the
+_Smoother_ documentation: [https://stephenmirving.github.io/smthr/]
+
+In the future, there will be a more Getting Started section and a comprehensive
+wiki with example code snippets that show their CSS output, with picture or
+video examples of the code's effect on the page. For now though, you can get started with the
 [documentation page](https://stephenmirving.github.io/smthr/), generated for
 the library using the [SassDoc](http://sassdoc.com/) annotations in the code.
 
@@ -291,57 +328,70 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-* Improved functionality of `shape-shadow()` function and fixed a bug with some
-  edge-case parameters .
+### Version 0.8.0 Patch Notes
 
-* Added `is-valid-hex()` function that tests input and determines if it is a
+- Added `transition-color()` mixin. This is a mixin that will set up everything
+  you need for a high performance background, color, and border-color transition.
+  Since background and border-color are both considered low performance
+  animations, this mixin emulates the effect using the `::after` pseudo-element
+  and an `opacity` transition. Perfect for smooth button hover effects.
+- Changed how the `ghost-button()` mixin handled background-color and
+  border-color transitions for the hover effect. The `ghost-button()` mixin now
+  uses `transition-color()` for this effect.
+- Added more detail to SassDoc annotations.
+
+### Older versions
+
+- Improved functionality of `shape-shadow()` function and fixed a bug with some
+  edge case parameters.
+
+- Added `is-valid-hex()` function that tests input and determines if it is a
   valid hex color or string.
 
-* Added `fibonacci()` function that returns an nth number in the sequence or a
-  range in the sequence represented as a comma-separated list. Also added
-  a `hypotenuse()` function.
+- Added `fibonacci()` function that returns an nth number in the sequence or a
+  range in the sequence represented as a comma-separated list.
 
-* Added library to NPM! You can now add this to your project using `npm i smoother`
+- Added library to NPM! You can now add this to your project using `npm i smoother`
 
-* 6 new mixins added: `caret()`, `fluid-media()`, `nav-divider()`, `visible()`
-`resizable()`, and `reset-text()`
+- 6 new mixins added: `caret()`, `fluid-media()`, `nav-divider()`, `visible()`
+  `resizable()`, and `reset-text()`
 
-* 8 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `power()`,
-`space()`, `swing()`, and `twister()`!
+- 8 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `power()`,
+  `space()`, `swing()`, and `twister()`!
 
-* Updated _Betterize_ to version 1.2.4
+- Updated _Betterize_ to version 1.2.4
 
-* New function that provides a dark or light text contrast color: `color-text-contrast()`
+- New function that provides a dark or light text contrast color: `color-text-contrast()`
 
-* New function added called `resolve-equation()` that returns custom CSS `calc()`
-equations based on trigonometry and linear algebra.
+- New function added called `resolve-equation()` that returns custom CSS `calc()`
+  equations based on trigonometry and linear algebra.
 
-* Improved `is-position()` function with the ability to allow alias values.
+- Improved `is-position()` function with the ability to allow alias values.
 
-* Greatly improved the BEM mixins `elem()` and `mod()` such that they can now be
+- Greatly improved the BEM mixins `elem()` and `mod()` such that they can now be
   passed a limitless Arglist of element or modifier names and be used on selector
   groups that have a limitless number of parent selectors.
 
-* Fixed an issue with animation suffixes and `animation-direction` not always
-working correctly since the 0.3.3 update.
+- Fixed an issue with animation suffixes and `animation-direction` not always
+  working correctly since the 0.3.3 update.
 
-* New functions, `is-falsey()`, `equals-true()`, `equals-false()`
+- New functions, `is-falsey()`, `equals-true()`, `equals-false()`
 
-* Updated all mixins and functions that had a likelihood of being passed an
+- Updated all mixins and functions that had a likelihood of being passed an
   argument with a 2 word keyword such as `top left`  or `to right` so that they
   would accept a greater number of alias values when not wrapped in strings.
 
-* Allowed for passing CSS global values on a greater number of mixin arguments,
-such as for the animation-direction property on animations.
+- Allowed for passing CSS global values on a greater number of mixin arguments,
+  such as for the animation-direction property on animations.
 
-* Refactored the `color-shifter()` mixin to allow for the `animation-direction`
-and the `animation-iteration-count` properties to be passed as arguments.
+- Refactored the `color-shifter()` mixin to allow for the `animation-direction`
+  and the `animation-iteration-count` properties to be passed as arguments.
 
-* Improved the annotations and error reporting for all the mixins and functions
+- Improved the annotations and error reporting for all the mixins and functions
   so that parameters with many possible keyword values have those keywords listed
   in the documentation.
 
-* Got the SassDoc annotation documentation online
+- Got the SassDoc annotation documentation online
 
 ## Betterize
 
@@ -376,6 +426,21 @@ the soon-to-be-deprecated `@import` feature with the newer `@use` and `@forward`
 features, refer to the
 [documentation for the sass-migrator tool](https://sass-lang.com/documentation/cli/migrator/).
 
+## Contributions
+
+If you would like to contribute to _Smoother_, whether it is to add something
+new or fix a bug you have found, check out the
+[Contributions](https://github.com/stephenmirving/smthr/blob/master/CONTRIBUTIONS.md)
+document.
+
+## License
+
+_Smoother_ is distributed under an
+[MIT License](https://github.com/stephenmirving/smthr/blob/master/LICENSE).
+
+**TLDR:** Anyone can use this code however they want as long as they include a
+copy of the above license.
+
 ## Authors
 
 Created by Stephen M Irving
@@ -383,10 +448,10 @@ Created by Stephen M Irving
 This library contains work inspired by others, as well as some forked code.
 This includes code by:
 
-* [Lucas Bonomi](http://lucasbonomi.com/)
-* [Eduardo Boucas](https://eduardoboucas.com/)
-* [Chris Coyier](https://chriscoyier.net/)
-* [Harry Roberts](https://csswizardry.com/)
+- [Lucas Bonomi](http://lucasbonomi.com/)
+- [Eduardo Boucas](https://eduardoboucas.com/)
+- [Chris Coyier](https://chriscoyier.net/)
+- [Harry Roberts](https://csswizardry.com/)
 
 ## Thanks
 
@@ -394,7 +459,7 @@ Thank you to the contributors and maintainers of [Sass](https://sass-lang.com/).
 
 Thank you to the creators and writers at [css-tricks.com](https://css-tricks.com/),
 [Smashing Magazine](https://www.smashingmagazine.com/) and the
-[Mozilla Developer's Network](https://developer.mozilla.org/), from whom I have
-learned so much.
+[Mozilla Developer's Network](https://developer.mozilla.org/), who are often
+my first source for keeping up with the changes in CSS and Sass.
 
 Thank you to my father, Michael Graham Irving.

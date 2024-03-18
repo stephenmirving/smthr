@@ -1,0 +1,60 @@
+/// This is a mixin that will set up everything you need for a high performance
+/// `background`, `color`, and `border-color` animation. Since `background` and
+/// `border-color` are both considered low performance animations, this mixin
+/// emulates the effect using the `::after` pseudo-element and an `opacity`
+/// transition.
+///
+/// @param {Color} $text-color - The text's initial color.
+/// @param {Color} $text-transition-color - The text color after being
+/// transitioned.
+/// @param {Color} $border-color - The border-color for the element.
+/// @param {Number} $border-width [3px] - The border-width for the element.
+/// @param {Color} $bg-color [rgba(0, 0, 0, 0)] - The element's initial
+/// background color.
+/// @param {Color} $bg-transition-color [$border-color] - The element's
+/// background color after being transitioned.
+/// @param {Number} $transition-duration [0.3s] - The transition duration.
+/// @param {String} $transition-timing - The transition-timing-function value.
+///
+/// @group Utilities
+@mixin transition-color(
+  $text-color,
+  $text-transition-color,
+  $border-color,
+  $border-width: 3px,
+  $bg-color: rgba(0, 0, 0, 0),
+  $bg-transition-color: $border-color,
+  $transition-duration: 0.3s,
+  $transition-timing: ease-out
+) {
+  position: relative;
+  border: $border-width solid #{$border-color};
+  background: #{$bg-color};
+  color: #{$text-color};
+  transition: color $transition-duration $transition-timing;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background-color: #{$bg-transition-color};
+    opacity: 0;
+    transition: opacity #{$transition-duration} $transition-timing;
+  }
+
+  &:hover {
+    color: #{$text-transition-color};
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}

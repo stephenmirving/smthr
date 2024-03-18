@@ -1,4 +1,15 @@
-/// Generates a ghost button.
+@use 'sass:string';
+@use '../../functions/is-calculation' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-string' as *;
+@use '../../functions/is-time' as *;
+@use '../../functions/is-global-value' as *;
+@use 'transition-color' as *;
+
+/// Generates a ghost button. Since `background` and `border-color` are both
+/// low-performance animation properties, the hover effect for the background
+/// and border instead uses the pseudo-element `::after` and an `opacity`
+/// transition.
 ///
 /// @link https://www.developerdrive.com/2014/10/how-to-make-a-ghost-button-in-css3/
 /// @link https://realcombiz.blogspot.com/2014/12/css-ghost-buttons.html
@@ -6,28 +17,55 @@
 /// @param {Number} $font-size - The font-size value.
 /// @param {Color} $font-color - The font's color.
 /// @param {String | List} $font-fam - The font family used in the button.
-/// @param {Number} $border-size - The border-width for the button.
+/// @param {Number} $border-width - The border-width for the button.
 /// @param {Color} $border-color - The border-color for the button.
-/// @param {Number} $padding - The button's padding.
+/// @param {Number} $padding - The button's padding shorthand property.
 /// @param {Number} $transition-duration - The button's transition duration.
-/// @param {Color} $hover-color - The text color of the button's hover state.
+/// @param {Color} $text-hover-color - The text color of the button's hover state.
 ///
 /// @group Utilities
+/// @require {function} transition-color
+///
+/// @throw Invalid $transition-duration input error.
+/// @throw Invalid $border-width input error.
 @mixin ghost-button(
   $font-size,
   $font-color,
   $font-weight,
   $font-fam,
-  $border-size,
+  $border-width,
   $border-color,
   $padding,
   $transition-duration,
-  $hover-color
+  $text-hover-color
 ) {
+  @if is-string($border-width) {
+    $border-width: string.to-lower-case($border-width);
+  }
+
+  @if not is-length($border-width) and
+      not is-calculation($border-width) and
+      $border-width != thin and
+      $border-width != medium and
+      $border-width != thick
+  {
+    @error 'Invalid $border-width input for the [ ghost-button() ] mixin. ' +
+        'The $border-width parameter must either be a length, a calculation ' +
+        'that resolves to a length, or one of the keywords: thin, medium ' +
+        'or thick.';
+  }
+
+  @if not is-time($transition-duration) and
+      not is-calculation($transition-duration) and
+      not is-global-value($transition-duration)
+  {
+    @error 'Invalid $transition-duration input for the [ ghost-button() ] ' +
+        'mixin. This parameter can be a time (in s or ms units), a ' +
+        'calculation that resolves to a time value, or a CSS global value.';
+  }
+
   display: inline-block;
   padding: $padding;
-  border: $border-size solid $border-color;
-  color: $font-color;
 
   @if $font-fam and $font-size {
     @if $font-weight and $font-weight != 400 and $font-weight != 'normal' {
@@ -40,7 +78,7 @@
       font-family: $font-fam;
     }
     @if $font-size {
-      font-size: $font-size;
+      font-size: #{$font-size};
     }
     @if $font-weight and $font-weight != 400 and $font-weight != 'normal' {
       font-weight: #{$font-weight};
@@ -49,13 +87,16 @@
 
   text-transform: uppercase;
   text-decoration: none;
-  transition:
-    color $transition-duration,
-    background $transition-duration,
-    border-color $transition-duration;
+  cursor: pointer;
 
-  &:hover {
-    background: $border-color;
-    color: $hover-color;
-  }
+  @include transition-color(
+    $font-color,
+    $text-hover-color,
+    $border-color,
+    $border-width,
+    rgba(0, 0, 0, 0),
+    $border-color,
+    #{$transition-duration},
+    ease-out
+  );
 }

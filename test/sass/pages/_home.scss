@@ -81,7 +81,7 @@
     transform: none;
   }
 
-  animation: 3s clip-wave infinite;
+  // animation: 3s clip-wave infinite;
 
   @include shape-shadow(#3336);
 }
@@ -158,31 +158,32 @@ $flip-axis: 'horizontal';
 }
 
 .btn {
-  @include reset;
-  @include button-base(
-    rgba(#08f, 1),
-    #fff,
-    6px ridge rgba(#80f, 0.8),
-    16px,
-    0 1rem,
-    0.875rem 1.75rem,
-    system-ui,
-    1.5rem
-  );
-  @include depth-level(2, #80f);
+  @include ghost-button(1.25rem, rgb(3, 23, 95, 1), 700, system-ui, 3px, rgb(3, 23, 95, 1), 1rem 1.25rem, 0.5s, color-text-contrast(rgba(3, 23, 95, 1)));
+  // @include reset;
+  // @include button-base(
+  //   rgba(#08f, 1),
+  //   #fff,
+  //   6px ridge rgba(#80f, 0.8),
+  //   16px,
+  //   0 1rem,
+  //   0.875rem 1.75rem,
+  //   system-ui,
+  //   1.5rem
+  // );
+  // @include depth-level(2, #80f);
 
-  transition-property: transform, box-shadow, border-color, background-color,
-    color;
-  transition-duration: 0.1s;
-  transition-timing-function: ease-out;
+  // transition-property: transform, box-shadow, border-color, background-color,
+  //   color;
+  // transition-duration: 0.1s;
+  // transition-timing-function: ease-out;
 
-  &:hover {
-    @include depth-level(4, #80f);
+  // &:hover {
+  //   @include depth-level(4, #80f);
 
-    border-color: tint(rgba(#80f, 0.8), 10%);
-    background-color: tint(rgba(#08f, 1), 10%);
-    transform: translateY(-2px) scale(1.005);
-  }
+  //   border-color: tint(rgba(#80f, 0.8), 10%);
+  //   background-color: tint(rgba(#08f, 1), 10%);
+  //   transform: translateY(-2px) scale(1.005);
+  // }
 
   &:active {
     @include depth-level(0);
