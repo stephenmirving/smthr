@@ -25,10 +25,11 @@ animation keyframe creation, or other verbose and complex code blocks.
 7. [Recently Improved](#recently-improved)
 8. [Betterize](#betterize)
 9. [More Info](#more-info)
-10. [Contributions](#contributions)
-11. [Authors](#authors)
+10. [Questions](#questions)
+11. [Contributions](#contributions)
 12. [License](#license)
-13. [Thanks](#thanks)
+13. [Authors](#authors)
+14. [Thanks](#thanks)
 
 ## Version
 
@@ -338,6 +339,7 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
   working at all.
 - Added ability to pass calc() function equations to the `text-shadow()` mixin.
 - Improved error checking, error messages, and SassDoc annotations on some mixins.
+- Added sections to this README
 
 ### Version 0.8.0 Patch Notes
 
@@ -436,6 +438,31 @@ For more information about how to update your project's Sass files to replace
 the soon-to-be-deprecated `@import` feature with the newer `@use` and `@forward`
 features, refer to the
 [documentation for the sass-migrator tool](https://sass-lang.com/documentation/cli/migrator/).
+
+## Questions
+
+If you have any questions about how to use _Smoother_ that cannot be answered
+by the [Smoother documentation](https://stephenmirving.github.io/smthr/), or if
+you have any issues, suggestions or comments, I would be happy to help anyone
+who reaches out. You can find me on X/Twitter at [@metric_dev](https://twitter.com/metric_dev).
+
+Feel free to ask me anything you like in a tweet, or shoot me a DM (though if
+you are not verified on X/Twitter I may not see the DM).
+
+## Contributions
+
+If you would like to contribute to _Smoother_, whether it is to add something
+new or fix a bug you have found, check out the
+[Contributions](https://github.com/stephenmirving/smthr/blob/master/CONTRIBUTIONS.md)
+document.
+
+## License
+
+_Smoother_ is distributed under an
+[MIT License](https://github.com/stephenmirving/smthr/blob/master/LICENSE).
+
+**TL;DR:** Anyone can use this code however they want but it would sure be nice
+if they also included a copy of the above license.
 
 ## Authors
 

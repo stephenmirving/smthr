@@ -64,7 +64,13 @@
     "calculations",
     "conversions",
     "ui",
-    "ux"
+    "ux",
+    "shadow",
+    "effects",
+    "smooth",
+    "smoother",
+    "smthr",
+    "smth"
   ],
   "author": "Stephen M Irving <@metric_dev stephenmichaelirving@gmail.com>",
   "license": "MIT",
