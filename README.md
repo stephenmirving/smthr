@@ -338,6 +338,7 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 - Fixed a bug with `inner-side-shadow()` that prevented that mixin from
   working at all.
 - Added ability to pass calc() function equations to the `text-shadow()` mixin.
+- Finished testing of all mixins and functions.
 - Improved error checking, error messages, and SassDoc annotations on some mixins.
 - Added sections to this README.
 
