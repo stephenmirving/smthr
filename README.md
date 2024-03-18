@@ -1,7 +1,7 @@
 # _smth.scss
 
 _Smoother_ is a Sass library designed for a smoother front-end
-development experience. Smoother is filled with simple-to-use functions and
+development experience. Smoother is filled with easy-to-use functions and
 mixins that aid in UI creation, serving up workflow enhancing utilities
 along with production ready element styles and animations.
 
@@ -35,22 +35,22 @@ animation keyframe creation, or other verbose and complex code blocks.
 
 _Smoother_ is **currently in active development**. Almost every day there are
 updates to the functionality or documentation of this library. If you download
-_Smoother_ for use in a project, I recommend updating it frequently to get the
-best functionality possible from it.
+_Smoother_ for use in a project, I recommend updating it frequently to get
+optimal functionality from it.
 
-This is **smthr** version 0.8.1 - _Last updated:_ 03/17/24
+This is **smoother** version 0.8.1 - _Last updated:_ 03/17/24
 
 ## Content
 
-Because `_smth.scss` is a Sass library comprised entirely of functions, mixins
-and variables, importing it into your project won't add any overhead or increased
+Because `_smth.scss` is a Sass library comprised of functions, mixins and
+variables, importing it into your project won't add any overhead or increased
 file size to your project's stylesheet except for the parts that you actually use
 by calling a function, variable, or by using a mixin with `@includes`.
 
 **_Smoother_ currently contains:**
 
 - **150+** Mixins, _including..._
-  - More than 35 easily configurable animation types, allowing for more than 100 unique animations.
+  - More than 35 easily configurable animation types, allowing for more than 100 unique animations
   - More than 20 element shapes created with a combination of `clip-path`, pseudo-elements, and `border-radius`
   - More than 80 utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given
@@ -149,7 +149,7 @@ you can simply `@import` the library at the top of the other partials you
 
 ```scss
 // FILE: sass/main.scss
-// ** Method not recommended **
+// ** METHOD NOT RECOMMENDED **
 @import 'vendors/smthr/smth';
 @import 'vendors/betterize/betterize';
 
@@ -165,15 +165,18 @@ you can simply `@import` the library at the top of the other partials you
 ```
 
 Inside of your partials, you would be free to call any of the functions, mixins,
-or variables that are available in the smthr library, because `@import` loads
-everything globally.
+or variables that are available in the _Smoother_ library, because `@import`
+loads everything globally.
 
 The downsides of this method are twofold:
 
-- None of these members will be namespaced and could increase
-  the potential for naming collisions between the smthr library, your own
-  project's members, and any other third-party libraries or frameworks you use.
-- This method will [soon be deprecated](https://github.com/sass/sass/blob/main/accepted/module-system.md#timeline) by Sass, which lists many [reasons for discouraging and deprecating the feature](https://sass-lang.com/documentation/at-rules/import/) in their documentation.
+- None of these members will be namespaced and could increase the potential for
+  naming collisions between the _Smoother_ library, your own project's members,
+  and any other third-party libraries or frameworks you use.
+- This method will [soon be deprecated](https://github.com/sass/sass/blob/main/accepted/module-system.md#timeline)
+  by Sass, which lists many
+  [reasons for discouraging and deprecating the feature](https://sass-lang.com/documentation/at-rules/import/)
+  in their documentation.
 
 The better choice would be to follow the specification for the newer versions of
 Sass (At time of writing, DartSass version 1.72.0). Doing it this way will ensure
@@ -203,9 +206,9 @@ your partials, now you would instead write something like this:
 // If you want to use betterize, load it first
 @use 'vendors/betterize/betterize';
 
-// Then load all your project's partials by loading in the folders
+// Then load all your project's partials by loading in the folders.
 // Sass will automatically look for the _index.scss file in each folder
-// and then forward all the files that the _index.scss @forward'd
+// and then forward all the files that the _index.scss has an @forward for.
 @use 'utilities';
 @use 'base';
 @use 'layout';
@@ -333,7 +336,7 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 ### Versions 0.8.1 Patch Notes
 
 - Fixed a bug in the new `fibonacci()` function that was preventing the use
-  of the function to return a range of numbers in the sequence rather tha
+  of the function to return a range of numbers in the sequence rather than
   just a single number.
 - Fixed a bug with `inner-side-shadow()` that prevented that mixin from
   working at all.

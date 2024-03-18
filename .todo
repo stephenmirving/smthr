@@ -19,7 +19,7 @@ TODO:
     ☐ Create is-color-string function that returns whether a string could be a valid color
     ☐ Add more form utilities and mixins
     ☐ Further test and improve Betterize
-    ☐ Possible change the aliases for things like "bottom-left-to-top-right" to resolve to "to top right"
+    ☐ Possibly change the aliases for things like "bottom-left-to-top-right" to resolve to "to top right"
     ☐ Create a new responsive font mixin using the trend-line function
     ☐ Possibly modify text-outline mixins or create new mixin to include the -webkit-text-stroke property
     ☐ Determine if a .sass version can be automated in a build process without too much work
@@ -44,8 +44,7 @@ TODO:
 
   Shapes Mixins:
     ☐ Go to shapes page with psuedo elements and add those (Figure out what shapes page is?)
-    ☐ Add diagnonal keyword directions and allow for angle units passed to $direction like in `chevron` in...
-      ☐ triangle
+    ☐ Add diagnonal keyword directions and allow for angle units passed to $direction like in `chevron` in `triangle`
     ☐ Make a mixin for animating between clip-path shapes. https://css-tricks.com/animating-with-clip-path/
 
   Utility Mixins:
@@ -53,28 +52,26 @@ TODO:
       ☐ Finish testing and copying over flex-flow mixin
     ☐ Create new CSS grid mixins and functions
     ☐ Create an @font-face mixin
+    ☐ Revisit the `hamburger()` mixin and improve on it's potential hover transition
+    ☐ Create a "logical" property mixin that takes physical properties like margin-top and uses that as the fallback but also adds margin-block-start, etc
 
   Functions:
-    ☐ Add mmore equations to the time-equations function, more are saved in workspace file css-equations.txt
+    ☐ Add more equations to the time-equations function, more are saved in workspace file css-equations.txt
     ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.
     ☐ Finish doing everything from the smashing magazine article the linear-interpolation function (and possibly trend line?) came from
-    ☐ Finish and propogate the new precision function ??
-      ☐ Function finished
+    ☐ Look into finding the old precision function ??
     ☐ Add more entity codes to the entity function
     ☐ Make an is-color-name function that returns true or false if the value is a css color name
 
   Publishing:
     ☐ Create website and API guide using Github Pages
-
-  Test Site:
-    ☐ Front page layout
-    ☐ Animation page
-    ☐ Shapes page
-    ☐ Utilities page
-    ☐ Functions page
-    ☐ Placeholders page
-    ☐ Each page code example and live demo for each function, mixin, or important variable.
-    ☐ Documentation using SassDoc
+      ☐ Front page layout
+      ☐ Animation page
+      ☐ Shapes page
+      ☐ Utilities page
+      ☐ Functions page
+      ☐ Each page code example and live demo for each function, mixin, or important variable.
+      ✔ Documentation using SassDoc @done(24-03-18 17:56)
 
 ================================================================================
 
