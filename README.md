@@ -38,7 +38,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.8.1 - _Last updated:_ 03/17/24
+This is **smoother** version 0.8.2 - _Last updated:_ 03/20/24
 
 ## Content
 
@@ -88,7 +88,7 @@ with DartSass >= 1.57.0 (the version `string.split()` was added), but it is
 preferable that you use a version >= 1.69.1, as features are coming soon
 that will take advantage of the new ability to have first-class mixins.
 
-There are some breaking changes coming in the new versions to come, so if you
+There are some breaking changes coming in the new versions of Sass, so if you
 need to get an older project ready with the new syntax, check out the
 [Sass Migrator](https://sass-lang.com/documentation/cli/migrator/) tool.
 
@@ -127,7 +127,7 @@ gh repo clone stephenmirving/smthr
 
 Whether you downloaded from NPM, cloned the repo, or just grabbed it manually,
 find the package folder (If you downloaded from NPM that would be
-`/node_modules/smthr`) and go into the `src` folder. Copy the `smthr` and
+`/node_modules/smoother`) and go into the `src` folder. Copy the `smthr` and
 `betterize` _(betterize is optional)_ folders into your own project's styling
 directory, in the folder where you keep the rest of your `.scss` files. This is
 probably in a `/sass` or `/scss` folder, or within one of the subdirectories of
@@ -333,7 +333,17 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-### Versions 0.8.1 Patch Notes
+### Version 0.8.2 Patch Notes
+
+- Fixed a bug with the `only-phones()` mixin that was causing it not to work.
+- Added new alias for the `update-list()` function called `list-replace()` to match
+  the syntax of the `str-replace()` function.
+- Added new aliases for the `str-replace()` function called `update-str()` and
+  `update-string()` to match the syntax for the `update-list()` function.
+- Added new aliases for the `is-number()` and `is-string()` functions: `is-num()`
+  and `is-str()`.
+
+### Version 0.8.1 Patch Notes
 
 - Fixed a bug in the new `fibonacci()` function that was preventing the use
   of the function to return a range of numbers in the sequence rather than
@@ -357,7 +367,7 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
   uses `transition-color()` for this effect.
 - Added more detail to SassDoc annotations.
 
-### Older versions
+### Recent Improvements in Older Versions
 
 - Improved functionality of `shape-shadow()` function and fixed a bug with some
   edge case parameters.
@@ -432,15 +442,21 @@ information, or to download versions of Betterize written in `.css`, `.sass`,
 `.less`, and `.scss` formats, all of which are free from any _Smoother_
 dependencies when downloaded from its own repository.
 
+You can also install the _Betterize_ free version with NPM:
+
+```bash
+npm i betterize
+```
+
 ## More Info
 
 For more information about how to structure your project with 3rd party
 libraries, please refer to the official
 [Sass Documentation](https://sass-lang.com/documentation/).
 
-For more information about how to update your project's Sass files to replace
-the soon-to-be-deprecated `@import` feature with the newer `@use` and `@forward`
-features, refer to the
+For more information about how to update your project's Sass files to use
+the module system and replace the soon-to-be-deprecated `@import` feature with
+the newer `@use` and `@forward` features, refer to the
 [documentation for the sass-migrator tool](https://sass-lang.com/documentation/cli/migrator/).
 
 ## Questions
