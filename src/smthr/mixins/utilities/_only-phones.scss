@@ -38,13 +38,13 @@
     $max-phone-width: conv-to-em($max-phone-width);
   }
 
-  @if not $target-all-devices or $min-resolution == 1 {
+  @if $target-all-devices or $min-resolution-ratio == 1 {
     @media screen and (max-width: $max-phone-width) {
       @content;
     }
   } @else {
     @media
-      screen and (max-width: $maxwidth) and
+      screen and (max-width: $max-phone-width) and
       (-webkit-min-device-pixel-ratio: $min-resolution-ratio),
 
       screen and (max-width: $max-phone-width) and

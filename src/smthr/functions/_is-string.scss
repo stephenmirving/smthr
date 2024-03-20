@@ -11,3 +11,17 @@
 @function is-string($value) {
   @return meta.type-of($value) == 'string';
 }
+
+/// Checks if a value is a string.
+///
+/// @param {*} $value - A value to be checked.
+///
+/// @return {Bool} True if $value is a string, false if it is not.
+///
+/// @access public
+/// @group Utilities
+///
+/// @alias is-string
+@function is-str($value) {
+  @return is-string($value)
+}
