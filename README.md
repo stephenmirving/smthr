@@ -38,7 +38,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.9.0 - _Last updated:_ 03/20/24
+This is **smoother** version 0.9.0 - _Last updated:_ 03/21/24
 
 ## Content
 
