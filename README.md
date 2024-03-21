@@ -50,8 +50,10 @@ by calling a function, variable, or by using a mixin with `@includes`.
 **_Smoother_ currently contains:**
 
 - **150+** Mixins, _including..._
-  - More than 35 easily configurable animation types, allowing for more than 100 unique animations
-  - More than 20 element shapes created with a combination of `clip-path`, pseudo-elements, and `border-radius`
+  - More than 35 easily configurable animation types, allowing for more than
+    100 unique animations
+  - More than 20 element shapes created with a combination of `clip-path`,
+    pseudo-elements, and `border-radius`
   - More than 80 utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given
     number of lines, creating corner ribbons, centering elements,
