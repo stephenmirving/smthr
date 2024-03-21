@@ -1,0 +1,17 @@
+@use 'str-replace' as *;
+
+/// Remove `$search` from `$string`.
+///
+/// @param {String} $string - The initial string.
+/// @param {String} $search - The substring to remove.
+///
+/// @return {String} The updated string.
+///
+/// @access public
+/// @group Utilities
+/// @since 0.9.0
+///
+/// @throw Invalid data type error for $string or $search.
+@function str-remove($string, $search) {
+  @return str-replace($string, $search);
+}

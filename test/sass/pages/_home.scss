@@ -30,6 +30,9 @@
   position: absolute;
   top: 10%;
   color: $white;
+  color: color-contrast(#80f, hsl);
+  color: color-complement(#80f, hsl);
+  color: color-invert(#80f, 100%, hsl);
 
   &:hover {
     @include wobbliness(top);
@@ -103,12 +106,18 @@
 }
 
 .front {
+  $col: #2dccb8;
   @include animation-front-face;
   @include flex-center;
 
   border: 8px solid conv-color(#08f, 'hsl');
   border-radius: 12px;
-  background: conv-color(#2dccb8, hwb) padding-box;
+  background: conv-color($col, hwb) padding-box;
+  color: color-contrast($col, hsl);
+  color: color-complement($col, hsl);
+
+
+
   // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, alternate, linear, 'bg');
   text-align: center;
   // animation: hue-shift 20s infinite;
@@ -126,7 +135,7 @@ $flip-axis: 'horizontal';
 
   border: 8px solid conv-color(#08f, 'hsl');
   border-radius: 12px;
-  background: conv-color($gray-900, 'hsl') padding-box;
+  background: conv-color($gray-9, 'hsl') padding-box;
   color: #fff;
   text-align: center;
 }
@@ -258,15 +267,6 @@ $flip-axis: 'horizontal';
 
 }
 
-.test {
-  $var: 30rem;
-
-  content: $var > 0;
-  color: color-text-contrast(blue);
-  content: fibonacci(5, 20);
-  @include caret;
-  @include fluid-media;
-  @include nav-divider;
-  @include visible('hide');
-  @include resizable;
+.test-flex {
+  @include flex-center(true, true, column-reverse, true)
 }

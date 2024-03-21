@@ -38,7 +38,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.8.2 - _Last updated:_ 03/20/24
+This is **smoother** version 0.9.0 - _Last updated:_ 03/20/24
 
 ## Content
 
@@ -333,6 +333,30 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
+### Version 0.9.0 Patch Notes
+
+- Updated `_betterize.scss` and `_smooth-print.scss` to version 1.3.0.
+- Improved the `ratio-to-percentage()` function allowing it to return a "common"
+  ratio even when passing a list, instead of just when passing a single Number.
+- Improved the `responsive-ratio()` mixin with some more properties, making it
+  work with a broader number of potential inputs (such as $x and $y values with
+  units and passing a child class name with a leading '.' or not passing one
+  at all). Also removed it's own ratio calculations in favor of using the
+  calculations done in `ratio-to-percentage`. Added a new parameter allowing
+  the user to pass values and then have the mixin return the closest "common"
+  ratio to the values provided, if there is one close enough within the threshold.
+- Added `str-remove()` function which just calls the `str-replace()` function
+  without passing a replacement.
+- Added `color-contrast()` function which finds a contrasting and complementary
+  color for a given color and returns it in a chosen syntax.
+- Fixed a bug in the `color-invert()` function where the string module was not
+  being loaded, preventing the function from working correctly.
+- Extended the `clearfix()` mixin to allow for supporting older versions of IE
+  if a new parameter is passed as `true`.
+- Extended the `flex-center()` mixin to provide full browser backwards
+  compatibility with all the older flexbox syntax if a new parameter is passed
+  as `true`.
+
 ### Version 0.8.2 Patch Notes
 
 - Fixed a bug with the `only-phones()` mixin that was causing it not to work.
@@ -351,7 +375,6 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 - Fixed a bug with `inner-side-shadow()` that prevented that mixin from
   working at all.
 - Added ability to pass calc() function equations to the `text-shadow()` mixin.
-- Finished testing of all mixins and functions.
 - Improved error checking, error messages, and SassDoc annotations on some mixins.
 - Added sections to this README.
 

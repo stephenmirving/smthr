@@ -21,6 +21,7 @@
 /// @group Utilities
 /// @require {function} conv-to-em
 /// @require {function} strip-unit
+/// @since 0.8.2 - Was not working in previous versions
 @mixin only-phones(
   $max-phone-width: 436px,
   $target-all-devices: false,

@@ -11,7 +11,7 @@
 ///
 /// @example scss -
 /// // A 5vw font size (with 50px fallback),
-/// // min of 35px and max of 150px:
+/// // A min of 35px and max of 150px:
 /// .element {
 ///   @include responsive-font(5vw, 35px, 150px, 50px);
 /// }

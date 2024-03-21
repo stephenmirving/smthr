@@ -19,6 +19,7 @@
 /// @require {function} is-length
 /// @require {function} is-number
 /// @require {function} is-string
+/// @since 0.8.1 - Was not working in previous versions.
 ///
 /// @throw Invalid $side value error. Must be either `top`, `right`, `bottom`,
 /// or `left`.

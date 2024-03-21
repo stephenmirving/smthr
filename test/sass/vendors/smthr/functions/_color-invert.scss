@@ -1,6 +1,7 @@
 @use 'sass:color';
 @use 'sass:list';
 @use 'sass:meta';
+@use 'sass:string';
 @use 'conv-color' as *;
 @use 'is-color' as *;
 @use 'is-string' as *;
@@ -24,6 +25,7 @@
 /// @require {function} get-color-type
 /// @require {function} is-color
 /// @require {function} is-string
+/// @since 0.9.0
 ///
 /// @throw Invalid $color data type, must be a color.
 /// @throw Invalid $weight value, must be a percentage between 0% and 100% inclusive.

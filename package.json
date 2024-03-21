@@ -1,6 +1,6 @@
 {
   "name": "smoother",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "description": "Smoother is a Sass (SCSS) library of simple-to-use functions & mixins that aid your front-end development experience by serving up workflow enhancing utilities along with production ready element styles and animations.",
   "main": "src/smthr/_smth.scss",
   "directories": {

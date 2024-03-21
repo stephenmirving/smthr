@@ -17,6 +17,7 @@
 /// @param {String} $transition-timing - The transition-timing-function value.
 ///
 /// @group Utilities
+/// @since 0.8.0
 @mixin transition-color(
   $text-color,
   $text-transition-color,

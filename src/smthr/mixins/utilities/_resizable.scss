@@ -5,9 +5,11 @@
 
 /// Make an element resizable.
 ///
-/// @param {String} $resize [vertical] - The way to make an element resizable. Can be
-/// `horizontal`, `vertical`, `block`, `inline` or `both`. Can also be any
-/// CSS global value.
+/// @param {String} $resize [vertical] - The way to make an element resizable.
+/// Can be `horizontal`, `vertical`, `block`, `inline` or `both`. Can also be
+/// any CSS global value.
+///
+/// @output Adds the correct `resize` and `overflow` values to the element.
 ///
 /// @group Utilities
 /// @require {function} is-alias

@@ -13,8 +13,8 @@
 ///
 /// @return {String} - The desired entity code or character wrapped in a string.
 ///
-/// @example `entity('&')` and `entity('amp')` both return `'\0026'`
-/// @example entity('tm', $is-coded: false) returns `'™'`
+///  `entity('&')` and `entity('amp')` both return `'\0026'`
+///  entity('tm', $is-coded: false) returns `'™'`
 ///
 /// @access public
 /// @group Utilities

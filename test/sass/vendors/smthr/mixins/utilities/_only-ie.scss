@@ -24,16 +24,16 @@
     @if meta.type-of($version) != 'number' or
         meta.type-of($version-max) != 'number'
     {
-      @error 'Invalid data type passed to the `only-ie` mixin. You must pass ' +
+      @error 'Invalid data type passed to the [ only-ie() ] mixin. You must pass ' +
           'one or two numbers to indicate a range of IE versions being targeted.';
     }
     @if $version-max < $version {
-      @error 'The second argument in the `only-ie` mixin, $version-max, must be a '
+      @error 'The second argument in the [ only-ie() ] mixin, $version-max, must be a '
           'number equal to or greater than the first argument passed, ' +
           '$version. This indicates the range of IE versions being targeted';
     }
     @if $version < 6 or $version-max > 11 {
-      @error 'Invalid data range for the `only-ie` mixin. You must choose to ' +
+      @error 'Invalid data range for the [ only-ie() ] mixin. You must choose to ' +
           'target a range of IE versions, starting with IE6 and ending with IE11.';
     }
   }
@@ -53,13 +53,13 @@
         @content;
       }
       @if $version-max == 6 {
-        @warn 'The `only-ie` mixin cannot target only IE 6 alone. Consider ' +
+        @warn 'The [ only-ie() ] mixin cannot target only IE 6 alone. Consider ' +
           'prepending your property values with an `_` character. Targeting ' +
           'IE 6-8 instead now.';
       }
     }
   } @else if $version == 7 {
-    @error 'The `only-ie` mixin cannot target a version range that begins with ' +
+    @error 'The [ only-ie() ] mixin cannot target a version range that begins with ' +
           '7. Consider prepending your property values in the following way ' +
           'instead: *+html .ie7 { property: value; }';
   } @else if $version == 8 {
@@ -72,11 +72,11 @@
         @content;
       }
       @if $version-max == 9 {
-        @warn 'The `only-ie` mixin can target IE 8, 9, and 10, but cannot '
+        @warn 'The [ only-ie() ] mixin can target IE 8, 9, and 10, but cannot '
             'target just 8 and 9. targeting IE versions 8-10 instead now.';
       }
     } @else {
-      @error 'The `only-ie` mixin can target IE 8, 9, and 10, but not any ' +
+      @error 'The [ only-ie() ] mixin can target IE 8, 9, and 10, but not any ' +
           'higher while including IE 8. Please change your selected range.';
     }
   } @else if $version == 9 {
@@ -89,7 +89,7 @@
         @content;
       }
       @if $version-max == 10 {
-        @warn 'The `only-ie` mixin can target IE 9 and up, but cannot target ' +
+        @warn 'The [ only-ie() ] mixin can target IE 9 and up, but cannot target ' +
             'just 9 and 10. targeting IE versions 9-11 instead now.';
       }
     }
@@ -98,7 +98,7 @@
       @content;
     }
     @if $version-max == 10 {
-      @warn 'The `only-ie` mixin can target IE 10 and up, but cannot target ' +
+      @warn 'The [ only-ie() ] mixin can target IE 10 and up, but cannot target ' +
             'just IE10 alone. targeting IE versions 10 and up instead now. ' +
             'If you need to target only version 10, consider the following ' +
             'syntax instead: _:-ms-lang(x), .ie10 { property: value; }';
@@ -107,7 +107,7 @@
     @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
       @content;
     }
-    @warn 'The `only-ie` mixin can target IE 10 and up, but cannot target ' +
+    @warn 'The [ only-ie() ] mixin can target IE 10 and up, but cannot target ' +
         'just IE11 alone. targeting IE versions 10 and up instead now. If ' +
         'you need to target only version 11+, consider the following syntax ' +
         'instead: _:-ms-fullscreen, :root .ie11up { property: value; }';

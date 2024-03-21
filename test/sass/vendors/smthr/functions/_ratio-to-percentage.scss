@@ -73,16 +73,19 @@
     }
   }
 
+  @if $num-returns-common-ratio and meta.type-of($ratio) == 'list' {
+    $ratio: math.div(list.nth($ratio, 1) + 0, list.nth($ratio, 2) + 0);
+  }
+
   @if meta.type-of($ratio) == 'number' and math.is-unitless($ratio) {
     $ratio: num-to-ratio($ratio, $num-returns-common-ratio);
   }
 
   $width: list.nth($ratio, 1) + 0;
+  $height: list.nth($ratio, 2) + 0;
 
   @if meta.type-of($ratio) == 'list' and list.length($ratio) == 2 {
-    $percentage: math.percentage(
-      math.div(list.nth($ratio, 2), list.nth($ratio, 1))
-    );
+    $percentage: math.percentage(math.div($height, $width));
   } @else {
     @error 'Invalid $ratio value of [ #{meta.inspect($ratio)} ] for the ' +
         '[ ratio-to-percentage() ] function. Value must be a ratio ' +

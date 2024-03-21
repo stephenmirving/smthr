@@ -1,20 +1,72 @@
 @use 'sass:math';
+@use 'sass:string';
+@use '../../functions/is-number' as *;
+@use '../../functions/is-string' as *;
+@use '../../functions/is-true' as *;
+
+/// Provides the styles for the child element that is being kept at the given
+/// ratio provided in the `responsive-ratio()` mixin.
+///
+/// @group Utilities
+/// @access private
+@mixin _responsive-element-styles {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
 
 /// Creates a scalable element that maintains a given ratio.
 ///
-/// @example scss
+/// @example scss -
 /// .element {
-///   @include responsive-ratio(16, 9);
+///   @include responsive-ratio(16, 9, 'responsive-item);
 /// }
 ///
 /// @param {Number} $x - The width portion of the ratio.
 /// @param {Number} $y - The height portion of the ratio.
-/// @param {String} $content-class-name - The class name of the content that we
-/// want to keep at the given ratio. Pass it as a string without the leading '.'
+/// @param {String} $content-class-name - The class name, passed as a string,
+/// of the content which is being kept at the given ratio.
+///
+/// @output The properties on the root element, pseudo-element, and child
+/// element necessary to create a responsive and scalable element that
+/// maintains a given ratio. Uses the pattern involving `padding-top` on
+/// a `::before` pseudo-element.
 ///
 /// @group Utilities
-@mixin responsive-ratio($x, $y, $child-content-class-name) {
+/// @require {function} is-number
+/// @require {function} is-string
+/// @require {function} is-true
+/// @require {function} str-remove
+@mixin responsive-ratio($x, $y, $child-content-class-name: null) {
+  @if not is-number($x) or not is-number($y) or not math.compatible($x, $y)
+  {
+    @error 'Invalid input for $x or $y in the [ responsive-ratio() ] mixin. ' +
+        'These values must either be unitless numbers, numbers with compatible ' +
+        'units, or calculations that resolve to values with compatible units.';
+  }
+
+  @if $child-content-class-name and is-string($child-content-class-name) {
+    // Remove the character if the class name was passed with a leading '.'
+    @if string.slice($string, 1, 1) == '.' {
+      $child-content-class-name: string.slice($string, 2);
+    }
+  } @else if $child-content-class-name {
+    @error 'Invalid input for $child-content-class-name in the ' +
+        '[ responsive-ratio() ] mixin. If passed, this value must be the '
+        'name of the class which is having its ratio constrained and is the ' +
+        'child element of the one which has the @include statement for the mixin.';
+  }
+
   position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 0;
 
   &::before {
     content: '';
@@ -23,11 +75,16 @@
     padding-top: math.percentage(math.div($y, $x));
   }
 
-  > .#{$child-content-class-name} {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  @if is-true($child-content-class-name) {
+    > .#{$child-content-class-name} {
+      @include _responsive-element-styles;
+    }
+  } @else {
+    > iframe,
+    > embed,
+    > object,
+    > video {
+      @include _responsive-element-styles;
+    }
   }
 }

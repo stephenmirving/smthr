@@ -3,16 +3,18 @@
 @use 'sass:string';
 
 /// Applies the float clearing 'clearfix' hack. This modern incarnation of the
-/// clearfix will work as far back as Internet Explorer 8.
+/// clearfix will work as far back as Internet Explorer 6.
 ///
 /// @param {String} $clear-val [both] - The clear property's value. Can either
 /// be `left`, `right`, or `both`.
+/// @param {Bool | String } $ie-6 [false] If `true` or `ie6` or `yes, clearfix
+/// will work as far back as IE6, otherwise it will work as far back as IE 8.
 ///
 /// @group Utilities
 ///
 /// @throw Invalid $clear-value data type error.
 /// @throw Invalid $clear-value keyword error.
-@mixin clearfix($clear-value: both) {
+@mixin clearfix($clear-value: both, $ie-6: false) {
   $accepted-values: 'both', 'left', 'right';
 
   @if $clear-value and meta.type-of($clear-value) == 'string' {
@@ -29,13 +31,37 @@
         '`left`, `right` or `both`.';
   }
 
-  &::before,
-  &::after {
-    content: '';
+  @if $ie-6 and meta.type-of($ie-6) == 'string' or meta.type-of($ie-6) == 'number' {
+    $ie-6: string.to-lower-case('#{$ie-6}');
+  }
+
+  @if $ie-6 == true or $ie-6 == 'true' or
+      $ie-6 == 'ie6' or $ie-6 == '6' or
+      $ie-6 == 'yes' or $ie-6 == 'y'
+  {
+    $ie-6: true;
+  } @else {
+    @if $ie-6 {
+      @warn 'Incorrect input for $ie-6 in the [ clearfix() ] mixin. This ' +
+          'value determines if the clearfix hack will support IE 6 and up, ' +
+          'or IE 8 and up. If you want to support IE 6, pass `true` or \'ie6\'' +
+          ' or \'yes\' or just \'y\'. Clearfix will only support IE 8 and up.';
+    }
+
+    $ie-6: false;
+  }
+
+  @if $ie-6 {
+    *zoom: 1;
+  }
+
+  &:before,
+  &:after {
+    content: ' ';
     display: table;
   }
 
-  &::after {
+  &:after {
     clear: #{$clear-value};
   }
 }

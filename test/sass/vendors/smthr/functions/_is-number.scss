@@ -11,3 +11,17 @@
 @function is-number($value) {
   @return meta.type-of($value) == 'number';
 }
+
+/// Checks if a value is a number.
+///
+/// @param {*} $value - A value to be checked.
+///
+/// @return {Bool} True if $value is a number, false if it is not.
+///
+/// @access public
+/// @group Utilities
+///
+/// @alias is-number
+@function is-num($value) {
+  @return is-number($value);
+}

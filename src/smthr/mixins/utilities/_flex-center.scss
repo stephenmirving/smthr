@@ -16,6 +16,10 @@
 /// @param {Bool | String} $vertical [true] - Pass `true` or `vertical` to
 /// center the contents vertically.
 /// @param {String} $flex-dir ['row'] - The flex-direction value.
+/// @param {Bool | String} $support-all [false] - If you pass `true` or `yes`,
+/// or `t` or `y` or `legacy` or `all`, the mixin will also provide all the
+/// fallback legacy flexbox syntax to support the widest possible range of
+/// browsers.
 ///
 /// @group Utilities
 /// @require {function} equals-false
@@ -29,7 +33,12 @@
 /// @throw Invalid $horizontal value error.
 /// @throw Invalid $vertical value error.
 /// @throw Invalid $flex-dir value error.
-@mixin flex-center($horizontal: true, $vertical: true, $flex-dir: null) {
+@mixin flex-center(
+  $horizontal: true,
+  $vertical: true,
+  $flex-dir: null,
+  $support-all: false
+) {
   $swap: null;
   $orientation: 'horizontal';
 
@@ -39,6 +48,10 @@
 
   @if $vertical and is-string($vertical) {
     $vertical: string.to-lower-case($vertical);
+  }
+
+  @if $support-all and is-string($support-all) {
+    $support-all: string.to-lower-case($support-all);
   }
 
   @if equals-true($horizontal) or $horizontal == 't' or
@@ -68,6 +81,27 @@
         'You must pass either true or false.';
   }
 
+  @if equals-true($support-all) or $support-all == 't' $support-all == 'yes' or
+      $support-all == 'y' or $support-all == 'legacy' or $support-all == 'all'
+  {
+    $support-all: true;
+  } @else {
+    @if $support-all {
+      @warn 'Unknown value for $support-all passed to the [ flex-center() ] ' +
+          'mixin. If you would like the mixin to support the widest possible ' +
+          'range of browsers and devices, pass `true`, `yes`, `y`, `legacy`, ' +
+          'or `all`. All other values will be considered false.';
+    }
+
+    $support-all: false;
+  }
+
+  @if $support-all {
+    display: -webkit-box; // iOS 6-, Safari 3.1-6, BB7
+    display: -ms-flexbox; // IE 10
+    display: -webkit-flex; // Safari 6.1+. iOS 7.1+, BB10
+  }
+
   display: flex;
 
   @if $flex-dir {
@@ -90,9 +124,9 @@
     } @else if is-alias('column-reverse', $flex-dir) {
       $flex-dir: column-reverse;
       $orientation: 'vertical';
-    } @else if $flex-dir == 'row' or $flex-dir == 'r' or
-      is-alias('normal', $flex-dir) or
-      is-alias('left-to-right', $flex-dir)
+    } @else if not $flex-dir or $flex-dir == 'row' or $flex-dir == 'r' or
+        is-alias('normal', $flex-dir) or
+        is-alias('left-to-right', $flex-dir)
     {
       $flex-dir: row;
     } @else if not is-global-value($flex-dir) {
@@ -106,14 +140,41 @@
       $vertical: $swap;
     }
 
+    @if $support-all {
+      @if not is-global-value($flex-dir) {
+        -webkit-box-orient: #{$orientation}; // iOS, Safari, BB7
+
+        @if $flex-dir == 'row-reverse' or $flex-dir == 'column-reverse' {
+          -webkit-box-direction: reverse; // iOS, Safari, BB7
+        } @else {
+          -webkit-box-direction: normal
+        }
+      }
+
+      -ms-flex-direction: #{$flex-dir}; // IE 10
+      -webkit-flex-direction: #{$flex-dir}; // Safari, iOS, BB10
+    }
+
     flex-direction: #{$flex-dir};
   }
 
   @if $vertical {
+    @if $support-all {
+      -webkit-box-align: center; // iOS 6-, Safari 3.1-6
+      -ms-flex-align: center; // IE 10
+      -webkit-align-items: center; // Safari 7.0+ iOS 7+
+    }
+
     align-items: center;
   }
 
   @if $horizontal {
+    @if $support-all {
+      -webkit-box-pack: center; // iOS 6-, Safari 3.1-6
+      -ms-flex-pack: center; // IE 10
+      -webkit-justify-content: center; // Safari 6.1+. iOS 7.1+, BB10
+    }
+
     justify-content: center;
   }
 }

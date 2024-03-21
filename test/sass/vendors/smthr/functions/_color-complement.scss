@@ -8,8 +8,9 @@
 @use 'is-string' as *;
 
 /// Takes a given color and gives its complement in the specified color syntax.
-/// This is the equivalent of doing color.adjust($color, $hue: 180deg) but while
-/// being able to choose the output color format.
+/// This extends the functionality of Sass' color.complement and is the
+/// equivalent of doing color.adjust($color, $hue: 180deg) while being able to
+/// choose the output color format.
 ///
 /// @param {Color} $color - The color to find the complement. Must be a color
 /// type recognized by Sass.
@@ -65,12 +66,14 @@
 }
 
 /// Takes a given color and gives its complement in the specified color syntax.
-/// This is the equivalent of doing color.adjust($color, $hue: 180deg) but while
-/// being able to choose the output color format.
+/// This extends the functionality of Sass' color.complement and is the
+/// equivalent of doing color.adjust($color, $hue: 180deg) while being able to
+/// choose the output color format.
 ///
-/// @param {Color} $color - The color to find the complement.
+/// @param {Color} $color - The color to find the complement. Must be a color
+/// type recognized by Sass.
 /// @param {String} $syntax [get-color-type($color)] - The color syntax to
-/// convert into. Defaults to the color notation used by $color.
+/// convert into. Defaults to the color notation used by `$color`.
 ///
 /// @return {Color} - The color's complement in the given syntax.
 ///
@@ -84,8 +87,6 @@
 /// @throw Invalid $color data type, must be a color.
 /// @throw Invalid $syntax data type, must be a string.
 /// @throw Invalid $syntax value, must be a color syntax string.
-///
-/// @alias complement-color
 @function complement-color($color, $syntax: get-color-type($color)) {
   @return color-complement($color, $syntax);
 }

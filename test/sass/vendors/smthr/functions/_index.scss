@@ -58,6 +58,7 @@
 
 // String Functions
 @forward 'str-replace';
+@forward 'str-remove';
 @forward 'str-to-list';
 @forward 'str-to-num';
 
@@ -81,6 +82,7 @@
 @forward 'bottom-shadow';
 @forward 'color-invert';
 @forward 'color-complement';
+@forward 'color-contrast';
 @forward 'color-text-contrast';
 @forward 'color-to-string';
 @forward 'conv-color';

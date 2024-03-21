@@ -48,6 +48,9 @@ TODO:
     ☐ Make a mixin for animating between clip-path shapes. https://css-tricks.com/animating-with-clip-path/
 
   Utility Mixins:
+    ✔ Update `responsive-ratio` with stuff from _embed.scss @done(24-03-19 14:51)
+    ☐ Add `ratio-to-percentage()` function to `responsive-ratio()` function calculation and add $num-returns-common-ratio parameter
+      ☐ Retest `ratio-to-percentage()` and `num-to-ratio()` functions and responsive-ratio mixin.
     ☐ Create more flex-box prefix mixins
       ☐ Finish testing and copying over flex-flow mixin
     ☐ Create new CSS grid mixins and functions

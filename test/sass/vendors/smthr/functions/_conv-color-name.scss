@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'is-color' as *;
-@use '../variables/maps' as *;
+@use '../variables/colors' as *;
 
 /// If the given $color value is a valid CSS color name, returns the associated
 /// 3 or 6 digit hex value. Otherwise, returns the same color.
@@ -13,7 +13,7 @@
 /// chosen due to what Sass outputs from color module methods.
 ///
 /// @param {Color} $color-name - The CSS color name to be converted.
-/// @param {Map} $color-map [$map-color-names] - The map containing all the CSS
+/// @param {Map} $color-map [$color-names-map] - The map containing all the CSS
 /// colors and their hex values.
 ///
 /// @return {Color} - If the $color-name provided is a valid CSS color, returns
@@ -23,10 +23,10 @@
 /// @access public
 /// @group Utilities
 /// @require {function} is-color
-/// @require {variable} $map-color-names
+/// @require {variable} $color-names-map
 ///
 /// @throw Invalid $color-name data type.
-@function conv-color-name($color-name, $color-map: $map-color-names) {
+@function conv-color-name($color-name, $color-map: $color-names-map) {
   @if not is-color($color-name) {
     @error 'Invalid $color-name provided to the [ conv-color-name() ] function ' +
         'The value provided is of type: #{meta.inspect(meta.type-of($color-name))} ' +
@@ -52,7 +52,7 @@
 /// chosen due to what Sass outputs from color module methods.
 ///
 /// @param {Color} $color-name - The CSS color name to be converted.
-/// @param {Map} $color-map [$map-color-names] - The map containing all the CSS
+/// @param {Map} $color-map [$color-names-map] - The map containing all the CSS
 /// colors and their hex values.
 ///
 /// @return {Color} - If the $color-name provided is a valid CSS color, returns
@@ -62,12 +62,12 @@
 /// @access public
 /// @group Utilities
 /// @require {function} is-color
-/// @require {variable} $map-color-names
+/// @require {variable} $color-names-map
 ///
 /// @throw Invalid $color-name data type.
 ///
 /// @alias conv-color-name
-@function conv-if-color-name($color-name, $color-map: $map-color-names) {
+@function conv-if-color-name($color-name, $color-map: $color-names-map) {
   @return conv-color-name($color-name, $color-map);
 }
 
@@ -81,7 +81,7 @@
 /// chosen due to what Sass outputs from color module methods.
 ///
 /// @param {Color} $color-name - The CSS color name to be converted.
-/// @param {Map} $color-map [$map-color-names] - The map containing all the CSS
+/// @param {Map} $color-map [$color-names-map] - The map containing all the CSS
 /// colors and their hex values.
 ///
 /// @return {Color} - If the $color-name provided is a valid CSS color, returns
@@ -91,11 +91,11 @@
 /// @access public
 /// @group Utilities
 /// @require {function} is-color
-/// @require {variable} $map-color-names
+/// @require {variable} $color-names-map
 ///
 /// @throw Invalid $color-name data type.
 ///
 /// @alias conv-color-name
-@function convert-color-name($color-name, $color-map: $map-color-names) {
+@function convert-color-name($color-name, $color-map: $color-names-map) {
   @return conv-color-name($color-name, $color-map);
 }
