@@ -241,7 +241,7 @@ body {
 // display correctly in all browsers.
 
 dialog, canvas, details, summary,
-legend, img, svg, video {
+main, legend, img, svg, video {
   display: block;
 }
 
@@ -561,7 +561,7 @@ dl menu {
 
 // Prevent VoiceOver from ignoring list semantics in Safari
 
-nav li::before {
+nav li:before {
   content: '\200B';
   float: left;
 }
@@ -807,23 +807,6 @@ progress {
   vertical-align: baseline;
 }
 
-// Mozilla focus rings can look a little bit closer to the element than the
-// ring set in other browsers by `:focus-visible`. To normalize that, the
-// `:-moz-focusring` selector comes after the standardized `:focus-visible`.
-// TODO: Change the outline color to something that matches your design, or
-//       change both rules to `outline:0` and create outlines with
-//       `box-shadow` instead.
-
-:focus-visible {
-  outline: 2px solid smth.$color-focus-ring;
-  outline-offset: 3px;
-}
-
-:-moz-focusring {
-  outline: 2px solid smth.$color-focus-ring;
-  outline-offset: 4px;
-}
-
 // Suppress the focus outline on elements that cannot be accessed via keyboard.
 // This prevents an unwanted focus outline from appearing around elements that
 // might still respond to pointer events.
@@ -840,7 +823,8 @@ progress {
 }
 
 ::placeholder {
-  color: rgba(0, 0, 0, 0.54);
+  color: inherit;
+  opacity: 0.54;
 }
 
 // Correct the inability to style clickable types in iOS and Safari and change
@@ -1038,20 +1022,10 @@ svg:not([fill]) {
   ::before,
   ::after {
     background-attachment: initial !important; // 1
-    -webkit-transition-duration: 0s !important; // 2
-    -o-transition-duration: 0s !important; // 2
     transition-duration: 0s !important; // 2
-    -webkit-transition-delay: 0s !important; // 2
-    -o-transition-delay: 0s !important; // 2
     transition-delay: 0s !important; // 2
-    -webkit-animation-duration: 1ms !important; // 3
-    -moz-animation-duration: 1ms !important; // 3
     animation-duration: 1ms !important; // 3
-    -webkit-animation-delay: -1ms !important; // 3
-    -moz-animation-delay: -1ms !important; // 3
     animation-delay: -1ms !important; // 3
-    -webkit-animation-iteration-count: 1 !important; // 3
-    -moz-animation-iteration-count: 1 !important; // 3
     animation-iteration-count: 1 !important; // 3
     scroll-behavior: auto !important; // 4
   }
