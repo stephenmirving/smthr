@@ -19,6 +19,9 @@ TODO:
     ☐ Create is-color-string function that returns whether a string could be a valid color
     ☐ Add more form utilities and mixins
     ☐ Further test and improve Betterize
+    ☐ Reorganize Groups
+      ☐ Change name of Utilities group
+      ☐ Add more Groups
     ☐ Possibly change the aliases for things like "bottom-left-to-top-right" to resolve to "to top right"
     ☐ Create a new responsive font mixin using the trend-line function
     ☐ Possibly modify text-outline mixins or create new mixin to include the -webkit-text-stroke property
@@ -75,6 +78,7 @@ TODO:
       ☐ Functions page
       ☐ Each page code example and live demo for each function, mixin, or important variable.
       ✔ Documentation using SassDoc @done(24-03-18 17:56)
+      ☐ Improve SassDoc with custom theme and better grouping
 
 ================================================================================
 

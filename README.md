@@ -38,7 +38,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.9.0 - _Last updated:_ 03/21/24
+This is **smoother** version 0.9.2 - _Last updated:_ 03/23/24
 
 ## Content
 
@@ -334,6 +334,16 @@ To get an idea of the full list of aliases for these keyword values, see the
 link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
+
+### Version 0.9.2 Patch Notes
+
+- Updated _Betterize_ to version 2.0.0.
+- Updated `hide-visually()` mixin's `clip` and `clip-path` properties slightly.
+
+### Version 0.9.1 Patch Notes
+
+- Fixed a change that was missing from the previous patch that updated
+  `_betterize.scss` to version 1.3.0.
 
 ### Version 0.9.0 Patch Notes
 
