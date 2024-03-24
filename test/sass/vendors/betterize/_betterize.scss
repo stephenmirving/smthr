@@ -3,7 +3,7 @@
 /// betterize.scss -- Modern normalization for better cross-browser design - ///
 /// Special version designed for use with the Smoother library ------------- ///
 /// @author Stephen M Irving -- <@metric_dev> ------------------------------ ///
-/// version 2.0.0 -- 03/23/2024 -------------------------------------------- ///
+/// version 2.0.1 -- 03/24/2024 -------------------------------------------- ///
 /// ------------------------------------------------------------------------ ///
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -127,6 +127,7 @@ html {
   hanging-punctuation: first last; // 12
   -webkit-tap-highlight-color: transparent; // 13
   -webkit-text-size-adjust: 100%; // 14
+  text-size-adjust: 100%; // 14
   -ms-overflow-style: scrollbar; // 15
 }
 
@@ -237,11 +238,17 @@ body {
   }
 }
 
-// Ensure HTML5 structual elements and media elements
-// display correctly in all browsers.
+// Ensure HTML5 structual elements and media elements display correctly
 
-dialog, canvas, details, summary,
-main, legend, img, svg, video {
+canvas,
+details,
+dialog,
+legend,
+main,
+summary,
+img,
+svg,
+video {
   display: block;
 }
 
@@ -260,13 +267,14 @@ figcaption {
 }
 
 // 1. Remove the top margin for easier control as it avoids margin collapse.
-// 2. Overwrite bottom margin with margin-block-end for browesers that support it.
+// 2. Overwrite phyical margin properties with logical properties if supported.
 // 3. Correct the font size <h1> elements within <section> and
 //    <article> contexts in Chrome, Firefox, and Safari.
 
 h1 {
   margin: 0 0 0.67em; // 1
-  margin-block-end: 0.67em; // 2
+  margin-block: 0 0.67em; // 2
+  margin-inline: 0; // 2
   font-size: 2em; // 3
 }
 
@@ -278,6 +286,7 @@ h4,
 h5,
 h6 {
   margin-top: 0;
+  margin-block-start: 0;
 }
 
 // 1. Limit the inline size of paragraphs to 92 characters.
@@ -300,7 +309,8 @@ ul,
 figure,
 blockquote {
   margin: 0 0 1rem;
-  margin-block-end: 1rem;
+  margin-block: 0 1rem;
+  margin-inline: 0;
 }
 
 // Normalize bold and strong
@@ -417,15 +427,16 @@ kbd {
   white-space: nowrap;
 }
 
-
 // 1. Dont't allow content to break outside
 // 2. Remove top margin to avoid vertical margin collapse.
-// 3. Overwrite margin-bottom with margin-block-end for browsers that support it.
+// 3. Overwrite physical margin properties with logical margin properties
+//    for browsers that support it to improve internationalization.
 
 pre {
   overflow: auto; // 1
   margin: 0 0 1rem; // 2
-  margin-block-end: 1rem; // 3
+  margin-block: 0 1rem; // 3
+  margin-inline: 0; // 3
 }
 
 :where(pre:has(code)) {
@@ -433,6 +444,11 @@ pre {
   max-height: 340px;
   padding-block: 0.5rem;
   padding-inline: 1rem;
+  background-color: #eee;
+}
+
+:where(pre) code {
+  border-radius: 0;
 }
 
 output {
@@ -440,8 +456,9 @@ output {
 }
 
 address {
-  margin-bottom: 1rem;
-  margin-block-end: 1rem;
+  margin: 0 0 1rem;
+  margin-block: 0 1rem;
+  margin-inline: 0;
   font-style: normal;
   line-height: inherit;
 }
@@ -505,8 +522,8 @@ hr {
   border: 0;
   border-top: 1px solid currentColor;
   margin: 1rem 0;
-  margin-block-start: 1rem;
-  margin-block-end: 1rem;
+  margin-block: 1rem;
+  margin-inline: 0;
   color: inherit;
   opacity: 0.6;
 }
@@ -530,9 +547,9 @@ cite {
 // Undo browser default margins
 
 dd {
-  margin-bottom: 0.5rem;
-  margin-block-end: 0.5rem;
-  margin-left: 0;
+  margin: 0 0 0.5rem;
+  margin-block: 0 0.5rem;
+  margin-inline: 0;
 }
 
 // Remove the list-style for <ol> and <ul> elements used in <nav> elements.
@@ -735,13 +752,6 @@ button::-moz-focus-inner,
   border-style: none;
 }
 
-input:disabled,
-select:disabled,
-textarea:disabled {
-  background-color: hsl(0, 0%, 90.2%);
-  cursor: not-allowed;
-}
-
 // Remove the border and padding in all browsers (opinionated)
 
 [type='color'],
@@ -763,12 +773,18 @@ input[type='month'] {
   -webkit-appearance: listbox;
 }
 
-// Remove the default vertical scrollbar in IE 10+ and restric horizontal
-// resizing in all browsers.
+// Remove any default vertical scrollbar and restric horizontal resizing.
 
 textarea {
   overflow: auto;
   resize: vertical;
+}
+
+input:disabled,
+select:disabled,
+textarea:disabled {
+  background-color: hsl(0, 0%, 90.2%);
+  cursor: not-allowed;
 }
 
 // Reset fieldsets to make them behave more like a standard block element and
@@ -791,8 +807,9 @@ legend {
   width: 100%;
   max-width: 100%;
   padding: 0;
-  margin-bottom: 0.5rem;
-  margin-block-end: 0.5rem;
+  margin: 0 0 0.5rem;
+  margin-block: 0 0.5rem;
+  margin-inline: 0;
   color: inherit;
   font-size: 1.375rem;
   line-height: inherit;
@@ -827,14 +844,6 @@ progress {
   opacity: 0.54;
 }
 
-// Correct the inability to style clickable types in iOS and Safari and change
-// font properties to inherit in Safari.
-
-::-webkit-file-upload-button {
-  -webkit-appearance: button;
-  font: inherit;
-}
-
 // Remove the additional :invalid styles in Firefox.
 
 :-moz-ui-invalid {
@@ -849,10 +858,18 @@ progress {
   box-shadow: none;
 }
 
+// Correct the inability to style clickable types in iOS and Safari and change
+// font properties to inherit in Safari.
+
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
 // Correct the cursor style of increment and decrement buttons in Chrome.
 
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -867,8 +884,8 @@ progress {
 // Remove the inner padding on search cancel buttons and search decorations in
 // Chrome and Safari on macOS.
 
-[type='search']::-webkit-search-cancel-button,
-[type='search']::-webkit-search-decoration {
+::-webkit-search-decoration,
+::-webkit-search-cancel-button {
   -webkit-appearance: none;
 }
 
