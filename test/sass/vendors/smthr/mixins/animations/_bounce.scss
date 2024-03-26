@@ -12,8 +12,8 @@
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// An animation that bounces an element in to view. It is recommended to use
-/// the `animation-stage()` mixin on the parent element.
+/// An animation that bounces an element in to view. It is recommended that the
+/// `animation-stage()` mixin be used on the parent element.
 ///
 /// @param {String | Bool} $in-or-out [in] - Determines if the element will
 /// bounce 'in' (pass `in`, `true`, or `i`) or 'out' (pass `out`, `false`, or `o`).

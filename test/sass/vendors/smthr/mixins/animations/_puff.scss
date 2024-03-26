@@ -12,17 +12,16 @@
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Generates an animation that puffs an element in or out. If a `forwards` or
-/// `backwards` $direction is chosen to augment the puff, it is recommended that
-/// the `animation-stage()` mixin be used on the parent element.
+/// Generates an animation that puffs an element in or out. It is recommended
+/// that the `animation-stage()` mixin be used on the parent element.
 ///
 /// @param {Bool | String} $in-or-out ['in'] - Determines if the element will
 /// puff 'in' (`in`, `i`, or `true`) or 'out' (`out`, `o`, or `false`).
 /// @param {String} $direction ['center'] - Will, depending on `$in-or-out`,
 /// either puff in from this direction or puff out towards this direction.
 /// Accepted values include: `center`, '`top`, `bottom`, `left`, `right`,
-/// `top-left`, `top-right`, `bottom-left`, `bottom-right`, `horizontal`, and
-/// `vertical`.
+/// `top-left`, `top-right`, `bottom-left`, `bottom-right`, `horizontal`,
+/// `vertical`, `forwards`, or `backwards`.
 /// @param {Number} $duration [0.7s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -102,10 +101,10 @@
 
   @if equals-true($in-or-out) or $in-or-out == 'in' {
     $in-or-out: true;
-    $anim-suffix: '-in-from';
+    $anim-suffix: '-in-to';
   } @else if equals-false($in-or-out) or $in-or-out == 'out' {
     $in-or-out: false;
-    $anim-suffix: '-out-to';
+    $anim-suffix: '-out-from';
   } @else {
     @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
         '[ puff() ] mixin. Value must be either `in` or `out`';
@@ -130,12 +129,12 @@
       $trans-val-1: translateY(50px);
       $trans-val-2: translateY(0);
       $trans-origin-val: 50% 100%;
-    } @else if is-alias('forwards', $direction) {
-      $direction: 'front';
-      $trans-val-1: translateZ(80px);
-      $trans-val-2: translateZ(0);
     } @else if is-alias('backwards', $direction) {
       $direction: 'back';
+      $trans-val-1: translateZ(80px);
+      $trans-val-2: translateZ(0);
+    } @else if is-alias('forwards', $direction) {
+      $direction: 'front';
       $trans-val-1: translateZ(-80px);
       $trans-val-2: translateZ(0);
     } @else if is-alias('left', $direction) {

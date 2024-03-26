@@ -7,26 +7,22 @@
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-falsey' as *;
 @use '../../functions/is-global-value' as *;
-@use '../../functions/is-length' as *;
 @use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
-@use '../../functions/is-position' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/list-to-string' as *;
 
-/// Generates an animation that poofs an element in or out. If a forward or
-/// backward $direction is chosen to augment the poof, it is recommended that
-/// the `animation-stage()` mixin be used on the parent element.
+/// Generates an animation that poofes an element in or out. It is recommended
+/// that the `animation-stage()` mixin be used on the parent element.
 ///
-/// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
-/// poof `in` (or `i` or `true`) or `out` (or `o`, or `false`).
-/// @param {String | Number | List} $trans-origin [50%] - The argument for
-/// the `transform-origin` property used in the keyframes of the animation.
-/// Almost any value that is valid for `transform-origin` is valid here, along
-/// with many aliases (such as 'top-right` or `tr` is the equivalent of
-/// `right top` or `100% 0%`. Does not accept CSS global values due to being
-/// used in the keyframes, not on the selector itself.
-/// @param {Number} $duration [1s] - The duration of the animation (`s` or `ms`)
+/// @param {Bool | String} $in-or-out ['in'] - Determines if the element will
+/// poof 'in' (`in`, `i`, or `true`) or 'out' (`out`, `o`, or `false`).
+/// @param {String} $direction ['center'] - Will, depending on `$in-or-out`,
+/// either poof in from this direction or poof out towards this direction.
+/// Accepted values include: `center`, '`top`, `bottom`, `left`, `right`,
+/// `top-left`, `top-right`, `bottom-left`, `bottom-right`, `horizontal`, or
+/// `vertical`.
+/// @param {Number} $duration [0.7s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
 /// for the animation to complete. Can be `infinite`, any unitless number, or
@@ -36,8 +32,10 @@
 /// any CSS global value. Default of `null` assumes the CSS property default of
 /// `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
-/// animation. A null value passed here will cause the animation to render
-/// according to the CSS default timing function value of `ease`;
+/// animation. A null value passed here will default to the recommended timing
+/// function for this animation of `cubic-bezier(0.47, 0, 0.745, 0.715)` if
+/// the animation is poofing in, and `cubic-bezier(0.165, 0.84, 0.44, 1)` if
+/// the animation is poofing out.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than
 /// once with different values in a stylesheet, you can pass a number or string
 /// to the mixin here that gets appeneded to end of the animation name so that
@@ -48,44 +46,36 @@
 /// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-global-value
-/// @require {function} is-length
 /// @require {function} is-number
-/// @require {function} is-position
 /// @require {function} is-string
 /// @require {function} is-list
 /// @require {function} list-to-string
 ///
 /// @throw Invalid $in-or-out value error.
-/// @throw Invalid $trans-origin value error.
 /// @throw Invalid $duration value error.
 /// @throw Invalid $delay value error.
 /// @throw Invalid $iterations value error.
 /// @throw Invalid $anim-dir value error.
 @mixin poof(
   $in-or-out: 'in',
-  $trans-origin: 50%,
-  $duration: 1s,
+  $direction: 'center',
+  $duration: 0.7s,
   $delay: null,
   $iterations: null,
   $anim-dir: null,
   $timing-func: null,
   $anim-num: null
 ) {
-  // Default values for a poof in
-  $trans-val-1: scale(2, 2);
-  $trans-val-2: scale(1, 1);
+  // Default values for a poof in with center direction
   $opacity-val-1: 0;
   $opacity-val-2: 1;
-  $blur-val-1: blur(90px);
+  $trans-val-1: scale(2);
+  $trans-val-2: scale(1);
+  $blur-val-1: blur(5px);
   $blur-val-2: blur(0);
+  $trans-origin-val: null;
+  $temp-val: null;
   $anim-suffix: '';
-
-  // $trans-origin error checking and alias-proofing
-  $cur-val: null;
-  $horizontal-axis-used: false;
-  $vertical-axis-used: false;
-  $trans-origin-position: null;
-  $trans-origin-zoffset: null;
 
   @if $in-or-out and is-string($in-or-out) {
     $in-or-out: string.to-lower-case($in-or-out);
@@ -111,152 +101,76 @@
 
   @if equals-true($in-or-out) or $in-or-out == 'in' {
     $in-or-out: true;
-    $anim-suffix: '-in';
+    $anim-suffix: '-in-to';
   } @else if equals-false($in-or-out) or $in-or-out == 'out' {
     $in-or-out: false;
-    $anim-suffix: '-out';
+    $anim-suffix: '-out-from';
   } @else {
     @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
         '[ poof() ] mixin. Value must be either `in` or `out`';
   }
 
-  // $trans-origin extensive error checking
-  @if $trans-origin {
-    $trans-error-start: 'Invalid value in the $trans-origin parameter, which ' +
-        'sets the `transform-origin` value for the keyframes in the ' +
-        '[ poof() ] mixin.';
+  @if $direction {
+    @if is-list($direction) {
+      $direction: list-to-string($direction);
+    }
 
-    @if is-list($trans-origin) {
-      $num-origin-vals: list.length($trans-origin);
+    @if is-string($direction) {
+      $direction: string.to-lower-case($direction);
+    }
 
-      @if $num-origin-vals > 3 {
-        @error '#{$trans-error-start} The transform-origin property only ' +
-          'allows for 1, 2, and 3-value syntax. You passed more than 3 values.';
-      }
-
-      // From this point we know $trans-origin is a 2 or 3 value list
-      @for $i from 1 through $num-origin-vals {
-        $cur-val: list.nth($trans-origin, $i);
-
-        @if $i == 3 and not is-length($cur-val) {
-          @error '#{$trans-error-start} When using the 3-value syntax with the ' +
-              'transform-origin property, the third value must be a length ' +
-              'that represents the Z offset.';
-        }
-
-        @if $i < 3 {
-          @if is-position($cur-val, 'allow-aliases') {
-            @if $i == 1 {
-              @if is-alias('left', $cur-val) or is-alias('right', $cur-val) {
-                $horizontal-axis-used: true;
-              } @else if is-alias('top', $cur-val) or is-alias('bottom', $cur-val) {
-                $vertical-axis-used: true;
-              }
-            } @else { // $i == 2
-              @if $horizontal-axis-used and
-                  (is-alias('left', $cur-val) or is-alias('right', $cur-val))
-              {
-                @error '#{$trans-error-start} Horizontal axis for this property ' +
-                  'already set when you passed #{meta.inspect(list.nth($trans-origin, 1))} ' +
-                  'for the first $trans-origin value. You must pass a ' +
-                  'length, a percentage, or one of the keywords for the vertical ' +
-                  'axis (`top` or `bottom`) for the 2nd value of $trans-origin.';
-              } @else if $vertical-axis-used and
-                    (is-alias('top', $cur-val) or is-alias('bottom', $cur-val))
-              {
-                @error '#{$trans-error-start} Vertical axis for this property ' +
-                  'already set when you passed #{meta.inspect(list.nth($trans-origin, 1))} ' +
-                  'for the first $trans-origin value. You must pass a ' +
-                  'length, a percentage, or one of the keywords for the horizontal ' +
-                  'axis (`left` or `right`) for the 2nd value of $trans-origin.';
-              }
-            }
-          } @else {
-            @error '#{$trans-error-start} When using the #{$num-origin-vals}' +
-                '-value syntax with the transform-origin property, ' +
-                'value one and value two must be either a length, a percentage ' +
-                'or one of the position keywords: `center`, `top`, `right' +
-                '`bottom`, or `left`.';
-          }
-        }
-      }
-
-      @if $num-origin-vals == 3 {
-        $trans-origin-position: (
-          list.nth($trans-origin, 1) list.nth($trans-origin, 2)
-        );
-        $trans-origin-zoffset: list.nth($trans-origin, 3);
-      } @else {
-        $trans-origin-position: $trans-origin;
-      }
+    @if is-alias('top', $direction) {
+      $direction: 'top';
+      $trans-origin-val: 50% 0%;
+    } @else if is-alias('top right', $direction) {
+      $direction: 'top-right';
+      $trans-origin-val: 100% 0%;
+    } @else if is-alias('right', $direction) {
+      $direction: 'right';
+      $trans-origin-val: 100% 50%;
+    } @else if is-alias('bottom right', $direction) {
+      $direction: 'bottom-right';
+      $trans-origin-val: 100% 100%;
+    } @else if is-alias('bottom', $direction) {
+      $direction: 'bottom';
+      $trans-origin-val: 50% 100%;
+    } @else if is-alias('bottom left', $direction) {
+      $direction: 'bottom-left';
+      $trans-origin-val: 0% 100%;
+    } @else if is-alias('left', $direction) {
+      $direction: 'left';
+      $trans-origin-val: 0% 50%;
+    } @else if is-alias('top left', $direction) {
+      $direction: 'top-left';
+      $trans-origin-val: 0% 0%;
+    } @else if is-alias('center', $direction) {
+      $direction: 'center';
     } @else {
-      $trans-origin-position: $trans-origin;
-    }
-
-    @if is-list($trans-origin-position) {
-      $trans-origin-position: list-to-string($trans-origin-position);
-    }
-
-    @if is-string($trans-origin-position) {
-      $trans-origin-position: string.to-lower-case($trans-origin-position);
-    }
-
-    @if is-alias('top', $trans-origin-position) {
-      $trans-origin-position: 50% 100%;
-    } @else if is-alias('top right', $trans-origin-position) {
-      $trans-origin-position: 0% 100%;
-    } @else if is-alias('right', $trans-origin-position) {
-      $trans-origin-position: 0% 50%;
-    } @else if is-alias('bottom right', $trans-origin-position) {
-      $trans-origin-position: 0% 0%;
-    } @else if is-alias('bottom', $trans-origin-position) {
-      $trans-origin-position: 50% 0%;
-    } @else if is-alias('bottom left', $trans-origin-position) {
-      $trans-origin-position: 100% 0%;
-    } @else if is-alias('left', $trans-origin-position) {
-      $trans-origin-position: 100% 50%;
-    } @else if is-alias('top left', $trans-origin-position) {
-      $trans-origin-position: 100% 100%;
+      @error 'Invalid direction of `#{meta.inspect($direction)}` chosen for the ' +
+          '[ poof() ] mixin. The $direction value must be one of the following: ' +
+          '`center`, `top`, `top-right`, `right`, `bottom-right`, `bottom`, ' +
+          '`bottom-left`, `left`, or `top-left`';
     }
   } @else {
-    $trans-origin-position: 50%;
+    $direction: 'center';
   }
 
-  $trans-origin: list.append(
-    $trans-origin-position,
-    $trans-origin-zoffset,
-    $separator: space
-  );
-
-  // If poofing out rather than in, reverse the necessary values
-  @if not $in-or-out {
-    $opacity-val-1: 1;
-    $opacity-val-2: 0;
-    $trans-val-1: scale(1, 1);
-    $trans-val-2: scale(2, 2);
-    $blur-val-1: blur(0);
-    $blur-val-2: blur(20px);
+  @if not $duration {
+    $duration: if($in-or-out, 0.7s, 1s);
   }
 
-  @if $duration {
-    @if not is-number($duration) {
-      @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] ' +
-          'mixin. The duration property must be a number.';
-    } @else if math.is-unitless($duration) {
-      // If no there is no unit for $duration, unless $duration > 60, assume seconds
-      $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
-    } @else if not list.index('s' 'ms', math.unit($duration)) {
-      @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] mixin.' +
-          'The duration property must be in either s or ms units.';
-    } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
-      // If time in ms would be shorter as seconds, convert it
-      $duration: math.div($duration, 1000ms) * 1s;
-    }
-  } @else {
-    $duration: 1s;
-
-    @warn 'You did not pass a $duration for the [ poof() ] mixin. Using the ' +
-        'default duration of 1s.';
+  @if not is-number($duration) {
+    @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] ' +
+        'mixin. The duration property must be a number.';
+  } @else if math.is-unitless($duration) {
+    // If no there is no unit for $duration, unless $duration > 60, assume seconds
+    $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+  } @else if not list.index('s' 'ms', math.unit($duration)) {
+    @error 'Invalid $duration value of `#{$duration}` for the [ poof() ] mixin.' +
+        'The duration property must be in either s or ms units.';
+  } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
+    // If time in ms would be shorter as seconds, convert it
+    $duration: math.div($duration, 1000ms) * 1s;
   }
 
   @if is-falsey($delay) or
@@ -316,8 +230,30 @@
   }
 
   @if equals-false($timing-func) or is-alias('normal', $timing-func) {
-    $timing-func: null;
+    $timing-func: if(
+      $in-or-out,
+      cubic-bezier(0.47, 0, 0.745, 0.715),
+      cubic-bezier(0.165, 0.84, 0.44, 1)
+    );
   }
+
+  // If poofing out rather than poofing in, reverse the necessary values
+  @if not $in-or-out {
+    $opacity-val-1: 1;
+    $opacity-val-2: 0;
+    $blur-val-1: blur(0);
+    $blur-val-2: blur(5px);
+
+    $temp-val: $trans-val-1;
+    $trans-val-1: $trans-val-2;
+    $trans-val-2: $temp-val;
+  }
+
+  $anim-suffix: string.insert(
+    $anim-suffix,
+    '-#{$direction}',
+    string.length($anim-suffix) + 1
+  );
 
   @if equals-false($anim-num) or $anim-num == '' {
     $anim-num: null;
@@ -331,7 +267,7 @@
 
   transform: translate3d(0, 0, 0);
   animation: poof#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
-    #{$iterations} #{$anim-dir} both;
+      #{$iterations} #{$anim-dir} both;
 
   @at-root {
     @keyframes poof#{$anim-suffix} {
@@ -339,14 +275,20 @@
         opacity: $opacity-val-1;
         filter: $blur-val-1;
         transform: $trans-val-1;
-        transform-origin: #{$trans-origin};
+
+        @if $trans-origin-val {
+          transform-origin: $trans-origin-val;
+        }
       }
 
       100% {
         opacity: $opacity-val-2;
         filter: $blur-val-2;
         transform: $trans-val-2;
-        transform-origin: #{$trans-origin};
+
+        @if $trans-origin-val {
+          transform-origin: $trans-origin-val;
+        }
       }
     }
   }

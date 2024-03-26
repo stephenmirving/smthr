@@ -172,6 +172,23 @@ $flip-axis: 'horizontal';
   @include flip-scale(bottom, $flip-axis, 0.6s, $anim-dir: alternate-reverse);
 }
 
+.active-anim-vanish {
+  @include vanish('in', left, 1.5s);
+}
+
+.active-anim-puff {
+  @include puff('out', 'back');
+}
+
+.active-anim-poof {
+  @include poof('in', topright);
+}
+
+.active-anim-poof-puff {
+  @include poof-puff('in', front);
+}
+
+
 .btn {
   // @include ghost-button(1.25rem, rgb(3, 23, 95, 1), 700, system-ui, 3px, rgb(3, 23, 95, 1), 1rem 1.25rem, 0.5s, color-text-contrast(rgba(3, 23, 95, 1)));
   @include reset;

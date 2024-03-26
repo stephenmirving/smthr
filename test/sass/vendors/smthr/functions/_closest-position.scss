@@ -8,10 +8,10 @@
 @use 'conv-angle' as *;
 @use '../variables/maps' as *;
 
-/// Takes an angle and returns the closest position keyword as an
-/// unquoted string. If $return-difference is set to true, it will return a
-/// comma separated list with the keyword first and then the difference
-/// in degrees between that and the given angle.
+/// Takes an angle and returns the closest position keyword (`top`, `right`,
+/// `bottom`, or `left`) as an unquoted string. If $return-difference is set to
+/// true, it will return a comma separated list with the keyword first and then
+/// the difference in degrees between that and the given angle.
 ///
 /// @param {Number} $angle - An angle in any format or a unitless number
 /// which the function will assume to be in degrees.
@@ -20,10 +20,10 @@
 /// direction and the given angle. Pass `false` or `null` to have the function
 /// return an unquoted string with just the closest position keyword.
 ///
-/// @return {String | List} Returns an unquoted string with the closest
-/// position keyword. If $return-difference is set to true, it will
-/// instead return a list with the keyword first and then the difference in deg
-/// between that position and the given angle.
+/// @return {String | List} Returns an unquoted string with the closest position
+/// keyword (`top`, `right`, `bottom`, or `left`). If $return-difference is set
+/// to true, it will instead return a list with the keyword first and then the
+/// difference in deg between that position and the given angle.
 ///
 /// @example scss
 /// .element {

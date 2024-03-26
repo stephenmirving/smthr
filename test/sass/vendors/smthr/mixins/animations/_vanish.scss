@@ -1,0 +1,402 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:string';
+@use '../../functions/equals-false' as *;
+@use '../../functions/equals-true' as *;
+@use '../../functions/is-alias' as *;
+@use '../../functions/is-falsey' as *;
+@use '../../functions/is-global-value' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-list' as *;
+@use '../../functions/is-number' as *;
+@use '../../functions/is-position' as *;
+@use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
+
+/// Generates an animation that vanishes an element in or out. It is recommended
+/// that the `animation-stage()` mixin be used on the parent element.
+///
+/// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
+/// vanish `in` (or `i` or `true`) or `out` (or `o`, or `false`).
+/// @param {String | Number | List} $direction [50%] - Resolves to the value for
+/// the `transform-origin` property used in the keyframes of the animation.
+/// Almost any value that is valid for `transform-origin` is valid here, along
+/// with many aliases. If you pass a direction keyword (`top`, `top right`,
+/// `right` `bottom right`, `bottom`, `bottom left`, `left,` `top left`,
+/// `center`) that value corresponds to the direction the animation appears to
+/// be moving in from or out towards. In this way, passing keyword direction is
+/// almost as if you are setting a "transform-destination" property. You can
+/// also directly pass 1, 2, or 3 value syntax that will be used directly for
+/// the `transform-origin` property on the animation's keyframes. Does not
+/// accept CSS global values due to being used in the keyframes, not on the
+/// selector itself.
+/// @param {Number} $duration [1s] - The duration of the animation (`s` or `ms`)
+/// @param {Number} $delay [null] - The optional delay time for the animation.
+/// @param {Number | String} $iterations [null] - The number of iterations
+/// for the animation to complete. Can be `infinite`, any unitless number, or
+/// any CSS global value.
+/// @param {String} $anim-dir [null] - Sets the animation-direction property.
+/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
+/// any CSS global value. Default of `null` assumes the CSS property default of
+/// `normal`.
+/// @param {Timing-Function} $timing-func [null] - The timing function for the
+/// animation. A null value passed here will cause the animation to render
+/// according to the CSS default timing function value of `ease`;
+/// @param {Number | String} $anim-num [null] - If the mixin is used more than
+/// once with different values in a stylesheet, you can pass a number or string
+/// to the mixin here that gets appeneded to end of the animation name so that
+/// the animations do not overwrite each other.
+///
+/// @group Animations
+/// @require {function} equals-false
+/// @require {function} equals-true
+/// @require {function} is-alias
+/// @require {function} is-global-value
+/// @require {function} is-length
+/// @require {function} is-number
+/// @require {function} is-position
+/// @require {function} is-string
+/// @require {function} is-list
+/// @require {function} list-to-string
+///
+/// @throw Invalid $in-or-out value error.
+/// @throw Invalid $direction value error.
+/// @throw Invalid $duration value error.
+/// @throw Invalid $delay value error.
+/// @throw Invalid $iterations value error.
+/// @throw Invalid $anim-dir value error.
+@mixin vanish(
+  $in-or-out: 'in',
+  $direction: 50%,
+  $duration: 1s,
+  $delay: null,
+  $iterations: null,
+  $anim-dir: null,
+  $timing-func: null,
+  $anim-num: null
+) {
+  // Default values for a vanish in
+  $trans-val-1: scale(2);
+  $trans-val-2: scale(1);
+  $opacity-val-1: 0;
+  $opacity-val-2: 1;
+  $blur-val-1: blur(90px);
+  $blur-val-2: blur(0);
+  $anim-suffix: '';
+  $direction-name: null;
+
+  // $direction error checking and alias-proofing
+  $cur-val: null;
+  $horizontal-axis-used: false;
+  $vertical-axis-used: false;
+  $trans-origin-position: null;
+  $trans-origin-zoffset: null;
+
+  @if $in-or-out and is-string($in-or-out) {
+    $in-or-out: string.to-lower-case($in-or-out);
+  }
+
+  @if $anim-dir {
+    @if is-list($anim-dir) {
+      $anim-dir: list-to-string($anim-dir);
+    }
+
+    @if is-string($anim-dir) {
+      $anim-dir: string.to-lower-case($anim-dir);
+    }
+  }
+
+  @if $delay and is-string($delay) {
+    $delay: string.to-lower-case($delay);
+  }
+
+  @if $timing-func and is-string($timing-func) {
+    $timing-func: string.to-lower-case($timing-func);
+  }
+
+  @if equals-true($in-or-out) or $in-or-out == 'in' {
+    $in-or-out: true;
+    $anim-suffix: '-in';
+  } @else if equals-false($in-or-out) or $in-or-out == 'out' {
+    $in-or-out: false;
+    $anim-suffix: '-out';
+  } @else {
+    @error 'Invalid $in-or-out value of #{meta.inspect($in-or-out)} for the ' +
+        '[ vanish() ] mixin. Value must be either `in` or `out`';
+  }
+
+  // $direction extensive error checking
+  @if $direction {
+    $trans-error-start: 'Invalid value in the $direction parameter, which ' +
+        'sets the `transform-origin` value for the keyframes in the ' +
+        '[ vanish() ] mixin.';
+
+    @if is-list($direction) {
+      $num-origin-vals: list.length($direction);
+
+      @if $num-origin-vals > 3 {
+        @error '#{$trans-error-start} The transform-origin property only ' +
+          'allows for 1, 2, and 3-value syntax. You passed more than 3 values.';
+      }
+
+      // From this point we know $direction is a 2 or 3 value list
+      @for $i from 1 through $num-origin-vals {
+        $cur-val: list.nth($direction, $i);
+
+        @if $i == 3 and not is-length($cur-val) {
+          @error '#{$trans-error-start} When using the 3-value syntax with the ' +
+              'transform-origin property, the third value must be a length ' +
+              'that represents the Z offset.';
+        }
+
+        @if $i < 3 {
+          @if is-position($cur-val, 'allow-aliases') {
+            @if $i == 1 {
+              @if is-alias('left', $cur-val) or is-alias('right', $cur-val) {
+                $horizontal-axis-used: true;
+              } @else if is-alias('top', $cur-val) or is-alias('bottom', $cur-val) {
+                $vertical-axis-used: true;
+              }
+            } @else { // $i == 2
+              @if $horizontal-axis-used and
+                  (is-alias('left', $cur-val) or is-alias('right', $cur-val))
+              {
+                @error '#{$trans-error-start} Horizontal axis for this property ' +
+                  'already set when you passed #{meta.inspect(list.nth($direction, 1))} ' +
+                  'for the first $direction value. You must pass a ' +
+                  'length, a percentage, or one of the keywords for the vertical ' +
+                  'axis (`top` or `bottom`) for the 2nd value of $direction.';
+              } @else if $vertical-axis-used and
+                    (is-alias('top', $cur-val) or is-alias('bottom', $cur-val))
+              {
+                @error '#{$trans-error-start} Vertical axis for this property ' +
+                  'already set when you passed #{meta.inspect(list.nth($direction, 1))} ' +
+                  'for the first $direction value. You must pass a ' +
+                  'length, a percentage, or one of the keywords for the horizontal ' +
+                  'axis (`left` or `right`) for the 2nd value of $direction.';
+              }
+            }
+          } @else {
+            @error '#{$trans-error-start} When using the #{$num-origin-vals}' +
+                '-value syntax with the transform-origin property, ' +
+                'value one and value two must be either a length, a percentage ' +
+                'or one of the position keywords: `center`, `top`, `right' +
+                '`bottom`, or `left`.';
+          }
+        }
+      }
+
+      @if $num-origin-vals == 3 {
+        $trans-origin-position: (
+          list.nth($direction, 1) list.nth($direction, 2)
+        );
+        $trans-origin-zoffset: list.nth($direction, 3);
+      } @else {
+        $trans-origin-position: $direction;
+      }
+    } @else {
+      $trans-origin-position: $direction;
+    }
+
+    @if is-list($trans-origin-position) {
+      $trans-origin-position: list-to-string($trans-origin-position);
+    }
+
+    @if is-string($trans-origin-position) {
+      $trans-origin-position: string.to-lower-case($trans-origin-position);
+    }
+
+    @if is-alias('top', $trans-origin-position) or
+        $trans-origin-position == '50% 100%'
+    {
+      $direction-name: 'top';
+      $trans-origin-position: 50% 100%;
+    } @else if is-alias('top right', $trans-origin-position) or
+        $trans-origin-position == '0% 100%'
+    {
+      $direction-name: 'top-right';
+      $trans-origin-position: 0% 100%;
+    } @else if is-alias('right', $trans-origin-position) or
+        $trans-origin-position == '0% 50%'
+    {
+      $direction-name: 'right';
+      $trans-origin-position: 0% 50%;
+    } @else if is-alias('bottom right', $trans-origin-position) or
+        $trans-origin-position == '0% 0%'
+    {
+      $direction-name: 'bottom-right';
+      $trans-origin-position: 0% 0%;
+    } @else if is-alias('bottom', $trans-origin-position)
+        or $trans-origin-position == '50% 0%'
+    {
+      $direction-name: 'bottom';
+      $trans-origin-position: 50% 0%;
+    } @else if is-alias('bottom left', $trans-origin-position) or
+        $trans-origin-position == '100% 0%'
+    {
+      $direction-name: 'bottom-left';
+      $trans-origin-position: 100% 0%;
+    } @else if is-alias('left', $trans-origin-position) or
+        $trans-origin-position == '100% 50%'
+    {
+      $direction-name: 'left';
+      $trans-origin-position: 100% 50%;
+    } @else if is-alias('top left', $trans-origin-position) or
+        $trans-origin-position == '100% 100%'
+    {
+      $direction-name: 'top-left';
+      $trans-origin-position: 100% 100%;
+    } @else if not is-alias('center', $trans-origin-position) and
+        $trans-origin-position != '50%' and
+        $trans-origin-position != '50% 50%'
+    {
+      @error 'Invalid keyword value for $direction passed to the [ vanish() ] ' +
+          'mixin. Valid keyword values for this parameter are: `top`, ' +
+          '`top right`, `right`, `bottom right`, `bottom`, `bottom left` ' +
+          '`left`, `top left`, or `center`. You may also pass any value(s) that ' +
+          'are valid for the `transform-origin` property, except for CSS ' +
+          'global values.';
+    }
+  } @else {
+    $trans-origin-position: 50%;
+  }
+
+  // Put $direction back together again
+  $direction: list.append(
+    $trans-origin-position,
+    $trans-origin-zoffset,
+    $separator: space
+  );
+
+  // If vanishing out rather than in, reverse the necessary values
+  @if not $in-or-out {
+    $opacity-val-1: 1;
+    $opacity-val-2: 0;
+    $trans-val-1: scale(1);
+    $trans-val-2: scale(2);
+    $blur-val-1: blur(0);
+    $blur-val-2: blur(20px);
+  }
+
+  @if $duration {
+    @if not is-number($duration) {
+      @error 'Invalid $duration value of `#{$duration}` for the [ vanish() ] ' +
+          'mixin. The duration property must be a number.';
+    } @else if math.is-unitless($duration) {
+      // If no there is no unit for $duration, unless $duration > 60, assume seconds
+      $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
+    } @else if not list.index('s' 'ms', math.unit($duration)) {
+      @error 'Invalid $duration value of `#{$duration}` for the [ vanish() ] mixin.' +
+          'The duration property must be in either s or ms units.';
+    } @else if math.unit($duration) == 'ms' and $duration % 100 == 0ms {
+      // If time in ms would be shorter as seconds, convert it
+      $duration: math.div($duration, 1000ms) * 1s;
+    }
+  } @else {
+    $duration: 1s;
+
+    @warn 'You did not pass a $duration for the [ vanish() ] mixin. Using the ' +
+        'default duration of 1s.';
+  }
+
+  @if is-falsey($delay) or
+      is-alias('none', $delay) or
+      $delay == 0s or $delay == 0ms
+  {
+    $delay: null;
+  }
+
+  @if $delay {
+    @if not is-number($delay) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ vanish() ] mixin.' +
+          'The delay property must be a number.';
+    } @else if math.is-unitless($delay) {
+      // If no there is no unit for $delay, unless $delay > 60, assume seconds
+      $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
+    } @else if not list.index('s' 'ms', math.unit($delay)) {
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ vanish() ] mixin.' +
+          'The delay property must be in either s or ms units.';
+    } @else if math.unit($delay) == 'ms' and $delay % 100 == 0ms {
+      // If time in ms would be shorter as seconds, convert it
+      $delay: math.div($delay, 1000ms) * 1s;
+    }
+  }
+
+  @if $iterations {
+    @if is-string($iterations) {
+      $iterations: string.to-lower-case($iterations);
+    }
+
+    @if is-alias('infinite', $iterations) {
+      $iterations: infinite;
+    } @else if (is-number($iterations) and math.is-unitless($iterations)) or
+      is-global-value($iterations)
+    {
+      $iterations: $iterations;
+    } @else {
+      @error 'Invalid $iterations value of `#{meta.inspect($iterations)}`' +
+          ' for the [ vanish() ] mixin.';
+    }
+  }
+
+  @if is-falsey($anim-dir) or
+      is-alias('none', $anim-dir) or
+      is-alias('normal', $anim-dir)
+  {
+    $anim-dir: null;
+  } @else if is-alias('reverse', $anim-dir) {
+    $anim-dir: reverse;
+  } @else if is-alias('alternate', $anim-dir) {
+    $anim-dir: alternate;
+  } @else if is-alias('alternate-reverse', $anim-dir) {
+    $anim-dir: alternate-reverse;
+  } @else if not is-global-value($anim-dir) {
+    @error 'Invalid animation-direction value of #{meta.inspect($anim-dir)} ' +
+        'passed with $anim-dir to the [ vanish() ] mixin.';
+  }
+
+  @if equals-false($timing-func) or is-alias('normal', $timing-func) {
+    $timing-func: null;
+  }
+
+  @if $direction-name {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '-#{if($in-or-out, 'from-', 'to-')}#{$direction-name}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  @if equals-false($anim-num) or $anim-num == '' {
+    $anim-num: null;
+  } @else {
+    $anim-suffix: string.insert(
+      $anim-suffix,
+      '--#{$anim-num}',
+      string.length($anim-suffix) + 1
+    );
+  }
+
+  transform: translate3d(0, 0, 0);
+  animation: vanish#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
+    #{$iterations} #{$anim-dir} both;
+
+  @at-root {
+    @keyframes vanish#{$anim-suffix} {
+      0% {
+        opacity: $opacity-val-1;
+        filter: $blur-val-1;
+        transform: $trans-val-1;
+        transform-origin: #{$direction};
+      }
+
+      100% {
+        opacity: $opacity-val-2;
+        filter: $blur-val-2;
+        transform: $trans-val-2;
+        transform-origin: #{$direction};
+      }
+    }
+  }
+}

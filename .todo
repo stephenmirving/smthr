@@ -31,6 +31,8 @@ TODO:
     ☐ Ensure all parameters that only take certain keyword strings have those strings listed in the SassDoc
 
   Animations Mixins:
+    ☐ Test poof, puff, poof-puff, and vanish mixins and ensure they all work properly
+      ☐ Improve places where they do the exact same animation (generally in the 'center') - scale(2, 2) == scale(2)
     ☐ Add more animation property options to the animations, animation-fill-mode and animation-play-state
     ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.

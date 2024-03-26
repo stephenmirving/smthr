@@ -17,7 +17,7 @@
 /// scaling it up or down. For optimal effect, use the `animation-stage()` mixin
 /// on the parent element, and a front and back child element within the rotated
 /// element, with the `animation-front-face()` and `animation-back-face()` mixins
-/// applied, respectively.
+/// applied, respectively. This way, the element will have two distinct sides.
 ///
 /// @param {Bool | String} $up-or-down ['up'] - Whether the elelment is
 /// scaling 'up' (pass `up`, `top` or `true`) or 'down' (pass `down`. `bottom`,

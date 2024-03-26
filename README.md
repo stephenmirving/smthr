@@ -38,7 +38,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.9.5 - _Last updated:_ 03/25/24
+This is **smoother** version 0.10.0 - _Last updated:_ 03/26/24
 
 ## Content
 
@@ -335,10 +335,18 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-### Version 0.9.2 - 0.9.5 Patch Notes
+### Version 0.10.0 Patch Notes
+
+- Renamed the `poof()` animation mixin to `vanish()`
+- Created new animation mixin to be named `poof()`
+- Created new animation mixin `poof-puff()` that is a combination of the `puff()`
+  animation and the **new** `poof()` animation.
+
+### Version 0.9.2 - 0.9.6 Patch Notes
 
 - Updated _Betterize_ to version 2.0.4.
 - Updated `hide-visually()` mixin's `clip` and `clip-path` properties slightly.
+- Fixed documentation for some of the animation mixins.
 
 ### Version 0.9.1 Patch Notes
 
