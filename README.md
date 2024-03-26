@@ -50,8 +50,8 @@ by calling a function, variable, or by using a mixin with `@includes`.
 **_Smoother_ currently contains:**
 
 - **150+** Mixins, _including..._
-  - More than 35 easily configurable animation types, allowing for more than
-    100 unique animations
+  - Over 40 easily configurable animation types, allowing for more than
+    300 unique animations
   - More than 20 element shapes created with a combination of `clip-path`,
     pseudo-elements, and `border-radius`
   - More than 80 utility mixins for things like creating responsive ratios,
@@ -335,12 +335,17 @@ link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
+Version 1.0.0 is _coming soon_ with **more** animations, **more** shapes,
+**more** utilities, a Getting Started guide, and a demo for every mixin and
+function to help you start using _Smoother_.
+
 ### Version 0.10.0 Patch Notes
 
 - Renamed the `poof()` animation mixin to `vanish()`
-- Created new animation mixin to be named `poof()`
-- Created new animation mixin `poof-puff()` that is a combination of the `puff()`
-  animation and the **new** `poof()` animation.
+- Added new animation mixin that is now named `poof()`
+- Added new animation mixin `poof-puff()` that is a combination of the `puff()`
+  animation and the **new** `poof()` animation which creates a more exaggerated
+  effect.
 
 ### Version 0.9.2 - 0.9.6 Patch Notes
 
