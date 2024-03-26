@@ -1,4 +1,4 @@
-# _smth.scss
+e# _smth.scss
 
 _Smoother_ is a Sass library designed for a smoother front-end
 development experience. Smoother is filled with easy-to-use functions and
@@ -23,6 +23,14 @@ animation keyframe creation, or other verbose and complex code blocks.
 5. [Documentation](#documentation)
 6. [Parameter Aliases](#parameter-aliases)
 7. [Recently Improved](#recently-improved)
+   - [Version 0.10.0 Patch Notes](#version-0100-patch-notes)
+   - [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
+   - [Version 0.9.1 Patch Notes](#version-091-patch-notes)
+   - [Version 0.9.0 Patch Notes](#version-090-patch-notes)
+   - [Version 0.8.2 Patch Notes](#version-082-patch-notes)
+   - [Version 0.8.1 Patch Notes](#version-081-patch-notes)
+   - [Version 0.8.0 Patch Notes](#version-080-patch-notes)
+   - [Recent Improvements in Older Versions](#recent-improvements-in-older-versions)
 8. [Betterize](#betterize)
 9. [More Info](#more-info)
 10. [Questions](#questions)
@@ -45,7 +53,7 @@ This is **smoother** version 0.10.0 - _Last updated:_ 03/26/24
 Because `_smth.scss` is a Sass library comprised of functions, mixins and
 variables, importing it into your project won't add any overhead or increased
 file size to your project's stylesheet except for the parts that you actually use
-by calling a function, variable, or by using a mixin with `@includes`.
+by calling a function, variable, or by using a mixin with `@includesadc`.
 
 **_Smoother_ currently contains:**
 
