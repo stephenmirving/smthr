@@ -35,7 +35,7 @@
   color: color-invert(#80f, 100%, hsl);
 
   &:hover {
-    @include wobbliness(top);
+    @include wobble(top);
   }
 }
 
@@ -189,6 +189,14 @@ $flip-axis: 'horizontal';
 
 .active-anim-poof-puff {
   @include poof-puff('in', front);
+}
+
+.active-anim-zoom {
+  @include zoom('in', 'top', 1.35s);
+}
+
+.active-anim-speed {
+  @include speed('in', 'right');
 }
 
 

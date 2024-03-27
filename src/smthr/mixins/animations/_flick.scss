@@ -18,12 +18,18 @@
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
 /// flick `in` (`true`) or `out` (`false`).
-/// @param {String | Number | List} $trans-origin [50%] - The argument for
+/// @param {String | Number | List} $direction [50%] - Resolves to the value for
 /// the `transform-origin` property used in the keyframes of the animation.
 /// Almost any value that is valid for `transform-origin` is valid here, along
-/// with many aliases (such as 'top-right` or `tr` is the equivalent of
-/// `right top` or `100% 0%`. Does not accept CSS global values due to being
-/// used in the keyframes, not on the selector itself.
+/// with many aliases. If you pass a direction keyword (`top`, `top right`,
+/// `right` `bottom right`, `bottom`, `bottom left`, `left,` `top left`,
+/// `center`) that value corresponds to the direction the animation appears to
+/// be moving in from or out towards. In this way, passing keyword direction is
+/// almost as if you are setting a "transform-destination" property. You can
+/// also directly pass 1, 2, or 3 value syntax that will be used directly for
+/// the `transform-origin` property on the animation's keyframes. Does not
+/// accept CSS global values due to being used in the keyframes, not on the
+/// selector itself.
 /// @param {Number} $duration [1s] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
@@ -54,14 +60,14 @@
 /// @require {function} list-to-string
 ///
 /// @throw Invalid $in-or-out value error.
-/// @throw Invalid $trans-origin value error.
+/// @throw Invalid $direction value error.
 /// @throw Invalid $duration value error.
 /// @throw Invalid $delay value error.
 /// @throw Invalid $iterations value error.
 /// @throw Invalid $anim-dir value error.
 @mixin flick(
   $in-or-out: 'in',
-  $trans-origin: 50%,
+  $direction: 50%,
   $duration: 1s,
   $delay: null,
   $iterations: null,
@@ -76,7 +82,7 @@
   $opacity-val-2: 1;
   $anim-suffix: '';
 
-  // $trans-origin error checking and alias-proofing
+  // $direction error checking and alias-proofing
   $cur-val: null;
   $horizontal-axis-used: false;
   $vertical-axis-used: false;
@@ -105,7 +111,7 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or $in-or-out == 'in' {
+  @if equals-true($in-or-out) or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
     $anim-suffix: '-in';
   } @else if equals-false($in-or-out) or $in-or-out == 'out' {
@@ -117,23 +123,23 @@
         '`out` (`o`, `false`).';
   }
 
-  // $trans-origin extensive error checking
-  @if $trans-origin {
-    $trans-error-start: 'Invalid valusse in the $trans-origin parameter, which ' +
+  // $direction extensive error checking
+  @if $direction {
+    $trans-error-start: 'Invalid valusse in the $direction parameter, which ' +
         'sets the `transform-origin` value for the keyframes in the ' +
         '[ flick() ] mixin.';
 
-    @if is-list($trans-origin) {
-      $num-origin-vals: list.length($trans-origin);
+    @if is-list($direction) {
+      $num-origin-vals: list.length($direction);
 
       @if $num-origin-vals > 3 {
         @error '#{$trans-error-start} The transform-origin property only ' +
           'allows for 1, 2, and 3-value syntax. You passed more than 3 values.';
       }
 
-      // From this point we know $trans-origin is a 2 or 3 value list
+      // From this point we know $direction is a 2 or 3 value list
       @for $i from 1 through $num-origin-vals {
-        $cur-val: list.nth($trans-origin, $i);
+        $cur-val: list.nth($direction, $i);
 
         @if $i == 3 and not is-length($cur-val) {
           @error '#{$trans-error-start} When using the 3-value syntax with the ' +
@@ -154,18 +160,18 @@
                   (is-alias('left', $cur-val) or is-alias('right', $cur-val))
               {
                 @error '#{$trans-error-start} Horizontal axis for this property ' +
-                  'already set when you passed #{meta.inspect(list.nth($trans-origin, 1))} ' +
-                  'for the first $trans-origin value. You must pass a ' +
+                  'already set when you passed #{meta.inspect(list.nth($direction, 1))} ' +
+                  'for the first $direction value. You must pass a ' +
                   'length, a percentage, or one of the keywords for the vertical ' +
-                  'axis (`top` or `bottom`) for the 2nd value of $trans-origin.';
+                  'axis (`top` or `bottom`) for the 2nd value of $direction.';
               } @else if $vertical-axis-used and
                     (is-alias('top', $cur-val) or is-alias('bottom', $cur-val))
               {
                 @error '#{$trans-error-start} Vertical axis for this property ' +
-                  'already set when you passed #{meta.inspect(list.nth($trans-origin, 1))} ' +
-                  'for the first $trans-origin value. You must pass a ' +
+                  'already set when you passed #{meta.inspect(list.nth($direction, 1))} ' +
+                  'for the first $direction value. You must pass a ' +
                   'length, a percentage, or one of the keywords for the horizontal ' +
-                  'axis (`left` or `right`) for the 2nd value of $trans-origin.';
+                  'axis (`left` or `right`) for the 2nd value of $direction.';
               }
             }
           } @else {
@@ -180,14 +186,14 @@
 
       @if $num-origin-vals == 3 {
         $trans-origin-position: (
-          list.nth($trans-origin, 1) list.nth($trans-origin, 2)
+          list.nth($direction, 1) list.nth($direction, 2)
         );
-        $trans-origin-zoffset: list.nth($trans-origin, 3);
+        $trans-origin-zoffset: list.nth($direction, 3);
       } @else {
-        $trans-origin-position: $trans-origin;
+        $trans-origin-position: $direction;
       }
     } @else {
-      $trans-origin-position: $trans-origin;
+      $trans-origin-position: $direction;
     }
 
     @if is-list($trans-origin-position) {
@@ -219,7 +225,7 @@
     $trans-origin-position: 50%;
   }
 
-  $trans-origin: list.append(
+  $direction: list.append(
     $trans-origin-position,
     $trans-origin-zoffset,
     $separator: space
@@ -333,13 +339,13 @@
       0% {
         opacity: $opacity-val-1;
         transform: $trans-val-1;
-        transform-origin: #{$trans-origin};
+        transform-origin: #{$direction};
       }
 
       100% {
         opacity: $opacity-val-2;
         transform: $trans-val-2;
-        transform-origin: #{$trans-origin};
+        transform-origin: #{$direction};
       }
     }
   }

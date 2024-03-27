@@ -9,18 +9,18 @@ appreciated.
 
 This project and everyone participating in it is governed by a Code of Conduct.
 By participating, you are expected to uphold this code. Please report unacceptable
-behavior to [stephenmichaelirving@gmail.com].
+behavior to [stephenmichaelirving@gmail.com](mailto:stephenmichaelirving@gmail.com).
 
-- Be friendly and patient: Remember you might not be communicating in someone
+- **Be friendly and patient:** Remember you might not be communicating in someone
   else’s primary spoken or programming language, and others may not have your
   level of understanding.
-- Be welcoming: Our communities welcome and support people of all backgrounds
+- **Be welcoming:** Our communities welcome and support people of all backgrounds
   and identities. This includes, but is not limited to members of any race,
   ethnicity, culture, national origin, color, immigration status, social and
   economic class, educational level, sex, sexual orientation, gender identity
   and expression, age, size, family status, political belief, religion, and
   mental and physical ability.
-- Be respectful: We are a world-wide community of professionals, and we conduct
+- **Be respectful:** We are a world-wide community of professionals, and we conduct
   ourselves professionally. Disagreement is no excuse for poor behavior and poor
   manners. Disrespectful and unacceptable behavior includes, but is not limited to:
   - Violent threats or language.
@@ -28,9 +28,11 @@ behavior to [stephenmichaelirving@gmail.com].
   - Posting sexually explicit or violent material.
   - Posting, or threatening to post, people’s personally identifying information (“doxxing”).
   - Insults, especially those using discriminatory terms or slurs.
+  - Trolling and personal or political attacks.
   - Behavior that could be perceived as sexual attention.
+  - Conduct which could reasonably be considered inappropriate in a professional setting.
   - Advocating for or encouraging any of the above behaviors.
-- Understand disagreements: Disagreements, both social and technical, are useful
+- **Understand disagreements:** Disagreements, both social and technical, are useful
   learning opportunities. Seek to understand the other viewpoints and resolve
   differences constructively.
 
@@ -38,9 +40,9 @@ This code is not exhaustive or complete. It serves to capture our common
 understanding of a productive, collaborative environment. The code should
 followed in spirit as much as in the letter.
 
-**Basically:** Just be _KIND_, _COOL_, &amp; _CHILL_!
+**Basically:** Just be **KIND &amp; CHILL**!
 
-There is _literally zero reason_ for you to be behave in any other manner while
+There is literally _zero reason_ for you to be behave in any other manner while
 contributing to open source.
 
 ## How Can I Contribute?

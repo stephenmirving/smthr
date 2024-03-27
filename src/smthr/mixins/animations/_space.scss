@@ -71,7 +71,7 @@
   $opacity-val-2: 1;
   $trans-val-1: null;
   $trans-val-2: null;
-  $temp-val: null;
+  $temp-swap: null;
   $trans-origin: null;
   $anim-suffix: '';
 
@@ -97,7 +97,7 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or $in-or-out == 'in' {
+  @if equals-true($in-or-out) or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
     $anim-suffix: '-in-from-';
   } @else if equals-false($in-or-out) or $in-or-out == 'out' {
@@ -170,9 +170,9 @@
     $opacity-val-1: 1;
     $opacity-val-2: 0;
 
-    $temp-val: $trans-val-1;
+    $temp-swap: $trans-val-1;
     $trans-val-1: $trans-val-2;
-    $trans-val-2: $temp-val;
+    $trans-val-2: $temp-swap;
   }
 
   @if not is-number($duration) {

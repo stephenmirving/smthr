@@ -10,7 +10,8 @@
 /// @param {Number} $left-pos [50%] - The top property value. 50% will put the
 /// element in the vertical center.
 /// @param {String} $position [relative] - The position value desired,
-/// must use either relative or absolute positioning.
+/// must use either relative or absolute positioning. If you use absolute
+/// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
 ///
@@ -42,7 +43,7 @@
         'relative or absolute positioning.';
   }
 
-  position: $position;
+  position: #{$position};
   left: $left-pos;
   transform: translateX(-50%);
 }
@@ -52,7 +53,8 @@
 /// both horizontally and vertically, use the `position-center()` mixin instead.
 ///
 /// @param {String} $position [relative] - The position value desired,
-/// must use either relative or absolute positioning.
+/// must use either relative or absolute positioning. If you use absolute
+/// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
 @mixin center-horizontally($position: relative) {
@@ -62,7 +64,7 @@
         'relative or absolute positioning.';
   }
 
-  position: $position;
+  position: #{$position};
   left: 50%;
   transform: translateX(-50%);
 }
@@ -72,7 +74,8 @@
 /// both horizontally and vertically, use the `position-center()` mixin instead.
 ///
 /// @param {String} $position [relative] - The position value desired,
-/// must use either relative or absolute positioning.
+/// must use either relative or absolute positioning. If you use absolute
+/// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
 /// @alias center-horizontally

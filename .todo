@@ -16,8 +16,12 @@ TODO:
       - https://www.tpgi.com/focus-visible-and-backwards-compatibility/
       - https://www.deque.com/blog/give-site-focus-tips-designing-usable-focus-indicators/
       - Copy any changes to Betterize repo as well
+    ☐ Try to find the libs in the SassDoc themes page
+    ☐ Create SassDoc Theme
     ☐ Create is-color-string function that returns whether a string could be a valid color
-    ☐ Add more form utilities and mixins
+    ☐ Add form utilities and mixins
+    ☐ Add clarity somehow to the new animations that allow transform-origin properties to be passed for $direction
+      - $direction keywords map to the inverse of their actual position (ex `bottom right` maps to `0% 0%` not `100% 100%`)
     ☐ Further test and improve Betterize
     ☐ Reorganize Groups
       ☐ Change name of Utilities group
@@ -32,7 +36,8 @@ TODO:
 
   Animations Mixins:
     ☐ Test poof, puff, poof-puff, and vanish mixins and ensure they all work properly
-      ☐ Improve places where they do the exact same animation (generally in the 'center') - scale(2, 2) == scale(2)
+      ✔ Improve places where they do the exact same animation (generally in the 'center') - scale(2, 2) == scale(2) @done(24-03-27 16:08)
+    ☐ Refactor `bg-zoom()` mixin so that it can also do a slow pan zoom out effect
     ☐ Add more animation property options to the animations, animation-fill-mode and animation-play-state
     ☐ Add Link Effectz https://codepen.io/stephenirving/pen/dBRjXQ/22700f48e3d7f3347a875e3d245c1ac4
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
@@ -147,8 +152,7 @@ Archive:
   ✔ Function propogated to a prefixed version and sass versions @done(24-03-04 18:42) @project(TODO.Functions)
   ✔ Get the SassDoc API compiled and ran @done(24-03-16 19:37) @project(TODO.Publishing)
   ✔ Publish as an npm package @done(24-03-16 19:37) @project(TODO.Publishing)
-  ☐
-  ✔ Update all size conversion functions to take $base-font-size with units @done(24-03-02 12:32) @project(TODO.TESTING)
+  ✔ Update all size conversion functions to take $base-font-size with units @project(TODO.TESTING) @done(24-03-27 16:08)
   ✔ Fix conv-to-rem @done(24-03-02 15:58) @project(TODO.TESTING)
   ✔ Add support for % inputs @done(24-03-02 15:58) @project(TODO.TESTING)
   ✔ Use $base-font-size in betterize @done(24-03-02 12:32) @project(TODO.TESTING)

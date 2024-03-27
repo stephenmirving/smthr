@@ -85,7 +85,7 @@
   $perspective: perspective(800px);
   $trans-val-1: null;
   $trans-val-2: null;
-  $temp-val: null;
+  $temp-swap: null;
   $trans-origin: null;
   $opacity-val-1: 1;
   $opacity-val-2: 0;
@@ -346,9 +346,9 @@
 
   // If hinge is closing rather than opening, reverse the necessary values
   @if not $open-or-closed {
-    $temp-val: $trans-val-1;
+    $temp-swap: $trans-val-1;
     $trans-val-1: $trans-val-2;
-    $trans-val-2: $temp-val;
+    $trans-val-2: $temp-swap;
     $opacity-val-1: 0;
     $opacity-val-2: 1;
   }

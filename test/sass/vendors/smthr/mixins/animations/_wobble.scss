@@ -47,7 +47,7 @@
 /// @throw Invalid data type for $delay error.
 /// @throw Invalid data type for $iterations error.
 /// @throw Invalid keyword value for $anim-dir error.
-@mixin wobbliness(
+@mixin wobble(
   $direction: 'bottom',
   $duration: 0.8s,
   $delay: null,
@@ -119,19 +119,19 @@
     $anim-suffix: '-from-right';
   } @else if not is-alias('bottom', $direction) {
     @error 'Invalid $direction of `#{meta.inspect($direction)}` for the ' +
-      '[ wobbliness() ] mixin. Valid directions include the following: ' +
+      '[ wobble() ] mixin. Valid directions include the following: ' +
       '`top`, `right`, `bottom`, or `left`.';
   }
 
   @if not is-number($duration) {
     @error 'Invalid $duration value of `#{meta.inspect($duration)}` for the ' +
-        '[ wobbliness() ] mixin. The duration property must be a number.';
+        '[ wobble() ] mixin. The duration property must be a number.';
   } @else if math.is-unitless($duration) {
     // If no there is no unit for $duration, unless $duration > 60, assume seconds
     $duration: if($duration > 60, $duration * 1ms, $duration * 1s);
   } @else if not list.index('s' 'ms', math.unit($duration)) {
     @error 'Invalid $duration value of `#{meta.inspect($duration)}` for the ' +
-        '[ wobbliness() ] mixin. The duration property must be in either ' +
+        '[ wobble() ] mixin. The duration property must be in either ' +
         's (seconds) or ms (milliseconds) units.';
   } @else if $duration % 10 == 0ms {
     // If time in ms would be shorter as seconds, convert it
@@ -152,13 +152,13 @@
 
   @if $delay {
     @if not is-number($delay) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ wobbliness() ] ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ wobble() ] ' +
           'mixin. The delay property must be a number.';
     } @else if math.is-unitless($delay) {
       // If no there is no unit for $delay, unless $delay > 60, assume seconds
       $delay: if($delay > 60, $delay * 1ms, $delay * 1s);
     } @else if not list.index('s' 'ms', math.unit($delay)) {
-      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ wobbliness() ] ' +
+      @error 'Invalid delay value of `#{meta.inspect($delay)}` for the [ wobble() ] ' +
           'mixin. The delay property must be in either s or ms units.';
     } @else if $delay % 10 == 0ms {
       $delay: math.div($delay, 1000ms) * 1s;
@@ -180,7 +180,7 @@
         not is-global-value($iterations)
     {
       @error 'Invalid $iterations value of `#{meta.inspect($iterations)}` for ' +
-          'the [ wobbliness() ] mixin.';
+          'the [ wobble() ] mixin.';
     }
   } @else {
     $iterations: null;
@@ -199,7 +199,7 @@
     $anim-dir: alternate-reverse;
   } @else if not is-global-value($anim-dir) {
     @error 'Invalid animation-direction value of `#{$anim-dir}`' +
-        'for the wobbliness` mixin.';
+        'for the wobble` mixin.';
   }
 
   @if not
@@ -295,8 +295,8 @@
 /// @throw Invalid data type for $iterations error.
 /// @throw Invalid keyword value for $anim-dir error.
 ///
-/// @alias wobbliness
-@mixin wobble(
+/// @alias wobble
+@mixin wobbliness(
   $direction: 'bottom',
   $duration: 0.8s,
   $delay: null,
@@ -305,7 +305,7 @@
   $timing-func: null,
   $anim-num: null
 ) {
-  @include wobbliness(
+  @include wobble(
     $direction,
     $duration,
     $delay,

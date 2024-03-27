@@ -1,9 +1,9 @@
 @use 'sass:string';
 
-/// Returns whether `$value` is "falsey" in a broader sense than by using
-/// the `not` keyword. Doing a conditional like `@if not $var { ... }` will only
-/// test as true for `false` and `null` values. By using this function like
-/// `@if is-falsey($var) { ... }`, it will test true for `false` and `null`
+/// Returns whether `$value` is "falsey" in a broader sense than by using the
+/// `not` keyword. Doing a conditional such as `@if not $var { ... }` will only
+/// test as `true` for `false` and `null` values in Sass. By using this function
+/// like, `@if is-falsey($var) { ... }`, it will test true for `false` and `null`
 /// values, but also for empty strings, empty lists, empty maps, the number `0`,
 /// and the unquoted string value of `'false'`.
 ///

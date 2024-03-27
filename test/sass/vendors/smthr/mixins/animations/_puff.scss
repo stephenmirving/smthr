@@ -74,7 +74,7 @@
   $blur-val-1: blur(4px);
   $blur-val-2: blur(0);
   $trans-origin-val: null;
-  $temp-val: null;
+  $temp-swap: null;
   $anim-suffix: '';
 
   @if $in-or-out and is-string($in-or-out) {
@@ -99,7 +99,7 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or $in-or-out == 'in' {
+  @if equals-true($in-or-out) or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
     $anim-suffix: '-in-to';
   } @else if equals-false($in-or-out) or $in-or-out == 'out' {
@@ -279,9 +279,9 @@
     $blur-val-1: blur(0);
     $blur-val-2: blur(4px);
 
-    $temp-val: $trans-val-1;
+    $temp-swap: $trans-val-1;
     $trans-val-1: $trans-val-2;
-    $trans-val-2: $temp-val;
+    $trans-val-2: $temp-swap;
   }
 
   $anim-suffix: string.insert(

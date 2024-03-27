@@ -73,7 +73,7 @@
   $trans-val-3: translateZ(0) rotateX(0);
   $opacity-val-1: 0;
   $opacity-val-2: 1;
-  $temp-val: null;
+  $temp-swap: null;
   $is-diagonal: false;
   $anim-suffix: '';
 
@@ -99,7 +99,7 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or $in-or-out == 'in' {
+  @if equals-true($in-or-out) or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
     $anim-suffix: '-in';
   } @else if equals-false($in-or-out) or $in-or-out == 'out' {
@@ -161,9 +161,9 @@
 
   // If animation slits out rather than in, reverse the necessary values
   @if not $in-or-out {
-    $temp-val: $trans-val-1;
+    $temp-swap: $trans-val-1;
     $trans-val-1: $trans-val-3;
-    $trans-val-3: $temp-val;
+    $trans-val-3: $temp-swap;
     $opacity-val-1: 1;
     $opacity-val-2: 0;
   }

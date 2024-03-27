@@ -15,8 +15,8 @@
 /// Generates an swinging open or swinging closed animation that turns an
 /// element from one of its corners.
 ///
-/// @param {String | Bool} $open-or-closed ['open'] - Determines if the element will
-/// swing 'open' (`open`, `true`, or `o`) or 'closed' (`closed`, `close`,
+/// @param {String | Bool} $open-or-closed ['open'] - Determines if the element
+/// will swing 'open' (`open`, `true`, or `o`) or 'closed' (`closed`, `close`,
 /// `false`, or `c`).
 /// @param {String} $corner ['top-right'] - Will either swing open or closed
 /// from this corner of the element, depending on the value of $open-or-closed
@@ -78,7 +78,7 @@
   $timing-val-2: ease-in-out;
   $opacity-val-1: 1;
   $opacity-val-2: 0;
-  $temp-val: null;
+  $temp-swap: null;
   $trans-origin: null;
   $anim-suffix: '';
 
@@ -191,13 +191,13 @@
 
   // If swing is closed rather than open, reverse the necessary values
   @if not $open-or-closed {
-    $temp-val: $trans-val-1;
+    $temp-swap: $trans-val-1;
     $trans-val-1: $trans-val-2;
-    $trans-val-2: $temp-val;
+    $trans-val-2: $temp-swap;
 
-    $temp-val: $timing-val-1;
+    $temp-swap: $timing-val-1;
     $timing-val-1: $timing-val-2;
-    $timing-val-2: $temp-val;
+    $timing-val-2: $temp-swap;
 
     $opacity-val-1: 0;
     $opacity-val-2: 1;

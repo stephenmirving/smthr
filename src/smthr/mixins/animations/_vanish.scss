@@ -115,7 +115,7 @@
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or $in-or-out == 'in' {
+  @if equals-true($in-or-out) or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
     $anim-suffix: '-in';
   } @else if equals-false($in-or-out) or $in-or-out == 'out' {

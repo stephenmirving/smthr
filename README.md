@@ -23,15 +23,16 @@ animation keyframe creation, or other verbose and complex code blocks.
 5. [Documentation](#documentation)
 6. [Parameter Aliases](#parameter-aliases)
 7. [Recently Improved](#recently-improved)
-   1. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
-   2. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
-   3. [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
-   4. [Version 0.9.1 Patch Notes](#version-091-patch-notes)
-   5. [Version 0.9.0 Patch Notes](#version-090-patch-notes)
-   6. [Version 0.8.2 Patch Notes](#version-082-patch-notes)
-   7. [Version 0.8.1 Patch Notes](#version-081-patch-notes)
-   8. [Version 0.8.0 Patch Notes](#version-080-patch-notes)
-   9. [Recent Improvements in Older Versions](#recent-improvements-in-older-versions)
+   1. [Version 0.12.0 Patch Notes](#version-0120-patch-notes)
+   2. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
+   3. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
+   4. [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
+   5. [Version 0.9.1 Patch Notes](#version-091-patch-notes)
+   6. [Version 0.9.0 Patch Notes](#version-090-patch-notes)
+   7. [Version 0.8.2 Patch Notes](#version-082-patch-notes)
+   8. [Version 0.8.1 Patch Notes](#version-081-patch-notes)
+   9. [Version 0.8.0 Patch Notes](#version-080-patch-notes)
+   10. [Recent Improvements in Older Versions](#recent-improvements-in-older-versions)
 8. [Betterize](#betterize)
 9. [More Info](#more-info)
 10. [Questions](#questions)
@@ -47,7 +48,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.11.0 - _Last updated:_ 03/26/24
+This is **smoother** version 0.12.0 - _Last updated:_ 03/27/24
 
 ## Content
 
@@ -60,10 +61,10 @@ by calling a function, variable, or by using a mixin with `@include`.
 
 - **150+** Mixins, _including..._
   - Over 40 easily configurable animation types, allowing for more than
-    300 unique animations
+    250 unique animations
   - More than 20 element shapes created with a combination of `clip-path`,
     pseudo-elements, and `border-radius`
-  - More than 90 utility mixins for things like creating responsive ratios,
+  - 90+ utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given
     number of lines, creating corner ribbons, centering elements,
     browser-targeted styling, media queries, making "hamburger" menu buttons and
@@ -321,11 +322,12 @@ For more information about migrating away from the soon-to-be-deprecated
 _Smoother_ documentation:
 [https://stephenmirving.github.io/smthr/](https://stephenmirving.github.io/smthr/)
 
-In the future, there will be a more Getting Started section and a comprehensive
-wiki with example code snippets that show their CSS output, with picture or
-video examples of the code's effect on the page. For now though, you can get started with the
-[documentation page](https://stephenmirving.github.io/smthr/), generated for
-the library using the [SassDoc](http://sassdoc.com/) annotations in the code.
+In the future, there will be a Getting Started section and a comprehensive
+wiki with example code snippets that show their CSS output, with pictures and
+video examples of the code's effect on the page. For now though, you can get
+started with the [documentation page](https://stephenmirving.github.io/smthr/),
+generated for the library using the [SassDoc](http://sassdoc.com/) annotations
+in the code.
 
 ## Parameter Aliases
 
@@ -333,23 +335,39 @@ Most of the documentation and SassDoc annotations will describe the valid
 parameters that you can pass to the various functions and mixins, and the forms
 those parameters can take. In an attempt to make the library more easy to pick
 up and use, many alias values were created for most of the commonly used keyword
-strings that you could pass as parameters to the library members. So if an
-animation mixin's `$axis` parameter accepts a value of `'horizontal'`, to
-indicate that it should animate over the horizontal axis, you should expect that
-the mixin would also accept alias values of `'horizontally'`, `'horiz'`, `horz`,
-`'left-to-right'` and more as correct and useable alias values for the
-`horizontal` value of the `$axis` parameter.
+strings that you could pass as parameters to the library members. So, if an
+animation mixin's `$direction` parameter accepts a value of `top right`, to
+indicate that it should animate in from the top right, you should expect that
+the mixin would also accept alias values of `'top right'` (in a quoted string
+or without quotes), `top-right`, `topright`, `right top`, `right-top`, or
+just `tr` or `t-r`, along with several more potential valid values that will
+resolve as `top right`.
 
 To get an idea of the full list of aliases for these keyword values, see the
-`$map-alias-resolutions` variable inside this
-[documentation](https://stephenmirving.github.io/smthr/#utilities-variable-map-alias-resolutions)
-link, or by looking for it in the `src/smthr/variables/_maps.scss` file.
+`$map-alias-resolutions` variable by checking the
+[documentation](https://stephenmirving.github.io/smthr/#utilities-variable-map-alias-resolutions),
+or by looking for it in the `src/smthr/variables/_maps.scss` file.
 
 ## Recently Improved
 
-Version 1.0.0 is _coming soon_ with **more** animations, **more** shapes,
-**more** utilities, a Getting Started guide, and a demo for every mixin and
-function to help you start using _Smoother_.
+Version 1.0.0 is _coming soon_ with **more** animations, **more** shapes, and
+**more** utilities. There will be an easier method for installing and updating
+new versions without having to copy folders every time, a Getting Started guide,
+and a website with a demo for every mixin and function to help you start using
+_Smoother_.
+
+### Version 0.12.0 Patch Notes
+
+- Renamed the `zoom-in()` animation mixin to `bg-zoom()`. It still has the same
+  alias of `ken-burns()`, along with the new alias of `bg-zoom-in()` and
+  `img-zoom()`.
+- Created new animation mixin called `zoom()`.
+- Renamed the `wobbliness()` animation mixin to just `wobble()`. `wobbliness()`
+  has been left as an alias for `wobble()`
+- Added new animation mixins: `speed()`, and `wiggle()`.
+- Added `prefix()` utility mixin that takes a map of property:value declarations
+  and adds a list of vendor prefixes to the properties. Though most people are
+  now using Autoprefixer, this may still be useful to some.
 
 ### Version 0.11.0 Patch Notes
 
@@ -360,13 +378,14 @@ function to help you start using _Smoother_.
     mixin use the `repeating-linear-gradient()` and
     `repeating-radial-gradient()` CSS functions rather than the non-repeating
     `linear-gradient()` and `radial-gradient` functions.
-  - Making a radial gradient with this mixin now allows you far more control
-    for different types of radial gradients with different parameters. Previously
-    the only type of radial-gradient the mixin could produce was the
-    `ellipse at center` parameter. Now you can enter virtually any valid starting
-    value for a `radial-gradient()` with the `$orientation` parameter.
-  - You can now pass two value percentage position parameters for $start-position
-    and $end-position, instead of just one value syntax available previously.
+  - Making a radial gradient with this mixin now allows you far more control for
+    different types of radial gradients with different parameters. Previously
+    the only type of radial-gradient the mixin could produce was the `ellipse at
+    center` parameter. Now you can enter virtually any valid starting value for
+    a `radial-gradient()` with the `$orientation` parameter.
+  - You can now pass two value percentage position parameters for
+    $start-position and $end-position, instead of just one value syntax
+    available previously.
   - You can also now pass `true` to the new $supports-legacy parameter and have
     all the vendor prefixes and the old IE filter gradient syntax applied at
     same time as fallbacks for the modern gradient syntax.
@@ -460,12 +479,11 @@ function to help you start using _Smoother_.
   valid hex color or string.
 - Added `fibonacci()` function that returns an nth number in the sequence or a
   range in the sequence represented as a comma-separated list.
-- Added library to NPM! You can now add this to your project using `npm i smoother`
+- Added library to NPM! You can now add _Smoother_ to your project using `npm i smoother`
 - 6 new mixins added: `caret()`, `fluid-media()`, `nav-divider()`, `visible()`
   `resizable()`, and `reset-text()`
 - 8 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `power()`,
   `space()`, `swing()`, and `twister()`!
-- Updated _Betterize_ to version 1.2.4
 - New function that provides a dark or light text contrast color: `color-text-contrast()`
 - New function added called `time-equation()` that returns custom CSS `calc()`
   equations based on trigonometric functions for use in animations or transitions.
@@ -481,9 +499,9 @@ function to help you start using _Smoother_.
   would accept a greater number of alias values when not wrapped in strings.
 - Allowed for passing CSS global values on a greater number of mixin arguments,
   such as for the animation-direction property on animations.
-- Refactored the `color-shifter()` mixin to allow for the `animation-direction`
-  and the `animation-iteration-count` properties to be passed as arguments.
-- Got the SassDoc annotation [documentation](https://stephenmirving.github.io/smthr/) online
+- Refactored the `color-shifter()` mixin to allow values for the
+  `animation-direction` and the `animation-iteration-count` properties to be
+  passed as arguments.
 
 ## Betterize
 

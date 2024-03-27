@@ -1,20 +1,24 @@
-/// Absolutely centers the element inside of its first parent using a method
-/// combining positioning and translation.
+/// Centers the element inside of its first parent using a method combining
+/// positioning and translation.
 ///
 /// @param {String} $position [relative] - The position value desired,
-/// must use either relative or absolute positioning.
-///
+/// must use either relative or absolute positioning. If you use absolute
+/// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
 @mixin position-center($position: relative) {
-  position: $position;
+  position: #{$position};
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
-/// Absolutely centers the element inside of its first parent using a method
-/// combining positioning and translation.
+/// Centers the element inside of its first parent using a method combining
+/// positioning and translation.
+///
+/// @param {String} $position [relative] - The position value desired,
+/// must use either relative or absolute positioning. If you use absolute
+/// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
 /// @alias position-center

@@ -10,7 +10,8 @@
 /// @param {Number} $top-pos [50%] - The top property value. 50% will put the
 /// element in the vertical center.
 /// @param {String} $position [relative] - The position value desired,
-/// must use either relative or absolute positioning.
+/// must use either relative or absolute positioning. If you use absolute
+/// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
 ///
@@ -42,7 +43,7 @@
         'relative or absolute positioning.';
   }
 
-  position: $position;
+  position: #{$position};
   top: $top-pos;
   transform: translateY(-50%);
 }
@@ -52,7 +53,8 @@
 /// both horizontally and vertically, use the `position-center()` mixin instead.
 ///
 /// @param {String} $position [relative] - The position value desired,
-/// must use either relative or absolute positioning.
+/// must use either relative or absolute positioning. If you use absolute
+/// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
 @mixin center-vertically($position: relative) {
@@ -62,7 +64,7 @@
         'relative or absolute positioning.';
   }
 
-  position: $position;
+  position: #{$position};
   top: 50%;
   transform: translateY(-50%);
 }
@@ -70,6 +72,10 @@
 /// Vertically centers the element inside of its first parent using a method
 /// combining positioning and translation. If you want to center the element
 /// both horizontally and vertically, use the `position-center()` mixin instead.
+///
+/// @param {String} $position [relative] - The position value desired,
+/// must use either relative or absolute positioning. If you use absolute
+/// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
 /// @alias center-vertically

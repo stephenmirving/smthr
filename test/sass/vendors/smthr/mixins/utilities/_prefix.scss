@@ -1,0 +1,19 @@
+/// Applies vendor prefixes to as many properties as it is given.
+///
+/// @param {Map} $declarations - Declarations to prefix. Pass a map of key:value
+/// pairs.
+/// @param {List} $prefixes [webkit moz ms o] - List of prefixes to use.
+///
+/// @output Each property with the chosen vendor prefixes as well as the
+/// standard, non-prefixed declarations.
+///
+/// @group Utilities
+@mixin prefix($declarations, $vendors: (webkit moz ms o)) {
+  @each $property, $value in $declarations {
+    @each $prefix in $prefixes {
+      #{'-' + $prefix + '-' + $property}: $value;
+    }
+
+    #{$property}: $value;
+  }
+}

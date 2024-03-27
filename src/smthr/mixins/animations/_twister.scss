@@ -17,7 +17,7 @@
 /// mixin be used on the parent element.
 ///
 /// @param {String | Bool} $in-or-out ['in'] - Determines if the element will
-/// spac 'in' (`in`, `true`, or `i`) or 'out' (`out`, `false`, or `o`).
+/// twist 'in' (`in`, `true`, or `i`) or 'out' (`out`, `false`, or `o`).
 /// @param {String} $direction ['top'] - Will either twist in from this
 /// direction or twist out towards this direction, depending on the value of
 /// $in-or-out. The value of $direction must be one of the following:
@@ -73,7 +73,7 @@
   $trans-val-1: null;
   $trans-val-2: null;
   $trans-val-3: null;
-  $temp-val: null;
+  $temp-swap: null;
   $trans-origin-1: null;
   $trans-origin-2: null;
   $anim-suffix: '';
@@ -81,6 +81,11 @@
   @if $in-or-out and is-string($in-or-out) {
     $in-or-out: string.to-lower-case($in-or-out);
   }
+
+  @if $delay and is-string($delay) {
+    $delay: string.to-lower-case($delay);
+  }
+
 
   @if $anim-dir {
     @if is-list($anim-dir) {
@@ -92,18 +97,14 @@
     }
   }
 
-  @if $delay and is-string($delay) {
-    $delay: string.to-lower-case($delay);
-  }
-
   @if $timing-func and is-string($timing-func) {
     $timing-func: string.to-lower-case($timing-func);
   }
 
-  @if equals-true($in-or-out) or $in-or-out == 'in' {
+  @if equals-true($in-or-out) or $in-or-out == 'in' or $in-or-out == 'i' {
     $in-or-out: true;
     $anim-suffix: '-in-from-';
-  } @else if is-falsey($in-or-out) or $in-or-out == 'out' {
+  } @else if is-falsey($in-or-out) or $in-or-out == 'out' or $in-or-out == 'o' {
     $in-or-out: false;
     $anim-suffix: '-out-to-';
   } @else {
@@ -151,16 +152,6 @@
   } @else {
     @error 'You must pass a $direction for the [ twister() ] mixin. The ' +
         '$direction value must be one of the following: `top`, `bottom`.';
-  }
-
-  // If twister is out rather than in, reverse the necessary values
-  @if not $in-or-out {
-    $opacity-val-1: 1;
-    $opacity-val-2: 0;
-
-    $temp-val: $trans-val-1;
-    $trans-val-1: $trans-val-3;
-    $trans-val-3: $temp-val;
   }
 
   @if not is-number($duration) {
@@ -235,6 +226,16 @@
 
   @if equals-false($timing-func) or is-alias('normal', $timing-func) {
     $timing-func: if(($in-or-out), ease-out, ease-in);
+  }
+
+   // If twisting out rather than in, reverse the necessary values
+  @if not $in-or-out {
+    $opacity-val-1: 1;
+    $opacity-val-2: 0;
+
+    $temp-swap: $trans-val-1;
+    $trans-val-1: $trans-val-3;
+    $trans-val-3: $temp-swap;
   }
 
   @if equals-false($anim-num) or $anim-num == '' {
