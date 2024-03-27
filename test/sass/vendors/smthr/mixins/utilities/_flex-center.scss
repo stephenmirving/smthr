@@ -82,7 +82,8 @@
   }
 
   @if equals-true($support-all) or $support-all == 't' $support-all == 'yes' or
-      $support-all == 'y' or $support-all == 'legacy' or $support-all == 'all'
+      $support-all == 'y' or $support-all == 'legacy' or $support-all == 'all' or
+      $support-all == 'supports' or $support-all == 'support'
   {
     $support-all: true;
   } @else {

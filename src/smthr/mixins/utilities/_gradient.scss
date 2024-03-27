@@ -1,50 +1,83 @@
-// stylelint-disable prettier/prettier
 @use 'sass:list';
 @use 'sass:meta';
 @use 'sass:math';
 @use 'sass:string';
+@use '../../functions/conv-color' as *;
+@use '../../functions/equals-true' as *;
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-angle' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/is-list' as *;
 @use '../../functions/is-number' as *;
+@use '../../functions/is-percentage' as *;
 @use '../../functions/list-to-string' as *;
 
 /// A robust and well supported down-n-dirty gradient mixin.
 ///
 /// @param {Color} $start-color - The starting color in the gradient.
 /// @param {Color} $end-color - The ending color in the gradient.
-/// @param {String | Number} $orientation ['to right'] - The orientation
-/// of the grandient. Can be an angle value or one of the orientation keywords
-/// used with gradients, `to top`, `to top right`, `to right`, `to bottom right`,
-/// `to right`, `to bottom left`, `to left`, `to top left`, or one of the alias
+/// @param {String | Number} $orientation ['to right'] - The orientation of the
+/// grandient. Can be an angle value or one of the orientation keywords used
+/// with gradients, `to top`, `to top right`, `to right`, `to bottom right`, `to
+/// right`, `to bottom left`, `to left`, `to top left`, or one of the alias
 /// values for these orientations.
-///
-/// @param {Number} $start-percent [0%] - Starting percentage of the gradient.
-/// @param {Number} $end-percent [100%] - Ending percentage of the gradient.
+/// @param {Number | List} $start-position [0%] - Starting position
+/// percentage of the gradient. Can be a 1 or 2 value percentage.
+/// @param {Number | List} $end-position [100%] - Ending position
+/// percentage of the gradient. Can be a 1 or 2 value percentage.
+/// @param {Bool | String} $is-for-text [false] - If true, will apply the
+/// gradient to text rather than to the background. Valid values equivalent to
+/// `true` also include `yes`, `y`, `t`, `text`, `txt`, `for-text`, `fortext`,
+/// `fortxt`, `on-text`, `on-txt`, `ontext`, and `ontxt`.
+/// @param {Bool | String} $is-repeating [false] - If true, will use the
+/// `repeating-linear-gradient()` and `repeating-radial-gradient()` CSS
+/// functions rather than the non-repeating `linear-gradient()` and
+/// `radial-gradient` functions. Valid values equivalent to `true` also include
+/// `yes`, `y`, `t`, `repeat, `repeats`, `repeating`, `rep` and `r`. All other
+/// values will be interpreted as `false`.
+/// @param {Bool | String} $support-all [false] - If true, will support as
+/// many browsers and devices as possible. Valid values equivalent to `true`
+/// also include `yes`, `y`, `t`, `legacy`, `supports`, `support`, and `all`.
+/// All other values will be interpreted as `false`.
 ///
 /// @group Utilities
+/// @require {function} conv-color
+/// @require {function} equals-true
 /// @require {function} is-alias
 /// @require {function} is-angle
 /// @require {function} is-string
 /// @require {function} is-list
 /// @require {function} is-number
+/// @require {function} is-percentage
 /// @require {function} list-to-string
 ///
-/// @throw Invalid $orientation value
-/// @throw Invalid $start-percent data type
-/// @throw Invalid $start-percent unit type
-/// @throw Invalid $end-percent data type
-/// @throw Invalid $end-percent unit type
-/// @throw Value of $start-percent out of range
-/// @throw Value of $end-percent out of range
+/// @throw Invalid $orientation value error.
+/// @throw Invalid $start-position data type error.
+/// @throw Invalid $start-position unit type error.
+/// @throw Invalid $end-position data type error.
+/// @throw Invalid $end-position unit type error.
+/// @throw Invalid $is-for-text value warning.
+/// @throw Invalid $is-repeating value warning.
 @mixin gradient(
   $start-color,
   $end-color,
   $orientation: 'to right',
-  $start-percent: 0%,
-  $end-percent: 100%
+  $start-position: 0%,
+  $end-position: 100%,
+  $is-for-text: false,
+  $is-repeating: false,
+  $support-all: false
 ) {
+  $gradient-type: linear;
+  $ie-gradient-num: 0;
+  $ie-gradient-reverse: false;
+  $indicator: null;
+  $position-error-msg: 'Invalid units entered for the values in the [ gradient() ] ' +
+      'mixin. If you pass values for the `$start-position` or `$end-position` ' +
+      'parameters, you must pass 1 or 2 value percentages. You passed ' +
+      '`#{meta.inspect($start-position)}` for `$start-position` and ' +
+      '`#{meta.inspect($end-position)}` for `$end-position`.';
+
   @if not $orientation {
     $orientation: 'to right';
   }
@@ -52,6 +85,7 @@
   @if $orientation and is-list($orientation) and
       list.separator($orientation) == space
   {
+    $indicator: '#{list.nth($orientation, 1)}';
     $orientation: list-to-string($orientation);
   }
 
@@ -59,132 +93,194 @@
     $orientation: string.to-lower-case($orientation);
   }
 
-  @if $start-percent and is-string($start-percent) {
-    $start-percent: string.to-lower-case($start-percent);
+  @if not $start-position {
+    $start-position: 0%;
+  }
 
-    @if $start-percent != 'start' {
-      @error 'Invalid value passed to $start-percent for the [ gradient() ] mixin.';
+  @if not $end-position {
+    $end-position: 100%;
+  }
+
+  @if is-number($start-position) and math.is-unitless($start-position) {
+    $start-position: $start-position * 1%;
+  }
+
+  @if is-number($end-position) and math.is-unitless($end-position) {
+    $end-position: $end-position * 1%;
+  }
+
+  @if is-list($start-position) and list.length($start-position) == 2 and
+      (not is-percentage(list.nth($start-position, 1)) or
+        not is-percentage(list.nth($start-position, 2)))
+  {
+    @error $position-error-msg;
+  } @else if is-number($start-position) and not is-percentage($start-position) {
+    @error $position-error-msg;
+  }
+
+  @if is-list($end-position) and list.length($end-position) == 2 and
+      (not is-percentage(list.nth($end-position, 1)) or
+        not is-percentage(list.nth($end-position, 2)))
+  {
+    @error $position-error-msg;
+  } @else if is-number($end-position) and not is-percentage($end-position) {
+    @error $position-error-msg;
+  }
+
+  @if equals-true($is-for-text) or $is-for-text == 'yes' or
+      $is-for-text == 'y' or $is-for-text == 't' or
+      $is-for-text == 'for-text' or $is-for-text == 'fortext' or
+      $is-for-text == 'for-txt' or $is-for-text == 'fortxt' or $is-for-text == 'text' or
+      $is-for-text == 'txt' or $is-for-text == 'on-text' or $is-for-text == 'ontext' or
+      $is-for-text == 'on-txt' or $is-for-text == 'ontxt'
+  {
+    $is-for-text: true;
+  } @else {
+    @if $is-for-text {
+      @warn 'Invalid input for $is-for-text passed to the [ gradient() ] ' +
+          'mixin. Passing `true` to this value will cause the mixin to apply ' +
+          'the gradient to the text of an element instead of the background. ' +
+          'You may also pass one of the following alias values that will be ' +
+          'interpreted as `true`: `yes`, `y`, `t`, `for-text`, `fortext`, ' +
+          '`for-txt`, `fortxt`, `text`, `txt`, `on-text`, `ontext`, `on-txt`, ' +
+          'or `ontxt`. All other values passed for $is-for-text will be interpreted as ' +
+          '`false`. You passed #{meta.inspect($is-for-text)} for this value.';
     }
+
+    $is-for-text: false;
   }
 
-  @if $end-percent and is-string($end-percent) {
-    $end-percent: string.to-lower-case($end-percent);
-
-    @if $end-percent != 'end' {
-      @error 'Invalid value passed to $start-percent for the [ gradient() ] mixin.';
+  @if equals-true($is-repeating) or $is-repeating == 'yes' or
+      $is-repeating == 'y' or $is-repeating == 't' or
+      $is-repeating == 'repeating' or $is-repeating == 'repeats' or
+      $is-repeating == 'repeat' or $is-repeating == 'rep' or $is-repeating == 'r'
+  {
+    $is-repeating: 'repeating-'
+  } @else {
+    @if $is-repeating {
+      @warn 'Invalid input for $is-repeating passed to the [ gradient() ] ' +
+          'mixin. Passing `true` to this value will cause the mixin to use ' +
+          'the `repeating-linear-gradient()` or `repeating-radial-gradient()` ' +
+          'CSS functions rather than the normal `linear-gradient()` and ' +
+          '`radial-gradient()` functions. You may also pass one of the ' +
+          'following alias values that will be interpreted as `true`: ' +
+          '`yes`, `y`, `t`, `repeating`, `repeats`, `repeat`, `rep`, or `r`. ' +
+          'All other values passed for $is-repeating will be interpreted as ' +
+          '`false`. You passed #{meta.inspect($is-repeating)} for this value.';
     }
+
+    $is-repeating: null;
   }
 
-  @if not $start-percent or $start-percent == 'start' {
-    $start-percent: 0%;
-  }
-
-  @if not $end-percent or $end-percent == 'end' {
-    $end-percent: 100%;
-  }
-
-  @if not is-number($start-percent) or not is-number($end-percent) {
-    @error 'Invalid data type entered for the values in the [ gradient() ] ' +
-      'mixin. If you pass values for the `$start-percent` or `$end-percent` ' +
-      'parameters, you must pass percentage values. You passed ' +
-      '`#{meta.inspect($start-percent)}` for `$start-percent` and ' +
-      '`#{meta.inspect($end-percent)}` for `$end-percent`.';
-  }
-
-  @if math.is-unitless($start-percent) {
-    $start-percent: $start-percent * 1%;
-  }
-
-  @if math.is-unitless($end-percent) {
-    $end-percent: $end-percent * 1%;
-  }
-
-  @if math.unit($start-percent) != '%' or math.unit($end-percent) != '%' {
-    @error 'Invalid units entered for the values in the [ gradient() ] mixin. If' +
-      ' you pass values for the `$start-percent` or `$end-percent` ' +
-      'parameters, you must pass percentage values. You passed ' +
-      '`#{meta.inspect($start-percent)}` for `$start-percent` and ' +
-      '`#{meta.inspect($end-percent)}` for `$end-percent`.';
-  }
-
-  @if $start-percent < 0% or $start-percent > 100% {
-    @error 'Invalid $start-percent value of `#{meta.inspect($start-percent)}`' +
-      ' for the [ gradient() ] mixin. The value is out of range.';
-  }
-
-  @if $end-percent < 0% or $end-percent > 100% {
-    @error 'Invalid $end-percent value of `#{meta.inspect($end-percent)}`' +
-      ' for the [ gradient() ] mixin. The value is out of range.';
-  }
-
-  @if $start-percent == 0% {
-    $start-percent: null;
-  }
-
-  @if $end-percent == 100% {
-    $end-percent: null;
+  @if is-alias('top-to-bottom', $orientation) {
+    $orientation: 180deg;
+    $ie-gradient-num: 1;
+  } @else if is-alias('bottom-to-top', $orientation) {
+    $orientation: 0deg;
+    $ie-gradient-num: 1;
+    $ie-gradient-reverse: true;
+  } @else if is-alias('left-to-right', $orientation) {
+    $orientation: 90deg;
+  } @else if is-alias('right-to-left', $orientation) {
+    $orientation: 270deg;
+    $ie-gradient-reverse: true;
+  } @else if is-alias('bottom-left-to-top-right', $orientation) {
+    $orientation: 45deg;
+    $ie-gradient-num: 1;
+  } @else if is-alias('bottom-right-to-top-left', $orientation) {
+    $orientation: 135deg;
+    $ie-gradient-num: 1;
+    $ie-gradient-reverse: true;
+  } @else if is-alias('top-right-to-bottom-left', $orientation) {
+    $orientation: 225deg;
+    $ie-gradient-num: 1;
+    $ie-gradient-reverse: true;
+  } @else if is-alias('top-left-to-bottom-right', $orientation) {
+    $ie-gradient-num: 1;
+    $orientation: 135deg;
+  } @else if is-alias('radial', $orientation) {
+    $gradient-type: radial;
+    $orientation: 'ellipse';
+  } @else if $indicator == 'circle' or $indicator == 'ellipse' or
+      $indicator == 'closest-side' or $indicator == 'closest-corner' or
+      $indicator == 'farthest-side' or $indicator == 'farthest-corner'
+  {
+    $gradient-type: radial;
+  } @else if not is-angle($orientation) and $indicator != 'in' {
+    @error 'Invalid $orientation value of `#{meta.inspect($orientation)}` for ' +
+      'the [ gradient() ] mixin. This value must either be an angle or a ' +
+      'keyword indicating the direction in which the gradient should go, ' +
+      'such as `to right`.';
   }
 
   background: $start-color;
 
-  @if is-alias('top-to-bottom', $orientation) {
-    background-image: linear-gradient(
-      180deg,
-      $start-color $start-percent,
-      $end-color $end-percent
-    );
-  } @else if is-alias('bottom-to-top', $orientation) {
-    background-image: linear-gradient(0deg, $start-color $start-percent, $end-color $end-percent);
-  } @else if is-alias('left-to-right', $orientation) {
-    background-image: linear-gradient(
-      90deg,
-      $start-color $start-percent,
-      $end-color $end-percent
-    );
-  } @else if is-alias('right-to-left', $orientation) {
-    background-image: linear-gradient(
-      270deg,
-      $start-color $start-percent,
-      $end-color $end-percent
-    );
-  } @else if is-alias('bottom-left-to-top-right', $orientation) {
-    background-image: linear-gradient(
-      45deg,
-      $start-color $start-percent,
-      $end-color $end-percent
-    );
-  } @else if is-alias('bottom-right-to-top-left', $orientation) {
-    background-image: linear-gradient(
-      135deg,
-      $start-color $start-percent,
-      $end-color $end-percent
-    );
-  } @else if is-alias('top-right-to-bottom-left', $orientation) {
-    background-image: linear-gradient(
-      225deg,
-      $start-color $start-percent,
-      $end-color $end-percent
-    );
-  } @else if is-alias('top-left-to-bottom-right', $orientation) {
-    background-image: linear-gradient(
-      135deg,
-      $start-color $start-percent,
-      $end-color $end-percent
-    );
-  } @else if is-alias('radial', $orientation) {
-    background-image: radial-gradient(
-      ellipse at center,
-      $start-color $start-percent,
-      $end-color $end-percent
-    );
-  } @else if is-angle($orientation) {
-    background-image: linear-gradient(
-      $orientation,
-      $start-color $start-percent,
-      $end-color $end-percent
-    );
+  @if equals-true($support-all) or $support-all == 'legacy' or
+      $support-all == 'all' or $support-all == 'yes' or
+      $support-all == 'y' or $support-all == 't' or
+      $support-all == 'supports' or $support-all == 'support'
+  {
+    $support-all: true;
+    $ie-start-color: '#{conv-color(conv-color($start-color, 'name'), 'hex')}';
+    $ie-end-color: '#{conv-color(conv-color($end-color, 'name'), 'hex')}';
+    $prefixes: (webkit moz o);
+
+    // If conv-color function returns a shortened 3-digit hex, convert
+    // to 6-digit hex because that is the only type accepted by the
+    // IE gradient syntax
+
+    @if string.length($ie-start-color) == 4 {
+      $r: string.slice($ie-start-color, 2, 2);
+      $g: string.slice($ie-start-color, 3, 3);
+      $b: string.slice($ie-start-color, 4, 4);
+      $ie-start-color: '#' + $r + $r + $g + $g + $b + $b;
+    }
+
+    @if string.length($ie-end-color) == 4 {
+      $r: string.slice($ie-end-color, 2, 2);
+      $g: string.slice($ie-end-color, 3, 3);
+      $b: string.slice($ie-end-color, 4, 4);
+      $ie-end-color: '#' + $r + $r + $g + $g + $b + $b;
+    }
+
+    @if $gradient-type == 'linear' and not $is-repeating {
+      @if $ie-gradient-reverse {
+        $temp-swap: $ie-start-color;
+        $ie-start-color: $ie-end-color;
+        $ie-end-color: $temp-swap;
+      }
+
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$ie-start-color}', endColorstr='#{$ie-end-color}', GradientType=#{$ie-gradient-num});
+    }
+
+    @each $prefix in $prefixes {
+      background-image: -#{$prefix}-#{$is-repeating}#{$gradient-type}-gradient(
+        #{$orientation},
+        #{$start-color} #{$start-position},
+        #{$end-color} #{$end-position}
+      );
+    }
   } @else {
-    @error 'Invalid $orientation value of `#{meta.inspect($orientation)}` for ' +
-      'the [ gradient() ] mixin.';
+    $support-all: false;
+  }
+
+  @if $is-for-text {
+    color: $start-color;
+  }
+
+  background-image: #{$is-repeating}#{$gradient-type}-gradient(
+    #{$orientation},
+    #{$start-color} #{$start-position},
+    #{$end-color} #{$end-position}
+  );
+
+  @if $is-for-text {
+    @if $support-all {
+      -webkit-background-clip: text;
+    }
+
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-fill-color: transparent;
   }
 }

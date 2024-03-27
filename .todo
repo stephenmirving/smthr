@@ -59,7 +59,17 @@ TODO:
     ☐ Create more flex-box prefix mixins
       ☐ Finish testing and copying over flex-flow mixin
     ☐ Create new CSS grid mixins and functions
+    ☐ Add vendor prefix mixin
     ☐ Create an @font-face mixin
+    ☐ Modify `gradient()` mixin such that it can take an Arglist of colors and percents
+      - like `gradient(to right, blue 0%, green 20%, purple 85%, orange 100%) - Maybe make new mixin that does this?
+      ✔ Also modify it so that it doesn't repeat the declaration and saves the values in variables instead and declares once at end @done(24-03-26 17:52)
+      ✔ Also modify it so that it can apply a gradient to text @done(24-03-27 01:42)
+      ☐ Expand functionality for radial gradients
+      ✔ Also modify it so that it can apply all necessary vendor prefixes if a $support-legacy flag is passed as true @done(24-03-26 21:41)
+    ☐ Add `mesh-gradient()` mixin that can create mesh gradients like this generator: https://colorffy.com/mesh-gradient-generator?ref=home-list
+    ✔ Add `repeating-gradient` mixin that is the same as `gradient` mixin but uses `repeating-linear-gradient()` and `repeating-radial-gradient()` CSS functions @done(24-03-27 00:54)
+      ✔ Investigate possibly just adding this feature to the gradient mixin. @done(24-03-27 00:54)
     ☐ Revisit the `hamburger()` mixin and improve on it's potential hover transition
     ☐ Create a "logical" property mixin that takes physical properties like margin-top and uses that as the fallback but also adds margin-block-start, etc
 

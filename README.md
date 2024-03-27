@@ -23,14 +23,15 @@ animation keyframe creation, or other verbose and complex code blocks.
 5. [Documentation](#documentation)
 6. [Parameter Aliases](#parameter-aliases)
 7. [Recently Improved](#recently-improved)
-   - [Version 0.10.0 Patch Notes](#version-0100-patch-notes)
-   - [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
-   - [Version 0.9.1 Patch Notes](#version-091-patch-notes)
-   - [Version 0.9.0 Patch Notes](#version-090-patch-notes)
-   - [Version 0.8.2 Patch Notes](#version-082-patch-notes)
-   - [Version 0.8.1 Patch Notes](#version-081-patch-notes)
-   - [Version 0.8.0 Patch Notes](#version-080-patch-notes)
-   - [Recent Improvements in Older Versions](#recent-improvements-in-older-versions)
+   1. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
+   2. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
+   3. [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
+   4. [Version 0.9.1 Patch Notes](#version-091-patch-notes)
+   5. [Version 0.9.0 Patch Notes](#version-090-patch-notes)
+   6. [Version 0.8.2 Patch Notes](#version-082-patch-notes)
+   7. [Version 0.8.1 Patch Notes](#version-081-patch-notes)
+   8. [Version 0.8.0 Patch Notes](#version-080-patch-notes)
+   9. [Recent Improvements in Older Versions](#recent-improvements-in-older-versions)
 8. [Betterize](#betterize)
 9. [More Info](#more-info)
 10. [Questions](#questions)
@@ -46,14 +47,14 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.10.0 - _Last updated:_ 03/26/24
+This is **smoother** version 0.11.0 - _Last updated:_ 03/26/24
 
 ## Content
 
 Because `_smth.scss` is a Sass library comprised of functions, mixins and
 variables, importing it into your project won't add any overhead or increased
 file size to your project's stylesheet except for the parts that you actually use
-by calling a function, variable, or by using a mixin with `@includesadc`.
+by calling a function, variable, or by using a mixin with `@include`.
 
 **_Smoother_ currently contains:**
 
@@ -62,27 +63,30 @@ by calling a function, variable, or by using a mixin with `@includesadc`.
     300 unique animations
   - More than 20 element shapes created with a combination of `clip-path`,
     pseudo-elements, and `border-radius`
-  - More than 80 utility mixins for things like creating responsive ratios,
+  - More than 90 utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given
     number of lines, creating corner ribbons, centering elements,
-    browser-targeted styling, making "hamburger" menu buttons and much more!
-- **80+** Functions, _including functions that...
+    browser-targeted styling, media queries, making "hamburger" menu buttons and
+    much more!
+- **85+** Functions, _including functions that...
   - Extend Sass' existing module's method functionality (ex: `update-list` function)
-  - Convert and manipulate colors
+  - Manipulate colors and convert between syntax types
   - Enhanced data type checking
-  - Data type conversion
+  - Data type conversion/casting
   - Calculate unit conversions (such as px to rem)
   - Fix floats to a given number of decimal places
   - Return custom cubic-bezier curves for timing functions based on Penner equations.
-  - Return custom calc() equations based on trigonometry and linear algebra
+  - Return custom calc() equations based on trigonometric functions for use in
+    animations and transitions
   - Calculate the "least square fit" or trend-line of a mapped set of points
-    (useful for setting responsive font sizes)
+    (very useful for setting responsive font sizes)
   - Functions that aid in the creation of mixins and placeholders
   - Much more!
 - A modern, opinionated CSS normalization file written in Sass called _betterize.scss
 - A print style file written in Sass called _smooth-print.scss
 - A collection of helpful and configurable `!default` variables
-- Helpful documentation for every function, mixin, and variable
+- Helpful [documentation](https://stephenmirving.github.io/smthr/) generated from
+  the SassDoc annotations written for every function, mixin, and variable
 
 ## Sass Version Requirement
 
@@ -347,13 +351,38 @@ Version 1.0.0 is _coming soon_ with **more** animations, **more** shapes,
 **more** utilities, a Getting Started guide, and a demo for every mixin and
 function to help you start using _Smoother_.
 
-### Version 0.10.0 Patch Notes
+### Version 0.11.0 Patch Notes
+
+- Greatly improved the robustness of the `gradient()` mixin.
+  - The mixin now allows you to apply a gradient effect to text, not just
+    backgrounds.
+  - You can now pass `true` to the new `$is-repeating` parameter to make the
+    mixin use the `repeating-linear-gradient()` and
+    `repeating-radial-gradient()` CSS functions rather than the non-repeating
+    `linear-gradient()` and `radial-gradient` functions.
+  - Making a radial gradient with this mixin now allows you far more control
+    for different types of radial gradients with different parameters. Previously
+    the only type of radial-gradient the mixin could produce was the
+    `ellipse at center` parameter. Now you can enter virtually any valid starting
+    value for a `radial-gradient()` with the `$orientation` parameter.
+  - You can now pass two value percentage position parameters for $start-position
+    and $end-position, instead of just one value syntax available previously.
+  - You can also now pass `true` to the new $supports-legacy parameter and have
+    all the vendor prefixes and the old IE filter gradient syntax applied at
+    same time as fallbacks for the modern gradient syntax.
+
+### Version 0.10.0 - 0.10.1 Patch Notes
 
 - Renamed the `poof()` animation mixin to `vanish()`
 - Added new animation mixin that is now named `poof()`
 - Added new animation mixin `poof-puff()` that is a combination of the `puff()`
   animation and the **new** `poof()` animation which creates a more exaggerated
   effect.
+- Updated _Betterize_ to version 2.0.5
+- Greatly reduced the size of the _Smoother_ NPM package by removing several
+  large image assets from the `test` directory when publishing the package. They
+  were causing the package to take up around 27MB instead of being slightly less
+  than 1MB, which is what the package takes up now.
 
 ### Version 0.9.2 - 0.9.6 Patch Notes
 
@@ -427,54 +456,34 @@ function to help you start using _Smoother_.
 
 - Improved functionality of `shape-shadow()` function and fixed a bug with some
   edge case parameters.
-
 - Added `is-valid-hex()` function that tests input and determines if it is a
   valid hex color or string.
-
 - Added `fibonacci()` function that returns an nth number in the sequence or a
   range in the sequence represented as a comma-separated list.
-
 - Added library to NPM! You can now add this to your project using `npm i smoother`
-
 - 6 new mixins added: `caret()`, `fluid-media()`, `nav-divider()`, `visible()`
   `resizable()`, and `reset-text()`
-
 - 8 new animations added: `hinge()`, `flick()`, `ping()`, `poof()`, `power()`,
   `space()`, `swing()`, and `twister()`!
-
 - Updated _Betterize_ to version 1.2.4
-
 - New function that provides a dark or light text contrast color: `color-text-contrast()`
-
-- New function added called `resolve-equation()` that returns custom CSS `calc()`
-  equations based on trigonometry and linear algebra.
-
+- New function added called `time-equation()` that returns custom CSS `calc()`
+  equations based on trigonometric functions for use in animations or transitions.
 - Improved `is-position()` function with the ability to allow alias values.
-
 - Greatly improved the BEM mixins `elem()` and `mod()` such that they can now be
   passed a limitless Arglist of element or modifier names and be used on selector
   groups that have a limitless number of parent selectors.
-
 - Fixed an issue with animation suffixes and `animation-direction` not always
   working correctly since the 0.3.3 update.
-
 - New functions, `is-falsey()`, `equals-true()`, `equals-false()`
-
 - Updated all mixins and functions that had a likelihood of being passed an
-  argument with a 2 word keyword such as `top left`  or `to right` so that they
+  argument with a 2 word keyword such as `top left` or `to right` so that they
   would accept a greater number of alias values when not wrapped in strings.
-
 - Allowed for passing CSS global values on a greater number of mixin arguments,
   such as for the animation-direction property on animations.
-
 - Refactored the `color-shifter()` mixin to allow for the `animation-direction`
   and the `animation-iteration-count` properties to be passed as arguments.
-
-- Improved the annotations and error reporting for all the mixins and functions
-  so that parameters with many possible keyword values have those keywords listed
-  in the documentation.
-
-- Got the SassDoc annotation documentation online
+- Got the SassDoc annotation [documentation](https://stephenmirving.github.io/smthr/) online
 
 ## Betterize
 

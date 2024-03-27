@@ -1,9 +1,11 @@
+@charset "UTF-8";
+
 ////////////////////////////////////////////////////////////////////////////////
 /// ------------------------------------------------------------------------ ///
 /// betterize.scss -- Modern normalization for better cross-browser design - ///
 /// Special version designed for use with the Smoother library ------------- ///
 /// @author Stephen M Irving -- <@metric_dev> ------------------------------ ///
-/// version 2.0.4 -- 03/25/2024 -------------------------------------------- ///
+/// version 2.0.5 -- 03/26/2024 -------------------------------------------- ///
 /// ------------------------------------------------------------------------ ///
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -245,6 +247,7 @@ details,
 dialog,
 legend,
 main,
+summary,
 img,
 svg,
 video {
@@ -400,7 +403,6 @@ code {
   background-color: #eee;
   word-break: break-word;
 }
-
 
 // Opinionated styling for `<kbd>` elements
 // to make them look like keyboard buttons
@@ -970,6 +972,14 @@ iframe {
 summary {
   cursor: pointer;
 }
+
+// https://html.spec.whatwg.org/C/#the-details-and-summary-elements
+// The specification doesn't have details > summary:first-of-type but
+// it is added because modern Chrome, Safari, and Firefox use
+// `summary { display: block }` as there are sites using `<summary>`
+// without `<details>`, and they expect that `<summary>` will not display
+// as a list-item when doing so. This will add the correct display back
+// for those browsers when `<summary>` is used with `<details>`.
 
 details > summary:first-of-type {
   display: list-item;

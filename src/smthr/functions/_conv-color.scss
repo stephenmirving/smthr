@@ -122,21 +122,15 @@
       $color: #{'hwb(' + strip-unit($color-hue) + ' ' + $color-whiteness + ' ' +
         $color-blackness + ' / ' + $color-alpha + ')'};
     }
-  } @else if
-    $syntax ==
-    'name' or
-    $syntax ==
-    'keyword' or
-    $syntax ==
-    'key' or
-    $syntax ==
-    'word' or
-    $syntax ==
-    'color' or
-    $syntax ==
-    'col' or
-    $syntax ==
-    'web'
+  } @else if $syntax == 'name' or
+      $syntax == 'keyword' or
+      $syntax == 'key' or
+      $syntax == 'word' or
+      $syntax == 'color' or
+      $syntax == 'col' or
+      $syntax == 'web' or
+      $syntax == 'no-alpha' or
+      $syntax == 'noalpha'
   {
     // If the given color can be converted into a CSS color name, this will
     // return that color name, otherwise it will return a 6 digit hex value.

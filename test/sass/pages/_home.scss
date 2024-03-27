@@ -41,7 +41,10 @@
 
 .stage {
   @include animation-stage(500px, 50%, 80%, 900, 80vh);
-  @include gradient(conv-color(rgba(#80f, 0.3), hsl), rgba(blue, 0.5), 135deg);
+  // @include gradient(conv-color(rgba(#80f, 0.3), hsl), rgba(blue, 0.5));
+  // @include gradient(blue, green, 150deg, 0%, 100%, false, true, true);
+  // @include gradient(red, purple, circle at center in hsl longer hue, 0%, 100%);
+  @include gradient(red, blue, 45deg, 0% 50%, 50% 100%);
   @include flex-center($flex-dir: 'column');
 
   border: 4px solid #000;
