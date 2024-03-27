@@ -199,7 +199,6 @@ $flip-axis: 'horizontal';
   @include speed('in', 'right');
 }
 
-
 .btn {
   // @include ghost-button(1.25rem, rgb(3, 23, 95, 1), 700, system-ui, 3px, rgb(3, 23, 95, 1), 1rem 1.25rem, 0.5s, color-text-contrast(rgba(3, 23, 95, 1)));
   @include reset;
