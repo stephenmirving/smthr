@@ -48,7 +48,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.12.1 - _Last updated:_ 03/27/24
+This is **smoother** version 0.12.2 - _Last updated:_ 03/27/24
 
 ## Content
 
@@ -356,7 +356,7 @@ new versions without having to copy folders every time, a Getting Started guide,
 and a website with a demo for every mixin and function to help you start using
 _Smoother_.
 
-### Version 0.12.0 - 0.12.1 Patch Notes
+### Version 0.12.0 - 0.12.2 Patch Notes
 
 - Renamed the `zoom-in()` animation mixin to `bg-zoom()`. It still has the same
   alias of `ken-burns()`, along with the new alias of `bg-zoom-in()` and
@@ -369,6 +369,7 @@ _Smoother_.
   and adds a list of vendor prefixes to the properties. Though most people are
   now using Autoprefixer, this may still be useful to some.
 - Fixed error in README.md
+- Removed unnecessary dependencies
 
 ### Version 0.11.0 Patch Notes
 
