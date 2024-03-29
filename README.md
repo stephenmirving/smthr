@@ -55,7 +55,8 @@ This is **smoother** version 0.13.1 - _Last updated:_ 03/29/24
 Because `_smth.scss` is a Sass library comprised of functions, mixins and
 variables, importing it into your project won't add any overhead or increased
 file size to your project's stylesheet except for the parts that you actually use
-by calling a function, variable, or by using a mixin with `@include`.
+by calling a function, variable, or by using a mixin with `@include`. The current
+unpacked size of the package is 1.1MB.
 
 **_Smoother_ currently contains:**
 
