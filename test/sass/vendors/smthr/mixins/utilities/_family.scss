@@ -108,8 +108,8 @@
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
-/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+/// @link https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// @link https://caniuse.com/?search=selector%20list%20%3Anth-child
 ///
 /// @group Utilities
 /// @require {function} is-integer
@@ -198,8 +198,8 @@
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
-/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+/// @link https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// @link https://caniuse.com/?search=selector%20list%20%3Anth-child
 ///
 /// @group Utilities
 /// @require {function} is-integer
@@ -252,8 +252,8 @@
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
-/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+/// @link https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// @link https://caniuse.com/?search=selector%20list%20%3Anth-child
 ///
 /// @group Utilities
 /// @require {function} is-integer
@@ -337,8 +337,8 @@
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
-/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+/// @link https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// @link https://caniuse.com/?search=selector%20list%20%3Anth-child
 ///
 /// @group Utilities
 /// @require {function} is-integer
@@ -400,8 +400,8 @@
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
-/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+/// @link https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// @link https://caniuse.com/?search=selector%20list%20%3Anth-child
 ///
 /// @group Utilities
 /// @require {function} is-integer
@@ -461,8 +461,8 @@
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
-/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+/// @link https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// @link https://caniuse.com/?search=selector%20list%20%3Anth-child
 ///
 /// @group Utilities
 /// @require {function} is-integer
@@ -527,8 +527,8 @@
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
-/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+/// @link https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// @link https://caniuse.com/?search=selector%20list%20%3Anth-child
 ///
 /// @group Utilities
 /// @require {function} is-integer
@@ -896,42 +896,6 @@
   }
 }
 
-/// This quantity-query mixin will select every items if there is at most
-/// `$num` items that match the given selector. It will not select anything if
-/// there is not as many item as `$num` that match the given selector.
-///
-/// @param {Number} $num - If the number of child elements matching $selector is
-/// equal to or less than this number, then all will be selected. If the number
-/// of child elements matching $selector is greater than this number, then none
-/// are selected.
-/// @param {String} $selector - Pass the selector as an unquoted string.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
-/// @group Utilities
-/// @require {function} is-integer
-/// TODO: fix this mixin or delete
-// @mixin at-most-any($num, $selector) {
-//   @if not is-integer($num) {
-//     @error 'Invalid input for $num in the [ at-most-any() ] mixin. ' +
-//       'This value must be an integers. You passed #{meta.inspect($num)}.';
-//   }
-
-//   @if meta.type-of($selector) != 'string' {
-//     @error 'Invalid input for $selector in the [ at-most-any() ] mixin. ' +
-//       'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
-//   }
-
-//   $parent: &;
-//   $child: list.nth(list.nth($parent, -1), -1);
-
-//   &:nth-last-child(-n + #{$num} of #{$selector}):first-child,
-//   &:nth-last-child(-n + #{$num} of #{$selector}):first-child ~ #{$child} {
-//     @content;
-//   }
-// }
-
 /// This quantity-query mixin will select every items there is between `$min`
 /// and `$max` items. If the quantity of child elements is less than the $min
 /// or greater than the $max, none will be selected. If the quantity is in
@@ -960,42 +924,6 @@
     @content;
   }
 }
-
-/// This quantity-query mixin will select every items there is that matches
-/// $selector between `$min` and `$max` items. If the quantity of child elements
-/// matching $selector is less than the $min or greater than the $max, none will
-/// be selected. If the quantity is in range, all will be selected.
-///
-/// @param {Number} $min - The minimum number of children that match $selector.
-/// @param {Number} $max - The maximum number of children that match $selector.
-/// @param {String} $selector - Pass the selector as an unquoted string.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
-/// @group Utilities
-/// @require {function} is-integer
-/// TODO: Fix mixin or delete
-// @mixin in-between-any($min, $max, $selector) {
-//   @if not is-integer($min) or not is-integer($max) {
-//     @error 'Invalid input for $min or $max in the [ in-between-any() ] mixin. ' +
-//       'These values must be integers. You passed #{meta.inspect($min)} for $min ' +
-//       'and #{meta.inspect($max)} for $max';
-//   }
-
-//   @if meta.type-of($selector) != 'string' {
-//     @error 'Invalid input for $selector in the [ in-between-any() ] mixin. ' +
-//       'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
-//   }
-
-//   $parent: &;
-//   $child: list.nth(list.nth($parent, -1), -1);
-
-//   &:nth-last-child(n + #{$min} of #{$selector}):nth-last-child(-n + #{$max} of #{$selector}):first-child,
-//   &:nth-last-child(n + #{$min} of #{$selector}):nth-last-child(-n + #{$max} of #{$selector}):first-child ~ #{$child} {
-//     @content;
-//   }
-// }
 
 /// Select the first exact child element.
 ///
@@ -1149,58 +1077,6 @@
     @content;
   }
 }
-
-/// Select an element if it has at least `$num` child elements.
-///
-/// @param {Number} $num - Element will be selected if it has at least $num
-/// child elements. Must be an integer.
-/// @param {String} $selector - Pass the selector as a quoted string.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
-/// @group Utilities
-/// @require {function} is-integer
-/// TODO: Fix or delete mixin
-// @mixin has-at-least($num) {
-//   @if not is-integer($num) {
-//     @error 'Invalid input for $num in the [ has-at-least() ] mixin. ' +
-//       'This value must be an integer. You passed #{meta.inspect($num)}.';
-//   }
-
-//   &:has(:nth-last-child(n + #{$num}):first-child) {
-//     @content;
-//   }
-// }
-
-/// Select an element if it has at least `$num` child elements that match
-/// $selector.
-///
-/// @param {Number} $num - Element will be selected if it has at least $num
-/// child elements of $selector. Must be an integer.
-/// @param {String} $selector - Pass the selector as a quoted string.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
-/// @group Utilities
-/// @require {function} is-integer
-/// TODO: Fix or delete mixin
-// @mixin has-at-least-of-any($num, $selector) {
-//   @if not is-integer($num) {
-//     @error 'Invalid input for $num in the [ has-at-least-of-any() ] mixin. ' +
-//       'This value must be an integer. You passed #{meta.inspect($num)}.';
-//   }
-
-//   @if meta.type-of($selector) != 'string' {
-//     @error 'Invalid input for $selector in the [ has-at-least-of-any() ] mixin. ' +
-//       'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
-//   }
-
-//   &:has(:nth-last-child(n + #{$num} of #{$selector}):first-child) {
-//     @content;
-//   }
-// }
 
 /// This mixin is used to automatically sort z-index in numerical order. But it
 /// can also sort them in reverse-numerical order, depending the parameters you
