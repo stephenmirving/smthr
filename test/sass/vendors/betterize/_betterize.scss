@@ -5,7 +5,7 @@
 /// betterize.scss -- Modern normalization for better cross-browser design - ///
 /// Special version designed for use with the Smoother library ------------- ///
 /// @author Stephen M Irving -- <@metric_dev> ------------------------------ ///
-/// version 2.0.5 -- 03/26/2024 -------------------------------------------- ///
+/// version 2.0.7 -- 03/28/2024 -------------------------------------------- ///
 /// ------------------------------------------------------------------------ ///
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -18,7 +18,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 // -------------------------------------------------------------------------- //
-// #BASE STYLES: opinionated defaults --------------------------------------- //
+// #BASE STYLES: Opinionated defaults and base element styles --------------- //
 // -------------------------------------------------------------------------- //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -58,8 +58,8 @@
 //  4. Set the default font size in an accessible way (such that a user
 //     can change the default size with the browser settings).
 //  5. Normalize default `line-height` across browsers.
-//  6. Set a new default for `overflow-wrap` on the root element since it
-//     is an inherited property.
+//  6. Set a new default for `word-wrap` (alias for `overflow-wrap`) on the root
+//     element since it is an inherited property.
 //  7. Allow the browser to automatically break words at appropriate hyphenation
 //     points. Ensure you specificy a language using the `lang` HTML attribute.
 //     to guarantee the automatic hyphenation applied is language-specific.
@@ -118,7 +118,7 @@ html {
     'Noto Color Emoji'; // 3
   font-size: $_root-font-size; // 4
   line-height: 1.15; // 5
-  overflow-wrap: break-word; // 6
+  word-wrap: break-word; // 6
   -webkit-hyphens: auto; // 7
   hyphens: auto; // 7
   -moz-tab-size: 4; // 8
@@ -362,6 +362,8 @@ samp {
     ui-monospace,
     // macOS 10.10+
     Menlo,
+    // macOS fallback
+    Monaco,
     // Windows 6+
     Consolas,
     // Android 4+
@@ -372,7 +374,7 @@ samp {
     'Noto Mono',
     // KDE Plasma 4+
     'Oxygen Mono',
-    // Linux/OpenOffice fallback
+    // Linux fallback
     'Liberation Mono',
     // Default fallback
     monospace,
@@ -428,7 +430,7 @@ kbd {
   white-space: nowrap;
 }
 
-// 1. Dont't allow content to break outside
+// 1. Dont't allow content to break outside.
 // 2. Remove top margin to avoid vertical margin collapse.
 // 3. Overwrite physical margin properties with logical margin properties
 //    for browsers that support it to improve internationalization.
@@ -441,10 +443,14 @@ pre {
 }
 
 :where(pre:has(code)) {
-  max-width: 120ch;
-  max-height: 340px;
-  padding-block: 0.5rem;
-  padding-inline: 1rem;
+  max-width: 110ch;
+  max-inline-size: 110ch;
+  max-height: 21.25rem;
+  max-block-size: 21.25rem;
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 3px;
   background-color: #eee;
 }
 

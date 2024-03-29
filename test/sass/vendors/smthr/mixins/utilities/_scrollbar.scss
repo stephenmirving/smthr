@@ -31,6 +31,8 @@
   @if $is-internal {
     scrollbar-color: $fg-color $bg-color; // Firefox 64+
     scrollbar-width: $ff-scroll-size; // Firefox 64+
+    scrollbar-face-color: $fg-color; // IE
+    scrollbar-track-color: $bg-color; // IE
 
     &::-webkit-scrollbar {
       height: $size;
@@ -59,10 +61,13 @@
         }
       }
     }
+
   } @else {
     html {
       scrollbar-color: $fg-color $bg-color; // Firefox 64+
       scrollbar-width: $ff-scroll-size; // Firefox 64+
+      scrollbar-face-color: $fg-color; // IE
+      scrollbar-track-color: $bg-color; // IE
     }
 
     ::-webkit-scrollbar {

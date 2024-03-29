@@ -1,105 +1,318 @@
+@use 'sass:math';
 @use 'sass:meta';
 @use 'sass:string';
-@use '../../variables/misc' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-length' as *;
+@use '../../functions/is-list' as *;
+@use '../../functions/is-number' as *;
 @use '../../functions/is-string' as *;
+@use '../../functions/list-to-string' as *;
 
-/// Used by the `caret()` mixin to make a down-facing caret.
+/// Applies the border properties necessary to make an up pointing caret
+/// (a little triangle). Used by the `caret()` mixin.
+///
+/// @param {Number} $size [0.25em] - The caret's size.
+/// @param {Color} $color [#222] - The caret's color.
 ///
 /// @group Utilities
-/// @access private
-/// @require {variable} $caret-width
-@mixin _caret-down {
-  border-top: $caret-width solid;
-  border-right: $caret-width solid transparent;
-  border-bottom: 0;
-  border-left: $caret-width solid transparent;
+/// @access public
+@mixin caret-up($size: 0.25em, $color: #222) {
+  border: 0;
+  border-right: $size solid transparent;
+  border-bottom: $size solid $color;
+  border-left: $size solid transparent;
 }
 
-/// Used by the `caret()` mixin to make an up-facing caret.
+/// Applies the border properties necessary to make an up and to the right
+/// pointing caret (a little triangle). Used by the `caret()` mixin.
+///
+/// @param {Number} $size [0.25em] - The caret's size.
+/// @param {Color} $color [#222] - The caret's color.
 ///
 /// @group Utilities
-/// @access private
-/// @require {variable} $caret-width
-@mixin _caret-up {
-  border-top: 0;
-  border-right: $caret-width solid transparent;
-  border-bottom: $caret-width solid;
-  border-left: $caret-width solid transparent;
+/// @access public
+@mixin caret-up-right($size: 0.25em, $color: #222) {
+  border: 0;
+  border-top: $size solid $color;
+  border-bottom: $size solid transparent;
+  border-left: $size solid transparent;
 }
 
-/// Used by the `caret()` mixin to make a right-facing caret.
+/// Applies the border properties necessary to make a right pointing caret
+/// (a little triangle). Used by the `caret()` mixin.
+///
+/// @param {Number} $size [0.25em] - The caret's size.
+/// @param {Color} $color [#222] - The caret's color.
 ///
 /// @group Utilities
-/// @access private
-/// @require {variable} $caret-width
-@mixin _caret-right {
-  border-top: $caret-width solid transparent;
-  border-bottom: $caret-width solid transparent;
-  border-left: $caret-width solid;
+/// @access public
+@mixin caret-right($size: 0.25em, $color: #222) {
+  border: 0;
+  border-top: $size solid transparent;
+  border-bottom: $size solid transparent;
+  border-left: $size solid $color;
 }
 
-/// Used by the `caret()` mixin to make a left-facing caret.
+/// Applies the border properties necessary to make a down and to the right
+/// pointing caret (a little triangle). Used by the `caret()` mixin.
+///
+/// @param {Number} $size [0.25em] - The caret's size.
+/// @param {Color} $color [#222] - The caret's color.
 ///
 /// @group Utilities
-/// @access private
-/// @require {variable} $caret-width
-@mixin _caret-left {
-  border-top: $caret-width solid transparent;
-  border-right: $caret-width solid;
-  border-bottom: $caret-width solid transparent;
+/// @access public
+@mixin caret-down-right($size: 0.25em, $color: #222) {
+  border: 0;
+  border-top: $size solid transparent;
+  border-bottom: $size solid $color;
+  border-left: $size solid transparent;
 }
 
+/// Applies the border properties necessary to make down pointing caret
+/// (a little triangle). Used by the `caret()` mixin.
+///
+/// @param {Number} $size [0.25em] - The caret's size.
+/// @param {Color} $color [#222] - The caret's color.
+///
+/// @group Utilities
+/// @access public
+@mixin caret-down($size: 0.25em, $color: #222) {
+  border: 0;
+  border-top: $size solid $color;
+  border-right: $size solid transparent;
+  border-left: $size solid transparent;
+}
 
-/// Add a caret using pseudo-elements that can face up, down, left, or right.
+/// Applies the border properties necessary to make a down and to the left
+/// pointing caret (a little triangle). Used by the `caret()` mixin.
+///
+/// @param {Number} $size [0.25em] - The caret's size.
+/// @param {Color} $color [#222] - The caret's color.
+///
+/// @group Utilities
+/// @access public
+@mixin caret-down-left($size: 0.25em, $color: #222) {
+  border: 0;
+  border-top: $size solid transparent;
+  border-right: $size solid transparent;
+  border-bottom: $size solid $color;
+}
+
+/// Applies the border properties necessary to make a left pointing caret
+/// (a little triangle). Used by the `caret()` mixin.
+///
+/// @param {Number} $size [0.25em] - The caret's size.
+/// @param {Color} $color [#222] - The caret's color.
+///
+/// @group Utilities
+/// @access public
+@mixin caret-left($size: 0.25em, $color: #222) {
+  border: 0;
+  border-top: $size solid transparent;
+  border-right: $size solid $color;
+  border-bottom: $size solid transparent;
+}
+
+/// Applies the border properties necessary to make an up and to the left
+/// pointing caret (a little triangle). Used by the `caret()` mixin.
+///
+/// @param {Number} $size [0.25em] - The caret's size.
+/// @param {Color} $color [#222] - The caret's color.
+///
+/// @group Utilities
+/// @access public
+@mixin caret-up-left($size: 0.25em, $color: #222) {
+  border: 0;
+  border-top: $size solid $color;
+  border-right: $size solid transparent;
+  border-bottom: $size solid transparent;
+}
+
+/// Add a caret (little triangle) that can face up, down, left, or right.
 ///
 /// @param {String} $point ['down'] - The desired direction for the caret
 /// to face. Can be either `up`, `down`, `left`, or `right`. Can also be any
 /// of the aliases for these values.
+/// @param {Number} $size [0.25em] - The caret's size.
+/// @param {Color} $color [#222] - The caret's color.
+/// @param {Bool} $new-context [false] - If true, will create a new context for
+/// the caret by applying `position: relative` to the parent and
+/// `position: absolute` to the pseudo-element containing the caret.
+/// @param {String} $placement [null] - An optional parameter that can take
+/// either `before` (or `left`) or `after` (or `right`) as a value and
+/// determines whether the caret will be placed in a `::before` pseudo-element
+/// or an `::after` pseudo-element. If nothing is explicitly passed to this
+/// parameter, the mixin will place carets pointing up, up and right, right,
+/// down and right, and down on the right in an `::after` pseudo-element, and
+/// carets pointing down and left, left, and up and left on the left in an a
+/// `::before` pseudo-element.
+/// @param {Number} $inline-margin [$size * 0.85] - The size of the
+/// `margin-left` or `margin-right` property that is applied depending on
+/// whether a `::before` or `::after` pseudo element is used.
 ///
 /// @group Utilities
 /// @require {function} is-alias
+/// @require {function} is-length
+/// @require {function} is-list
+/// @require {function} is-number
 /// @require {function} is-string
-/// @require {variable} $caret-width
-@mixin caret($point: 'down') {
-  @if $point and is-string($point) {
-    $point: string.to-lower-case($point);
+/// @require {function} list-to-string
+///
+/// @throw Invalid $point keyword error.
+/// @throw Invalid $size error, this value must be a length.
+/// @throw Invalid $placement keyword error.
+@mixin caret(
+  $point: 'down',
+  $size: 0.25em,
+  $color: #222,
+  $new-context: false,
+  $placement: null,
+  $inline-margin: $size * 0.85
+) {
+  $point-error-msg: 'Invalid $point input for the [ caret() ] mixin. You must ' +
+      'choose a valid direction for the caret to point. Can be `up`, `up right` ' +
+      '`right`, `down right`, `down`, `down left`, `left`, or `up left`.';
+  $placement-error-msg: 'Invalid $placement value passed to the [ caret() ] ' +
+      'mixin. This value must be a keyword string with a value of either ' +
+      '`before` (or `left`) or `after` (or `right`).';
+  $default-placement: 'after';
+  $trans-factor-1: 1;
+  $trans-factor-2: 1;
+  $element: null;
+  $inline-dir: null;
+
+  @if $point {
+    @if is-list($point) {
+      $point: list-to-string($point);
+    }
+
+    @if is-string($point) {
+      $point: string.to-lower-case($point);
+
+      @if is-alias('top', $point) {
+        $point: 'top';
+      } @else if is-alias('top right', $point) {
+        $point: 'top-right';
+      } @else if is-alias('right', $point) {
+        $point: 'right';
+      } @else if is-alias('bottom right', $point) {
+        $point: 'bottom-right';
+      } @else if is-alias('bottom', $point) {
+        $point: 'bottom';
+      } @else if is-alias('bottom left', $point) {
+        $point: 'bottom-left';
+        $default-placement: 'before';
+      } @else if is-alias('left', $point) {
+        $point: 'left';
+        $default-placement: 'before';
+      } @else if is-alias('top left', $point) {
+        $point: 'top-left';
+        $default-placement: 'before';
+      } @else {
+        @error '#{$point-error-msg} You passed #{meta.inspect($point)}.';
+      }
+    } @else {
+      @error '#{$point-error-msg} You passed #{meta.inspect($point)}.';
+    }
+  } @else {
+    @error '#{$point-error-msg} You passed #{meta.inspect($point)}.';
   }
 
-  &::after {
+  // If $size is unitless convert it to px.
+  @if $size and is-number($size) and math.is-unitless($size) {
+    $size: $size * 1px;
+  }
+
+  @if not is-length($size) {
+    @error 'Invalid $size passed to the [ caret() ] mixin. This value must ' +
+        'be a valid length. You passed #{meta.inspect($size)}.';
+  }
+
+  @if $placement and is-string($placement) {
+    $placement: string.to-lower-case($placement);
+
+    @if is-alias('left', $placement) or
+        $placement == 'before' or
+        $placement == 'bef' or
+        $placement == 'b'
+    {
+      $placement: 'before';
+    } @else if is-alias('right', $placement) or
+        $placement == 'after' or
+        $placement == 'aft' or
+        $placement == 'a'
+    {
+      $placement: 'after';
+    } @else {
+      @error '#{$placement-error-msg} You passed #{meta.inspect($placement)}.';
+    }
+
+  } @else if $placement {
+    @error '#{$placement-error-msg} You passed #{meta.inspect($placement)}.';
+  }
+
+  @if $new-context {
+    position: relative;
+  }
+
+  @if $placement == 'before' or (not $placement and $default-placement == 'before') {
+    $element: '::before';
+    $inline-dir: 'right';
+    $trans-factor-1: -1;
+  } @else if $placement == 'after' or (not $placement and $default-placement == 'after') {
+    $element: '::after';
+    $inline-dir: 'left';
+    $trans-factor-2: -1;
+  }
+
+  &#{$element} {
     content: '';
-    display: inline-block;
-    vertical-align: $caret-width * 0.85;
+
+    @if $new-context {
+      position: absolute;
+      top: 50%;
+      #{$inline-dir}: 100%;
+      display: block;
+    } @else {
+      vertical-align: middle;
+      display: inline-block;
+    }
+
     width: 0;
     height: 0;
-    margin-left: $caret-width * 0.85;
 
-    @if is-alias('bottom', $point) {
-      @include _caret-down;
-    } @else if is-alias('top', $point) {
-      @include _caret-up;
-    } @else if is-alias('right', $point) {
-      @include _caret-right;
-    } @else if not is-alias('left', $point) {
-      @error 'Invalid $point value passed to the [ caret() ] mixin. ' +
-          'Value must be either \'up\', \'down\', \'left\', or \'right\'.';
-    }
-  }
-
-  @if is-alias('left', $point) {
-    &::after {
-      display: none;
+    @if $new-context {
+      margin-top: $size * -0.5;
     }
 
-    &::before {
-      content: '';
-      display: inline-block;
-      vertical-align: $caret-width * 0.85;
-      width: 0;
-      height: 0;
-      margin-right: $caret-width * 0.85;
+    margin-#{$inline-dir}: #{$inline-margin};
 
-      @include _caret-left;
+    @if $point == 'top' {
+      @include caret-up($size, $color);
+    } @else if $point == 'top-right' {
+      @include caret-up-right($size, $color);
+    } @else if $point == 'right' {
+      @include caret-right($size, $color);
+    } @else if $point == 'bottom-right' {
+      @include caret-down-right($size, $color);
+    } @else if $point == 'bottom' {
+      @include caret-down($size, $color);
+    } @else if $point == 'bottom-left' {
+      @include caret-down-left($size, $color);
+    } @else if $point == 'left' {
+      @include caret-left($size, $color);
+    } @else if $point == 'top-left' {
+      @include caret-up-left($size, $color);
+    }
+
+    @if $new-context {
+      @if $point == 'right' or $point == 'left' {
+        transform: translate(50% * $trans-factor-1, -25%)
+      } @else if $point == 'bottom-left' {
+        transform: translate(50% * $trans-factor-2, -50%);
+      } @else if $point == 'bottom-right' {
+        transform: translate(-50% * $trans-factor-2, -50%);
+      }
     }
   }
 

@@ -20,7 +20,6 @@
     $target-versions: string.to-lower-case($target-versions);
   }
 
-
   @if not $target-versions or
       $target-versions == 'false' or
       $target-versions == 'f' or

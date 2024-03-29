@@ -29,12 +29,12 @@
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`)
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// for the animation to complete. Can be `infinite`, any unitless number, or
-/// any CSS global value.
-/// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
-/// any CSS global value. Default of `null` assumes the CSS property default of
-/// `normal`.
+/// to complete. Sets the value for the `animation-iteration-count` property.
+/// Can be `infinite`, any unitless number, or any CSS global value.
+/// @param {String} $anim-dir [null] - Sets the value for the
+/// `animation-direction` property. Can be `normal`, `reverse`, `alternate`, or
+/// `alternate-reverse`. Can also be any CSS global value. Default of `null`
+/// assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for the
 /// animation. A null value passed here will cause the animation to render
 /// according to the CSS default timing function value of `ease`;

@@ -1,0 +1,44 @@
+@use 'sass:list';
+@use 'sass:math';
+
+/// Generates a stripe gradient with a direction and a list of colors.
+///
+/// @param {Direction} $direction - Gradient direction
+/// @param {List} $colors - List of colors
+///
+/// @output `background-image: linear-gradient()` if $colors contains mulitple
+/// colors, `background-color: $colors` if only one color is passed.
+@mixin gradient-stripes($direction, $colors) {
+  $length: list.length($colors);
+
+  @if $length > 1 {
+    $stripes: ();
+
+    @for $i from 1 through $length {
+      $stripe: math.div(100%, $length) * ($i - 1);
+
+      @if $i > 1 {
+        $stripes: list.append($stripes, list.nth($colors, $i - 1) $stripe, comma);
+      }
+
+      $stripes: list.append($stripes, list.nth($colors, $i) $stripe, comma);
+    }
+
+    background-image: linear-gradient($direction, $stripes);
+  } @else if $length == 1 {
+    background-color: $colors;
+  }
+}
+
+/// Generates a stripe gradient with a direction and a list of colors.
+///
+/// @param {Direction} $direction - Gradient direction
+/// @param {List} $colors - List of colors
+///
+/// @output `background-image: linear-gradient()` if $colors contains mulitple
+/// colors, `background-color: $colors` if only one color is passed.
+///
+/// @alias gradient-stripes
+@mixin stripes($direction, $colors) {
+  @include gradient-stripes($direction, $colors);
+}

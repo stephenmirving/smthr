@@ -1,0 +1,12 @@
+
+/// Shortcut for setting an image's background size to `cover`.
+///
+/// @param {String | Number | List} $bg-pos [50%] - The value for the
+/// `background-position` property.
+@mixin bg-cover($bg-pos: 50%) {
+  width: 100%;
+  height: 100%;
+  background-position: #{$bg-pos};
+  background-size: cover;
+  background-repeat: no-repeat;
+}

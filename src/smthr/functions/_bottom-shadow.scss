@@ -1,17 +1,22 @@
 @use 'sass:list';
 
-/// Computes a bottom-shadow for a card effect (Used by `card` mixin).
+/// Computes the bottom shadow for a Material Design depth effect. Used by the
+/// `depth-level()` mixin.
 ///
-/// @param {Number} $depth - depth level
+/// @param {Number} $depth - The shadow effect's depth level.
+/// @param {Color} $color [#000] - The color of the shadow effect.
+/// @param {Number} $intensity [1] - An optional value that is multiplied with
+/// the default color opacity to increase or decrease the intensity of the
+/// effect.
 ///
 /// @return {List} Computed values for the bottom-shadow
 ///
 /// @access public
 /// @group Utilities
-@function bottom-shadow($depth, $color) {
+@function bottom-shadow($depth, $color, $intensity) {
   $primary-offset: list.nth(1.5 3 6 10 15, $depth) * 1px;
   $blur: list.nth(1 3 3 5 6, $depth) * 4px;
-  $color: rgba($color, list.nth(0.24 0.23 0.23 0.22 0.22, $depth));
+  $color: rgba($color, $intensity * list.nth(0.24 0.23 0.23 0.22 0.22, $depth));
 
   @return 0 $primary-offset $blur $color;
 }

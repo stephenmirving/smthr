@@ -5,11 +5,12 @@
 @use 'is-number' as *;
 @use '../variables/misc' as *;
 
-/// Converts pixels into `rem` units. Can be a single value or a list of values.
-/// Unitless values are assumed to be in pixels.
+/// Converts $values into `rem` units. Can be a single value or a list of values.
+/// Unitless values are assumed to be in pixels. Default base font size is 16px,
+/// but can be changed with the $base-font-size variable.
 ///
 /// @param {Number | List} $values - The value(s) to convert to `rem` units.
-/// Can be a single value or a List containing `px`, `em`, `rem`, `%`, and/or
+/// Can be a single value or a List containing `px`, `em`, `rem`, `%`, or
 /// unitless values.
 /// @param {Number} $base [null] - The base font-size. If none specified, defers
 /// to the $base-font-size variable. If that is not found, defaults to 16px.
@@ -70,10 +71,33 @@
   @return $rem-values;
 }
 
+/// Converts $values into `rem` units. Can be a single value or a list of values.
+/// Unitless values are assumed to be in pixels. Default base font size is 16px,
+/// but can be changed with the $base-font-size variable.
+///
+/// @param {Number | List} $values - The value(s) to convert to `rem` units.
+/// Can be a single value or a List containing `px`, `em`, `rem`, `%`, or
+/// unitless values.
+/// @param {Number} $base [null] - The base font-size. If none specified, defers
+/// to the $base-font-size variable. If that is not found, defaults to 16px.
+///
+/// @return {Number | List} The value(s) in `rem` units.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} strip-unit
+/// @require {function} is-number
+/// @require {variable} $base-font-size
+///
+/// @alias conv-to-rem
+@function rem($values, $base: null) {
+  @return conv-to-rem($values, $base);
+}
+
 /// Converts a value to matching rem value. By default, the base pixel value
 /// used to calculate the rem value is taken from the `$base-font-size` variable.
 ///
-/// @param {Number} $value - Value to convert.
+/// @param {Number} $value - Value to convert. Can be `px`, `em`, `%`, or `rem`
 /// @param {Number} $base - Base for pixel conversion.
 ///
 /// @return {Number} A number in `rem`s, calculated based on the given value and

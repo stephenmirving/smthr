@@ -1,19 +1,21 @@
 ////
-/// This file is an updated fork of _family.scss for Sass versions 1.6+.
+/// This file is an updated fork of _family.scss for Dart Sass version 1.6+,
+/// modified for use with Smoother with my own `:nth-child` and `:has` based
+/// mixins added to take advantage of the modern syntax improvements.
+///
 /// @author Lucas Bonomi < @lukyvj -- lucasbonomi.com >
+/// @author Stephen Irving < @metric_dev -- stephenirving.net >
 ///
-/// family.scss is a set of 26 smart Sass mixins which will help you to manage
-/// the style of :nth-child’ified elements, in an easy and classy way.
+/// _family.scss is a set of 40+ smart Sass mixins which will help you to manage
+/// the style of relational elements, in an easy and classy way.
 ///
-/// The goal of this project is to unleash the power of the nth-child property,
-/// in an easy way.
 /// The best way to understand each and every mixin, is to read it, literally.
 /// For example: first(3) => first three
 ///
-/// Taken from the family.scss library
+/// Most mixins forked from the family.scss library
 /// @link http://lukyvj.github.io/family.scss/
-///
 /// Copyright 2016 - MIT Licence
+/// Copyright 2024 - MIT License
 ////
 
 @use 'sass:meta';
@@ -22,6 +24,7 @@
 @use 'sass:string';
 @use '../../functions/order-index' as *;
 @use '../../functions/is-alias' as *;
+@use '../../functions/is-integer' as *;
 
 /// Select all children of an element from the first to `$num`.
 ///
@@ -47,7 +50,13 @@
 /// }
 ///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin first($num: 1) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ first() ] mixin. This ' +
+      'value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   @if $num == 1 {
     &:first-child {
       @content;
@@ -61,14 +70,20 @@
 
 /// Select all children of type from the first to `$num`.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $num - All child elements counted from the first to this
 /// number will be selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin first-of-type($num: 1) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ first-of-type() ] mixin. This ' +
+      'value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   @if $num == 1 {
     &:first-of-type {
       @content;
@@ -80,16 +95,56 @@
   }
 }
 
-/// Select all children from the last to `$num`.
+/// Uses the new selector list argument of `:nth-child` syntax to select any
+/// children of a given selector, similar to :first-of-type but allows for any
+/// selector. Because this is a new feature, it only has 92% browser support and
+/// will only work on Chrome or Edge 111+, Safari 9+, Firefox 113+, Opera 98+,
+/// and Android Browser 122+.
+///
+/// @param {Number | String} $num [1] - All child elements counted from the
+/// first to this number that match the given selector. Must be an integer value.
+/// @param {String} $selector - Pass the selector as a quoted string.
 ///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
+/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin first-of-any($num: 1, $selector) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ first-of-any() ] mixin. This ' +
+      'value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ after-first-of-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(-n + #{$num} of #{$selector}) {
+    @content;
+  }
+}
+
+/// Select all children from the last to `$num`.
+///
 /// @param {Number} $num - All child elements counted from the last to this
 /// number will be selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin last($num: 1) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ last() ] mixin. This ' +
+      'value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   @if $num == 1 {
     &:last-child {
       @content;
@@ -103,14 +158,20 @@
 
 /// Select all children of type from the last to `$num`.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $num - All child elements counted from the last to this
 /// number will be selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin last-of-type($num: 1) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ last-of-type() ] mixin. This ' +
+      'value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   @if $num == 1 {
     &:last-of-type {
       @content;
@@ -122,40 +183,118 @@
   }
 }
 
-/// Select all children after the first to `$num`.
+/// Uses the new selector list argument of `:nth-last-child` syntax to select
+/// any children of a given selector, starting from the last. Similar to
+/// :last-of-type but allows for any selector, not just a type selector. Because
+/// this is a new feature, as of March 2024 it only has 92% browser support and
+/// will only work on Chrome or Edge 111+, Safari 9+, Firefox 113+, Opera 98+,
+/// and Android Browser 122+.
+///
+/// @param {Number | String} $num [1] - Mixin will select all these child
+/// elements counted from the last that match the given selector. Must be an
+/// integer.
+/// @param {String} $selector - Pass the selector as a quoted string.
 ///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
+/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin last-of-any($num: 1, $selector) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ last-of-any() ] mixin. This ' +
+      'value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ last-of-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-last-child(-n + #{$num} of #{$selector}) {
+    @content;
+  }
+}
+
+/// Select all children after the first to `$num`.
+///
 /// @param {Number} $num - After the first child elements of this quantity, all
 /// children are selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin after-first($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ after-first() ] mixin. This ' +
+      'value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   &:nth-child(n + #{$num + 1}) {
+    @content;
+  }
+}
+
+/// Uses the new selector list argument of `:nth-child` syntax to select all
+/// children after the first to `$num` of any given selector. Because this is a
+/// new feature, it only has 92% browser support and will only work on Chrome or
+/// Edge 111+, Safari 9+, Firefox 113+, Opera 98+, and Android Browser 122+.
+///
+/// @param {Number} $num - After the first child elements of this quantity that
+/// match the given selector, all children are selected.
+/// @param {String} $selector - Pass the selector as a quoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin after-first-of-any($num: 1, $selector) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ after-first-of-any() ] mixin. This ' +
+      'value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ after-first-of-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(n + #{$num + 1} of #{$selector}) {
     @content;
   }
 }
 
 /// Select all children before `$num` from the last.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $num - This number back from the last child element will
 /// be selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin from-end($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ from-end() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   &:nth-last-child(#{$num}) {
     @content;
   }
 }
 
 /// Select all children between `$first` and `$last`.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
 ///
 /// @param {Number} $first - The first child element that will be selected,
 /// counted from the start. This child element and all others up to and
@@ -164,51 +303,187 @@
 /// counted from the start. This child element and all before it up to and
 /// including $first are selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin between($first, $last) {
+  @if not is-integer($first) or not is-integer($last) or $last < $first {
+    @error 'Invalid input for $first or $last in the [ between() ] mixin. ' +
+      'These values must be integers. You passed #{meta.inspect($first)} for ' +
+      '$first and #{meta.inspect($first)} for $last';
+  }
+
   &:nth-child(n + #{$first}):nth-child(-n + #{$last}) {
+    @content;
+  }
+}
+
+/// Uses the new selector list argument of `:nth-child` syntax to select all
+/// children between `$first` of a selector and `$last` of a selector. Because
+/// this is a new feature, it only has 92% browser support and will only work on
+/// Chrome or Edge 111+, Safari 9+, Firefox 113+, Opera 98+, and Android Browser
+/// 122+.
+///
+/// @param {Number} $first - The first child element that will be selected,
+/// counted from the start. This child element and all others up to and
+/// including $last are selected if they match $selector.
+/// @param {Number} $last - The last child element that will be selected,
+/// counted from the start. This child element and all before it up to and
+/// including $first are selected if they match $selector.
+/// @param {String} $selector - Pass the selector as a quoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin between-any($first, $last, $selector) {
+  @if not is-integer($first) or not is-integer($last) or $last < $first {
+    @error 'Invalid input for $first or $last in the [ between-any() ] mixin. ' +
+      'These values must be integers. You passed #{meta.inspect($first)} for ' +
+      '$first and #{meta.inspect($first)} for $last';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ between-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(n + #{$first} of #{$selector}):nth-child(-n + #{$last} of #{$selector}) {
     @content;
   }
 }
 
 /// Select all evenly numbered children between `$first` and `$last`.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $first - The first child element of the selection range,
 /// counted from the start. Will only be selected if it is evenly numbered.
 /// @param {Number} $last - The last child element of the selection range,
 /// counted from the start. WIll only be selected if it is evenly numbered.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin even-between($first, $last) {
+  @if not is-integer($first) or not is-integer($last) or $last < $first {
+    @error 'Invalid input for $first or $last in the [ even-between() ] mixin. ' +
+      'These values must be integers. You passed #{meta.inspect($first)} for ' +
+      '$first and #{meta.inspect($first)} for $last';
+  }
+
   &:nth-child(even):nth-child(n + #{$first}):nth-child(-n + #{$last}) {
+    @content;
+  }
+}
+
+/// Uses the new selector list argument of `:nth-child` syntax to select all
+/// even numbered children of a given selector that are between the `$first` and
+/// `$last` child. Because is a new feature, it only has 92% browser support and
+/// will only work on Chrome or Edge 111+, Safari 9+, Firefox 113+, Opera 98+,
+/// and Android Browser 122+.
+///
+/// @param {Number} $first - The first child element that will be selected,
+/// counted from the start. This child element and all others up to and
+/// including $last are selected if they match $selector.
+/// @param {Number} $last - The last child element that will be selected,
+/// counted from the start. This child element and all before it up to and
+/// including $first are selected if they match $selector.
+/// @param {String} $selector - Pass the selector as a quoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin even-between-any($first, $last, $selector) {
+  @if not is-integer($first) or not is-integer($last) or $last < $first {
+    @error 'Invalid input for $first or $last in the [ even-between-any() ] mixin. ' +
+      'These values must be integers. You passed #{meta.inspect($first)} for ' +
+      '$first and #{meta.inspect($first)} for $last';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ even-between-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(even of #{$selector}):nth-child(n + #{$first}):nth-child(-n + #{$last}) {
     @content;
   }
 }
 
 /// Select all odd children between `$first` and `$last`.
 ///
+/// @param {Number} $first - The first child element that will be counted,
+/// selecting even numbered children from the start that match $selector.
+/// @param {Number} $last - The last child element that will be counted,
+/// selecting even numbered children from the start that match $selector.
+///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @param {Number} $first - The first child element of the selection range,
-/// counted from the start. Will only be selected if it is an odd number.
-/// @param {Number} $last - The last child element of the selection range,
-/// counted from the start. WIll only be selected if it is an odd number.
-///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin odd-between($first, $last) {
+  @if not is-integer($first) or not is-integer($last) or $last < $first {
+    @error 'Invalid input for $first or $last in the [ odd-between() ] mixin. ' +
+      'These values must be integers. You passed #{meta.inspect($first)} for ' +
+      '$first and #{meta.inspect($first)} for $last';
+  }
+
   &:nth-child(odd):nth-child(n + #{$first}):nth-child(-n + #{$last}) {
     @content;
   }
 }
 
-/// Select all `$num` children between `$first` and `$last`.
+/// Uses the new selector list argument of `:nth-child` syntax to select all
+/// odd numbered children of a given selector that are between the `$first` and
+/// `$last` child. Because is a new feature, it only has 92% browser support and
+/// will only work on Chrome or Edge 111+, Safari 9+, Firefox 113+, Opera 98+,
+/// and Android Browser 122+.
+///
+/// @param {Number} $first - The first child element that will be counted,
+/// selecting odds numbered children from the start that match $selector.
+/// @param {Number} $last - The last child element that will be counted,
+/// selecting odds numbered children from the start that match $selector.
+/// @param {String} $selector - Pass the selector as a quoted string.
 ///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
+///
+/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin odd-between-any($first, $last, $selector) {
+  @if not is-integer($first) or not is-integer($last) or $last < $first {
+    @error 'Invalid input for $first or $last in the [ odd-between-any() ] mixin. ' +
+      'These values must be integers. You passed #{meta.inspect($first)} for ' +
+      '$first and #{meta.inspect($first)} for $last';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ odd-between-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(odd of #{$selector}):nth-child(n + #{$first}):nth-child(-n + #{$last}) {
+    @content;
+  }
+}
+
+/// Select all `$num` children between `$first` and `$last`.
 ///
 /// @param {Number} $num - Select every $num items for the range set by $first
 /// and $last parameters.
@@ -217,22 +492,79 @@
 /// @param {Number} $last - The ending number for the selection range, counted
 /// from the start.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin n-between($num, $first, $last) {
+  @if not is-integer($num) or not is-integer($first) or not is-integer($last) or $last < $first {
+    @error 'Invalid input for $num, $first, or $last in the [ n-between() ] mixin. ' +
+      'These values must be integers. You passed #{meta.inspect($num)} for ' +
+      '$num, #{meta.inspect($first)} for $first, and #{meta.inspect($last)} ' +
+      'for $last.';
+  }
+
   &:nth-child(#{$num}n):nth-child(n + #{$first}):nth-child(-n + #{$last}) {
+    @content;
+  }
+}
+
+/// Uses the new selector list argument of `:nth-child` syntax to select all
+/// $num children of a given selector that are between the `$first` and
+/// `$last` child. Because is a new feature, it only has 92% browser support and
+/// will only work on Chrome or Edge 111+, Safari 9+, Firefox 113+, Opera 98+,
+/// and Android Browser 122+.
+///
+/// @param {Number} $num - Select every $num items that match $selector for the
+/// range set by $first and $last parameters.
+/// @param {Number} $first - The starting number for the selection range,
+/// counted from the start.
+/// @param {Number} $last - The ending number for the selection range, counted
+/// from the start.
+/// @param {String} $selector - Pass the selector as a quoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @see https://drafts.csswg.org/selectors/#the-nth-child-pseudo
+/// and: https://caniuse.com/?search=selector%20list%20%3Anth-child
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin n-between-any($num, $first, $last, $selector) {
+  @if not is-integer($num) or not is-integer($first) or not is-integer($last) or $last < $first {
+    @error 'Invalid input for $num, $first, or $last in the [ n-between-any() ] mixin. ' +
+      'These values must be integers. You passed #{meta.inspect($num)} for ' +
+      '$num, #{meta.inspect($first)} for $first, and #{meta.inspect($last)} ' +
+      'for $last.';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ n-between-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(#{$num}n of #{$selector}):nth-child(n + #{$first}):nth-child(-n + #{$last}) {
     @content;
   }
 }
 
 /// Select all children but `$num`.
 ///
+/// @param {Number} $num - All child elements are selected except for $num.
+///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @param {Number} $num - All child elements are selected except for $num.
-///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin all-but($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ all-but() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   &:not(:nth-child(#{$num})) {
     @content;
   }
@@ -240,13 +572,19 @@
 
 /// Select each child every `$num`.
 ///
+/// @param {Number} $num - Every $num child elements, a child is selected.
+///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @param {Number} $num - Every $num child elements, a child is selected.
-///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin each($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ each() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   &:nth-child(#{$num}n) {
     @content;
   }
@@ -254,31 +592,99 @@
 
 /// Select each child every `$num`.
 ///
+/// @param {Number} $num - Every $num child elements, a child is selected.
+///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
 ///
-/// @param {Number} $num - Every $num child elements, a child is selected.
-///
 /// @group Utilities
+/// @require {function} is-integer
 /// @alias each
 @mixin every($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ every() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   &:nth-child(#{$num}n) {
+    @content;
+  }
+}
+
+/// Select each child every `$num` that matches `$selector`.
+///
+/// @param {Number} $num - Every $num child elements, a child is selected.
+/// @param {String} $selector - Pass the selector as a quoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin each-of-any($num, $selector) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ each-of-any() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ each-of-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(#{$num}n of #{$selector}) {
     @content;
   }
 }
 
 /// Select the `$num` child from the start and the `$num` child from the last.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $num - The child element that is $num from the start, as
 /// well as the child element that is $num from the end, will be selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin from-first-last($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ from-first-last() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   &:nth-child(#{$num}),
   &:nth-last-child(#{$num}) {
+    @content;
+  }
+}
+
+/// Select the `$num` child from the start that match $selector, and the `$num`
+/// child from the last that match $selector.
+///
+/// @param {Number} $num - The child element that is the $num matching the
+/// $selector from the start, as well as the child element that is $num matching
+/// $selector from the end, will be selected.
+/// @param {String} $selector - Pass the selector as a quoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin from-first-last-any($num, $selector) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ from-first-last-any() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ from-first-last-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(#{$num} of #{$selector}),
+  &:nth-last-child(#{$num} of #{$selector}) {
     @content;
   }
 }
@@ -286,30 +692,70 @@
 /// Select the item in the middle of `$num` child. Only works with odd number
 /// chain.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $num - Count $num child elements from the start and the
 /// middle element of that selection range will be selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin middle($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ middle() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   &:nth-child(#{math.round(math.div($num, 2))}) {
     @content;
   }
 }
 
-/// Select all children between the `$num` first and the `$num` last.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
+/// Select all children between the `$num` first and the `$num` last inclusively.
 ///
 /// @param {Number} $num - Count $num children from the start and from the end
 /// and all other child elements except for those will be selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin all-but-first-last($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ all-but-first-last() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   &:nth-child(n + #{$num}):nth-last-child(n + #{$num}) {
+    @content;
+  }
+}
+
+/// Select all children between the `$num` first that matches the $selector and
+/// the `$num` last that matches the $selector inclusively.
+///
+/// @param {Number} $num - Count $num children from the start that match the
+/// $selector and from the end that match $selector, and all other child
+/// elements except for those will be selected.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin all-but-first-last-of-any($num, $selector) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ all-but-first-last-of-any() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ all-but-first-last-of-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(n + #{$num} of #{$selector}):nth-last-child(n + #{$num} of #{$selector}) {
     @content;
   }
 }
@@ -317,14 +763,20 @@
 /// This quantity-query mixin will only select the first of `$limit` items. It
 /// will not work if the quantity of child elements is less than `$limit`.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $limit - If the quantity of child elements is equal to or
 /// greater than `$limit`, the first of those elements is selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin first-of($limit) {
+  @if not is-integer($limit) {
+    @error 'Invalid input for $limit in the [ first-of() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($limit)}.';
+  }
+
   &:nth-last-child(#{$limit}):first-child {
     @content;
   }
@@ -334,15 +786,21 @@
 /// will not work if the quantity of child elements of the same type
 /// is less than `$limit`.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $limit - If the quantity of child elements of the same type
 /// is greater than or equal to `$limit`, the last of those elements, determined
 /// by `$limit`, is selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin last-of($limit) {
+  @if not is-integer($limit) {
+    @error 'Invalid input for $limit in the [ last-of() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($limit)}.';
+  }
+
   &:nth-of-type(#{$limit}):nth-last-of-type(1) {
     @content;
   }
@@ -351,20 +809,62 @@
 /// This quantity-query mixin will select every items if there is at least `$num`
 /// items. It will not select anything if there is not as many item as `$num`.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $num - If the number of child elements is equal to or
 /// greater than this number, then all will be selected. If the number of child
 /// elements is less than this number, then none are selected.
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin at-least($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ at-least() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   $selector: &;
   $child: list.nth(list.nth($selector, -1), -1);
 
   &:nth-last-child(n + #{$num}),
   &:nth-last-child(n + #{$num}) ~ #{$child} {
+    @content;
+  }
+}
+
+/// This quantity-query mixin will select every item if there is at least
+/// `$num` items that match the given selector, starting with the first item
+/// that matches the selector. It will not select anything if there is not as
+/// many item as `$num` that match the given selector.
+///
+/// @param {Number} $num - If the number of child elements matching $selector is
+/// equal to or greater than this number, then all will be selected. If the
+/// number of child elements matching $selector is less than this number, then
+/// none are selected.
+/// @param {String} $selector - Pass the selector as an unquoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @require {function} is-integer
+@mixin at-least-any($num, $selector) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ at-least-any() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ at-least-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  $parent: &;
+  $child: list.nth(list.nth($parent, -1), -1);
+
+  &:nth-last-child(n + #{$num} of #{$selector}),
+  &:nth-last-child(n + #{$num} of #{$selector}) ~ #{$child} {
     @content;
   }
 }
@@ -380,7 +880,13 @@
 /// less than this number, then all will be selected.
 ///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin at-most($num) {
+  @if not is-integer($num) {
+    @error 'Invalid input for $num in the [ at-most() ] mixin. ' +
+      'This value must be an integer. You passed #{meta.inspect($num)}.';
+  }
+
   $selector: &;
   $child: list.nth(list.nth($selector, -1), -1);
 
@@ -390,19 +896,62 @@
   }
 }
 
+/// This quantity-query mixin will select every items if there is at most
+/// `$num` items that match the given selector. It will not select anything if
+/// there is not as many item as `$num` that match the given selector.
+///
+/// @param {Number} $num - If the number of child elements matching $selector is
+/// equal to or less than this number, then all will be selected. If the number
+/// of child elements matching $selector is greater than this number, then none
+/// are selected.
+/// @param {String} $selector - Pass the selector as an unquoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @require {function} is-integer
+/// TODO: fix this mixin or delete
+// @mixin at-most-any($num, $selector) {
+//   @if not is-integer($num) {
+//     @error 'Invalid input for $num in the [ at-most-any() ] mixin. ' +
+//       'This value must be an integers. You passed #{meta.inspect($num)}.';
+//   }
+
+//   @if meta.type-of($selector) != 'string' {
+//     @error 'Invalid input for $selector in the [ at-most-any() ] mixin. ' +
+//       'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+//   }
+
+//   $parent: &;
+//   $child: list.nth(list.nth($parent, -1), -1);
+
+//   &:nth-last-child(-n + #{$num} of #{$selector}):first-child,
+//   &:nth-last-child(-n + #{$num} of #{$selector}):first-child ~ #{$child} {
+//     @content;
+//   }
+// }
+
 /// This quantity-query mixin will select every items there is between `$min`
 /// and `$max` items. If the quantity of child elements is less than the $min
 /// or greater than the $max, none will be selected. If the quantity is in
 /// range, all will be selected.
 ///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
 /// @param {Number} $min - The minimum number of children
 /// @param {Number} $max - The maximum number of children
 ///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
 /// @group Utilities
+/// @require {function} is-integer
 @mixin in-between($min, $max) {
+  @if not is-integer($min) or not is-integer($max) {
+    @error 'Invalid input for $min or $max in the [ in-between() ] mixin. ' +
+      'These values must be integers. You passed #{meta.inspect($min)} for $min ' +
+      'and #{meta.inspect($max)} for $max';
+  }
+
   $selector: &;
   $child: list.nth(list.nth($selector, -1), -1);
 
@@ -411,6 +960,42 @@
     @content;
   }
 }
+
+/// This quantity-query mixin will select every items there is that matches
+/// $selector between `$min` and `$max` items. If the quantity of child elements
+/// matching $selector is less than the $min or greater than the $max, none will
+/// be selected. If the quantity is in range, all will be selected.
+///
+/// @param {Number} $min - The minimum number of children that match $selector.
+/// @param {Number} $max - The maximum number of children that match $selector.
+/// @param {String} $selector - Pass the selector as an unquoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @require {function} is-integer
+/// TODO: Fix mixin or delete
+// @mixin in-between-any($min, $max, $selector) {
+//   @if not is-integer($min) or not is-integer($max) {
+//     @error 'Invalid input for $min or $max in the [ in-between-any() ] mixin. ' +
+//       'These values must be integers. You passed #{meta.inspect($min)} for $min ' +
+//       'and #{meta.inspect($max)} for $max';
+//   }
+
+//   @if meta.type-of($selector) != 'string' {
+//     @error 'Invalid input for $selector in the [ in-between-any() ] mixin. ' +
+//       'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+//   }
+
+//   $parent: &;
+//   $child: list.nth(list.nth($parent, -1), -1);
+
+//   &:nth-last-child(n + #{$min} of #{$selector}):nth-last-child(-n + #{$max} of #{$selector}):first-child,
+//   &:nth-last-child(n + #{$min} of #{$selector}):nth-last-child(-n + #{$max} of #{$selector}):first-child ~ #{$child} {
+//     @content;
+//   }
+// }
 
 /// Select the first exact child element.
 ///
@@ -448,6 +1033,25 @@
   }
 }
 
+/// Select all evenly numbered child elements that match $selector.
+///
+/// @param {String} $selector - Pass the selector as a quoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @group Utilities
+@mixin even-of-any($selector) {
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ each-of-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(even of #{$selector}) {
+    @content;
+  }
+}
+
 /// Select all odd numbered child elements.
 ///
 /// @content [ Write the style rules that you want to apply to the children,
@@ -456,6 +1060,25 @@
 /// @group Utilities
 @mixin odd {
   &:nth-child(odd) {
+    @content;
+  }
+}
+
+/// Select all odd numbered child elements that match $selector.
+///
+/// @param {String} $selector - Pass the selector as a quoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @group Utilities
+@mixin odd-of-any($selector) {
+  @if meta.type-of($selector) != 'string' {
+    @error 'Invalid input for $selector in the [ odd-of-any() ] mixin. ' +
+      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+  }
+
+  &:nth-child(odd of #{$selector}) {
     @content;
   }
 }
@@ -527,18 +1150,70 @@
   }
 }
 
-/// This mixin is used to automatically sort z-index in numerical order. But it
-/// can also sort them in reverse-numerical order, depending the parameters you
-/// select.
+/// Select an element if it has at least `$num` child elements.
+///
+/// @param {Number} $num - Element will be selected if it has at least $num
+/// child elements. Must be an integer.
+/// @param {String} $selector - Pass the selector as a quoted string.
 ///
 /// @content [ Write the style rules that you want to apply to the children,
 /// and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @require {function} is-integer
+/// TODO: Fix or delete mixin
+// @mixin has-at-least($num) {
+//   @if not is-integer($num) {
+//     @error 'Invalid input for $num in the [ has-at-least() ] mixin. ' +
+//       'This value must be an integer. You passed #{meta.inspect($num)}.';
+//   }
+
+//   &:has(:nth-last-child(n + #{$num}):first-child) {
+//     @content;
+//   }
+// }
+
+/// Select an element if it has at least `$num` child elements that match
+/// $selector.
+///
+/// @param {Number} $num - Element will be selected if it has at least $num
+/// child elements of $selector. Must be an integer.
+/// @param {String} $selector - Pass the selector as a quoted string.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @require {function} is-integer
+/// TODO: Fix or delete mixin
+// @mixin has-at-least-of-any($num, $selector) {
+//   @if not is-integer($num) {
+//     @error 'Invalid input for $num in the [ has-at-least-of-any() ] mixin. ' +
+//       'This value must be an integer. You passed #{meta.inspect($num)}.';
+//   }
+
+//   @if meta.type-of($selector) != 'string' {
+//     @error 'Invalid input for $selector in the [ has-at-least-of-any() ] mixin. ' +
+//       'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+//   }
+
+//   &:has(:nth-last-child(n + #{$num} of #{$selector}):first-child) {
+//     @content;
+//   }
+// }
+
+/// This mixin is used to automatically sort z-index in numerical order. But it
+/// can also sort them in reverse-numerical order, depending the parameters you
+/// select.
 ///
 /// @param {Number} $num - Number of children to index.
 /// @param {String} $direction ['forwards'] - Direction of the sort. Can be
 /// `forwards`, `backwards`, or one of a number of alias values for these two
 /// words, such as `forward`, `front`, `back`, `backward`, or just `f`, or `b`.
 /// @param {Number} $index [0] - Base indexing number for the sort.
+///
+/// @content [ Write the style rules that you want to apply to the children,
+/// and they will be added within the content directive ]
 ///
 /// @group Utilities
 /// @require {function} order-index

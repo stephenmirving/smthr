@@ -1,0 +1,128 @@
+@use 'sass:map';
+@use '../../variables/colors' as *;
+
+/// A Debugging tool -- Do not use in production -- Apply to a class on the
+/// `<body>` and it will apply different colored borders to all the children so
+/// you can see the outlines of every element. Perfect for precision layout
+/// tweaks. It will also add indicators for some potential mistakes like
+/// hardcoded inline styles, forgetting an alt tag on an image, left the alt
+/// blank, etc.
+///
+/// Specific indicators to look for are:
+/// - An <img> with no alt tag will be red saturated with a red border
+/// - An <img> with an empty alt tag will have a yellow border
+/// - An <img> with a filled alt tag will have a green border
+/// - An <a> with not title attribute will be red
+/// - An <a> with an empty href or just href="#" will be yellow
+/// - An <a> with a title attribute will have a green border
+/// - Elements with hardcoded inline stlyes or empty class or id attributes
+///   will be yellow.
+///
+/// @group Utilities
+/// @require {variable} $indicator-colors
+@mixin debug {
+  border: 1px solid #9370db !important;
+
+  & > * {
+    border: 1px solid #bdb76b !important;
+
+    & > * {
+      border: 1px solid #48d1cc !important;
+
+      & > * {
+        border: 1px solid #000171 !important;
+
+        & > * {
+          border: 1px solid #789 !important;
+
+          & > * {
+            border: 1px solid #7b68ee !important;
+
+            & > * {
+              border: 1px solid #00bfff !important;
+
+              & > * {
+                border: 1px solid #8fbc8f !important;
+
+                & > * {
+                  border: 1px solid #97008B !important;
+
+                  & > * {
+                    border: 1px solid #e392d8 !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  img {
+    border: 1px solid map.get($indicator-colors, 'alert') !important;
+    -webkit-filter: hue-rotate(330deg) contrast(0.75) saturate(6) !important;
+    filter: hue-rotate(330deg) contrast(0.75) saturate(6) !important;
+  }
+
+  img[alt] {
+    border: 1px solid map.get($indicator-colors, 'success') !important;
+    -webkit-filter: none !important;
+    filter: none !important;
+  }
+
+  img[alt=''] {
+    border: 1px solid map.get($indicator-colors, 'warning') !important;
+    -webkit-filter: contrast(1) saturate(2) !important;
+    filter: contrast(1) saturate(2) !important;
+  }
+
+  a {
+    border: 1px solid map.get($indicator-colors, 'alert') !important;
+    background: rgba($color-alert, 0.1) !important;
+  }
+
+  a[title] {
+    border-color: map.get($indicator-colors, 'success') !important;
+    background: none !important;
+  }
+
+  style {
+    display: block !important;
+  }
+
+  style,
+  [style],
+  [class=''],
+  [id=''],
+  a[href='']
+  a[href='#'] {
+    border: 1px solid map.get($indicator-colors, 'warning') !important;
+    background: rgba(255, 255, 0, 0.2) !important;
+  }
+}
+
+/// A Debugging tool -- Do not use in production -- Apply to a class on the
+/// `<body>` and it will apply different colored borders to all the children so
+/// you can see the outlines of every element. Perfect for precision layout
+/// tweaks. It will also add indicators for some potential mistakes like
+/// hardcoded inline styles, forgetting an alt tag on an image, left the alt
+/// blank, etc.
+///
+/// Specific indicators to look for are:
+/// - An <img> with no alt tag will be red saturated with a red border
+/// - An <img> with an empty alt tag will have a yellow border
+/// - An <img> with a filled alt tag will have a green border
+/// - An <a> with not title attribute will be red
+/// - An <a> with an empty href or just href="#" will be yellow
+/// - An <a> with a title attribute will have a green border
+/// - Elements with hardcoded inline stlyes or empty class or id attributes
+///   will be yellow.
+///
+/// @group Utilities
+/// @require {variable} $indicator-colors
+///
+/// @alias debug
+@mixin debugger {
+  @include debug;
+}

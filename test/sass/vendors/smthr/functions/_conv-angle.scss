@@ -116,8 +116,6 @@
         'Assuming `deg` units.';
   }
 
-
-
   // If the angle is the same type as $convert-to, simply return it as-is.
   @if math.unit($angle) == $convert-to {
     @return $angle;

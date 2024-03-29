@@ -48,7 +48,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.12.2 - _Last updated:_ 03/27/24
+This is **smoother** version 0.13.0 - _Last updated:_ 03/29/24
 
 ## Content
 
@@ -59,12 +59,12 @@ by calling a function, variable, or by using a mixin with `@include`.
 
 **_Smoother_ currently contains:**
 
-- **150+** Mixins, _including..._
+- **175+** Mixins, _including..._
   - Over 40 easily configurable animation types, allowing for more than
     250 unique animations
   - More than 20 element shapes created with a combination of `clip-path`,
     pseudo-elements, and `border-radius`
-  - 90+ utility mixins for things like creating responsive ratios,
+  - 110+ utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given
     number of lines, creating corner ribbons, centering elements,
     browser-targeted styling, media queries, making "hamburger" menu buttons and
@@ -355,6 +355,29 @@ Version 1.0.0 is _coming soon_ with **more** animations, **more** shapes, and
 new versions without having to copy folders every time, a Getting Started guide,
 and a website with a demo for every mixin and function to help you start using
 _Smoother_.
+
+### Version 0.13.0 Patch Notes
+
+- Made the `caret()` mixin more robust by adding size and color customization to
+  the available parameters and enabling pointing the caret in diagonal
+  directions. You can also now place the caret in a new positioning context and
+  choose whether the caret will be in a `::before` or `::after` pseudo-element
+  with the optional $placement parameter.
+- Added new utility mixins: `debug()`, which gives visual indicators for
+  debugging layouts and `bg-cover()`, which is a shortcut for setting a
+  background image to cover.
+- Added `gradient-stripes()` mixin (with alias of `stripes()`), which generates
+  a stripe gradient with a direction and a list of colors.
+- Added more than 15 new semantic relational mixins to the collection in
+  `_family.scss`. These new mixins take advantage of the new selector list
+  arguments feature for `nth-child` and `:nth-last-child`, as well as the
+  relational pseudo-class selector `:has`.
+- Added $intensity parameter for the `depth-level()` mixin that works as a
+  modifier for the shadow effect's opacity.
+- Updated _Betterize_ to version 2.07
+- For broader browser support, changed all instances of `overflow-wrap` in
+  mixins to the alias property `word-wrap`
+- Improved some of the documentation
 
 ### Version 0.12.0 - 0.12.2 Patch Notes
 

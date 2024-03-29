@@ -13,11 +13,12 @@
     $text-overflow: ellipsis;
   }
 
+  display: inline-block;
   overflow: hidden;
   max-width: $max-width;
   white-space: nowrap;
   text-overflow: #{$text-overflow};
-  overflow-wrap: normal;
+  word-wrap: normal;
 }
 
 /// Truncates a field or line of text on the inline progression direction,
@@ -65,5 +66,21 @@
 ///
 /// @alias truncate
 @mixin text-truncate($max-width: 100%, $text-overflow: ellipsis) {
+  @include truncate($max-width, $text-overflow);
+}
+
+/// Truncates a field or line of text on the inline progression direction,
+/// adding the text-overflow value at the end. Uses ellipsis by default.
+///
+/// If you would like to truncate multiple lines of text, such a text
+/// overflowing at the bottom of a box, try the `clamp-lines()` function instead.
+///
+/// @param {Number} $max-width [100%] - The max width for the element.
+/// @param {String} $text-overflow [ellipsis] - The text-overflow value.
+///
+/// @group Utilities
+///
+/// @alias truncate
+@mixin ellipsis($max-width: 100%, $text-overflow: ellipsis) {
   @include truncate($max-width, $text-overflow);
 }

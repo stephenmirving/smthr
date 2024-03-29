@@ -3,8 +3,8 @@
 @use '../../functions/equals-true' as *;
 @use '../../variables/misc' as *;
 
-/// Resets text properties. If you want to reset `font-size` and `overflow-wrap`
-/// (formerly `word-wrap`) as well, pass `true` for those parameters.
+/// Resets text properties. If you want to reset `font-size` and `word-wrap`
+/// (aka `overflow-wrap`) as well, pass `true` for those parameters.
 ///
 /// @param {Bool} $reset-size [false] - Pass true to also reset `font-size`.
 /// @param {Bool} $reset-wrap [false] - Pass true to also reset `word-wrap`.
@@ -45,7 +45,7 @@
   word-break: normal;
 
   @if equals-true($reset-wrap) {
-    overflow-wrap: normal;
+    word-wrap: normal;
   }
 
   line-break: auto;

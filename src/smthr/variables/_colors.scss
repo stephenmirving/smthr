@@ -25,6 +25,25 @@ $gray-9: hsl(210, 10.8%, 14.5%) !default;
 $gray-10: hsl(0, 0%, 7.06%) !default;
 $black: #000 !default;
 
+/// A map containing all the grayscale colors, with values from 0 (white) to
+/// 11 (black) with 1-10 being gray-1 through gray-10.
+///
+/// @type Map
+$grayscale-map: (
+  0: $white,
+  1: $gray-1,
+  2: $gray-2,
+  3: $gray-3,
+  4: $gray-4,
+  5: $gray-5,
+  6: $gray-6,
+  7: $gray-7,
+  8: $gray-8,
+  9: $gray-9,
+  10: $gray-10,
+  11: $black
+) !default;
+
 /// Black with just a bit of purple in it
 $black-purple: hsl(300, 20%, 3.4%) !default;
 
@@ -50,6 +69,25 @@ $color-warning: hsl(44, 100%, 50%) !default;
 
 /// The alert color, used to indicate errors or critical issues.
 $color-alert: hsl(0, 100%, 50%) !default;
+
+/// A map containting all the indicator colors.
+///
+/// @type Map
+///
+/// @prop {String} 'success' [$color-success] - Used to indicate
+/// successful actions or positive outcomes.
+/// @prop {String} 'info' [$color-info] - Used to draw atention
+/// to important information.
+/// @prop {String} 'warning' [$color-warning] - Used to indicate
+/// caution or potential issues.
+/// @prop {String} 'alert' [$color-alert] - Used to indicate
+/// errors or critical issues.
+$indicator-colors: (
+  success: $color-success,
+  info: $color-info,
+  warning: $color-warning,
+  alert: $color-alert
+) !default;
 
 /// When you want an off-white color
 $color-light: $gray-1 !default;

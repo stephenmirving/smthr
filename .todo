@@ -43,10 +43,6 @@ TODO:
     ☐ Add animation-fill-mode parameter to all the animation mixins. Animation fill mode can be 'none', 'forwards', 'backwards', or 'both'.
     ☐ Add typewrtiter animation effect. https://codepen.io/stephenirving/pen/QWoPVVW/e5eb204f9c2b209d5ca65c6d5ea4801c?editors=1100
     ☐ Add MetaFizzy animation effect https://codepen.io/stephenirving/pen/KYYZjm?editors=1100
-    ☐ Look through animations here for inspiration
-        ☐ https://animista.net/
-        ☐ https://animate.style/
-        ☐ https://www.minimamente.com/project/magic/
 
   Button Mixins:
     ☐ Create and add a bunch of button mixins for different style buttons
@@ -58,6 +54,11 @@ TODO:
     ☐ Make a mixin for animating between clip-path shapes. https://css-tricks.com/animating-with-clip-path/
 
   Utility Mixins:
+    ☐ Test the new relational mixins in _family.scss
+      - at-most not working
+      - in-between-any not working
+      - has-at-least not working
+      - has-at-least-of-any not working
     ✔ Update `responsive-ratio` with stuff from _embed.scss @done(24-03-19 14:51)
     ☐ Add `ratio-to-percentage()` function to `responsive-ratio()` function calculation and add $num-returns-common-ratio parameter
       ☐ Retest `ratio-to-percentage()` and `num-to-ratio()` functions and responsive-ratio mixin.
@@ -77,7 +78,74 @@ TODO:
       ✔ Investigate possibly just adding this feature to the gradient mixin. @done(24-03-27 00:54)
     ☐ Revisit the `hamburger()` mixin and improve on it's potential hover transition
     ☐ Create a "logical" property mixin that takes physical properties like margin-top and uses that as the fallback but also adds margin-block-start, etc
+    ☐ Make a color-stops function, chatgpt attempt below (doesn't work, start from scratch):
+        @function color-stops($args...) {
+          $stops: ();
+          $last-stop: 0%;
 
+          @for $i from 1 through list.length($args) {
+            $arg: list.nth($args, $i);
+
+            // Check if the argument is a color
+            @if meta.type-of($arg) == color {
+              $stop: $last-stop;
+              $color: $arg;
+              $stops: map.merge($stops, (list.length($stops) + 1: $color $stop));
+            }
+            // Check if the argument has a stop
+            @else if meta.type-of($arg) == list and list.length($arg) == 2 {
+              $stop: list.nth($arg, 2);
+              $color: list.nth($arg, 1);
+
+              // Check if the stop is a percentage
+              @if meta.type-of($stop) == number {
+                // Check if the stop is unitless
+                @if math.is-unitless($stop) {
+                  // Check if the stop is 0
+                  @if $stop == 0 {
+                    $stop: 0;
+                  } @else {
+                    $stop: math.percentage($stop);
+                  }
+                }
+              } @else {
+                @error "Invalid stop format. Stops must be numbers or pairs with a color and a stop.";
+              }
+
+              $last-stop: $stop;
+              $stops: map.merge($stops, (list.length($stops) + 1: $color $stop));
+            }
+            @else {
+              @error "Invalid argument format for color-stops function";
+            }
+          }
+
+          // Format color stops into the desired output format
+          $output: ();
+          $num-stops: map.keys($stops);
+          $step: math.div(100%, (length($num-stops) - 1));
+
+          @each $key, $value in $stops {
+            $color: nth($value, 1);
+            $stop: nth($value, 2);
+
+            // Adjust stop value for zero with appropriate units
+            @if $stop == 0 {
+              $stop: 0;
+            }
+
+            $output: list.append($output, $color $stop);
+          }
+
+          @return $output;
+        }
+
+        // Example usage:
+        .el {
+          content: color-stops(#FFF, #F00, #00C); // Output: #FFF 0, #F00 50%, #00C 100%
+          content: color-stops(#FFF, #F00 25%, #0C0, #00C); // Output: #FFF 0, #F00 25%, #0C0 62.5%, #00C 100%
+          content: color-stops(#FFF, #F00 5px, #0C0, #00C 25px); // Output: #FFF 0, #F00 5px, #0C0 15px, #00C 25px
+        }
   Functions:
     ☐ Add more equations to the time-equations function, more are saved in workspace file css-equations.txt
     ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.

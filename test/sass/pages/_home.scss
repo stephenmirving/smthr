@@ -67,7 +67,6 @@
   );
   // @include inner-side-shadow('top', 5vh, hsla(180, 80%, 20%, 1));
 
-
   position: relative;
   border: 8px solid conv-color(#08f, 'hsl');
   border-radius: 12px;
@@ -118,8 +117,6 @@
   background: conv-color($col, hwb) padding-box;
   color: color-contrast($col, hsl);
   color: color-complement($col, hsl);
-
-
 
   // @include color-shifter(blue green purple orange red black white, 2.5s, 0s, infinite, alternate, linear, 'bg');
   text-align: center;

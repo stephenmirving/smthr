@@ -60,7 +60,6 @@
     // Get the current chacter of the string
     $char: string.slice($string, $i, $i);
 
-
     // Detect and process the unit of the end of the number
     @if not (map.has-key($numbers, $char) or $char == '.') {
       @return _to-unit(

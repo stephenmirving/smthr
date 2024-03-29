@@ -25,12 +25,12 @@
 /// @param {Number} $duration [null] - The duration of the animation (`s` or `ms`).
 /// @param {Number} $delay [null] - The optional delay time for the animation.
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// for the animation to complete. Can be `infinite`, any unitless number, or
-/// any CSS global value.
-/// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
-/// any CSS global value. Default of `null` assumes the CSS property default of
-/// `normal`.
+/// to complete. Sets the value for the `animation-iteration-count` property.
+/// Can be `infinite`, any unitless number, or any CSS global value.
+/// @param {String} $anim-dir [null] - Sets the value for the
+/// `animation-direction` property. Can be `normal`, `reverse`, `alternate`, or
+/// `alternate-reverse`. Can also be any CSS global value. Default of `null`
+/// assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [null] - The timing function for
 /// the animation. A null value passed here will default to the recommended
 /// timing function for this animation of `ease-out` on a speed-in animation,
@@ -84,7 +84,6 @@
   @if $delay and is-string($delay) {
     $delay: string.to-lower-case($delay);
   }
-
 
   @if $anim-dir {
     @if is-list($anim-dir) {
@@ -221,7 +220,7 @@
 
   // Set keyframes values
   $trans-val-1:
-    translate3d(-100% * $side-factor, 0, 0)
+    translate3d(-150% * $side-factor, 0, 0)
     skewX(30deg * $side-factor * $in-out-factor);
   $trans-val-2: translate3d(0, 0, 0);
   $skew-val-1: skewX(-20deg * $side-factor);
@@ -243,7 +242,6 @@
     );
   }
 
-  transform: translate3d(0, 0, 0);
   animation: speed#{$anim-suffix} #{$duration} #{$timing-func} #{$delay}
     #{$iterations} #{$anim-dir} both;
 
@@ -258,14 +256,18 @@
       }
 
       @if $in-or-out {
-        60% {
+        40% {
           opacity: $opacity-val-2;
+        }
+
+        60% {
           transform: $skew-val-1;
         }
 
         80% {
           transform: $skew-val-2;
         }
+
       }
 
       100% {

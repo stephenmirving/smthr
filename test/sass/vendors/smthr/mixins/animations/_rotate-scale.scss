@@ -30,12 +30,12 @@
 /// also be either `diagonal` (or `diag` `diagonal1`, `diag1`, `d`, `d1`), or
 /// `diagonal2` (or `diag2`, `d2`).
 /// @param {Number | String} $iterations [null] - The number of iterations
-/// for the animation to complete. Can be `infinite`, any unitless number, or
-/// any CSS global value.
-/// @param {String} $anim-dir [null] - Sets the animation-direction property.
-/// Can be `normal`, `reverse`, `alternate`, or `alternate-reverse`. Can also be
-/// any CSS global value. Default of `null` assumes the CSS property default of
-/// `normal`.
+/// to complete. Sets the value for the `animation-iteration-count` property.
+/// Can be `infinite`, any unitless number, or any CSS global value.
+/// @param {String} $anim-dir [null] - Sets the value for the
+/// `animation-direction` property. Can be `normal`, `reverse`, `alternate`, or
+/// `alternate-reverse`. Can also be any CSS global value. Default of `null`
+/// assumes the CSS property default of `normal`.
 /// @param {Timing-Function} $timing-func [linear] - The timing function for the
 /// animation.
 /// @param {Number | String} $anim-num [null] - If the mixin is used more than

@@ -2,7 +2,6 @@
 @use '../../functions/is-absolute-length' as *;
 @use '../../functions/is-calculation' as *;
 
-
 /// Quickly the adds some default properties for a container element.
 ///
 /// @param {Number | Calculation} $padding-x [1rem] - The x padding of the
