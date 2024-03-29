@@ -1,0 +1,176 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:math';
+
+/// Attempt at programmatically generating the values to rainbow colored long
+/// shadow
+///
+/// !!!! ATTN: CURRENTLY BEING DEVELOPED. NOT INTEGRATED OR TESTED. !!!!
+///
+/// @param {Number} $longness - The integer length of the shadow.
+/// @param {Color} $color - The color of the long shadow.
+/// @param {Bool} $rainbow - The integer length of the shadow.
+///
+/// @return {List} The list of values for the text-shadow property.
+///
+/// @access public
+/// @group Utilities
+@function make-rainbow-shadow($longness, $color: #ffd300, $has-gradient: true) {
+  $val: 0 0 $color;
+
+  @if $has-gradient {
+    @for $i from 1 through $longness {
+      $color-#{$i}: color.adjust($color, $hue: $i * -1deg)
+    }
+  }
+
+  @for $i from 1 through $longness {
+    $val: $val, $i * 1px $i * 1px $color;
+  }
+  @return $val;
+}
+
+// Below is the code from https://codepen.io/stephenirving/pen/mdgBReV/804738cd0fee83faf894f88099eca1c4
+// TODO: Need to sort through all this and integrate into multiple functions and mixins
+//       that will work together
+
+@font-face {
+    font-family: 'MetafizzyLogoRegular';
+    src: url('https://metafizzy.co/assets/fonts/metafizzylogo-regular.eot');
+    src: url('https://metafizzy.co/assets/fonts/metafizzylogo-regular.eot?#iefix') format('embedded-opentype'),
+         url('https://metafizzy.co/assets/fonts/metafizzylogo-regular.woff') format('woff'),
+         url('https://metafizzy.co/assets/fonts/metafizzylogo-regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/**
+ * Returns the number of keyframes required based on $n (max 50)
+ * $n: length of colors list
+ * Basically: 2->50, 3->48, 4->48, 5->50, 6->48, 7->49, 8->48, 9->45, 10->50
+ */
+@function define-max($n) {
+  @for $i from 1 through 51 {
+    @if $i * $n > 50 {
+      @return $i - 1;
+    }
+  }
+}
+
+/**
+ * Returns a list of N values based on a list of colors
+ * knowing N % $colors length has to be equals to 0 (to make the loop loops)
+ * and N can't be greater than 50 (number of keyframes)
+ * $colors: list of colors to be used
+ */
+@function create-list($colors) {
+  $a: define-max( list.length($colors) );
+  $l: ();
+  @each $c in $colors {
+    @for $i from 1 through $a {
+      $l: append($l, $c);
+    }
+  }
+  @return $l;
+}
+
+/**
+ * Mixin outputing a crapload of text-shadows (50 actually)
+ * $hue: starting hue
+ */
+@mixin text-3d($hue: 0) {
+  $ts: ();
+  @for $i from 1 through 50 {
+    $ts: $ts, $i*2px $i*2px hsl($hue + $i*1, 100%, 50% - $i);
+  }
+  text-shadow: $ts, 0 0 50px, 0 0 55px;
+}
+
+/**
+ * Mixin outputing a crapload of text-shadows (based on given list of colors)
+ * Used for animated hover
+ * $index: index of the color list at which the first text-shadow will start
+ * $cols: list of colors
+ */
+@mixin crazy-rainbow($n, $colors) {
+  $ts: ();
+  $colors: create-list($colors);
+
+   @for $i from 1 through length($colors) {
+    $n: if($n > length($colors) or $n == 0, 1, $n);
+
+    $ts: $ts, $i*2px $i*2px 0 nth($colors, $n);
+
+    $n: $n + 1;
+  }
+
+  text-shadow: $ts;
+}
+
+/**
+ * Mixin to metafizzy a text
+ * $size: font-size used
+ * $duration: color-changing animation duration
+ */
+@mixin metafizzy($size, $duration: 20s) {
+  font-family: 'MetafizzyLogoRegular', cursive;
+  color: white;
+  line-height: .9em;
+  font-weight: normal;
+  font-size: $size;
+  animation: text-3d-animation $duration linear infinite;
+
+  &:hover {
+    animation: crazy-rainbow-animation 1s linear infinite;
+    animation-direction: reverse;
+  }
+}
+
+/**
+ * Mixin generating keyframes for animations
+ * Outputing a crapload of text shadows
+ */
+@mixin metafizzy-animations($hover-colors) {
+  /**
+   * Rainbow animation, changing color smoothly
+   */
+  @keyframes text-3d-animation {
+    @for $i from 0 through 10 {
+      #{$i*10%} {
+        @include text-3d($i * 36);
+      }
+    }
+  }
+
+  /**
+   * Hover epiphany
+   */
+  @keyframes crazy-rainbow-animation {
+    0% {
+      @include crazy-rainbow(50, $hover-colors);
+    }
+    @for $i from 1 through 50 {
+      #{$i*2%} {
+       @include crazy-rainbow($i, $hover-colors);
+      }
+    }
+  }
+}
+
+body {
+  background: black;
+  overflow: hidden;
+}
+
+/**
+ * Until @at-root (Sass 3.3), we have to call this outside h1
+ * Actually @keyframes bubbling would work too.
+ */
+ @include metafizzy-animations(red orangered gold lightgreen green deepskyblue);
+
+
+h1 {
+  margin: .1em;
+  @include metafizzy(25em, 5s);
+}

@@ -48,7 +48,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.13.0 - _Last updated:_ 03/29/24
+This is **smoother** version 0.13.1 - _Last updated:_ 03/29/24
 
 ## Content
 
@@ -356,7 +356,7 @@ new versions without having to copy folders every time, a Getting Started guide,
 and a website with a demo for every mixin and function to help you start using
 _Smoother_.
 
-### Version 0.13.0 Patch Notes
+### Version 0.13.0 - 0.13.1 Patch Notes
 
 - Made the `caret()` mixin more robust by adding size and color customization to
   the available parameters and enabling pointing the caret in diagonal

@@ -1,3 +1,8 @@
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:math';
+
 /// Attempt at programmatically generating the values to rainbow colored long
 /// shadow
 ///
@@ -25,7 +30,6 @@
   }
   @return $val;
 }
-@import "compass/css3";
 
 // Below is the code from https://codepen.io/stephenirving/pen/mdgBReV/804738cd0fee83faf894f88099eca1c4
 // TODO: Need to sort through all this and integrate into multiple functions and mixins
@@ -61,7 +65,7 @@
  * $colors: list of colors to be used
  */
 @function create-list($colors) {
-  $a: define-max( length($colors) );
+  $a: define-max( list.length($colors) );
   $l: ();
   @each $c in $colors {
     @for $i from 1 through $a {
