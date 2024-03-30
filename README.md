@@ -23,7 +23,7 @@ animation keyframe creation, or other verbose and complex code blocks.
 5. [Documentation](#documentation)
 6. [Parameter Aliases](#parameter-aliases)
 7. [Recently Improved](#recently-improved)
-   1. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0130---0131-patch-notes)
+   1. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0140---0141-patch-notes)
    2. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
    3. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
    4. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
