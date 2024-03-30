@@ -1,0 +1,28 @@
+@use 'sass:map';
+@use 'sass:meta';
+
+/// Counts the number of occurrences of each value in `$list`.
+///
+/// @param {List} $list - The List having its values counted.
+///
+/// @return {Map} Values mapped to their count
+///
+/// @example scss
+/// list-count-values('a' 'b' 'c' 'a' 'c' 'c')
+/// // (a: 2, b: 1, c: 3)
+///
+/// @access public
+/// @group Utilities
+/// @since 0.14.0
+/// @require {function} is-true
+@function list-count-values($list) {
+  $map: ();
+
+  @each $item in $list {
+    $index: map.get($map, $item);
+    $value: if($index, $index + 1, 1);
+    $map: map.merge($map, ($item: $value));
+  }
+
+  @return $map;
+}

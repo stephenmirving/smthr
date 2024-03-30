@@ -44,7 +44,9 @@
 ///
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.
-/// @param {String} $replace [''] - The new value that replaces `$search`.
+/// @param {String} $replace [''] - The new value that replaces `$search`. If
+/// nothing is passed here, or an empty string is passed, $search is removed
+/// from the string.
 ///
 /// @return {String} The updated string.
 ///
@@ -62,7 +64,9 @@
 ///
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.
-/// @param {String} $replace [''] - The new value that replaces `$search`.
+/// @param {String} $replace [''] - The new value that replaces `$search`. If
+/// nothing is passed here, or an empty string is passed, $search is removed
+/// from the string.
 ///
 /// @return {String} The updated string.
 ///
@@ -80,7 +84,9 @@
 ///
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.
-/// @param {String} $replace [''] - The new value that replaces `$search`.
+/// @param {String} $replace [''] - The new value that replaces `$search`. If
+/// nothing is passed here, or an empty string is passed, $search is removed
+/// from the string.
 ///
 /// @return {String} The updated string.
 ///

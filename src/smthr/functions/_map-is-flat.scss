@@ -1,0 +1,74 @@
+@use 'sass:map';
+
+/// Determines if a given map does not have any nested keys and will return
+/// `true` if it does not, indicating that it is a shallow/flat map. Otherwise,
+/// returns false.
+///
+/// @param {Map} $map - Map to determine if it is shallow and has no nested keys.
+///
+/// @return {Bool} - True if the map has no nested keys and is shallow, false
+/// if does have nested keys and is deep.
+///
+/// @group Utilities
+/// @access public
+@function map-is-flat($map) {
+  @each $key, $value in $map {
+    @if type-of($value) == map {
+      @return false;
+    }
+  }
+
+  @return true;
+}
+
+/// Determines if a given map does not have any nested keys and will return
+/// `true` if it does not, indicating that it is a shallow/flat map. Otherwise,
+/// returns false.
+///
+/// @param {Map} $map - Map to determine if it is shallow and has no nested keys.
+///
+/// @return {Bool} - True if the map has no nested keys and is shallow, false
+/// if does have nested keys and is deep.
+///
+/// @group Utilities
+/// @access public
+///
+/// @alias map-is-flat
+@function map-is-shallow($map) {
+  @return map-is-flat($map);
+}
+
+/// Determines if a given map does not have any nested keys and will return
+/// `true` if it does not, indicating that it is a shallow/flat map. Otherwise,
+/// returns false.
+///
+/// @param {Map} $map - Map to determine if it is shallow and has no nested keys.
+///
+/// @return {Bool} - True if the map has no nested keys and is shallow, false
+/// if does have nested keys and is deep.
+///
+/// @group Utilities
+/// @access public
+///
+/// @alias map-is-flat
+@function map-has-no-nesting($map) {
+  @return map-is-flat($map);
+}
+
+/// Determines if a given map does not have any nested keys and will return
+/// `true` if it does not, indicating that it is a shallow/flat map. Otherwise,
+/// returns false.
+///
+/// @param {Map} $map - Map to determine if it is shallow and has no nested keys.
+///
+/// @return {Bool} - True if the map has no nested keys and is shallow, false
+/// if does have nested keys and is deep.
+///
+/// @access public
+/// @group Utilities
+/// @since 0.14.0
+///
+/// @alias map-is-flat
+@function map-is-not-nested($map) {
+  @return map-is-flat($map);
+}

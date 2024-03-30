@@ -8,6 +8,7 @@ TODO:
           ☐ Need to find example values where this is true and list below
 
   General Changes:
+    ☐ Add `$support-ie` and `$support-old-ie` flag variables and then go through every feature targetting IE and wrap in conditonals based on these flags
     ☐ Test :focus-visible vs :focus and possible change :focus-visible styles back to :focus due to accessibility concerns
       - https://www.nicchan.me/blog/tips-for-focus-styles/
       - https://www.smashingmagazine.com/2021/03/complete-guide-accessible-front-end-components/#accessible-focus-styles

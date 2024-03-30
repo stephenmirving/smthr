@@ -7,11 +7,11 @@
 /// @group Utilities
 @mixin sticky($z-index: 999, $top: 0, $left: null) {
   position: sticky;
-  top: $top;
+  top: #{$top};
 
   @if $left {
-    left: $left;
+    left: #{$left};
   }
 
-  z-index: $z-index;
+  z-index: #{$z-index};
 }

@@ -1,0 +1,71 @@
+@use 'sass:list';
+
+/// Returns whether `$list` contains `$value`.
+///
+/// @param {List} $list - The List to check.
+/// @param {*} $value - The value to look for.
+///
+/// @return {Bool} - Returns `true` if `$list` contains `$value`, `false` if not.
+///
+/// @example scss
+/// list-contain('a' 'b' 'c', 'a')
+/// // true
+///
+/// @example scss
+/// list-contains('a' 'b' 'c', 'z')
+/// // false
+///
+/// @access public
+/// @group Utilities
+/// @since 0.14.0
+@function list-contains($list, $value) {
+  @return not not list.index($list, $value);
+}
+
+/// Returns whether `$list` contains `$value`.
+///
+/// @param {List} $list - The List to check.
+/// @param {*} $value - The value to look for.
+///
+/// @return {Bool} - Returns `true` if `$list` contains `$value`, `false` if not.
+///
+/// @example scss
+/// list-contain('a' 'b' 'c', 'a')
+/// // true
+///
+/// @example scss
+/// list-contains('a' 'b' 'c', 'z')
+/// // false
+///
+/// @access public
+/// @group Utilities
+///
+/// @since 0.14.0
+/// @alias list-contains
+@function list-includes($list, $value) {
+  @return list-contains($list, $value);
+}
+
+/// Returns whether `$list` contains `$value`.
+///
+/// @param {List} $list - The List to check.
+/// @param {*} $value - The value to look for.
+///
+/// @return {Bool} - Returns `true` if `$list` contains `$value`, `false` if not.
+///
+/// @example scss
+/// list-contain('a' 'b' 'c', 'a')
+/// // true
+///
+/// @example scss
+/// list-contains('a' 'b' 'c', 'z')
+/// // false
+///
+/// @access public
+/// @group Utilities
+/// @since 0.14.0
+///
+/// @alias list-contains
+@function in-list($list, $value) {
+  @return list-contains($list, $value);
+}

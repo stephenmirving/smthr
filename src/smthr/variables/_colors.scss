@@ -49,7 +49,7 @@ $black-purple: hsl(300, 20%, 3.4%) !default;
 
 /// The primary color, typically used for the majority
 /// of the colors in your theme.
-$color-primary: hsl(203.93, 77.99%, 40.98%) !default;
+$color-primary: hsl(203.84, 92%, 30.2%) !default;
 
 /// The secondary color, used for secondary actions
 /// or to complement the primary color.
@@ -117,13 +117,13 @@ $color-body-bg-gradient-dark: linear-gradient(135deg, $color-body-bg-dark, $blac
 $color-link: $color-primary !default;
 
 /// Highlight background color when text is selected.
-$color-selection-highlight: hsl(211.48, 36.97%, 32.35%) !default;
+$color-selection-highlight: $color-primary !default;
 
 /// Text color when it is selected.
-$color-selection-text: hsl(0, 0%, 100%) !default;
+$color-selection-text: $white !default;
 
 /// The color of the ring around elements when they are keyboard focused.
-$color-focus-ring: hsl(0, 0%, 0%) !default;
+$color-focus-ring: $black !default;
 
 /// The dark color for use in the `color-text-contrast()` function.
 $contrast-text-dark: $gray-9 !default;
@@ -139,6 +139,7 @@ $contrast-text-light: $white !default;
 /// Every associated value is the 3 or 6 digit hex color value for that name.
 ///
 /// @type Map
+/// @see {function} conv-color-name
 $color-names-map: (
   aliceblue: #f0f8ff,
   antiquewhite: #faebd7,

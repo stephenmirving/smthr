@@ -1,0 +1,53 @@
+@use 'sass:map';
+
+/// Determines if a given map has at least one nested key and will return `true`
+/// if it does, indicating that it is a deep map. Otherwise, returns false.
+///
+/// @param {Map} $map - Map to determine if it is deep and has nested keys.
+///
+/// @return {Bool} - True if the map has at least one nested key, false if not.
+///
+/// @group Utilities
+/// @access public
+/// @since 0.14.0
+@function map-is-deep($map) {
+  @each $key, $value in $map {
+    @if type-of($value) == map {
+      @return true;
+    }
+  }
+
+  @return false;
+}
+
+/// Determines if a given map has at least one nested key and will return `true`
+/// if it does, indicating that it is a deep map. Otherwise, returns false.
+///
+/// @param {Map} $map - Map to determine if it is deep and has nested keys.
+///
+/// @return {Bool} - True if the map has at least one nested key, false if not.
+///
+/// @access public
+/// @group Utilities
+/// @since 0.14.0
+///
+/// @alias map-is-deep
+@function map-has-nesting($map) {
+  @return map-is-deep($map);
+}
+
+/// Determines if a given map has at least one nested key and will return `true`
+/// if it does, indicating that it is a deep map. Otherwise, returns false.
+///
+/// @param {Map} $map - Map to determine if it is deep and has nested keys.
+///
+/// @return {Bool} - True if the map has at least one nested key, false if not.
+///
+/// @access public
+/// @group Utilities
+/// @since 0.14.0
+///
+/// @alias map-is-deep
+@function map-is-nested($map) {
+  @return map-is-deep($map);
+}

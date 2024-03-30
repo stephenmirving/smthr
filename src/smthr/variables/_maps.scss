@@ -26,6 +26,8 @@
 /// @prop {List} lucida-grande - The font stack for Lucida Grande-style sans-serif fonts.
 /// @prop {List} verdana - The font stack for Verdana-style sans-serif fonts.
 /// @prop {List} georgia - The font stack for Georgia-style serif fonts.
+///
+/// @see {function} font-stack
 $font-stacks: (
   'primary': (
     Roboto,
@@ -131,7 +133,8 @@ $font-stacks: (
   )
 ) !default;
 
-/// Map of custom timing functions based on Penner equations.
+/// Map of custom timing functions based on Penner equations. Used by the
+/// `timing` function.
 ///
 /// Each of the map's key's is a string value that has a cubic-bezier timing
 /// function curve as its value.
@@ -160,6 +163,8 @@ $font-stacks: (
 /// @prop {String} ease-in-out-expo
 /// @prop {String} ease-in-out-circ
 /// @prop {String} ease-in-out-back
+///
+/// @see {function} timing
 $map-timing-functions: (
   'ease-in-quad': cubic-bezier(0.55, 0.085, 0.68, 0.53),
   'ease-in-cubic': cubic-bezier(0.55, 0.055, 0.675, 0.19),
@@ -207,6 +212,8 @@ $map-timing-functions: (
 /// @prop {Map} 315 - The 'name' key with value of 'top left' and a 'deg' key with value of 315
 /// @prop {Map} 360 - The 'name' key with value of 'top' and a 'deg' key with value of 360
 /// effectively wrapping around to the start.
+///
+/// @see {function} closest-direction
 $map-directions: (
   0: (
     'name': 'top',
@@ -262,6 +269,8 @@ $map-directions: (
 /// @prop {Map} 270 - The position name 'left' with an angle of 270 degrees.
 /// @prop {Map} 360 - The position name 'top' with an angle of 360 degrees,
 /// effectively wrapping around to the start.
+///
+/// @see {function} closest-position
 $map-positions: (
   0: (
     'name': 'top',
@@ -287,6 +296,8 @@ $map-positions: (
 
 /// A map of all the units in CSS as string types for keys, with their values
 /// being 1 numeric unit.
+///
+/// @see {function} str-to-num
 $map-units: (
   'px': 1px,
   'cm': 1cm,
@@ -354,6 +365,9 @@ $map-units: (
 ///
 /// Used by the is-alias and resolve-alias functions to allow a greater set
 /// of possible inputs when using functions and mixins.
+///
+/// @see {function} is-alias
+/// @see {function} resolve-alias
 $map-alias-resolutions: (
   'bottom': (
     'bottom',

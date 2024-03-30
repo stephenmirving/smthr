@@ -54,3 +54,22 @@
 @function list-replace($list, $old-value, $new-value) {
   @return update-list($list, $old-value, $new-value);
 }
+
+/// Replaces `$old-value` with `$new-value` in `$list`.
+///
+/// @param {List} $list - The list to update.
+/// @param {*} $old-value - The old value to replace in `$list`.
+/// @param {*} $new-value - The new value that is replacing the `$old-value`.
+///
+/// @return {List} The new, updated list.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-true
+/// @require {function} purge-list
+/// @require {function} to-list
+///
+/// @alias update-list
+@function list-update($list, $old-value, $new-value) {
+  @return update-list($list, $old-value, $new-value);
+}

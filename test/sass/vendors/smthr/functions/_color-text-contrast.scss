@@ -16,8 +16,8 @@
 /// @param {Color} $color - The color you are finding the contrast for.
 /// Must be a color type recognized by Sass.
 ///
-/// @param {String} $syntax [get-color-type($color)] - The color syntax to
-/// convert into. Defaults to the color notation used by `$color`. Can be
+/// @param {String} $syntax [get-color-type($color)] - The desired syntax of the
+/// returned color. Defaults to the color notation used by `$color`. Can be
 /// 'hex', '#', 'rgb', 'rgba', 'hsl', 'hsla', 'hwb', 'function', 'name', or 'cmyk'.
 ///
 /// @return {Color} - The contrast color in the given syntax.

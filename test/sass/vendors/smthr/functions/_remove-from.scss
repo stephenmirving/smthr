@@ -29,3 +29,19 @@
 @function trim-list($list, $value) {
   @return remove-from($list, $value);
 }
+
+/// Removes `$value` from `$list`.
+///
+/// @param {List} $list - The list to update.
+/// @param {*} $value - The value to remove from `$list`.
+///
+/// @return {List} The updated list.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} update-list
+///
+/// @alias remove-from
+@function list-remove($list, $value) {
+  @return remove-from($list, $value);
+}

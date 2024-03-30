@@ -1,4 +1,6 @@
 @use 'sass:color';
+@use 'sass:math';
+@use 'sass:meta';
 
 /// Applies a fast custom scrollbar to the page, or to an internal element
 /// within the page. The effect works the best in webkit based browsers (Chrome,
@@ -6,7 +8,8 @@
 /// color to the scrollbar in IE 6+, and in Firefox 64+ it will apply the
 /// background and foreground colors and can reduce the size of the bar.
 ///
-/// @param {Number} $size - The height and width of the custom scrollbar.
+/// @param {Number} $size - The height and width of the custom scrollbar in
+/// pixels. If $size is `0`, no scrollbar will be shown.
 /// @param {Color} $fg-color - The color of the foreground or 'handle'
 /// of the scrollbar.
 /// @param {Color} $bg-color [mix($fg-color, #000, 50%)] - The color
@@ -21,79 +24,106 @@
 /// @group Utilities
 @mixin scrollbar(
   $size,
-  $fg-color,
-  $bg-color: mix($fg-color, #000, 50%),
+  $fg-color: #bbb,
+  $bg-color: color.mix($fg-color, #000, 50%),
   $radius: null,
   $is-internal: false
 ) {
-  $ff-scroll-size: if($size < 15, thin, auto);
+  $ff-scroll-size: 0;
+
+  @if meta.type-of($size) != 'number' or
+      (math.unit($size) != 'px' and not math.is-unitless($size))
+  {
+    @error 'Invalid input for $size in the [ scrollbar() ] mixin. Value must ' +
+        'a number in pixel units or be unitless.';
+  }
+
+  @if $size == 0px or $size == 0 {
+    $size: 0;
+  } @else {
+    $ff-scroll-size: if($size < 15px, thin, auto);
+  }
 
   @if $is-internal {
-    scrollbar-color: $fg-color $bg-color; // Firefox 64+
     scrollbar-width: $ff-scroll-size; // Firefox 64+
-    scrollbar-face-color: $fg-color; // IE
-    scrollbar-track-color: $bg-color; // IE
+
+    @if $size != 0 {
+      scrollbar-color: $fg-color $bg-color; // Firefox 64+
+      scrollbar-face-color: $fg-color; // IE
+      scrollbar-track-color: $bg-color; // IE
+    }
 
     &::-webkit-scrollbar {
-      height: $size;
-      width: $size;
+      @if $size == 0 {
+        display: none;
+      } @else {
+        height: $size;
+        width: $size;
 
-      &-track {
-        background: $bg-color;
-        @if $radius {
-          border-radius: $radius;
-        }
-      }
-
-      &-thumb {
-        background: $fg-color;
-        @if $radius {
-          border-radius: $radius;
+        &-track {
+          background: $bg-color;
+          @if $radius {
+            border-radius: $radius;
+          }
         }
 
-        &:hover {
-          background: color.mix(#000, $fg-color, 17.5%);
-        }
+        &-thumb {
+          background: $fg-color;
+          @if $radius {
+            border-radius: $radius;
+          }
 
-        &:active {
-          background: color.mix(#000, $fg-color, 35%);
-          box-shadow: inset 1px 1px 3px rgba(color.mix(#fff, $fg-color, 30%), 0.5);
+          &:hover {
+            background: color.mix(#000, $fg-color, 17.5%);
+          }
+
+          &:active {
+            background: color.mix(#000, $fg-color, 35%);
+            box-shadow: inset 1px 1px 3px rgba(color.mix(#fff, $fg-color, 30%), 0.5);
+          }
         }
       }
     }
 
   } @else {
     html {
-      scrollbar-color: $fg-color $bg-color; // Firefox 64+
       scrollbar-width: $ff-scroll-size; // Firefox 64+
-      scrollbar-face-color: $fg-color; // IE
-      scrollbar-track-color: $bg-color; // IE
+
+      @if $size != 0 {
+        scrollbar-color: $fg-color $bg-color; // Firefox 64+
+        scrollbar-face-color: $fg-color; // IE
+        scrollbar-track-color: $bg-color; // IE
+      }
     }
 
     ::-webkit-scrollbar {
-      width: $size;
-      height: $size;
+      @if $size == 0 {
+        display: none;
+      } @else {
+        width: $size;
+        height: $size;
 
-      &-track {
-        background: $bg-color;
-        @if $radius {
-          border-radius: $radius;
-        }
-      }
-
-      &-thumb {
-        background: $fg-color;
-        @if $radius {
-          border-radius: $radius;
+        &-track {
+          background: $bg-color;
+          @if $radius {
+            border-radius: $radius;
+          }
         }
 
-        &:hover {
-          background: color.mix(#000, $fg-color, 17.5%);
-        }
+        &-thumb {
+          background: $fg-color;
+          @if $radius {
+            border-radius: $radius;
+          }
 
-        &:active {
-          background: color.mix(#000, $fg-color, 35%);
-          box-shadow: inset 1px 1px 3px rgba(color.mix(#fff, $fg-color, 30%), 0.5);
+          &:hover {
+            background: color.mix(#000, $fg-color, 17.5%);
+          }
+
+          &:active {
+            background: color.mix(#000, $fg-color, 35%);
+            box-shadow: inset 1px 1px 3px rgba(color.mix(#fff, $fg-color, 30%), 0.5);
+          }
         }
       }
     }

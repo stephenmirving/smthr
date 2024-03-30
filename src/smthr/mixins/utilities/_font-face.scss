@@ -1,0 +1,65 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:string';
+@use '../../functions/str-replace' as *;
+
+/// Easy importer for font-face properties
+///
+/// @param {String} $name - Name of the font family, without extension.
+/// @param {String} $path - ['assets/fonts'] Path from the compiled css to the
+/// fonts folder.
+/// @param {Number | String} $weight [null] - Weight of the font.
+/// @param {string} $style [null] - Style of the font.
+/// @param {String} $display [swap] - The value for the `font-display` property.
+/// @param {List} $extensions [eot woff2 woff ttf svg] - Font format extensions.
+///
+/// @example scss - @include font-face('Samplina Neue', 'assets/fonts', bold, italic);
+///
+/// @example css -
+///   @font-face {
+///     font-family: 'Samplina Neue';
+///     font-style: italic;
+///     font-weight: bold;
+///     src: url('fonts/SamplinaNeue.eot?') format('eot'),
+///       url('fonts/SamplinaNeue.woff2') format('woff2'),
+///       url('fonts/SamplinaNeue.woff') format('woff'),
+///       url('fonts/SamplinaNeue.ttf') format('truetype'),
+///       url('fonts/SamplinaNeue.svg#Samplina_Neue') format('svg');
+///     font-display: swap;
+///   }
+///
+/// @group Utilities
+@mixin font-face(
+  $name,
+  $path,
+  $weight: null,
+  $style: null,
+  $extensions: ('eot' 'woff2' 'woff' 'ttf' 'svg')
+) {
+  $src: null;
+  $extmods: (
+    eot: '?',
+    svg: '#' + str-replace($name, ' ', '_')
+  );
+  $formats: (
+    otf: 'opentype',
+    ttf: 'truetype'
+  );
+
+  @each $ext in $extensions {
+    $extmod: if(map.has-key($extmods, $ext), $ext + map.get($extmods, $ext), $ext);
+    $format: if(map.has-key($formats, $ext), map.get($formats, $ext), $ext);
+    $src: list.append($src, url('#{$path}.#{$extmod}') format('#{$format}'), comma);
+  }
+
+  @at-root {
+    @font-face {
+      font-family: '#{$name}';
+      font-weight: #{$weight}; n
+      font-style: #{$style};
+      src: $src;
+      font-display: #{$display};
+    }
+  }
+}

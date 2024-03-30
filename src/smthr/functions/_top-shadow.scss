@@ -13,6 +13,7 @@
 ///
 /// @access public
 /// @group Utilities
+/// @see {mixin} depth-level
 @function top-shadow($depth, $color, $intensity) {
   $primary-offset: list.nth(1.5 3 10 14 19, $depth) * 1px;
   $blur: list.nth(1.5 3 10 14 19, $depth) * 4px;

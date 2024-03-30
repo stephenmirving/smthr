@@ -1,26 +1,28 @@
 @use 'sass:list';
 @use 'sass:meta';
 
-/// Casts a map into a list.
+/// Casts a Map into a List.
 ///
-/// @param {Map} $map - Map to pull a value from.
+/// @param {Map} $map - The map being cast into a list.
 /// @param {String} $keep ['both'] - Whether to keep just the 'keys', just the
 /// 'values' or 'both' from the $map.
+/// @param {String} $separator [comma] - The separator to use in the new List.
+/// Can be `comma`, `space`, or `slash`.
 ///
 /// @return {List} Depending on the flag, returns either keys, values or both.
 ///
 /// @access public
 /// @group Utilities
-@function map-to-list($map, $keep: 'both') {
+@function map-to-list($map, $keep: 'both', $separator: comma) {
   $keep: if(list.index('keys' 'values', $keep), $keep, 'both');
 
-  @if type-of($map) == 'map' {
+  @if meta.type-of($map) == 'map' {
     $keys: ();
     $values: ();
 
     @each $key, $val in $map {
-      $keys: list.append($keys, $key);
-      $values: list.append($values, $val);
+      $keys: list.append($keys, $key, $separator);
+      $values: list.append($values, $val, $separator);
     }
 
     @if $keep == 'keys' {
@@ -32,5 +34,5 @@
     }
   }
 
-  @return if(meta.type-of($map) != 'list', ($value), $map);
+  @return if(meta.type-of($map) == 'list', $map, ($value));
 }

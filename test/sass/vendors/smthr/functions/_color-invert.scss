@@ -14,10 +14,10 @@
 /// @param {Color} $color - The color to invert.
 /// @param {Number} $weight [100%] - How much to invert the color. Must be
 /// a percentage between 0% and 100% inclusive.
-/// @param {String} $syntax [get-color-type($color)] - The color syntax to
-/// convert into. Defaults to the color notation used by $color.
+/// @param {String} $syntax [get-color-type($color)] - The desired syntax of the
+/// returned color. Defaults to the color notation used by $color.
 ///
-/// @return {Color} - The inverted color in the given syntax.
+/// @return {Color} - The inverted color in the given syntax.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 ///
 /// @access public
 /// @group Utilities
@@ -80,8 +80,8 @@
 /// recognized by Sass.
 /// @param {Number} $weight [100%] - How much to invert the color. Must be
 /// a percentage between 0% and 100% inclusive.
-/// @param {String} $syntax [get-color-type($color)] - The color syntax to
-/// convert into. Defaults to the color notation used by `$color`.
+/// @param {String} $syntax [get-color-type($color)] - The desired syntax of the
+/// returned color. Defaults to the color notation used by `$color`.
 ///
 /// @return {Color} - The inverted color in the given syntax.
 ///

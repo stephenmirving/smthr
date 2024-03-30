@@ -1,0 +1,121 @@
+@use '../../variables/colors' as smth;
+
+/// Applies an underline that gets bigger on hover and is removed on
+/// selection/highlighting. This is an effect similar to the default link effect
+/// on Safari. Can only be used with a solid background color.
+///
+/// @param {Color} $bg-color The color of the background element, provided so
+/// the text shadow can match.
+/// @param {Color} $color - The color of the text
+/// @param {Color} $select-bg-color [$main-color] The background color when you
+/// select/highlight the text.
+///
+/// @example scss Input
+/// .smart-underline {
+///   @include smart-underline(#fff, #000, #bada55);
+/// }
+/// @example css Output
+/// .smart-underline {
+///   background-image: linear-gradient(#fff, #fff), linear-gradient(#fff, #fff), linear-gradient(#000, #000);
+///   background-position: 0% 90%, 100% 90%, 0% 90%;
+///   background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+///   background-repeat: no-repeat, no-repeat, repeat-x;
+///   text-decoration: none;
+///   text-shadow:
+///     0.03em 0 #fff, -0.03em 0 #fff, 0 0.03em #fff,
+///     0 -0.03em #fff, 0.06em 0 #fff, -0.06em 0 #fff,
+///     0.09em 0 #fff, -0.09em 0 #fff, 0.12em 0 #fff,
+///     -0.12em 0 #fff, 0.15em 0 #fff, -0.15em 0 #fff;
+/// }
+/// .smart-underline,
+/// .smart-underline:link,
+/// .smart-underline:visited {
+///   color: #000;
+/// }
+/// .smart-underline::selection {
+///   text-shadow:
+///     0.03em 0 #bada55, -0.03em 0 #bada55, 0 0.03em #bada55,
+///     0 -0.03em #bada55, 0.06em 0 #bada55, -0.06em 0 #bada55,
+///     0.09em 0 #bada55, -0.09em 0 #bada55, 0.12em 0 #bada55,
+///     -0.12em 0 #bada55, 0.15em 0 #bada55, -0.15em 0 #bada55;
+///   background: #bada55;
+/// }
+/// .smart-underline:before,
+/// .smart-underline:after,
+/// .smart-underline *,
+/// .smart-underline *:before,
+/// .smart-underline *:after {
+///   text-shadow: none;
+/// }
+///
+/// @group Utilities
+/// @require {mixin} _cropped-underline
+/// @require {variable} $color-link
+/// @require {variable} $color-selection-highlight
+@mixin smart-underline(
+  $bg-color,
+  $color: smth.$color-link,
+  $select-bg-color: smth.$color-selection-highlight
+) {
+  background-image:
+    linear-gradient(#{$bg-color}, #{$bg-color}),
+    linear-gradient(#{$bg-color}, #{$bg-color}),
+    linear-gradient(#{$color}, #{$color});
+  background-position: 0% 90%, 100% 90%, 0% 90%;
+  background-size: 0.05em 1px, 0.05em 1px, 1px 1px;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  text-decoration: none;
+
+  @include _cropped-underline(#{$bg-color});
+
+  &,
+  &:link,
+  &:visited {
+    color: #{$color};
+  }
+
+  &::-moz-selection {
+    background: #{$select-bg-color};
+
+    @include _cropped-underline(#{$select-bg-color});
+  }
+
+  &::selection {
+    background: #{$select-bg-color};
+
+    @include _cropped-underline(#{$select-bg-color});
+  }
+
+  &::before,
+  &::after,
+  *,
+  *::before,
+  *::after {
+    text-shadow: none;
+  }
+}
+
+/// Helper mixin for the `smart-underline` mixin. Can only be used with a
+/// solid background color.
+///
+/// @param {Color} $color - The color of the `text-shadow` based underline
+/// effect.
+///
+/// @group Utilities
+/// @access private
+/// @see {mixin} smart-underline
+@mixin _cropped-underline($color) {
+  text-shadow:
+    0.03em 0 #{$color},
+    -0.03em 0 #{$color},
+    0 0.03em #{$color},
+    0 -0.03em #{$color},
+    0.06em 0 #{$color},
+    -0.06em 0 #{$color},
+    0.09em 0 #{$color},
+    -0.09em 0 #{$color},
+    0.12em 0 #{$color},
+    -0.12em 0 #{$color},
+    0.15em 0 #{$color},
+    -0.15em 0 #{$color};
+}

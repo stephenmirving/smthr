@@ -1,0 +1,119 @@
+@use 'sass:list';
+@use 'map-is-flat' as *;
+
+/// If a map is deep and has nested maps, returns a comma-separated list of
+/// key "chains" with the key for each nested map in the chain, each individual
+/// chain in the list is itself a space separated list of each key for each
+/// nested map.
+///
+/// @param {Map} $map - The map from which to get the nested key chains.
+///
+/// @return {List | String} A comma-separated list of space-separated lists
+/// comprised of all the nested keys that are in a chain. If there is only one
+/// nested key chain, it will just return a space-separated list of those keys.
+/// If there was only a single nested map in $map, will return a string with
+/// the name of the nested key.
+///
+/// @group Utilities
+/// @access public
+/// @since 0.14.0
+@function map-get-key-chains($map) {
+  @if map-is-flat($map) {
+    @return null;
+  }
+
+  @return _map-get-key-chains-recursive($map, ());
+}
+
+/// If a map is deep and has nested maps, returns a comma-separated list of
+/// key "chains" with the key for each nested map in the chain, each individual
+/// chain in the list is itself a space separated list of each key for each
+/// nested map.
+///
+/// @param {Map} $map - The map from which to get the nested key chains.
+///
+/// @return {List | String} A comma-separated list of space-separated lists
+/// comprised of all the nested keys that are in a chain. If there is only one
+/// nested key chain, it will just return a space-separated list of those keys.
+/// If there was only a single nested map in $map, will return a string with
+/// the name of the nested key.
+///
+/// @group Utilities
+/// @access public
+/// @since 0.14.0
+///
+/// @alias map-get-key-chains
+@function map-get-key-chain($map) {
+  @return map-get-key-chains($map);
+}
+
+/// If a map is deep and has nested maps, returns a comma-separated list of
+/// key "chains" with the key for each nested map in the chain, each individual
+/// chain in the list is itself a space separated list of each key for each
+/// nested map.
+///
+/// @param {Map} $map - The map from which to get the nested key chains.
+///
+/// @return {List | String} A comma-separated list of space-separated lists
+/// comprised of all the nested keys that are in a chain. If there is only one
+/// nested key chain, it will just return a space-separated list of those keys.
+/// If there was only a single nested map in $map, will return a string with
+/// the name of the nested key.
+///
+/// @group Utilities
+/// @access public
+/// @since 0.14.0
+///
+/// @alias map-get-key-chains
+@function get-key-chains($map) {
+  @return map-get-key-chains($map);
+}
+
+/// If a map is deep and has nested maps, returns a comma-separated list of
+/// key "chains" with the key for each nested map in the chain, each individual
+/// chain in the list is itself a space separated list of each key for each
+/// nested map.
+///
+/// @param {Map} $map - The map from which to get the nested key chains.
+///
+/// @return {List | String} A comma-separated list of space-separated lists
+/// comprised of all the nested keys that are in a chain. If there is only one
+/// nested key chain, it will just return a space-separated list of those keys.
+/// If there was only a single nested map in $map, will return a string with
+/// the name of the nested key.
+///
+/// @access public
+/// @group Utilities
+/// @since 0.14.0
+///
+/// @alias map-get-key-chains
+@function get-key-chain($map) {
+  @return map-get-key-chains($map);
+}
+
+/// Recursive key searching function used by the map-get-key-chain function.
+///
+/// @access private
+/// @group Utilities
+/// @since 0.14.0
+///
+/// @see {function} map-get-key-chains
+@function _map-get-key-chains-recursive($map, $current-path) {
+  $result: ();
+
+  @each $key, $value in $map {
+    $new-path: list.append($current-path, $key);
+
+    @if type-of($value) == map {
+      // Append the key of the nested map to the result list
+      @if map-is-flat($value) {
+        $result: list.append($result, $new-path, comma);
+      }
+
+      // Recursively find nested keys inside this nested map
+      $result: list.append($result, _map-get-key-chains-recursive($value, $new-path), comma);
+    }
+  }
+
+ @return $result;
+}

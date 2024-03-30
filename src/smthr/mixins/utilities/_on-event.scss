@@ -4,7 +4,7 @@
 /// along with the `:link`, and `:visited` pseudo-classes if anything but `null`
 /// or `false` is passed to the only argument.
 ///
-/// @param {Bool} $self [false] - If this is set to `true`, the selector used
+/// @param {Bool | *} $self [false] - If this is set to `true`, the selector used
 /// for the content directiive will include the element itself, plus `&:link`,
 /// and `&:visited` in addition to the `&:hover`, `&:focus` and `&:active`
 /// selectors which are always applid by default.

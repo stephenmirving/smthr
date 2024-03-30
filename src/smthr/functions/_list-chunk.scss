@@ -1,0 +1,85 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:list';
+@use 'is-integer' as *;
+@use 'to-list' as *;
+
+/// Chunks `$list` into multiple space-separated lists with lengths of the given
+/// $size. Each of these lists is appended and returned in a comma-separated
+/// list.
+///
+/// @param {List} $list - The list to chunk.
+/// @param {Number} $size - The length of the new lists.
+///
+/// @return {List | Null} - A comma-separated list containing space-separated
+/// lists of the given $size.
+///
+/// @throw Invalid data type error for $size, value must be an integer.
+///
+/// @example scss - list-chunk('a' 'b' 'c' 'd' 'e', 2); // 'a' 'b', 'c' 'd', 'e'
+///
+/// @group Utilities
+/// @require {function} is-integer
+/// @require {function} to-list
+@function list-chunk($list, $size) {
+  @if not is-integer($size) {
+    @error 'Invalid $size input for the [ list-chunk() ] mixin. This value ' +
+        'must be an integer, you passed #{meta.inspect($size)}.';
+  }
+
+  @if $size >= list.length($list) {
+    @return to-list($list);
+  }
+
+  $index: 1;
+  $result: ();
+  $length: list.length($list);
+  $end: math.ceil(math.div($length, $size));
+
+  @for $i from 1 through $end {
+    $temp-list: ();
+
+    @for $j from 1 through $size {
+      @if $index <= $length {
+        $is-orphan: $length % $size == 1 and $j == 1;
+
+        @if $is-orphan {
+          $temp-list: list.nth($list, $index);
+        } @else {
+          $temp-list: list.append($temp-list, list.nth($list, $index), space);
+        }
+      }
+
+      $index: $index + 1;
+    }
+
+    $result: list.append($result, $temp-list, comma);
+  }
+
+  @return $result;
+}
+
+/// Chunks `$list` into multiple space-separated lists with lengths of the given
+/// $size. Each of these lists is appended and returned in a comma-separated
+/// list.
+///
+/// @param {List} $list - The list to chunk.
+/// @param {Number} $size - The length of the new lists.
+///
+/// @return {List | Null} - A comma-separated list containing space-separated
+/// lists of the given $size.
+///
+/// @throw Invalid data type error for $size, value must be an integer.
+///
+/// @example scss - list-chunk('a' 'b' 'c' 'd' 'e', 2); // 'a' 'b', 'c' 'd', 'e'
+///
+/// @access public
+/// @group Utilities
+/// @since 0.14.0
+/// @require {function} is-integer
+/// @require {function} to-list
+///
+/// @alias list-chunk
+@function chunk-list($list, $size) {
+  @return list-chunk($list, $size);
+}

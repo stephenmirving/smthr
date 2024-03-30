@@ -1,7 +1,7 @@
 @use 'sass:math';
 @use 'sass:meta';
 
-/// Helper function that mixes black with a given opacity level.
+/// Mixes black with a given opacity level.
 ///
 /// @param {Number} $opacity [1] - An opacity level between either 0 and 1
 /// or 0% and 100%, inclusive.

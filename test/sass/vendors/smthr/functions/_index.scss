@@ -9,7 +9,7 @@
 @forward 'functions-walk';
 @forward 'walk';
 
-// Is-Type Functions
+// Type and Value Checking Functions
 @forward 'is-alias';
 @forward 'is-color';
 @forward 'is-number';
@@ -63,7 +63,10 @@
 @forward 'str-to-num';
 
 // List Functions
-@forward 'in-list';
+@forward 'every';
+@forward 'list-chunk';
+@forward 'list-contains';
+@forward 'list-count-values';
 @forward 'list-to-string';
 @forward 'purge-list';
 @forward 'remove-from';
@@ -74,6 +77,9 @@
 // Map Functions
 @forward 'extend-map';
 @forward 'font-stack';
+@forward 'map-get-key-chains';
+@forward 'map-is-deep';
+@forward 'map-is-flat';
 @forward 'map-to-string';
 @forward 'map-to-list';
 

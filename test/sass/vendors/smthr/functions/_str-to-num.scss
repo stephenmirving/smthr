@@ -144,6 +144,7 @@
 /// @access private
 /// @group Utilities
 /// @require {variable} $map-units
+/// @see {function} str-to-num
 @function _to-unit($value, $unit) {
   @if not list.index(map.keys($map-units), $unit) {
     @error 'Invalid $unit value of `#{meta.inspect($unit)}` passed to the ' +

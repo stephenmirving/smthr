@@ -8,6 +8,7 @@
 ///
 /// @access public
 /// @group Utilities
+/// @see {mixin} child-index
 @function order-index($num, $index) {
   @return ($index + $num);
 }

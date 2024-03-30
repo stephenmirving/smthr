@@ -23,16 +23,18 @@ animation keyframe creation, or other verbose and complex code blocks.
 5. [Documentation](#documentation)
 6. [Parameter Aliases](#parameter-aliases)
 7. [Recently Improved](#recently-improved)
-   1. [Version 0.12.0 Patch Notes](#version-0120-patch-notes)
-   2. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
-   3. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
-   4. [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
-   5. [Version 0.9.1 Patch Notes](#version-091-patch-notes)
-   6. [Version 0.9.0 Patch Notes](#version-090-patch-notes)
-   7. [Version 0.8.2 Patch Notes](#version-082-patch-notes)
-   8. [Version 0.8.1 Patch Notes](#version-081-patch-notes)
-   9. [Version 0.8.0 Patch Notes](#version-080-patch-notes)
-   10. [Recent Improvements in Older Versions](#recent-improvements-in-older-versions)
+   1. [Version 0.14.0 Patch Notes](#version-0140-patch-notes)
+   2. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
+   3. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
+   4. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
+   5. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
+   6. [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
+   7. [Version 0.9.1 Patch Notes](#version-091-patch-notes)
+   8. [Version 0.9.0 Patch Notes](#version-090-patch-notes)
+   9. [Version 0.8.2 Patch Notes](#version-082-patch-notes)
+   10. [Version 0.8.1 Patch Notes](#version-081-patch-notes)
+   11. [Version 0.8.0 Patch Notes](#version-080-patch-notes)
+   12. [Recent Improvements in Older Versions](#recent-improvements-in-older-versions)
 8. [Betterize](#betterize)
 9. [More Info](#more-info)
 10. [Questions](#questions)
@@ -48,7 +50,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.13.1 - _Last updated:_ 03/29/24
+This is **smoother** version 0.14.0 - _Last updated:_ 03/30/24
 
 ## Content
 
@@ -60,17 +62,17 @@ unpacked size of the package itself is 1.1MB.
 
 **_Smoother_ currently contains:**
 
-- **175+** Mixins, _including..._
+- **180+** Mixins, _including..._
   - Over 40 easily configurable animation types, allowing for more than
     250 unique animations
-  - More than 20 element shapes created with a combination of `clip-path`,
-    pseudo-elements, and `border-radius`
-  - 110+ utility mixins for things like creating responsive ratios,
+  - 115+ utility mixins for things like creating responsive ratios,
     box-shadow effects that adhere to Material Design, clamping text to a given
     number of lines, creating corner ribbons, centering elements,
     browser-targeted styling, media queries, making "hamburger" menu buttons and
     much more!
-- **85+** Functions, _including functions that...
+  - More than 20 element shapes created with a combination of `clip-path`,
+    pseudo-elements, and `border-radius`
+- **90+** Functions, _including functions that...
   - Extend Sass' existing module's method functionality (ex: `update-list` function)
   - Manipulate colors and convert between syntax types
   - Enhanced data type checking
@@ -356,6 +358,34 @@ Version 1.0.0 is _coming soon_ with **more** animations, **more** shapes, and
 new versions without having to copy folders every time, a Getting Started guide,
 and a website with a demo for every mixin and function to help you start using
 _Smoother_.
+
+### Version 0.14.0 Patch Notes
+
+- Added `font-face()` utility mixin.
+- Modified the `scrollbar()` mixin so that you can pass a $size of 0 and hide
+  the scrollbar entirely.
+- Added the `map-is-deep()` and `map-is-flat()` functions that return a Boolean
+  indicating if a given map has any nested maps, and is either deep or
+  flat/shallow.
+- Added `map-get-key-chain()` function that returns the "chains" of nested keys.
+- Renamed the `_in-list.scss` partial to `_list-contains.scss`. The `in-list()`
+  mixin is still an alias value for `list-contains()` but any `@use` directives
+  pointing to `_in-list.scss` will have to change to `_list-contains.scss`
+- Added `list-chunk()` function that chunks a list into multiple lists of a given
+  length.
+- Added `hoctive()` mixin that applies the provided content to the `:hover`,
+  `:focus`, and `:active` pseudo-classes in one selector group.
+- Added `hocus-visible()` mixin that applies the provided content to the `:hover`,
+  and `:focus-visible` pseudo-classes in one selector group.
+- Added the `smart-underline()` mixin that applies an underline that gets bigger
+  on hover and is removed on selection/highlighting. This is an effect similar
+  to the default link effect in Safari.
+- Improved the `to-list()` function by having it first detect if the $value
+  is a Map and then calling the `map-to-list()` function for those values.
+- Improved the `map-to-list()` function adding a $separator parameter so you
+  can choose how the new list is separated just like the `to-list()` function.
+- Added all the new functions to the `@use` directives in `functions-walk()`
+  and `walk()` functions.
 
 ### Version 0.13.0 - 0.13.1 Patch Notes
 

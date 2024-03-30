@@ -291,6 +291,6 @@ $flip-axis: 'horizontal';
 
 }
 
-.test-flex {
-  @include flex-center(true, true, column-reverse, true)
+.test {
+  content: meta.inspect(every(1 2 3, 'is-unitless', math));
 }

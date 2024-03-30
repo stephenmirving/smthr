@@ -99,7 +99,7 @@
 /// @throw Passed $color value had it's alpha value disregarded warning.
 ///
 /// @alias depth-level
-@mixin card-depth($level, $color: #000) {
+@mixin card-depth($level, $color: #000, $intensity: 1) {
   @include depth-level($level, $color);
 }
 
@@ -132,7 +132,7 @@
 /// @throw Passed $color value had it's alpha value disregarded warning.
 ///
 /// @alias depth-level
-@mixin shadow-depth($level, $color: #000) {
+@mixin card($level, $color: #000, $intensity: 1) {
   @include depth-level($level, $color);
 }
 
@@ -165,7 +165,7 @@
 /// @throw Passed $color value had it's alpha value disregarded warning.
 ///
 /// @alias depth-level
-@mixin shadow-level($level, $color: #000) {
+@mixin shadow-depth($level, $color: #000, $intensity: 1) {
   @include depth-level($level, $color);
 }
 
@@ -198,7 +198,73 @@
 /// @throw Passed $color value had it's alpha value disregarded warning.
 ///
 /// @alias depth-level
-@mixin add-shadow($level, $color: #000) {
+@mixin depth($level, $color: #000, $intensity: 1) {
+  @include depth-level($level, $color);
+}
+
+/// Uses box-shadow to give an element a depth effect based on Google's
+/// Material Design principles.
+///
+/// @link https://material.io/design/environment/light-shadows.html
+/// @link https://material.io/design/environment/elevation.html
+///
+/// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+/// This value will change the strength of the shadow effect, with 0 being off,
+/// 1 being the lowest effective level, and 5 being the strongest. The higher
+/// the value, the deeper the shadow, the more the effect makes the element
+/// look like it is lifted off the screen.
+/// @param {Color} $color [#000] - The color of the box-shadow effect.
+/// @param {Number} $intensity [1] - An optional value that is multiplied with
+/// the default color opacity to increase or decrease the intensity of the
+/// effect.
+///
+/// @group Utilities
+/// @require {function} bottom-shadow
+/// @require {function} top-shadow
+/// @require {function} conv-color
+/// @require {function} is-integer
+/// @require {function} is-number
+///
+/// @throw Invalid $level value error.
+/// @throw Invalid $intensity value error.
+/// @throw Unaccepted $color type error.
+/// @throw Passed $color value had it's alpha value disregarded warning.
+///
+/// @alias depth-level
+@mixin shadow-level($level, $color: #000, $intensity: 1) {
+  @include depth-level($level, $color);
+}
+
+/// Uses box-shadow to give an element a depth effect based on Google's
+/// Material Design principles.
+///
+/// @link https://material.io/design/environment/light-shadows.html
+/// @link https://material.io/design/environment/elevation.html
+///
+/// @param {Number} $level - Depth level (Must be between 0 and 5, inclusive).
+/// This value will change the strength of the shadow effect, with 0 being off,
+/// 1 being the lowest effective level, and 5 being the strongest. The higher
+/// the value, the deeper the shadow, the more the effect makes the element
+/// look like it is lifted off the screen.
+/// @param {Color} $color [#000] - The color of the box-shadow effect.
+/// @param {Number} $intensity [1] - An optional value that is multiplied with
+/// the default color opacity to increase or decrease the intensity of the
+/// effect.
+///
+/// @group Utilities
+/// @require {function} bottom-shadow
+/// @require {function} top-shadow
+/// @require {function} conv-color
+/// @require {function} is-integer
+/// @require {function} is-number
+///
+/// @throw Invalid $level value error.
+/// @throw Invalid $intensity value error.
+/// @throw Unaccepted $color type error.
+/// @throw Passed $color value had it's alpha value disregarded warning.
+///
+/// @alias depth-level
+@mixin add-shadow($level, $color: #000, $intensity: 1) {
   @include depth-level($level, $color);
 }
 

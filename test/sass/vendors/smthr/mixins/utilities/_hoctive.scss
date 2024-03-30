@@ -1,0 +1,33 @@
+/// A simple utility mixin that selects the `:hover`, `:focus`, and `:active`
+/// pseudo-classes at the same time and applies the content's directives.
+///
+/// @content [ Write the style rules you want to apply to `:hover` and `:focus`
+/// pseudo-classes, and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @since 0.14.0
+@mixin hoctive {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}
+
+/// A simple utility mixin that selects the `:hover`, `:focus`, and `:active`
+/// pseudo-classes at the same time and applies the content's directives.
+///
+/// @content [ Write the style rules you want to apply to `:hover` and `:focus`
+/// pseudo-classes, and they will be added within the content directive ]
+///
+/// @group Utilities
+/// @since 0.14.0
+///
+/// @alias hoctive
+@mixin hactivus {
+  &:hover,
+  &:focus,
+  &:active {
+    @content;
+  }
+}

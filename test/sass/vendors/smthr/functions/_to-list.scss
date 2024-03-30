@@ -1,29 +1,36 @@
 @use 'sass:list';
+@use 'map-to-list' as *;
 
 /// Casts `$value` into a List.
 ///
-/// @param {*} $value - Value to cast into a List
+/// @param {*} $value - Value to cast into a List.
 /// @param {String} $separator [list.separator($value)] - The separator to use
-/// in the new List.
+/// in the new List. Can be `comma`, `space`, or `slash`.
 ///
 /// @return {List} - The new List.
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} map-to-list
 @function to-list($value, $separator: list.separator($value)) {
+  @if meta.type-of($value) == 'map' {
+    @return map-to-list($value, $separator);
+  }
+
   @return list.join((), $value, $separator);
 }
 
 /// Casts `$value` into a List.
 ///
-/// @param {*} $value - Value to cast into a List
-/// @param {String} $separator [list.separator($value)] - The separator to use
-/// in the new List.
+/// @param {*} $value - Value to cast into a List.
+/// @param {String} $separator [comma] - The separator to use in the new List.
+/// Can be `comma`, `space`, or `slash`.
 ///
 /// @return {List} - The new List.
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} map-to-list
 ///
 /// @alias to-list
 @function parse-list($value, $separator: list.separator($value)) {
