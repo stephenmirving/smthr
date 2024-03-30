@@ -23,7 +23,7 @@ animation keyframe creation, or other verbose and complex code blocks.
 5. [Documentation](#documentation)
 6. [Parameter Aliases](#parameter-aliases)
 7. [Recently Improved](#recently-improved)
-   1. [Version 0.14.0 Patch Notes](#version-0140-patch-notes)
+   1. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0130---0131-patch-notes)
    2. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
    3. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
    4. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
@@ -50,7 +50,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.14.0 - _Last updated:_ 03/30/24
+This is **smoother** version 0.14.1 - _Last updated:_ 03/30/24
 
 ## Content
 
@@ -359,7 +359,7 @@ new versions without having to copy folders every time, a Getting Started guide,
 and a website with a demo for every mixin and function to help you start using
 _Smoother_.
 
-### Version 0.14.0 Patch Notes
+### Version 0.14.0 - 0.14.1 Patch Notes
 
 - Added `font-face()` utility mixin.
 - Modified the `scrollbar()` mixin so that you can pass a $size of 0 and hide
