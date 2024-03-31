@@ -51,6 +51,7 @@
 /// units if the length passed is in `px` or `rem` units.
 ///
 /// @group Utilities
+/// @require {mixin} only-under-width
 ///
 /// @alias only-under-width
 @mixin target-under-width($threshold) {
@@ -70,7 +71,7 @@
 /// units if the length passed is in `px` or `rem` units.
 ///
 /// @group Utilities
-///
+/// @require {mixin} only-under-width
 /// @alias only-under-width
 @mixin only-up-to-width($threshold, $convert: true) {
   @include only-under-width($threshold, $convert) {
@@ -89,7 +90,7 @@
 /// units if the length passed is in `px` or `rem` units.
 ///
 /// @group Utilities
-///
+/// @require {mixin} only-under-width
 /// @alias only-under-width
 @mixin target-up-to-width($threshold, $convert: true) {
   @include only-under-width($threshold, $convert) {
@@ -108,7 +109,7 @@
 /// units if the length passed is in `px` or `rem` units.
 ///
 /// @group Utilities
-///
+/// @require {mixin} only-under-width
 /// @alias only-under-width
 @mixin max-width($threshold, $convert: true) {
   @include only-under-width($threshold, $convert) {

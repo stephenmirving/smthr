@@ -4,7 +4,7 @@
 @use 'sass:list';
 @use 'strip-unit' as *;
 @use 'is-number' as *;
-@use 'update-list' as *;
+@use 'list-update' as *;
 @use '../variables' as *;
 
 /// Converts `rem` value(s) into pixel units. Can be a single value of a List of

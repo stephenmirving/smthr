@@ -18,8 +18,8 @@
 /// @group Utilities
 /// @require {variable} $map-alias-resolutions
 ///
-/// @throw Invalid $keyword data type
-/// @throw Invalid $alias-map data type
+/// @throw Invalid $keyword data type error.
+/// @throw Invalid $alias-map data type error.
 @function is-alias($keyword, $alias, $alias-map: smth.$map-alias-resolutions) {
   @if meta.type-of($keyword) != 'string' {
     @error 'Invalid data type of `#{meta.type-of($keyword)}` for $keyword ' +
@@ -49,9 +49,10 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} is-alias
 ///
-/// @throw Invalid $keyword data type.
-/// @throw Invalid $alias-map data type.
+/// @throw Invalid $keyword data type error.
+/// @throw Invalid $alias-map data type error.
 ///
 /// @alias is-alias
 @function is-alias-for(

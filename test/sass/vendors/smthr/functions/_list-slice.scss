@@ -1,0 +1,67 @@
+@use 'sass:list';
+@use 'is-integer' as *;
+@use 'is-map' as *;
+
+
+/// Slices `$list` between `$start` and `$end`.
+///
+/// @param {List} $list - The List to slice.
+/// @param {Number} $start [1] - The start index.
+/// @param {Number} $end [list.length($list)] - The end index.
+///
+/// @return {List} - The new sliced List.
+///
+/// @example
+/// list-slice('a' 'b' 'c' 'd' 'e', 2, 4)
+/// // 'b' 'c' 'd'
+///
+/// @example
+/// list-slice('a' 'b' 'c' 'd' 'e', 2, 2)
+/// // 'b'
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-integer
+/// @require {function} is-map
+/// @since 0.15.0
+///
+/// @throw List indexes $start and $end must be non-zero integers.
+/// @throw Start index has to be lesser than or equals to the end index.
+/// @throw Start index has to be lesser than or equal to list length.
+/// @throw End index has to be lesser than or equal to list length.
+@function list-slice($list, $start: 1, $end: list.length($list)) {
+  $list-length: list.length($list);
+
+  @if is-map($list) {
+    @error 'Invalid $list data type for the [ list-slice() ] function. ' +
+        'You may not pass a value of data type \'map\'.';
+  }
+
+  @if not is-integer($start) or not is-integer($end) or $start < 1 or $end < 1  {
+    @error 'List indexes #{$start} and #{$end} for the [ list-slice() ] function ' +
+        'must be non-zero integers.';
+  }
+
+  @if $start > $end {
+    @error 'Start index is #{$start} but has to be lesser than or equals to ' +
+        'the end index #{$end} for the [ list-slice() ] function.';
+  }
+
+  @if $start > $list-length {
+    @error 'Start index is #{$start} but list is only #{$list-length} items ' +
+        'long for [ list-slice() ] function.';
+  }
+
+  @if $end > $list-length {
+    @error 'End index is #{$end} but list is only #{$list-length} items ' +
+        'long for [ list-slice() ] function.';
+  }
+
+  $result: ();
+
+  @for $i from $start through $end {
+    $result: list.append($result, list.nth($list, $i), list.separator($list));
+  }
+
+  @return $result;
+}

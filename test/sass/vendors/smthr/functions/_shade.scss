@@ -65,9 +65,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-color
-/// @require {function} is-number
-/// @require {function} is-percentage
+/// @require {function} shade
 ///
 /// @throw Invalid $color data type error, must be of type 'color'.
 /// @throw Invalid $percentage data type error.
@@ -87,9 +85,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-color
-/// @require {function} is-number
-/// @require {function} is-percentage
+/// @require {function} shade
 ///
 /// @throw Invalid $color data type error, must be of type 'color'.
 /// @throw Invalid $percentage data type error.
@@ -109,9 +105,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-color
-/// @require {function} is-number
-/// @require {function} is-percentage
+/// @require {function} shade
 ///
 /// @throw Invalid $color data type error, must be of type 'color'.
 /// @throw Invalid $percentage data type error.
@@ -131,9 +125,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-color
-/// @require {function} is-number
-/// @require {function} is-percentage
+/// @require {function} shade
 ///
 /// @throw Invalid $color data type error, must be of type 'color'.
 /// @throw Invalid $percentage data type error.
@@ -153,9 +145,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-color
-/// @require {function} is-number
-/// @require {function} is-percentage
+/// @require {function} shade
 ///
 /// @throw Invalid $color data type error, must be of type 'color'.
 /// @throw Invalid $percentage data type error.

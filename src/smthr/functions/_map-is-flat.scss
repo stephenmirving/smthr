@@ -11,6 +11,7 @@
 ///
 /// @group Utilities
 /// @access public
+/// @since 0.14.0
 @function map-is-flat($map) {
   @each $key, $value in $map {
     @if type-of($value) == map {
@@ -32,6 +33,8 @@
 ///
 /// @group Utilities
 /// @access public
+/// @require {function} map-is-flat
+/// @since 0.14.0
 ///
 /// @alias map-is-flat
 @function map-is-shallow($map) {
@@ -49,6 +52,8 @@
 ///
 /// @group Utilities
 /// @access public
+/// @require {function} map-is-flat
+/// @since 0.14.0
 ///
 /// @alias map-is-flat
 @function map-has-no-nesting($map) {
@@ -66,6 +71,7 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} map-is-flat
 /// @since 0.14.0
 ///
 /// @alias map-is-flat

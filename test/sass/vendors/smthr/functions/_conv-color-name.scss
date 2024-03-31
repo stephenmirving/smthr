@@ -61,7 +61,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-color
+/// @require {function} conv-color-name
 /// @require {variable} $color-names-map
 ///
 /// @throw Invalid $color-name data type.
@@ -90,7 +90,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-color
+/// @require {function} conv-color-name
 /// @require {variable} $color-names-map
 ///
 /// @throw Invalid $color-name data type.

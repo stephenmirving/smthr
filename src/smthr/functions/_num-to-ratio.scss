@@ -100,10 +100,8 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-number
-/// @require {function} str-to-num
-///
-/// @alias decimal-to-ratio
+/// @require {function} num-to-ratio
+/// @alias num-to-ratio
 @function decimal-to-ratio($number, $common-ratio: false, $accuracy: 50000, $tolerance: 0.0175) {
   @return num-to-ratio($number, $common-ratio, $accuracy, $tolerance);
 }

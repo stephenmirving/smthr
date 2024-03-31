@@ -199,13 +199,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {function} equals-false
-/// @require {function} is-alias
-/// @require {function} is-falsey
-/// @require {function} is-list
-/// @require {function} is-number
-/// @require {function} is-string
-/// @require {function} list-to-string
+/// @require {mixin} bg-zoom
 ///
 /// @throw Invalid keyword for $direction error.
 /// @throw Invalid data type for $duration error.
@@ -235,13 +229,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {function} equals-false
-/// @require {function} is-alias
-/// @require {function} is-falsey
-/// @require {function} is-list
-/// @require {function} is-number
-/// @require {function} is-string
-/// @require {function} list-to-string
+/// @require {mixin} bg-zoom
 ///
 /// @throw Invalid keyword for $direction error.
 /// @throw Invalid data type for $duration error.
@@ -271,13 +259,7 @@
 /// the animations do not overwrite each other.
 ///
 /// @group Animations
-/// @require {function} equals-false
-/// @require {function} is-alias
-/// @require {function} is-falsey
-/// @require {function} is-list
-/// @require {function} is-number
-/// @require {function} is-string
-/// @require {function} list-to-string
+/// @require {mixin} bg-zoom
 ///
 /// @throw Invalid keyword for $direction error.
 /// @throw Invalid data type for $duration error.

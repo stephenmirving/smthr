@@ -30,7 +30,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} map-to-list
+/// @require {function} to-list
 ///
 /// @alias to-list
 @function parse-list($value, $separator: list.separator($value)) {

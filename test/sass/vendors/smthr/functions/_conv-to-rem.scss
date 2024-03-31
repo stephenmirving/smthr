@@ -85,9 +85,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} strip-unit
-/// @require {function} is-number
-/// @require {variable} $base-font-size
+/// @require {function} conv-to-rem
 ///
 /// @alias conv-to-rem
 @function rem($values, $base: null) {

@@ -82,7 +82,7 @@
 /// @content Styles to apply to Gecko-based Mozilla browsers.
 ///
 /// @group Utilities
-///
+/// @require {mixin} only-moz
 /// @alias only-moz
 @mixin moz-only($target-versions: null) {
   @include only-moz($target-versions) {
@@ -105,7 +105,7 @@
 /// @content Styles to apply to Gecko-based Mozilla browsers.
 ///
 /// @group Utilities
-///
+/// @require {mixin} only-moz
 /// @alias only-moz
 @mixin target-moz($target-versions: null) {
   @include only-moz($target-versions) {

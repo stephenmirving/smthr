@@ -1,0 +1,38 @@
+@use 'sass:list';
+@use 'list-range' as *;
+@use 'is-empty' as *;
+@use 'is-map' as *;
+
+/// Casts a `$list` into a Map, using indexes as keys. Useful for iterating
+/// through a List with an index variable.
+///
+/// @param {List} $list - The List to cast into a Map.
+///
+/// @return {Map} - The new Map created from `$list`.
+///
+/// @example
+///   list-to-map('a' 'b' 'c')
+///   // (1: 'a', 2: 'b', 3: 'c')
+///
+/// @example
+///   @each $index, $value in to-map($list) { ... }
+///
+/// @access public
+/// @group Utilities
+/// @require {function} list-range
+/// @require {function} is-empty
+/// @require {function} is-map
+/// @since 0.15.0
+///
+/// @throw List cannot be empty for the [ list-to-map() ] function.
+@function list-to-map($list) {
+  @if is-map($list) {
+    @return $list;
+  }
+
+  @if is-empty($list) {
+    @error 'List cannot be empty for the [ list-to-map() ] function.';
+  }
+
+  @return list.zip(list-range(list.length($list)), $list);
+}

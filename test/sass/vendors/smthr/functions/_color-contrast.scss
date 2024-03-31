@@ -103,10 +103,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} conv-color
-/// @require {function} get-color-type
-/// @require {function} is-color
-/// @require {function} is-string
+/// @require {function} color-contrast
 ///
 /// @throw Invalid $color data type, must be a color.
 /// @throw Invalid $syntax data type, must be a string.

@@ -94,6 +94,7 @@
 /// units if the lengths passed are in `px` or `rem` units.
 ///
 /// @group Utilities
+/// @require {mixin} only-between-widths
 ///
 /// @alias only-between-widths
 @mixin target-between-widths($min-threshold, $max-threshold, $convert: true) {
@@ -118,6 +119,7 @@
 /// units if the lengths passed are in `px` or `rem` units.
 ///
 /// @group Utilities
+/// @require {mixin} only-between-widths
 ///
 /// @alias only-between-widths
 @mixin target-between-width($min-threshold, $max-threshold, $convert: true) {
@@ -142,6 +144,7 @@
 /// units if the lengths passed are in `px` or `rem` units.
 ///
 /// @group Utilities
+/// @require {mixin} only-between-widths
 ///
 /// @alias only-between-widths
 @mixin min-to-max-widths($min-threshold, $max-threshold, $convert: true) {
@@ -166,6 +169,7 @@
 /// units if the lengths passed are in `px` or `rem` units.
 ///
 /// @group Utilities
+/// @require {mixin} only-between-widths
 ///
 /// @alias only-between-widths
 @mixin min-to-max-width($min-threshold, $max-threshold, $convert: true) {

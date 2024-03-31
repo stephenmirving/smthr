@@ -1,0 +1,71 @@
+
+
+/// Tests whether a List or Map is empty.
+///
+/// @param {List | Map} $value - The List or Map to run the test against. Any
+/// other data types are interpreted as single-value lists by the function.
+///
+/// @return {Bool} - Will return `true` if $value has a length of 0, otherwise
+/// returns `false`.
+///
+/// @example
+/// is-empty(())
+/// // true
+///
+/// @example
+/// is-empty(a)
+/// // false
+///
+/// @group Utilities
+/// @since 0.15.0
+@function is-empty($value) {
+  @return list.length($value) == 0;
+}
+
+/// Tests whether a List or Map is empty.
+///
+/// @param {List | Map} $value - The List or Map to run the test against. Any
+/// other data types are interpreted as single-value lists by the function.
+///
+/// @return {Bool} - Will return `true` if $value has a length of 0, otherwise
+/// returns `false`.
+///
+/// @example
+/// is-list-empty(())
+/// // true
+///
+/// @example
+/// is-list-empty(a)
+/// // false
+///
+/// @access public
+/// @group Utilities
+/// @since 0.15.0
+/// @alias is-empty
+@function is-list-empty($value) {
+  @return list.length($value) == 0;
+}
+
+/// Tests whether a List or Map is empty.
+///
+/// @param {List | Map} $value - The List or Map to run the test against. Any
+/// other data types are interpreted as single-value lists by the function.
+///
+/// @return {Bool} - Will return `true` if $value has a length of 0, otherwise
+/// returns `false`.
+///
+/// @example
+/// list-is-empty(())
+/// // true
+///
+/// @example
+/// list-is-empty(a)
+/// // false
+///
+/// @access public
+/// @group Utilities
+/// @since 0.15.0
+/// @alias is-empty
+@function list-is-empty($value) {
+  @return list.length($value) == 0;
+}

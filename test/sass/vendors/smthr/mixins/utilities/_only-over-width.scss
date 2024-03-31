@@ -52,7 +52,7 @@
 /// units if the length passed is in `px` or `rem` units.
 ///
 /// @group Utilities
-///
+/// @require {mixin} only-over-width
 /// @alias only-over-width
 @mixin target-over-width($threshold, $convert: true) {
   @include only-over-width($threshold, $convert) {
@@ -72,7 +72,7 @@
 /// units if the length passed is in `px` or `rem` units.
 ///
 /// @group Utilities
-///
+/// @require {mixin} only-over-width
 /// @alias only-over-width
 @mixin min-width($threshold, $convert: true) {
   @include only-over-width($threshold, $convert) {

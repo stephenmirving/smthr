@@ -29,6 +29,7 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} color-to-string
 ///
 /// @throw Invalid $color data type error, $color cannot be of type 'map'.
 /// @throw Invalid $color data type warning.

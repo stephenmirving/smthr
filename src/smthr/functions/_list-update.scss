@@ -2,7 +2,7 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'is-true' as *;
-@use 'purge-list' as *;
+@use 'list-purge' as *;
 @use 'to-list' as *;
 
 /// Replaces `$old-value` with `$new-value` in `$list`.
@@ -18,7 +18,7 @@
 /// @require {function} is-true
 /// @require {function} purge-list
 /// @require {function} to-list
-@function update-list($list, $old-value, $new-value) {
+@function list-update($list, $old-value, $new-value) {
   $running: true;
 
   @while $running {
@@ -46,13 +46,11 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-true
-/// @require {function} purge-list
-/// @require {function} to-list
+/// @require {function} list-update
 ///
-/// @alias update-list
+/// @alias list-update
 @function list-replace($list, $old-value, $new-value) {
-  @return update-list($list, $old-value, $new-value);
+  @return list-update($list, $old-value, $new-value);
 }
 
 /// Replaces `$old-value` with `$new-value` in `$list`.
@@ -65,11 +63,9 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-true
-/// @require {function} purge-list
-/// @require {function} to-list
+/// @require {function} list-update
 ///
-/// @alias update-list
-@function list-update($list, $old-value, $new-value) {
-  @return update-list($list, $old-value, $new-value);
+/// @alias list-update
+@function update-list($list, $old-value, $new-value) {
+  @return list-update($list, $old-value, $new-value);
 }

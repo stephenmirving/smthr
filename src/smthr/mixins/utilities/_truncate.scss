@@ -47,7 +47,7 @@
 /// @param {String} $text-overflow [ellipsis] - The text-overflow value.
 ///
 /// @group Utilities
-///
+/// @require {mixin} truncate
 /// @alias truncate
 @mixin truncate-text($max-width: 100%, $text-overflow: ellipsis) {
   @include truncate($max-width, $text-overflow);
@@ -63,7 +63,7 @@
 /// @param {String} $text-overflow [ellipsis] - The text-overflow value.
 ///
 /// @group Utilities
-///
+/// @require {mixin} truncate
 /// @alias truncate
 @mixin text-truncate($max-width: 100%, $text-overflow: ellipsis) {
   @include truncate($max-width, $text-overflow);
@@ -79,7 +79,7 @@
 /// @param {String} $text-overflow [ellipsis] - The text-overflow value.
 ///
 /// @group Utilities
-///
+/// @require {mixin} truncate
 /// @alias truncate
 @mixin ellipsis($max-width: 100%, $text-overflow: ellipsis) {
   @include truncate($max-width, $text-overflow);

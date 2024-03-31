@@ -2,15 +2,15 @@
 @use 'sass:meta';
 @use 'sass:string';
 
-/// Takes a string and separates it into a list.
+/// Takes a String and separates it into a List.
 ///
 /// @param {String} $string - The initial string.
-/// @param {String} $delimiter - The separator in the $string found in
-/// the string that is used to subdivide the string into list values.
-/// @param {String} $list-separator [comma] - The separator that will
-/// be used between values in the new list. Must be either `space`, `comma` or
-/// `slash`. You may also pass the string-wrapped characters themselves to this
-/// parameter, such as: `' '`, `','`, `', '`, `'/'`. or `' / '`.
+/// @param {String} $delimiter - The separator found in `$string` that is
+/// used to subdivide the string into list values.
+/// @param {String} $separator [comma] - The separator that will be used between
+/// values in the new list. Must be either `space`, `comma` or `slash`. You may
+/// also pass the string-wrapped characters themselves to this parameter, such
+/// as: `' '`, `','`, `', '`, `'/'`. or `' / '`.
 ///
 /// @return {List} The converted list.
 ///
@@ -20,8 +20,8 @@
 /// @throw List passsed to str-to-list warning.
 /// @throw Invalid $string type passed, not a string.
 /// @throw Invalid $delimiter type passed, not a string.
-/// @throw Invalid $list-separator value passed, not a valid separator.
-@function str-to-list($string, $delimiter: ' ', $list-separator: comma) {
+/// @throw Invalid $separator value passed, not a valid separator.
+@function str-to-list($string, $delimiter: ' ', $separator: comma) {
   @if meta.type-of($string) == 'list' {
     @warn 'You passed a list value to the [ str-to-list() ] function.' +
         'Returning original list of #{$string}';
@@ -54,17 +54,17 @@
     $delimiter: '-';
   }
 
-  @if $list-separator == comma or $list-separator == ',' or $list-separator == ', ' {
-    $list-separator: comma;
-  } @else if $list-separator == space or $list-separator == ' ' {
-    $list-separator: space;
-  } @else if $list-separator == slash or $list-separator == '/' or $list-separator == ' / ' {
-    $list-separator: slash;
+  @if $separator == comma or $separator == ',' or $separator == ', ' {
+    $separator: comma;
+  } @else if $separator == space or $separator == ' ' {
+    $separator: space;
+  } @else if $separator == slash or $separator == '/' or $separator == ' / ' {
+    $separator: slash;
   } @else {
-    @error 'Invalid $list-separator value passed to the [ str-to-list() ] ' +
-        'function. You passed `#{meta.inspect($list-separator)}`, which is ' +
+    @error 'Invalid $separator value passed to the [ str-to-list() ] ' +
+        'function. You passed `#{meta.inspect($separator)}`, which is ' +
         'not a valid separator for lists. You must choose either `comma`, ' +
-        '`space`, or `slash` for the $list-separator parameter.';
+        '`space`, or `slash` for the $separator parameter.';
   }
 
   $list: ();
@@ -75,7 +75,7 @@
     $item: string.slice($string, 1, $index - 1);
 
     // Append the item to the list
-    $list: list.append($list, $item, $list-separator);
+    $list: list.append($list, $item, $separator);
 
     // Remove the processed item and separator from the string
     $string: string.slice($string, $index + string.length($delimiter));
@@ -86,33 +86,86 @@
 
   // Check if there is any remaining string to add as the last item
   @if string.length($string) > 0 {
-    $list: list.append($list, $string, $list-separator);
+    $list: list.append($list, $string, $separator);
   }
 
   @return $list;
 }
 
-/// Takes a string and separates it into a list.
+/// Takes a String and separates it into a List.
 ///
 /// @param {String} $string - The initial string.
-/// @param {String} $delimiter - The separator in the $string found in
-/// the string that is used to subdivide the string into list values.
-/// @param {String} $list-separator [comma] - The separator that will
-/// be used between values in the new list. Must be either `space`, `comma` or
-/// `slash`. You may also pass the string-wrapped characters themselves to this
-/// parameter, such as: `' '`, `','`, `', '`, `'/'`. or `' / '`.
+/// @param {String} $delimiter - The separator found in `$string` that is
+/// used to subdivide the string into list values.
+/// @param {String} $separator [comma] - The separator that will be used between
+/// values in the new list. Must be either `space`, `comma` or `slash`. You may
+/// also pass the string-wrapped characters themselves to this parameter, such
+/// as: `' '`, `','`, `', '`, `'/'`. or `' / '`.
 ///
 /// @return {List} The converted list.
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} str-to-list
 ///
 /// @throw List passsed to str-to-list warning.
 /// @throw Invalid $string type passed, not a string.
 /// @throw Invalid $delimiter type passed, not a string.
-/// @throw Invalid $list-separator value passed, not a valid separator.
+/// @throw Invalid $separator value passed, not a valid separator.
 ///
 /// @alias str-to-list
-@function string-to-list($string, $delimiter: ' ', $list-separator: comma) {
-  @return str-to-list($string, $delimiter, $list-separator);
+@function string-to-list($string, $delimiter: ' ', $separator: comma) {
+  @return str-to-list($string, $delimiter, $separator);
+}
+
+/// Takes a String and separates it into a List.
+///
+/// @param {String} $string - The initial string.
+/// @param {String} $delimiter - The separator found in `$string` that is
+/// used to subdivide the string into list values.
+/// @param {String} $separator [comma] - The separator that will be used between
+/// values in the new list. Must be either `space`, `comma` or `slash`. You may
+/// also pass the string-wrapped characters themselves to this parameter, such
+/// as: `' '`, `','`, `', '`, `'/'`. or `' / '`.
+///
+/// @return {List} The converted list.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} str-to-list
+///
+/// @throw List passsed to str-to-list warning.
+/// @throw Invalid $string type passed, not a string.
+/// @throw Invalid $delimiter type passed, not a string.
+/// @throw Invalid $separator value passed, not a valid separator.
+///
+/// @alias str-to-list
+@function string-to-list($string, $delimiter: ' ', $separator: comma) {
+  @return str-to-list($string, $delimiter, $separator);
+}
+
+/// Takes a String and separates it into a List.
+///
+/// @param {String} $string - The initial string.
+/// @param {String} $delimiter - The separator found in `$string` that is
+/// used to subdivide the string into list values.
+/// @param {String} $separator [comma] - The separator that will be used between
+/// values in the new list. Must be either `space`, `comma` or `slash`. You may
+/// also pass the string-wrapped characters themselves to this parameter, such
+/// as: `' '`, `','`, `', '`, `'/'`. or `' / '`.
+///
+/// @return {List} The converted list.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} str-to-list
+///
+/// @throw List passsed to str-to-list warning.
+/// @throw Invalid $string type passed, not a string.
+/// @throw Invalid $delimiter type passed, not a string.
+/// @throw Invalid $separator value passed, not a valid separator.
+///
+/// @alias str-to-list
+@function explode-string($string, $delimiter: ' ', $separator: comma) {
+  @return str-to-list($string, $delimiter, $separator);
 }

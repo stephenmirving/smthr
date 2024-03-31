@@ -22,7 +22,7 @@
 ///
 /// @access public
 /// @group Utilities
-///
+/// @require {function} is-calculation
 /// @alias is-calculation
 @function is-calc($value) {
   @return is-calculation($value);

@@ -13,7 +13,7 @@
 /// @group Utilities
 /// @require {function} is-true
 /// @require {function} to-list
-@function purge-list($list) {
+@function list-purge($list) {
   $result: ();
 
   @each $item in $list {
@@ -34,12 +34,11 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-true
-/// @require {function} to-list
+/// @require {function} list-purge
 ///
-/// @alias purge-list
-@function clean-list($list) {
-  @return purge-list($list);
+/// @alias list-purge
+@function purge-list($list) {
+  @return list-purge($list);
 }
 
 /// Removes all values from $list that are `null`, `false`, or are empty maps,
@@ -51,10 +50,25 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-true
-/// @require {function} to-list
+/// @require {function} list-purge
 ///
-/// @alias purge-list
-@function list-purge($list) {
-  @return purge-list($list);
+/// @alias list-purge
+@function clean-list($list) {
+  @return list-purge($list);
+}
+
+/// Removes all values from $list that are `null`, `false`, or are empty maps,
+/// lists, or strings.
+///
+/// @param {List} $list - The list to purge.
+///
+/// @return {List} The purged list.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} list-purge
+///
+/// @alias list-purge
+@function list-clean($list) {
+  @return list-purge($list);
 }

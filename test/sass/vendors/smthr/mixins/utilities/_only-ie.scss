@@ -18,7 +18,6 @@
 /// @content Styles that target the IE versions given.
 ///
 /// @group Utilities
-/// @alias only-ie
 @mixin only-ie($version: null, $version-max: $version) {
   @if $version {
     @if meta.type-of($version) != 'number' or
@@ -132,6 +131,7 @@
 /// @content Styles that target the IE versions given.
 ///
 /// @group Utilities
+/// @require {mixin} only-ie
 /// @alias only-ie
 @mixin ie-only($version: null, $version-max: $version) {
   @include only-ie($version, $version-max) {
@@ -157,6 +157,7 @@
 /// @content Styles that target the IE versions given.
 ///
 /// @group Utilities
+/// @require {mixin} only-hidpi
 /// @alias only-ie
 @mixin target-ie($version: null, $version-max: $version) {
   @include only-ie($version, $version-max) {

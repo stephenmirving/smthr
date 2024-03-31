@@ -1,0 +1,81 @@
+@use 'sass:list';
+@use 'is-integer' as *;
+
+/// Shift elements in `$list` forwarsd on a loop, by `$number` of positions.
+///
+/// @param {List} $list - The list to update.
+/// @param {Number} $number [1] - number of position between old and new indexes
+///
+/// @return {List} - Returns the newly shifted list.
+///
+/// @example
+/// list-loop('a' 'b' 'c')
+/// // 'c' 'a' 'b'
+///
+/// @example
+/// list-loop('a' 'b' 'c', 2)
+/// // 'b' 'c' 'a'
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-integer
+/// @since 0.15.0
+///
+/// @throws Invalid data type for $list in the [ list-loop() ] mixin.
+/// @throws Invalid data type for $number in the [ list-loop() ] mixin.
+@function list-loop($list, $number: 1) {
+  @if type-of($list) == 'map' {
+    @error 'Invalid data type for $list in the [ list-loop() ] mixin. Value ' +
+      'cannot be of type \'map\'.';
+  }
+
+  @if not is-integer($number) {
+    @error 'Invalid data type for $number in the [ list-loop() ] mixin. This ' +
+      'value must be an integer that represents the number of index positions ' +
+      'that you want the List to shift through on a loop.';
+  }
+
+  @if list.length($list) < 2 {
+    @return $list;
+  }
+
+  $result: ();
+  $length: list.length($list);
+
+  @for $i from 0 to $length {
+    $result: list.append(
+      $result,
+      list.nth($list, ($i - $number) % $length + 1),
+      list.separator($list)
+    );
+  }
+
+  @return $result;
+}
+
+/// Shift elements in `$list` forwards on a loop, by `$number` of positions.
+///
+/// @param {List} $list - The list to update.
+/// @param {Number} $number [1] - number of position between old and new indexes
+///
+/// @return {List} - Returns the newly shifted list.
+///
+/// @example
+/// shift-list-elements('a' 'b' 'c')
+/// // 'c' 'a' 'b'
+///
+/// @example
+/// shift-list-elements('a' 'b' 'c', 2)
+/// // 'b' 'c' 'a'
+///
+/// @group Utilities
+/// @require {function} list-loop
+/// @since 0.15.0
+///
+/// @throws Invalid data type for $list in the [ list-loop() ] mixin.
+/// @throws Invalid data type for $number in the [ list-loop() ] mixin.
+///
+/// @alias list-loop
+@function shift-list-elements($list, $number: 1) {
+  @return list-loop($list, $number)
+}

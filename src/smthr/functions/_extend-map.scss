@@ -93,6 +93,7 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} extend-map
 ///
 /// @throw Invalid $object type, not of type 'map'.
 /// @throw Invalid type in $objects, not of type 'map'

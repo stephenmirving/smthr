@@ -22,6 +22,7 @@
 /// @content Styles that target HiDPI/Retina displays only.
 ///
 /// @group Utilities
+/// @require {mixin} only-hidpi
 ///
 /// @alias only-hidpi
 @mixin hidpi-only($ratio: 1.25) {
@@ -38,6 +39,7 @@
 /// @content Styles that target HiDPI/Retina displays only.
 ///
 /// @group Utilities
+/// @require {mixin} only-hidpi
 ///
 /// @alias only-hidpi
 @mixin target-hidpi($ratio: 1.25) {

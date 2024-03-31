@@ -64,15 +64,28 @@
 
 // List Functions
 @forward 'every';
+@forward 'first-of';
+@forward 'is-empty';
+@forward 'last-of';
+@forward 'last-index';
 @forward 'list-chunk';
 @forward 'list-contains';
 @forward 'list-count-values';
+@forward 'list-loop';
+@forward 'list-prepend';
 @forward 'list-to-string';
-@forward 'purge-list';
+@forward 'list-purge';
+@forward 'list-range';
+@forward 'list-replace-nth';
+@forward 'list-remove-duplicates';
+@forward 'list-remove-nth';
+@forward 'list-reverse';
+@forward 'list-slice';
+@forward 'list-to-map';
+@forward 'list-update';
 @forward 'remove-from';
 @forward 'remove-where';
 @forward 'to-list';
-@forward 'update-list';
 
 // Map Functions
 @forward 'extend-map';

@@ -78,6 +78,7 @@
 /// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
+/// @require {mixin} center-horizontally
 /// @alias center-horizontally
 @mixin horizontal-center($position: relative) {
   @include center-horizontally($position);

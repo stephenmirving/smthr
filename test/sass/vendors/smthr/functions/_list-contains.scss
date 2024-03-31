@@ -39,7 +39,7 @@
 ///
 /// @access public
 /// @group Utilities
-///
+/// @require {function} list-contains
 /// @since 0.14.0
 /// @alias list-contains
 @function list-includes($list, $value) {
@@ -64,7 +64,7 @@
 /// @access public
 /// @group Utilities
 /// @since 0.14.0
-///
+/// @require {function} list-contains
 /// @alias list-contains
 @function in-list($list, $value) {
   @return list-contains($list, $value);

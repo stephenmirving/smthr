@@ -1,0 +1,44 @@
+@use 'sass:math';
+@use 'sass:meta';
+@use 'sass:list';
+@use 'is-integer' as *;
+
+/// Build a list of values from 1 through `$n`.
+///
+/// @param {Number} $n - The maximum value. Must be a unitless integer greater
+/// than 0.
+///
+/// @return {List | Number}
+///
+/// @example
+/// list-range(5)
+/// // 1 2 3 4 5
+///
+/// @example
+/// list-range(1)
+/// // 1
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-integer
+/// @since 0.15.0
+///
+/// @throw Invalid `$n` value, it is not a a unitless integer greater than 0.
+@function list-range($n) {
+  @if not is-integer($n) or not math.is-unitless($n) or $n < 1 {
+    @error 'Invalid $n value of `#{meta.inspect($n)}` the [ list-range() ] ' +
+        'function. Value must be a unitless integer greater than 0.';
+  }
+
+  @if $n == 1 {
+    @return $n;
+  }
+
+  $range: ();
+
+  @for $i from 1 through $n {
+    $range: list.append($range, $i);
+  }
+
+  @return $range;
+}

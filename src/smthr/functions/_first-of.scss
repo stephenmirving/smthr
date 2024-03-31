@@ -1,0 +1,162 @@
+@use 'sass:list';
+@use 'sass:meta';
+@use 'is-empty' as *;
+
+/// Returns first element of a List or the first property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve first element
+/// or property/value pair.
+/// @return {*} - The first element from `$value`. If $value is a Map, returns
+/// the first key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// first-of('a' 'b' 'c')
+/// // 'a'
+///
+/// @example
+/// first-of('a')
+/// // 'a'
+///
+/// @example
+/// first-of(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-empty
+/// @since 0.15.0
+///
+/// @throw The value passed to the [ first-of() ] function is empty, cannot find
+/// the first item of empty Lists or Maps.
+@function first-of($value) {
+  @if is-empty($value) {
+    @error 'The value passed to the [ first-of() ] function is empty, cannot ' +
+        'find the first item of empty Lists or Maps.';
+  }
+
+  @return list.nth($value, 1);
+}
+
+/// Returns first element of a List or the first property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve first element
+/// or property/value pair.
+/// @return {*} - The first element from `$value`. If $value is a Map, returns
+/// the first key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// first-of-list('a' 'b' 'c')
+/// // 'a'
+///
+/// @example
+/// first-of-list('a')
+/// // 'a'
+///
+/// @example
+/// first-of-list(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} first-of
+/// @since 0.15.0
+///
+/// @throw Value passed is empty, cannot find first item of empty Lists or Maps.
+///
+/// @alias first-of
+@function first-of-list($value) {
+  @return first-of($value);
+}
+
+/// Returns first element of a List or the first property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve first element
+/// or property/value pair.
+/// @return {*} - The first element from `$value`. If $value is a Map, returns
+/// the first key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// list-first-of('a' 'b' 'c')
+/// // a
+///
+/// @example
+/// list-first-of('a')
+/// // a
+///
+/// @example
+/// list-first-of(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} first-of
+/// @since 0.15.0
+///
+/// @throw Value passed is empty, cannot find first item of empty Lists or Maps.
+///
+/// @alias first-of
+@function list-first-of($value) {
+  @return first-of($value);
+}
+
+/// Returns first element of a List or the first property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve first element
+/// or property/value pair.
+/// @return {*} - The first element from `$value`. If $value is a Map, returns
+/// the first key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// first-of-map('a' 'b' 'c')
+/// // 'a'
+///
+/// @example
+/// first-of-map('a')
+/// // 'a'
+///
+/// @example
+/// first-of-map(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} first-of
+/// @since 0.15.0
+///
+/// @throw Value passed is empty, cannot find first item of empty Lists or Maps.
+///
+/// @alias first-of
+@function first-of-map($value) {
+  @return first-of($value);
+}
+
+/// Returns first element of a List or the first property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve first element
+/// or property/value pair.
+/// @return {*} - The first element from `$value`. If $value is a Map, returns
+/// the first key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// map-first-of('a' 'b' 'c')
+/// // 'a'
+///
+/// @example
+/// map-first-of('a')
+/// // 'a'
+///
+/// @example
+/// map-first-of(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} first-of
+/// @since 0.15.0
+///
+/// @throw Value passed is empty, cannot find first item of empty Lists or Maps.
+///
+/// @alias first-of
+@function map-first-of($value) {
+  @return first-of($value);
+}

@@ -1,0 +1,46 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'is-true' as *;
+@use 'is-integer' as *;
+@use 'list-purge' as *;
+@use 'to-list' as *;
+
+/// Replaces value at `$index` from `$list` with `$value`.
+///
+/// @param {List} $list - The List to update.
+/// @param {Number} $index - The list index to replace.
+/// @param {*} $value - The value to be placed in the List at `$index`
+///
+/// @return {List} - The update list with the value at `$index` replaced with
+/// `$value`
+///
+/// @example
+/// list-replace-nth('a' 'b' 'c', 2, 'z')
+/// // 'a' 'z' 'c'
+///
+/// @access public
+/// @group Utilities
+/// @require is-integer
+/// @require list-purge
+/// @require is-true
+/// @require to-list
+/// @since 0.15.0
+///
+/// @throws Invalid index $index for `sl-replace-nth`.
+@function list-replace-nth($list, $index, $value) {
+  @if is-map($list) {
+    @error 'Invalid $list data type for the [ list-replace-nth() ] function. ' +
+        'You may not pass a value of data type \'map\'';
+  }
+
+  @if not is-integer($index) or $index == 0 or math.abs($index) > list.length($list) {
+    @error 'Invalid $index of #{meta.inspect($index)} used for the ' +
+        '[ list-replace-nth() ] function.';
+  }
+
+  $list: list.set-nth($list, $index, $value);
+  $list: if(is-true($value), $list, list-purge($list));
+
+  @return to-list($list);
+}

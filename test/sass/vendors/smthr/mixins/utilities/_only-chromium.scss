@@ -16,6 +16,7 @@
 /// @content Styles that target Chromium browsers version 29 and up.
 ///
 /// @group Utilities
+/// @require {mixin} only-chromium
 ///
 /// @alias only-chromium
 @mixin chromium-only {
@@ -30,6 +31,7 @@
 /// @content Styles that target Chromium browsers version 29 and up.
 ///
 /// @group Utilities
+/// @require {mixin} only-chromium
 ///
 /// @alias only-chromium
 @mixin target-chromium {

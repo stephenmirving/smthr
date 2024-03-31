@@ -1,0 +1,40 @@
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'to-list' as *;
+
+/// Reverses the order of `$list`.
+///
+/// @param {List} $list - The List to reverse.
+///
+/// @return {List} - The updated list with its order having been reversed.
+///
+/// @example
+/// sl-reverse('a' 'b' 'c' 'd')
+/// // 'd' 'c' 'b' 'a'
+///
+/// @access public
+/// @group Utilities
+/// @require {function} to-list
+/// @since 0.15.0
+@function list-reverse($list) {
+  @if meta.type-of($list) == 'map' {
+    @error 'Invalid $list data type for the [ list-reverse() ] function. This ' +
+        'value cannot be of type \'map\'';
+  }
+
+  $length: list.length($list);
+  $end: math.floor(math.div($length, 2));
+
+  @if $length < 2 {
+    @return $list;
+  }
+
+  @for $i from 1 through $end {
+    $temp: list.nth($list, $i);
+    $list: list.set-nth($list, $i, list.nth($list, -$i));
+    $list: list.set-nth($list, -$i, $temp);
+  }
+
+  @return to-list($list);
+}

@@ -175,12 +175,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} is-alias
-/// @require {function} is-angle
-/// @require {function} is-number
-/// @require {function} is-string
-/// @require {function} strip-unit
-/// @require {function} pi
+/// @require {function} conv-angle
 ///
 /// @throw Invalid $angle unit type error.
 /// @throw Invalid $angle keyword string error.

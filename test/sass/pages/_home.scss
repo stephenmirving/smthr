@@ -292,5 +292,6 @@ $flip-axis: 'horizontal';
 }
 
 .test {
-  content: meta.inspect(every(1 2 3, 'is-unitless', math));
+
+  content: meta.inspect(list.nth(('a' 'b' 'c' 'd' 'e' 'f' 'g'), -1));
 }

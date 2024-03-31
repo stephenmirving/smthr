@@ -189,11 +189,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} conv-color-name
-/// @require {function} strip-unit
-/// @require {function} to-cmyk
-/// @require {function} to-hex
-/// @require {function} to-fixed
+/// @require {function} conv-color
 ///
 /// @throw Invalid data type for $color.
 /// @throw Invalid data type for $syntax.
@@ -230,11 +226,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} conv-color-name
-/// @require {function} strip-unit
-/// @require {function} to-cmyk
-/// @require {function} to-hex
-/// @require {function} to-fixed
+/// @require {function} conv-color
 ///
 /// @throw Invalid data type for $color.
 /// @throw Invalid data type for $syntax.
@@ -271,11 +263,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} conv-color-name
-/// @require {function} strip-unit
-/// @require {function} to-cmyk
-/// @require {function} to-hex
-/// @require {function} to-fixed
+/// @require {function} conv-color
 ///
 /// @throw Invalid data type for $color.
 /// @throw Invalid data type for $syntax.

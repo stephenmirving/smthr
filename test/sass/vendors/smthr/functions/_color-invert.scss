@@ -87,10 +87,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} conv-color
-/// @require {function} get-color-type
-/// @require {function} is-color
-/// @require {function} is-string
+/// @require {function} color-invert
 ///
 /// @throw Invalid `$color` data type, must be a color.
 /// @throw Invalid `$weight` value, must be a percentage between 0% and 100% inclusive.

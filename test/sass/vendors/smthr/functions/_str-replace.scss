@@ -52,6 +52,7 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} str-replace
 ///
 /// @throw Invalid data type error for $string, $search, or $replace.
 ///
@@ -72,6 +73,7 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} str-replace
 ///
 /// @throw Invalid data type error for $string, $search, or $replace.
 ///
@@ -92,6 +94,7 @@
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} str-replace
 ///
 /// @throw Invalid data type error for $string, $search, or $replace.
 ///

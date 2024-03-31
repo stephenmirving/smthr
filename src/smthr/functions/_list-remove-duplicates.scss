@@ -1,0 +1,35 @@
+@use 'sass:list';
+@use 'is-map' as *;
+@use 'to-list' as *;
+
+/// Removes duplicate values from `$list`.
+///
+/// @param {List} $list - The List from which to remove duplicates.
+///
+/// @return {List} - The new List with duplicates removed.
+///
+/// @example
+/// list-remove-duplicates('a' 'b' 'a' 'b')
+/// // 'a' 'b'
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-map
+/// @require {function} to-list
+/// @since 0.15.0
+@function list-remove-duplicates($list) {
+  $result: ();
+
+  @if is-map($list) {
+    @error 'Invalid $list data type for the [ list-remove-duplicates() ] function. ' +
+        'You may not pass a value of data type \'map\'';
+  }
+
+  @each $item in $list {
+    @if not list.index($result, $item) {
+      $result: list.append($result, $item, list.separator($list));
+    }
+  }
+
+  @return to-list($result);
+}

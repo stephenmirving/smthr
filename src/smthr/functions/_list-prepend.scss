@@ -1,0 +1,35 @@
+@use 'sass:list';
+@use 'to-list' as *;
+@use 'is-map' as *;
+@use 'is-true' as *;
+
+/// Adds `$value` as first index of `$list`.
+///
+/// @param {List} $list - The list on which to preprend `$value`.
+/// @param {*} $value - The value to prepend to `$list`.
+///
+/// @return {List} - The new List, created by adding `$value` to the start of
+/// `$list` and shifting all other values in `$list` over by 1 index position.
+///
+/// @example
+/// list-prepend('a' 'b' 'c', 'z')
+/// // 'z' 'a' 'b' 'c'
+///
+/// @access public
+/// @group Utilities
+/// @since 0.15.0
+/// @require to-list
+/// @require is-map
+/// @require is-true
+@function list-prepend($list, $value) {
+  @if is-map($list) {
+    @error 'Invalid data type for $list in the [ list-prepend() ] function. ' +
+        'The $list value cannot be of type \'map\'.';
+  }
+
+  @if is-true($value) {
+    $list: list.join($value, $list, list.separator($list));
+  }
+
+  @return to-list($list);
+}

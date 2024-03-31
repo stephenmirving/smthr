@@ -1,0 +1,162 @@
+@use 'sass:list';
+@use 'sass:meta';
+@use 'is-empty' as *;
+
+/// Returns last element of a List or the last property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve last element
+/// or property/value pair.
+/// @return {*} - The last element from `$value`. If $value is a Map, returns
+/// the last key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// last-of('a' 'b' 'c')
+/// // 'a'
+///
+/// @example
+/// last-of('a')
+/// // 'a'
+///
+/// @example
+/// last-of(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-empty
+/// @since 0.15.0
+///
+/// @throw The value passed to the [ last-of() ] function is empty, cannot find
+/// the last item of empty Lists or Maps.
+@function last-of($value) {
+  @if is-empty($value) {
+    @error 'The value passed to the [ last-of() ] function is empty, cannot ' +
+        'find the last item of empty Lists or Maps.';
+  }
+
+  @return list.nth($value, -1);
+}
+
+/// Returns last element of a List or the last property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve last element
+/// or property/value pair.
+/// @return {*} - The last element from `$value`. If $value is a Map, returns
+/// the last key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// last-of-list('a' 'b' 'c')
+/// // 'a'
+///
+/// @example
+/// last-of-list('a')
+/// // 'a'
+///
+/// @example
+/// last-of-list(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} last-of
+/// @since 0.15.0
+///
+/// @throw Value passed is empty, cannot find last item of empty Lists or Maps.
+///
+/// @alias last-of
+@function last-of-list($value) {
+  @return last-of($value);
+}
+
+/// Returns last element of a List or the last property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve last element
+/// or property/value pair.
+/// @return {*} - The last element from `$value`. If $value is a Map, returns
+/// the last key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// list-last-of('a' 'b' 'c')
+/// // 'a'
+///
+/// @example
+/// list-last-of('a')
+/// // 'a'
+///
+/// @example
+/// list-last-of(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} last-of
+/// @since 0.15.0
+///
+/// @throw Value passed is empty, cannot find last item of empty Lists or Maps.
+///
+/// @alias last-of
+@function list-last-of($value) {
+  @return last-of($value);
+}
+
+/// Returns last element of a List or the last property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve last element
+/// or property/value pair.
+/// @return {*} - The last element from `$value`. If $value is a Map, returns
+/// the last key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// last-of-map('a' 'b' 'c')
+/// // 'a'
+///
+/// @example
+/// last-of-map('a')
+/// // 'a'
+///
+/// @example
+/// last-of-map(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} last-of
+/// @since 0.15.0
+///
+/// @throw Value passed is empty, cannot find last item of empty Lists or Maps.
+///
+/// @alias last-of
+@function last-of-map($value) {
+  @return last-of($value);
+}
+
+/// Returns last element of a List or the last property value pair from a map.
+///
+/// @param {List} $value - The List or Map from which to retrieve last element
+/// or property/value pair.
+/// @return {*} - The last element from `$value`. If $value is a Map, returns
+/// the last key/value pair as as a two value, space-separated List.
+///
+/// @example
+/// map-last-of('a' 'b' 'c')
+/// // 'a'
+///
+/// @example
+/// map-last-of('a')
+/// // 'a'
+///
+/// @example
+/// map-last-of(())
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} last-of
+/// @since 0.15.0
+///
+/// @throw Value passed is empty, cannot find last item of empty Lists or Maps.
+///
+/// @alias last-of
+@function map-last-of($value) {
+  @return last-of($value);
+}

@@ -75,9 +75,7 @@
 /// the content directive.
 ///
 /// @group Utilities
-/// @require {function} conv-to-em
-/// @require {function} strip-unit
-///
+/// @require {mixin} only-phones
 /// @alias only-phones
 @mixin phones-only (
   $max-phone-width: 436px,
@@ -105,8 +103,7 @@
 /// the content directive.
 ///
 /// @group Utilities
-/// @require {function} conv-to-em
-/// @require {function} strip-unit
+/// @require {mixin} only-phones
 ///
 /// @alias only-phones
 @mixin target-phones(

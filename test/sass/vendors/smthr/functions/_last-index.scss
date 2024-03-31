@@ -1,0 +1,60 @@
+@use 'sass:list';
+@use 'is-empty' as *;
+
+/// Returns the last index of `$value` in `$list`.
+///
+/// @param {List} $list - The List to search for `$value`.
+/// @param {*} $value - Value to be searched for in `$list`.
+///
+/// @return {Number | Null} - Returns the last index of `$value` in `$liSt` if
+/// `$value` exists in `$list`, otherwise returns `null`.
+///
+/// @example
+/// last-index('a' 'b' 'a', 'a')
+/// // 3
+///
+/// @example
+/// last-index('a' 'b' 'a', 'z')
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @since 0.15.0
+@function last-index($list, $value) {
+  $list-length: list.length($list);
+
+  @if not is-empty($list) {
+    @for $list-index from $list-length through 1 {
+      @if list.nth($list, $list-index) == $value {
+        @return $i;
+      }
+    }
+  }
+
+  @return null;
+}
+
+/// Returns the last index of `$value` in `$list`.
+///
+/// @param {List} $list - The List to search for `$value`.
+/// @param {*} $value - Value to be searched for in `$list`.
+///
+/// @return {Number | Null} - Returns the last index of `$value` in `$liSt` if
+/// `$value` exists in `$list`, otherwise returns `null`.
+///
+/// @example
+/// list-last-index('a' 'b' 'a', 'a')
+/// // 3
+///
+/// @example
+/// list-last-index('a' 'b' 'a', 'z')
+/// // null
+///
+/// @access public
+/// @group Utilities
+/// @require {function} last-index
+/// @since 0.15.0
+/// @alias last-index
+@function list-last-index($list, $value) {
+  @return last-index($list, $value);
+}

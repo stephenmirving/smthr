@@ -21,6 +21,7 @@
 /// positioning, you should apply `position: relative` to the parent element.
 ///
 /// @group Utilities
+/// @require {mixin} position-center
 /// @alias position-center
 @mixin pos-center($position: relative) {
   @include position-center($position);

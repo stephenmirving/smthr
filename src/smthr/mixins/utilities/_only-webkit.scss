@@ -16,7 +16,7 @@
 /// @content Styles that target WebKit browsers like Chrome, Safari, modern Edge.
 ///
 /// @group Utilities
-///
+/// @require {mixin} only-webkit
 /// @alias only-webkit
 @mixin webkit-only {
   @include only-webkit {
@@ -30,7 +30,7 @@
 /// @content Styles that target WebKit browsers like Chrome, Safari, modern Edge.
 ///
 /// @group Utilities
-///
+/// @require {mixin} only-webkit
 /// @alias only-webkit
 @mixin target-webkit {
   @include only-webkit {

@@ -93,8 +93,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} _component-to-hex
-/// @require {function} conv-color-name
+/// @require {function} to-hex
 ///
 /// @throw Invalid data type for $color error.
 ///
@@ -120,8 +119,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} _component-to-hex
-/// @require {function} conv-color-name
+/// @require {function} to-hex
 ///
 /// @throw Invalid data type for $color error.
 ///
@@ -147,8 +145,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} _component-to-hex
-/// @require {function} conv-color-name
+/// @require {function} to-hex
 ///
 /// @throw Invalid data type for $color error.
 ///

@@ -1,0 +1,21 @@
+/// Remove value at `$index` from `$list`.
+///
+/// @param {List} $list - The List to update.
+/// @param {Number} $index - The list index to remove.
+///
+/// @return {List} - The update list with the value at `$index` removed.
+///
+/// @example
+/// list-remove-nth('a' 'b' 'c', 2)
+/// // 'a' 'c'
+///
+/// @access public
+/// @group Utilities
+/// @require is-integer
+/// @require list-purge
+/// @require is-true
+/// @require to-list
+/// @since 0.15.0
+@function list-remove-nth($list, $index) {
+  @return list-replace-nth($list, $index, '');
+}
