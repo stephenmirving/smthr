@@ -6,23 +6,24 @@
 @use '../../functions/is-alias' as *;
 @use '../../functions/is-integer' as *;
 
+// **ATTN:** EVERYTHING HERE IS CURRENTLY UNTESTED AND UNINTEGRATED
 
-/// This quantity-query mixin will select every items if there is at most
-/// `$num` items that match the given selector. It will not select anything if
-/// there is not as many item as `$num` that match the given selector.
-///
-/// @param {Number} $num - If the number of child elements matching $selector is
-/// equal to or less than this number, then all will be selected. If the number
-/// of child elements matching $selector is greater than this number, then none
-/// are selected.
-/// @param {String} $selector - Pass the selector as an unquoted string.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
-/// @group Utilities
-/// @require {function} is-integer
-/// TODO: fix this mixin or delete
+// / This quantity-query mixin will select every items if there is at most
+// / `$num` items that match the given selector. It will not select anything if
+// / there is not as many item as `$num` that match the given selector.
+// /
+// / @param {Number} $num - If the number of child elements matching $selector is
+// / equal to or less than this number, then all will be selected. If the number
+// / of child elements matching $selector is greater than this number, then none
+// / are selected.
+// / @param {String} $selector - Pass the selector as an unquoted string.
+// /
+// / @content [ Write the style rules that you want to apply to the children,
+// / and they will be added within the content directive ]
+// /
+// / @group Utilities
+// / @require {function} is-integer
+// / TODO: fix this mixin or delete
 @mixin at-most-any($num, $selector) {
   @if not is-integer($num) {
     @error 'Invalid input for $num in the [ at-most-any() ] mixin. ' +
@@ -43,21 +44,21 @@
   }
 }
 
-/// This quantity-query mixin will select every items there is that matches
-/// $selector between `$min` and `$max` items. If the quantity of child elements
-/// matching $selector is less than the $min or greater than the $max, none will
-/// be selected. If the quantity is in range, all will be selected.
-///
-/// @param {Number} $min - The minimum number of children that match $selector.
-/// @param {Number} $max - The maximum number of children that match $selector.
-/// @param {String} $selector - Pass the selector as an unquoted string.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
-/// @group Utilities
-/// @require {function} is-integer
-/// TODO: Fix mixin or delete
+// / This quantity-query mixin will select every items there is that matches
+// / $selector between `$min` and `$max` items. If the quantity of child elements
+// / matching $selector is less than the $min or greater than the $max, none will
+// / be selected. If the quantity is in range, all will be selected.
+// /
+// / @param {Number} $min - The minimum number of children that match $selector.
+// / @param {Number} $max - The maximum number of children that match $selector.
+// / @param {String} $selector - Pass the selector as an unquoted string.
+// /
+// / @content [ Write the style rules that you want to apply to the children,
+// / and they will be added within the content directive ]
+// /
+// / @group Utilities
+// / @require {function} is-integer
+// / TODO: Fix mixin or delete
 @mixin in-between-any($min, $max, $selector) {
   @if not is-integer($min) or not is-integer($max) {
     @error 'Invalid input for $min or $max in the [ in-between-any() ] mixin. ' +
@@ -79,18 +80,18 @@
   }
 }
 
-/// Select an element if it has at least `$num` child elements.
-///
-/// @param {Number} $num - Element will be selected if it has at least $num
-/// child elements. Must be an integer.
-/// @param {String} $selector - Pass the selector as a quoted string.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
-/// @group Utilities
-/// @require {function} is-integer
-/// TODO: Fix or delete mixin
+// / Select an element if it has at least `$num` child elements.
+// /
+// / @param {Number} $num - Element will be selected if it has at least $num
+// / child elements. Must be an integer.
+// / @param {String} $selector - Pass the selector as a quoted string.
+// /
+// / @content [ Write the style rules that you want to apply to the children,
+// / and they will be added within the content directive ]
+// /
+// / @group Utilities
+// / @require {function} is-integer
+// / TODO: Fix or delete mixin
 @mixin has-at-least($num) {
   @if not is-integer($num) {
     @error 'Invalid input for $num in the [ has-at-least() ] mixin. ' +
@@ -102,19 +103,19 @@
   }
 }
 
-/// Select an element if it has at least `$num` child elements that match
-/// $selector.
-///
-/// @param {Number} $num - Element will be selected if it has at least $num
-/// child elements of $selector. Must be an integer.
-/// @param {String} $selector - Pass the selector as a quoted string.
-///
-/// @content [ Write the style rules that you want to apply to the children,
-/// and they will be added within the content directive ]
-///
-/// @group Utilities
-/// @require {function} is-integer
-/// TODO: Fix or delete mixin
+// / Select an element if it has at least `$num` child elements that match
+// / $selector.
+// /
+// / @param {Number} $num - Element will be selected if it has at least $num
+// / child elements of $selector. Must be an integer.
+// / @param {String} $selector - Pass the selector as a quoted string.
+// /
+// / @content [ Write the style rules that you want to apply to the children,
+// / and they will be added within the content directive ]
+// /
+// / @group Utilities
+// / @require {function} is-integer
+// / TODO: Fix or delete mixin
 @mixin has-at-least-of-any($num, $selector) {
   @if not is-integer($num) {
     @error 'Invalid input for $num in the [ has-at-least-of-any() ] mixin. ' +

@@ -16,6 +16,10 @@
 /// functions. If you are using Betterize too, this value will be used to
 /// calculate the base font-size in `em` units, set on the html element.
 /// @type Number
+/// @see {function} conv-to-em
+/// @see {function} conv-to-px
+/// @see {function} conv-to-rem
+/// @see {function} reset-text
 $base-font-size: 16 !default;
 
 /// Sets the body element's font size. Sometimes you may want to change this
@@ -80,3 +84,14 @@ $text-contrast-threshold: 150 !default;
 /// Default spacer size
 /// @type Number
 $spacer: 1rem !default;
+
+/// The alphabetical order of characters.
+/// @type List
+/// @see {function} list-sort
+$sort-order: (
+  '!', '#', '$', '%', '&', '\'', '(' ')', '*', '+', ',', '-',
+  '.', '/', '[', '\\', ']', '^', '_', '{', '|', '}', '~', '0',
+  '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
+  'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+  'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+) !default;

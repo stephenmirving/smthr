@@ -16,16 +16,16 @@
 /// implemented by `$func`, otherwise returns `false`.
 ///
 /// @example
-/// every(1 2 3, unitless)
+/// every(1 2 3, 'unitless')
 /// // true
 ///
 /// @example
-/// every(1 2 3px, unitless)
+/// every(1 2 3px, 'unitless')
 /// // false
 ///
 /// @access public
 /// @group Utilities
-/// @since 0.14.0
+/// @since 0.15.0
 /// @require {function} is-falsey
 @function every($list, $func, $mod: null, $args...) {
   $is-css: false;

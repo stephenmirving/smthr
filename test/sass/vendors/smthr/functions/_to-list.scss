@@ -1,4 +1,5 @@
 @use 'sass:list';
+@use 'sass:meta';
 @use 'map-to-list' as *;
 
 /// Casts `$value` into a List.

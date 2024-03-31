@@ -23,13 +23,14 @@ animation keyframe creation, or other verbose and complex code blocks.
 5. [Documentation](#documentation)
 6. [Parameter Aliases](#parameter-aliases)
 7. [Recently Improved](#recently-improved)
-   1. [Version 0.15.0 Patch Notes](#version-0150-patch-notes)
-   2. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0140---0141-patch-notes)
-   3. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
-   4. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
-   5. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
-   6. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
-   7. [Full Patch History](#full-patch-history)
+   1. [Version 0.16.0 Patch Notes](#version-0160-patch-notes)
+   2. [Version 0.15.0 Patch Notes](#version-0150-patch-notes)
+   3. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0140---0141-patch-notes)
+   4. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
+   5. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
+   6. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
+   7. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
+   8. [Full Patch History](#full-patch-history)
 8. [Betterize](#betterize)
 9. [More Info](#more-info)
 10. [Questions](#questions)
@@ -45,7 +46,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.15.0 - _Last updated:_ 03/31/24
+This is **smoother** version 0.16.0 - _Last updated:_ 03/31/24
 
 ## Content
 
@@ -227,7 +228,7 @@ that folder called `_index.scss` and that file should look like this:
 @forward 'navigation';
 @forward 'header';
 @forward 'footer';
-// all other partials in the sass/layout/ folder should have an @forward here
+// all other partials in the sass/layout/ folder should have a @forward directive here
 ```
 
 Then in your `main.scss` file where formerly you woud use `@import` to load all
@@ -372,6 +373,15 @@ new versions without having to copy folders every time, a Getting Started guide,
 and a website with a demo for every mixin and function to help you start using
 _Smoother_.
 
+### Version 0.16.0 Patch Notes
+
+- Added the `some()` function that tests whether some items (at least one) from a
+  List pass the test implemented by a given function.
+- Added the `list-sort()` function that sorts a List based on alphabetical order or
+  a custom provided order.
+- Added the `str-compare()` function that helps `list-sort()` compare two string
+  based on the order provided.
+
 ### Version 0.15.0 Patch Notes
 
 - Added `first-of()` function that returns the first item in a List or Map.
@@ -397,6 +407,8 @@ _Smoother_.
 - Added the `list-range()` function that creates a List of numbered values from
   1 to a provided value.
 - Added the `list-to-map()` function that casts a List into a Map.
+- Added the `every()` function that tests whether all items from a List
+  pass the test implemented by a given function.
 - Renamed the `src/smthr/functions/_purge-list.scss` partial to `_list-purge().scss`
   to match the naming convention of the new list functions. `purge-list()` will
   live on as an alias of `list-purge()`.
@@ -537,6 +549,7 @@ You can also install the _Smoother_ dependency-free version of _Betterize_ with 
 ```bash
 npm i -D betterize
 ```
+
 ```bash
 npm i smoother
 ```
@@ -547,6 +560,7 @@ sass directory with:
 ```bash
 cp -r node_modules/smoother/src/{betterize,smthr} www/sass/vendors/
 ```
+
 ## More Info
 
 For more information about how to structure your project with 3rd party

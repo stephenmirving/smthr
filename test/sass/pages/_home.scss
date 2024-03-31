@@ -292,6 +292,5 @@ $flip-axis: 'horizontal';
 }
 
 .test {
-
-  content: meta.inspect(list.nth(('a' 'b' 'c' 'd' 'e' 'f' 'g'), -1));
+  content: meta.inspect(list-sort(('a' 'c' 'q' 1 '3' 'z' '.')));
 }

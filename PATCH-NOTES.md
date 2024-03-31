@@ -1,5 +1,24 @@
 # Full Smoother Patch Notes Record
 
+## Table of Contents
+
+1. [Coming Soon](#coming-soon)
+2. [Patch Notes History](#patch-notes-history)
+   1. [Version 0.16.0 Patch Notes](#version-0160-patch-notes)
+   2. [Version 0.15.0 Patch Notes](#version-0150-patch-notes)
+   3. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0140---0141-patch-notes)
+   4. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
+   5. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
+   6. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
+   7. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
+   8. [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
+   9. [Version 0.9.1 Patch Notes](#version-091-patch-notes)
+   10. [Version 0.9.0 Patch Notes](#version-090-patch-notes)
+   11. [Version 0.8.2 Patch Notes](#version-082-patch-notes)
+   12. [Version 0.8.1 Patch Notes](#version-081-patch-notes)
+   13. [Version 0.8.0 Patch Notes](#version-080-patch-notes)
+   14. [Improvements in Older Versions](#improvements-in-older-versions)
+
 ## Coming Soon
 
 Version 1.0.0 is _coming soon_ with **more** animations, **more** shapes, and
@@ -9,6 +28,15 @@ and a website with a demo for every mixin and function to help you start using
 _Smoother_.
 
 ## Patch Notes History
+
+### Version 0.16.0 Patch Notes
+
+- Added the `some()` function that tests whether some items (at least one) from a
+  List pass the test implemented by a given function.
+- Added the `list-sort()` function that sorts a List based on alphabetical order or
+  a custom provided order.
+- Added the `str-compare()` function that helps `list-sort()` compare two string
+  based on the order provided.
 
 ### Version 0.15.0 Patch Notes
 
@@ -25,9 +53,24 @@ _Smoother_.
   shifting all the other elements on the list down by 1 index.
 - Added the `list-remove-nth()` function that will remove a value from a List
   at the given index.
+- Added the `list-replace-nth()` function that will replace a value from a List
+  at the given index.
+- Added the `list-remove-duplicate()` function that will remove all duplicates
+  from a List.
+- Added the `list-reverse()` function that will reverse the order of a List.
+- Added the `list-slice()` function that will slice a list between a start and
+  end point.
+- Added the `list-range()` function that creates a List of numbered values from
+  1 to a provided value.
+- Added the `list-to-map()` function that casts a List into a Map.
+- Added the `every()` function that tests whether all items from a List
+  pass the test implemented by a given function.
 - Renamed the `src/smthr/functions/_purge-list.scss` partial to `_list-purge().scss`
   to match the naming convention of the new list functions. `purge-list()` will
   live on as an alias of `list-purge()`.
+- Renamed the `src/smthr/functions/_update-list.scss` partial to `_list-update().scss`
+  to match the naming convention of the new list functions. `update-list()` will
+  live on as an alias of `list-update()`.
 - Improved documentation.
 
 ### Version 0.14.0 - 0.14.1 Patch Notes

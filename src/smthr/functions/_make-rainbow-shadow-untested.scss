@@ -3,19 +3,19 @@
 @use 'sass:meta';
 @use 'sass:math';
 
-/// Attempt at programmatically generating the values to rainbow colored long
-/// shadow
-///
-/// !!!! ATTN: CURRENTLY BEING DEVELOPED. NOT INTEGRATED OR TESTED. !!!!
-///
-/// @param {Number} $longness - The integer length of the shadow.
-/// @param {Color} $color - The color of the long shadow.
-/// @param {Bool} $rainbow - The integer length of the shadow.
-///
-/// @return {List} The list of values for the text-shadow property.
-///
-/// @access public
-/// @group Utilities
+// / Attempt at programmatically generating the values to rainbow colored long
+// / shadow
+// /
+// / !!!! ATTN: CURRENTLY BEING DEVELOPED. NOT INTEGRATED OR TESTED. !!!!
+// /
+// / @param {Number} $longness - The integer length of the shadow.
+// / @param {Color} $color - The color of the long shadow.
+// / @param {Bool} $rainbow - The integer length of the shadow.
+// /
+// / @return {List} The list of values for the text-shadow property.
+// /
+// / @access public
+// / @group Utilities
 @function make-rainbow-shadow($longness, $color: #ffd300, $has-gradient: true) {
   $val: 0 0 $color;
 

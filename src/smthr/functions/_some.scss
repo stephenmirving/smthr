@@ -3,31 +3,32 @@
 @use 'sass:string';
 @use 'is-falsey' as *;
 
-/// Tests whether all items from `$list` pass the test implemented by `$func`.
+/// Tests whether at least one items from `$list` passes the test implemented by
+/// `$func`.
 ///
 /// @param {List} $list - The list to run the test against.
-/// @param {String} $func - The function to run against every item from $list.
+/// @param {String} $func - The function to run against items from $list.
 /// @param {String | null} $mod [null] - The module that $func belongs to.
 /// If no module and calling a global function, pass `null` or nothing. If
 /// calling a plain CSS function, pass `css`.
 /// @param {ArgList} $args - Optional extra arguments to pass to the function
 ///
-/// @return {Bool} - Returns `true` if all items from `$list` pass the test
+/// @return {Bool} - Returns `true` if some items from `$list` pass the test
 /// implemented by `$func`, otherwise returns `false`.
 ///
 /// @example
-/// every(1 2 3, 'unitless')
+/// some(1 2 3, unitless)
 /// // true
 ///
 /// @example
-/// every(1 2 3px, 'unitless')
+/// some(1 2 3px, unitless)
 /// // false
 ///
 /// @access public
 /// @group Utilities
-/// @since 0.15.0
+/// @since 0.16.0
 /// @require {function} is-falsey
-@function every($list, $func, $mod: null, $args...) {
+@function some($list, $func, $mod: null, $args...) {
   $is-css: false;
 
   @if string.to-lower-case($mod) == 'css' {
@@ -40,14 +41,14 @@
   }
 
   @each $item in $list {
-    @if not meta.call(
+    @if meta.call(
       meta.get-function($func, $css: $is-css, $module: $mod),
       $item,
       $args...
     ) {
-      @return false;
+      @return true;
     }
   }
 
-  @return true;
+  @return false;
 }

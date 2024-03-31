@@ -80,11 +80,13 @@
 @forward 'list-remove-duplicates';
 @forward 'list-remove-nth';
 @forward 'list-reverse';
+@forward 'list-sort';
 @forward 'list-slice';
 @forward 'list-to-map';
 @forward 'list-update';
 @forward 'remove-from';
 @forward 'remove-where';
+@forward 'some';
 @forward 'to-list';
 
 // Map Functions
