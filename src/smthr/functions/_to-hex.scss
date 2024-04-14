@@ -64,7 +64,7 @@
     )};
   }
 
-  // If the color has an alpha of 1 or no alpha value (not trapsarent), convert
+  // If the color has an alpha of 1 or no alpha value (not tranparent), convert
   // it into either a 3 or 6 digit hex color.
   $color: color.change(
     rgb($red-component $green-component $blue-component),

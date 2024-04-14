@@ -1,20 +1,21 @@
 @use 'sass:list';
 @use 'sass:meta';
+@use 'map-to-string' as *;
 
-/// Iterates over a list and returns it as a converted string.
+/// Iterates over a List and returns it as a converted String.
 ///
-/// @param {List} $list - The list to convert into a string.
+/// @param {List | Map} $list - The List to convert into a String.
 /// @param {String} $separator [' '] - The separator to use between
 /// the list elements. By default this is the separator used in $list.
 /// @param {Bool} $extra-space [false] - Pass true to use extra space between
-/// list items in the resulting string.
+/// list items in the resulting String.
 ///
-/// @return {String} The converted string.
+/// @return {String} The converted String.
 ///
 /// @access public
 /// @group Utilities
+/// @require {function} map-to-string
 ///
-/// @throw Invalid $list type error.
 /// @throw Invalid $separator type error.
 @function list-to-string(
   $list,
@@ -22,18 +23,10 @@
   $extra-space: false
 ) {
   $str: '';
+  $type: meta.type-of($list);
 
-  @if meta.type-of($list) == 'string' {
-    @warn 'You passed a string value to the [ list-to-string() ] function.' +
-        'Returning original string of #{$list}';
-
+  @if $type == 'string' {
     @return $list;
-  }
-
-  @if meta.type-of($list) != 'list' {
-    @error 'Invalid $list type passed to the [ list-to-string() ] function. You ' +
-        'passed `#{meta.inspect($list)}`, which is of type: '
-        '[ #{meta.type-of($list)} ].';
   }
 
   @if $separator == comma or $separator == ',' or $separator == ', ' {
@@ -60,32 +53,35 @@
         'a valid separator string. Use something like comma, space, or slash.';
   }
 
+  @if $type == 'map' {
+    @return map-to-string($list, $separator);
+  }
+
   @each $item in $list {
     @if $str == '' {
-      $str: $item;
+      $str: '#{$item}';
     } @else {
-      $str: $str + $separator + $item;
+      $str: '#{$str}#{$separator}#{$item}';
     }
   }
 
   @return $str;
 }
 
-/// Iterates over a list and returns it as a converted string.
+/// Iterates over a List and returns it as a converted String.
 ///
-/// @param {List} $list - The list to convert into a string.
+/// @param {List | Map} $list - The List to convert into a String.
 /// @param {String} $separator [' '] - The separator to use between
 /// the list elements. By default this is the separator used in $list.
 /// @param {Bool} $extra-space [false] - Pass true to use extra space between
-/// list items in the resulting string.
+/// list items in the resulting String.
 ///
-/// @return {String} The converted string.
+/// @return {String} The converted String.
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} list-to-string
+/// @require {function} map-to-string
 ///
-/// @throw Invalid $list type error.
 /// @throw Invalid $separator type error.
 ///
 /// @alias list-to-string
@@ -97,21 +93,20 @@
   @return list-to-string($list, $extra-space, $separator);
 }
 
-/// Iterates over a list and returns it as a converted string.
+/// Iterates over a List and returns it as a converted String.
 ///
-/// @param {List} $list - The list to convert into a string.
+/// @param {List | Map} $list - The List to convert into a String.
 /// @param {String} $separator [' '] - The separator to use between
 /// the list elements. By default this is the separator used in $list.
 /// @param {Bool} $extra-space [false] - Pass true to use extra space between
-/// list items in the resulting string.
+/// list items in the resulting String.
 ///
-/// @return {String} The converted string.
+/// @return {String} The converted String.
 ///
 /// @access public
 /// @group Utilities
-/// @require {function} list-to-string
+/// @require {function} map-to-string
 ///
-/// @throw Invalid $list type error.
 /// @throw Invalid $separator type error.
 ///
 /// @alias list-to-string

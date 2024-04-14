@@ -15,8 +15,9 @@
 /// @group Utilities
 @function map-to-list($map, $keep: 'both', $separator: comma) {
   $keep: if(list.index('keys' 'values', $keep), $keep, 'both');
+  $type: meta.type-of($map);
 
-  @if meta.type-of($map) == 'map' {
+  @if $type == 'map' {
     $keys: ();
     $values: ();
 
@@ -34,5 +35,5 @@
     }
   }
 
-  @return if(meta.type-of($map) == 'list', $map, ($value));
+  @return if($type == 'list', $map, ($value));
 }

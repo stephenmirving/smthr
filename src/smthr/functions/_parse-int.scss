@@ -1,0 +1,51 @@
+// @use 'sass:meta';
+// @use 'sass:string';
+// @use 'sass:math';
+// @use 'str-to-num' as *;
+// @use 'is-integer' as *;
+// @use 'is-number' as *;
+// @use 'is-string' as *;
+
+// / Parses a string or number and returns an integer. If the value is a float,
+// / it truncates the decimal part. If the value is an integer, it returns the value.
+// / If a radix is specified, it parses the string according to that base.
+// /
+// / @param {String | Number} $value - The value to be parsed.
+// / @param {Number} $radix - An optional integer between 2 and 36 that
+// / represents the radix (the base in mathematical numeral system) of the
+// / `$value`.
+// /
+// / @return {Number} - The integer representation of the string or number.
+// /
+// / @access public
+// / @group Utilities
+// @function parse-int($value, $radix: null) {
+//   @if is-number($value) {
+//     @return math.floor($value);
+//   }
+
+//   @if not is-string($value) {
+//     @error 'Invalid $value input of #{meta.inspect($value)} for the ' +
+//         '[ parse-int() ] function. Value must of type \'string\' or \'number\'.';
+//   }
+
+//   @if $radix {
+//     @if is-integer($radix) and $radix >= 2 and $radix <= 36 {
+//       // Convert the string to a number according to the radix
+//       $num: str-to-num(string.to-lower-case($value), $radix);
+
+//       // Truncate the number if it's a float
+//       @return math.floor($num);
+//     } @else {
+//       @error 'Invalid $radix value of #{meta.inspect($radix)} for the ' +
+//           '[ parse-int() ] function. The optional $radix must be an integer ' +
+//           'between 2 and 36.';
+//     }
+//   }
+
+//   // Default parsing
+//   $num: str-to-num($value);
+
+//   // Truncate the number if it's a float
+//   @return math.floor($num);
+// }

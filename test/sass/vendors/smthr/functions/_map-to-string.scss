@@ -17,7 +17,8 @@
 
   @if meta.type-of($map) != 'map' {
     @error 'Invalid $map type passed to the `map-to-string()` function. You ' +
-        'passed `#{meta.inspect($map)}`, which is not a valid map.';
+        'passed a value of type `#{meta.inspect(meta.type-of($map))}`, not ' +
+        'a valid map.';
   }
 
   @if meta.type-of($separator) != 'string' and $separator != comma {

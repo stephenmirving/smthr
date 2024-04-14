@@ -16,3 +16,19 @@
       list.index('Hz' 'kHz', math.unit($value)) != null
   );
 }
+
+/// Checks if a value is a frequency.
+///
+/// @param {*} $value - A value to be checked.
+///
+/// @return {Bool} True if $value is a frequency, false if it is not.
+///
+/// @access public
+/// @group Utilities
+/// @alias is-frequency
+@function is-freq($value) {
+  @return (
+    meta.type-of($value) == 'number' and
+      list.index('Hz' 'kHz', math.unit($value)) != null
+  );
+}

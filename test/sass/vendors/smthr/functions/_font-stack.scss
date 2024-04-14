@@ -1,5 +1,5 @@
 @use 'sass:map';
-@use '../variables' as *;
+@use '../variables/lists' as smth;
 
 /// Returns the font stack chosen from a font-stack map.
 ///
@@ -10,6 +10,6 @@
 ///
 /// @access public
 /// @group Utilities
-@function font-stack($stack, $map: $font-stacks) {
+@function font-stack($stack, $map: smth.$font-stacks) {
   @return map.get($map, $stack);
 }

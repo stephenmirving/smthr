@@ -14,7 +14,9 @@
 /// color syntax types. Available notations are `hex`, `rgb`, `rgba`, `hsl`,
 /// `hsla`, `hwb`, `name`, `function`, or `cmyk`. Passing 'name' will only
 /// return a CSS color name if the given $color can can be converted into one,
-/// otherwise it returns a hex. Alpha is disregarded for this syntax selection.
+/// otherwise it returns a hex. Alpha is disregarded for this syntax selection,
+/// unless the alpha is 0 which will convert the color into the CSS color name
+/// `transparent`.
 ///
 /// Some of the colors this function returns cannot be used in Sass functions
 /// that make use of the color module or type checking as Sass currently
@@ -132,11 +134,15 @@
       $syntax == 'no-alpha' or
       $syntax == 'noalpha'
   {
-    // If the given color can be converted into a CSS color name, this will
-    // return that color name, otherwise it will return a 6 digit hex value.
-    // Any alpha value in the given color will be omitted from the result.
-    // Will test correctly as type 'color'
-    $color: color.change(rgb($color-red $color-green $color-blue), $alpha: 1);
+    @if $color == transparent or $color-alpha == 0 {
+      $color: transparent;
+    } @else {
+      // If the given color can be converted into a CSS color name, this will
+      // return that color name, otherwise it will return a 6 digit hex value.
+      // Any alpha value in the given color will be omitted from the result.
+      // Will test correctly as type 'color'
+      $color: color.change(rgb($color-red $color-green $color-blue), $alpha: 1);
+    }
   } @else if $syntax == 'function' or $syntax == 'funct' or $syntax == 'func' {
     // This is the same as the above 'name' except it will *not* omit the alpha
     // value and will return a 3 or 6 digit hex, or, if there
@@ -147,7 +153,9 @@
       $alpha: $color-alpha
     );
 
-    @return conv-color-name($color);
+    // If color is changed to a CSS color name keyword, change it to its
+    // equivalent 3 or 6 digit hex, otherwise will leave as is.
+    $color: conv-color-name($color);
   } @else if $syntax == 'cmyk' {
     // This will return a device-cmyk() function that is in CSS Color Module 5
     // and is not yet supported by any browser.

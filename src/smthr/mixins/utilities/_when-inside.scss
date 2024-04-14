@@ -1,0 +1,55 @@
+/// Make a context-based selector.
+///
+/// @param {String} $context
+///
+/// @example scss
+/// h1 {
+///   font-size : 2.5rem;
+///
+///   @include when-inside(article) {
+///     font-size: 2rem;
+///   }
+/// }
+///
+/// @example css
+/// h1 { font-size: 2.5rem; }
+/// article h1 { font-size: 2rem; }
+///
+/// @group Utilities
+/// @since 0.17.0
+@mixin when-inside($context) {
+  #{$context} & {
+    @content;
+  }
+}
+
+/// Make a context-based selector.
+///
+/// @param {String} $context - The parent selector context for the content styles.
+///
+/// @content [ Write the style rules that you want to apply to the element when
+/// it is within the provided selector context, and they will be added within
+/// the content directive ]
+///
+/// @example scss
+/// h1 {
+///   font-size : 2.5rem;
+///
+///   @include when-inside(article) {
+///     font-size: 2rem;
+///   }
+/// }
+///
+/// @example css
+/// h1 { font-size: 2.5rem; }
+/// article h1 { font-size: 2rem; }
+///
+/// @group Utilities
+/// @since 0.17.0
+///
+/// @alias when-inside
+@mixin has-parent($context) {
+  #{$context} & {
+    @content;
+  }
+}

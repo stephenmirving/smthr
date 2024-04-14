@@ -1,7 +1,7 @@
 @use 'sass:list';
 @use 'sass:string';
 @use 'is-string' as *;
-@use '../variables/misc' as *;
+@use '../variables/lists' as *;
 
 /// Detects if a given value is one of the CSS global values that can be used
 /// with virutally any CSS property.

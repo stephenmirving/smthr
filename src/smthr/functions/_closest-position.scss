@@ -6,7 +6,7 @@
 @use 'is-angle' as *;
 @use 'is-number' as *;
 @use 'conv-angle' as *;
-@use '../variables/maps' as *;
+@use '../variables/lists' as *;
 
 /// Takes an angle and returns the closest position keyword (`top`, `right`,
 /// `bottom`, or `left`) as an unquoted string. If $return-difference is set to

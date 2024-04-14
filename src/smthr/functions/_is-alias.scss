@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:list';
-@use '../variables/maps' as smth;
+@use '../variables/lists' as smth;
 
 /// Returns true if the given alias is found in the map's list for
 /// the given keyword, otherwise returns false.

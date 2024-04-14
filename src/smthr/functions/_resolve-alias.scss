@@ -1,7 +1,7 @@
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:list';
-@use '../variables/maps' as smth;
+@use '../variables/lists' as smth;
 
 /// Takes a potential alias for a keyword value and returns the corresponding
 /// keyword based on an alias resolution map.

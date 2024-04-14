@@ -29,18 +29,25 @@
 /// @throw Invalid ratio value format, value must be a proper ratio.
 @function ratio-to-percentage($ratio, $num-returns-common-ratio: false) {
   $separators: (' : ', ':', ' / ', '/', ', ', ',', ' ');
+  $ratio-type: meta.type-of($ratio);
   $found-separators: 0;
   $separator-used: null;
   $percentage: null;
   $width: null;
   $height: null;
+  $ratio-error-msg: 'Value must be a ratio which can be expressed one of three ' +
+    'ways: by a two number List (ex: `(16 9)` for a 16:9 ratio), by a String ' +
+    'containing two numbers separated by either a colon, slash, comma or ' +
+    'space (ex: `"21:9"`, `"21/9", `"21,9"`, etc), or by single number ' +
+    '(ex: `0.75` for a 3:4 ratio).';
 
-  @if meta.type-of($ratio) == 'number' and not math.is-unitless($ratio) {
+  @if $ratio-type == 'number' and not math.is-unitless($ratio) {
     @error 'Invalid $ratio value of #{meta.inspect($ratio)} passed to ' +
-        'the [ ratio-to-percentage() ] function. The $ratio must be unitless.';
+        'the [ ratio-to-percentage() ] function. When passed as a single ' +
+        'number, the $ratio must be unitless.';
   }
 
-  @if meta.type-of($ratio) == 'string' {
+  @if $ratio-type == 'string' {
     @each $separator in $separators {
       @if string.index($ratio, $separator) {
         $found-separators: $found-separators + 1;
@@ -50,7 +57,7 @@
 
     @if $found-separators > 1 {
       @error 'Invalid ratio format of #{meta.inspect($ratio)} ] passed to the ' +
-      '[ ratio-to-percentage() ] function.';
+      '[ ratio-to-percentage() ] function. #{$ratio-error-msg}';
     }
 
     @if string.index($ratio, $separator-used) {
@@ -62,9 +69,7 @@
       @if meta.type-of($width) != 'number' or meta.type-of($height) != 'number'
       {
         @error 'Invalid $ratio value of [ #{meta.inspect($ratio)} ] for ' +
-            'the [ ratio-to-percentage() ] function. Value must be a ratio ' +
-            'represented by either a single number or a two value list ' +
-            'separated by a space, comma, or colon.';
+            'the [ ratio-to-percentage() ] function. #{$ratio-error-msg}';
       }
 
       $ratio: ($width $height);
@@ -73,11 +78,11 @@
     }
   }
 
-  @if $num-returns-common-ratio and meta.type-of($ratio) == 'list' {
+  @if $num-returns-common-ratio and $ratio-type == 'list' {
     $ratio: math.div(list.nth($ratio, 1) + 0, list.nth($ratio, 2) + 0);
   }
 
-  @if meta.type-of($ratio) == 'number' and math.is-unitless($ratio) {
+  @if $ratio-type == 'number' and math.is-unitless($ratio) {
     $ratio: num-to-ratio($ratio, $num-returns-common-ratio);
   }
 
@@ -88,9 +93,7 @@
     $percentage: math.percentage(math.div($height, $width));
   } @else {
     @error 'Invalid $ratio value of [ #{meta.inspect($ratio)} ] for the ' +
-        '[ ratio-to-percentage() ] function. Value must be a ratio ' +
-        'represented by either a single number or a two value list ' +
-        'separated by a space, comma, or colon.';
+        '[ ratio-to-percentage() ] function. #{$ratio-error-msg}';
   }
 
   @return $percentage;

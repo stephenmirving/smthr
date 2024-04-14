@@ -17,12 +17,14 @@
 /// @require {function} is-map
 /// @require {function} to-list
 /// @since 0.15.0
+///
+/// @throw Invalid $list data type error
 @function list-remove-duplicates($list) {
   $result: ();
 
   @if is-map($list) {
-    @error 'Invalid $list data type for the [ list-remove-duplicates() ] function. ' +
-        'You may not pass a value of data type \'map\'';
+    @error 'Invalid $list data type error for the [ list-remove-duplicates() ] ' +
+        'function. You may not pass a value of data type \'map\'';
   }
 
   @each $item in $list {

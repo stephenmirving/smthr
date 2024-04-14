@@ -1,13 +1,16 @@
 ////
 ///
-/// All the public variables that are used in the Smoother library that are of
-/// the `Map` type.
+/// Most of the public variables that are used in the Smoother library
+/// that are of the `Map` or `List` type.
 ///
 /// @access public
 /// @group Utilities
-/// @type Map
 ///
 ////
+
+@use 'sass:list';
+@use 'sass:map';
+@use '../functions/stringify-map-keys' as *;
 
 /// A map of font stacks with web-safe fonts. Use with the font-stack function.
 ///
@@ -17,6 +20,8 @@
 /// with each key is a list of font families, ordered by preference.
 ///
 /// @todo Fill out the stack with the fonts you choose for your theme
+///
+/// @type Map
 ///
 /// @prop {List} primary - The primary font stack for body text.
 /// @prop {List} header - The font stack for headers.
@@ -131,13 +136,15 @@ $font-stacks: (
     'URW Bookman L',
     serif
   )
-) !default;
+);
 
 /// Map of custom timing functions based on Penner equations. Used by the
 /// `timing` function.
 ///
 /// Each of the map's key's is a string value that has a cubic-bezier timing
 /// function curve as its value.
+///
+/// @type Map
 ///
 /// @prop {String} ease-in-quad
 /// @prop {String} ease-in-cubic
@@ -190,7 +197,7 @@ $map-timing-functions: (
   'ease-in-out-expo': cubic-bezier(1, 0, 0, 1),
   'ease-in-out-circ': cubic-bezier(0.785, 0.135, 0.15, 0.86),
   'ease-in-out-back': cubic-bezier(0.68, -0.55, 0.265, 1.55)
-) !default;
+);
 
 /// A comprehensive map associating all the direction/offset keywords with their
 /// associated angles in degrees.
@@ -202,6 +209,7 @@ $map-timing-functions: (
 /// 'name' of the direction/offset and its 'deg' angle, also as a unitless
 /// number.
 ///
+/// @type Map
 /// @prop {Map} 0 - The 'name' key with value of 'top' and a 'deg' key with value of 0
 /// @prop {Map} 45 - The 'name' key with value of 'top right' and a 'deg' key with value of 45
 /// @prop {Map} 90 - The 'name' key with value of 'right' and a 'deg' key with value of 90
@@ -251,7 +259,7 @@ $map-directions: (
     'name': 'top',
     'deg': 0
   )
-) !default;
+);
 
 /// Map of only the position/offset keywords and their associated angles, in
 /// degrees.
@@ -263,6 +271,7 @@ $map-directions: (
 /// particularly useful for calculations or when you need to reference positions
 /// in a more dynamic way.
 ///
+/// @type Map
 /// @prop {Map} 0 - The position name 'top' with an angle of 0 degrees.
 /// @prop {Map} 90 - The position name 'right' with an angle of 90 degrees.
 /// @prop {Map} 180 - The position name 'bottom' with an angle of 180 degrees.
@@ -292,12 +301,14 @@ $map-positions: (
     'name': 'top',
     'deg': 0
   )
-) !default;
+);
 
 /// A map of all the units in CSS as string types for keys, with their values
 /// being 1 numeric unit.
 ///
+/// @type Map
 /// @see {function} str-to-num
+/// @see {function} _to-unit
 $map-units: (
   'px': 1px,
   'cm': 1cm,
@@ -359,12 +370,412 @@ $map-units: (
   'turn': 1turn,
   'Hz': 1Hz,
   'kHz': 1kHz
-) !default;
+);
+
+/// A list of all the units in CSS as string types
+///
+/// @type Map
+$list-units: map.keys($map-units);
+
+/// A list of all the units in CSS as a single numeric unit
+/// (such a `1rem`, `1px`, etc...)
+///
+/// @type List
+$list-unit-values: map.values($map-units);
+
+/// Map of all the CSS color names and their hex values. Can use to convert
+/// CSS color names into their hex value when Sass color module functions
+/// return them as their color name.
+///
+/// Every key of the map is a CSS color name of type 'color', not 'string'.
+/// Every associated value is the 3 or 6 digit hex color value for that name,
+/// with the exception of the value `transparent`, which has an associated
+/// 4 digit hex color of `#0000`.
+///
+/// @type Map
+/// @see {function} conv-color-name
+$map-color-names: (
+  aliceblue: #f0f8ff,
+  antiquewhite: #faebd7,
+  aqua: #0ff,
+  aquamarine: #7fffd4,
+  azure: #f0ffff,
+  beige: #f5f5dc,
+  bisque: #ffe4c4,
+  black: #000,
+  blanchedalmond: #ffebcd,
+  blue: #00f,
+  blueviolet: #8a2be2,
+  brown: #a52a2a,
+  burlywood: #deb887,
+  cadetblue: #5f9ea0,
+  chartreuse: #7fff00,
+  chocolate: #d2691e,
+  coral: #ff7f50,
+  cornflowerblue: #6495ed,
+  cornsilk: #fff8dc,
+  crimson: #dc143c,
+  darkblue: #00008b,
+  darkcyan: #008b8b,
+  darkgoldenrod: #b8860b,
+  darkgray: #a9a9a9,
+  darkgreen: #006400,
+  darkkhaki: #bdb76b,
+  darkmagenta: #8b008b,
+  darkolivegreen: #556b2f,
+  darkorange: #ff8c00,
+  darkorchid: #9932cc,
+  darkred: #8b0000,
+  darksalmon: #e9967a,
+  darkseagreen: #8fbc8f,
+  darkslateblue: #483d8b,
+  darkslategray: #2f4f4f,
+  darkturquoise: #00ced1,
+  darkviolet: #9400d3,
+  deeppink: #ff1493,
+  deepskyblue: #00bfff,
+  dimgray: #696969,
+  dodgerblue: #1e90ff,
+  firebrick: #b22222,
+  floralwhite: #fffaf0,
+  forestgreen: #228b22,
+  fuchsia: #f0f,
+  gainsboro: #dcdcdc,
+  ghostwhite: #f8f8ff,
+  gold: #ffd700,
+  goldenrod: #daa520,
+  gray: #808080,
+  green: #008000,
+  greenyellow: #adff2f,
+  honeydew: #f0fff0,
+  hotpink: #ff69b4,
+  indianred: #cd5c5c,
+  indigo: #4b0082,
+  ivory: #fffff0,
+  khaki: #f0e68c,
+  lavender: #e6e6fa,
+  lavenderblush: #fff0f5,
+  lawngreen: #7cfc00,
+  lemonchiffon: #fffacd,
+  lightblue: #add8e6,
+  lightcoral: #f08080,
+  lightcyan: #e0ffff,
+  lightgoldenrodyellow: #fafad2,
+  lightgray: #d3d3d3,
+  lightgreen: #90ee90,
+  lightpink: #ffb6c1,
+  lightsalmon: #ffa07a,
+  lightseagreen: #20b2aa,
+  lightskyblue: #87cefa,
+  lightslategray: #789,
+  lightsteelblue: #b0c4de,
+  lightyellow: #ffffe0,
+  lime: #0f0,
+  limegreen: #32cd32,
+  linen: #faf0e6,
+  maroon: #800000,
+  mediumaquamarine: #66cdaa,
+  mediumblue: #0000cd,
+  mediumorchid: #ba55d3,
+  mediumpurple: #9370db,
+  mediumseagreen: #3cb371,
+  mediumslateblue: #7b68ee,
+  mediumspringgreen: #00fa9a,
+  mediumturquoise: #48d1cc,
+  mediumvioletred: #c71585,
+  midnightblue: #191970,
+  mintcream: #f5fffa,
+  mistyrose: #ffe4e1,
+  moccasin: #ffe4b5,
+  navajowhite: #ffdead,
+  navy: #000080,
+  oldlace: #fdf5e6,
+  olive: #808000,
+  olivedrab: #6b8e23,
+  orange: #ffa500,
+  orangered: #ff4500,
+  orchid: #da70d6,
+  palegoldenrod: #eee8aa,
+  palegreen: #98fb98,
+  paleturquoise: #afeeee,
+  palevioletred: #db7093,
+  papayawhip: #ffefd5,
+  peachpuff: #ffdab9,
+  peru: #cd853f,
+  pink: #ffc0cb,
+  plum: #dda0dd,
+  powderblue: #b0e0e6,
+  purple: #800080,
+  rebeccapurple: #639,
+  red: #f00,
+  rosybrown: #bc8f8f,
+  royalblue: #4169e1,
+  saddlebrown: #8b4513,
+  salmon: #fa8072,
+  sandybrown: #f4a460,
+  seagreen: #2e8b57,
+  seashell: #fff5ee,
+  sienna: #a0522d,
+  silver: #c0c0c0,
+  skyblue: #87ceeb,
+  slateblue: #6a5acd,
+  slategray: #708090,
+  snow: #fffafa,
+  springgreen: #00ff7f,
+  steelblue: #4682b4,
+  tan: #d2b48c,
+  teal: #008080,
+  thistle: #d8bfd8,
+  tomato: #ff6347,
+  transparent: #0000,
+  turquoise: #40e0d0,
+  violet: #ee82ee,
+  wheat: #f5deb3,
+  white: #fff,
+  whitesmoke: #f5f5f5,
+  yellow: #ff0,
+  yellowgreen: #9acd32
+);
+
+/// Map of all the CSS color names as strings and their hex values.
+///
+/// Every key of the map is a CSS color name of type 'string'. Every associated
+/// value is the 3 or 6 digit hex color value for that name,
+/// with the exception of the value `transparent`, which has an associated
+/// 4 digit hex color of `#0000`.
+///
+/// @type Map
+// $map-color-name-strings: stringify-map-keys($map-color-names);
+
+/// Map of all the CSS color names and their hex values which were not included
+/// in `$map-color-names` due to being duplicates of other values.
+///
+/// @type Map
+$map-duplicate-color-names: (
+  cyan: #0ff, // duplicate of aqua
+  magenta: #f0f, // duplicate of fuchsia
+  darkgrey: #a9a9a9, // duplicate of darkgray
+  darkslategrey: #2f4f4f, // duplicate of darkslategray
+  dimgrey: #696969, // duplicate of dimgray
+  grey: #808080, // duplicate of gray
+  lightgrey: #d3d3d3, // duplicate of lightgray
+  lightslategrey: #789, // duplicate of lightslategray
+  slategrey: #708090 // duplicate of slategray
+);
+
+/// A List of all the CSS color names, including those with duplicate
+/// hex values such as `gray` and `grey` or `aqua` and `cyan`.
+///
+/// @type List
+$list-color-names: (
+  aliceblue,
+  antiquewhite,
+  aqua,
+  aquamarine,
+  azure,
+  beige,
+  bisque,
+  black,
+  blanchedalmond,
+  blue,
+  blueviolet,
+  brown,
+  burlywood,
+  cadetblue,
+  chartreuse,
+  chocolate,
+  coral,
+  cornflowerblue,
+  cornsilk,
+  crimson,
+  cyan,
+  darkblue,
+  darkcyan,
+  darkgoldenrod,
+  darkgray,
+  darkgreen,
+  darkgrey,
+  darkkhaki,
+  darkmagenta,
+  darkolivegreen,
+  darkorange,
+  darkorchid,
+  darkred,
+  darksalmon,
+  darkseagreen,
+  darkslateblue,
+  darkslategray,
+  darkslategrey,
+  darkturquoise,
+  darkviolet,
+  deeppink,
+  deepskyblue,
+  dimgray,
+  dimgrey,
+  dodgerblue,
+  firebrick,
+  floralwhite,
+  forestgreen,
+  fuchsia,
+  gainsboro,
+  ghostwhite,
+  gold,
+  goldenrod,
+  gray,
+  green,
+  greenyellow,
+  grey,
+  honeydew,
+  hotpink,
+  indianred,
+  indigo,
+  ivory,
+  khaki,
+  lavender,
+  lavenderblush,
+  lawngreen,
+  lemonchiffon,
+  lightblue,
+  lightcoral,
+  lightcyan,
+  lightgoldenrodyellow,
+  lightgray,
+  lightgreen,
+  lightgrey,
+  lightpink,
+  lightsalmon,
+  lightseagreen,
+  lightskyblue,
+  lightslategray,
+  lightslategrey,
+  lightsteelblue,
+  lightyellow,
+  lime,
+  limegreen,
+  linen,
+  magenta,
+  maroon,
+  mediumaquamarine,
+  mediumblue,
+  mediumorchid,
+  mediumpurple,
+  mediumseagreen,
+  mediumslateblue,
+  mediumspringgreen,
+  mediumturquoise,
+  mediumvioletred,
+  midnightblue,
+  mintcream,
+  mistyrose,
+  moccasin,
+  navajowhite,
+  navy,
+  oldlace,
+  olive,
+  olivedrab,
+  orange,
+  orangered,
+  orchid,
+  palegoldenrod,
+  palegreen,
+  paleturquoise,
+  palevioletred,
+  papayawhip,
+  peachpuff,
+  peru,
+  pink,
+  plum,
+  powderblue,
+  purple,
+  rebeccapurple,
+  red,
+  rosybrown,
+  royalblue,
+  saddlebrown,
+  salmon,
+  sandybrown,
+  seagreen,
+  seashell,
+  sienna,
+  silver,
+  skyblue,
+  slateblue,
+  slategray,
+  slategrey,
+  snow,
+  springgreen,
+  steelblue,
+  tan,
+  teal,
+  thistle,
+  tomato,
+  transparent,
+  turquoise,
+  violet,
+  wheat,
+  white,
+  whitesmoke,
+  yellow,
+  yellowgreen
+);
+
+/// A list containing all hex values which have a corresponding
+/// CSS color name keyword.
+///
+/// @type List
+$list-named-hex-colors: map.values($map-color-names);
+
+/// A list containing all the available CSS global values that can be used
+/// with virtually any property.
+///
+/// @type List
+$global-values: (inherit initial revert revert-layer unset);
+
+/// A map with stringified decimal values 0 - 9 as keys and their Number type
+/// equivalent as values.
+///
+/// @type Map
+$map-decimals: (
+  '0': 0,
+  '1': 1,
+  '2': 2,
+  '3': 3,
+  '4': 4,
+  '5': 5,
+  '6': 6,
+  '7': 7,
+  '8': 8,
+  '9': 9
+);
+
+/// A list containing all potential decimal values 0 - 9.
+///
+/// @type List
+// $decimal-space: map.values($map-decimals);
+
+/// A list containing all potential hexadecimal values 0 - F.
+///
+/// @type List
+// $hex-space: ('0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'A' 'B' 'C' 'D' 'E' 'F');
+
+/// The alphabetical order of characters.
+///
+/// @type List
+/// @see {function} list-sort
+$sort-order: (
+  '!', '#', '$', '%', '&', '\'', '(' ')', '*', '+', ',', '-',
+  '.', '/', '[', '\\', ']', '^', '_', '{', '|', '}', '~', '0',
+  '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
+  'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+  'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
+);
 
 /// Map of keywords, each with their own list of potential aliases.
 ///
 /// Used by the is-alias and resolve-alias functions to allow a greater set
 /// of possible inputs when using functions and mixins.
+///
+/// @type Map
 ///
 /// @see {function} is-alias
 /// @see {function} resolve-alias
@@ -1366,4 +1777,4 @@ $map-alias-resolutions: (
     'c r',
     'cr'
   )
-) !default;
+);

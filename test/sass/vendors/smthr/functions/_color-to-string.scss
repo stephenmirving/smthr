@@ -14,8 +14,8 @@
   @if meta.type-of($color) != 'color' {
     @warn 'Incorrect data type passed to [ color-to-string() ] function. You ' +
       'passed `#{meta.inspect($color)}` for the $color argument, which is ' +
-      'not recognized as a color by Sass. Returning the given value as a ' +
-      'string anyway.';
+      'not recognized as a color by Sass. Returning the given value wrapped ' +
+      'in a string anyway.';
   }
 
   @return '#{$color}';

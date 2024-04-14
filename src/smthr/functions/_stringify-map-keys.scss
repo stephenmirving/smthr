@@ -1,0 +1,42 @@
+@use 'sass:map';
+@use 'is-list' as *;
+@use 'list-to-string' as *;
+
+/// Converts a Map's keys into strings
+///
+/// @param {Map} $map - The Map which will have its keys converted to strings.
+///
+/// @return {Map} - The map with stringified keys.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} is-list
+/// @require {function} list-to-string
+/// @since 0.17.0
+@function stringify-map-keys($map) {
+  $new-map: (); // Initialize an empty map to hold the new key-value pairs.
+  $key-as-string: null;
+
+  // Convert each key to a string and add the key-value pair to the new map.
+  @each $key, $value in $map {
+    $key: if(is-list($key), list-to-string($key), '#{$key}');
+    $new-map: map.merge($new-map, ($key: $value));
+  }
+
+  @return $new-map;
+}
+
+/// Converts a Map's keys into strings
+///
+/// @param {Map} $map - The Map which will have its keys converted to strings.
+///
+/// @return {Map} - The map with stringified keys.
+///
+/// @access public
+/// @group Utilities
+/// @require {function} stringify-map-keys
+/// @since 0.17.0
+/// @alias stringify-map-keys
+@function conv-keys-to-str($map) {
+  @return stringify-map-keys($map);
+}

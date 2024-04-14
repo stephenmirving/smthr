@@ -11,6 +11,7 @@
 
 // Type and Value Checking Functions
 @forward 'is-alias';
+@forward 'is-bool';
 @forward 'is-color';
 @forward 'is-number';
 @forward 'is-integer';
@@ -43,6 +44,7 @@
 @forward 'factorial';
 @forward 'fibonacci';
 @forward 'linear-interpolation';
+@forward 'parse-int';
 @forward 'pi';
 @forward 'ratio-to-percentage';
 @forward 'time-equation';
@@ -57,6 +59,7 @@
 @forward 'conv-to-rem';
 
 // String Functions
+@forward 'char-at';
 @forward 'str-replace';
 @forward 'str-remove';
 @forward 'str-to-list';
@@ -71,17 +74,20 @@
 @forward 'list-chunk';
 @forward 'list-contains';
 @forward 'list-count-values';
+@forward 'list-flatten';
+@forward 'list-insert-nth';
 @forward 'list-loop';
+@forward 'list-merge';
 @forward 'list-prepend';
 @forward 'list-to-string';
 @forward 'list-purge';
 @forward 'list-range';
-@forward 'list-replace-nth';
 @forward 'list-remove-duplicates';
 @forward 'list-remove-nth';
+@forward 'list-replace-nth';
 @forward 'list-reverse';
-@forward 'list-sort';
 @forward 'list-slice';
+@forward 'list-sort';
 @forward 'list-to-map';
 @forward 'list-update';
 @forward 'remove-from';
@@ -97,6 +103,8 @@
 @forward 'map-is-flat';
 @forward 'map-to-string';
 @forward 'map-to-list';
+@forward 'stringify-map-keys';
+@forward 'to-map';
 
 // Color Functions
 @forward 'black';

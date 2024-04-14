@@ -1,7 +1,7 @@
 @use 'sass:meta';
 @use 'sass:string';
 
-/// Replace `$search` with `$replace` in `$string`.
+/// Replace all instances of `$search` with `$replace` in `$string`.
 ///
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.
@@ -40,7 +40,7 @@
   @return $string;
 }
 
-/// Replace `$search` with `$replace` in `$string`.
+/// Replace all instances of `$search` with `$replace` in `$string`.
 ///
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.
@@ -61,7 +61,7 @@
   @return str-replace($string, $search, $replace);
 }
 
-/// Replace `$search` with `$replace` in `$string`.
+/// Replace all instances of `$search` with `$replace` in `$string`.
 ///
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.
@@ -82,7 +82,7 @@
   @return str-replace($string, $search, $replace);
 }
 
-/// Replace `$search` with `$replace` in `$string`.
+/// Replace all instances of `$search` with `$replace` in `$string`.
 ///
 /// @param {String} $string - The initial string.
 /// @param {String} $search - The substring to replace.

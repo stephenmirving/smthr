@@ -1,0 +1,60 @@
+@use 'is-falsey' as *;
+
+/// Casts a value to a boolean (Sass bool type), based on the "falsey" values
+/// in the `is-falsey()` function. Falsey values are `null`, `false`, `'false'`
+/// (false as a string), `0`, empty strings, empty lists, and empty maps.
+///
+/// @param {*} $value - The value to cast into a bool
+///
+/// @return {Bool} - If the value is falsey, returns `false`, otherwise returns
+/// `true`.
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+/// @require {function} is-falsey
+@function to-bool($value) {
+  @if is-falsey($value) {
+    @return false;
+  }
+
+  @return true;
+}
+
+/// Casts a value to a boolean (Sass bool type), based on the "falsey" values
+/// in the `is-falsey()` function. Falsey values are `null`, `false`, `'false'`
+/// (false as a string), `0`, empty strings, empty lists, and empty maps.
+///
+/// @param {*} $value - The value to cast into a bool
+///
+/// @return {Bool} - If the value is falsey, returns `false`, otherwise returns
+/// `true`.
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+/// @require {function} is-falsey
+///
+/// @alias to-bool
+@function to-boolean($value) {
+  @return to-bool($value);
+}
+
+/// Casts `$value` to a boolean (Sass Bool type), based on the "falsey" values
+/// in the `is-falsey()` function. Falsey values are `null`, `false`, `'false'`
+/// (false as a string), `0`, empty strings, empty lists, and empty maps.
+///
+/// @param {*} $value - The value to cast into a bool
+///
+/// @return {Bool} - If the value is falsey, returns `false`, otherwise returns
+/// `true`.
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+/// @require {function} is-falsey
+///
+/// @alias to-bool
+@function parse-bool($value) {
+  @return to-bool($value);
+}

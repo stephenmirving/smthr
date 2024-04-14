@@ -23,14 +23,15 @@ animation keyframe creation, or other verbose and complex code blocks.
 5. [Documentation](#documentation)
 6. [Parameter Aliases](#parameter-aliases)
 7. [Recently Improved](#recently-improved)
-   1. [Version 0.16.0 Patch Notes](#version-0160-patch-notes)
-   2. [Version 0.15.0 Patch Notes](#version-0150-patch-notes)
-   3. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0140---0141-patch-notes)
-   4. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
-   5. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
-   6. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
-   7. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
-   8. [Full Patch History](#full-patch-history)
+   1. [Version 0.17.0 Patch Notes](#version-0170-patch-notes)
+   2. [Version 0.16.0 Patch Notes](#version-0160-patch-notes)
+   3. [Version 0.15.0 Patch Notes](#version-0150-patch-notes)
+   4. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0140---0141-patch-notes)
+   5. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
+   6. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
+   7. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
+   8. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
+   9. [Full Patch History](#full-patch-history)
 8. [Betterize](#betterize)
 9. [More Info](#more-info)
 10. [Questions](#questions)
@@ -46,7 +47,7 @@ updates to the functionality or documentation of this library. If you download
 _Smoother_ for use in a project, I recommend updating it frequently to get
 optimal functionality from it.
 
-This is **smoother** version 0.16.0 - _Last updated:_ 03/31/24
+This is **smoother** version 0.17.0 - _Last updated:_ 04/14/24
 
 ## Content
 
@@ -373,6 +374,72 @@ new versions without having to copy folders every time, a Getting Started guide,
 and a website with a demo for every mixin and function to help you start using
 _Smoother_.
 
+### Version 0.17.0 Patch Notes
+
+- Refactored the `responsive-ratio()` mixin in mulitple ways. It fixes an bug
+  with passing a class name to the function. It also no longer takes the `$x`
+  and `$y` components of the size ratio separately. Instead, the parameter
+  `$ratio` will take a two value list. This means the mixin user to not have to
+  type a comma, like `responsive-ratio(16, 9)` and instead would use
+  `responsive-ratio(16 9)`. This will allow for using this mixin together with
+  the ratio function `num-to-ratio()`. The function `ratio-to-percentage()` will
+  also be used to expand the number of potential inputs for `$ratio` it is
+  possible for `responsive-ratio()` to have. THIS IS A BREAKING CHANGE. If you
+  are using `responsive-ratio()` you may get a warning when you compile your
+  code that your parameters must change. Check the documentation for this mixin
+  for more information.
+- Added the `is-bool()` function which takes a value and determines if the value
+  is strictly equal to either `true` or `false`.
+- Added the `list-insert-nth()` function that inserts an element in a List.
+- Added the `list-flatten()` function which flattens multi-dimensional Lists
+  into flat, one-dimensional Lists.
+- Added the `list-merge()` function which merges multiple Lists into a single
+  List after removing all duplicate values.
+- Started working on the the `parse-int()` function which will parse a string
+- or number into an integer if possible, with an attempt to mimic the behavior
+  of the JavaScript method parseInt() (NOT YET IMPLEMENTED).
+- Aded the `expand-action-area()` mixin. Occasionaly you may find that an icon
+  or button needs a slightly larger click/touch area. This mixin adds a
+  pseudo-element that increases the interaction area by a given amount
+  (10px by default) in every direction.
+- Added `:focus-within` to the `on-event()` mixin.
+- Added the `when-inside()` context-based selector mixin.
+- Added `$is-logical` parameter to the `container()` mixin, which if `true` is
+  passed, will cause the mixin to use logical properties like `max-inline-size`
+  over physical properties like `max-width`.
+- Renamed `$color-names-map` back to `$map-color-names` and moved it back to
+  `src/smthr/variables/_maps.scss` from `variables/_colors.scss`
+- Added the `transparent` color keyword to `$map-color-names` with the
+  associated value of the 4-digit hex-notation color: `#0000`
+- Added `$map-color-name-strings`, which is just `$map-color-names` but with the
+  Map keys in type "string" instead of "color".
+- Added `$map-duplicate-color-names` which has all the CSS color names not
+  included in $map-color-names due to them having duplicate values, such as
+  `grey` being a duplicate of `gray` or `cyan` being a duplicate of `aqua`.
+- Added $list-color-names which is a sorted list of every color name, including
+  ones with duplicated values. This is created from the keys of
+  `$map-color-names` and `$map-duplicate-color-names`.
+- Added `$list-named-hex-colors` which is a list containing all hex values which
+  have a corresponding CSS color name keyword.
+- Fixed `conv-color` so that when `transparent`, or an equivalent color such as
+  `rgba(0, 0, 0, 0)` is passed to it with a `$syntax` value of `name`, it
+  correctly returns `transparent`.
+- Added the `stringify-map-keys()` function, which converts map keys into
+  strings and returns the new map.
+- Modified `list-to-string()` to correctly convert single value Lists and
+  convert Maps by calling `map-to-string()` rather than returning an error
+  message.
+- Added the `char-at()` function that takes a string and an index and
+  returns the character at the given index.
+- Added the `to-bool()` function that casts a value to a Bool
+  according to the falsey values found in the `is-falsey()` function.
+- Added the `to-map()` function that casts a value to a Map.
+- Renamed the `variables/_maps.scss` file to `variables/_lists.scss` to reflect
+  that it now also contains most lists. Since maps in Sass are also all de-facto
+  lists, but lists are not maps, this name is a better fit. THIS IS A BREAKING
+  CHANGE. Any `@use 'variables/maps'` directives must be changed to
+  `@use variables/lists`
+
 ### Version 0.16.0 Patch Notes
 
 - Added the `some()` function that tests whether some items (at least one) from a
@@ -429,12 +496,12 @@ _Smoother_.
 - Renamed the `_in-list.scss` partial to `_list-contains.scss`. The `in-list()`
   mixin is still an alias value for `list-contains()` but any `@use` directives
   pointing to `_in-list.scss` will have to change to `_list-contains.scss`
-- Added `list-chunk()` function that chunks a list into multiple lists of a given
-  length.
+- Added `list-chunk()` function that chunks a list into multiple lists of a
+  given length.
 - Added `hoctive()` mixin that applies the provided content to the `:hover`,
   `:focus`, and `:active` pseudo-classes in one selector group.
-- Added `hocus-visible()` mixin that applies the provided content to the `:hover`,
-  and `:focus-visible` pseudo-classes in one selector group.
+- Added `hocus-visible()` mixin that applies the provided content to the
+  `:hover`, and `:focus-visible` pseudo-classes in one selector group.
 - Added the `smart-underline()` mixin that applies an underline that gets bigger
   on hover and is removed on selection/highlighting. This is an effect similar
   to the default link effect in Safari.

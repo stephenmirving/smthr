@@ -1,0 +1,31 @@
+@use 'sass:meta';
+
+/// Returns whether a given value is of the Sass type `bool` and is strictly
+/// equal to `true` or `false`.
+///
+/// @param {*} $value - A value to be checked.
+///
+/// @return {Bool} Returns `true` if $value is a boolean, false if it is not.
+///
+/// @access public
+/// @group Utilities
+@function is-bool($value) {
+  @return not not (
+    meta.type-of($value) == 'bool' and ($value == true or $value == false)
+  );
+}
+
+/// Returns whether a given value is of the Sass type `bool` and is strictly
+/// equal to `true` or `false`.
+///
+/// @param {*} $value - A value to be checked.
+///
+/// @return {Bool} Returns `true` if $value is a boolean, false if it is not.
+///
+/// @access public
+/// @group Utilities
+///
+/// @alias is-bool
+@function is-boolean($value) {
+  @return is-bool($value);
+}

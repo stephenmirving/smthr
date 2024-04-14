@@ -4,20 +4,21 @@
 
 1. [Coming Soon](#coming-soon)
 2. [Patch Notes History](#patch-notes-history)
-   1. [Version 0.16.0 Patch Notes](#version-0160-patch-notes)
-   2. [Version 0.15.0 Patch Notes](#version-0150-patch-notes)
-   3. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0140---0141-patch-notes)
-   4. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
-   5. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
-   6. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
-   7. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
-   8. [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
-   9. [Version 0.9.1 Patch Notes](#version-091-patch-notes)
-   10. [Version 0.9.0 Patch Notes](#version-090-patch-notes)
-   11. [Version 0.8.2 Patch Notes](#version-082-patch-notes)
-   12. [Version 0.8.1 Patch Notes](#version-081-patch-notes)
-   13. [Version 0.8.0 Patch Notes](#version-080-patch-notes)
-   14. [Improvements in Older Versions](#improvements-in-older-versions)
+   1. [Version 0.17.0 Patch Notes](#version-0170-patch-notes)
+   2. [Version 0.16.0 Patch Notes](#version-0160-patch-notes)
+   3. [Version 0.15.0 Patch Notes](#version-0150-patch-notes)
+   4. [Version 0.14.0 - 0.14.1 Patch Notes](#version-0140---0141-patch-notes)
+   5. [Version 0.13.0 - 0.13.1 Patch Notes](#version-0130---0131-patch-notes)
+   6. [Version 0.12.0 - 0.12.2 Patch Notes](#version-0120---0122-patch-notes)
+   7. [Version 0.11.0 Patch Notes](#version-0110-patch-notes)
+   8. [Version 0.10.0 - 0.10.1 Patch Notes](#version-0100---0101-patch-notes)
+   9. [Version 0.9.2 - 0.9.6 Patch Notes](#version-092---096-patch-notes)
+   10. [Version 0.9.1 Patch Notes](#version-091-patch-notes)
+   11. [Version 0.9.0 Patch Notes](#version-090-patch-notes)
+   12. [Version 0.8.2 Patch Notes](#version-082-patch-notes)
+   13. [Version 0.8.1 Patch Notes](#version-081-patch-notes)
+   14. [Version 0.8.0 Patch Notes](#version-080-patch-notes)
+   15. [Improvements in Older Versions](#improvements-in-older-versions)
 
 ## Coming Soon
 
@@ -28,6 +29,14 @@ and a website with a demo for every mixin and function to help you start using
 _Smoother_.
 
 ## Patch Notes History
+
+### Version 0.17.0 Patch Notes
+
+- Added the `list-insert-nth()` function that inserts an element in a List.
+- Added the `list-flatten()` function which flattens multi-dimensional Lists
+  into flat, one-dimensional Lists.
+- Added the `list-merge()` function which flattens multi-dimensional Lists
+  into flat, one-dimensional Lists.
 
 ### Version 0.16.0 Patch Notes
 

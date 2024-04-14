@@ -1,0 +1,90 @@
+
+@use 'sass:meta';
+@use '../../functions/is-length';
+
+/// Occasionally, an icon or button may need a larger interaction area,
+/// especially for touch screens. This mixin adds a before pseudo-element that
+/// increases the click/touch area by a given length in every direction.
+///
+/// @param {Number} $by [10px] - The length to expand the interaction area.
+///
+/// @group Utilities
+/// @require {function} is-length
+/// @since 0.17.0
+@mixin expand-action-area($by: 10px) {
+  @if not is-length($by) {
+    @error 'Invalid length of #{meta.inspect($by)} passed to the ' +
+        '[ expand-action-area() ] mixin. This value must be a valid CSS length.';
+  }
+
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: #{$by * -1};
+    right: #{$by * -1};
+    bottom: #{$by * -1};
+    left: #{$by * -1};
+  }
+}
+
+/// Occasionally, an icon or button may need a larger interaction area,
+/// especially for touch screens. This mixin adds a before pseudo-element that
+/// increases the click/touch area by a given length in every direction.
+///
+/// @param {Number} $by [10px] - The length to expand the interaction area.
+///
+/// @group Utilities
+/// @require {function} is-length
+/// @since 0.17.0
+///
+/// @alias expand-action-area
+@mixin expand-interaction-area($by: 10px) {
+  @include expand-action-area($by);
+}
+
+/// Occasionally, an icon or button may need a larger interaction area,
+/// especially for touch screens. This mixin adds a before pseudo-element that
+/// increases the click/touch area by a given length in every direction.
+///
+/// @param {Number} $by [10px] - The length to expand the interaction area.
+///
+/// @group Utilities
+/// @require {function} is-length
+/// @since 0.17.0
+///
+/// @alias expand-action-area
+@mixin expand-touch-area($by: 10px) {
+  @include expand-action-area($by);
+}
+
+/// Occasionally, an icon or button may need a larger interaction area,
+/// especially for touch screens. This mixin adds a before pseudo-element that
+/// increases the click/touch area by a given length in every direction.
+///
+/// @param {Number} $by [10px] - The length to expand the interaction area.
+///
+/// @group Utilities
+/// @require {function} is-length
+/// @since 0.17.0
+///
+/// @alias expand-action-area
+@mixin expand-click-area($by: 10px) {
+  @include expand-action-area($by);
+}
+
+/// Occasionally, an icon or button may need a larger interaction area,
+/// especially for touch screens. This mixin adds a before pseudo-element that
+/// increases the click/touch area by a given length in every direction.
+///
+/// @param {Number} $by [10px] - The length to expand the interaction area.
+///
+/// @group Utilities
+/// @require {function} is-length
+/// @since 0.17.0
+///
+/// @alias expand-action-area
+@mixin expand-active-area($by: 10px) {
+  @include expand-action-area($by);
+}

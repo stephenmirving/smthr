@@ -1,0 +1,63 @@
+@use 'sass:string';
+@use 'sass:meta';
+@use 'is-true' as *;
+@use 'list-to-string' as *;
+
+/// Return character from `$string` at `$index`.
+///
+/// @param {String} $string - The String to check.
+/// @param {String} $index - The index to find the character.
+///
+/// @return {String | Null} - The character from `$string` at `$index`. Returns
+/// `null` if the String is empty or if index` exceeds the range of the length
+/// of the String.
+///
+/// @access public
+/// @group Utilities
+/// @require (function} is-true
+/// @require (function} list-to-string
+/// @since 0.17.0
+@function char-at($string, $index) {
+  // Converts any non-string value into a String.
+  $string: list-to-string($string);
+
+  $char: string.slice($string, $index, $index);
+
+  @return if(not is-true($char), null, $char);
+}
+
+/// Return character from `$string` at `$index`.
+///
+/// @param {String} $string - The String to check.
+/// @param {String} $index - The index to find the character.
+///
+/// @return {String | Null} - The character from `$string` at `$index`. Returns
+/// `null` if the String is empty or if index` exceeds the range of the length
+/// of the String.
+///
+/// @access public
+/// @group Utilities
+/// @require (function} char-at
+/// @since 0.17.0
+/// @alias char-at
+@function char-at-index($string, $index) {
+  @return char-at($string, $index);
+}
+
+/// Return character from `$string` at `$index`.
+///
+/// @param {String} $string - The String to check.
+/// @param {String} $index - The index to find the character.
+///
+/// @return {String | Null} - The character from `$string` at `$index`. Returns
+/// `null` if the String is empty or if index` exceeds the range of the length
+/// of the String.
+///
+/// @access public
+/// @group Utilities
+/// @require (function} char-at
+/// @since 0.17.0
+/// @alias char-at
+@function nth-char($string, $index) {
+  @return char-at($string, $index);
+}

@@ -1,10 +1,12 @@
 @use 'sass:list';
 @use 'is-integer' as *;
 
-/// Shift elements in `$list` forwarsd on a loop, by `$number` of positions.
+/// Shift elements in `$list` forward or backwards on a loop, by `$number` of
+/// positions.
 ///
 /// @param {List} $list - The list to update.
-/// @param {Number} $number [1] - number of position between old and new indexes
+/// @param {Number} $number [1] - The number of position between old and new
+/// indices. Can be positive or negative but must be an integer.
 ///
 /// @return {List} - Returns the newly shifted list.
 ///
@@ -21,8 +23,8 @@
 /// @require {function} is-integer
 /// @since 0.15.0
 ///
-/// @throws Invalid data type for $list in the [ list-loop() ] mixin.
-/// @throws Invalid data type for $number in the [ list-loop() ] mixin.
+/// @throw Invalid data type for $list error, `$list` must not be a 'map.
+/// @throws Invalid data type for $number error, must be an integer.
 @function list-loop($list, $number: 1) {
   @if type-of($list) == 'map' {
     @error 'Invalid data type for $list in the [ list-loop() ] mixin. Value ' +

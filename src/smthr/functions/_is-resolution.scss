@@ -16,3 +16,19 @@
     list.index('dpi' 'dpcm' 'dppx' 'x', math.unit($value)) != null
   );
 }
+
+/// Checks if a value is a resolution.
+///
+/// @param {*} $value - A value to be checked.
+///
+/// @return {Bool} True if $value is a resolution, false if it is not.
+///
+/// @access public
+/// @group Utilities
+/// @alias is-resolution
+@function is-resol($value) {
+  @return (
+    meta.type-of($value) == 'number' and
+    list.index('dpi' 'dpcm' 'dppx' 'x', math.unit($value)) != null
+  );
+}

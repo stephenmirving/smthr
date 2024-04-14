@@ -21,12 +21,14 @@
     &:visited,
     &:hover,
     &:focus,
+    &:focus-within,
     &:active {
       @content;
     }
   } @else {
     &:hover,
     &:focus,
+    &:focus-within,
     &:active {
       @content;
     }

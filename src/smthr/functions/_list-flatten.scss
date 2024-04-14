@@ -1,0 +1,79 @@
+@use 'sass:list';
+
+/// Turns multi-dimensional Lists or Maps into flat, one-level Lists.
+///
+/// @param {List | Map} $value - The List or Map to flatten.
+///
+/// @return {List} - The newly flattened List or Map.
+///
+/// @example
+/// list-flatten(('a' 'b' 'c', 'd' 'e' 'f', 'g' 'h' 'i'))
+/// // 'a' 'b' 'c' 'd' 'e' 'f' 'g' 'h' 'i'
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+///
+/// @throw Invalid $value data type error, `$value` must not be a 'map.
+@function list-flatten($value) {
+  $length: list.length($value);
+  $result: ();
+
+  @each $item in $value {
+    @if list.length($item) > 1 {
+      $flatten: list-flatten($item);
+
+      @each $i in $flatten {
+        $result: list.append($result, $i, list.separator($value));
+      }
+    } @else {
+      $result: list.append($result, $item, list.separator($value));
+    }
+  }
+
+  @return $result;
+}
+
+/// Turns multi-dimensional Lists or Maps into flat, one-level Lists.
+///
+/// @param {List | Map} $value - The List or Map to flatten.
+///
+/// @return {List} - The newly flattened List or Map.
+///
+/// @example
+/// flatten(('a' 'b' 'c', 'd' 'e' 'f', 'g' 'h' 'i'))
+/// // 'a' 'b' 'c' 'd' 'e' 'f' 'g' 'h' 'i'
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+/// @require {function} list-flatten
+///
+/// @throw Invalid $value data type error, `$value` must not be a 'map.
+///
+/// @alias list-flatten
+@function map-flatten($value) {
+  @return list-flatten($value);
+}
+
+/// Turns multi-dimensional Lists or Maps into flat, one-level Lists.
+///
+/// @param {List | Map} $value - The List or Map to flatten.
+///
+/// @return {List} - The newly flattened List or Map.
+///
+/// @example
+/// flatten(('a' 'b' 'c', 'd' 'e' 'f', 'g' 'h' 'i'))
+/// // 'a' 'b' 'c' 'd' 'e' 'f' 'g' 'h' 'i'
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+/// @require {function} list-flatten
+///
+/// @throw Invalid $value data type error, `$value` must not be a 'map.
+///
+/// @alias list-flatten
+@function flatten($value) {
+  @return list-flatten($value);
+}

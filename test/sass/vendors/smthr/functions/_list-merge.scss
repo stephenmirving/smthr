@@ -1,0 +1,35 @@
+@use 'sass:list';
+@use 'list-flatten' as *;
+@use 'list-remove-duplicates' as *;
+
+/// Merges multiple Lists into a single List after removing all duplicate values.
+///
+/// @param {ArgList} $lists - The List or Lists to merge.
+///
+/// @return {List} - The newly merged List with all duplicates removed.
+///
+/// @example scss
+/// $merged-list: list-merge(('a' 'b' 'c', 'b' 'e' 'd', 'a' 'c' 'b'));
+/// // $merged-list == "a", "b", "c", "e", "d"
+///
+/// @example scss
+/// $list-1: ('a' 'b' 'c');
+/// $list-2: ('b' 'e' 'd');
+/// $list-3: ('a' 'c' 'b');
+/// $merged-map: list-merge($list-1, $list-2, $list-3);
+/// // $merged-lists == "a", "b", "c", "e", "d"
+///
+/// @example scss
+/// $merged-map: list-merge((1: 'a', 2: 'b', 3: 'c', 4: 'a' 'b' 'f'))
+/// // $merged-map == 1, "a", 2, "b", 3, "c", 4, "f"
+///
+/// @access public
+/// @group Utilities
+/// @require {function} list-flatten
+/// @require {function} list-remove-duplicates
+/// @since 0.17.0
+///
+/// @throw Invalid $list data type error, `$list` must not be a 'map.
+@function list-merge($lists...) {
+  @return list-remove-duplicates(list-flatten($lists));
+}

@@ -1,0 +1,40 @@
+@use 'sass:meta';
+@use 'sass:map';
+
+/// Casts a value to a Map.
+///
+/// @param {*} $value - The value to convert into a map.
+///
+/// @return {Map} - The `$value` cast into a Map.
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+@function to-map($value) {
+  $type: meta.type-of($value);
+
+  @if $type == 'map' {
+    @return $value;
+  }
+
+  // If the type is a list, return an empty list if it is empty, or map each
+  // item to its index in the list.
+  @if $type == 'list' {
+    $length: list.length($value);
+
+    @if $length == 0 {
+      @return ();
+    }
+
+    $map: ();
+
+    @for $i from 1 through $length {
+      $map: map.merge($map, ($i: list.nth($value, $i)));
+    }
+
+    @return $map;
+  }
+
+  // All other values get mapped to a single index
+  @return (1: $value);
+}

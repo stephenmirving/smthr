@@ -22,17 +22,19 @@
 /// @throw Invalid $delimiter type passed, not a string.
 /// @throw Invalid $separator value passed, not a valid separator.
 @function str-to-list($string, $delimiter: ' ', $separator: comma) {
-  @if meta.type-of($string) == 'list' {
+  $string-type: meta.type-of($string);
+
+  @if $string-type == 'list' {
     @warn 'You passed a list value to the [ str-to-list() ] function.' +
         'Returning original list of #{$string}';
 
     @return $string;
   }
 
-  @if meta.type-of($string) != 'string' {
+  @if $string-type != 'string' {
     @error 'Invalid $string type passed to the [ str-to-list() ] function. ' +
         'You passed `#{meta.inspect($string)}`, which is of type: '
-        '`#{meta.type-of($string)}`.';
+        '`#{$string-type}`.';
   }
 
   @if meta.type-of($delimiter) != 'string' {

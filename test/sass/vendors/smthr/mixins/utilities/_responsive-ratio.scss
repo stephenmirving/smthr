@@ -1,8 +1,12 @@
 @use 'sass:math';
+@use 'sass:list';
 @use 'sass:string';
-@use '../../functions/is-number' as *;
+@use '../../functions/equals-true' as *;
+@use '../../functions/is-bool' as *;
+@use '../../functions/is-percentage' as *;
 @use '../../functions/is-string' as *;
 @use '../../functions/is-true' as *;
+@use '../../functions/ratio-to-percentage' as *;
 
 /// Provides the styles for the child element that is being kept at the given
 /// ratio provided in the `responsive-ratio()` mixin.
@@ -25,13 +29,21 @@
 ///
 /// @example scss -
 /// .element {
-///   @include responsive-ratio(16, 9, 'responsive-item);
+///   @include responsive-ratio(16 9, 'responsive-item');
 /// }
 ///
-/// @param {Number} $x - The width portion of the ratio.
-/// @param {Number} $y - The height portion of the ratio.
-/// @param {String} $content-class-name - The class name, passed as a string,
-/// of the content which is being kept at the given ratio.
+/// @param {List | String | Number} $ratio - A ratio value that can be expressed
+/// one of three ways: by a two number List (ex: `(16 9)` for a 16:9 ratio), by
+/// a String containing two numbers separated by either a colon, slash, comma or
+/// space (ex: `'21:9'`, `'21/9', `'21,9'`, etc), or by single number
+/// (ex: `0.75` for a 3:4 ratio).
+/// @param {String} $content-class-name - The optional class name, passed as a
+/// string, of the content which is being kept at the given ratio. If no class
+/// is passed, it in
+/// @param {Bool} $num-returns-common-ratio - If this is set to any value except
+/// `null` or `false`, when $ratio is provided as a single Number the function
+/// will try to look for a common media ratio that is close to the provided
+/// number, on which to base the returned percentage.
 ///
 /// @output The properties on the root element, pseudo-element, and child
 /// element necessary to create a responsive and scalable element that
@@ -39,28 +51,67 @@
 /// a `::before` pseudo-element.
 ///
 /// @group Utilities
-/// @require {function} is-number
+/// @require {function} equals-true
+/// @require {function} is-bool
+/// @require {function} is-percentage
 /// @require {function} is-string
 /// @require {function} is-true
-/// @require {function} str-remove
-@mixin responsive-ratio($x, $y, $child-content-class-name: null) {
-  @if not is-number($x) or not is-number($y) or not math.compatible($x, $y)
+/// @require {function} ratio-to-percentage
+@mixin responsive-ratio(
+  $ratio,
+  $child-content-class-name: null,
+  $find-common-ratio: false
+) {
+  $ratio-percentage: null;
+
+  @if equals-true($find-common-ratio) or is-string($find-common-ratio) {
+    @if is-string($find-common-ratio) {
+      $find-common-ratio: string.to-lower-case($find-common-ratio);
+    }
+  }
+
+  @if equals-true($find-common-ratio) or $find-common-ratio == 'common' or
+      $find-common-ratio == 'yes' or $find-common-ratio == 'y' or
+      $find-common-ratio == 't' or $find-common-ratio == 'find common ratio' or
+      $find-common-ratio == 'find' or $find-common-ratio == 'find-common-ratio'
   {
-    @error 'Invalid input for $x or $y in the [ responsive-ratio() ] mixin. ' +
-        'These values must either be unitless numbers, numbers with compatible ' +
-        'units, or calculations that resolve to values with compatible units.';
+    $find-common-ratio: true;
+  } @else if $find-common-ratio {
+    @if $find-common-ratio != 'no' and $find-commmon-ratio != 'n' and
+        $find-common-ratio != 'exact' and $find-commmon-ratio != 'false'
+    {
+      @warn 'Invalid input passed for the $find-common-ratio parameter in the ' +
+          '[ responsive-ratio() ] mixin. This value should be `true` or `false`. ' +
+          'Other acceptable values include "common", "yes", "y", "t" or ' +
+          '"find-common-ratio" for true, and "no", "n", "exact" for false.';
+    }
+
+    $find-common-ratio: false;
+  }
+
+  $ratio-percentage: ratio-to-percentage($ratio, $find-common-ratio);
+
+  @if not is-percentage($ratio-percentage) {
+    @error 'Invalid $ratio input of #{meta.inspect($ratio)} passed to the ' +
+        '[ responsive-ratio() ] mixin. This value can be expressed one of ' +
+        'three ways: by a two number List (ex: `(16 9)` for a 16:9 ratio), by ' +
+        'a String containing two numbers separated by either a colon, slash, ' +
+        'comma or space (ex: "21:9", "21/9", "21,9", etc), or by single ' +
+        'number (ex: `0.75` for a 3:4 ratio).';
   }
 
   @if $child-content-class-name and is-string($child-content-class-name) {
-    // Remove the character if the class name was passed with a leading '.'
-    @if string.slice($string, 1, 1) == '.' {
-      $child-content-class-name: string.slice($string, 2);
+     // Remove the leading character from $child-content-class-name if it
+     // was passed with a leading '.'
+    @if string.slice($child-content-class-name, 1, 1) == '.' {
+      $child-content-class-name: string.slice($child-content-class-name, 2);
     }
   } @else if $child-content-class-name {
     @error 'Invalid input for $child-content-class-name in the ' +
-        '[ responsive-ratio() ] mixin. If passed, this value must be the '
-        'name of the class which is having its ratio constrained and is the ' +
-        'child element of the one which has the @include statement for the mixin.';
+        '[ responsive-ratio() ] mixin. If passed, this value must be a String. ' +
+        'It is the name of the class which is having its ratio constrained and ' +
+        'is the child of the element which has the @include statement ' +
+        'for this mixin.';
   }
 
   position: relative;
@@ -72,7 +123,7 @@
     content: '';
     display: block;
     width: 100%;
-    padding-top: math.percentage(math.div($y, $x));
+    padding-top: $ratio-percentage;
   }
 
   @if is-true($child-content-class-name) {

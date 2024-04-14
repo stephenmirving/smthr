@@ -5,7 +5,7 @@
 /// test as `true` for `false` and `null` values in Sass. By using this function
 /// like, `@if is-falsey($var) { ... }`, it will test true for `false` and `null`
 /// values, but also for empty strings, empty lists, empty maps, the number `0`,
-/// and the unquoted string value of `'false'`.
+/// and the string value of `'false'`.
 ///
 /// In Sass, empty strings and empty lists are all "truthy" and sometimes you
 /// may want to check if something is false in the more traditional sense.

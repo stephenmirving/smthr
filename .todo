@@ -148,7 +148,9 @@ TODO:
           content: color-stops(#FFF, #F00 5px, #0C0, #00C 25px); // Output: #FFF 0, #F00 5px, #0C0 15px, #00C 25px
         }
   Functions:
+    ☐ Create a function that takes a value and an Arglist of functions which return true or false and tests that value against every function and returns true if all functions passed return true.
     ☐ Add more equations to the time-equations function, more are saved in workspace file css-equations.txt
+    ☐ Add functionality to `conv-color-name()` function that uses the $map-color-name-strings variable to also detect color names as strings and return that hex code.
     ☐ Make conv-angle also able to convert into one of the angle keywords that are in the map inside the function.
     ☐ Finish doing everything from the smashing magazine article the linear-interpolation function (and possibly trend line?) came from
     ☐ Look into finding the old precision function ??

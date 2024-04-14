@@ -1,0 +1,210 @@
+@use 'sass:list';
+@use 'sass:meta';
+@use 'sass:string';
+@use 'equals-true' as *;
+@use 'is-integer' as *;
+@use 'is-map' as *;
+@use 'is-string' as *;
+@use 'is-true' as *;
+
+/// Inserts `$value` in `$list` at `$index`.
+///
+/// @param {List} $list - The List to update.
+/// @param {Number} $index - The index in `$list` where `$value` will be inserted.
+/// Must be a non-zero, positive integer.
+/// If `$allow-null` is left `false`, its default value, an `$index` value
+/// greater than the length of the List will result in `$value` being appended
+/// directly on the end of the list, increasing the length of `$list` by only
+/// 1, with the difference in index values disregarded.
+/// @param {*} $value - The value to insert in `$list` at `$index`,
+/// @param {Bool | String} $allow-null [false] - If `true, this will allow `$index` values
+/// that are greater than the length of `$list` to cause the function to return a
+/// List with null list values between the end of the original List and the
+/// index value provided. Alias values for this variable that resolve as `true`
+/// are `yes`, `y`, `'true'` (in quotes), `t`, and `allow`.
+///
+/// @return {List} - The new List with `$value` inserted at `$index`.
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 2, 'z')
+/// // 'a' 'z' 'b' 'c'
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 9, 'z')
+/// // 'a' 'b' 'c' 'z'
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 9, 'z', true)
+/// // 'a' 'b' 'c' null null null null null 'z'
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 0, 'z')
+/// // error
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+/// @require {function} equals-true
+/// @require {function} is-integer
+/// @require {function} is-map
+/// @require {function} is-string
+/// @require {function} is-true
+///
+/// @throw Invalid $list data type error, `$list` must not be a 'map.
+/// @throw Invalid List $index error, must be a non-zero, positive integer.
+@function list-insert-nth($list, $value, $index, $allow-null: false) {
+  @if is-map($list) {
+    @error 'Invalid $list data type error for the [ list-insert-nth() ] function. ' +
+        'You may not pass a value of data type \'map\'';
+  }
+
+  $length: list.length($list);
+
+  @if is-string($allow-null) {
+    $allow-null: string.to-lower-case($allow-null);
+  }
+
+  @if equals-true($allow-null) or $allow-null == 'yes' or $allow-null == 'y'
+      or $allow-null == 'y' or $allow-null == 'allow'
+  {
+    $allow-null: true;
+  } @else {
+    @if $allow-null {
+      @warn 'Unrecognized $allow-null value warning for the [ list-inster-nth() ] ' +
+          'function. Passing this value is optional and if used should be passed ' +
+          'a boolean value of either `true` or `false`.';
+    }
+
+    $allow-null: false;
+  }
+
+  @if not $index {
+    $index: $length + 1;
+  }
+
+  @if not is-integer($index) or $index < 1 {
+    @error 'Invalid $index of #{meta.inspect($index)} passed to the ' +
+        '[ list-insert-nth() ] function. This value must be a non-zero, ' +
+        'positive integer.';
+  }
+
+  @if $index > $length {
+    @if $allow-null {
+      // Append nulls until the list is just one item short of the target index.
+      @while $length < $index - 1 {
+        $list: list.append($list, null);
+        $length: $length + 1;
+      }
+    }
+
+    @return list.append($list, $value, list.separator($list));
+  }
+
+  $result: ();
+
+  @for $i from 1 through $length {
+    @if $i == $index {
+      @if is-true($value) {
+        $result: list.append($result, $value, list.separator($list));
+      }
+    }
+
+    $result: list.append($result, list.nth($list, $i), list.separator($list));
+  }
+
+  @return $result;
+}
+
+/// Inserts `$value` in `$list` at `$index`.
+///
+/// @param {List} $list - The List to update.
+/// @param {Number} $index - The index in `$list` where `$value` will be inserted.
+/// Must be a non-zero, positive integer.
+/// If `$allow-null` is left `false`, its default value, an `$index` value
+/// greater than the length of the List will result in `$value` being appended
+/// directly on the end of the list, increasing the length of `$list` by only
+/// 1, with the difference in index values disregarded.
+/// @param {*} $value - The value to insert in `$list` at `$index`,
+/// @param {Bool | String} $allow-null [false] - If `true, this will allow `$index` values
+/// that are greater than the length of `$list` to cause the function to return a
+/// List with null list values between the end of the original List and the
+/// index value provided. Alias values for this variable that resolve as `true`
+/// are `yes`, `y`, `'true'` (in quotes), `t`, and `allow`.
+///
+/// @return {List} - The new List with `$value` inserted at `$index`.
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 2, 'z')
+/// // 'a' 'z' 'b' 'c'
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 9, 'z')
+/// // 'a' 'b' 'c' 'z'
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 9, 'z', true)
+/// // 'a' 'b' 'c' null null null null null 'z'
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 0, 'z')
+/// // error
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+/// @require {function} list-insert-nth
+///
+/// @throw Invalid $list data type error, `$list` must not be a 'map.
+/// @throw Invalid List $index error, must be a non-zero, positive integer.
+///
+/// @alias list-insert-nth
+@function list-insert-at($list, $value, $index, $allow-null: false) {
+  @return list-insert-nth($list, $value, $index, $allow-null);
+}
+
+/// Inserts `$value` in `$list` at `$index`.
+///
+/// @param {List} $list - The List to update.
+/// @param {Number} $index - The index in `$list` where `$value` will be inserted.
+/// Must be a non-zero, positive integer.
+/// If `$allow-null` is left `false`, its default value, an `$index` value
+/// greater than the length of the List will result in `$value` being appended
+/// directly on the end of the list, increasing the length of `$list` by only
+/// 1, with the difference in index values disregarded.
+/// @param {*} $value - The value to insert in `$list` at `$index`,
+/// @param {Bool | String} $allow-null [false] - If `true, this will allow `$index` values
+/// that are greater than the length of `$list` to cause the function to return a
+/// List with null list values between the end of the original List and the
+/// index value provided. Alias values for this variable that resolve as `true`
+/// are `yes`, `y`, `'true'` (in quotes), `t`, and `allow`.
+///
+/// @return {List} - The new List with `$value` inserted at `$index`.
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 2, 'z')
+/// // 'a' 'z' 'b' 'c'
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 9, 'z')
+/// // 'a' 'b' 'c' 'z'
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 9, 'z', true)
+/// // 'a' 'b' 'c' null null null null null 'z'
+///
+/// @example
+/// list-insert-nth('a' 'b' 'c', 0, 'z')
+/// // error
+///
+/// @access public
+/// @group Utilities
+/// @since 0.17.0
+/// @require {function} list-insert-nth
+///
+/// @throw Invalid $list data type error, `$list` must not be a 'map.
+/// @throw Invalid List $index error, must be a non-zero, positive integer.
+///
+/// @alias list-insert-nth
+@function insert-at($list, $value, $index, $allow-null: false) {
+  @return list-insert-nth($list, $value, $index, $allow-null);
+}

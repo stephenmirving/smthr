@@ -24,25 +24,25 @@
 // / @group Utilities
 // / @require {function} is-integer
 // / TODO: fix this mixin or delete
-@mixin at-most-any($num, $selector) {
-  @if not is-integer($num) {
-    @error 'Invalid input for $num in the [ at-most-any() ] mixin. ' +
-      'This value must be an integers. You passed #{meta.inspect($num)}.';
-  }
+// @mixin at-most-any($num, $selector) {
+//   @if not is-integer($num) {
+//     @error 'Invalid input for $num in the [ at-most-any() ] mixin. ' +
+//       'This value must be an integers. You passed #{meta.inspect($num)}.';
+//   }
 
-  @if meta.type-of($selector) != 'string' {
-    @error 'Invalid input for $selector in the [ at-most-any() ] mixin. ' +
-      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
-  }
+//   @if meta.type-of($selector) != 'string' {
+//     @error 'Invalid input for $selector in the [ at-most-any() ] mixin. ' +
+//       'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+//   }
 
-  $parent: &;
-  $child: list.nth(list.nth($parent, -1), -1);
+//   $parent: &;
+//   $child: list.nth(list.nth($parent, -1), -1);
 
-  &:nth-last-child(-n + #{$num} of #{$selector}):first-child,
-  &:nth-last-child(-n + #{$num} of #{$selector}):first-child ~ #{$child} {
-    @content;
-  }
-}
+//   &:nth-last-child(-n + #{$num} of #{$selector}):first-child,
+//   &:nth-last-child(-n + #{$num} of #{$selector}):first-child ~ #{$child} {
+//     @content;
+//   }
+// }
 
 // / This quantity-query mixin will select every items there is that matches
 // / $selector between `$min` and `$max` items. If the quantity of child elements
@@ -59,26 +59,26 @@
 // / @group Utilities
 // / @require {function} is-integer
 // / TODO: Fix mixin or delete
-@mixin in-between-any($min, $max, $selector) {
-  @if not is-integer($min) or not is-integer($max) {
-    @error 'Invalid input for $min or $max in the [ in-between-any() ] mixin. ' +
-      'These values must be integers. You passed #{meta.inspect($min)} for $min ' +
-      'and #{meta.inspect($max)} for $max';
-  }
+// @mixin in-between-any($min, $max, $selector) {
+//   @if not is-integer($min) or not is-integer($max) {
+//     @error 'Invalid input for $min or $max in the [ in-between-any() ] mixin. ' +
+//       'These values must be integers. You passed #{meta.inspect($min)} for $min ' +
+//       'and #{meta.inspect($max)} for $max';
+//   }
 
-  @if meta.type-of($selector) != 'string' {
-    @error 'Invalid input for $selector in the [ in-between-any() ] mixin. ' +
-      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
-  }
+//   @if meta.type-of($selector) != 'string' {
+//     @error 'Invalid input for $selector in the [ in-between-any() ] mixin. ' +
+//       'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+//   }
 
-  $parent: &;
-  $child: list.nth(list.nth($parent, -1), -1);
+//   $parent: &;
+//   $child: list.nth(list.nth($parent, -1), -1);
 
-  &:nth-last-child(n + #{$min} of #{$selector}):nth-last-child(-n + #{$max} of #{$selector}):first-child,
-  &:nth-last-child(n + #{$min} of #{$selector}):nth-last-child(-n + #{$max} of #{$selector}):first-child ~ #{$child} {
-    @content;
-  }
-}
+//   &:nth-last-child(n + #{$min} of #{$selector}):nth-last-child(-n + #{$max} of #{$selector}):first-child,
+//   &:nth-last-child(n + #{$min} of #{$selector}):nth-last-child(-n + #{$max} of #{$selector}):first-child ~ #{$child} {
+//     @content;
+//   }
+// }
 
 // / Select an element if it has at least `$num` child elements.
 // /
@@ -92,16 +92,16 @@
 // / @group Utilities
 // / @require {function} is-integer
 // / TODO: Fix or delete mixin
-@mixin has-at-least($num) {
-  @if not is-integer($num) {
-    @error 'Invalid input for $num in the [ has-at-least() ] mixin. ' +
-      'This value must be an integer. You passed #{meta.inspect($num)}.';
-  }
+// @mixin has-at-least($num) {
+//   @if not is-integer($num) {
+//     @error 'Invalid input for $num in the [ has-at-least() ] mixin. ' +
+//       'This value must be an integer. You passed #{meta.inspect($num)}.';
+//   }
 
-  &:has(:nth-last-child(n + #{$num}):first-child) {
-    @content;
-  }
-}
+//   &:has(:nth-last-child(n + #{$num}):first-child) {
+//     @content;
+//   }
+// }
 
 // / Select an element if it has at least `$num` child elements that match
 // / $selector.
@@ -116,18 +116,18 @@
 // / @group Utilities
 // / @require {function} is-integer
 // / TODO: Fix or delete mixin
-@mixin has-at-least-of-any($num, $selector) {
-  @if not is-integer($num) {
-    @error 'Invalid input for $num in the [ has-at-least-of-any() ] mixin. ' +
-      'This value must be an integer. You passed #{meta.inspect($num)}.';
-  }
+// @mixin has-at-least-of-any($num, $selector) {
+//   @if not is-integer($num) {
+//     @error 'Invalid input for $num in the [ has-at-least-of-any() ] mixin. ' +
+//       'This value must be an integer. You passed #{meta.inspect($num)}.';
+//   }
 
-  @if meta.type-of($selector) != 'string' {
-    @error 'Invalid input for $selector in the [ has-at-least-of-any() ] mixin. ' +
-      'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
-  }
+//   @if meta.type-of($selector) != 'string' {
+//     @error 'Invalid input for $selector in the [ has-at-least-of-any() ] mixin. ' +
+//       'This value must be a quoted string. You passed #{meta.inspect($selector)}.';
+//   }
 
-  &:has(:nth-last-child(n + #{$num} of #{$selector}):first-child) {
-    @content;
-  }
-}
+//   &:has(:nth-last-child(n + #{$num} of #{$selector}):first-child) {
+//     @content;
+//   }
+// }

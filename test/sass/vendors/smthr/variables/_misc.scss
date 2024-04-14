@@ -3,7 +3,7 @@
 ////
 ///
 /// All the public variables that are used in the Smoother library other than
-/// those of the Map or Color type (found in _maps.scss and _colors.scss).
+/// the Lists, Maps, and Colros found in _lists.scss and _colors.scss
 ///
 /// @access public
 /// @group Utilities
@@ -15,6 +15,7 @@
 /// This value is used in the `conv-to-rem()`, `conv-to-px()` and `conv-to-em()`
 /// functions. If you are using Betterize too, this value will be used to
 /// calculate the base font-size in `em` units, set on the html element.
+///
 /// @type Number
 /// @see {function} conv-to-em
 /// @see {function} conv-to-px
@@ -24,42 +25,56 @@ $base-font-size: 16 !default;
 
 /// Sets the body element's font size. Sometimes you may want to change this
 /// value to be different than the $base-font-size value.
+///
 /// @type Number
 $body-font-size: 1rem !default;
 
 /// Base path for assets (fonts, images, etc.). Do not use a trailing slash.
 /// If you are not using an assets folder, you can set this to `null` or `''`.
+///
 /// @type String
 $asset-base-path: 'assets' !default;
 
+/// Container's maximum width
+///
+/// @type Number
+$max-inline-size: 1140px !default;
+
 /// Suffix appended to the end of an image name to indicate that it is for HiDPI.
 /// Retina displays
+///
 /// @type String
 $image-suffix-2x: '@2x' !default;
 
 /// Separation characters between a block and an element if using BEM notation.
+///
 /// @type String
 $bem-elem-separator: '__' !default;
 
 /// Separation characters between a modifier and its parent if using BEM notation.
+///
 /// @type String
 $bem-mod-separator: '--' !default;
 
 /// Button transition properties.
+///
 /// @type List
 $btn-transition-properties: background-color, border-color, box-shadow, color,
   top !default;
 
 /// The duration of the transition used on buttons.
+///
 /// @type Number
 $btn-transition-duration: 0.3s !default;
 
 /// The timing function used on button transitions.
+///
 /// @type String
 $btn-transition-timing-function: ease-out !default;
 
 /// The value for the `transition` property on buttons. Created from the previous
 /// button transition properties by the `@each` loop following this declaration.
+///
 /// @type List
 $btn-transition: () !default;
 
@@ -71,27 +86,13 @@ $btn-transition: () !default;
   );
 }
 
-/// A list containing all the available CSS global values that can be used
-/// with virtually any property.
-/// @type List
-$global-values: (inherit initial revert revert-layer unset) !default;
-
 /// The lightness value that determines when the lightness of color changes
 /// from "dark" to "light". Acceptable values are between 0 and 255.
+///
 /// @type Number
 $text-contrast-threshold: 150 !default;
 
 /// Default spacer size
+///
 /// @type Number
 $spacer: 1rem !default;
-
-/// The alphabetical order of characters.
-/// @type List
-/// @see {function} list-sort
-$sort-order: (
-  '!', '#', '$', '%', '&', '\'', '(' ')', '*', '+', ',', '-',
-  '.', '/', '[', '\\', ']', '^', '_', '{', '|', '}', '~', '0',
-  '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
-  'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-  'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
-) !default;

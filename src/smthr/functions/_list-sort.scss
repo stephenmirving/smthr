@@ -6,7 +6,7 @@
 @use 'is-map' as *;
 @use 'is-string' as *;
 @use 'to-list' as *;
-@use '../variables/misc' as smth;
+@use '../variables/lists' as smth;
 
 /// Sorts values of `$list` by $order using quick-sort algorithm. By default,
 /// the order is alphabetical and is an imported variable called $sort-order.
@@ -43,8 +43,8 @@
   }
 
   @if is-map($list) {
-    @error 'Invalid $list data type for the [ list-sort() ] function. ' +
-        'You may not pass a value of data type \'map\'';
+    @error 'Invalid $list data type error for the [ list-sort() ] ' +
+        'function. You may not pass a value of data type \'map\'';
   }
 
   @if not is-list($order) {
@@ -97,6 +97,34 @@
 ///
 /// @alias list-sort
 @function list-order($list, $order: smth.$sort-order) {
+  @return list-sort($list, $order);
+}
+
+/// Sorts values of `$list` by $order using quick-sort algorithm. By default,
+/// the order is alphabetical and is an imported variable called $sort-order.
+///
+/// @param {List} $list - The List to sort.
+/// @param {List} $order [smth.$sort-order] - The order to respect for the newly
+/// sorted List.
+///
+/// @return {List} - The newly sorted List.
+///
+/// @example
+/// list-sort('b' 'a' 'c')
+/// // 'a' 'b' 'c'
+///
+/// @example
+/// list-sort(3 5 1)
+/// // 1 3 5
+///
+/// @access public
+/// @group Utilities
+/// @require {function} list-sort
+/// @require {variable} $sort-order
+/// @since 0.16.0
+///
+/// @alias list-sort
+@function sort-list($list, $order: smth.$sort-order) {
   @return list-sort($list, $order);
 }
 

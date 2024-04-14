@@ -33,8 +33,8 @@
   $list-length: list.length($list);
 
   @if is-map($list) {
-    @error 'Invalid $list data type for the [ list-slice() ] function. ' +
-        'You may not pass a value of data type \'map\'.';
+    @error 'Invalid $list data type error for the [ list-slice() ] ' +
+        'function. You may not pass a value of data type \'map\'';
   }
 
   @if not is-integer($start) or not is-integer($end) or $start < 1 or $end < 1  {
