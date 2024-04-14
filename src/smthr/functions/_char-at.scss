@@ -14,8 +14,8 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require (function} is-true
-/// @require (function} list-to-string
+/// @require {function} is-true
+/// @require {function} list-to-string
 /// @since 0.17.0
 @function char-at($string, $index) {
   // Converts any non-string value into a String.
@@ -37,7 +37,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require (function} char-at
+/// @require {function} char-at
 /// @since 0.17.0
 /// @alias char-at
 @function char-at-index($string, $index) {
@@ -55,7 +55,7 @@
 ///
 /// @access public
 /// @group Utilities
-/// @require (function} char-at
+/// @require {function} char-at
 /// @since 0.17.0
 /// @alias char-at
 @function nth-char($string, $index) {

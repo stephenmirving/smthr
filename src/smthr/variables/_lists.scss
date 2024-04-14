@@ -545,7 +545,7 @@ $map-color-names: (
 /// 4 digit hex color of `#0000`.
 ///
 /// @type Map
-// $map-color-name-strings: stringify-map-keys($map-color-names);
+$map-color-name-strings: stringify-map-keys($map-color-names);
 
 /// Map of all the CSS color names and their hex values which were not included
 /// in `$map-color-names` due to being duplicates of other values.
@@ -751,12 +751,12 @@ $map-decimals: (
 /// A list containing all potential decimal values 0 - 9.
 ///
 /// @type List
-// $decimal-space: map.values($map-decimals);
+$decimal-space: map.values($map-decimals);
 
 /// A list containing all potential hexadecimal values 0 - F.
 ///
 /// @type List
-// $hex-space: ('0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'A' 'B' 'C' 'D' 'E' 'F');
+$hex-space: ('0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'A' 'B' 'C' 'D' 'E' 'F');
 
 /// The alphabetical order of characters.
 ///
